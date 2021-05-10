@@ -1,0 +1,563 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 FINAL//EN">
+<html><head>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="author" content="Japheth">
+<meta name="keywords" content="HX, HDPMI, DPMI, DOS Extender, Win32, DPMILD32">
+<meta name="description" content="HX is a DOS Extender based on Win32 PE file format">
+<link rel="stylesheet" type="text/css" href="HX_files/format3.css"></head><body topmargin="4" leftmargin="4" marginheight="4" marginwidth="4">
+<table border="0" cellpadding="4" cellspacing="0" height="100%" width="100%">
+  <tbody><tr valign="top"><td height="20"><img src="HX_files/clearpix.gif" border="0" height="1"></td></tr>
+  <tr align="center" valign="top">
+   </tr>
+<tr align="left" valign="top">
+<td>
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+   <tbody><tr align="left" valign="top">
+   <td>
+<h2 align="center">HX DOS Extender</h2>
+ <div id="menu2">
+ <ul>
+ <li><a href="#hxabout">A. About HX DOS-Extender</a></li>
+ <li><a href="#hxrt">B. HX Runtime</a></li>
+ <li><a href="#hxgui">C. HX GUI Extension</a></li>
+ <li><a href="#hxdv32">D. HX 32-Bit Developer Support</a></li>
+ <li><a href="#hxdv16">E. HX 16-Bit Developer Support</a></li>
+ <li><a href="#hxsrc">F. HX Source Code</a></li>
+ <li><a href="#hxdbg">G. Debugging HX DOS Extended Applications</a></li>
+ <li><a href="#hxunix">H. Running HX under Linux/Unix</a></li>
+ <li><a href="#hxrm">I. HX Roadmap</a></li>
+ </ul>
+ </div>
+
+<a name="hxabout"></a>
+<h3>A. About HX DOS-Extender</h3>
+
+ HX DOS-Extender is a free DOS extender with built-in Win32 PE file format
+ support. Usually the purpose of a DOS extender is to make protected-mode
+ features available for DOS applications. HX fully supports this goal, but
+ goes some steps further. A Win32 API emulation layer is part of HX which 
+ allows many Win32 console applications to run in DOS. This emulation goes
+ far beyond similiar approaches in other extenders (Borland's PowerPack, WDOSX
+ or Phar Lab TNT). Furthermore HX implements - limited - support for windows,
+ DirectDraw, GDI and even OpenGL graphics. This allows to run "simple" Win32
+ GUI apps in DOS as well.
+<br>&nbsp;<br>
+ Many development environments which support creating Win32 console
+ applications are compatible with HX, among them are:
+
+<ul>
+<li>Open Watcom C++</li>
+<li>Digital Mars C++</li>
+<li>MinGW (uses GCC)</li>
+<li>CygWin (uses GCC)</li>
+<li>MS Visual C++, including the free version of MS Visual C++ Toolkit 2003</li>
+<li>Borland C++, including the free version of C++ Builder Command Line Tools</li>
+<li>LADSoft CC386</li>
+<li>Pelles C</li>
+<li>LCC-Win32 (C compiler)</li>
+<li>Borland Delphi</li>
+<li>Free Pascal (Win32)</li>
+<li>Pascal Pro</li>
+<li>Virtual Pascal (Win32)</li>
+<li>FreeBasic (Win32)</li>
+<li>PowerBasic</li>
+<li>MicroFocus Object Cobol</li>
+<li>XDS Modula II</li>
+<li>MASM, TASM, POASM, WASM, FASM, LZASM, NASM, GOASM, ...</li>
+</ul>
+
+ Since HX's built-in Win32 emulation is pretty mature, most of these
+ compilers/assemblers will run with HX in plain DOS as well.
+
+<br>&nbsp;<br>
+
+ Other tools suitable to create HX PE binaries are:
+<ul>
+<li><a href="http://www.japheth.de/hx/djgpp.html">DJGPP</a> (uses GCC)</li>
+</ul>
+
+ 
+HX consists of<br>
+<ul>
+<li><b>HXRT</b>, HX DOS extender runtime (download <a href="http://www.japheth.de/Download/HXRT.ZIP">HXRT.ZIP</a>)</li>
+<li><b>HXGUI</b>, HX DOS extender GUI extension (download <a href="http://www.japheth.de/Download/HXGUI.ZIP">HXGUI.ZIP</a>)</li>
+<li><b>HXDEV</b>, HX DOS extender developer support (download <a href="http://www.japheth.de/Download/HXDEV.ZIP">HXDEV.ZIP</a>)</li>
+<li><b>HXSRC</b>, HX DOS extender source (download <a href="http://www.japheth.de/Download/HXSRC.ZIP">HXSRC.ZIP</a>)</li>
+</ul>
+
+The current development version of HXRT and HXGUI may be downloaded from 
+<a href="http://www.japheth.de/Download/HXRTD.ZIP">here</a>. Some bugs may be fixed there, but
+there is also a chance for new bugs. Just the binaries and docs are included.
+It's intended for testing purposes.
+<br>&nbsp;<br>
+
+
+<a name="hxrt"></a>
+<h3>B. HX Runtime</h3>
+
+The extender runtime includes all files needed to execute 32bit DOS extended apps.
+These are:
+
+<ul>
+<li>DPMI server <b>HDPMI</b>. Used in plain DOS only.</li>
+<li>PE file loader <b>DPMILD32</b></li>
+<li>Win32 API emulation dlls (<b>DKRNL32, DUSER32, DADVAPI, ...</b>)</li>
+<li>Helper tools <b>HXLdr32</b> and <b>PEStub</b></li>
+</ul>
+If you just want to run some Win32 console applications in DOS you don't need
+to care much about these binaries, because most of them are loaded automatically
+just when they are needed. The one thing one has to do to activate HX's Win32
+support in pure DOS is to run HXLdr32, which is a tiny DOS TSR.
+
+
+<h4>About HDPMI</h4>
+HDPMI is a free <a href="http://www.google.com/search?q=DOS+Protected+Mode+Interface+%28DPMI%29" target="_top">DPMI</a> server. Its features are:
+<ul>
+<li>fully supports DPMI V0.9</li>
+<li>most of DPMI V1.0 functions are implemented as well</li>
+<li>client address space may be up to 4088 MB</li>
+<li>no limit for physical memory usage, 4 GB supported
+</li><li>full DOS API translation services included</li>
+<li>both 32bit and 16bit clients are supported</li>
+<li>the server's DOS memory usage is below 13 kB, including an 8 kB translation buffer</li>
+<li>is compatible with Bochs, Qemu, DosBox, VMWare and VirtualBox. 
+    Virtual PC 2007 needs a modified HDPMI version, can be downloaded <a href="http://www.japheth.de/Download/hdpmivpc.zip">here</a></li>
+</ul>
+View <a href="http://www.japheth.de/HX/HDPMI.TXT">hdpmi.txt</a> for more details.
+
+<br>&nbsp;<br>
+
+<h4>About DPMILD32</h4>
+DPMILD32 is a PE file loader required to load binaries into memory.
+It is not restricted to HX extended applications, but may also be used to
+load standard Win32 console apps as DPMI clients, provided that all
+Win32 functions called by the application are included in the emulation layer.
+<br>&nbsp;<br>
+View <a href="http://www.japheth.de/HX/DPMILD32.TXT">dpmild32.txt</a> for more details.
+<br>&nbsp;<br>
+
+<h4>Win32 API Emulation</h4>
+
+The Win32 API Emulation included in the HX runtime package consists of:
+
+<ul>
+<li>DKRNL32.DLL: emulates KERNEL32.DLL</li>
+<li>DADVAPI.DLL: emulates ADVAPI32.DLL</li>
+<li>DUSER32.DLL: emulates USER32.DLL</li>
+<li>DGDI32.DLL: emulates GDI32.DLL</li>
+<li>DDDRAW.DLL: emulates DDRAW.DLL</li>
+<li>OLE32.DLL and OLEAUT32.DLL</li>
+</ul>
+
+DPMILD32 will provide for the translation of the module names, so if a PE
+executable has references to KERNEL32.DLL, DPMILD32 will try to resolve 
+these imports by loading DKRNL32.DLL, for example. This means that any
+development tool being able to create Win32 console applications will most
+likely be compatible with HX DOS extender. While running under a Win32
+OS like win9x or winxp, such console apps are executed as true Win32 apps
+and neither DPMILD32 nor the Win32 API emulation dlls are loaded.
+These will only be needed in Non-Win32 environments (that is, plain DOS,
+DOSEmu, Windows 3.1 or OS/2 Dos boxes) and there exist 2 ways to activate
+the Win32 emulation:
+<br>&nbsp;<br>
+
+
+<ul>
+<li>
+<b>HXLdr32</b>: this is a TSR program which will hook DOS interrupt 21h and check
+all programs to be launched if they are PE binaries. If this is true, DPMILD32 will be
+started to run the program. This approach is the recommended one because no binaries 
+have to be modified. HXLdr32 will refuse to install itself if there is already support for
+PE file loading, as it is the case in win9x/winxp DOS boxes.
+</li>
+<li>
+<b>PEStub</b>: this tool can be used to change the MZ stub of PE applications
+which under plain DOS displays a message like "This program requires Windows" 
+or something similiar. The new stub, which will gain control in plain DOS only, will
+load DPMILD32 to run the binary as DPMI client. The stub's size is only 512 bytes,
+so the total size of the binary won't increase too much.
+</li>
+</ul>
+
+As already mentioned HX supports simple graphics (GUI) applications. 
+These may use Win32 GDI or DirectDraw for their output, both is possible with
+HX. As with Win32 console applications the GUI apps will run as Win32 
+processes in Win32 environments, only in DOS they will run as DPMI clients 
+and the GDI/DirectDraw emulation dlls will be used. The emulation
+requires a VESA 2.0 BIOS to work. Because in DOS there is no acceleration
+available the emulation may be a bit slow. Some applications may run sufficiently
+fast, however, and it may be a way to overcome the non-existance of VESA support
+in Windows NT/2K/XP. 
+
+<br>&nbsp;<br>
+
+View <a href="http://www.japheth.de/HX/COMPAT.TXT">compat.txt</a> for a list of Win32 console apps successfully tested to run with the Win32 emulation.
+
+
+<br>&nbsp;<br>
+
+<a name="hxgui"></a>
+<h3>C. HX GUI Extension</h3>
+
+<h4>Running GUI Applications</h4>
+ With the <a href="http://www.japheth.de/Download/HXGUI.zip">HXGUI</a> extension it is possible to run simple GUI applications with HX in DOS.
+ "Simple" in this context means applications which use just one window as user 
+ interface. Such apps usually are based on SDL, DirectDraw and/or OpenGl. 
+ To use HXGUI a VESA V2.0 BIOS with support for linear frame buffer access (LFB) is required.
+<br>&nbsp;<br>
+
+ The Win32 API Emulation is enhanced by HX GUI and consists of:
+
+<ul>
+<li>DINPUT.DLL: emulates DINPUT.DLL</li>
+<li>DSOUND.DLL: emulates DSOUND.DLL</li>
+<li>WINMM.DLL: emulates WINMM.DLL</li>
+<li>DCIMAN32.DLL: emulates DCIMAN32.DLL</li>
+<li>WSOCK32.DLL: emulates WSOCK32.DLL</li>
+</ul>
+ Some more dlls are included just as dummies:
+<ul>
+<li>IPHLPAPI.DLL</li>
+<li>MSACM32.DLL</li>
+<li>SHELL32.DLL</li>
+</ul>
+ 
+<h4>Running OpenGL Applications</h4>
+
+ With the help of the Windows 9x binaries OPENGL32.DLL and GLU32.DLL is is
+ possible to run OpenGL applications on DOS with HXGUI. However, this OpenGL 
+ implementation is pure software without hardware acceleration, so don't
+ expect it to be too fast.
+<br>&nbsp;<br>
+ <img src="HX_files/image3.png" align="middle" border="1"><br>
+ Screenshot from an OpenGL Win32 sample written by Frank Charlet, running in DOS, 256 colors.
+<br>&nbsp;<br>
+ If you don't own a copy of Windows 9x: there should be a redistributable version
+ of OpenGL for Windows 95 available. Search for OPENGL95.EXE in the Web. Or download
+ the plain binaries from <a href="http://www.japheth.de/Download/OPENGL95.zip">here</a>.
+   
+<br>&nbsp;<br>
+
+<h4>About SDL</h4>
+ SDL (Simple Directmedia Layer) is an Open Source effort to provide a
+ multi-platform API for games, emulators, .... There are ports for various
+ platforms available. As far as HXGUI is concerned, support for video, (wave) audio,
+ keyboard, mouse, timer and threads is implemented.
+ Please be aware that there is no special version of SDL for HX (or DOS)
+ available. It is the <a href="http://www.libsdl.org/release/SDL-1.2.11-win32.zip">
+ Win32 port of SDL</a> which can be used with HX. The SDL
+ site is at <a href="http://www.libsdl.org/index.php" target="_top">http://www.libsdl.org/index.php</a>,
+ where the source code of all ports can be found.
+<br>&nbsp;<br>
+
+<h4>Running QEMU with HX</h4>
+ QEMU is a PC emulator application available for many platforms.
+ The Win32 ports of QEMU 0.7, 0.8 and 0.9, which are based on SDL, were
+ successfully tested to run with HXGUI [a binary may
+ be downloaded from <a href="http://www.h7.dion.ne.jp/%7Eqemu-win/" target="_top">
+ here</a>]. Since the QEMU Win32 port is in a
+ preliminary state as well, it is very likely that bugs will be found. 
+ The source code of QEMU can be downloaded from <a href="http://fabrice.bellard.free.fr/qemu/" target="_top">
+ http://fabrice.bellard.free.fr/qemu</a>. The main advantage of QEMU running
+ in DOS with HX is that one can try all kinds of operating systems without the
+ need to install them on the physical HD. Here FreeDOS is booting inside a MS-DOS session:
+<br>&nbsp;<br>
+ <img src="HX_files/image2.png" align="middle" border="1">
+<br>&nbsp;<br>
+ 
+ Some notes about running QEMU under HX
+ <ul>
+ <li>please be aware that QEMU requires huge
+ amounts of virtual memory. Since HX doesn't support a swapfile, virtual
+ memory is identical to physical memory. For example, running QEMU with a
+ 128 MB guest requires about 170 MB of RAM. </li>
+ <li>don't expect any performance boosts running QEMU on
+ HX/DOS. If there is a gain by avoiding the overhead of a multitasking environment like windows,
+ this gain is -more than - lost by the simple fact that in DOS there is no 2D graphics acceleration available.
+ </li>
+ </ul>
+
+<h4>Running DOSBox with HX</h4>
+ Another interesting SDL application is <a href="http://dosbox.sourceforge.net/" target="_top">DOSBox</a>. Running DOSBox in DOS with
+ HX is not that senseless as it might seem at first glance. There are many
+ old DOS games which will not run on modern machines, or they will run too fast. 
+ There are also some old games known to have caused lots of trouble even
+ on older machines, which now run flawless in DOSBox. This is one of those:
+<br>&nbsp;<br>
+ <img src="HX_files/image1.png" align="middle" border="1">
+<br>&nbsp;<br>
+
+
+<a name="hxdv32"></a>
+<h3>D. HX 32-Bit Developer Support</h3>
+
+The <a href="http://www.japheth.de/Download/HXDEV.zip">HXDEV</a> developer support package contains all files required to create 32bit extended DOS apps.
+Two file formats are supported by the extender:
+
+<ul>
+<li>PE file format</li>
+<li>MZ file format</li>
+</ul>
+
+<h4>32bit DOS Applications in Win32-PE Format</h4>
+
+This is the standard format for HX DOS extender. Since such binaries are
+in fact true Win32 applications, all the work to create these apps will be
+done by your standard development tool. For HX there isn't much left to do.
+So the only things included are 
+
+<ul>
+<li><b>PatchPE</b>, used to convert binaries from Win32-PE to DOS-PE ("PX") format</li>
+<li><b>Vesa32(s).lib</b>, to simplify using VESA functions in DOS-extended apps</li>
+<li><b>CrtDll.lib</b>, a static library to link against CRTDLL.DLL (COFF format)</li>
+<li><b>DCrt32s.lib</b>, a simple static C runtime library (COFF format)</li>
+<li><b>OWSupp</b>, some files helping to create and debug HX extended apps with Open Watcom</li>
+<li>Samples in ASM, C, Pascal, (Power)Basic and Cobol</li>
+</ul>
+
+The C runtime libraries are intended to be used by ASM programs, but 
+of course may be used by C/C++ apps as well if no other C runtime is
+available.
+<br>&nbsp;<br>
+<h4>32bit DOS Applications in DOS-PE Format</h4>
+With tool <b>PatchPE</b> one can change a Win32-PE file to a DOS-PE file.
+This may be necessary if the application uses features usually not available for
+Win32 applications, i.e. it calls DOS INT 21h or it directly accesses I/O ports.
+The tool will change just one byte, which ensures that the binary is not loaded in the Win32 subsystem
+when launched inside Windows.
+<br>&nbsp;<br>
+
+<h4>32bit DOS Apps in MZ Format</h4>
+
+This format is also supported by HX and consists of
+<ul>
+<li><b>JMPPM32.OBJ</b> to prepare app for 32bit protected mode execution</li>
+<li>some helper functions in library <b>JMPPM32.LIB</b></li>
+<li>some libraries in OMF format for Win32 emulation (see below for more details)</li>
+<li><b>Libc32.lib</b>, a simple static C runtime library (OMF format)</li>
+<li><b>TestOMF</b>, a program to test 32bit MZ format support of various OMF linkers.</li>
+<li>Samples in ASM and C</li>. 
+</ul>
+
+Win32 emulation is provided for this format as well, but of course exists on the
+source code level only. For this OMF libraries (DKRNL32S.LIB, DUSER32S.LIB and DADVAPIS.LIB)
+are included.
+
+The MZ format compared to the PE format has some limitations, though.
+Advantages/disadvantages are:<br>
+<ul>
+<li>+ has the least overhead and loads pretty fast</li>
+<li>- applications cannot run in a true flat (=zero-based) memory model</li>
+<li>- doesn't support dll dynamic linking</li>
+<li>- size of image is limited to available DOS memory</li>
+<li>- some popular OMF linkers have problems with 32bit segments &gt; 64 kB.
+I recommend to use either Digital Mars' LINK.EXE (supplied with their C++ compiler) or LADSoft's VALX.EXE. 
+Both linkers have no problems with HX MZ format.
+</li>
+<li>- No support for 32bit apps in MZ format by most development tools.
+The Digital Mars C++ compiler and Watcom C++ will support this format, though.
+And of course assemblers don't have any problems with it either.
+</li>
+</ul>
+
+<br>
+
+<a name="hxdv16"></a>
+<h3>E. HX 16-Bit Developer Support</h3>
+
+ Although most of HX is 32-bit, it still supports 16-bit protected-mode 
+ applications. The support consists of
+ <ul>
+ <li>
+  <b>HDPMI16</b>, DPMI server to run 16-bit DPMI clients. It is included
+     in the HX runtime.
+ </li>
+ <li>
+  <b>DPMILD16</b>, Loader for 16-Bit NE binaries. It is included in the
+    HX runtime.
+ </li>
+ <li>
+  <a href="http://www.japheth.de/Download/HXDV16.ZIP"><b>HXDV16</b></a>, Developer package.
+     Basically the following tools are able to create HX compatible 16-bit
+     binaries:
+     <ul>
+     <li>Open Watcom C</li>
+     <li>Digital Mars C++ v8.4</li>
+     <li>MS C 6.0 and MS VC++ v1.52</li>
+     <li>Borland C++ v3.1 and v4</li>
+     <li>MASM, TASM, WASM, NASM, YASM, FASM</li>
+     <li>Borland Pascal 7.0</li>
+     <li>MS Cobol v4.5</li>
+     </ul>
+     Samples in ASM, C, Pascal and Cobol are included and will show how to create,
+     run and debug the binaries.
+ </li>
+ </ul>
+<br>
+ 
+<a name="hxsrc"></a>
+<h3>F. HX Source Code</h3>
+
+ The <a href="http://www.japheth.de/Download/HXSRC.zip">HXSRC</a> package contains the HX DOS extender source code.
+ This consists of:
+ 
+ <ul>
+ <li>DPMI host HDPMI32.EXE / HDPMI16 (MASM)</li>
+ <li>DPMI loader DPMILD32.EXE / DPMILD16.EXE (MASM)</li>
+ <li>Win32 emulation dlls DKRNL32, DADVAPI, DGDI32, DUSER32, OLE32, OLEAUT32, WINMM, DDDRAW, DINPUT, DSOUND (MASM)</li>
+ <li>GUI helper dll HXGuiHlp.dll</li>
+ <li>Tools HXLdr32.exe, PEStub.exe, PatchPE.exe, PatchNE.exe(MASM)</li>
+ <li>MZ stubs DPMIST32.BIN / DPMIST16.BIN (MASM)</li>
+ <li>HX's MZ/NE file format support (MASM)</li>
+ <li>WD debugger trap helper files HXHELP.EXE / HXHP16.EXE (MASM)</li>
+ <li>VESA support dll VESA32 (MASM)</li>
+ </ul>
+
+HX's source code is about 100.000 lines of code. 
+<br>&nbsp;<br>
+
+
+<a name="hxdbg"></a>
+<h3>G. Debugging HX DOS Extended Applications</h3>
+ 
+ <h4>1. Debugging 32-bit DPMI Applications</h4>
+ 
+ <ul>
+ <li>
+ <b>WD</b>: Standard debugger of Open Watcom. This is a full-screen debugger
+ which allows debugging on source code level. Support for Open Watcom and WD
+ is included in HX. WD will be able to debug all types of HX binaries.<br>
+ <ul>
+   <li>
+   <a href="http://www.japheth.de/hx/wd1.png">Screenshot of WD debugging a HX "hello world" in C on Source Code Level</a>
+   </li>
+   <li>
+   <a href="http://www.japheth.de/hx/wd2.png">Screenshot of WD debugging a HX "hello world" in MASM on Source Code Level</a>
+   </li>
+ </ul>
+ </li>
+ <li><a href="http://www.japheth.de/debxxf.html"><b>DEB32F</b></a>:
+ A debugger with a line-oriented interface like the good, old DOS debug,
+ intended to be used by real men only.
+ </li>
+ <li><a href="http://members.tripod.com/%7Eladsoft/grdb.htm" target="_top"><b>GRDB</b></a>:
+ Recent versions of LadSoft's GRDB are able to debug DPMI clients, so this debugger
+ might also be used to debug HX applications. However, there seems to be
+ a severe problem with GRDB running on Win9x systems, better don't try this
+ combination.
+ </li>
+ <li>
+ <a href="http://www.sudleyplace.com/swat" target="_top"><b>386SWAT</b></a>:
+ A free debugger from Qualitas Inc. It runs at the highest privilege level
+ and can therefore debug DPMI and VCPI clients. Since HDPMI runs as a VCPI client if a
+ memory manager has been loaded, 386SWAT can debug any part of HX. But there also are
+ some disadvantages:
+ <ul>
+ <li>cannot debug on source level (support for using <i>symbol tables</i> is implemented)</li>
+ <li>has a strange user interface</li>
+ <li>is not always as stable as it could be</li>
+ <li>to debug graphics applications it needs a second monitor</li>
+ <li>cannot be loaded from the command line, must be installed as device driver</li>
+ </ul>
+ </li>
+ <li><b>WDEB386/WDEB98/DEBUGGER</b>:
+ these are various versions of a ring 0 debugger from Microsoft which is included in Win9x DDKs (and possibly SDKs, 
+ if I remember correctly).
+ This debugger's user interface - like the one of DEB32F - isn't for the faint of heart.
+ You may get it for virtually free, or at least you got it with the Win9x DDKs.
+ HX's DPMI host HDPMI supports debugger APIs int 68h (real mode) and int 41h (protected mode)
+ and so supports debugging with WDEB386, on user level (ring 3) and system level (ring 0).
+ You will need a second computer and a terminal program for debugging
+ (see WDEB386 help for more details).
+ </li>
+ </ul>
+ 
+<h4>2. Debugging 16-bit DPMI Applications</h4>
+<ul>
+<li>
+<b>WD</b>: The Open Watcom debugger may now be used to debug 16 bit DPMI apps
+in any format. All files needed are included in <a href="http://www.japheth.de/Download/HXDV16.ZIP">HXDV16.ZIP</a>.
+</li>
+
+<li><b><a href="http://www.japheth.de/debxxf.html">DEB16F</a></b>: A a line oriented debugger similiar to DEB32F.
+</li>
+<li><b>TD/TDX</b>: 16-bit debugger from Borland. 
+DPMI support is implemented in newer versions of TD.EXE (version &gt; 4). 
+Previously there existed a special version for DPMI, TDX.EXE, which is
+included in Borland Pascal 7.0. This debugger will accept the Borland
+binary format only, but HX's 16-bit developer support package includes
+examples how to create a compatible NE format.
+TD is not free, but possibly you have an old version of BP or BC available.
+</li>
+</ul>
+<br>
+
+<a name="hxunix"></a>
+<h3>H. Running HX under Linux/Unix</h3>
+
+<h4>Running HX with Emulators</h4>
+Virtual PC emulators (VMWare, Qemu, Bochs, ...) should have no problem running
+HX. HX's DPMI server HDPMI, which must run in ring 0, has been verified
+to be compatible with current versions of VMWare, Qemu and Bochs. Since the 80386's
+hardware debugging registers usually are <b>not</b> supported by the emulators,
+debuggers that would like to use them may not always work as expected. This is true
+for DEB32F, DEB16F and DEB16FW.
+
+<h4>Running HX with DosEmu (x86 Linux only)</h4>
+DosEmu doesn't allow a ring 0 application like HDPMI to run under its control.
+That's not that bad, because DosEmu installs its own DPMI host, and most 
+of the features required by HX are implemented. If you're running a DosEmu
+version &lt; 1.3.1, you will have to upgrade (the current release version is 1.4.0).<br>
+For developers it might also be interesting that DosEmu supports using the
+80386 hardware debug registers.
+<br>&nbsp;<br>
+Some issues concerning Dosemu are
+<ul>
+<li>DosEmu's DPMI host is currently unable
+to support multiple address spaces, a feature which may be required by some
+commercial Win32 applications.</li>
+<li>
+Some distributions (RedHat) do have a very sophisticated feature which,
+IIRC, is called "address space randomization". This conflicts with DosEmu's
+DPMI V1.0 implementation and may cause errors when HX's DPMILD32 is running.
+</li>
+</ul>
+ <br>&nbsp;<br>
+
+<a name="hxrm"></a>
+<h3>I. HX Roadmap</h3>
+ 
+ Below are the features which are currently missing in HX. 
+ <ul>
+ <li>ASPI support currently requires WNASPI32.DLL from Windows 9x to work.
+ This should be changed so this external (and unfree) dll is no longer required.
+ </li>
+ <li>2D (and OpenGl) Graphics acceleration in DOS. I'm not sure if something
+ like SciTech's SNAP could be used to implement these features. Hints are welcome.
+ </li>
+ <li>a VDD to be loaded when HX is running in WinXP DOS boxes and which 
+ emulates VESA LFB by using fullscreen DirectDraw.
+ </li>
+ <li>Sound support when running in a WinXP DOS box. Currently a WinXP DOS
+ box provides SB 2 emulation only, but HX requires at least a SB Pro for
+ stereo wave output. Installing <a href="http://www.sourceforge.net/projects/vdmsound" target="_top">
+ VDMSound</a> may allow to emulate a SB 16, but
+ this software has its problems and may not work as expected. There exist 
+ other emulators which work better, but they are not free AFAIK.
+ </li>
+ <li>AC97 support in DOS.
+ </li>
+ <li>support of a GUI/widget library, possibly <a href="http://www.fltk.org/" target="_top">FLTK</a>
+     or <a href="http://www.gtk.org/" target="_top">GTK+</a>.
+ </li>
+ </ul>
+Feel free to contact me if you think there is something missing or if you want
+to contribute to HX in any way.
+ </td></tr>
+</tbody></table>
+</td>
+</tr></tbody></table>
+
+</body></html>

@@ -1,0 +1,30 @@
+#
+# DSM for grep 2.2 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: grep22s
+dsm-version: 0.4.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: grep
+version: 2.2
+manifest: grep22s
+binaries-dsm: grep22b
+short-description: GNU grep
+long-description: A handy text searching tool
+license: GNU General Public License, Version 2
+
+organisation: GNU Project
+web-site: http://www.gnu.org/
+ftp-site: ftp://ftp.gnu.org/
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: grep22s.zip
+

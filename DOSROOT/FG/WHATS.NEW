@@ -1,0 +1,811 @@
+
+                                Release Notes
+
+                             Fastgraph (tm) V3.0
+
+
+
+                             Ted Gruber Software
+                                 PO Box 13408
+                             Las Vegas, NV  89112
+
+                             (702) 735-1980 voice
+                              (702) 735-4603 FAX
+                              (702) 796-7134 BBS
+                                72000,1642 CIS
+
+                 Copyright (c) 1991-1994 Ted Gruber Software.
+                             All Rights Reserved.
+
+
+------------------------------------------------------------------------------
+                                 Introduction
+------------------------------------------------------------------------------
+
+The Fastgraph 3.0 release notes describe the new features added in Fastgraph
+3.00 through 3.05 (hereafter collectively referred to as Fastgraph 3.0).  The
+release notes will be of interest to customers who are already familiar with
+Fastgraph so they can get an overview of the new version.  Among the many new
+features in Fastgraph 3.0 are:
+
+* SVGA support for 19 chipsets plus VESA in resolutions of 640x400x256,
+  640x480x256, 800x600x256, 1024x768x256, 800x600x16, and 1024x768x16.
+* Routines for displaying and creating GIF files (not in Fastgraph/Light).
+* Routines for FAST filling of convex polygons, with clipping.
+* Low-level keyboard handler, ideal for game development.
+* User-definable image buffer (up to 64K) for faster creation and display
+  of GIF, PCX, and pixel run files.
+* Additional graphics primitives, including XOR points/lines/boxes in all
+  graphics modes, filled circles and ellipses, and clipped region fill.
+* Bit maps that don't include transparent colors.
+* Block transfers between RAM and video memory instead of just video memory
+  to video memory.
+* Improved ROM text support, including three font sizes (VGA/SVGA) and the
+  ability to display strings relative to any graphics position.
+* Ability to access up to 1MB video RAM in non-SVGA modes with certain SVGA
+  chipsets (see the READ.ME file for more information about this).
+* Ability to display PCX images at the position defined in the PCX header
+  instead of only relative to the current graphics position.
+* Total of 47 new functions.
+* Support for additional compilers.
+
+The release notes provide an overview of most of these new features.  For
+details, refer to the Fastgraph User's Guide and Reference Manual.
+
+Please be sure to see the last section of this document, which discusses two
+important compatibility considerations when migrating Fastgraph 2.xx programs
+to version 3.0.
+
+------------------------------------------------------------------------------
+                   Summary of New Routines in Fastgraph 3.0
+------------------------------------------------------------------------------
+
+The following routines are new to Fastgraph 3.0.  Please see the Fastgraph
+Reference Manual for full descriptions, including their parameters, return
+values, and restrictions.
+
+FG_BOXW      World space version of FG_BOX
+FG_BOXX      Draw hollow rectangle in XOR mode
+FG_BOXXW     World space version of FG_BOXX
+FG_CIRCLEF   Draw a filled circle
+FG_CIRCLEFW  World space version of FG_CIRCLEF
+FG_DEFPAGES  Define extended video pages when using block transfer routines
+FG_DRAWRELX  Draw line in XOR mode relative to graphics position
+FG_DRAWRXW   World space version of FG_DRAWRELX
+FG_DRAWX     Draw line in XOR mode
+FG_DRAWXW    World space version of FG_DRAWX
+FG_ELLIPSEF  Draw a filled ellipse
+FG_ELLIPSFW  World space version of FG_ELLIPSEF
+FG_FILLPAGE  Fill active video page with the current color
+FG_FLOOD     Like FG_PAINT but observes the clipping limits
+FG_FLOODW    World space version of FG_FLOOD
+FG_FONTSIZE  Enable 8x8, 8x14, or 8x16 ROM font (VGA/SVGA only)
+FG_GETBLOCK  Transfer rectangular region from video memory to RAM
+FG_GETENTRY  Get address and type of a physical, virtual, or logical page
+FG_IMAGEBUF  Define address and size of Fastgraph's GIF/PCX file buffer
+FG_INSIDE    Check if a specified point is inside a convex polygon
+FG_JUSTIFY   Define justification settings for FG_PRINT
+FG_KBINIT    Enable or disable the Fastgraph low-level keyboard handler
+FG_KBTEST    Determine if a key is now pressed or released
+FG_MAKEGIF   Create GIF file from rectangular region of active video page
+FG_MAKEPPR   Create PPR file from rectangular region of active video page
+FG_MAKESPR   Create SPR file from rectangular region of active video page
+FG_MEMORY    Return amount of video memory present in kilobytes
+FG_MOUSEFIN  Unhook Fastgraph's XVGA or SVGA mouse handler
+FG_PAGESIZE  Return video page size in bytes
+FG_POINTX    Draw point in XOR mode
+FG_POINTXW   World space version of FG_POINTX
+FG_POLYFILL  Draw filled convex polygon
+FG_POLYLINE  Draw unfilled polygon from one vertex array
+FG_POLYOFF   Define polygon offsets for FG_POLYFILL and FG_POLYLINE
+FG_PRINT     Display hardware characters in screen space
+FG_PUTBLOCK  Transfer rectangular region from RAM to video memory
+FG_PUTIMAGE  Like FG_DRWIMAGE but doesn't check for transparent pixels
+FG_SETENTRY  Set address and type of a physical, virtual, or logical page
+FG_SHOWGIF   Display GIF file
+FG_SHOWPCX   Display PCX file (formerly FG_DISPPCX)
+FG_SHOWPPR   Display packed pixel run (PPR) file
+FG_SHOWSPR   Display standard pixel run (SPR) file
+FG_SVGAINIT  Initialize Fastgraph's SVGA kernel
+FG_SVGASTAT  Return information about the active SVGA chipset
+FG_SVGAVER   Return Fastgraph SVGA kernel version number
+FG_TCDEFINE  Define transparent color number for FG_TCXFER
+FG_WAITVR    Specify if functions wait internally for vertical retrace
+
+Note that FG_MAKEGIF, FG_SHOWGIF, and the world space functions are not in
+Fastgraph/Light.
+
+------------------------------------------------------------------------------
+                             New SVGA Video Modes
+------------------------------------------------------------------------------
+
+Six new video modes have been introduced for Fastgraph's SVGA support.  These
+are summarized below:
+
+        640x400x256   mode 24         1024x768x256   mode 27
+        640x480x256   mode 25         800x600x16     mode 28
+        800x600x256   mode 26         1024x768x16    mode 29
+
+Before you establish an SVGA graphics mode with FG_SETMODE, you must call the
+FG_SVGAINIT function.  This new function initializes Fastgraph's SVGA kernel
+for a specific SVGA chipset (see the list of supported chipsets in the next
+section).  You can use FG_SVGAINIT to automatically detect the system's SVGA
+chipset, or you can use a specific chipset.
+
+More information about the new SVGA video modes, Fastgraph's SVGA kernel, and
+the FG_SVGAINIT routine appears in Chapters 2 and 3 of the Fastgraph User's
+Guide.
+
+------------------------------------------------------------------------------
+                           Supported SVGA Chipsets
+------------------------------------------------------------------------------
+
+As different manufacturers developed SVGA cards, they implemented the SVGA
+features according to their own specifications (each unique implementation is
+called a "chipset").  This situation arose because of the lack of an SVGA
+standard.  Fastgraph 3.0 will directly support the SVGA chipsets listed in
+the table below.  A "Y" entry means the chipset supports the video mode, and
+an "N" means it doesn't.  The last row of the table shows the amount of video
+memory required to support each mode.
+
+                        ----------- 256 colors ------------  --- 16 colors ---
+SVGA chipset            640x400  640x480  800x600  1024x768  800x600  1024x768
+==============================================================================
+Ahead "A" type             Y        Y        Y         N        Y         Y
+------------------------------------------------------------------------------
+Ahead "B" type             Y        Y        Y         Y        Y         Y
+------------------------------------------------------------------------------
+ATI 18800                  Y        Y        Y         N        Y         N
+------------------------------------------------------------------------------
+ATI 18800-1                Y        Y        Y         N        Y         Y
+------------------------------------------------------------------------------
+ATI 28800                  Y        Y        Y         Y        Y         Y
+------------------------------------------------------------------------------
+Chips & Tech 82c451        Y        N        N         N        Y         N
+------------------------------------------------------------------------------
+Chips & Tech 82c452        Y        Y        N         N        Y         Y
+------------------------------------------------------------------------------
+Chips & Tech 82c453        Y        Y        Y         Y        Y         Y
+------------------------------------------------------------------------------
+Cirrus Logic 5400 series   N        Y        Y         Y        Y         Y
+------------------------------------------------------------------------------
+Genoa 6000 series          Y        Y        Y         N        Y         Y
+------------------------------------------------------------------------------
+Oak OTI-067                N        Y        Y         N        Y         Y
+------------------------------------------------------------------------------
+Paradise PVGA1a            Y        Y        N         N        Y         N
+------------------------------------------------------------------------------
+Paradise WD90C00/10        Y        Y        N         N        Y         Y
+------------------------------------------------------------------------------
+Paradise WD90C11/30/31     Y        Y        Y         Y        Y         Y
+------------------------------------------------------------------------------
+S3                         N        Y        Y         Y        Y         Y
+------------------------------------------------------------------------------
+Trident 8800               Y        Y        N         N        Y         Y
+------------------------------------------------------------------------------
+Trident 8900/8900B/8900C   Y        Y        Y         Y        Y         Y
+------------------------------------------------------------------------------
+Tseng ET3000               N        Y        Y         N        Y         Y
+------------------------------------------------------------------------------
+Tseng ET4000               Y        Y        Y         Y        Y         Y
+------------------------------------------------------------------------------
+Video7                     Y        Y        Y         Y        Y         Y
+==============================================================================
+minimum video RAM needed  256      512      512       1MB      256       512
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------
+                          VESA-compatible SVGA Cards
+------------------------------------------------------------------------------
+
+The Video Electronics Standards Association (VESA) has assumed the complex
+task of improving the compatibility of SVGA cards from different companies.
+Most SVGA cards sold today include VESA compatibility, either directly in ROM
+or through software drivers.  Fastgraph 3.0 provides support for any SVGA
+card with VESA compatibility.
+
+When using VESA compatibility, the VESA BIOS handles all chipset-specific
+functions such as bank switching.  The overhead imposed by the BIOS usually
+makes the VESA modes slightly slower than using chipset-specific functions
+directly.  For this reason, the FG_SVGAINIT routine lets you specify if you
+want to give precedence to the chipset-specific SVGA code or to the VESA
+BIOS.  Chipset-specific precedence means FG_SVGAINIT will only use the VESA
+BIOS if no supported SVGA chipset is found.  Conversely, VESA precedence
+means FG_SVGAINIT will only use the chipset-specific functions if no VESA
+BIOS is found.
+
+VESA implementations for some video cards are more VESA-compatible than
+others, especially in areas of page flipping and panning.  Fastgraph has no
+way to determine the degree of compatibility for any VESA function.  If an
+SVGA program will include VESA support, we recommend also including a method
+to select chipset-specific SVGA code.  Problematic VESA drivers are beyond
+the control of Fastgraph, of application programmers, and perhaps most
+importantly, beyond the control of your program's end users.
+
+------------------------------------------------------------------------------
+                           SVGA Read and Write Banks
+------------------------------------------------------------------------------
+
+Accessing video memory on an SVGA is controlled through a banking scheme that
+maps contiguous 64KB blocks of video memory into a segmented address space.
+In other words, referencing a specific byte in video RAM requires a bank
+number and an address offset within that bank.  Some SVGA cards provide dual
+read and write bank registers, while others perform both operations through
+the same bank register.
+
+Fastgraph's FG_COPYPAGE, FG_RESTORE, FG_SAVE, FG_TCXFER, and FG_TRANSFER
+functions copy rectangular blocks from one part of video memory to another.
+If an SVGA card provides separate read and write banks, these functions can
+copy the source region directly to the destination region.  However, SVGA
+cards that employ a single bank register require that these functions copy
+the source region to an intermediate buffer and then copy the buffer contents
+to the destination.  This makes the block transfer operation slower,
+especially in 16-color SVGA modes.
+
+------------------------------------------------------------------------------
+                              SVGA Display Pages
+------------------------------------------------------------------------------
+
+Most of the SVGA graphics modes include additional video pages if your SVGA
+card has enough video RAM.  The following table shows the number of video
+pages available in each mode.
+
+        Mode                     Number of pages with....
+       Number  Resolution        256KB  512KB  768KB  1MB
+
+         24    640x400x256         1      2      3     4
+         25    640x480x256         0      1      1     2
+         26    800x600x256         0      1      1     2
+         27    1024x768x256        0      0      1     1
+         28    800x600x16          1      2      3     4
+         29    1024x768x16         0      1      1     2
+
+Some SVGA chipsets restrict what you can do with video pages beyond page 0.
+Certain chipsets let you access the additional pages but do not let you make
+them the visual page, while others completely disable some or all of the
+extra memory in some video modes.  A few older chipsets have limitations on
+page flipping and panning.  These items are discussed in the READ.ME file.
+
+------------------------------------------------------------------------------
+                    SVGA Chipset Limitations and Problems
+------------------------------------------------------------------------------
+
+This section summarizes the known limitations and problems of the supported
+SVGA chipsets.
+
+The ATI 18800 chipset restricts horizontal panning to four-pixel increments
+in 256-color SVGA modes.  In these modes, FG_PAN will reduce the x position
+to a multiple of four pixels.
+
+The Cirrus Logic 5400 series chipsets have panning problems in the 256-color
+SVGA modes (25 to 27).  Panning to an x coordinate that is not a multiple of
+four will leave x modulo 4 colums of undefined pixels along the right edge of
+the video display.
+
+The Genoa 6000 series chipsets do not include the ability to set the display
+start address beyond the 16-bit capability provided by the CRT Controller.
+This means FG_SETVPAGE is not meaningful in SVGA graphics modes.  Further,
+the FG_PAN screen origin is restricted to the first 64K bytes of video memory
+in 256-color SVGA modes, and to the first 256K bytes in 16-color SVGA modes.
+
+The Genoa 6000 series chipsets restrict horizontal panning to even addresses
+in video memory in the 1024x768x16 mode (mode 29).  This means you can pan
+only to x coordinates where x modulo 16 is less than 8.
+
+The Oak OTI-067 chipset apparently does not include the ability to set the
+display start address beyond the 16-bit capability provided by the CRT
+Controller.  This means FG_SETVPAGE is not meaningful in SVGA graphics modes.
+Further, the FG_PAN screen origin is restricted to the first 64K bytes of
+video memory in 256-color SVGA modes, and to the first 256K bytes in 16-color
+SVGA modes.
+
+The Oak OTI-067 chipset has paging problems in 16-color SVGA modes.  Because
+this chipset supports a maximum of 512K video memory, mode 28 is the only
+16-color SVGA mode that is a candidate for additional pages.  However, video
+memory beyond 256K is apparently disabled in this mode.
+
+All Paradise chipsets restrict horizontal panning to four-pixel increments in
+256-color SVGA modes.  In these modes, FG_PAN will reduce the x position to a
+multiple of four pixels.
+
+All S3 chipsets restrict horizontal panning to four-pixel increments in 256-
+color SVGA modes.  In these modes, FG_PAN will reduce the x position to a
+multiple of four pixels.
+
+The Trident 8800 chipsets use a unique pixel doubling technique in the 256-
+color SVGA modes.  For example, the 640 x 400 mode (mode 24) actually uses a
+1280 x 400 video frame.  This means a multisync monitor is required to use
+the two available 256-color modes (24 and 25).  Note that this "feature" only
+applies to the Trident 8800 and NOT the 8900 family.
+
+Video cards based on the Trident 8900, 8900B, and 8900C chipsets all have
+problems accessing video memory beyond 512K in 16-color SVGA modes.  This
+means a 1MB Trident card has two pages instead of four in mode 28, and one
+page instead of two in mode 29.
+
+At least one video card based on the Trident 8900C chipset has problems
+accessing video memory beyond 512K in the 640x400 and 640x480 256-color SVGA
+modes (in addition to the similar problem in the 16-color SVGA modes for all
+Trident chipsets).  Such cards would have two video pages instead of four in
+modes 24 and 28, and one page instead of two in modes 25 and 29.  Note that
+this problem does not apply to all Trident 8900C cards; the problem has only
+been reported on one 8900C-based video card.
+
+The Tseng ET3000 chipset has horizontal panning restrictions in its two
+available 256-color SVGA graphics modes (25 and 26).  Horizontal panning
+works correctly in these modes only for x coordinates whose value modulo
+8 is less than 4.  If an x coordinate modulo 8 is 4 or more, panning is
+forced to x-4.  For example, panning to x=10 works fine, but panning to
+x=15 pans to x=11.
+
+Video cards based on the Video7 HT208 chipset (i.e., the Video7 VGA 1024i)
+have panning problems in all SVGA modes.
+
+If an SVGA graphics program returns to text mode when the visual page is
+not page 0, some SVGA chipsets have problems the next time you try to run
+an SVGA application.  We therefore recommend calling FG_SETVPAGE(0) just
+before restoring the original video mode if an application performs page
+flipping in SVGA graphics modes.  For example:
+
+        old_mode = fg_getmode();
+        fg_svgainit(0);
+        fg_setmode(25);
+                .
+                .
+                .
+        fg_setvpage(1);
+                .
+                .
+                .
+        fg_setvpage(0);         /* add this line to be safe */
+        fg_setmode(old_mode);
+
+------------------------------------------------------------------------------
+                         XVGA and SVGA Mouse Support
+------------------------------------------------------------------------------
+
+This release offers mouse support for the extended VGA (XVGA) graphics video
+modes (modes 20 to 23) and SVGA graphics modes (24 to 29).  In these modes,
+Fastgraph displays the mouse cursor through an interrupt handler that is
+activated whenever the mouse moves.  The handler is installed when you call
+FG_MOUSEINI in modes 20 to 29.
+
+If you do not disable this handler before your program exits, strange things
+will happen.  More specifically, characters may be invisible, or your system
+may hang upon attempting a disk access.  Obviously, these are problems to
+avoid.  The FG_MOUSEFIN routine removes Fastgraph's mouse interrupt handler
+previously installed with FG_MOUSEINI.  You should call FG_MOUSEFIN just
+before restoring the original video mode, as illustrated below:
+
+        fg_mousefin();
+        fg_setmode(old_mode);
+        fg_reset();
+        /* now exit to DOS */
+
+Note that calling FG_MOUSEFIN is required only in XVGA and SVGA graphics
+modes.  Calling it in other video modes is not applicable, though it causes
+no problems.
+
+In the standard VGA/MCGA 256-color mode (mode 19), white pixels in the mouse
+cursor are displayed in color 15.  This is inconsistent with other graphics
+modes, where the white pixels are displayed in the highest-numbered color
+value available in that mode.  Fastgraph corrects this inconsistency in modes
+20 to 27 by displaying white mouse cursor pixels in color 255.  Like color 15,
+color 255 is white by default.  This allows you to redefine color 15 in your
+256-color applications without interfering with the mouse cursor colors.
+
+------------------------------------------------------------------------------
+                          Low-Level Keyboard Handler
+------------------------------------------------------------------------------
+
+Fastgraph 3.0 includes a new low-level keyboard handler that replaces the
+BIOS keyboard handler.  Fastgraph's keyboard handler intercepts keystrokes
+ahead of the BIOS and thus eliminates the annoying beep that sounds upon
+filling the BIOS keyboard buffer.  The low-level keyboard handler should be
+especially well-suited to game development because it increases keyboard
+responsiveness in high-speed action games.  However, when the low-level
+keyboard handler is enabled, it is not possible to use FG_GETKEY, FG_INTKEY,
+or any third party functions that use BIOS or DOS services to access the
+keyboard.  For this reason, a program that enables the low-level keyboard
+handler must disable it before exiting to DOS.
+
+The low-level keyboard handler can be enabled and disabled at any time.  The
+FG_KBINIT routine is provided for this purpose.  When it is enabled, you can
+use the FG_KBTEST routine to check if keys are currently pressed or released.
+FG_KBTEST provides the only mechanism for accessing the keyboard when the
+low-level handler is enabled.
+
+Please see Chapter 14 of the Fastgraph User's Guide for a full description of
+the low-level keyboard handler.
+
+------------------------------------------------------------------------------
+                           New FG_SHOWPCX Flag Bits
+------------------------------------------------------------------------------
+
+FG_SHOWPCX has two new bits defined in the flags parameter:
+
+        Bit 1
+           0 = display image at position indicated in PCX header
+           1 = display image at current graphics position
+        Bit 2
+           0 = read PCX image data from the PCX file
+           1 = assume PCX image data is in the FG_IMAGEBUF buffer
+
+In Fastgraph 2.xx, PCX images were always displayed relative to the current
+graphics position.  This behavior is achieved in Fastgraph 3.0 by setting bit
+1 in the flags parameter.  If bit 1 is zero, the image will be displayed at
+the location specified in the PCX header.
+
+As of Fastgraph 3.03, bit 2 in the flags parameter defines the source of the
+PCX image data.  If bit 2 is zero, FG_SHOWPCX displays the image directly from
+the PCX file (this was the only available method of displaying PCX images in
+Fastgraph 3.02 and before).  If bit 2 is set, FG_SHOWPCX assumes the image
+data is in the FG_IMAGEBUF buffer.  Note that the FG_IMAGEBUF buffer has a
+maximum size of 64K bytes, so this feature is applicable only if the size of
+the GIF or PCX file is 64K bytes or less.
+
+The following program fragment shows how to display PCX image data stored in
+the FG_IMAGEBUF buffer.  The same technique can be used to display GIF image
+data from the FG_IMAGEBUF buffer if we use FG_SHOWGIF instead of FG_SHOWPCX.
+
+        static char far buffer[40000];
+        FILE *stream;
+        int file_size;
+
+        stream = fopen("TEST.PCX","rb");
+        file_size = (int)(filelength(fileno(stream)));
+        fread(buffer,1,file_size,stream);
+        fclose(stream);
+
+        fg_imagebuf(buffer,file_size);
+        fg_showpcx("",4);
+
+In this example, there is a 40,000-byte array that we'll use as the image
+buffer.  Note that we specify the actual PCX file length, not the array size,
+as the buffer size when we call FG_IMAGEBUF.  It is extremely important that
+this be the case when displaying GIF or PCX data stored in the image buffer.
+Note also how we must include a "place holder" parameter where the PCX file
+name is normally passed to FG_SHOWPCX.  While any string can be specified for
+this purpose, we recommend using the null string as in the above example.
+
+------------------------------------------------------------------------------
+                          Some Notes About Polygons
+------------------------------------------------------------------------------
+
+Fastgraph's new polygon fill function (FG_POLYFILL) fills convex polygons.  A
+polygon is convex if any horizontal line drawn through the polygon crosses the
+left edge exactly once and the right edge exactly once (excluding horizontal
+and zero-length edge segments).  Note that this definition includes shapes
+that are not convex in the traditional sense.  In addition, any non-convex
+polygon can be decomposed into two or more convex polygons.
+
+The filled convex polygon is a fundamental tool of three-dimensional computer
+graphics.  A common practice is to build an image or object from several
+adjacent or connecting polygons.  Such polygons typically overlap at one or
+more edges.  For instance, the coordinates defining the right edge of one
+polygon may also define the left edge of another polygon immediately to its
+right.  For an overall image to appear correct, its component polygons must
+fit together correctly.  Fastgraph's FG_POLYFILL function applies the
+following rules to handle overlapping polygon edges:
+
+1)  Points located exactly on non-horizontal edges are drawn only if the
+    polygon's interior is directly to the right.
+
+2)  Points located exactly on horizontal edges are drawn only if the
+    polygon's interior is directly below them.
+
+3)  A vertex is drawn only if all lines ending at that point meet the above
+    two conditions.
+
+These three rules ensure that no pixel is drawn more than once when filling
+adjacent polygons.  However, they may not be suitable for displaying polygons
+that are not adjacent because some of the pixels on the polygon's edge will
+not be included.  If this is an issue, first draw the filled polygon with
+FG_POLYFILL, then draw an unfilled polygon having the same vertices with the
+FG_POLYLINE function.  Both FG_POLYFILL and FG_POLYLINE honor the current
+clipping limits.
+
+Refer to Chapter 6 of the Fastgraph User's Guide for more information about
+Fastgraph's new polygon routines.
+
+------------------------------------------------------------------------------
+                             Extended Video Pages
+------------------------------------------------------------------------------
+
+One of the more frequent technical support questions we receive is "I have
+one megabyte of memory on my video card, why can I only use the first 256K?".
+The answer is simple:  the standard EGA and VGA modes have no way to address
+video memory beyond 256K.  Accessing this memory requires SVGA bank switching
+techniques.  This is analogous to the fact that you might have four megabytes
+of RAM on your system, but without an EMS/XMS memory manager, a DOS extender,
+or the like, all that memory won't do much good.
+
+Unfortunately, not all SVGA chipsets allow bank switching in non-SVGA video
+modes.  For those that do, however, Fastgraph 3.0 includes a last-minute
+addition called EXTENDED VIDEO PAGES that provide access to all memory on the
+video card in modes 13 to 23 instead of restricting access to the first
+256K.  This means, for example, that a 1MB SVGA card will allow 32 physical
+pages in mode 13 rather than the usual 8 pages.  At this time, extended pages
+are available with the following SVGA chipsets:
+
+        Ahead B (except in mode 19)
+        ATI 28800 (except in mode 19)
+        Paradise WD90C11/WD90C30/WD90C31
+        Tseng ET4000
+
+Although extended pages are used in non-SVGA graphics modes, the method of
+accessing video memory above 256K is specific to each SVGA chipset.  Thus,
+you must initialize Fastgraph's SVGA kernel (with FG_SVGAINIT) before you can
+use extended pages.
+
+When writing applications that use extended video pages, you should make sure
+they are available on the active SVGA chipset and that there is enough video
+memory for the number of pages required.  First, verify that FG_SVGAINIT
+successfully initializes the SVGA kernel.  If so, use the FG_SVGASTAT routine
+to see if the SVGA chipset supports extended pages.  Finally, use FG_MEMORY
+to insure that enough video memory is available for the number of video pages
+needed.
+
+The following table shows the number of video pages available in modes 13 to
+23.
+
+                                 Number of Pages With...
+                         Mode    256K    512K    1MB
+
+                          13       8      16      32
+                          14       4       8      16
+                          15       2       4       8
+                          16       2       4       8
+                          17       2       4       8
+                          18       2       4       8
+                          19       4       8      16
+                          20       4       8      16
+                          21       2       4       8
+                          22       4       8      16
+                          23       2       4       8
+
+Note that when extended pages are not enabled, the video mode has the number
+of physical video pages listed in the 256K column.  The exception to this is
+mode 19, which has only one physical page unless extended pages are enabled.
+
+Some video modes do not provide the listed number of full video pages.  For
+example, modes 17 and 18 normally have two video pages -- one full 640x480
+page (page 0) and one partial 640x320 page (page 1).  For extended pages,
+Fastgraph uses a page numbering scheme that maintains consistency with its
+standard page numbering.  That is, when extended pages are available and mode
+17 or 18 is used on a 1MB video card, the page numbers will range from 0 to
+7, with the even-numbered pages being full pages and the odd-numbered pages
+being partial 640x320 pages.  Similarly, in mode 22 pages 3, 7, 11, and 15
+are partial (320x80); in mode 23 odd-numbered pages are partial (320x320).
+See the Fastgraph User's Guide for more information on partial video pages.
+
+When you use Fastgraph's block transfer routines (FG_COPYPAGE, FG_RESTORE,
+FG_SAVE, FG_TCXFER, and FG_TRANSFER) with extended pages, you must also use
+the new FG_DEFPAGES routine to define the source and destination video pages.
+This is needed because the two pages may reside in different SVGA banks, and
+bank switching is not performed in Fastgraph's non-SVGA code.  The additional
+overhead of having the block transfer routines determine the bank numbers is
+not necessary in all cases (see below), and it would also impact the block
+transfer routines when extended pages are not being used.
+
+Before you use one of the block transfer routines, you must call FG_DEFPAGES,
+passing it the source and destination page numbers.  FG_DEFPAGES determines
+the SVGA bank numbers in which the source and destination pages reside and
+then enables the corresponding banks for reading and writing, respectively.
+These banks remain in effect until you define new ones with FG_DEFPAGES or
+FG_SETPAGE, so you may not need to call FG_DEFPAGES before every call to a
+block transfer routine.  The following table shows the bank numbers for each
+video page in each 16-color mode that supports extended pages.
+
+                            ---------- Pages in ----------
+                    Mode    Bank 0  Bank 1  Bank 2  Bank 3
+
+                     13        0-7    8-15   16-23   24-31
+                     14        0-3     4-7    8-11   12-15
+                     15        0-1     2-3     4-5     6-7
+                     16        0-1     2-3     4-5     6-7
+                     17        0-1     2-3     4-5     6-7
+                     18        0-1     2-3     4-5     6-7
+                     20        0-3     4-7    8-11   12-15
+                     21        0-1     2-3     4-5     6-7
+                     22        0-3     4-7    8-11   12-15
+                     23        0-1     2-3     4-5     6-7
+
+In mode 19, each of the 16 possible pages is in its own SVGA bank.  That is,
+page 0 is in bank 0, page 1 is in bank 1, and so forth.
+
+The following code calls FG_DEFPAGES only when needed in mode 13, where each
+group of 8 pages resides in its own SVGA bank.  FG_SETMODE enables bank 0
+for reading and writing, so we don't need to call FG_DEFPAGES until we
+reference a page in one of the other banks (page 10 in this example).
+
+        fg_svgainit(0);
+        fg_setmode(13);         /* enables bank 0 for reading and writing */
+        fg_copypage(0,1);
+        fg_copypage(0,2);
+        fg_defpages(0,1);       /* page 10 is in bank 1 */
+        fg_copypage(2,10);
+        fg_defpages(1,1);       /* page 15 is in bank 1 */
+        fg_copypage(10,15);
+        fg_setpage(0);          /* enables bank 0 for reading and writing */
+        fg_erase();
+        fg_copypage(0,3);
+        fg_defpages(1,0);       /* page 15 is in bank 1 */
+        fg_copypage(15,4);
+
+FG_DEFPAGES has no effect unless extended pages are enabled.
+
+Most mouse drivers know nothing about SVGA bank switching and non-standard
+video modes (that's why Fastgraph must hook its own mouse cursor control
+handlers into the mouse driver in XVGA and SVGA modes).  As Fastgraph still
+programs the mouse driver for cursor control in modes 13 to 19, it is only
+possible to display the mouse cursor on video pages in the first SVGA bank
+(bank 0) in these modes.  Note that this does not apply to modes 20 to 23,
+where Fastgraph controls the mouse cursor through its own handlers.
+
+Some SVGA chipsets do not reset the read and write bank numbers back to zero
+when establishing a non-SVGA video mode.  When a mode set operation clears
+video memory, such chipsets will clear the first video page in whatever write
+bank was last selected.  While FG_SETMODE does set the read and write banks
+to zero when extended pages are available, it cannot do this before setting
+the video mode, which is what normally would clear the screen.  This may
+result in artifacts on page 0 after calling FG_SETMODE.  The easiest way
+around this problem is to call FG_DEFPAGES(0,0) before restoring the original
+video mode in programs that use extended pages.  Even this, however, does not
+clear video memory after a mode set when using extended pages with some SVGA
+chipsets.  We therefore recommend calling FG_ERASE immediately after calling
+FG_SETMODE when using extended pages.
+
+Extended pages may be resized (with FG_RESIZE) just as the standard video
+pages may in modes 13-18 and 20-23.  However, the resulting pages must not
+cross SVGA bank boundaries.  In mode 20, for instance, you normally have four
+320x200 pages in each bank.  You could change the video page size to 640x400,
+thereby having four larger pages, one in each bank.  You could not, however,
+resize video memory to two 640x800 pages, as each page would span two banks.
+
+Again, we developed extended pages as a last-minute addition to Fastgraph
+because we've had so many requests for this feature.  Please bear in mind
+that the implementation of extended pages in Fastgraph 3.0 is the first
+attempt at a solution to our customer's needs.  In the future, we hope to
+find ways to support more SVGA chipsets and remove some of the limitations,
+especially the restriction on displaying the mouse cursor beyond bank zero.
+
+------------------------------------------------------------------------------
+      Optimizations, Improvements, and Corrections to Existing Routines
+------------------------------------------------------------------------------
+
+The performance of several existing Fastgraph functions has been improved in
+version 3.0.  The most notable of these are FG_DRWIMAGE (in 16-color modes)
+and FG_PAINT, both of which provide a performance improvement on the order of
+20% to 25%.
+
+The FG_TEXT routine no longer uses the BIOS in modes 13 to 18.  This change
+greatly improves the speed of FG_TEXT in these modes.  It also eliminates
+the problem where characters were displayed in the wrong colors when a
+character's background cell contained pixels of different colors.
+
+The FG_PAN routine now supports one-pixel horizontal panning in modes 19 to
+23.  Previously panning was restricted to four-pixel increments in these
+video modes.
+
+Fastgraph's mouse support routines no longer require the presence of the
+mouse driver's EGA Register Interface Library (RIL) when using the mouse in
+modes 17 and 18.  Fastgraph will still use the RIL if it is present, as many
+mouse drivers rely on the RIL for proper operation.  For mouse drivers such
+as the OS/2 mouse driver that do not use the RIL in these modes, Fastgraph
+now programs the VGA registers directly, just as when the mouse isn't used.
+
+In modes 20 and 21, the video page offsets were changed to prevent the mouse
+cursor save area from conflicting with displayable video memory.  This would
+cause problems if the last video page (page 3 in mode 20, page 1 in mode 21)
+was the visual page and you moved the mouse into the lower right corner of
+the screen.  If your code relies on specific page offsets in these modes, the
+new page sizes are 3E80 hex for mode 20 and 7D00 hex for mode 21.  The values
+in Fastgraph 2.xx were 4000 and 8000 hex respectively.
+
+The FG_BESTMODE routine will now propose mode 20 instead of mode 19 when
+checking for a 320 x 200 graphics mode on VGA systems.
+
+The order of the two FG_BOXDEPTH parameters has been corrected (they were
+transposed in Fastgraph 2.xx).
+
+The masking map routines (FG_CLIPMASK, FG_DRAWMASK, FG_FLIPMASK, and
+FG_REVMASK) now work in all video modes.
+
+The CLIP utility no longer requires two video pages, which means it now
+supports modes 17, 18, and 23.
+
+------------------------------------------------------------------------------
+                          New Turbo Pascal Unit Files
+------------------------------------------------------------------------------
+
+Fastgraph 2.xx uses two unit files, FGTP.TPU and FGTPX.TPU.  FGTP.TPU is the
+primary Fastgraph unit, while FGTPX.TPU contains the extended Fastgraph
+routines listed in Appendix D of the Fastgraph User's Guide.
+
+Borland Pascal and Turbo Pascal restrict the total size of all code segments
+in a unit file 65,520 bytes.  With the introduction of the SVGA support and
+other new features in Fastgraph 3.0, the size of the FGTP.TPU unit file would
+have exceeded this limit.  For this reason, the FGTP.TPU file has been split
+into several unit files.
+
+Fastgraph routines in FGBITMAP.TPU:
+
+        FG_CLIPMASK     FG_FLIPMASK     FG_IMAGEBUF     FG_REVIMAGE
+        FG_CLPIMAGE     FG_FLPIMAGE     FG_IMAGESIZ     FG_REVMASK
+        FG_DRAWMASK     FG_GETBLOCK     FG_PUTBLOCK
+        FG_DRWIMAGE     FG_GETIMAGE     FG_PUTIMAGE
+
+Fastgraph routines in FGGIF.TPU:
+
+        FG_MAKEGIF      FG_SHOWGIF
+
+Fastgraph routines in FGMISC.TPU:
+
+        FG_BUTTON       FG_INTKEY       FG_MOUSEPOS     FG_SETCAPS
+        FG_CAPSLOCK     FG_KBINIT       FG_MOUSEPTR     FG_SETNUM
+        FG_CURSOR       FG_KBTEST       FG_MOUSESPD     FG_SOUND
+        FG_GETCLOCK     FG_MEASURE      FG_MOUSEVIS     FG_SOUNDS
+        FG_GETKEY       FG_MEMAVAIL     FG_MUSIC        FG_SUSPEND
+        FG_GETXJOY      FG_MOUSEBUT     FG_MUSICB       FG_VOICE
+        FG_GETYJOY      FG_MOUSECUR     FG_NUMLOCK      FG_VOICES
+        FG_HUSH         FG_MOUSEFIN     FG_PLAYING      FG_WAITFOR
+        FG_HUSHNEXT     FG_MOUSEINI     FG_QUIET        FG_WAITKEY
+        FG_INITJOY      FG_MOUSELIM     FG_RESUME
+        FG_INTJOY       FG_MOUSEMOV     FG_SCRLOCK
+
+Fastgraph routines in FGPCX.TPU:
+
+        FG_MAKEPCX      FG_PCXHEAD      FG_PCXMODE      FG_SHOWPCX
+
+Fastgraph routines in FGPR.TPU:
+
+        FG_DISPFILE     FG_DISPLAYP     FG_MAKESPR      FG_SHOWSPR
+        FG_DISPLAY      FG_MAKEPPR      FG_SHOWPPR
+
+Fastgraph routines in FGSVGA.TPU:
+
+        FG_DEFPAGES     FG_SVGAINIT     FG_SVGASTAT     FG_SVGAVER
+        FG_MEMORY
+
+Any Fastgraph routine that uses the world space coordinate system is in the
+file FGWORLD.TPU (this was formerly FGTPX.TPU).  All other Fastgraph routines
+are in the FGMAIN.TPU unit file.
+
+The above lists appear in Appendix E of the Fastgraph User's Guide.
+
+------------------------------------------------------------------------------
+                   Converting Applications to Fastgraph 3.0
+------------------------------------------------------------------------------
+
+Only two features in Fastgraph 2.xx are not upwardly compatible with version
+3.0.  The first applies only to Borland Pascal and Turbo Pascal, while the
+second applies to all supported compilers.
+
+As described in the previous section, it was necessary to split the FGTP.TPU
+unit of Fastgraph 2.xx into several unit files.  Additionally, the FGTPX.TPU
+unit is now called FGWORLD.TPU.  Pascal programmers must replace the FGTP and
+FGTPX unit names in the USES statement with FGMAIN and FGWORLD, respectively.
+If your programs call any of the routines in the other new units, you must
+add the appropriate unit names to the USES statement as well.  Please see the
+preceding section of this document or Appendix E of the Fastgraph User's
+Guide for lists of the Fastgraph routines in each unit file.
+
+The other change pertains to the new FG_SHOWPCX function, which replaces the
+FG_DISPPCX function of earlier versions (the function was renamed to avoid
+confusion with the pixel run display routines, which all have names of the
+form FG_DISPxxxx).
+
+PCX image positioning will generally not be an issue for full-screen PCX files
+because the PCX header typically defines their upper left corner at the screen
+origin, which is where you'd move to display a full-screen image anyway.
+However, if a PCX file is smaller than the screen resolution and you want to
+override the image positioning in the PCX header, you must define a new
+FG_SHOWPCX flags argument in which bit 1 is set.  That is, the Fastgraph 2.xx
+call FG_DISPPCX(filename,0) is equivalent to FG_SHOWPCX(filename,2).
+Similarly, FG_DISPPCX(filename,1) is equivalent to FG_SHOWPCX(filename,3).
+Note that C programmers can use the following preprocessor directive to make
+an old FG_DISPPCX call compatible with the new FG_SHOWPCX function.
+
+                  #define fg_disppcx(a,b) fg_showpcx(a,b|2)
+

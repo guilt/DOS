@@ -1,0 +1,36 @@
+#
+# DSM for fileutils 3.16 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.3
+dsm-name: fil316b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: fileutils
+version: 3.16
+manifest: fil316b
+sources-dsm: fil316s
+documentation-dsm: fil316d
+short-description: GNU Fileutils
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+web-site: http://www.gnu.org/
+ftp-site: ftp://ftp.gnu.org/
+
+mailing-list: fileutils-bugs@gnu.ai.mit.edu
+
+simtelnet-path: v2gnu/
+zip: fil316b.zip
+
+replaces: fileutils < 3.16
+requires: DPMI
+# For reading docs
+depends-on: info-reader

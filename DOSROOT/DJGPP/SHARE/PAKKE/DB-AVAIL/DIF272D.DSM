@@ -1,0 +1,26 @@
+#
+# DSM for diffutils 2.7.2 documentation
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.2
+dsm-name: dif272d
+dsm-version: 0.4.0
+dsm-type: documentation
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: diffutils
+version: 2.7.2
+manifest: dif272d
+binaries-dsm: dif272b
+sources-dsm: dif272s
+short-description: GNU diffutils
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: dif272d.zip

@@ -1,0 +1,1990 @@
+       OOOOOO                            VV        VV
+      OO    OO   PPPPPPP   TTTTTTTT  II   VV      VV  EEEEEE   CCCCCC
+      OO    OO   PP    PP     TT     II    VV    VV   EE       CC
+      OO    OO   PPPPPPP      TT     II     VV   VV   EEEEEE   CC
+      OO    OO   PP           TT     II       VVV     EE       CC
+       OOOOOO    PP           TT     II        V      EEEEEE   CCCCCC
+
+
+                       OptiVec  Version 2
+
+              Part Three: Description of MatrixLib
+
+                     OptiCode - Dr. Martin Sander Software Development
+                     Steinachstr. 9A
+                     D-69198 Schriesheim
+                     Germany
+                     e-mail: support@optivec.com  or  sales@optivec.com
+                     http://www.optivec.com
+
+****************************************************************************
+
+!!     This is an ASCII text file!  It is best viewed with a simple        !!
+!!     DOS editor.                                                         !!
+!!     If you load this file into a word processor under Windows, you      !!
+!!     must use the filter "DOS text".                                     !!
+!!     Alternatively, you may use FCONVERT (shipped with Borland C++) to   !!
+!!     convert from ASCII (OEM) into the ANSI character set.               !!
+!!     Preferrably use the lettertype CourierNew 10 pt.                    !!
+
+A general description of OptiVec is given in the  F i r s t  P a r t
+of this documentation, in the file HANDBOOK.TXT.
+Chapter 1.2 of that file contains the licence terms.
+See FUNCREF.TXT for the description of VectorLib functions,
+and CMATH.TXT for CMATH functions.
+
+Copyright for the Software and its documentation (C) 1996-2000 Martin Sander
+
+
+****************************************************************************
+*                                                                          *
+*******                           Contents                           *******
+*                                                                          *
+****************************************************************************
+
+ 1. Introduction
+    1.1 Matrix Data Types
+    1.2 Prefixes of MatrixLib Functions
+    1.3 C/C++ Version Only
+    1.4 Pascal/Delphi Version Only
+ 2. Management of Dynamically Generated Matrices
+ 3. Initialization of Matrices
+ 4. Data-Type Conversions
+ 5. Transposing, Augmenting, Deleting and Extracting Parts from a Matrix
+ 6. Arithmetic Operations Performed on a Single Row, Column, or the Diagonal
+ 7. Operations Performed Along All Rows or All Columns Simultaneously
+ 8. Operations Involving Two Rows or Two Colums
+ 9. Whole-Matrix Arithmetics: Addition, Multiplication
+10. Linear Algebra 
+11. Eigenvalues and Eigenvectors
+12. Two-Dimensional Fourier-Transform Methods
+13. Data Fitting
+    13.1 Polynomials
+    13.2 General Linear Functions
+    13.3 Non-Linear Models
+    13.4 Fitting Multiple Data Sets
+    13.5 Helper Functions for Nonlinear Fits
+    13.6 Summary of Fitting Functions
+14. Matrix Input and Output
+15. Graphical Representation of Matrices
+16. Alphabetical Syntax Reference
+    16.1 Syntax Reference for C/C++
+    16.2 Syntax Reference for Pascal/Delphi
+
+
+1. Introduction
+-------------------------
+
+Before reading this documentation about MatrixLib, you should have read the
+introductory chapters of the VectorLib handbook. MatrixLib builds upon the
+principles established in VectorLib.
+
+1.1 Matrix Data Types
+---------------------
+As VectorLib defines vector data types, here are the matrix data types,
+defined in MatrixLib:
+
+  fMatrix   matrix of floats
+  dMatrix   matrix of doubles
+  eMatrix   matrix of extended (= long double)
+  cfMatrix  matrix of fComplex (= complex<float>)
+  cdMatrix  matrix of dComplex (= complex<double>)
+  ceMatrix  matrix of eComplex (= complex<extended>)
+
+The ordering of elements is the same as in the two-dimensional arrays
+provided by the respective target compilers. This means that the matrices
+are stored row-wise in MatrixLib versions for C and C++ compilers, but
+column-wise in versions for Pascal/Delphi and Fortran.
+At present, integer matrices are defined, but no functions are available
+for them.
+
+While we recommend to exclusively use these dynamically allocated matrix
+types, static matrices defined, e.g., as
+    float  MX[4][6];  (for C/C++),  or
+    MX:  array[0..3][0..5] of Single;  (for Pascal/Delphi)
+can be used in all MatrixLib functions with the exception of the multiLinfit
+and multiNonlinfit routines.
+
+
+1.2 Prefixes of MatrixLib Functions
+-----------------------------------
+
+Each MatrixLib function has a prefix defining the data type on which it acts:
+
+MF_  for arguments of the types fMatrix, float and fVector
+MD_  for arguments of the types dMatrix, double and dVector
+ME_  for arguments of the types eMatrix, extended (long double) and eVector
+MCF_ for arguments of the types cfMatrix, fComplex and cfVector
+MCD_ for arguments of the types cdMatrix, dComplex and cdVector
+MCE_ for arguments of the types ceMatrix, eComplex and ceVector
+
+In a few cases, the prefix is augmented by a three-letter code
+denoting special matrix properties:
+
+MFdia_  means that the function expects a diagonal matrix (i.e., a square
+        matrix which has non-zero elements only on the diagonal); as there
+        is no sense in storing all the zeros, this diagonal matrix actually
+        is a vector, holding only the diagonal.
+
+MFtrd_  means the function is for a tridiagonal matrix (i.e., a square matrix
+        with non-zero elements only on the diagonal plus or minus one column).
+        A tridiagonal matrix has to be entered in the form of a matrix with
+        three rows, representing the three vectors actually containing non-
+        zero data.
+        Thus, the original matrix
+        Ú                                                 ¿
+        ³ d0  u0   0  ...                                 ³
+        ³ l1  d1   u1   0   ...                           ³
+        ³ 0   l2   d2   u2   0   ...                      ³
+        ³               ......                            ³
+        ³                              lN-2   dN-2   uN-2 ³
+        ³                               0     lN-1   dN-1 ³
+        À                                                 Ù
+        is compacted into the form
+        Ú                                   ¿
+        ³  u0   u1   u2   ...   uN-2    *   ³
+        ³  d0   d1   d2   ...   dN-2   dN-1 ³
+        ³  *    l1   l2   ...   lN-2   lN-1 ³
+        À                                   Ù.
+        The elements l0 and uN-1, marked with an asterisk, are undefined and
+        never used.
+
+MFsym_  denotes a function which expects the input matrix to be symmetric.
+        At present, only MFsym_eigenvalues makes use of this assumption.
+
+
+1.3 C/C++ Version Only:
+-----------------------
+    In the C/C++ version of MatrixLib, all functions taking matrix arguments
+    exist in a second form. In this form, all matrix arguments are replaced
+    by pointers to the first elements of the respective matrices. You can
+    explicitly use the second form by leaving away the underbar of the
+    function-name prefix.  Calling
+         MF_mulM( MC, MA, MB, htA, lenA, lenB );
+    is equivalent to calling
+         MFmulM(&(MC[0][0]),&(MA[0][0]),&(MB[0][0]),htA,lenA,lenB);
+    or   MFmulM( MC[0], MA[0], MB[0], htA, lenA, lenB );
+
+    Actually, the run-time routines are in the second form, and the macros
+    defined in <MFstd.h> etc. convert calls to the first form into calls to
+    the second form.
+
+1.4 Pascal/Delphi Version Only:
+-------------------------------
+    In the Pascal/Delphi version of MatrixLib, matrices of all data types are
+    actually defined as pointers to the element M[0][0]. This means you can
+    pass static matrices (like  MX: array[0..5][0..5] of Single;) to MatrixLib
+    functions with the address operator:
+        MF_equ1( @(MX[0][0]), 6 );
+
+    Delphi 4 or higher:
+    -------------------
+    From version 4 on, Delphi offers dynamic arrays. In the one-dimensional
+    case, they are declared as "array of Single", "array of Double", etc.
+    The VecLib unit includes short-cut definitions for these types as fArray,
+    dArray, etc. By simply type-casting fArrays into fVectors, they can be
+    used with all VectorLib functions.
+
+    The situation is more complicated in the two-dimensional case. Dynamic
+    two-dimensional arrays can be created in Delphi by declaring them
+    as "array of fArray", "array of dArray", etc. Short-cut definitions for
+    these types are also given in the VecLib unit, as f2DArray, d2DArray, etc.
+    As a consequence of the described way of defining 2D-Arrays in Delphi,
+    each row of a matrix is stored in a separate vector. This means that
+    the matrix elements do no longer occupy a single, contiguous memory space.
+    Therefore, 2DArrays cannot be used directly with MatrixLib functions.
+    Instead, they have to be copied into matrices by calling
+    MF_2DArrayToMatrix etc., before MatrixLib functions can be used on them.
+    The reverse conversion is available as MF_MatrixTo2DArray.
+
+In the following chapters, a brief summary of all MatrixLib function is given,
+ordered into groups according to their functionality. At the end of this
+file, chapter 16 gives a syntax reference in alphabetical order.
+
+
+2. Management of Dynamically Generated Matrices
+-----------------------------------------------
+
+MF_matrix      allocate memory for a matrix
+MF_matrix0     allocate memory and set all elements 0
+M_free         free one matrix (data-type independent)
+M_nfree        free n matrices (data-type independent; only for C/C++)
+V_freeAll      free all existing vectors and matrices
+
+OptiVec's dynamically allocated matrices are aligned on 32-byte boundaries,
+which allows for optimum cache-line matching for the Pentium processor and
+its currently available successors and competitors.
+
+C/C++ version only:
+-------------------
+    OptiVec's dynamically allocated matrices can be addressed just like two-
+    dimensional static arrays of C/C++. If you have, e.g., an fMatrix MX and
+    a variable float a, you can write a line like
+         a = MX[3][5];
+
+Both C/C++ and Pascal/Delphi versions:
+--------------------------------------
+There are two functions addressing single elements. These functions are the
+only means to address elements in Pascal/Delphi, and are also needed for
+getting around the pointer arithmetics bug in some versions of Borland C++:
+
+MF_Pelement    Pointer to a specific matrix element
+MF_element     value of a specific matrix element
+
+To assign a value to a specific matrix element, you should use the syntax
+    *(MF_Pelement( MX, ht, len, 3, 4 )) = 3.0;    (for C/C++),  or
+    MF_Pelement( MX, ht, len, 3, 4 )^  := 3.0;    (for Pascal/Delphi)
+
+
+3. Initialization of Matrices
+-----------------------------
+
+In order to initialize all matrices with the same value, or to perform
+the same arithmetic operation on all matrix elements simultaneously,
+please use the respective VectorLib function. You can do so, because
+all matrices are in fact stored as vectors, occupying a contiguous space
+in memory. All you have to do is to pass the first row of the matrix
+(rather than the matrix itself) to the vector function.
+Fore example, you can initialize all matrix elements with a constant C
+by calling
+    VF_equC( MA[0], ht*len, C );    (C/C++), or
+    VF_equC( MA, ht*len, C );       (Pascal/Delphi)
+As you will see, some of the most common operations of this kind
+are also explicitly defined in MatrixLib, like initialization with zero,
+MF_equ0, or multiplication by a constant, available as MF_mulC
+(see chapter 9).
+
+Here are the typical matrix initialization functions:
+
+MF_equ0        set all elements to 0
+MF_equ1        identity matrix: set all diagonal elements to 1.0,
+               all others to 0
+MF_equm1       negative identity matrix: set all diagonal elements to -1.0,
+               all others to 0
+MF_outerprod   matrix formed by the "outer product" of two vectors
+
+MF_Row_equ0    set all elements of one specific row to 0
+MF_Col_equ0    set all elements of one specific column to 0
+MF_Dia_equ0    set all diagonal elements to 0
+MF_Row_equC    set all elements of one specific row to the constant C
+MF_Col_equC    set all elements of one specific column to the constant C
+MF_Dia_equC    set all diagonal elements to the constant C
+MF_Row_equV    copy a vector into one specific row
+MF_Col_equV    copy a vector into one specific column
+MF_Dia_equV    copy a vector into the diagonal
+MF_Trd_equM    copy a compacted tridiagonal matrix into a general matrix
+
+MF_equM        make one matrix the copy of another
+MF_neg         make one matrix the negative of another
+MCF_conj       make one matrix the complex conjugate of another
+MF_UequL       copy lower-diagonal elements into upper-diagonal
+               by index-reflection, so as to get a symmetric matrix
+MF_LequU       copy upper-diagonal elements into lower-diagonal
+
+Two-dimensional windows for spectral analysis are provided by:
+MF_Hanning     Hanning window
+MF_Parzen      Parzen window
+MF_Welch       Welch window
+
+
+4. Data-Type Conversions
+------------------------
+
+Matrices of every data type can be converted into every other.
+Only a few examples are given; the rest should be obvious.
+
+M_FtoD    fMatrix to dMatrix
+M_EtoD    eMatrix to dMatrix (with overflow protection)
+M_CDtoCF  cdMatrix to cfMatrix (with overflow protection)
+M_DtoE    dMatrix to eMatrix
+
+
+5. Transposing, Augmenting, Deleting and Extracting Parts from a Matrix
+-----------------------------------------------------------------------
+
+MF_transpose        transpose a matrix:  MB = MAT
+
+MF_submatrix        extract a submatrix
+MF_submatrix_equM   copy a submatrix back into another (normally larger)
+                    matrix
+
+MF_Row_extract      extract a single row and copy it into a vector
+MF_Col_extract      extract a single column and copy it into a vector
+MF_Dia_extract      extract the diagonal and copy it into a vector
+
+MF_Trd_extract      extract a tridiagonal matrix from a general matrix 
+
+In contrast to the VectorLib functions VF_insert and VF_delete, insertion
+and deletion of rows or columns of matrices is not done in-place. Rather,
+the functions of the following list will store the augmented or truncated
+input matrix MA into an output matrix MB.
+
+MF_Row_insert       augment a matrix by insertion of one row
+MF_Col_insert       augment a matrix by insertion of one column
+MF_Row_delete       delete one row of a matrix
+MF_Col_delete       delete one column of a matrix
+
+If augmenting, be sure that MB is large enough to accommodate the enlarged
+output matrix! Normally, this means that you have to create a new matrix
+MB before calling MF_???_insert and possibly discarding MA by calling
+M_free( MA ) afterwards.
+If this process is repeated more often, you might wish to avoid the
+inefficiency of these "create new" - "copy" - "delete old" cycles.
+In this case, you can create MA from the outset with the maximum dimensions
+that will eventually be reached (or, if these are not known beforehand, with
+the upper limits of both ht and len). During the build-up process then, you
+have to keep track of the actual dimensions and use these (not the maxima
+used for allocation!) in all MatrixLib function calls. Now you may
+overwrite the original matrix by the augmented one in each call to
+MF_???_insert as, e.g., in:
+    MF_Row_insert( MA, MA, actualhtA+1, actuallenA+1, 0, X );
+
+C++ with dynamic matrices only: If you overwrite MA by MB in the
+column insertion/deletion functions, you lose the possibility of accessing
+individual matrix elements by writing  MB[i][j]. This is no longer possible,
+as the row pointers of the output matrix will still remain those of the
+input matrix. Then, you can only use MF_element and MF_Pelement to access
+individual elements. If you are exclusively inserting/deleting rows,
+on the other hand, the row pointers remain valid.
+
+
+6. Arithmetic Operations Performed on a Single Row, Column, or the Diagonal
+---------------------------------------------------------------------------
+
+MF_Row_addC         add a constant to all elements of a specific row
+MF_Col_addC         add a constant to all elements of a specific column
+MF_Dia_addC         add a constant to all diagonal elements
+MF_Row_addV         add corresponding vector elements to all elements of a
+                    specific row
+MF_Col_addV         add corresponding vector elements to all elements of a
+                    specific column
+MF_Dia_addV         add corresponding vector elements to the diagonal elements
+
+A few examples should suffice for the other functions of this family:
+MF_Row_subC         subtract a constant from all elements of a specific row
+MF_Col_subrC        reverse substraction: difference between column elements
+                    and a constant
+MF_Dia_mulV         multiply the diagonal elements with corresponding vector
+                    elements
+MF_Row_divV         divide all elements of a specific row by corresponding
+                    vector elements
+MF_Col_divrC        reverse division: division of a constant by the individual
+                    column elements
+
+
+7. Operations Performed Along All Rows or All Columns Simultaneously,
+         or Along the Diagonal of a Square Matrix
+----------------------------------------------------------------------
+
+MF_Rows_max         store the maxima of all rows in a column vector
+MF_Cols_max         store the maxima of all colums in a row vector
+MF_Dia_max          return the maximum of the diagonal as a scalar
+
+MF_Rows_min         store the minima of all rows in a column vector
+MF_Cols_min         store the minima of all colums in a row vector
+MF_Dia_min          return the minimum of the diagonal as a scalar
+
+MF_Rows_absmax      store the absolute maxima of all rows in a column vector
+MF_Cols_absmax      store the absolute maxima of all colums in a row vector
+MF_Dia_absmax       return the absolute maximum of the diagonal as a scalar
+MF_Rows_absmin      store the absolute minima of all rows in a column vector
+MF_Cols_absmin      store the absolute minima of all colums in a row vector
+MF_Dia_absmin       return the absolute minimum of the diagonal as a scalar
+
+MF_Rows_sum         sum, taken along rows and stored in a column vector
+MF_Cols_sum         sum, taken along colums and stored in a row vector
+MF_Dia_sum          sum of the diagonal elements
+
+MF_Rows_prod        product, taken along rows and stored in a column vector
+MF_Cols_prod        product, taken along colums and stored in a row vector
+MF_Dia_prod         product of the diagonal elements
+
+MF_Rows_runsum      running sum along rows
+MF_Cols_runsum      running sum along columns
+MF_Rows_runprod     running product along rows
+MF_Cols_runprod     running product along columns
+
+MF_Rows_rotate      rotate all rows by a specified number of positions
+MF_Cols_rotate      rotate all rows by a specified number of positions
+MF_Rows_reflect     set the upper halves of all rows equal to their reversed
+                    lower halves
+MF_Cols_reflect     set the upper halves of all columns equal to their
+                    reversed lower halves
+
+Please note that multiplying all rows or all columns by one and the same
+vector is equivalent to a multiplication by a diagonal matrix, which is
+provided by MF_mulMDia and MF_TmulMDia.
+
+
+8. Operations Involving Two Rows or Two Colums
+----------------------------------------------
+
+MF_Rows_exchange   exchange two rows
+MF_Cols_exchange   exchange two columns
+
+MF_Rows_add        add two rows  (destination += source)
+MF_Cols_add        add two columns 
+
+MF_Rows_sub        subtract two rows (destination -= source)
+MF_Cols_sub        subtract two columns
+
+MF_Rows_Cadd       add scaled row to another (destination += C * source)
+MF_Cols_Cadd       add scaled column to another
+
+MF_Rows_lincomb    linear combination of two rows
+MF_Cols_lincomb    linear combination of two columns
+
+
+9. Whole-Matrix Arithmetics: Addition, Multiplication
+-----------------------------------------------------
+
+MF_addM     add two matrices
+MF_subM     subtract one matrix from another
+MF_mulC     multiply all matrix elements by a constant
+MCF_mulReC  multiply all elements of a complex matrix by a real number 
+MF_divC     divide all matrix elements by a constant
+MCF_divReC  divide all elements of a complex matrix by a real number 
+MFs_addM    scaled addition of two matrices: MC = c * (MA + MB)
+MFs_subM    scaled subtraction of two matrices: MC = c * (MA - MB)
+MF_lincomb  linear combination: MC = ca * MA + cb * MB
+            
+MF_mulV     multiply a matrix by a column vector:  Y = MA * X;
+            the dimensions of X and Y are implicitly given by the matrix
+            dimensions:  sizX = lenA,   sizY = htA.
+MF_TmulV    multiply the transpose of a matrix by a column vector:
+            Y = MAT * X.
+            The dimensions htA and lenA refer to the original (rather than the
+            intermediate transposed) matrix MA; the dimensions of X and Y are
+            implicitly given by the matrix dimensions:
+            sizX = htA, sizY = lenA.
+            
+VF_mulM     multiply a row vector by a matrix:  Y = X * MA;
+            the dimensions of X and Y are implicitly given by the matrix
+            dimensions:  sizX = htA,   sizY = lenA.
+VF_mulMT    multiply a row vector by the transpose of a matrix:  Y = X * MAT.
+            The dimensions htA and lenA refer to the original (rather than the
+            intermediate transposed) matrix MA; the dimensions of X and Y are
+            implicitly given by the matrix dimensions:
+            sizX = lenA,   sizY = htA.
+            
+MF_mulM     multiply two matrices:  MC = MA * MB;
+            htA, lenA, and lenB must be specified; the other dimensions are
+            implicitly given as:  htB = lenA,  lenC = lenB,  htC = htA.
+MF_mulMT    multiply one matrix by the transpose of another matrix:
+            MC = MA * MBT.
+            htA, lenA, and htB must be specified; the other dimensions are
+            implicitly given as:  lenB = lenA,  lenC = htB,  htC = htA.
+MF_TmulM    multiply the transpose of a matrix by another matrix:
+            MC = MAT * MB.
+            htA, lenA, and lenB must be specified; the other dimensions are
+            implicitly given as:  htB = htA,  lenC = lenB,  htC = lenA.
+MF_TmulMT   multiply the transpose of one matrix by the transpose of
+            another matrix:  MC = MAT * MBT.
+            htA, lenA, and htB must be specified; the other dimensions are
+            implicitly given as:  lenB = htA,  lenC = htB,  htC = lenA.
+
+The following functions multiply general matrices by diagonal matrices or
+vice versa, whereby the diagonal matrix is passed to the respective function
+as a vector:
+
+MF_mulMdia  multiply a matrix by a diagonal matrix:  MC = MA * MBDia.
+            htA and lenA must be specified; sizB = lenA.
+MF_TmulMdia multiply the transpose of a matrix by a diagonal matrix:
+            MC = MAT * MBDia.
+            htA and lenA must be specified; sizB = htA.
+MFdia_mulM  multiply a diagonal matrix by a general matrix:
+            MC = MADia * MB.
+            htB and lenB must be specified; sizA = htB.
+MFdia_mulMT multiply a diagonal matrix by the transpose of a general matrix:
+            MC = MADia * MBT.
+            htB and lenB must be specified; sizA = lenB.
+
+
+10. Linear Algebra
+------------------
+
+There are three groups of linear algebra functions. The first group consists
+of "easy-to-use" versions which can be used as black-box functions without
+caring about their internal working. The second group consists of functions
+for LU decomposition and its applications. The third group, finally, is
+devoted to Singular Value Decomposition (SVD).
+Here are the "easy-to-use" versions of linear algebra functions:
+
+MF_solve          solve simultaneous linear equations, using LU decomposition.
+                  The function works well in all cases where the system of
+                  linear equations has one unique solution. If successful,
+                  it returns FALSE (0).
+                  If, on the other hand, the system is ill-determined, which
+                  happens in all cases where one or more of the equations are
+                  linear combinations of other equations of the same system,
+                  the resulting matrix becomes singular and the function fails
+                  with an error message, returning TRUE (1).
+                  To avoid outright failure in an application where ill-
+                  determined  matrices might occur, you should use
+                  MF_LUDsetEdit (see below) to define a minimum "pivot".
+                  If you did so, MF_solve returns always FALSE (0), but
+                  a call to MF_LUDresult will tell you if editing has
+                  actually been necessary.
+MF_inv            invert a matrix; if the matrix is non-invertible, the
+                  function fails with an error message and returns TRUE (1).
+                  Just as described above for MF_solve, you can define a
+                  minimum pivot using MF_LUDsetEdit to save the function from
+                  failing.
+                  In that case, any matrix is made invertible, and MF_int
+                  returns always 0. As before, a call to MF_LUDresult will
+                  tell you if editing has actually been necessary to avoid
+                  a singularity.
+MF_det            determinant of a matrix
+MF_solveBySVD     solve a set of simultaneous linear equations, using
+                  Singular Value Decomposition. Here, underdetermined systems
+                  do not lead to an error. Rather, you get one particular
+                  solution out of the solution space. If you have more equations
+                  than unknowns, i.e., in the case of an overdetermined system,
+                  the solution vector contains a least-square "compromise"
+                  between the equations.
+                  The function should always return FALSE (0). Only in the
+                  very rare case of SVD failure, TRUE (1) is returned.
+                  The length of the desired solution vector, sizX must be
+                  equal to the width of the input matrix, lenA, whereas the
+                  length of the right-hand-side vector, sizB must be equal
+                  to htA.
+MF_safeSolve      try first solution by LUD; if that fails, SVD is done.
+                  A return value of 0 indicates success via LUD, 1 signals
+                  success via SVD, and -1 is returned in the very rare case
+                  that even SVD fails.
+
+
+Now some functions for LU decomposition and for treatment of LU decomposed
+matrices:
+
+MF_LUdecompose    decompose a matrix into a product MA = L * U, where
+                  L is lower-triangular with the diagonal elements equal to 1,
+                  and U is upper-triangular. As the combined number of non-
+                  trivial elements of L and U just fit into a matrix of the
+                  same dimensions as MA, the result is stored in a single
+                  matrix MLU rather than in to distinct matrices L and U.
+                  MA may or may not be overwritten by MLU.
+MF_LUimprove      improve accuracy of LU decomposition by iteration. This is
+                  only possible if MA is not overwritten by MLU in the call
+                  to MF_LUdecompose whose result you wish to fine-polish.
+MF_LUDresult      check if MF_LUdecompose was successful (return value:
+                  FALSE = 0) or not (return value TRUE = 1 for singular
+                  matrices)
+MF_LUDsetEdit     set editing threshold for MF_LUdecompose, MF_inv, and
+                  MF_solve. This is a crude way to work around (near-)singu-
+                  larities: If, in the partial pivoting process employed in
+                  the decomposition and inversion, no diagonal element larger
+                  than the threshold is available, the scaling of the matrix
+                  is done with the threshold value rather than with the tiny
+                  diagonal element. That way, divisions by (near-)zero are
+                  avoided.
+MF_LUDgetEdit     retrieve currently set threshold
+MF_LUsolve        solve simultaneous linear equations, given the matrix in
+                  LU form as obtained by MF_LUdecompose
+MF_LUinv          invert matrix already decomposed into LU form
+MF_LUdet          determinant of matrix already decomposed into LU form
+
+Singular Value Decomposition and related functions are offered as:
+
+MF_SVdecompose    Singular Value Decomposition. A matrix MA of dimensions
+                  [ht, len] is decomposed into a product MA = U * W * VT,
+                  where U has the dimensions [max(ht,len), len],
+                  W is a diagonal matrix, where all elements are positive or
+                  zero. Actually, only the diagonal of this matrix is stored
+                  in a vector of size [len],
+                  V, finally, is a square matrix [len, len].
+                  Both U and V are orthogonal: UT * U = VT * V = (1).
+MF_SVsolve        solve SV-decomposed set of linear equations; sometimes this
+                  process is also called Singular Value Backsubstitution.
+                  In this function, at first W is edited such that elements
+                  smaller than a threshold are set to zero. Then, in the
+                  backsubstitution process, which involves divisions by the
+                  elements of W, any divisions by W[i] = 0 are replaced
+                  by setting the result to 0. You can choose the editing
+                  threshold by calling MF_SVDsetEdit. If you prefer to
+                  inspect and edit W yourself before calling MF_SVsolve,
+                  you can call MF_SVDsetEdit with the argument 0.0, thereby
+                  switching off the automatic editing.
+                  The parameters  lenU = lenA and htU = max( lenA, htA )
+                  are the same as fed into MD_SVdecompose.
+
+MF_SVDsetEdit     set threshold for Singular Value editing, see above
+MF_SVDgetEdit     retrieve current threshold for Singular Value editing
+
+
+11. Eigenvalues and Eigenvectors
+--------------------------------
+
+At present, only the special, but most frequent case of a symmetric real
+matrix is covered, whose eigenvalues, with or without eigenvectors, are
+calculated by MFsym_eigenvalues.
+This function takes the following arguments:
+EigV          a vector in which the eigenvalues will be returned
+EigM          a matrix whose columns will be filled with the eigenvectors
+MX            the input matrix, which may or may not be overwritten by EigM
+len           the length of the rows (which is the same as the height of the
+              columns, as MX must be a symmetric square matrix)
+CalcEigenVec  an integer, deciding if only the eigenvalues are needed
+              (CalcEigenVec=0) or if the eigenvectors are desired as well
+              (CalcEigenVec=1); calculating the eigenvalues alone, without
+              the eigenvectors, can speed up the calculation by up to a
+              factor of two.
+
+
+12. Two-Dimensional Fourier-Transform Methods
+---------------------------------------------
+
+By analogy with the corresponding one-dimensional Fourier Transform methods
+described in the VectorLib handbook, the following functions for the two-
+dimensional case are available in MatrixLib:
+
+MF_FFT            Fast Fourier Transform (FFT)
+                  void    MF_FFT( fMatrix MY, fMatrix MX,
+                                  unsigned ht, unsigned len, int dir );
+                  procedure  MF_FFT( MY, MX:fMatrix; ht, len:UInt;
+                                  dir:Integer );
+
+                  Just as in the one-dimensional case, the symmetry properties
+                  of two-dimensional FFT allow to store the result of an FFT
+                  of a real-valued matrix in a packed format, fitting into
+                  the same memory space as the input matrix.
+                  Consequently, the output matrix, MY, is defined as fMatrix,
+                  although it consists of complex numbers.
+                  The order of storage in MY is derived from the ordering in
+                  the one-dimensional case, with the packing applied first
+                  to all rows, then to the columns. The resulting order is
+                  indicated in the following table.
+
+ÚÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ 0,0.Re   ³ 0,N/2.Re   ³ 0,1.Re  ³ 0,1.Im  ³ ... ³ 0,N/2-1.Re  ³ 0,N/2-1.Im ³
+ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄ´
+³ M/2,0.Re ³ M/2,N/2.Re ³ 1,1.Re  ³ 1,1.Im  ³ ... ³ 1,N/2-1.Re  ³ 1,N/2-1.Im ³
+ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄ´
+³ 1,0.Re   ³ 1,N/2.Re   ³ 2,1.Re  ³ 2,1.Im  ³ ... ³ 2,N/2-1.Re  ³ 2,N/2-1.Im ³
+ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄ´
+³ 1,0.Im   ³ 1,N/2.Im   ³ 3,1.Re  ³ 3,1.Im  ³ ... ³ 3,N/2-1.Re  ³ 3,N/2-1.Im ³
+ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄ´
+³    ...   ³    ...     ³   ...   ³   ...   ³ ... ³      ...    ³    ...     ³ 
+ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄ´
+³M/2-1,0.Re³M/2-1,N/2.Re³   ...   ³   ...   ³ ... ³      ...    ³    ...     ³
+ÃÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄ´
+³M/2-1,0.Im³M/2-1,N/2.Im³ M-1,1.Re³ M-1,1.Im³ ... ³M-1,N/2-1.Re ³M-1,N/2-1.Im³
+ÀÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+MF_convolve     Convolution with a spatial response function
+                void  MF_convolve( fMatrix MY, fMatrix MFlt, fMatrix MX,
+                                   fMatrix MRsp, unsigned ht, unsigned len );
+                procedure  MF_convolve( MY, MFlt, MX, MRsp:fMatrix;
+                                   ht, len:UInt );
+
+                The convolution of MX with the response function MRsp is
+                calculated and stored in MY.  A filter MFlt is also calculated.
+                If more than one matrix is to be convolved with the same MRsp,
+                use MF_convolve only once and use MF_filter for the other
+                marices.
+                The response has to be stored in MRsp in wrap-around order
+                in both dimensions: in each row i of MRsp, the response for
+                zero and positive x-values is stored in  MRsp[i,0]  to
+                MRsp[i,len/2] and the response for negative x-values
+                (beginning with the most negative x) in MRsp[i,len/2+1] to
+                MRsp[i,len-1].
+                Similarly, in each column of MRsp, the response for zero and
+                positive y-values is stored in  MRsp[0,j]  to  MRsp[len/2,j]
+                and the response for negative y-values (beginning with the
+                most negative y) in MRsp[len/2+1,j] to MRsp[len-1,j].
+                You may wish to use MF_Rows_rotate and MF_Cols_rotate, or
+                MF_Rows_reflect and MF_Cols_reflect to achieve this wrap-
+                around order and to construct the response matrix.
+                Note that MRsp has to be of the same size as MX.
+
+                The result of the convolution appears scaled with the sum
+                of all elements of MRsp. Normally, therefore, MRsp should be
+                normalized to 1.0.
+
+                MX, MY, MRsp, and MFlt must all be of the same dimensions.
+                Both len and ht have to be integer powers of 2.  MX may be
+                overwritten by MY, MRsp may be overwritten by MFlt, but
+                MX and MFlt as well as MY and MRsp have to be distinct from
+                each other.
+
+                As in the one-dimensional case, the treatment of round-off
+                errors in the construction of MFlt may be modified by
+                VF_setRspEdit.
+
+                The input matrix is assumed to be periodic in both dimensions.
+                See the description of VF_convolve on how to avoid end
+                effects, in case it is not periodic.
+
+MF_deconvolve   Deconvolution (edge sharpening)
+                void MF_deconvolve( fMatrix MY, fMatrix MFlt, fMatrix MX,
+                                    fMatrix MRsp, unsigned ht, unsigned len );
+                procedure MF_deconvolve( MY, MFlt, MX, MRsp:fMatrix;
+                                    ht, len:UInt );
+
+                MX is assumed to be the result of a convolution of some "true"
+                profile with the response function MRsp; a deconvolution is
+                attempted and stored in MY. A filter MFlt is also calculated;
+                if more than one matrix is to be deconvolved with the same
+                MRsp, use MF_deconvolve only once and use the filter MFlt thus
+                obtained to deconvolve other matrices by calling MF_filter.
+                The response has to be stored in the wrap-around order
+                described above for MF_convolve.
+                As for MF_convolve, MX, MY, MRsp, and MFlt must all be of the
+                same dimensions, which have to be integer powers of 2.  MX may
+                be overwritten by MY, MRsp may be overwritten by MFlt, but MX
+                and MFlt as well as MY and MRsp have to be distinct from each
+                other.
+
+                Mathematically, MFlt is the inverse of the Fourier transform of
+                MRsp. If the Fourier transform of MRsp contains elements equal
+                to zero, all information is lost for the respective frequency
+                and no reconstruction is possible. The best one can do in
+                this case is to accept this loss and to  deconvolve only up
+                to those frequencies where still something is left to be
+                reconstructed.
+                You are therefore advised not to use this function blindly
+                but rather to inspect the Fourier transform of MRsp and
+                decide what to do on the basis of your specific application.
+                If you wish to use this function nevertheless, you may rely
+                on the automatic editing of the filter, built into
+                MF_deconvolve. Thereby, MFlt is set to zero (instead of
+                infinity) at those frequences where all information has
+                been lost. You may set the threshold for this implicit
+                editing by VF_setRspEdit. In order to retrieve the threshold
+                actually set, use VF_getRspEdit. (These two functions are
+                shared between the one- and two-dimensional FFT functions.)
+
+                This deconvolution is based on the implicit assumption that
+                MX is periodic; if this is not the case, see the description
+                of  VF_convolve  about how to avoid end effects.
+
+MF_filter       Spatial filtering
+                void    MF_filter( fMatrix MY, fMatrix MX, fMatrix MFlt,
+                                   unsigned ht, unsigned len );
+                procedure  MF_filter( MY, MX, MFlt:fMatrix; ht, len:UInt );
+
+                A frequency filter MFlt is applied to the vector MX.
+                Internally, this is done by performing a Fourier transform on
+                MX, multiplying the transform element-wise with MFlt and
+                transforming the product back into the spatial domain.
+
+                Complex versions: MX, MY and the filter MFlt are complex
+                matrices.
+                Real versions:   MX and MY are real.  MFlt has to be in the
+                packed complex format that is obtained by Fourier transforming
+                a real matrix with MF_FFT or by using MF_convolve.
+
+                If MX is non-periodic, both ends of the filtered function may
+                be spoiled by wrap-around. See VF_convolve about how to avoid
+                end-effects in the one-dimensional case by embedding a vector
+                X in a larger vector or by removing a possible linear trend.
+                The same principles apply also for matrices.
+
+MF_autocorr     Spatial autocorrelation
+                void    MF_autocorr( fMatrix MACorr, fMatrix MX,
+                                     unsigned ht, unsigned len );
+                procedure  MF_autocorr( MACorr, MX:fMatrix; ht, len:UInt );
+
+                The spatial autocorrelation function (SACF) of MX is
+                calculated and stored in MY  in wrap-around order in both
+                dimensions: The row elements MY[i,0] to MY[i,len/2-1]
+                contain the SACF for zero and positive x lags. Beginning with
+                the most negative lag in MY[i,len/2+1], the elements up to
+                MY[i,len-1] contain the SACF for negative lags. Since this
+                function assumes MX to be periodic, the SACF for the most
+                positive lag is identical to the SACF for the most negative
+                lag. This element is stored as Y[i,len/2].
+                Similarly, the column elements MY[0,j] to MY[len/2-1,j]
+                contain the SACF for zero and positive y lags. Beginning with
+                the most negative lag in MY[len/2+1,j], the elements up to
+                MY[len-1,j] contain the SACF for negative lags.
+                To get the SACF into normal order, you may call
+                   MF_Rows_rotate( MY, MY, ht, len, len/2 );
+                   MF_Cols_rotate( MY, MY, ht, len, ht/2 );
+                After that, the zero point is at the position [ht/2,len/2].
+
+                In case MX is non-periodic, you should avoid end effects
+                by the methods described in connection with MF_convolve.
+
+MF_xcorr        Spatial cross-correlation
+                void  MF_xcorr( fMatrix MXCorr, fMatrix MX, fMatrix MY,
+                                unsigned ht, unsigned len );
+                procedure MF_xcorr( MXCorr, MX, MY:fMatrix; ht, len:UInt );
+
+                The spatial cross-correlation function (SCCF) of MX and MY
+                is calculated and stored in MZ in the wrap-around order
+                described above for MF_autocorr.
+
+MF_spectrum     Spatial frequency spectrum
+                void    MF_spectrum( fMatrix MSpec,
+                                     unsigned htSpec, unsigned lenSpec,
+                                     fMatrix MX, unsigned htX, unsigned lenX,
+                                     fMatrix MWin );
+                procedure MF_spectrum( MSpec:fMatrix; htSpec, lenSpec:UInt;
+                                  MX:fMatrix; htX, lenX:UInt; MWin:fMatrix );
+
+                The data set MX is analyzed for the mean square amplitude
+                of its spatial frequency spectrum. The result is stored
+                in MSpc.
+                Internally, the spectrum is calculated by dividing the
+                input data into overlapping segments, similarly to the
+                one-dimensional case described for VF_spectrum.
+                MWin is a window that is applied to the data segments.
+                Three functions are available that give suitable
+                Windows: MF_Welch, MF_Parzen, and MF_Hanning.
+                A square window is available by setting all matrix elements
+                equal to 1.0.
+                htSpec and lenSpec must be integer powers of 2,
+                MSpec has [htSpec+1][lenSpec+1] elements (!), and
+                htX >= n*htSpec,  lenX >= n*lenSpec,
+                htWin = 2*htSpec, lenWin = 2*lenSpec.
+
+
+13. Data Fitting
+----------------
+
+The functions for fitting X-Y pairs of data are included in MatrixLib rather
+than in VectorLib, because they rely heavily on matrix methods. Their prefix,
+VF_, however, is a reminder that they actually work on vectors, rather than
+on matrices. (The weighted variants actually do also require a matrix as an
+argument, as they calculate the covariance matrix of parameters).
+
+ ³  Please note that, out of the functions described in the following, the
+ ³  non-linear fitting routines are available only in the C/C++ versions,
+ ³  but not in the Pascal/Delphi versions.
+
+Only linear regression (i.e., data fitting to a straight line), does not
+employ matrix methods and is contained in VectorLib: VF_linregress.
+
+MatrixLib provides a broad range of data fitting functions for various
+classes of model functions.  The most simple model functions are:
+
+13.1 Polynomials
+----------------
+
+Polynomials are functions of the form
+    y = a0 + a1x + a2x2 ...
+Here, you are interested in the coefficients ai up to a certain limit,
+determined by the desired degree of the polynomial. All coefficients are
+treated as free parameters, without the possibility of "fixing" those whose
+values you happen to know beforehand. Polynomial fitting is most useful for
+degrees of 2 to 4. With degrees higher than 5, you  will be able to fit
+almost any data - but the resulting coefficients will be at best inaccurate
+and at worst useless, as already very little experimental noise will strongly
+influence the balance of the higher terms. If you do need polynomials of
+higher degrees, you should carefully examine your problem to see which terms
+you can eliminate. This leads us from polynomials to the next class of
+fitting functions, namely:
+
+13.2 General Linear Functions
+-----------------------------
+
+In the general linear case, you have to write the model function yourself
+and pass it as an argument to the fitting routine.  The word "linear" means
+that the model function consists of a linear combination of basis functions
+each of which depends linearly on the fitting coefficients:
+      y = a0f0(x) + a1f1(x) + a2f2(x)...
+The individual functions fi(x)may be non-linear in x, but not in the
+coefficients ai. For example,  y = a0sin(x)+ a1cos(x) is a valid linear
+fitting function, but y = sin(a0x)+ cos(a1x) is not.
+
+    Pascal with DOS only:
+        The module, containing the model function to be passed to
+        VF_linfit, must be compiled using the "Force Far Calls" option
+        (Options/Compiler in the IDE or switch {$F+} ) !
+
+For general linear fits, the model function has to be provided in a form
+which calculates the individual basis functions for each x-value present in
+the data set. The above example with sine and cosine functions would be
+coded in C/C++ as
+   void LinModel( fVector BasFuncs, float x, unsigned nfuncs )
+   {
+       BasFuncs[0] = sin(x);
+       BasFuncs[1] = cos(x);
+   }
+
+Note that the coefficients ai are not used in the model function itself. The
+argument nfuncs (which is neglected in the above example) allows to use a
+variable number of basis functions. It is also possible to switch fitting
+parameters "on" and "off", i.e., "free" or "fixed". To this end, the routine
+VF_linfit takes a "status" array as an argument. For all members of the
+parameter vector that are to be treated as free, the corresponding "status"
+entry must be set to 1. If status[i] is set to 0, the corresponding
+parameter, a[i], is treated as fixed at the value one has to initialize
+before calling VF_linfit.
+
+Internally, VF_linfit employs a Singular Value Decomposition algorithm to
+obtain a solution even for (near-)singular linear systems. Thereby,
+coefficients a[i] whose significance is lower than a threshold, Thresh, are
+set to 0 instead of infinity. This threshold can be modified by calling
+VF_setLinfitNeglect. The current threshold can be retrieved by
+VF_getLinfitNeglect.
+
+Having noted above that functions like
+    y = sin(a0x)+ cos(a1x) 
+require their own treatment, we arrive at the last and most general class
+of model functions:
+
+13.3 Non-Linear Models
+----------------------
+
+As described above, fits to linear model functions (which include, of course,
+simple polynomials) are performed internally by solving a set of coupled
+linear equations - which is basically a simple matrix inversion process.
+The situation for non-linear model functions is completely different: no
+closed-form solution exists, and the fitting problem can be solved only
+iteratively. Therefore, fitting to non-linear models is much more time-
+consuming (by 3-5 orders of magnitude!) than fitting to linear models.
+Two non-linear fitting algorithms are offered:
+the Levenberg-Marquardt method, and the
+Downhill-Simplex method by Nelder and Mead.
+As a starting-point, it is normally a good idea to choose a combination of
+both (choose FitOptions.LevelOfMethod = 3, see below).
+
+The fundamental difference between linear and non-linear data fitting is
+reflected also in the required formulation of the model functions.
+In contrast to the linear case, here it is not the individual basis functions
+which are needed. Rather, the model function will be called by VF_nonlinfit
+with the whole X-vector as input argument and has to return the whole
+Y-vector. For the above non-linear sine and cosine example, this would be
+coded in C/C++ as
+   void NonlinModel( fVector Y, fVector X, ui size)
+   {
+       for( ui i=0; i<size; i++ ) 
+           Y[i] = sin( a[0]*X[i] ) + cos( a[1]*X[i] );
+   }
+
+The parameter array "a" should be global. It is passed as an argument to
+VF_nonlinfit, and its elements are changed during the fitting process. Upon
+input, "a" must (!) contain your initial "best guess" of the parameters.
+The better your guess, the faster VF_nonlinfit will converge. If your initial
+guess is too far off, convergence might be very slow or even never attained.
+
+All nonlinfit functions return the figure-of-merit of the best parameter
+array "a" found. To perform the fit, these functions need not only the fitting
+function itself, but also its partial derivatives with respect to the
+individual coefficients. Therefore, an argument Derivatives is required in
+calling the nonlinfit functions. If you happen to know the partial
+derivatives analytically, Derivatives should point to a function calculating
+them. If you do not know them, call with Derivatives = NULL. In the latter
+case, all derivatives will be calculated numerically inside the functions.
+In cases where you know some, but not all of the partial derivatives of Y
+with respect to the coefficients ai, you could also calculate dY/dai
+wherever you have an analytic formula, and call VF_nonlinfit_autoDeriv for the
+remaining coefficients. To demonstrate this possibility, here is a function
+coding the derivatives for our non-linear sine and cosine example:
+
+   void DerivModel( fVector dYdAi, fVector X, ui size, unsigned iPar )
+   {
+       switch( iPar )
+       {
+           case 0:
+               for( ui i=0; i<size; i++ ) 
+                   dYdAi[i] = X[i] * cos( a[0]*X[i] );
+               break;
+           case 1:  /* say we don't know this derivative: */
+               VF_nonlinfit_autoDeriv( dYdAi, X, size, iPar);
+       }
+   }
+
+For actual working examples of code for the polynomial, general linear, and
+general non-linear cases, please see the file FITDEMO.CPP.
+
+13.4 Fitting Multiple Data Sets
+-------------------------------
+
+In addition to the fitting functions for single data sets, there are routines
+for fitting multiple data sets simultaneously. Say, you are a physicist or a
+chemist and want to measure a rate constant k. You have performed the same
+kinetic measurement ten times under slightly different conditions. All these
+measurements have, of course, the same k, but other parameters, like
+amplitude and time-zero, will differ from experiment to experiment. Now, the
+usual way would be to perform one fit for each of these ten data sets and
+average over the resulting k's.
+There is a problem with this approach: you don't really know which weight
+you have to assign to each of the measurements, and how to treat the
+overlapping error margins of the individual fits. You might want to perform
+a fit on all your data sets simultaneously, taking the same k for all data
+sets, and assigning individual amplitudes etc. to each set. This is precisely
+what the multifit functions of MatrixLib are designed for.
+
+    Pascal with DOS only:
+        The module, containing the model function to be passed to
+        VF_multiLinfit, must be compiled using the "Force Far Calls"
+        option (Options/Compiler in the IDE or switch {$F+} ) !
+
+
+13.5 Helper Functions for Nonlinear Fits
+----------------------------------------
+
+As nonlinear fitting tasks - especially with multiple data sets - may become
+quite tedious and take a very long time (sometimes many hours!) to converge,
+there is a number of functions which allow to follow the course of nonlinear
+fits. The names of these functions are always derived from the fitting
+function they are used with. For example, the helper functions for
+VF_nonlinfit  are:
+
+VF_nonlinfit_getBestValues  gives the best set of parameters found so far
+VF_nonlinfit_getChi2        returns the best figure-of-merit (chi2) obtained
+                            so far
+VF_nonlinfit_getTestDir     returns the test direction (+1 for upwards,
+                            -1 for downwards) during "breakout" attempts
+                            (level-of-method greater than 3, see the
+                            description of VF_NONLINFITOPTIONS below)
+VF_nonlinfit_getTestPar     returns the index of the parameter currently
+                            under "breakout" investigation
+VF_nonlinfit_getTestRun     returns the index of the current "breakout" test
+                            run (for each fitted parameter, one test run is
+                            performed)
+VF_nonlinfit_stop           stops fitting after completion of the current
+                            Levenberg-Marquardt or Downhill cycle
+
+For the other nonlinear fitting functions, the corresponding function names
+are obtained by replacing the "VF_nonlinfit_" prefix with the respective
+fitting function name, as in VF_nonlinfitwW_getBestValues,
+MF_multiNonlinfit_stop, and so on.
+
+There are two possibilities how these functions can be called. The first way
+is to call them from within your model function. For example, you might
+install a counter into your model function and, upon reaching a certain
+number of calls, retrieve the current chi2, parameter set, etc.
+The second way is open only for multithreaded programs: a thread, different
+from the one performing the fit, may call any of the above functions to
+control the progress of the fit.
+
+13.6 Summary of Fitting Functions
+---------------------------------
+Here is a summary of the fitting routines provided by MatrixLib.
+The first group is for fitting X-Y data pairs and has the prefix VF_ :
+
+VF_polyfit        fit an X-Y data pair to a polynomial of arbitrary degree
+VF_polyfitwW      the same with non-equal weighting of individual data points
+VF_linfit         fit an X-Y data pair to a function linear in its parameters
+VF_linfitwW       the same with non-equal weighting of individual data points
+VF_nonlinfit      fit X-Y data to an arbitrary, possibly non-linear function
+VF_nonlinfitwW    the same for non-equal data-point weighting
+VF_multiLinfit       fit multiple X-Y data sets to one common model,
+                     linear in its parameters
+VF_multiLinfitwW     the same for non-equal data-point weighting
+VF_multiNonlinfit    fit multiple X-Y data sets to one common model,
+                     possibly nonlinear in its parameters
+VF_multiNonlinfitwW  the same for non-equal data-point weighting
+
+With the exception of fitting to polynomials, which are present only for the
+X-Y data case, here are the corresponding functions for fitting
+z = f(x,y) data (with the prefix MF_):
+
+MF_linfit         fit X-Y-Z data to a function linear in its parameters
+MF_linfitwW       the same with non-equal weighting of individual data points
+
+MF_nonlinfit      fit X-Y-Z data to an arbitrary, possibly non-linear function
+MF_nonlinfitwW    the same for non-equal data-point weighting
+
+MF_multiLinfit       fit multiple X-Y-Z data sets to one common model,
+                     linear in its parameters
+MF_multiLinfitwW     the same for non-equal data-point weighting
+MF_multiNonlinfit    fit multiple X-Y-Z data sets to one common model,
+                     possibly nonlinear in its parameters
+MF_multiNonlinfitwW  the same for non-equal data-point weighting
+
+The nonlinear fitting routines are highly sophisticated and offer the user
+a lot of different options. These options may be set by the function
+V_setNonlinfitOptions. To retrieve current settings, use
+V_getNonlinfitOptions.
+
+All options are packed into a structure named VF_NONLINFITOPTIONS.
+VF_NONLINFITOPTIONS has the following fields:
+
+int      FigureOfMerit       0: least squares fitting
+                             1: robust fitting, optimizing for minimum
+                                absolute deviation
+                             Default: 0
+
+float    AbsTolChi           absolute change of chi (default: EPSILON)
+float    FracTolChi          fractional change of chi
+                                    (default: SQRT_EPSILON)
+float    AbsTolPar           absolute change of all parameters
+                                    (default: SQRT_MIN) 
+float    FracTolPar          fractional change of all parameters
+                                    (default: SQRT_EPSILON)
+                             These four parameters describe the convergence
+                             conditions: if the changes achieved in successive
+                             iterations are smaller than demanded by these
+                             criteria, this signals convergence. Criteria
+                             which are not applicable should be set to 0.0.
+
+unsigned HowOftenFulfill     how often fulfill one of the above conditions
+                             before convergence is considered achieved
+                             (default: 3)
+
+unsigned LevelOfMethod       1: Levenberg-Marquardt method,
+                             2: Downhill Simplex (Nelder and Mead) method,
+                             3: both methods alternating;
+                                add 4 to this in order to try
+                                breaking out of local minima;
+                             0: no fit, calculate only chi2 (and Covar)
+                             (default: 1)
+
+unsigned LevMarIterations    max.number of successful iterations of LevMar
+                             during one run (default: 100)
+
+unsigned LevMarStarts        number of LevMar restarts per run (default: 2)
+
+float    LambdaStart,
+         LambdaMin,
+         LambdaMax,
+         LambdaDiv,
+         LambdaMul           treatment of LevMar parameter lambda (don't
+                             touch, unless you are an expert!)
+
+unsigned DownhillIterations  max. number of successful iterations in Downhill
+                             Simplex method  (default: 200)
+
+float    DownhillReflection,
+         DownhillContraction,
+         DownhillExpansion   treatment of re-shaping of the simplex in
+                             Downhill Simplex method  (don't touch
+                             unless you are an expert!)
+
+unsigned TotalStarts;        max. number of LevMar/Downhill pairs
+                             (default: 16)
+
+fVector  UpperLimits;        impose upper limits on parameters. Default: NULL
+fVector  LowerLimits         impose lower limits on parameters. Default: NULL
+
+void     (*Restrictions)(void);  user-defined function, implementing
+                             restrictions on the parameters which cannot be
+                             formulated as simple upper/lower limits.
+                             The function must check the whole parameter
+                             vector and edit the parameters as needed.
+                             Default: NULL
+
+
+The multifit functions, i.e. those which allow the treatment of several
+X-Y or X-Y-Z data sets simultaneously, need the data to be passed in
+structures named VF_EXPERIMENT for X-Y data and MF_EXPERIMENT for X-Y-Z
+data:
+
+In C/C++, VF_EXPERIMENT has the following fields:
+
+fVector X, Y               X and Y vectors
+fVector InvVar             inverse variances of the individual vector
+                           elements (needed only for the "with weights"
+                           functions)
+ui      size               the number of vector elements
+float   WeightOfExperiment individual weight to be assigned to the
+                           whole experiment (again needed only for
+                           the weighted variants)
+
+In C/C++, MF_EXPERIMENT has the following fields:
+
+fVector   X, Y             X and Y vectors (independent variables)
+fMatrix   MZ               measured data z=f(x,y)
+fMatrix   MInvVar          inverse variances of the individual matrix
+                           elements (needed only for the "with weights"
+                           functions)
+unsigned  htZ, lenZ        matrix dimensions
+float     WeightOfExperiment weight to be assigned to the whole
+                           experiment (again needed only for
+                           the weighted variants)
+
+In Pascal/Delphi, VF_EXPERIMENT and MF_EXPERIMENT are defined as follows:
+
+type VF_EXPERIMENT = record
+    X, Y, InvVar:       fVector;
+    size:               UInt;
+    WeightOfExperiment: Single;
+     (* InvVar and WeightOfExperiment are needed only for the
+        weighted variants of the multifit functions *)
+end;
+type PVF_EXPERIMENT = ^VF_EXPERIMENT;
+
+type MF_EXPERIMENT = record
+    X, Y:               fVector;
+    MZ, MInvVar:        fMatrix;
+    htZ, lenZ:          UInt;
+    WeightOfExperiment: Single;
+     (* MInvVar and WeightOfExperiment are needed only for the
+        weighted variants of the multifit functions *)
+end;
+type PMF_EXPERIMENT = ^MF_EXPERIMENT;
+
+
+14. Matrix Input and Output
+---------------------------
+
+The matrix input/output functions are all analogous to the corresponding
+vector functions
+
+MF_cprint   print a matrix to the screen. If necessary, rows are cut off
+            at the screen boundaries. If there are more rows than screen
+            lines, proper paging is applied.
+MF_print    print a matrix to the screen (without paging or row cut-off)
+MF_fprint   print a matrix in ASCII format to a stream.
+
+MF_store    store in binary format
+MF_recall   retrieve in binary format
+MF_write    write in ASCII format in a stream
+MF_read     read from an ASCII file.
+
+
+15. Graphical Representation of Matrices
+----------------------------------------
+
+True 3D-plotting functions will be included in future versions.
+For now, only color-density plots are available. In these plots, each
+data value is translated into a color value by linear interpolatiion
+between two colors, specified as mincolor and maxcolor.
+
+MF_xyzAutoDensityMap    Color density map for z=f(x,y) with automatic
+                        scaling of the X and Y axes and of the color
+                        density scale between mincolor and maxcolor.
+MF_xyzDataDensityMap    z=f(x,y) color density map, plotted into an
+                        existing axis frame, and using the color density
+                        scale set by the last call to an "AutoDensityMap"
+                        function.
+MF_zAutoDensityMap      Color density map for z=f(i,j) with automatic
+                        scaling of the X and Y axes and of the color
+                        density scale between mincolor and maxcolor.
+                        i and j are the indices in X and Y direction,
+                        respectively.
+MF_zDataDensityMap      Color density map for z=f(i,j), plotted into
+                        an existing axis frame, and using the color
+                        density scale set by the last call to an
+                        "AutoDensityMap" function.
+
+
+16. Alphabetical Syntax Reference
+---------------------------------
+This chapter summarizes, in alphabetical order, the syntax of MatrixLib
+functions. As usual, the MF_ or M_ prefix is neglected in the ordering
+of entries. The particles "Row_", "Rows_", "Col_", "Cols_", and "Dia_",
+however, are fully taken into account. For example, "MF_Rows_" functions
+will come after all "MF_Row_" functions. While most MatrixLib functions
+have the prefixes MF_ or M_, please note that some - notably the X-Y
+fitting functions - have the prefix VF_. These functions have been included
+into MatrixLib, because they use matrix methods. Their prefix is a reminder,
+however, that their functional behaviour is aimed at vectors more than on
+matrices, as, e.g., in VF_linfit.
+
+16.1 Syntax Reference for C/C++
+-------------------------------
+
+void    MF_addM( fMatrix MC, fMatrix MA, fMatrix MB,
+                 unsigned ht, unsigned len );
+void    MFs_addM( fMatrix MC, fMatrix MA, fMatrix MB,
+                  unsigned ht, unsigned len, float C );
+void    MF_addMT( fMatrix MC, fMatrix MA, fMatrix MB,
+                 unsigned ht, unsigned len );
+void    MFs_addMT( fMatrix MC, fMatrix MA, fMatrix MB,
+                  unsigned ht, unsigned len, float C );
+void    MF_autocorr( fMatrix MACorr, fMatrix MX,
+                     unsigned ht, unsigned len );
+void    M_CDtoCE( ceMatrix MCE, cdMatrix MCD, unsigned ht, unsigned len );
+void    M_CDtoCF( cfMatrix MCF, cdMatrix MCD, unsigned ht, unsigned len );
+void    M_CEtoCD( cdMatrix MCD, ceMatrix MCE, unsigned ht, unsigned len );
+void    M_CEtoCF( cfMatrix MCF, ceMatrix MCE, unsigned ht, unsigned len );
+void    M_CFtoCD( cdMatrix MCD, cfMatrix MCF, unsigned ht, unsigned len );
+void    M_CFtoCE( ceMatrix MCE, cfMatrix MCF, unsigned ht, unsigned len );
+void    MF_Col_addC( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iCol, float C );
+void    MF_Col_addV( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iCol, fVector X );
+void    MF_Col_delete( fMatrix MB, fMatrix MA,
+                        unsigned htA, unsigned lenA, unsigned iCol );
+void    MF_Col_divC( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iCol, float C );
+void    MF_Col_divrC( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iCol, float C );
+void    MF_Col_divrV( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iCol, fVector X );
+void    MF_Col_divV( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iCol, fVector X );
+void    MF_Col_equ0( fMatrix MA, unsigned ht, unsigned len,
+                     unsigned iCol );
+void    MF_Col_equC( fMatrix MA, unsigned ht, unsigned len,
+                     unsigned iCol, float C );
+void    MF_Col_equV( fMatrix MA, unsigned ht, unsigned len,
+                     unsigned iCol, fVector X );
+void    MF_Col_extract( fVector Y, fMatrix MA, unsigned ht, unsigned len,
+                        unsigned iCol );
+void    MF_Col_insert( fMatrix MB, fMatrix MA, unsigned htB,
+                        unsigned lenB, unsigned iCol, fVector X );
+void    MF_Col_mulC( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iCol, float C );
+void    MF_Col_mulV( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iCol, fVector X );
+void    MF_Col_subC( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iCol, float C );
+void    MF_Col_subrC( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iCol, float C );
+void    MF_Col_subV( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iCol, fVector X );
+void    MF_Col_subrV( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iCol, fVector X );
+void    MF_Cols_absmax( fVector Y, fMatrix MA, unsigned ht, unsigned len );
+void    MF_Cols_absmin( fVector Y, fMatrix MA, unsigned ht, unsigned len );
+void    MF_Cols_add( fMatrix MA, unsigned ht, unsigned len,
+                     unsigned destCol, unsigned sourceCol );
+void    MF_Cols_Cadd( fMatrix MA, unsigned ht, unsigned len,
+                      unsigned destCol, unsigned sourceCol, float C );
+void    MF_Cols_exchange( fMatrix MA, unsigned ht, unsigned len,
+                          unsigned i1, unsigned i2 );
+void    MF_Cols_lincomb( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned destCol,  float  destC,
+                         unsigned srceCol,  float  srceC );
+void    MF_Cols_max( fVector Y, fMatrix MA, unsigned ht, unsigned len );
+void    MF_Cols_min( fVector Y, fMatrix MA, unsigned ht, unsigned len );
+void    MF_Cols_prod(fVector Y, fMatrix MA, unsigned ht, unsigned len );
+void    MF_Cols_reflect( fMatrix MA, unsigned ht, unsigned len );
+void    MF_Cols_rotate( fMatrix MA, unsigned ht, unsigned len, int pos );
+void    MF_Cols_runprod( fMatrix MA, unsigned ht, unsigned len );
+void    MF_Cols_runsum( fMatrix MA, unsigned ht, unsigned len );
+void    MF_Cols_sub( fMatrix MA, unsigned ht, unsigned len,
+                     unsigned destCol, unsigned sourceCol );
+void    MF_Cols_sum( fVector Y, fMatrix MA, unsigned ht, unsigned len );
+void    MCF_conj( cfMatrix MB, cfMatrix MA, unsigned ht, unsigned len );
+void    MF_convolve( fMatrix MY, fMatrix MFlt, fMatrix MX,
+                     fMatrix MRsp, unsigned ht, unsigned len );
+void    MF_cprint( fMatrix MA, unsigned ht, unsigned len );
+void    MF_deconvolve( fMatrix MY, fMatrix MFlt, fMatrix MX,
+                       fMatrix MRsp, unsigned ht, unsigned len );
+float   MF_det( fMatrix MA, unsigned len );
+float   MF_Dia_absmax(  fMatrix MA, unsigned len );
+float   MF_Dia_absmin(  fMatrix MA, unsigned len );
+void    MF_Dia_addC( fMatrix MA, unsigned len, float C );
+void    MF_Dia_addV( fMatrix MA, unsigned len, fVector X );
+void    MF_Dia_divC( fMatrix MA, unsigned len, float C );
+void    MF_Dia_divrC( fMatrix MA, unsigned len, float C );
+void    MF_Dia_divrV( fMatrix MA, unsigned len, fVector X );
+void    MF_Dia_divV( fMatrix MA, unsigned len, fVector X );
+void    MF_Dia_equ0( fMatrix MA, unsigned len );
+void    MF_Dia_equC( fMatrix MA, unsigned len, float C );
+void    MF_Dia_equV( fMatrix MA, unsigned len, fVector X );
+void    MF_Dia_extract( fVector Y, fMatrix MA, unsigned len );
+float   MF_Dia_max(  fMatrix MA, unsigned len );
+float   MF_Dia_min(  fMatrix MA, unsigned len );
+void    MF_Dia_mulC( fMatrix MA, unsigned len, float C );
+void    MF_Dia_mulV( fMatrix MA, unsigned len, fVector X );
+float   MF_Dia_prod( fMatrix MA, unsigned len );
+void    MF_Dia_subrC( fMatrix MA, unsigned len, float C );
+void    MF_Dia_subrV( fMatrix MA, unsigned len, fVector X );
+void    MF_Dia_subC( fMatrix MA, unsigned len, float C );
+void    MF_Dia_subV( fMatrix MA, unsigned len, fVector X );
+float   MF_Dia_sum(  fMatrix MA, unsigned len );
+void    MF_divC( fMatrix MB, fMatrix MA, unsigned ht, unsigned len, float C );
+void    M_DtoE( eMatrix ME, dMatrix MD, unsigned ht, unsigned len );
+void    M_DtoF( fMatrix MF, dMatrix MD, unsigned ht, unsigned len );
+
+float   MF_element( fMatrix X, unsigned ht, unsigned len,
+                    unsigned m, unsigned n );
+void    MFsym_eigenvalues( fVector EigV, fMatrix EigM, fMatrix MA,
+                           unsigned len, int CalcEigenVec );
+void    MF_equ0( fMatrix MA, unsigned ht, unsigned len );
+void    MF_equ1( fMatrix MA, unsigned len );  /* identity matrix */
+void    MF_equm1( fMatrix MA, unsigned len );  /* neg. identity matrix */
+void    MF_equM( fMatrix MB, fMatrix MA, unsigned ht, unsigned len );
+void    M_EtoD( dMatrix MD, eMatrix ME, unsigned ht, unsigned len );
+void    M_EtoF( fMatrix MF, eMatrix ME, unsigned ht, unsigned len );
+void    MF_filter( fMatrix MY, fMatrix MX, fMatrix MFlt,
+                   unsigned ht, unsigned len );
+void    MF_FFT( fMatrix MY, fMatrix MX,
+                 unsigned ht, unsigned len, int dir );
+void    M_findDensityMapBounds( extended xmin, extended xmax,
+                                extended ymin, extended ymax,
+                                extended zmin, extended zmax,
+                                COLORREF mincolor, COLORREF maxcolor );
+void    MF_fprint( FILE  *stream, fMatrix MA, unsigned ht,
+                     unsigned len, unsigned linewidth );
+void    M_free( void **M );
+void    M_FtoD( dMatrix MD, fMatrix MF, unsigned ht, unsigned len );
+void    M_FtoE( eMatrix ME, fMatrix MF, unsigned ht, unsigned len );
+float   VF_getLinfitNeglect( void );
+void    VF_getNonlinfitOptions( VF_NONLINFITOPTIONS *Options );
+void    MF_Hanning( fMatrix MA, unsigned ht, unsigned len );
+int     MF_inv( fMatrix MInv, fMatrix MA, unsigned len );
+void    MF_LequU( fMatrix MA, unsigned len );
+void    MF_lincomb( fMatrix MC, fMatrix MA, fMatrix MB,
+                    unsigned ht, unsigned len, float CA, float CB );
+void    VF_linfit( fVector A, iVector AStatus, unsigned npars,
+                   fVector X, fVector Y, ui sizex,
+                   void (*funcs)(fVector BasFuncs, float x, unsigned nfuncs));
+void    VF_linfitwW( fVector A, fMatrix Covar, iVector AStatus,
+                 unsigned npars,
+                 fVector X, fVector Y, fVector InvVar, ui sizex,
+                 void (*funcs)(fVector BasFuncs, float x, unsigned nfuncs));
+void    MF_linfit( fVector A, iVector AStatus, unsigned npars,
+               fVector X, fVector Y, fMatrix MZ, unsigned htZ, unsigned lenZ,
+               void (*funcs)(fVector BasFuncs, float x, float y,
+                             unsigned nfuncs));
+void    MF_linfitwW( fVector A, fMatrix Covar, iVector AStatus,
+                     unsigned npars,
+                     fVector X, fVector Y, fMatrix MZ, fMatrix MInvVar,
+                     unsigned htZ, unsigned lenZ,
+                     void (*funcs)(fVector BasFuncs, float x, float y,
+                                   unsigned nfuncs));
+int     MF_LUdecompose( fMatrix MLU,  uiVector Ind, fMatrix MA,
+                            unsigned len );
+float   MF_LUdet( fMatrix MLU, unsigned len, int permut );
+float   MF_LUDgetEdit( void );
+int     MF_LUDresult( void );
+void    MF_LUDsetEdit( float Thresh );
+void    MF_LUimprove( fVector X, fVector B, fMatrix MA, fMatrix MLU,
+                          uiVector Ind, unsigned len );
+void    MF_LUinv( fMatrix MInv, fMatrix MLU, uiVector Ind,
+                      unsigned len );
+void    MF_LUsolve( fVector X, fMatrix MLU, fVector B, uiVector Ind,
+                        unsigned len );
+fMatrix MF_matrix( unsigned ht, unsigned len );
+fMatrix MF_matrix0( unsigned ht, unsigned len );
+void    MF_mulC( fMatrix MB, fMatrix MA, unsigned ht, unsigned len, float C );
+void    MF_mulM( fMatrix MC, fMatrix MA, fMatrix MB,
+                  unsigned htA, unsigned lenA, unsigned lenB );
+void    MFdia_mulM( fMatrix MC, fVector MADia, fMatrix MB,
+                    unsigned htB, unsigned lenB );
+void    VF_mulM( fVector Y, fVector X, fMatrix MA,
+                    unsigned htA, unsigned lenA );
+void    MF_mulMDia( fMatrix MC, fMatrix MA, fVector MBDia,
+                  unsigned htA, unsigned lenA );
+void    MF_mulMT( fMatrix MC, fMatrix MA, fMatrix MB,
+                  unsigned htA, unsigned lenA, unsigned htB );
+void    MFdia_mulMT( fMatrix MC, fVector MADia, fMatrix MB,
+                    unsigned htB, unsigned lenB );
+void    VF_mulMT( fVector Y, fVector X, fMatrix MA,
+                    unsigned htA, unsigned lenA );
+void    MF_mulV( fVector Y, fMatrix MA, fVector X,
+                    unsigned htA, unsigned lenA );
+void    MF_multiLinfit( fVector A, iVector AStatus, unsigned npars,
+                MF_EXPERIMENT *ListOfExperiments, unsigned nexperiments,
+                void (*funcs)(fVector BasFuncs, float x, float y,
+                              unsigned nfuncs, unsigned iexperiment) );
+void    VF_multiLinfit( fVector A, iVector AStatus, unsigned npars,
+                VF_EXPERIMENT *ListOfExperiments, unsigned nexperiments,
+                void (*funcs)(fVector BasFuncs, float x,
+                              unsigned nfuncs, unsigned iexperiment) );
+void    MF_multiLinfitwW( fVector A, fMatrix Covar,
+                iVector AStatus, unsigned npars,
+                MF_EXPERIMENT *ListOfExperiments, unsigned nexperiments,
+                void (*funcs)(fVector BasFuncs, float x, float y,
+                              unsigned nfuncs, unsigned nexperiment) );
+void    VF_multiLinfitwW( fVector A, fMatrix Covar,
+                iVector AStatus, unsigned npars,
+                VF_EXPERIMENT *ListOfExperiments, unsigned nexperiments,
+                void (*funcs)(fVector BasFuncs, float x,
+                              unsigned nfuncs, unsigned nexperiment) );
+float   MF_multiNonlinfit( fVector A, iVector AStatus, unsigned npars,
+               MF_EXPERIMENT _VFAR *ListOfExperiments, unsigned nexperiments,
+               void (*modelfunc)(fMatrix MZModel, unsigned htZ, unsigned lenZ,
+                                 fVector X, fVector Y, unsigned iexperiment),
+               void (*derivatives)(fMatrix dZdAi, unsigned htZ, unsigned lenZ,
+                                   fVector X, fVector Y, unsigned ipar,
+                                   unsigned iexperiment) );
+float   VF_multiNonlinfit( fVector A, iVector AStatus, unsigned npars,
+               VF_EXPERIMENT _VFAR *ListOfExperiments, unsigned nexperiments,
+               void (*modelfunc)(fVector YModel, fVector XModel,
+                                 ui size, unsigned iexperiment),
+               void (*derivatives)(fVector dYdAi,fVector X, ui size,
+                                 unsigned ipar, unsigned iexperiment) );
+
+void    VF_multiNonlinfit_autoDeriv( fVector dYdAi, fVector X, ui size,
+                                     unsigned ipar, unsigned iexperiment );
+void    MF_multiNonlinfit_autoDeriv(fMatrix dZdAi, unsigned htZ, unsigned lenZ,
+                                    fVector X, fVector Y,
+                                    unsigned ipar, unsigned iexperiment );
+void     MF_multiNonlinfit_getBestA( fVector ABest );
+void     VF_multiNonlinfit_getBestA( fVector ABest );
+float    MF_multiNonlinfit_getChi2( void );
+float    VF_multiNonlinfit_getChi2( void );
+int      MF_multiNonlinfit_getTestDir( void );
+int      VF_multiNonlinfit_getTestDir( void );
+unsigned MF_multiNonlinfit_getTestPar( void );
+unsigned VF_multiNonlinfit_getTestPar( void );
+unsigned MF_multiNonlinfit_getTestRun( void );
+unsigned VF_multiNonlinfit_getTestRun( void );
+void     MF_multiNonlinfit_stop( void );
+void     VF_multiNonlinfit_stop( void );
+
+float   MF_multiNonlinfitwW( fVector A, fMatrix Covar,
+                iVector AStatus, unsigned npars,
+                MF_EXPERIMENT  *ListOfExperiments, unsigned nexperiments,
+                void (*modelfunc)(fMatrix MZModel, unsigned htZ, unsigned lenZ,
+                                  fVector X, fVector Y, unsigned iexperiment ),
+                void (*derivatives)(fMatrix dZdAi, unsigned htZ, unsigned lenZ,
+                                    fVector X, fVector Y,
+                                    unsigned ipar, unsigned iexperiment) );
+float   VF_multiNonlinfitwW( fVector A, fMatrix Covar,
+                iVector AStatus, unsigned npars,
+                VF_EXPERIMENT *ListOfExperiments, unsigned nexperiments,
+                void (*modelfunc)(fVector YModel, fVector X, ui size,
+                                  unsigned iexperiment),
+                void (*derivatives)(fVector dYdAi, fVector X, ui size,
+                                  unsigned ipar, unsigned iexperiment) );
+void    MF_multiNonlinfitwW_autoDeriv( fMatrix dZdAi,
+                                    unsigned htZ, unsigned lenZ,
+                                    fVector X, fVector Y,
+                                    unsigned ipar, unsigned iexperiment );
+void    VF_multiNonlinfitwW_autoDeriv( fVector dYdAi, fVector X, ui size,
+                                       unsigned ipar, unsigned iexperiment );
+void     MF_multiNonlinfitwW_getBestA( fVector ABest );
+void     VF_multiNonlinfitwW_getBestA( fVector ABest );
+float    MF_multiNonlinfitwW_getChi2( void );
+float    VF_multiNonlinfitwW_getChi2( void );
+int      MF_multiNonlinfitwW_getTestDir( void );
+int      VF_multiNonlinfitwW_getTestDir( void );
+unsigned MF_multiNonlinfitwW_getTestPar( void );
+unsigned VF_multiNonlinfitwW_getTestPar( void );
+unsigned MF_multiNonlinfitwW_getTestRun( void );
+unsigned VF_multiNonlinfitwW_getTestRun( void );
+void     MF_multiNonlinfitwW_stop( void );
+void     VF_multiNonlinfitwW_stop( void );
+
+void    MF_neg( fMatrix MB, fMatrix MA, unsigned ht, unsigned len );
+
+void    M_nfree( unsigned n, ... );
+float   MF_nonlinfit( fVector A, iVector AStatus, unsigned npars,
+                    fVector X, fVector Y, fMatrix MZ, unsigned htZ, unsigned lenZ,
+                    void (*modelfunc)(fMatrix MZModel, unsigned htZ, unsigned lenZ, fVector X, fVector Y ),
+                    void (*derivatives)(fMatrix dZdAi, unsigned htZ, unsigned lenZ, fVector X, fVector Y, unsigned ipar) );
+float   MF_nonlinfitwW( fVector A, fMatrix Covar, iVector AStatus, unsigned npars,
+                    fVector X, fVector Y, fMatrix MZ, fMatrix MInvVar, unsigned htZ, unsigned lenZ,
+                    void (*modelfunc)(fMatrix MZModel, unsigned htZ, unsigned lenZ, fVector X, fVector Y ),
+                    void (*derivatives)(fMatrix dZdAi, unsigned htZ, unsigned lenZ, fVector X, fVector Y, unsigned ipar) );
+float   VF_nonlinfit( fVector A, iVector AStatus, unsigned npars,
+                      fVector X, fVector Y, ui sizex,
+                      void (*modelfunc)(fVector YModel, fVector XModel, ui size),
+                      void (*derivatives)(fVector dYdAi,fVector X, ui size, unsigned iPar) );
+float   VF_nonlinfitwW( fVector A, fMatrix Covar, iVector AStatus, unsigned npars,
+                    fVector X, fVector Y, fVector InvVar, ui sizex,
+                    void (*modelfunc)(fVector YModel, fVector X, ui size),
+                    void (*derivatives)(fVector dYdAi, fVector X, ui size, unsigned i) );
+void    MF_outerprod( fMatrix MA, fVector X,  fVector Y,
+                      unsigned ht, unsigned len );
+void    MF_Parzen( fMatrix MA, unsigned ht, unsigned len );
+float * MF_Pelement( fMatrix X, unsigned ht, unsigned len,
+                     unsigned m, unsigned n );
+void    VF_polyfit( fVector A, unsigned deg, fVector X, fVector Y, ui sizex );
+void    VF_polyfitwW( fVector A, fMatrix Covar, unsigned deg,
+                      fVector X, fVector Y, fVector InvVar, ui sizex );
+void    MF_print( fMatrix MA, unsigned ht, unsigned len );
+void    MF_read( fMatrix X, unsigned ht, unsigned len, FILE  *stream );
+void    MF_recall( fMatrix MA, unsigned ht, unsigned len, FILE *stream);
+void    MF_Row_addC( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iRow, float C );
+void    MF_Row_addV( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iRow, fVector X );
+void    MF_Row_delete( fMatrix MB, fMatrix MA,
+                        unsigned htA, unsigned lenA, unsigned iRow );
+void    MF_Row_divC( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iRow, float C );
+void    MF_Row_divrC( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iRow, float C );
+void    MF_Row_divrV( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iRow, fVector X );
+void    MF_Row_divV( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iRow, fVector X );
+void    MF_Row_equ0( fMatrix MA, unsigned ht, unsigned len,
+                     unsigned iRow );
+void    MF_Row_equC( fMatrix MA, unsigned ht, unsigned len,
+                     unsigned iRow, float C );
+void    MF_Row_equV( fMatrix MA, unsigned ht, unsigned len,
+                     unsigned iRow, fVector X );
+void    MF_Row_extract( fVector Y, fMatrix MA, unsigned ht, unsigned len,
+                        unsigned iRow );
+void    MF_Row_insert( fMatrix MB, fMatrix MA, unsigned htB,
+                        unsigned lenB, unsigned iRow, fVector X );
+void    MF_Row_mulC( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iRow, float C );
+void    MF_Row_mulV( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iRow, fVector X );
+void    MF_Row_subC( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iRow, float C );
+void    MF_Row_subrC( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iRow, float C );
+void    MF_Row_subrV( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iRow, fVector X );
+void    MF_Row_subV( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned iRow, fVector X );
+void    MF_Rows_absmax( fVector Y, fMatrix MA, unsigned ht, unsigned len );
+void    MF_Rows_absmin( fVector Y, fMatrix MA, unsigned ht, unsigned len );
+void    MF_Rows_add( fMatrix MA, unsigned ht, unsigned len,
+                     unsigned destRow, unsigned sourceRow );
+void    MF_Rows_Cadd( fMatrix MA, unsigned ht, unsigned len,
+                      unsigned destRow, unsigned sourceRow, float C );
+void    MF_Rows_exchange( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned i1, unsigned i2 );
+void    MF_Rows_lincomb( fMatrix MA, unsigned ht, unsigned len,
+                         unsigned destRow,  float  destC,
+                         unsigned srceRow,  float  srceC );
+void    MF_Rows_max( fVector Y, fMatrix MA, unsigned ht, unsigned len );
+void    MF_Rows_min( fVector Y, fMatrix MA, unsigned ht, unsigned len );
+void    MF_Rows_prod(fVector Y, fMatrix MA, unsigned ht, unsigned len );
+void    MF_Rows_reflect( fMatrix MA, unsigned ht, unsigned len );
+void    MF_Rows_rotate( fMatrix MA, unsigned ht, unsigned len, int pos );
+void    MF_Rows_runprod( fMatrix MA, unsigned ht, unsigned len );
+void    MF_Rows_runsum( fMatrix MA, unsigned ht, unsigned len );
+void    MF_Rows_sub( fMatrix MA, unsigned ht, unsigned len,
+                     unsigned destRow, unsigned sourceRow );
+void    MF_Rows_sum( fVector Y, fMatrix MA, unsigned ht, unsigned len );
+int     MF_safeSolve( fVector X, fMatrix MA, fVector B, unsigned len );
+void    M_setDensityBounds(  extended zmin, extended zmax,
+                             COLORREF mincolor, COLORREF maxcolor );
+void    M_setDensityMapBounds(  extended xmin, extended xmax,
+                                extended ymin, extended ymax,
+                                extended zmin, extended zmax,
+                                COLORREF mincolor, COLORREF maxcolor );
+
+void    VF_setLinfitNeglect( float Thresh );
+void    VF_setNonlinfitOptions( VF_NONLINFITOPTIONS *Options );
+void    MF_setWriteFormat( char *FormatString );
+void    MF_setWriteSeparate( char *SepString );
+int     MF_solve( fVector X, fMatrix MA, fVector B, unsigned len );
+int     MF_solveBySVD( fVector X, fMatrix MA, fVector B,
+                           unsigned htA, unsigned lenA );
+void    MF_spectrum( fMatrix MSpec, unsigned htSpec, unsigned lenSpec,
+                     fMatrix MX, unsigned htX, unsigned lenX,
+                     fMatrix MWin );
+void    MF_store( FILE *str, fMatrix MA, unsigned ht, unsigned len );
+void    MF_subM( fMatrix MC, fMatrix MA, fMatrix MB,
+                 unsigned ht, unsigned len );
+void    MFs_subM( fMatrix MC, fMatrix MA, fMatrix MB,
+                  unsigned ht, unsigned len, float C );
+void    MF_subMT( fMatrix MC, fMatrix MA, fMatrix MB,
+                 unsigned ht, unsigned len );
+void    MFs_subMT( fMatrix MC, fMatrix MA, fMatrix MB,
+                  unsigned ht, unsigned len, float C );
+void    MF_subrMT( fMatrix MC, fMatrix MA, fMatrix MB,
+                 unsigned ht, unsigned len );
+void    MFs_subrMT( fMatrix MC, fMatrix MA, fMatrix MB,
+                  unsigned ht, unsigned len, float C );
+void    MF_submatrix( fMatrix MSub,
+                      unsigned subHt,  unsigned subLen,
+                      fMatrix MSrce,
+                      unsigned srceHt,  unsigned srceLen,
+                      unsigned firstRowInCol,  unsigned sampInCol,
+                      unsigned firstColInRow,  unsigned sampInRow );
+
+void    MF_submatrix_equM( fMatrix MDest,
+                           unsigned destHt,  unsigned destLen,
+                           unsigned firstRowInCol,  unsigned sampInCol,
+                           unsigned firstColInRow,  unsigned sampInRow,
+                           fMatrix MSrce,
+                           unsigned srceHt,  unsigned srceLen );
+int     MF_SVdecompose( fMatrix MU, fMatrix MV, fVector W, fMatrix MA,
+                           unsigned htA, unsigned lenA );
+float   MF_SVDgetEdit( void );
+void    MF_SVDsetEdit( float Thresh );
+void    MF_SVsolve( fVector X, fMatrix MU, fMatrix MV, fVector W,
+                       fVector B, unsigned htU, unsigned lenU );
+void    MF_TmulM( fMatrix MC, fMatrix MA, fMatrix MB,
+                  unsigned htA, unsigned lenA, unsigned lenB );
+void    MF_TmulMDia( fMatrix MC, fMatrix MA, fVector MBDia,
+                  unsigned htA, unsigned lenA );
+void    MF_TmulMT( fMatrix MC, fMatrix MA, fMatrix MB,
+                  unsigned htA, unsigned lenA, unsigned htB );
+void    MF_TmulV( fVector Y, fMatrix MA, fVector X,
+                  unsigned htA, unsigned lenA );
+void    MF_transpose( fMatrix MTr, fMatrix MA,
+                       unsigned htTr, unsigned lenTr );
+void    MF_Trd_equM( fMatrix MA, fMatrix MTrd, unsigned len );
+void    MF_Trd_extract( fMatrix MTrd, fMatrix MA, unsigned len );
+void    MF_UequL( fMatrix MA, unsigned len );
+void    MF_Welch( fMatrix MA, unsigned ht, unsigned len );
+void    MF_write( FILE  *stream, fMatrix X, unsigned ht, unsigned len  );
+void    MF_xcorr( fMatrix MXCorr, fMatrix MX, fMatrix MY,
+                     unsigned ht, unsigned len );
+void    MF_xyzAutoDensityMap( fVector X, fVector Y, fMatrix MZ,
+                              unsigned ht, unsigned len,
+                              COLORREF mincolor, COLORREF maxcolor );
+void    MF_xyzDataDensityMap( fVector X, fVector Y, fMatrix MZ,
+                              unsigned ht, unsigned len );
+void    MFzAutoDensityMap( fMatrix MZ, unsigned ht, unsigned len,
+                             COLORREF mincolor, COLORREF maxcolor );
+void    MFzDataDensityMap( fMatrix MZ, unsigned ht, unsigned len );
+
+
+16.2 Syntax Reference for Pascal/Delphi
+---------------------------------------
+
+procedure    MF_2DArrayToMatrix( MF:fMatrix; DelphiArr:f2DArray; ht,len:UInt);
+                (*  only for Delphi 4 or higher  *)
+
+procedure    MF_addM( MC, MA, MB:fMatrix MC; ht, len:UInt );
+procedure    MFs_addM( MC, MA, MB:fMatrix MC; ht, len:UInt; C:Single );
+procedure    MF_addMT( MC, MA, MB:fMatrix MC; ht, len:UInt );
+procedure    MFs_addMT( MC, MA, MB:fMatrix MC; ht, len:UInt; C:Single );
+procedure    MF_autocorr( MACorr, MX:fMatrix; ht, len:UInt );
+procedure    M_CDtoCE( MCE:ceMatrix; MCD:cdMatrix; ht, len:UInt );
+procedure    M_CDtoCF( MCF:cfMatrix; MCD:cdMatrix; ht, len:UInt );
+procedure    M_CEtoCD( MCD:cdMatrix; MCE:ceMatrix; ht, len:UInt );
+procedure    M_CEtoCF( MCF:cfMatrix; MCE:ceMatrix; ht, len:UInt );
+procedure    M_CFtoCD( MCD:cdMatrix; MCF:cfMatrix; ht, len:UInt );
+procedure    M_CFtoCE( MCE:ceMatrix; MCF:cfMatrix; ht, len:UInt );
+procedure    MF_Col_addC( MA:fMatrix; ht, len, iCol:UInt; C:Single );
+procedure    MF_Col_addV( MA:fMatrix; ht, len, iCol:UInt; X:fVector );
+procedure    MF_Col_delete( MB, MA:fMatrix; htA, lenA, iCol:UInt );
+procedure    MF_Col_divC( MA:fMatrix; ht, len, iCol:UInt; C:Single );
+procedure    MF_Col_divrC( MA:fMatrix; ht, len, iCol:UInt; C:Single );
+procedure    MF_Col_divrV( MA:fMatrix; ht, len, iCol:UInt; X:fVector );
+procedure    MF_Col_divV( MA:fMatrix; ht, len, iCol:UInt; X:fVector );
+procedure    MF_Col_equ0( MA:fMatrix; ht, len, iCol:UInt );
+procedure    MF_Col_equC( MA:fMatrix; ht, len, iCol:UInt; C:Single );
+procedure    MF_Col_equV( MA:fMatrix; ht, len, iCol:UInt; X:fVector );
+procedure    MF_Col_extract( Y:fVector; MA:fMatrix; ht, len, iCol:UInt );
+procedure    MF_Col_insert( MB, MA:fMatrix; htB, lenB, iCol:UInt; X:fVector );
+procedure    MF_Col_mulC( MA:fMatrix; ht, len, iCol:UInt; C:Single );
+procedure    MF_Col_mulV( MA:fMatrix; ht, len, iCol:UInt; X:fVector );
+procedure    MF_Col_subC( MA:fMatrix; ht, len, iCol:UInt; C:Single );
+procedure    MF_Col_subrC( MA:fMatrix; ht, len, iCol:UInt; C:Single );
+procedure    MF_Col_subV( MA:fMatrix; ht, len, iCol:UInt; X:fVector );
+procedure    MF_Col_subrV( MA:fMatrix; ht, len, iCol:UInt; X:fVector );
+procedure    MF_Cols_absmax( Y:fVector; MA:fMatrix; ht, len:UInt );
+procedure    MF_Cols_absmin( Y:fVector; MA:fMatrix; ht, len:UInt );
+procedure    MF_Cols_add( MA:fMatrix; ht, len, destCol, sourceCol:UInt );
+procedure    MF_Cols_Cadd( MA:fMatrix; ht, len, destCol, sourceCol:UInt;
+                           C:Single );
+procedure    MF_Cols_exchange( MA:fMatrix; ht, len, i1, i2:UInt );
+procedure    MF_Cols_lincomb( MA:fMatrix; ht, len:UInt;
+                         destCol:UInt;  destC:Single;
+                         srceCol:Uint;  srceC:Single );
+procedure    MF_Cols_max( Y:fVector; MA:fMatrix; ht, len:UInt );
+procedure    MF_Cols_min( Y:fVector; MA:fMatrix; ht, len:UInt );
+procedure    MF_Cols_prod(Y:fVector; MA:fMatrix; ht, len:UInt );
+procedure    MF_Cols_reflect( MA:fMatrix; ht, len:UInt );
+procedure    MF_Cols_rotate( MA:fMatrix; ht, len:UInt; pos:Integer );
+procedure    MF_Cols_runprod( MA:fMatrix; ht, len:UInt );
+procedure    MF_Cols_runsum( MA:fMatrix; ht, len:UInt );
+procedure    MF_Cols_sub( MA:fMatrix; ht, len, destCol, sourceCol:UInt; );
+procedure    MF_Cols_sum( Y:fVector; MA:fMatrix; ht, len:UInt );
+procedure    MCF_conj( MB, MA:cfMatrix; ht, len:UInt );
+procedure    MF_convolve( MY, MFlt, MX, MRsp:fMatrix; ht, len:UInt );
+procedure    MF_cprint( MA:fMatrix; ht, len:UInt );
+procedure    MF_deconvolve( MY, MFlt, MX, MRsp:fMatrix; ht, len:UInt );
+function     MF_det( MA:fMatrix; len:UInt ):Single;
+function     MF_Dia_absmax(  MA:fMatrix; len:UInt ):Single;
+function     MF_Dia_absmin(  MA:fMatrix; len:UInt ):Single;
+procedure    MF_Dia_addC( MA:fMatrix; len:UInt; C:Single );
+procedure    MF_Dia_addV( MA:fMatrix; len:UInt; X:fVector );
+procedure    MF_Dia_divC( MA:fMatrix; len:UInt; C:Single );
+procedure    MF_Dia_divrC( MA:fMatrix; len:UInt; C:Single );
+procedure    MF_Dia_divrV( MA:fMatrix; len:UInt; X:fVector );
+procedure    MF_Dia_divV( MA:fMatrix; len:UInt; X:fVector );
+procedure    MF_Dia_equ0( MA:fMatrix; len:UInt );
+procedure    MF_Dia_equC( MA:fMatrix; len:UInt; C:Single );
+procedure    MF_Dia_equV( MA:fMatrix; len:UInt; X:fVector );
+procedure    MF_Dia_extract( Y:fVector; MA:fMatrix; len:UInt );
+function     MF_Dia_max(  MA:fMatrix; len:UInt ):Single;
+function     MF_Dia_min(  MA:fMatrix; len:UInt ):Single;
+procedure    MF_Dia_mulC( MA:fMatrix; len:UInt; C:Single );
+procedure    MF_Dia_mulV( MA:fMatrix; len:UInt; X:fVector );
+function     MF_Dia_prod( MA:fMatrix; len:UInt ):Single;
+procedure    MF_Dia_subrC( MA:fMatrix; len:UInt; C:Single );
+procedure    MF_Dia_subrV( MA:fMatrix; len:UInt; X:fVector );
+procedure    MF_Dia_subC( MA:fMatrix; len:UInt; C:Single );
+procedure    MF_Dia_subV( MA:fMatrix; len:UInt; X:fVector );
+function     MF_Dia_sum(  MA:fMatrix; len:UInt ):Single;
+procedure    MF_divC( MB, MA:fMatrix; ht, len:UInt; C:Single );
+procedure    M_DtoE( ME:eMatrix; MD:dMatrix; ht, len:UInt );
+procedure    M_DtoF( MF:fMatrix; MD:dMatrix; ht, len:UInt );
+
+function     MF_element( MA:fMatrix; ht, len, m, n:UInt );
+procedure    MFsym_eigenvalues( EigVals:fVector; EigVecs, MA:fMatrix;
+                           len:UInt; CalcEigenVec:IntBool );
+procedure    MF_equ0( MA:fMatrix; ht, len:UInt );
+procedure    MF_equ1( MA:fMatrix; len:UInt );  (* identity matrix *)
+procedure    MF_equm1( MA:fMatrix; len:UInt );  (* neg. identity matrix *)
+procedure    MF_equM( MB, MA:fMatrix; ht, len:UInt );
+procedure    M_EtoD( MD:dMatrix; ME:eMatrix; ht, len:UInt );
+procedure    M_EtoF( MF:fMatrix; ME:eMatrix; ht, len:UInt );
+procedure    MF_filter( MY, MX, MFlt:fMatrix; ht, len:UInt );
+procedure    MF_FFT( MY, MX:fMatrix; ht, len:UInt; dir:Integer );
+procedure    M_findDensityMapBounds( xmin, xmax, ymin, ymax,
+                                     zmin, zmax:    Extended;
+                                     mincolor, maxcolor: COLORREF );
+{Delphi version:}
+    procedure MF_fprint( var Stream:TextFile; MA:fMatrix;
+                         ht, len, linewidth:UInt );
+{Turbo Pascal version:}
+    procedure MF_fprint( var Stream:Text; MA:fMatrix;
+                         ht, len, linewidth:UInt );
+
+procedure    M_free( M:Pointer );
+procedure    M_FtoD( MD:dMatrix; MF:fMatrix; ht, len:UInt );
+procedure    M_FtoE( ME:eMatrix; MF:fMatrix; ht, len:UInt );
+function     VF_getLinfitNeglect:Single;
+procedure    MF_Hanning( MA:fMatrix; ht, len:UInt );
+function     MF_inv( MInv, MA:fMatrix; len:UInt ):IntBool;
+procedure    MF_LequU( MA:fMatrix; len:UInt );
+procedure    MF_lincomb( MC, MA, MB:fMatrix; ht, len:UInt; CA, CB:Single );
+procedure    VF_linfit( A:fVector; AStatus:iVector; npars:UInt;
+                   X, Y:fVector; sizex:UInt; funcs:Pointer );
+procedure    VF_linfitwW( A:fVector; Covar:fMatrix; AStatus:iVector;
+                 npars:UInt;
+                 X, Y, InvVar:fVector; sizex:UInt; funcs:Pointer );
+procedure    MF_linfit( A:fVector; AStatus:iVector; npars:UInt;
+               X, Y:fVector; MZ:fMatrix; htZ, lenZ:UInt; funcs:Pointer );
+procedure    MF_linfitwW( A:fVector; Covar:fMatrix; AStatus:iVector;
+                     npars:UInt;
+                     X, Y:fVector; MZ, MInvVar:fMatrix;
+                     htZ, lenZ:UInt; funcs:Pointer );
+function     MF_LUdecompose( MLU:fMatrix; Ind:uVector; MA:fMatrix;
+                     len:UInt ):Integer;
+function     MF_LUdet( MLU:fMatrix; len:UInt; permut:Integer ): Single;
+function     MF_LUDgetEdit: Single;
+function     MF_LUDresult: IntBool; (* returns FALSE, if MF_LUdecompose was
+                   successful; returns TRUE, if MA was (nearly) singular. *)
+procedure    MF_LUDsetEdit( Thresh:Single ); 
+procedure    MF_LUimprove( X, B:fVector; MA, MLU:fMatrix; Ind:uVector;
+                           len:UInt );
+procedure    MF_LUinv( MInv, MLU:fMatrix; Ind:uVector; len:UInt );
+procedure    MF_LUsolve( X:fVector; MLU:fMatrix; B:fVector; Ind:uVector;
+                         len:UInt );
+function     MF_matrix(  ht, len:UInt ): fMatrix;
+function     MF_matrix0( ht, len:UInt ): fMatrix;
+procedure    MF_MatrixTo2DArray( DelphiArr:f2DArray; MF:fMatrix; ht,len:UInt);
+                 (*  only for Delphi 4 or higher *)
+
+procedure    MF_mulC( MB, MA:fMatrix; ht, len:UInt; C:Single );
+procedure    MF_mulM( MC, MA, MB:fMatrix; htA, lenA, lenB:UInt );
+procedure    MFdia_mulM(  MC:fMatrix; MADia: fVector; MB:fMatrix;
+                          htB, lenB:UInt );
+procedure    VF_mulM( Y, X:fVector; MA:fMatrix; htA, lenA:UInt );
+procedure    MF_mulMDia( MC, MA:fMatrix; MBDia:fVector; htA, lenA:UInt );
+procedure    MF_mulMT( MC, MA, MB:fMatrix; htA, lenA, htB:UInt );
+procedure    MFdia_mulMT( MC:fMatrix; MADia: fVector; MB:fMatrix;
+                          htB, lenB:UInt );
+procedure    VF_mulMT( Y, X:fVector; MA:fMatrix; htA, lenA:UInt );
+procedure    VF_multiLinfit( A:fVector; ParStatus:iVector; nParameters:UInt;
+                ListOfExperiments: PVF_EXPERIMENT; nexperiments:UInt;
+                funcs: Pointer );
+procedure    VF_multiLinfitwW( A:fVector; Covar:fMatrix;
+                ParStatus:iVector; nParameters:UInt;
+                ListOfExperiments: PVF_EXPERIMENT; nexperiments:UInt;
+                funcs: Pointer );
+procedure    MF_multiLinfit( A:fVector; ParStatus:iVector; nParameters:UInt;
+                ListOfExperiments: PMF_EXPERIMENT; nexperiments:UInt;
+                funcs: Pointer );
+procedure    MF_multiLinfitwW( A:fVector; Covar:fMatrix;
+                ParStatus:iVector; nParameters:UInt;
+                ListOfExperiments: PMF_EXPERIMENT; nexperiments:UInt;
+                funcs: Pointer );
+procedure    MF_mulV( Y:fVector; MA:fMatrix; X:fVector; htA, lenA:UInt );
+procedure    MF_neg( MB, MA:fMatrix; ht, len:UInt );
+procedure    MF_outerprod( MA:fMatrix; X, Y:fVector; ht, len:UInt );
+procedure    MF_Parzen( MA:fMatrix; ht, len:UInt );
+function     MF_Pelement( MA:fMatrix; ht, len, m, n:UInt ): PSingle;
+procedure    VF_polyfit( A:fVector; deg:UInt; X, Y:fVector; sizex:UInt );
+procedure    VF_polyfitwW( A:fVector; Covar:fMatrix; deg:UInt,
+                      X, Y, InvVar:fVector; sizex:UInt );
+procedure    MF_print( MA:fMatrix; ht, len:UInt );
+{Delphi version:}
+    procedure MF_read( MA:fMatrix; ht, len:UInt; var Stream:TextFile );
+{Turbo Pascal version:}
+    procedure MF_read( MA:fMatrix; ht, len:UInt; var Stream:Text );
+
+procedure    MF_recall( MA:fMatrix; ht, len:UInt; var Stream:FILE );
+procedure    MF_Row_addC( MA:fMatrix; ht, len, iRow:UInt; C:Single );
+procedure    MF_Row_addV( MA:fMatrix; ht, len, iRow:UInt; X:fVector );
+procedure    MF_Row_delete( MB, MA:fMatrix; htA, lenA, iRow:UInt );
+procedure    MF_Row_divC( MA:fMatrix; ht, len, iRow:UInt; C:Single );
+procedure    MF_Row_divrC( MA:fMatrix; ht, len, iRow:UInt; C:Single );
+procedure    MF_Row_divrV( MA:fMatrix; ht, len, iRow:UInt; X:fVector );
+procedure    MF_Row_divV( MA:fMatrix; ht, len, iRow:UInt; X:fVector );
+procedure    MF_Row_equ0( MA:fMatrix; ht, len, iRow:UInt );
+procedure    MF_Row_equC( MA:fMatrix; ht, len, iRow:UInt; C:Single );
+procedure    MF_Row_equV( MA:fMatrix; ht, len, iRow:UInt; X:fVector );
+procedure    MF_Row_extract( Y:fVector; MA:fMatrix; ht, len, iRow:UInt );
+procedure    MF_Row_insert( MB, MA:fMatrix; htB, lenB, iRow:UInt; X:fVector );
+procedure    MF_Row_mulC( MA:fMatrix; ht, len, iRow:UInt; C:Single );
+procedure    MF_Row_mulV( MA:fMatrix; ht, len, iRow:UInt; X:fVector );
+procedure    MF_Row_subC( MA:fMatrix; ht, len, iRow:UInt; C:Single );
+procedure    MF_Row_subrC( MA:fMatrix; ht, len, iRow:UInt; C:Single );
+procedure    MF_Row_subV( MA:fMatrix; ht, len, iRow:UInt; X:fVector );
+procedure    MF_Row_subrV( MA:fMatrix; ht, len, iRow:UInt; X:fVector );
+procedure    MF_Rows_absmax( Y:fVector; MA:fMatrix; ht, len:UInt );
+procedure    MF_Rows_absmin( Y:fVector; MA:fMatrix; ht, len:UInt );
+procedure    MF_Rows_add( MA:fMatrix; ht, len, destRow, sourceRow:UInt );
+procedure    MF_Rows_Cadd( MA:fMatrix; ht, len, destRow, sourceRow:UInt;
+                           C:Single );
+procedure    MF_Rows_exchange( MA:fMatrix; ht, len, i1, i2:UInt );
+procedure    MF_Rows_lincomb( MA:fMatrix; ht, len:UInt;
+                         destRow:UInt;  destC:Single;
+                         srceRow:Uint;  srceC:Single );
+procedure    MF_Rows_max( Y:fVector; MA:fMatrix; ht, len:UInt );
+procedure    MF_Rows_min( Y:fVector; MA:fMatrix; ht, len:UInt );
+procedure    MF_Rows_prod(Y:fVector; MA:fMatrix; ht, len:UInt );
+procedure    MF_Rows_reflect( MA:fMatrix; ht, len:UInt );
+procedure    MF_Rows_rotate( MA:fMatrix; ht, len:UInt; pos:Integer );
+procedure    MF_Rows_runprod( MA:fMatrix; ht, len:UInt );
+procedure    MF_Rows_runsum( MA:fMatrix; ht, len:UInt );
+procedure    MF_Rows_sub( MA:fMatrix; ht, len, destRow, sourceRow:UInt; );
+procedure    MF_Rows_sum( Y:fVector; MA:fMatrix; ht, len:UInt );
+function     MF_safeSolve( X:fVector; MA:fMatrix; B:fVector;
+                          len:UInt ):Integer;
+
+procedure    M_setDensityMapBounds(  xmin, xmax, ymin, ymax,
+                                     zmin, zmax:    Extended;
+                                     mincolor, maxcolor: COLORREF );
+procedure    M_setDensityBounds(  zmin, zmax: Extended;
+                                  mincolor, maxcolor: COLORREF );
+
+procedure    VF_setLinfitNeglect( Thresh:Single );
+                (* neglect A[i]=0, if significance smaller than Thresh *)
+procedure    MF_setWriteSeparate( SepString:PChar );
+function     MF_solve( X:fVector; MA:fMatrix; B:fVector; len:UInt ): IntBool;
+function     MF_solveBySVD( X:fVector; MA:fMatrix; B:fVector;
+                       htA, lenA:UInt ): IntBool;
+procedure    MF_spectrum( MSpec:fMatrix; htSpec, lenSpec:UInt;
+                           MX:fMatrix; htX, lenX:UInt; MWin:fMatrix );
+procedure    MF_store(  var Stream:FILE; MA:fMatrix; ht, len:UInt );
+procedure    MF_subM( MC, MA, MB:fMatrix; ht, len:UInt );
+procedure    MFs_subM( MC, MA, MB:fMatrix; ht, len:UInt; C:Single );
+procedure    MF_subMT( MC, MA, MB:fMatrix; ht, len:UInt );
+procedure    MFs_subMT( MC, MA, MB:fMatrix; ht, len:UInt; C:Single );
+procedure    MF_subrMT( MC, MA, MB:fMatrix; ht, len:UInt );
+procedure    MFs_subrMT( MC, MA, MB:fMatrix; ht, len:UInt; C:Single );
+procedure    MF_submatrix( MSub:fMatrix; subHt, subLen:UInt;
+                   MSrce:fMatrix; srceHt, srceLen:UInt;
+                   firstRowInCol, sampInCol, firstColInRow, sampInRow:UInt );
+procedure    MF_submatrix_equM( MDest:fMatrix; destHt, destLen,
+                   firstRowInCol, sampInCol, firstColInRow, sampInRow:UInt;
+                   MSrce:fMatrix; srceHt, srceLen:UInt );
+
+function     MF_SVdecompose( MU, MV:fMatrix; W:fVector; MA:fMatrix;
+                             htA, lenA:UInt ): IntBool;
+function     MF_SVDgetEdit: Single;
+procedure    MF_SVDsetEdit( Thresh:Single );
+procedure    MF_SVsolve( X:fVector; MU, MV:fMatrix; W, B:fVector;
+                         htU, lenU:UInt );
+procedure    MF_TmulM( MC, MA, MB:fMatrix;  htA, lenA, lenB:UInt );
+procedure    MF_TmulMDia( MC, MA:fMatrix; MBDia:fVector; htA, lenA:UInt );
+procedure    MF_TmulMT( MC, MA, MB:fMatrix; htA, lenA, htB:UInt );
+procedure    MF_TmulV( Y:fVector; MA:fMatrix; X:fVector; htA, lenA:UInt );
+procedure    MF_transpose( MTr, MA:fMatrix; htTr, lenTr:UInt );
+procedure    MF_Trd_equM( MA, MTrd:fMatrix; len:UInt );
+procedure    MF_Trd_extract( MTrd, MA:fMatrix; len:UInt );
+procedure    MF_UequL( MA:fMatrix; len:UInt );
+procedure    MF_Welch( MA:fMatrix; ht, len:UInt );
+{Delphi version:}
+    procedure MF_write( var Stream:TextFile; MA:fMatrix; ht, len:UInt );
+{Turbo Pascal version:}
+    procedure MF_write( var Stream:Text; MA:fMatrix; ht, len:UInt );
+
+procedure    MF_xcorr( MXCorr, MX, MY:fMatrix; ht, len:UInt );
+procedure    MF_xyzAutoDensityMap( X, Y:fVector; MZ:fMatrix; ht, len: UInt;
+                                   mincolor, maxcolor: COLORREF );
+procedure    MF_xyzDataDensityMap( X, Y:fVector; MZ:fMatrix;
+                                   ht, len: UInt );
+procedure    MF_zAutoDensityMap( MZ:fMatrix; ht, len: UInt;
+                                 mincolor, maxcolor: COLORREF );
+procedure    MF_zDataDensityMap( MZ:fMatrix; ht, len: UInt );
+
+
+****************************************************************************
+*                                                                          *
+*******                      E  N  D                                 *******
+*                                                                          *
+****************************************************************************
+
+Copyright for OptiVec software and documentation
+(C) 1996-2000 Martin Sander.
+All rights reserved!

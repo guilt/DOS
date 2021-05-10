@@ -1,0 +1,37 @@
+Coding Standards for pakke
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+$Id: coding.txt,v 1.6 2002/06/23 20:28:30 richdawe Exp $
+
+- Use 'const' where appropriate on function arguments, e.g. strings,
+  integers.
+
+- When submitting diffs, please use either '-C3 -p' or '-u -p'. '-C3'
+  generates a context diff with three lines of context; '-u' generates
+  a unified diff; '-p' includes the function name in each section of
+  the diff, which is useful when seeing what will change.
+
+- Please follow the style of the existing code.
+
+- Please write comments.
+
+- Don't use tab to line up code. Tabs are evil, because every text editor
+  seems to treat them differently. Use spaces instead.
+
+- Use a style similar to the GNU style. Indent the line following a brace
+  by two spaces. I recommend using GNU emacs's default C mode style for
+  indentation.
+
+- Use '*' to line up multi-line comments, e.g.
+
+  /*
+   * This
+   * is
+   * a
+   * comment.
+   */
+
+- Put a CVS Id string in each file under CVS control, like the one near
+  the start of this file.
+
+Richard Dawe <rich@phekda.freeserve.co.uk> 2002-06-23

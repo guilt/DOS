@@ -1,0 +1,30 @@
+#
+# DSM for lacheck 1.26 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: lchk126b
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: lacheck
+version: 1.26
+type: binaries
+manifest: lchk126b
+sources-dsm: lchk126s
+
+short-description: Lacheck, a consistency checker for LaTeX documents
+license: GNU General Public License, Version 1
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: lchk126b.zip
+
+pre-install-readme: gnu/web2c-7.2/djgpp/README
+
+requires: texmflib

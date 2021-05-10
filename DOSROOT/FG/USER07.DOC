@@ -1,0 +1,1127 @@
+Chapter 7
+
+
+
+
+
+Character Display Routines
+128   Fastgraph User's Guide
+
+
+Overview
+
+     An important part of any program is the capability to display text or
+other characters on the screen.  Fastgraph supports two character sets:  the
+hardware or BIOS character set available with each video mode, and
+Fastgraph's own software character set for graphics video modes.
+Fastgraph/Light does not support the software character set.
+
+     We'll begin this chapter with a review of character space, and then
+discuss the specifics about hardware and software characters.  At the end of
+the chapter, we'll briefly explain how to implement bit-mapped characters
+into a program.  To simplify things, the example programs presented in this
+chapter are mode-specific examples, and no testing is done to check if the
+video mode is available on the user's system.
+
+
+Character Space
+
+     The coordinate system used for displaying hardware characters is called
+character space.  It is the only coordinate system available in text video
+modes, but it is a supplementary coordinate system you can use with either
+screen space or world space in graphics video modes.  Character space can be
+thought of as a grid of rows and columns, with each cell in the grid holding
+one character.  Each cell is identified by its unique (row,column) integer
+coordinates.  The rows and columns are numbered starting at zero; the origin
+is always the upper left corner of the screen.  For example, in the 80-column
+by 25-row video modes, the (row,column) coordinates of the screen corners are
+shown in the following diagram.
+
+                            (0,0)           (0,79)
+
+
+                            (24,0)         (24,79)
+
+The default number of rows and columns depends on the video mode, as shown in
+the following table.  For graphics modes, the table also includes the default
+width and height in pixels of a character cell.
+
+                           Mode                 Char. Char.
+                          Number  Columns Rows  Width Height
+
+                             0      40     25
+                             1      40     25
+                             2      80     25
+                             3      80     25
+                             4      40     25     8     8
+                             5      40     25     8     8
+                             6      80     25     8     8
+                             7      80     25
+                             9      40     25     8     8
+                            11      80     25     9    14
+                            12      40     25     8     8
+                            13      40     25     8     8
+                                  Chapter 7:  Character Display Routines   129
+
+                            14      80     25     8     8
+                            15      80     25     8    14
+                            16      80     25     8    14
+                            17      80     30     8    16
+                            18      80     30     8    16
+                            19      40     25     8     8
+                            20      40     25     8     8
+                            21      40     50     8     8
+                            22      40     30     8     8
+                            23      40     60     8     8
+                            24      80     25     8    16
+                            25      80     30     8    16
+                            26      100    37     8    16
+                            27      128    48     8    16
+                            28      100    37     8    16
+                            29      128    48     8    16
+
+Hardware Characters
+
+     Hardware characters are available in all of Fastgraph's supported video
+modes.  As explained in Chapter 5, text mode characters have a display
+attribute that defines their foreground color, their background color, and
+whether or not they blink.  Graphics mode characters appear in a single
+color, as determined by the current color index.  Chapter 5 also explained
+how Fastgraph's fg_setattr and fg_setcolor routines define the attribute or
+color index in which subsequent hardware characters appear.
+
+     It is obviously important to define the color or attribute for hardware
+characters, but it is equally important to define their location on the
+screen.  Fastgraph draws hardware characters at the position defined by the
+text cursor.  Like the graphics cursor, the text cursor is not a cursor in
+the true sense, but is simply a pair of character space (row,column)
+coordinates with a special meaning.  The fg_setmode routine sets the text
+cursor position to the character space coordinates (0,0), which of course is
+the upper left corner of the screen.2
+
+     The Fastgraph routine fg_locate changes the text cursor position.  It
+has two integer arguments that specify the (row,column) character space
+coordinates of the new position.  The row values must be between 0 and one
+less than the number of character rows available.  The column values must be
+between 0 and one less than the number of character columns available.
+
+     The fg_text routine is Fastgraph's basic character display routine.  It
+displays a string of hardware characters, starting at the text cursor
+position, using the current color attribute (for text modes) or color index
+(for graphics modes).  If the string reaches the last column in a row,
+fg_text will wrap the string to the first column of the next row.
+Additionally, fg_text leaves the cursor one column to the right of the last
+character displayed (or the first column of the next row if the last
+character appears at the end of a row).  This feature makes it possible for
+successive calls to fg_text to display adjacent strings.  The first argument
+____________________
+
+     (2) In reality there are eight  text cursors, one for each video page.
+The fg_setmode routine initializes each text cursor position to (0,0).  The
+next chapter describes this in more detail.
+130   Fastgraph User's Guide
+for the fg_text routine is a character string of arbitrary length, and the
+second argument is an integer value that specifies the number of characters
+to display from that string.
+
+     Example 7-1 illustrates the use of the fg_locate and fg_text routines in
+the 80 by 25 color text mode (mode 3).  After establishing the video mode and
+making the BIOS cursor invisible, the program displays four strings with
+different attributes.  The attributes are selected using the fg_setattr
+routine, and the strings are displayed by the fg_text routine.  The first
+string appears in yellow (attributes 14,0,0) in the upper left corner of the
+screen; the fg_locate routine is not necessary because (0,0) is the default
+text cursor position established by fg_setmode.  The second string appears in
+light green (10,0,0) one space to the right of the first string.  Its
+position relies on the fact fg_text leaves the text cursor positioned one
+space to the right of the last character displayed (following the "w" of
+"yellow" in this case).  The leading space in " green" leaves a space between
+the first and second strings.  Similarly, the third string appears in
+blinking light red (12,0,1) one space to the right of the second string.
+
+     The program then uses the fg_locate routine to move the text cursor to
+the lower left corner of the screen and displays the "Press any key" string.
+This string is displayed with a light red foreground against a gray
+background (12,7,0).  The extra spaces surrounding the string extend the
+background color one character position to the left and right and make the
+string more visually appealing.  Finally, once you press any key, the program
+restores the original video mode and screen attributes before returning to
+DOS.
+
+                                 Example 7-1.
+
+                      #include <fastgraf.h>
+                      void main(void);
+
+                      void main()
+                      {
+                         int old_mode;
+
+                         old_mode = fg_getmode();
+                         fg_setmode(3);
+                         fg_cursor(0);
+
+                         fg_setattr(14,0,0);
+                         fg_text("yellow",6);
+
+                         fg_setattr(10,0,0);
+                         fg_text(" green",6);
+
+                         fg_setattr(12,0,1);
+                         fg_text(" blinking",9);
+
+                         fg_setattr(12,7,0);
+                         fg_locate(24,0);
+                         fg_text(" Press any key. ",16);
+                         fg_waitkey();
+
+                         fg_setmode(old_mode);
+                         fg_reset();
+                                  Chapter 7:  Character Display Routines   131
+
+                      }
+
+     The fg_where routine retrieves the text cursor position in its two
+integer arguments.  This routine is not used as frequently as the fg_locate
+and fg_text routines because more often than not your program will know the
+text cursor position implicitly, or you'll know in advance the locations at
+which text will be displayed.  The fg_where routine takes two integer
+arguments passed as pointers (that is, by reference), and these two arguments
+respectively receive the text cursor's current row and column position.
+
+     Example 7-2 produces the same results as example 7-1, but it does so a
+bit differently.  It uses its own routine, put_string, to display a string at
+a specified row and column.  The put_string routine simply calls fg_locate to
+establish the text cursor position and then calls fg_text to display the
+string.  Note the use of the C library function strlen to determine the
+string length passed to the fg_text routine.  Example 7-2 also uses the
+fg_where routine to retrieve the new text cursor positions, which are then
+passed to the put_string routine.
+
+                                 Example 7-2.
+
+                   #include <fastgraf.h>
+                   #include <string.h>
+                   void main(void);
+                   void put_string(char*,int,int);
+
+                   void main()
+                   {
+                      int old_mode;
+                      int row, column;
+
+                      old_mode = fg_getmode();
+                      fg_setmode(3);
+                      fg_cursor(0);
+
+                      fg_setattr(14,0,0);
+                      put_string("yellow",0,0);
+
+                      fg_setattr(10,0,0);
+                      fg_where(&row,&column);
+                      put_string("green",row,column+1);
+
+                      fg_setattr(12,0,1);
+                      fg_where(&row,&column);
+                      put_string("blinking",row,column+1);
+
+                      fg_setattr(12,7,0);
+                      put_string(" Press any key. ",24,0);
+                      fg_waitkey();
+
+                      fg_setmode(old_mode);
+                      fg_reset();
+                   }
+
+                   void put_string(string,row,column)
+                   char *string;
+132   Fastgraph User's Guide
+
+                   int row, column;
+                   {
+                      fg_locate(row,column);
+                      fg_text(string,strlen(string));
+                   }
+
+     Sometimes you may wish to change the display attribute of existing text,
+such as when creating a shadow around the edges of a pop-up window.  The
+Fastgraph routine fg_chgattr performs this function.  It applies the current
+text display attribute (as defined in the most recent call to fg_setattr or
+fg_setcolor) to a given number of characters, starting at the text cursor
+position.  It leaves the text cursor one column to the right of the last
+character changed (or the first column of the next row if the last character
+is at the end of a row).  The fg_chgattr routine's argument specifies the
+number of characters to change.  This routine has no effect in graphics video
+modes.
+
+     The Fastgraph routine fg_chgtext performs somewhat the opposite function
+of fg_chgattr.  It displays new text but uses the display attributes already
+assigned to the character cells where the text will appear.  The fg_chgtext
+routine takes the same two arguments as the fg_text routine, displays the
+characters starting at the text cursor position, and leaves the cursor one
+column to the right of the last character displayed.  Like fg_chgattr,
+fg_chgtext has no effect in graphics video modes.
+
+     Example 7-3 illustrates the fg_chgattr and fg_chgtext routines.  It runs
+in the 80-column color text mode (mode 3), but if we change the fg_setmode
+argument it also would run in the monochrome text mode (mode 7).  The program
+first displays the word "hello" in the upper left corner of the screen, using
+a gray foreground and black background attribute.  After waiting for a
+keystroke, the program calls fg_chgattr to make the word "hello" appear in
+reverse video (that is, a black foreground and gray background attribute).
+After a second keystroke, the program uses fg_chgtext to change the "h" of
+"hello" to upper case.  Following this, the program returns to DOS.
+
+                                 Example 7-3.
+
+                         #include <fastgraf.h>
+                         void main(void);
+
+                         void main()
+                         {
+                            int old_mode;
+
+                            old_mode = fg_getmode();
+                            fg_setmode(3);
+                            fg_cursor(0);
+
+                            fg_setattr(7,0,0);
+                            fg_text("hello",5);
+                            fg_waitkey();
+
+                            fg_locate(0,0);
+                            fg_setattr(0,7,0);
+                            fg_chgattr(5);
+                            fg_waitkey();
+                                  Chapter 7:  Character Display Routines   133
+
+
+                            fg_locate(0,0);
+                            fg_chgtext("H",1);
+                            fg_waitkey();
+
+                            fg_setmode(old_mode);
+                            fg_reset();
+                         }
+
+
+     You also can retrieve the character or attribute stored in a specific
+character cell.  The Fastgraph routine fg_getchar retrieves character values,
+while fg_getattr retrieves character attributes.  Both routines have two
+integer arguments that specify the (row,column) coordinates for the character
+cell of interest.  Example 7-4 uses fg_getchar and fg_getattr to obtain the
+character and attribute stored at row 24, column 0.  Just before the program
+exits, it displays these values.
+
+                                 Example 7-4.
+
+                     #include <fastgraf.h>
+                     #include <stdio.h>
+                     void main(void);
+
+                     void main()
+                     {
+                        int attr, value;
+                        int old_mode;
+
+                        old_mode = fg_getmode();
+                        fg_setmode(3);
+                        fg_cursor(0);
+
+                        fg_setattr(9,7,0);
+                        fg_locate(24,0);
+                        fg_text("Test",4);
+                        value = fg_getchar(24,0);
+                        attr  = fg_getattr(24,0);
+                        fg_waitkey();
+
+                        fg_setmode(old_mode);
+                        fg_reset();
+                        printf("%c %2.2X\n",value,attr);
+                     }
+
+
+     If you need to retrieve characters and attributes from a rectangular
+area, it's more efficient to use the fg_getimage routine (described in
+Chapter 10) than to call fg_getchar and fg_getattr repeatedly.
+
+     Displaying hardware characters in graphics video modes is quite
+different from doing so in text modes.  Like text modes, we can still use
+fg_text to display strings in character space, which of course restricts the
+places where strings can appear.  Graphics modes offer the ability to display
+strings relative to any pixel, not just character cells.  The fg_print and
+fg_justify routines are provided for this purpose.  To compare the two
+134   Fastgraph User's Guide
+
+methods of displaying strings in graphics modes, let's begin with an example
+of doing so with fg_text.
+
+     Example 7-5 is similar to example 7-1, but it runs in the EGA enhanced
+graphics mode (mode 16) instead of a text mode.  In graphics modes, the
+fg_cursor routine has no effect, so we have omitted it from the program.
+Furthermore, characters cannot be displayed with a blinking attribute, so we
+have omitted the blinking characters (we could simulate blinking by
+repetitively displaying and erasing them, but that is beyond the scope of
+this example).  Because graphics mode characters only have a foreground
+color, we had to simulate the gray background of the "Press any key" string
+by first drawing a rectangle where that string appears.  The differences
+between examples 7-5 and 7-1 hold for any graphics video mode, not just mode
+16.
+
+                                 Example 7-5.
+
+                      #include <fastgraf.h>
+                      void main(void);
+
+                      void main()
+                      {
+                         int old_mode;
+
+                         old_mode = fg_getmode();
+                         fg_setmode(16);
+
+                         fg_setcolor(14);
+                         fg_text("yellow",6);
+
+                         fg_setcolor(10);
+                         fg_text(" green",6);
+
+                         fg_setcolor(7);
+                         fg_rect(0,127,336,349);
+                         fg_setcolor(12);
+                         fg_locate(24,0);
+                         fg_text(" Press any key. ",16);
+                         fg_waitkey();
+
+                         fg_setmode(old_mode);
+                         fg_reset();
+                      }
+
+     Now let's show how to display graphics mode strings using the more
+flexible screen space coordinate system.  The fg_print routine is identical
+to fg_text, but it displays a string relative to the graphics cursor position
+(that is, in screen space) rather than the character space position
+established with fg_locate.  By default, fg_print displays strings so their
+lower left corner is at the graphics cursor position.  The fg_justify routine
+lets you change this default justification.  Its two parameters, xjust and
+yjust, control the string positioning about the current graphics position, as
+summarized in the following table:
+
+           value of       value of      horizontal      vertical
+             xjust          yjust      justification  justification
+                                  Chapter 7:  Character Display Routines   135
+
+              -1             -1            left           lower
+              -1              0            left          center
+              -1              1            left           upper
+               0             -1           center          lower
+               0              0           center         center
+               0              1           center          upper
+               1             -1            right          lower
+               1              0            right         center
+               1              1            right          upper
+
+Any other justification values produce undefined results.  In the context of
+vertical justification, lower justification means the bottom of each
+character will be at the current graphics y position.  Upper justification
+means the top of each character will be at the graphics y position, while
+center justification means characters will be centered about the graphics y
+position.  Note that the default justification settings are xjust = -1 and
+yjust = -1.  The fg_print routine leaves the graphics cursor positioned just
+beyond the bottom right corner of the last character displayed.
+
+     Example 7-6 illustrates the use of fg_print and fg_justify to display
+justified text in the VGA 640 by 480 16-color graphics mode (mode 18).  The
+first series of calls to fg_move, fg_justify, and fg_print display the string
+"Fastgraph" left justified, centered, and right justified against the top row
+of the screen.  The second series of such calls also displays the string in
+these positions, but each is centered vertically in the middle of the screen.
+The final series displays the strings against the bottom row of the screen.
+The nine calls to fg_justify in example 7-6 represent all possible
+justification settings for strings displayed with fg_print.
+
+                                 Example 7-6.
+
+                         #include <fastgraf.h>
+                         void main(void);
+
+                         void main()
+                         {
+                            int old_mode;
+
+                            old_mode = fg_getmode();
+                            fg_setmode(18);
+                            fg_setcolor(9);
+                            fg_fillpage();
+                            fg_setcolor(14);
+
+                            fg_move(0,0);
+                            fg_justify(-1,1);
+                            fg_print("Fastgraph",9);
+                            fg_move(320,0);
+                            fg_justify(0,1);
+                            fg_print("Fastgraph",9);
+                            fg_move(639,0);
+                            fg_justify(1,1);
+                            fg_print("Fastgraph",9);
+
+                            fg_move(0,240);
+                            fg_justify(-1,0);
+136   Fastgraph User's Guide
+                            fg_print("Fastgraph",9);
+                            fg_move(320,240);
+                            fg_justify(0,0);
+                            fg_print("Fastgraph",9);
+                            fg_move(639,240);
+                            fg_justify(1,0);
+                            fg_print("Fastgraph",9);
+
+                            fg_move(0,479);
+                            fg_justify(-1,-1);
+                            fg_print("Fastgraph",9);
+                            fg_move(320,479);
+                            fg_justify(0,-1);
+                            fg_print("Fastgraph",9);
+                            fg_move(639,479);
+                            fg_justify(1,-1);
+                            fg_print("Fastgraph",9);
+                            fg_waitkey();
+
+                            fg_setmode(old_mode);
+                            fg_reset();
+                         }
+
+     Example 7-7 demonstrates a side effect that occurs when displaying
+characters in graphics modes.  This example uses the MCGA graphics mode (mode
+19) and displays two character strings at the same location.  If we were to
+do this in a text mode, the first string would disappear once we displayed
+the second string.  In graphics modes, however, the portions of the first
+string not covered by characters from the second string are still visible.
+The reason for this may not be clear at first, but remember when we display
+characters in graphics modes, we aren't really displaying characters but
+merely a pixel representation of the characters.  Fastgraph has no way to
+distinguish such pixels from any other pixels, no matter if we use fg_text or
+fg_print for string display.
+
+                                 Example 7-7.
+
+                         #include <fastgraf.h>
+                         void main(void);
+
+                         void main()
+                         {
+                            int old_mode;
+
+                            old_mode = fg_getmode();
+                            fg_setmode(19);
+
+                            fg_setcolor(14);
+                            fg_text("yellow",6);
+                            fg_locate(0,0);
+                            fg_setcolor(10);
+                            fg_text(" green",6);
+                            fg_waitkey();
+
+                            fg_setmode(old_mode);
+                            fg_reset();
+                         }
+                                  Chapter 7:  Character Display Routines   137
+
+     To avoid this problem, the recommended procedure for displaying
+characters in graphics modes is to first erase the area where the text will
+appear.  The easiest way to do this is to use the fg_rect routine to draw a
+rectangle in the background color.  In example 7-7, we could do this by
+inserting the statements
+
+
+                              fg_setcolor(0);
+                              fg_rect(0,47,0,7);
+
+
+immediately before the call to fg_locate.  The parameters passed to the
+fg_rect routine represent the 48 by 8 pixel region that corresponds to the
+first six character cells of row 0 in the 320 by 200 graphics modes.
+
+
+Character Height
+
+     In VGA and SVGA graphics modes (modes 17 to 29), it's possible to change
+the height of characters displayed with fg_print or fg_text.  By default,
+characters are 16 pixels high in the VGA and SVGA graphics modes (17, 18, 24
+to 29) and 8 pixels high in the MCGA and XVGA graphics modes (19 to 23).  The
+fg_fontsize routine lets you display characters from the BIOS 8x8, 8x14, or
+8x16 fonts in any of these modes.  Its only parameter specifies the character
+height in pixels; it must be 8, 14, or 16.  If the character height is some
+other value, or if fg_fontsize is used in a video mode numbered 16 or less
+(that is, in a non-VGA mode), nothing happens.
+
+     When we change the character height with fg_fontsize, the number of text
+rows on the screen changes accordingly.  The following table shows the number
+of text rows available in each supported video mode when using the different
+character sizes.  The values in boldface type represent the default character
+size and number of rows for that video mode.
+
+                                 Mode No. of rows with
+                                Number 8x8  8x14 8x16
+
+                                  17    60   34   30
+                                  18    60   34   30
+                                  19    25   14   12
+                                  20    25   14   12
+                                  21    50   28   25
+                                  22    30   17   15
+                                  23    60   34   30
+                                  24    50   28   25
+                                  25    60   34   30
+                                  26    75   42   37
+                                  27    96   54   48
+                                  28    75   42   37
+                                  29    96   54   48
+
+     Example 7-8 shows how to use fg_fontsize to activate the 8x8 character
+font in the 16-color 640 by 480 VGA graphics mode (mode 18).  In this mode,
+characters displayed with fg_print or fg_text are normally 16 pixels high,
+138   Fastgraph User's Guide
+
+giving 30 character rows per screen.  When we use the 8x8 font, this
+increases to 60 rows because the characters are now half as tall as before.
+The example program uses fg_text to display the string "8x8 ROM font" 60
+times, once in each row.
+
+                                 Example 7-8.
+
+                     #include <fastgraf.h>
+                     void main(void);
+
+                     void main()
+                     {
+                        int old_mode;
+                        int row;
+
+                        old_mode = fg_getmode();
+                        fg_setmode(18);
+
+                        fg_setcolor(9);
+                        fg_fillpage();
+                        fg_setcolor(15);
+                        fg_fontsize(8);
+
+                        for (row = 0; row < 60; row++) {
+                           fg_locate(row,34);
+                           fg_text("8x8 ROM font",12);
+                           }
+                        fg_waitkey();
+
+                        fg_setmode(old_mode);
+                        fg_reset();
+                     }
+
+
+Conversion Routines
+
+     In Chapter 4 we introduced Fastgraph's routines for converting
+coordinates between character space and screen space.  In this section we'll
+review these routines and then present an example that uses some of them.
+
+     The fg_xalpha and fg_yalpha routines convert screen space coordinates to
+character space.  The fg_xalpha routine converts a screen space x coordinate
+to the character space column that contains the coordinate.  Similarly, the
+fg_yalpha routine converts a screen space y coordinate to the character space
+row that contains the coordinate.
+
+     The fg_xconvert and fg_yconvert routines convert character space
+coordinates to screen space.  The fg_xconvert routine converts a character
+space column to the screen space coordinate of its leftmost pixel.
+Similarly, the fg_yconvert routine converts a character space row to the
+screen space coordinate of its top (lowest-numbered) pixel.
+
+     Example 7-5 demonstrated how to display characters in a graphics mode.
+Because characters do not have a background color in graphics modes, that
+example used fg_rect to simulate a background color by drawing a gray
+rectangle before displaying the text.  It was necessary to determine the
+                                  Chapter 7:  Character Display Routines   139
+
+screen coordinates of the character cells so we could pass the correct
+parameters to fg_rect.  By using the fg_xconvert and fg_yconvert routines, we
+can let Fastgraph calculate the required screen coordinates.  This method has
+the additional benefit of working in any graphics mode, whereas the
+coordinates passed to fg_rect in example 7-5 would only work properly in a
+640 by 350 graphics mode.  Example 7-9 shows how we could extend example 7-5
+to use the fg_xconvert and fg_yconvert routines.
+
+                                 Example 7-9.
+
+                      #include <fastgraf.h>
+                      void main(void);
+
+                      void main()
+                      {
+                         int old_mode;
+                         int minx, maxx, miny, maxy;
+
+                         fg_old_mode = fg_getmode();
+                         fg_setmode(16);
+
+                         fg_setcolor(14);
+                         fg_text("yellow",6);
+
+                         fg_setcolor(10);
+                         fg_text(" green",6);
+
+                         fg_setcolor(7);
+                         minx = fg_xconvert(0);
+                         maxx = fg_xconvert(16) - 1;
+                         miny = fg_yconvert(24);
+                         maxy = fg_yconvert(25) - 1;
+                         fg_rect(minx,maxx,miny,maxy);
+                         fg_setcolor(12);
+                         fg_locate(24,0);
+                         fg_text(" Press any key. ",16);
+                         fg_waitkey();
+
+                         fg_setmode(old_mode);
+                         fg_reset();
+                      }
+
+
+
+Software Characters
+
+     Software characters, also called stroke characters or vector characters
+in other literature, are only are available in graphics video modes.  Unlike
+the fixed-size hardware characters, you can display software characters in
+any size, at any angle, and at any position.  In addition, software
+characters are proportionally spaced.  However, software characters take
+longer to draw than do hardware characters.
+
+     Fastgraph includes two software character fonts, called the primary font
+and the alternate font.  The primary font contains upper and lower case
+letters, numbers, punctuation, and most of the other printable ASCII
+140   Fastgraph User's Guide
+characters.  The alternate font contains upper and lower case Greek letters
+and other mathematical and scientific symbols.
+
+     The Fastgraph routine fg_swchar displays a string of software characters
+in the current color index (as defined by the most recent call to
+fg_setcolor).  The string may contain any characters from the primary font,
+the alternate font, or both.  You can display the characters left justified,
+centered, or right justified relative to the graphics cursor position.  Just
+as the fg_text routine updates the text cursor position, fg_swchar sets the
+graphics cursor position just to the right of the last character drawn.  The
+characters are clipped according to the current clipping region.  In addition
+to the characters, the string passed to fg_swchar also may contain operators
+for switching fonts, underlining, subscripting, or superscripting characters.
+Because fg_swchar internally uses world space coordinates, you must call the
+fg_initw routine at some point in your program before the first call to
+fg_swchar.  You also must establish a world space coordinate system with the
+fg_setworld routine.
+
+     The fg_swchar routine has three arguments.  The first argument is the
+character string to display.  The second argument is an integer value that
+specifies the number of characters in the string, including any characters
+used as special operators.  The third argument is an integer value that
+determines the position of the string relative to the graphics cursor
+position.  If this value is negative, the lower left corner of the first
+character will be at the graphics cursor position.  If it is positive, the
+lower right corner of the last character will be at the graphics cursor
+position.  If it is zero, the string will be horizontally centered at the
+graphics cursor position.
+
+     The size of software characters is determined by the values passed to
+the fg_setsize, fg_setsizew, and fg_setratio routines.  The fg_setsize
+routine has a single integer argument that defines the height of software
+characters in screen space units, while the fg_setsizew routine has a single
+floating point argument that defines the height in world space units.  If
+neither of these routines is called, Fastgraph will use its default character
+height of one world space unit.  The fg_setratio routine has a single
+floating point argument that defines the aspect ratio for software
+characters.  The aspect ratio is the ratio of character width to character
+height.  For example, an aspect ratio of 2.0 means characters are twice as
+wide as they are high.  If the fg_setratio routine is not called, Fastgraph
+uses its default aspect ratio of 1.
+
+     Example 7-10 displays both of the software character fonts.  The program
+uses the enhanced EGA graphics mode (mode 16), but it could run in any
+graphics mode by changing the fg_setmode argument.  After establishing the
+video mode, the program calls the fg_initw routine to initialize Fastgraph's
+world space parameters; this is required since the software character drawing
+routines internally use world space coordinates.  The next statement is a
+call to fg_setworld that establishes a world space coordinate system with
+0.01 world space units per pixel.  Following this is a call to fg_setsizew
+that defines the character height as 0.21 world space units, or 21 pixels.
+Note we could have instead used the fg_setsize routine here with an integer
+argument of 21.
+
+     The next part of the program draws the characters in the primary font on
+the upper half of the screen.  After doing this, the program draws the
+alternate font characters on the lower half.  In each case it does this with
+                                  Chapter 7:  Character Display Routines   141
+
+the fg_swchar routine.  By default, the string passed to fg_swchar will
+produce characters from the primary font.  However, you can insert a back
+slash character (\) in the string to toggle between the two fonts.  Don't
+forget the C language applies a special meaning to the back slash character
+within strings, so you must use two consecutive back slashes to insert a
+single back slash in the string.
+
+                                Example 7-10.
+
+            #include <fastgraf.h>
+            void main(void);
+
+            void main()
+            {
+               int old_mode;
+
+               old_mode = fg_getmode();
+               fg_setmode(16);
+               fg_initw();
+               fg_setworld(0.0,6.39,0.0,3.49);
+               fg_setsizew(0.21);
+
+               fg_setcolor(15);
+               fg_locate(0,26);
+               fg_text("Software characters - font 1",28);
+
+               fg_setcolor(10);
+               fg_movew(0.0,3.1);
+               fg_swchar("ABCDEFGHIJKLMNOPQRSTUVWXYZ",26,-1);
+               fg_movew(0.0,2.8);
+               fg_swchar("abcdefghijklmnopqrstuvwxyz",26,-1);
+               fg_movew(0.0,2.5);
+               fg_swchar("0123456789",10,-1);
+               fg_movew(0.0,2.2);
+               fg_swchar("!\"#$%&'()*+,-./:;<=>?[]^`{|}~",29,-1);
+
+               fg_setcolor(15);
+               fg_locate(12,26);
+               fg_text("Software characters - font 2",28);
+
+               fg_setcolor(10);
+               fg_movew(0.0,1.4);
+               fg_swchar("\\ABCDEFGHIJKLMNOPRSTUWXYZ",25,-1);
+               fg_movew(0.0,1.1);
+               fg_swchar("\\abcdefghijklmnoprstuwxyz",25,-1);
+               fg_movew(0.0,0.4);
+               fg_swchar("\\012345678#$%&()*+/<=>?[]{}",27,-1);
+               fg_waitkey();
+
+               fg_setmode(old_mode);
+               fg_reset();
+            }
+
+     Example 7-10 displays all characters in each font.  If you compare the
+primary font strings with the alternate font strings, you'll see the
+alternate font contains fewer characters.  For example, the letters Q and V
+142   Fastgraph User's Guide
+
+(either upper or lower case) have no corresponding character in the alternate
+font.  You might have also noticed the primary font does not support the full
+printable ASCII character set.  Any character in a string passed to the
+fg_swchar routine that does not have a corresponding character in the current
+font will display a blank character.
+
+     In addition to the font change operator (the back slash character),
+fg_swchar recognizes three other operators.  The superscript operator is a
+back slash followed by a caret (\^).  It causes the next character to appear
+as a superscript.  Similarly, the subscript operator is a back slash followed
+by a lower case v (\v); it causes the next character to appear as a
+subscript.  The size of superscripted and subscripted characters is one half
+the height of the other characters.  The underline operator is the underscore
+character (_).  It causes all subsequent characters in the string to be
+underlined until another underscore character is found, or until the end of
+the string.  When using these operators, be sure to include them as part of
+the string length count passed to fg_swchar.
+
+     Example 7-11 illustrates the use of the font selection, superscript,
+subscript, and underline operators with the fg_swchar routine.  Again,
+because the back slash character has a special meaning to the C programming
+language, we must use two consecutive back slashes to represent a single back
+slash within the string.  The program displays four strings:
+
+                             cosýé  + sinýé  = 1
+                                     H2O
+                                     U232
+                           One word is underlined.
+
+The theta symbol (é) in the first string is produced by displaying the
+character "h" in the alternate font.  Note another font selection operator
+(\) appears immediately after the "h" to revert to the primary font.  The
+first string also includes superscript operators (\^) to display the
+exponents in the equation.  The second string includes a single subscripted
+character, while the third string shows how to display three consecutive
+subscripted characters.  Finally, the fourth string illustrates how to
+underline characters.
+
+     Note example 7-11 also uses the fg_setratio routine.  The first three
+strings are drawn with an aspect ratio of 2, making them twice as wide as
+they are high.  The fourth string is drawn with an aspect ratio of 1
+(Fastgraph's default aspect ratio for software characters), so the character
+height is the same as the character width.  Also, the strings are centered
+instead of left justified as in the previous example.
+
+                                Example 7-11.
+
+            #include <fastgraf.h>
+            void main(void);
+
+            void main()
+            {
+               int old_mode;
+
+               old_mode = fg_getmode();
+               fg_setmode(16);
+                                  Chapter 7:  Character Display Routines   143
+               fg_setcolor(10);
+               fg_initw();
+               fg_setworld(0.0,6.39,0.0,3.49);
+               fg_setratio(2.0);
+               fg_setsizew(0.21);
+
+               fg_movew(3.2,3.0);
+               fg_swchar("cos\\^2\\h\\ + sin\\^2\\h\\ = 1",25,0);
+
+               fg_movew(3.2,2.0);
+               fg_swchar("H\\v2O   U\\v2\\v3\\v2",18,0);
+
+               fg_movew(3.2,1.0);
+               fg_setratio(1.0);
+               fg_swchar("One _word_ is underlined.",25,0);
+               fg_waitkey();
+
+               fg_setmode(old_mode);
+               fg_reset();
+            }
+
+     The fg_setangle routine defines the angle or orientation at which
+software characters are displayed.  Its only argument is a floating point
+value that specifies the angle, measured in degrees counterclockwise from the
+positive x axis.  If a program draws software characters before calling
+fg_setangle, Fastgraph will use its default angle of zero degrees (that is,
+the characters will be oriented horizontally).
+
+     In most programs, the alternate font is not needed.  However, if you use
+the fg_swchar routine, Fastgraph will include the definitions of these
+characters in your program's data segment.  To prevent wasting this space,
+Fastgraph includes the fg_swtext routine.  The fg_swtext routine is same as
+the fg_swchar routine, except it does not include the alternate font.  Since
+the font selection operator does not apply when using fg_swtext, the routine
+simply ignores it.  You should only use fg_swtext if do not use fg_swchar.
+If you use both routines, your program will still work correctly, but its
+data segment will contain an extra copy of the primary font definitions.
+
+     Example 7-12 demonstrates the use of the fg_setangle and fg_swtext
+routines.  The program draws a series of strings of the form "nnn degrees",
+where nnn is a multiple of 15, radiating from the screen center.  Each string
+appears at the specified angle.  For example, the string "15 degrees" is
+drawn at an angle of 15 degrees.
+
+                                Example 7-12.
+
+               #include <fastgraf.h>
+               void main(void);
+
+               void main()
+               {
+                  char string[24];
+                  int angle;
+                  int old_mode;
+
+                  old_mode = fg_getmode();
+                  fg_setmode(16);
+144   Fastgraph User's Guide
+                  fg_setcolor(10);
+                  fg_initw();
+                  fg_setworld(0.0,6.39,0.0,3.49);
+                  fg_setsizew(0.21);
+
+                  for (angle = 0; angle < 360; angle += 15) {
+                     fg_movew(3.2,1.75);
+                     fg_setangle((double)angle);
+                     sprintf(string,"     %3d degrees",angle);
+                     fg_swtext(string,16,-1);
+                     }
+                  fg_waitkey();
+
+                  fg_setmode(old_mode);
+                  fg_reset();
+               }
+
+     The final routine pertaining to software characters is fg_swlength,
+which returns the length of a specified string of software characters in
+world space units.  The length is returned as the routine's floating point
+function value.  The fg_swlength routine has two arguments -- a string of
+software characters, and an integer value specifying the number of characters
+in the string.  As with fg_swchar and fg_swtext, the count includes any of
+the special operator characters.
+
+     Example 7-13 demonstrates a typical use of the fg_swlength routine.  The
+program displays the string "hello there." in light green against a gray
+background in the middle of the screen.  As in our previous software
+character examples, the program uses mode 16 and first performs the necessary
+initializations to use software characters.  Following this, the program uses
+the fg_swlength routine to compute the length in world space units of the
+string.  Note we have added blank characters to each end of the string passed
+to fg_swlength; this increases the length of the actual string and will
+effectively give the gray rectangle an extended border on its left and right
+sides.  The string length returned by fg_swlength is multiplied by 0.5,
+giving the distance from the middle of the screen to either side of the
+rectangle.  The program then uses this value to compute the minimum and
+maximum x coordinates passed to fg_rectw.  After drawing the gray rectangle,
+the program uses fg_swtext to draw the string of software characters in the
+middle of the screen.  It then waits for a keystroke before restoring the
+original video mode and screen attributes and returning to DOS.
+
+                                Example 7-13.
+
+              #include <fastgraf.h>
+              void main(void);
+
+              void main()
+              {
+                 int old_mode;
+                 double half;
+                 double fg_swlength();
+
+                 old_mode = fg_getmode();
+                 fg_setmode(16);
+                 fg_initw();
+
+                                  Chapter 7:  Character Display Routines   145
+
+                 fg_setworld(0.0,6.39,0.0,3.49);
+                 fg_setsizew(0.21);
+
+                 fg_setcolor(7);
+                 half = fg_swlength(" Hello there. ",14) * 0.5;
+                 fg_rectw(3.2-half,3.2+half,1.6,1.9);
+
+                 fg_setcolor(10);
+                 fg_movew(3.2,1.65);
+                 fg_swtext("Hello there.",12,0);
+                 fg_waitkey();
+
+                 fg_setmode(old_mode);
+                 fg_reset();
+              }
+
+
+
+Bit-Mapped Characters
+
+     Bit-mapped characters combine the properties of hardware and software
+characters.  Like hardware characters, they are a fixed size, but they are
+almost always more visually appealing.  Because they are not scalable, they
+do not require floating point arithmetic, and therefore they are much faster
+than software characters.
+
+     Fastgraph makes no special provision for bit-mapped characters because
+it treats them as if they were any other bit-mapped image.  For example, to
+use a five-pixel by five-pixel bit-mapped font, you can construct characters
+as shown below and then store these representations in an image array.
+
+                          *       * * * *       * * * *
+                        *   *     *       *   *
+                      * * * * *   * * * *     *
+                      *       *   *       *   *
+                      *       *   * * * *       * * * *
+
+The image display routines fg_drawmap and fg_drwimage, discussed in Chapter
+10, could then be used to display specific characters from the image array.
+Also, the Fastgraph/Fonts  add-on product greatly simplifies adding bit-
+mapped font support to Fastgraph applications.
+
+
+Summary of Character Display Routines
+
+     This section summarizes the functional descriptions of the Fastgraph
+routines presented in this chapter.  More detailed information about these
+routines, including their arguments and return values, may be found in the
+Fastgraph Reference Manual.
+
+     FG_CHGATTR applies the current text display attribute to a given number
+of characters, starting at the text cursor position.  This routine leaves the
+text cursor one column to the right of the last character changed (or the
+first column of the next row if the last character is at the end of a row).
+It has no effect in graphics video modes.
+146   Fastgraph User's Guide
+
+     FG_CHGTEXT displays a string of hardware characters, starting at the
+text cursor position, using the existing text display attributes.  This
+routine leaves the text cursor one column to the right of the last character
+displayed (or the first column of the next row if the last character is at
+the end of a row).  It has no effect in graphics video modes.
+
+     FG_FONTSIZE enables the 8x8, 8x14, or 8x16 ROM BIOS character font for
+strings displayed with fg_print and fg_text.  This routine is meaningful only
+in VGA and SVGA graphics video modes.
+
+     FG_GETATTR returns the character attribute stored at the specified
+position on the active video page.  It has no effect in graphics video modes.
+
+     FG_GETCHAR returns the character value stored at the specified position
+on the active video page.  It has no effect in graphics video modes.
+
+     FG_JUSTIFY defines the horizontal and vertical justification settings
+for strings displayed with the fg_print.
+
+     FG_LOCATE establishes the text cursor position for the active video
+page.
+
+     FG_PRINT displays a string of hardware characters, relative to the
+graphics cursor position, using the current color index.  By default, strings
+are displayed such that the bottom row of the first character is at the
+current graphics position.  On return, the graphics cursor is positioned just
+to the right of the last character displayed.
+
+     FG_SETANGLE defines the angle or orientation at which software
+characters are displayed.  The angle is measured in degrees counterclockwise
+from the positive x axis.
+
+     FG_SETATTR establishes the current text display attribute in text video
+modes.  This routine has no effect in graphics video modes.
+
+     FG_SETCOLOR establishes the current color index (which may be a virtual
+color index in graphics modes).  In text modes, the fg_setcolor routine
+provides an alternate method of establishing the current text display
+attribute.
+
+     FG_SETRATIO defines the aspect ratio for software characters.  The
+aspect ratio is the ratio of character width to character height.
+
+     FG_SETSIZE defines the height of software characters in screen space
+units.
+
+     FG_SETSIZEW defines the height of software characters in world space
+units.
+
+     FG_SWCHAR displays a string of software characters using the current
+color index.  The string may be left justified, centered, or right justified
+relative to the graphics cursor position.  The string passed to fg_swchar may
+contain special operators that allow switching between fonts, underlining,
+superscripting, or subscripting.  This routine has no effect in text video
+modes.
+                                  Chapter 7:  Character Display Routines   147
+
+     FG_SWLENGTH returns the length in world space units of a string of
+software characters.
+
+     FG_SWTEXT is a scaled down version of the fg_swchar routine.  It does
+not include the alternate font character definitions and thus requires less
+memory than fg_swchar.
+
+     FG_TEXT displays a string of hardware characters, starting at the text
+cursor position, using the current color attribute (for text modes) or color
+index (for graphics modes).  This routine leaves the text cursor one column
+to the right of the last character displayed (or the first column of the next
+row if the last character is at the end of a row).
+
+     FG_WHERE retrieves the row and column numbers of the text cursor
+position.
+
+     FG_XALPHA and FG_YALPHA convert screen space coordinates to character
+space.
+
+     FG_XCONVERT and FG_YCONVERT convert character space coordinates to
+screen space.
+148   Fastgraph User's Guide

@@ -1,0 +1,30 @@
+#
+# DSM for zlib
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.3
+dsm-name: zlib112b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: zlib
+version: 1.1.2
+manifest: zlib112b
+sources-dsm: zlib112s
+short-description: General purpose data compression library
+license: Free without warranty
+
+author: Jean-loup Gailly and Mark Adler
+web-site: http://www.cdrom.com/pub/infozip/zlib/
+ftp-site: ftp://ftp.cdrom.com/pub/infozip/zlib/
+
+simtelnet-path: v2tk/
+zip: zlib112b.zip
+
+replaces: zlib < 1.1.2
+requires: gcc
+requires: djdev

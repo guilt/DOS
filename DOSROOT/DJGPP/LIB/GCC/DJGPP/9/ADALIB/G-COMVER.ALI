@@ -1,0 +1,42 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV SPARK_05
+
+U gnat.compiler_version%b  g-comver.adb		94de7355 NE OL PK GE
+W gnat%s		gnat.ads		gnat.ali
+
+U gnat.compiler_version%s  g-comver.ads		76d6b035 BN NE OL PU PK GE
+W gnat%s		gnat.ads		gnat.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D gnat.ads		20190108125404 b5988c27 gnat%s
+D g-comver.ads		20190108125404 c34e3c12 gnat.compiler_version%s
+D g-comver.adb		20190108125404 57904f47 gnat.compiler_version%b
+D system.ads		20190108125404 27426ea2 system%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+X 3 gnat.ads
+34K9*GNAT 57e9 4|49r9 61r5 5|36r14 72r5
+X 4 g-comver.ads
+49k14*Compiler_Version 3|34k9 4|61l10 61e26 5|36b19 72l10 72t26
+52V13*Version{string} 5|53b13 70l8 70t15
+X 5 g-comver.adb
+38N4 Ver_Len_Max 46r41
+42a4 Ver_Prefix{string} 46r55 57r16 59r34 63r34
+46a4 GNAT_Version{string} 47m22 47r22 57r41 58r13 59r20 62r13 63r20 69r14
+57i11 J{integer} 58r27 59r59 62r27 63r59
+

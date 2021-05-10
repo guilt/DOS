@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<packages>
+<package name="utils-pas2fpm">
+ <version major="3" minor="0" micro="0"/>
+ <filename>p2fm.zip</filename>
+ <author>Free Pascal Team</author>
+ <license>LGPL with modification</license>
+ <homepageurl>www.freepascal.org</homepageurl>
+ <email></email>
+ <description>Generate fpmake.pp for Pascal source.</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+  <dependency>
+   <package packagename="fcl-base"/>
+  </dependency>
+  <dependency>
+   <package packagename="fcl-passrc"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

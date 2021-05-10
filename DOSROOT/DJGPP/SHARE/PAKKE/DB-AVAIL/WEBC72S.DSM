@@ -1,0 +1,30 @@
+#
+# DSM for web2c 7.2 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: webc72s
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: web2c
+version: 7.2
+type: sources
+manifest: webc72s
+binaries-dsm: webc72b
+documentation-dsm: webc72d
+
+short-description: Web2c converts TeX, Metafont and other WEB programs to C.
+license: Mixed - GNU General Public License, Version 2 & Knuth's TeX license.
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: webc72s.zip
+
+changelog: gnu/web2c-7.2/web2c/NEWS
+pre-install-readme: gnu/web2c-7.2/djgpp/README

@@ -1,0 +1,23 @@
+#
+# DSM for gdbm 1.7.3 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: gdbm173s
+dsm-version: 0.4.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: gdbm
+version: 1.7.3
+manifest: gdbm173s
+binaries-dsm: gdbm173b
+short-description: GNU gdbm
+license: GNU General Public License, Version 2
+
+simtelnet-path: v2gnu/
+zip: gdbm173s.zip
+

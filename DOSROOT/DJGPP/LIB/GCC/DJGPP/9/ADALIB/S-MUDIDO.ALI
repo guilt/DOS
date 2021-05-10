@@ -1,0 +1,130 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+
+U system.multiprocessors.dispatching_domains%b  s-mudido.adb  07def6f1 NE OL PK
+Z ada.exceptions%s	a-except.adb		a-except.ali
+W system.multiprocessors%s  s-multip.adb	s-multip.ali
+Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U system.multiprocessors.dispatching_domains%s  s-mudido.ads  1b70fc95 EE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.real_time%s	a-reatim.adb		a-reatim.ali
+W ada.task_identification%s  a-taside.adb	a-taside.ali
+W system%s		system.ads		system.ali
+Z system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.multiprocessors%s  s-multip.adb	s-multip.ali
+Z system.standard_library%s  s-stalib.adb	s-stalib.ali
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-except.ads		20190108125404 291912d5 ada.exceptions%s
+D a-reatim.ads		20190108125404 0240fc73 ada.real_time%s
+D a-taside.ads		20190108125404 c3e0cda8 ada.task_identification%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20190108125404 5ab55268 interfaces%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-atacco.ads		20190108125404 4c36d12f system.address_to_access_conversions%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-multip.ads		20170908181218 38ac9f73 system.multiprocessors%s
+D s-mudido.ads		20170908161500 5baa40df system.multiprocessors.dispatching_domains%s
+D s-mudido.adb		20190108125404 5c74b62e system.multiprocessors.dispatching_domains%b
+D s-osinte.ads		20190108125404 86be1773 system.os_interface%s
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-secsta.ads		20190108125404 20bbe636 system.secondary_stack%s
+D s-soflin.ads		20190108125404 a7318a92 system.soft_links%s
+D s-stache.ads		20190108125404 a37c21ec system.stack_checking%s
+D s-stausa.ads		20190108125404 017a0a05 system.stack_usage%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-stoele.ads		20190108125404 2dc34a04 system.storage_elements%s
+D s-tasinf.ads		20190108125404 801abd01 system.task_info%s
+D s-taspri.ads		20190108125404 6995cc42 system.task_primitives%s
+D s-taprop.ads		20190108125404 1dd2e1b6 system.task_primitives.operations%s
+D s-taskin.ads		20190108125404 b9d612e2 system.tasking%s
+D s-traent.ads		20190108125404 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20190108125404 34867c83 system.unsigned_types%s
+X 1 ada.ads
+16K9*Ada 20e8 11|16r6 18r6 47r11 48r13 53r16 54r18 58r13 59r15 62r11 63r13
+. 66r26 12|56r16 57r18 87r26 109r11 110r13 133r11 134r13 167r13 168r15
+X 3 a-reatim.ads
+39K13*Real_Time 185e18 11|16w10 66r30 12|87r30
+49O9*Time<duration> 11|66r40 12|87r40
+X 4 a-taside.ads
+39K13*Task_Identification 95e28 11|18w10 47r15 48r17 53r20 54r22 58r17 59r19
+. 62r15 63r17 12|56r20 57r22 109r15 110r17 133r15 134r17 167r17 168r19
+47P9*Task_Id<24|109P9> 11|47r35 53r40 58r37 62r35 12|56r40 109r35 133r35
+. 167r37
+59V13*Current_Task{47P9} 11|48s37 54s42 59s39 63s37 12|57s42 110s37 134s37
+. 168s39
+X 7 system.ads
+37K9*System 148e11 11|20r14 22r9 70r35 74r37 75r5 12|35r14 175r5
+X 10 s-multip.ads
+16K16*Multiprocessors 7|37k9 10|28e27 11|22r16 75r12 12|35r21 175r12
+19I9*CPU_Range<integer> 11|34r41 38r63 52r16 57r13 63r58 67r26 12|55r16 68r41
+. 88r26 110r58 155r63 166r13
+21I12*CPU{19I9} 11|34r29 36r64 40r27 12|68r29 145r64 148r14
+23i4*Not_A_Specific_CPU{19I9} 11|52r29 12|55r29 114r14
+25V13*Number_Of_CPUs{21I12} 12|158s14
+X 11 s-mudido.ads
+22K32*Dispatching_Domains 10|16k16 11|70E9 75l28 75e47 12|35b37 175l28 175t47
+28X4*Dispatching_Domain_Error 12|61r13 71r20 78r20 92r13 124r20 172r13
+30P9*Dispatching_Domain<24|388P9> 32r41 34r59 36r37 38r36 42r43 44r35 48r58
+. 51r23 70c9 72r41 73r34 12|54r23 68r59 75r43 121r35 134r58 145r37 155r36
+32p4*System_Dispatching_Domain{30P9} 72c4 12|138r14
+34V13*Create{30P9} 34>21 34>34 12|68b13 73l8 73t14
+34i21 First{10|21I12} 12|68b21 69r28
+34i34 Last{10|19I9} 12|68b34 69r35
+36V13*Get_First_CPU{10|21I12} 36>28 12|145b13 149l8 149t21
+36p28 Domain{30P9} 12|145b28 146r28
+38V13*Get_Last_CPU{10|19I9} 38>27 12|155b13 159l8 159t20
+38p27 Domain{30P9} 12|155b27 156r28
+40A9*CPU_Set(boolean)<10|19I9> 42r27 44r62 12|75r27 121r62
+42V13*Create{30P9} 42>21 12|75b13 80l8 80t14
+42a21 Set{40A9} 12|75b21 76r28
+44V13*Get_CPU_Set{40A9} 44>26 12|121b13 126l8 126t19
+44p26 Domain{30P9} 12|121b26 122r28
+46V13*Get_Dispatching_Domain{30P9} 47>7 12|132b13 139l8 139t30
+47p7 T{4|47P9} 12|133b7 136r28
+50U14*Assign_Task 51=7 52>7 53>7 12|53b14 62l8 62t19
+51p7 Domain{30P9} 12|54b7 59r28
+52i7 CPU{10|19I9} 12|55b7 59r36
+53p7 T{4|47P9} 12|56b7 59r41
+56U14*Set_CPU 57>7 58>7 12|165b14 173l8 173t15
+57i7 CPU{10|19I9} 12|166b7 170r28
+58p7 T{4|47P9} 12|167b7 170r33
+61V13*Get_CPU{10|19I9} 62>7 12|108b13 115l8 115t15
+62p7 T{4|47P9} 12|109b7 112r28
+65U14*Delay_Until_And_Set_CPU 66>7 67>7 12|86b14 93l8 93t31
+66o7 Delay_Until_Time{3|49O9} 12|87b7 90r28
+67i7 CPU{10|19I9} 12|88b7 90r46
+X 12 s-mudido.adb
+41U14 Freeze_Dispatching_Domains 43r12 99b14 102l8 102t34
+X 18 s-stausa.ads
+203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
+268U14*Output_Results 272i<c,__gnat_stack_usage_output_results>22
+X 24 s-taskin.ads
+47K16*Tasking 11|20w21 70r42 74r44 24|1215e19
+109P9*Task_Id(107R9)
+379A9*Dispatching_Domain(boolean)<10|19I9>
+388P9*Dispatching_Domain_Access(379A9) 11|70r50
+390p4*System_Domain{388P9} 11|74r52
+

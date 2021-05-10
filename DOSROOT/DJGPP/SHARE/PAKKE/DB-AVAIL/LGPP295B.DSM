@@ -1,0 +1,34 @@
+#
+# DSM for libg++ 2.95
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.3
+dsm-name: lgpp295b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: libg++
+version: 2.95
+manifest: lgpp295b
+short-description: GNU C++ class library
+license: GNU General Public License, Version 2
+organisation: Free Software Foundation
+
+porter: Andris Pavenis
+porter-email: pavenis@lanet.lv
+porting-web-site: http://www.lanet.lv/~pavenis/djgpp.html
+
+simtelnet-path: v2gnu/
+zip: lgpp295b.zip
+
+#
+# Dependencies
+#
+requires: djdev >= 2.02
+requires: gpp == 2.95
+conflicts-with: libg++ < 2.8.0
+replaces: libg++ < 2.95

@@ -1,0 +1,16 @@
+bin/gfortran.exe
+lib/gcc/djgpp/9/finclude/ieee_arithmetic.mod
+lib/gcc/djgpp/9/finclude/ieee_exceptions.mod
+lib/gcc/djgpp/9/finclude/ieee_features.mod
+lib/gcc/djgpp/9/include/ISO_Fortran_binding.h
+lib/gcc/djgpp/9/libcaf_single.a
+lib/gcc/djgpp/9/libcaf_single.la
+lib/libgfortran.a
+lib/libgfortran.la
+lib/libgfortran.spec
+libexec/gcc/djgpp/9/f951.exe
+manifest/gfor920b.dsm
+manifest/gfor920b.mft
+manifest/gfor920b.ver
+share/info/gfortran.info
+share/man/cat1/gfortran.1

@@ -1,0 +1,31 @@
+#
+# DSM for dvidvi 1.1 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: dvdv11s
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: dvidvi
+version: 1.1
+type: sources
+manifest: dvdv11s
+binaries-dsm: dvdv11b
+
+short-description: DVI to DVI convertor
+license: Unspecified
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: dvdv11s.zip
+
+pre-install-readme: gnu/web2c-7.2/djgpp/README
+
+depends-on: texmflib
+depends-on: kpathsea

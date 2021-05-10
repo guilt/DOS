@@ -1,0 +1,25 @@
+#
+# cdev.dsm
+# Constructed by Richard Dawe <richdawe@bigfoot.com> 1999-05-17
+#
+# This is an example DSM for a "C development" package.
+#
+
+dsm-file-version: 1.0
+dsm-version: 0.4.0
+dsm-name: cdev
+dsm-type: group
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: C development
+version: 1
+short-description: C development with DJGPP - DJGPP libs, gcc, GNU make
+
+# This has no packages of its own - it just requires other ones.
+requires: djdev >= 2.00
+requires: gcc >= 2.7.2
+requires: make >= 3.74
+requires: info-reader
+requires: faq

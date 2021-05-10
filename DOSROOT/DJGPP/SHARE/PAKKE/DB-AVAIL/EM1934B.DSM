@@ -1,0 +1,39 @@
+#
+# DSM for Emacs 19.34
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.2
+dsm-name: em1934b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: emacs
+version: 19.34
+sources-dsm: em1934s
+documentation-dsm: em1934d
+short-description: GNU Emacs
+license: GNU General Public License, Version 2
+
+organisation: Free Software Foundation
+web-site: http://www.fsf.org/
+newsgroup: gnu.emacs.*
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: em1934b.zip
+zip: em1934r1.zip
+zip: em1934r2.zip
+zip: em1934r3.zip
+
+replaces: emacs < 19.34
+requires: DPMI
+provides: info-reader
+#
+# Emacs lisp is recommended
+#
+depends-on: emacs-lisp 19.34

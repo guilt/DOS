@@ -1,0 +1,29 @@
+#
+# DSM for man 1.2 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.2
+dsm-name: man12b
+dsm-version: 0.4.2
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+dsm-author-web-site: http://www.bigfoot.com/~richdawe/
+
+name: man
+version: 1.2
+manifest: man12b
+sources-dsm: man12s
+short-description: man, a man page viewer
+license: GNU General Public License, Version 2
+author: Eli Zaretskii
+author-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/
+zip: man12b.zip
+
+requires: DPMI
+requires: less
+replaces: man < 1.2

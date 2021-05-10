@@ -1,0 +1,29 @@
+#
+# DSM for textutils 2.0 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com> 2000-04-02
+#
+
+dsm-file-version: 1.2
+dsm-name: txt20b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: textutils
+version: 2.0
+manifest: txt20b
+sources-dsm: txt20s
+short-description: GNU textutils
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: txt20b.zip
+
+replaces: textutils < 2.0
+requires: DPMI
+depends-on: info-reader

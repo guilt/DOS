@@ -1,0 +1,10 @@
+Name=ide
+Version=3.0.0
+Checksum=1198613596
+CPU=i386
+OS=go32v2
+SourcePath=E:\pas\fpcb.300\fpcsrc\ide\
+FPMakeOptions=-o -Tgo32v2 -o -XPi386-go32v2- -o -Xr -o -Ur -o -Xs -o -O2 -o -n -o -Fle:/pas/fpcb.300/fpcsrc/libgdb/go32v2 -o -dRELEASE
+Depends=rtl,rtl-extra|1198613551,fv|1198613564,chm|1198613554,regexpr|1198613565,gdbint|1198613564,graph|1198613564
+NeedLibC=Y
+FPMakeAddIn=N

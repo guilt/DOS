@@ -1,0 +1,214 @@
+Chapter 17
+
+
+
+
+
+Miscellaneous Routines
+
+304   Fastgraph User's Guide
+
+Overview
+
+     There are a few remaining Fastgraph routines that really don't fit into
+any of the categories discussed so far.  For this reason, they are described
+separately in this chapter.
+
+
+Determining Available Memory
+
+     The fg_memavail routine returns the amount of free conventional memory
+(in bytes) available to DOS.  It returns the amount of memory as its function
+value, which is a 32-bit unsigned integer.  Fg_memavail has no arguments.
+
+     Example 17-1 uses fg_memavail to show the effects of creating and
+releasing virtual pages.  When run in a video mode in which video pages 1 and
+2 are physical pages, the amount of free memory remains the same because
+these pages use memory that is resident on the video adapter.  However, in
+modes where pages 1 and 2 are virtual pages, the amount of free memory
+decreases after each call to fg_allocate and returns to its original value
+after the calls to fg_freepage.  Note how the program requests and validates
+the video mode.
+
+                                Example 17-1.
+
+       #include <fastgraf.h>
+       #include <stdio.h>
+       #include <stdlib.h>
+       void main(void);
+
+       void main()
+       {
+          long original, mem0, mem1, mem2;
+          int  mode, old_mode;
+
+          printf("Which video mode? ");
+          scanf("%d",&mode);
+
+          if (fg_testmode(mode,0) == 0) {
+             printf("Your system does not support that video mode.\n");
+             exit(1);
+             }
+          if (fg_testmode(mode,3) == 0) {
+             printf("Your system does not have enough memory.\n");
+             exit(1);
+             }
+
+          original = fg_memavail();
+          old_mode = fg_getmode();
+          fg_setmode(mode);
+          mem0 = fg_memavail();
+          fg_allocate(1);
+          mem1 = fg_memavail();
+          fg_allocate(2);
+          mem2 = fg_memavail();
+
+          fg_freepage(1);
+                                     Chapter 17:  Miscellaneous Routines   305
+          fg_freepage(2);
+          fg_setmode(old_mode);
+          fg_reset();
+
+          printf("originally     = %ld\n",original);
+          printf("after setmode  = %ld\n",mem0);
+          printf("after 1st page = %ld\n",mem1);
+          printf("after 2nd page = %ld\n",mem2);
+          printf("at end         = %ld\n",memavail());
+       }
+
+
+Choosing the Video Memory Update Function
+
+     In Chapter 12, we saw how to use the fg_setfunc routine to perform XOR
+animation in native EGA and VGA graphics modes (modes 13 to 18).  In these
+video modes, fg_setfunc controls the logical operation applied when the
+contents of video memory change.  The specific operation is defined by its
+argument, as shown below.
+
+                     value of   logical
+                     argument  operation
+
+                         0    replacement
+                         1        and
+                         2        or
+                         3   exclusive or
+
+If your program does not use the fg_setfunc routine, replacement mode is
+always used.  That is, information written to video memory replaces whatever
+was there before.  Again, fg_setfunc is meaningful only in modes 13 to 18.
+
+     Example 17-2 demonstrates the fg_setfunc routine.  The program is
+similar to example 6-11 which displays 200 random rectangles on the screen.
+However, example 17-2 displays the rectangles in XOR mode, which means the
+rectangle intersections will appear in different colors.
+
+                                Example 17-2.
+
+            #include <fastgraf.h>
+            #include <stdio.h>
+            #include <stdlib.h>
+            void main(void);
+
+            #define RECTANGLES 200
+            #define SWAP(a,b,temp) { temp = a; a = b; b = temp; }
+
+            void main()
+            {
+               int i;
+               int minx, maxx, miny, maxy;
+               int old_mode;
+               int temp;
+               int xres, yres;
+
+               if (fg_egacheck() == 0) {
+
+306   Fastgraph User's Guide
+
+                  printf("This program requires EGA or VGA.\n");
+                  exit(1);
+                  }
+
+               old_mode = fg_getmode();
+               fg_setmode(fg_automode());
+               fg_setfunc(3);
+
+               xres = fg_getmaxx() + 1;
+               yres = fg_getmaxy() + 1;
+
+               for (i = 0; i < RECTANGLES; i++) {
+                  minx = rand() % xres;
+                  maxx = rand() % xres;
+                  miny = rand() % yres;
+                  maxy = rand() % yres;
+                  if (minx > maxx)
+                     SWAP(minx,maxx,temp);
+                  if (miny > maxy)
+                     SWAP(miny,maxy,temp);
+                  fg_setcolor(rand()%16);
+                  fg_rect(minx,maxx,miny,maxy);
+                  }
+
+               fg_setmode(old_mode);
+               fg_reset();
+            }
+
+
+
+Controlling Vertical Retrace Synchronization
+
+     The vertical retrace is the brief period when the monitor's electron
+beam travels from the bottom of the screen back to the upper left corner to
+begin a new display refresh cycle.  Depending on the monitor, the vertical
+retrace typically occurs between 50 and 60 times per second.
+
+     Certain graphics operations must be performed during a vertical retrace
+interval to avoid potential screen flickering or snow.  These include page
+flipping, panning, and reading or writing a block of video DAC registers or
+palettes.  By default, Fastgraph's routines that perform these operations
+automatically provide the necessary vertical retrace synchronization.  In
+most applications, these vertical retrace controls are completely sufficient.
+There are times, however, when you may wish to disable Fastgraph's vertical
+retrace checking and perform the vertical retrace synchronization at the
+application level.
+
+     This is the purpose of Fastgraph's fg_waitvr routine.  To disable all
+internal vertical retrace synchronization within Fastgraph, call fg_waitvr
+with a zero argument.  If you want to re-enable it, pass a non-zero value to
+fg_waitvr (note that this is the default state).  The Fastgraph routines
+relevant to the vertical retrace are fg_getdacs, fg_makegif, fg_makepcx,
+fg_palettes, fg_pan, fg_setdacs, fg_setvpage, fg_showgif, and fg_showpcx.
+The vertical retrace is applicable to fg_makepcx and fg_showpcx in 16-color
+and 256-color graphics modes only.
+                                     Chapter 17:  Miscellaneous Routines   307
+
+     As an example of why you might want to do disable Fastgraph's vertical
+retrace controls, consider page flipping.  After fg_setvpage defines the
+display start address for the new visual page, it waits for a vertical
+retrace interval so the new starting address can take effect.  If fg_setvpage
+didn't do this, graphics displayed before the next vertical retrace would
+sometimes appear on the screen before the old visual page is completely
+removed.  Suppose, though, that immediately after the page flip you did some
+calculations or other work that didn't affect the video display.  If you
+disable Fastgraph's vertical retrace synchronization, you might achieve a
+faster frame rate because you can perform the post-page-flip calculations
+during a time when the system is normally waiting for the vertical retrace.
+Depending on the extent of these calculations, you may find that it's not
+even necessary to wait for the vertical retrace following a page flip.
+
+
+Summary of Miscellaneous Routines
+
+     This section summarizes the functional descriptions of the Fastgraph
+routines presented in this chapter.  More detailed information about these
+routines, including their arguments and return values, may be found in the
+Fastgraph Reference Manual.
+
+     FG_MEMAVAIL returns the amount of memory available to DOS.
+
+     FG_SETFUNC specifies the logical operation (replacement, or, and,
+exclusive or) applied when video memory changes in the native EGA and VGA
+graphics modes.  This routine has no effect in other video modes.
+
+     FG_WAITVR disables or enables vertical retrace synchronization within
+Fastgraph.
+308   Fastgraph User's Guide

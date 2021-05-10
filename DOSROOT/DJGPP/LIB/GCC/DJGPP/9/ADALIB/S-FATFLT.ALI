@@ -1,0 +1,49 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.fat_flt%s	s-fatflt.ads		7f3772b6 NE OL PU PK
+W ada%s			ada.ads			ada.ali
+Z ada.exceptions%s	a-except.adb		a-except.ali
+Z ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+W system.fat_gen%s
+Z system.unsigned_types%s  s-unstyp.ads		s-unstyp.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-except.ads		20190108125404 291912d5 ada.exceptions%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-fatflt.ads		20190108125404 11beb392 system.fat_flt%s
+D s-fatgen.ads		20190108125404 49cbaf86 system.fat_gen%s
+D s-fatgen.adb		20190108125404 28cd35f5 system.fat_gen%b
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-traent.ads		20190108125404 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20190108125404 34867c83 system.unsigned_types%s
+X 4 system.ads
+37K9*System 148e11 5|35r6 37r9 45r30 47r5
+X 5 s-fatflt.ads
+37K16*Fat_Flt 4|37k9 5|47l12 47e19
+45K12*Attr_Float[6|41]
+X 6 s-fatgen.ads
+41k16*Fat_Gen 5|35w13 45r37 6|118e19
+

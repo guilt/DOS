@@ -1,0 +1,49 @@
+# DSM (DJGPP Software Map) entry file for Binutils v2.8.1
+#
+dsm-author: Laurynas Biveinis
+dsm-file-version: 2.2
+dsm-version: 0.4.0
+dsm-name: bnu281b
+dsm-type: binaries
+#
+# Application information
+#
+name: binutils
+version: 2.8.1
+manifest: bnu281b
+sources-dsm: bnu281s
+documentation-dsm: bnu281d
+short-description: GNU Binutils port to DJGPP
+long-description: GNU Binutils port to DJGPP contains assembler, linker and other utilities required for DJGPP development
+license: GNU General Public License, Version 2
+#
+# Authors
+#
+organisation: FSF
+web-site: http://www.gnu.org/software/binutils.html
+ftp-site: ftp://ftp.gnu.org/pub/gnu/binutils/
+#
+# Porter
+# 
+porter: Robert Hoehne
+porter-email: robert.hoehne@mathematik.tu-chemnitz.de
+#
+# Where to look for help
+#
+mailing-list: bug-gnu-utils@prep.ai.mit.edu
+#
+# Package archive info
+#
+simtelnet-path: v2gnu/
+zip: bnu281b.zip
+post-install-readme: readme.djg
+#
+# Dependencies
+#
+#
+# Required ones:
+#
+replaces: binutils < 2.8.1
+requires: DPMI >= 0.9
+# For reading docs
+depends-on: info-reader

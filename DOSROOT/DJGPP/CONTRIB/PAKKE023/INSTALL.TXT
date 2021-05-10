@@ -1,0 +1,398 @@
+File: pakke.info,  Node: Installation,  Next: Getting started,  Prev: Introduction,  Up: Top
+
+Installation
+************
+
+Installing the Binary Distribution
+==================================
+
+Filename: `pakk023b.zip'
+
+If you want to install DJGPP from scratch, please see the How-To (*note
+How to install DJGPP using pakke::).
+
+Installing the binary distribution (ready-to-run) of pakke is relatively
+straightforward.  Extract the ZIP file into the DJGPP directory (e.g.
+c:\djgpp), preserving directory names - e.g. use PKUNZIP's '-d' option.
+
+The binary distribution includes documentation in info and text formats.
+For additional formats please see the section below on the documentation
+distribution.
+
+To install the info files properly, you will need GNU texinfo 4.0
+(available from the DJGPP archive as `v2gnu/txi40b.zip').  Run the
+following commands:
+
+     install-info --info-file=/dev/env/DJDIR/info/pakke.inf \
+                  --info-dir=/dev/env/DJDIR/info
+     
+     install-info --info-file=/dev/env/DJDIR/info/dsmcheck.inf \
+                  --info-dir=/dev/env/DJDIR/info
+     
+     install-info --info-file=/dev/env/DJDIR/info/dsm.inf \
+                  --info-dir=/dev/env/DJDIR/info
+
+Please note that some lines have been split with the `\' character -
+these should be typed as one line.
+
+pakke should now be installed correctly and ready to use - please read
+how to get started with pakke (*note Getting started::).
+
+Installing the Documentation Distribution
+=========================================
+
+Filename: `pakk023d.zip'
+
+Installing the documentation distribution of pakke is relatively
+straightforward.  Extract the ZIP file into the DJGPP directory (e.g.
+c:\djgpp), preserving directory names - e.g. use PKUNZIP's '-d' option.
+
+The documentation is provided in DVI, PostScript and HTML formats.
+
+Building from the Source Distribution
+=====================================
+
+Filename: `pakk023s.zip'
+
+Required and Optional Packages
+------------------------------
+
+To build pakke the following packages are required:
+
+   * GNU C compiler - versions 2.8.0, 2.8.1, 2.95.2, 2.95.3 have been
+     used.
+
+   * GNU binutils - versions 2.8.1, 2.9.5.1 beta, 2.10 have been used.
+
+   * GNU make
+
+   * GNU autoconf 2.13
+
+   * GNU m4 1.4 (or later) (required by GNU autoconf)
+
+   * GNU awk (required by GNU autoconf)
+
+   * GNU grep (required by GNU autoconf)
+
+   * GNU sed
+
+   * GNU bash
+
+   * GNU fileutils
+
+   * GNU findutils
+
+   * GNU shellutils
+
+   * GNU textutils 2.0 (or later)
+
+   * GNU texinfo 4.0 (or later)
+
+   * GNU flex
+
+   * GNU bison
+
+   * zlib (available from the DJGPP archive in `v2tk/')
+
+   * popt (available from the DJGPP archive in `v2tk/')
+
+Optional packages are as follows:
+
+   * The Memory Supervision System (MSS) can provide memory allocation
+     debugging.  MSS is available from the DJGPP archive in `v2tk/'.
+
+   * PMODE/DJ can be used to build executables that have a built-in DOS
+     extender (i.e. CWSDPMI not required), so that pakke can be used to
+     install DJGPP "from nothing".  PMODE/DJ is available from the
+     DJGPP archive in `v2misc/'.
+
+These packages should be detected and used automatically during the
+configure process.
+
+Configuration and Compilation
+-----------------------------
+
+In the following instructions, I have assumed that bash is the shell.
+If not, type 'bash' and then follow the instructions.
+
+  1. Run `./configure' to autodetect any needed libraries.  The
+     following command-line options can be passed to `configure':
+
+    `--enable-debug'
+          Enable debugging information.
+
+    `--enable-email=xxx'
+          Set the e-mail address to be displayed with pakke's `-V'
+          command-line option.
+
+    `--with-bzip2'
+          Enable support for bzip2-compressed packages (*note
+          bzip2.info: Top.).
+
+    `--with-mss'
+          Enable memory allocation tracking with MSS - if MSS isn't
+          installed, then this will be ignored.
+
+    `--with-pmode-stub'
+          Enable building with the PMODE/DJ protected mode stub.  When
+          built with this stub, pakke and dsmcheck can be used on any
+          computer without needing a DPMI server to be installed.  This
+          is useful for installing DJGPP from scratch under DOS, where
+          no DPMI server is available by default.
+
+          Note: The versions built with the PMODE/DJ stub _may_ be less
+          stable than those built without.  Problems have been reported
+          with programs built with PMODE/DJ.
+
+     If you are going to distribute your binaries of pakke, please use
+     the `--enable-email' switch and supply your e-mail address.
+
+     Below is an example invocation of `configure' with all the options;
+     you may not need all these options.
+
+          ./configure --enable-debug --with-mss \
+                      --enable-email=barney.rubble@bedrock.az.us
+
+     The `--prefix' option is used to specify the prefix used when
+     installing the built package.  This should probably be the DJGPP
+     directory, but you can install it elsewhere if you want.  If you
+     have a recent enough DJGPP toolchain, you can use the
+     `/dev/env/DJDIR' syntax for the prefix, e.g.:
+
+          ./configure --prefix=/dev/env/DJDIR
+
+  2. Run `make' to compile.
+
+  3. (_Optional_, but recommended) Run `make check' to check that the
+     programs have been built correctly.
+
+  4. (_Optional_) Run `make -C doc all' to build documentation in
+     formats other than the defaults of info and HTML.
+
+  5. (_Optional_) Run `make install' to install pakke.  If you want to
+     see what would be installed, use `make -n install' instead.
+
+  6. (_Optional_) Run `make install-lib' if you are going to use
+     libpakke in your own programs.  It installs library header files
+     and the library itself.
+
+pakke should now be built, installed correctly and ready to use -
+please read how to get started with pakke (*note Getting started::).
+
+File: pakke.info,  Node: Getting started,  Next: Dependencies,  Prev: Installation,  Up: Top
+
+Getting started
+***************
+
+Before getting started with pakke, some concepts need to be explained.
+
+* Menu:
+
+* Dependencies::
+* The package database::
+* The package operations::
+* DSMs for DJGPP packages::
+* Automatic downloading of packages::
+* Getting started with pakke::
+
+File: pakke.info,  Node: Dependencies,  Next: The package database,  Prev: Getting started,  Up: Getting started
+
+Dependencies
+============
+
+Dependencies are the interactions between different packages.  For
+instance, if one has some C source code, it is only useful, if there is
+a C compiler to compile it with.  The source code depends on the C
+compiler.
+
+The DSM specification (*note dsm.inf: Top.) actually has two kinds of
+dependencies - `requires' and `depends-on'.  These are "hard
+dependencies" and "soft dependencies" respectively.  A hard dependency
+must be satisfied.  A package with a hard dependency will not work, if
+this dependency is not satisfied.  A soft dependency may not be
+satisfied, but the package will still work with some of its
+functionality impaired.
+
+It is also possible to have "virtual dependencies", which specify
+capabilities.  These capabilities may be provided by multiple packages.
+A capability is something like the ability to read web pages or provide
+certain system calls, e.g. DPMI, that packages require.
+
+File: pakke.info,  Node: The package database,  Next: The package operations,  Prev: Dependencies,  Up: Getting started
+
+The package database
+====================
+
+pakke has a package database, to keep track of what has been
+installed/uninstalled/upgraded.  This information allows pakke to
+install/uninstall/upgrade packages safely.  It contains the following
+information:
+
+   * descriptions of the packages (DSMs);
+
+   * manifest files for the packages (`.mft' files);
+
+   * MD5 hashes of each file in the packages, to detect when they have
+     changed.
+
+When the package database is created by pakke (*note Initialising the
+package database::), some information is automatically added:
+
+   * a DSM for the operating system/platform that pakke is running on.
+
+Why would you want to install a DSM for the platform that pakke is
+running on?  These "platform DSMs" list what capabilities the operating
+system provides.
+
+An important capability for DJGPP programs is DPMI, since all DJGPP
+programs require a DPMI server to be running.  Please note that some
+DJGPP programs appear not to need a DPMI server.  They do, but the DPMI
+server has been linked into them.  Windows provides a DPMI 0.9 server,
+so there is a capability in the Windows DSMs for DPMI.
+
+The package database is stored in `share/pakke' in the DJGPP directory
+(or whatever directory is the pakke root).  In this directory there are:
+
+`pakkerc'
+     pakke's configuration file;
+
+`simtelrc'
+     a list of URLs for mirror sites for the DJGPP archive;
+
+`db/'
+     a directory containing installed package database;
+
+`db-avail/'
+     a directory containing available package database;
+
+`win32/'
+     a directory (if present) containing helper programs for running
+     under 32-bit versions of Windows, i.e.: any version later than
+     Windows 3.x.
+
+If the configuration and package database has not been created, you may
+see the following error:
+
+     Error: Unable to read configuration file!
+
+Please see the later section "Getting started with pakke" (*note
+Getting started with pakke: Getting started.).
+
+File: pakke.info,  Node: The package operations,  Next: DSMs for DJGPP packages,  Prev: The package database,  Up: Getting started
+
+The package operations
+======================
+
+pakke has different modes of operation, depending on the packages
+involved:
+
+   * The package database can be initialised.
+
+   * The package database can be synchronised with updated DSMs, when
+     they become available.
+
+   * Installed packages can be queried, uninstalled, upgraded or
+     verified.
+
+   * Available packages can be queried or installed.
+
+These operations are described in the chapter "Package operations"
+(*note Package operations::).
+
+The method of selecting packages depends on the operation.  See the
+section of package specifiers for more details (*note Package
+specifiers::).
+
+Verification of a package is called an "integrity check".  This will
+show which files in the package have changed or are missing, if any.
+
+File: pakke.info,  Node: DSMs for DJGPP packages,  Next: Automatic downloading of packages,  Prev: The package operations,  Up: Getting started
+
+DSMs for DJGPP packages
+=======================
+
+Newer DJGPP packages are provided with DSMs.  These DSMs are also
+available in the package "djgpp-dsms", which is available from the
+`v2/' directory of the DJGPP archive as the file `dsXXXXXX.zip', where
+`XXXXXX' is the package's date, e.g. `010822'.  This can be installed,
+upgraded and uninstalled like any other DJGPP package.
+
+If one plans to install or upgrade a lot of packages to the latest from
+the DJGPP archive, it may be more convenient to download all the
+packages, install "djgpp-dsms" and then upgrade by package name.
+Typing in a large number of filenames can become tedious.
+
+In fact the `--syncdb' operation can download the latest "djgpp-dsms"
+package for you (*note Synchronising the package database::).
+
+File: pakke.info,  Node: Automatic downloading of packages,  Next: Getting started with pakke,  Prev: DSMs for DJGPP packages,  Up: Getting started
+
+Automatic downloading of packages
+=================================
+
+pakke can download packages automatically, if they are not found.  The
+following operations can download packages:
+
+   * synchronising the package database (*note Synchronising the
+     package database::);
+
+   * installing packages (*note Installing packages::);
+
+   * upgrading packages (*note Upgrading packages::).
+
+pakke will ask you whether you want to download packages.  If pakke is
+running in non-interactive mode (*note Non-interactive mode::), it will
+not download packages.
+
+You should configure pakke (*note pakkerc::), so that it uses the
+nearest and fastest server on the Internet to you, when downloading
+packages.
+
+You can specify the Simtel.NET mirror to use on the command-line using
+the `--mirror' command-line option:
+
+     pakke --mirror ftp://ftp.simtel.net/pub/simtelnet/gnu/djgpp/
+
+If you use the same mirror each time, you may wish to configure pakkerc
+(*note pakkerc::) to use it by default.
+
+pakke uses GNU wget, to download packages.  See the wget home page at
+`http://wget.sunsite.dk/' or `http://www.gnu.org/software/wget/' for
+more details.
+
+File: pakke.info,  Node: Getting started with pakke,  Next: Invoking pakke,  Prev: Automatic downloading of packages,  Up: Getting started
+
+Getting started with pakke
+==========================
+
+This section assumes that you already have a DJGPP installation.  For
+instructions on installing DJGPP from scratch with pakke, please see
+the How-To (*note How to install DJGPP using pakke::).
+
+Using pakke with an existing DJGPP installation is straightforward.
+Firstly, extract the pakke binaries into the DJGPP directory.  You now
+need to initialise and synchronise the package database, so that pakke
+knows about all the packages you have.  I have assumed that you are
+using the bash shell - if not, type `bash' to run it.  Then change into
+the DJGPP directory (e.g. `c:/djgpp') and then execute the following
+commands:
+
+     ./bin/pakke -v --initdb
+     ./bin/pakke -v --syncdb
+
+These commands will create the configuration files `pakkerc' and
+`simtelrc' for you (*note pakkerc::, *note simtelrc::).
+
+You should now be able to use pakke.  To check this, list all installed
+packages:
+
+     pakke -v -qa
+
+To read the pakke manual, you can use the info program:
+
+     info pakke
+
+Please read the manual, particularly the sections on querying (*note
+Querying packages::) and installing packages (*note Installing
+packages::).
+

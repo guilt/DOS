@@ -1,0 +1,35 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV SPARK_05
+
+U gnat.current_exception%s  g-curexc.ads	f2a511d2 NE OL PU PK
+W gnat%s		gnat.ads		gnat.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D gnat.ads		20190108125404 b5988c27 gnat%s
+D g-curexc.ads		20190108125404 473d9df5 gnat.current_exception%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+X 3 gnat.ads
+34K9*GNAT 57e9 4|44r9 112r5
+X 4 g-curexc.ads
+44K14*Current_Exception 3|34k9 4|112l10 112e27
+53V13*Exception_Information{string} 108b30
+59V13*Exception_Message{string} 109b30
+65V13*Exception_Name{string} 110b30
+

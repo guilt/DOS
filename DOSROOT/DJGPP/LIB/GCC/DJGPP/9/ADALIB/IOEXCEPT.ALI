@@ -1,0 +1,35 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+
+U io_exceptions%s	ioexcept.ads		15b36750 NE OL PU
+W ada%s			ada.ads			ada.ali
+W ada.io_exceptions%s	a-ioexce.ads		a-ioexce.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-ioexce.ads		20170908181218 e4a01f64 ada.io_exceptions%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D ioexcept.ads		20170908181218 f1137834 io_exceptions%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+X 1 ada.ads
+16K9*Ada 20e8 4|22r6 24r31
+X 2 a-ioexce.ads
+18K13*IO_Exceptions 30e22 4|22w10 24r35
+X 4 ioexcept.ads
+24K9*IO_Exceptions=24:35
+

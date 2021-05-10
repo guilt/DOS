@@ -1,0 +1,59 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_IMPLEMENTATION_ASPECT_SPECIFICATIONS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.atomic_counters%b  s-atocou.adb	825ddfd4 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.atomic_counters%s  s-atocou.ads	931e432f BN NE OL PR PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20190108125404 27426ea2 system%s
+D s-atocou.ads		20190108125404 b45c2d8d system.atomic_counters%s
+D s-atocou.adb		20190108125404 3601f259 system.atomic_counters%b
+X 1 system.ads
+37K9*System 148e11 2|40r9 107r5 3|36r14 93r5
+X 2 s-atocou.ads
+40K16*Atomic_Counters 1|37k9 2|102E9 107l12 107e27 3|36b21 93l12 93t27
+45R9*Atomic_Counter 57r39 61r38 65r28 69r37 102c9 105e14 3|42r38 64r39 78r37
+. 87r28
+57U14*Increment 57=25 58r26 3|64b14 67l8 67t17
+57r25 Item{45R9} 3|64b25
+61V13*Decrement{boolean} 61=24 62r26 3|42b13 46l8 46t17
+61r24 Item{45R9} 3|42b24
+65V13*Is_One{boolean} 65>21 66r26 3|87b13 91l8 91t14
+65r21 Item{45R9} 3|87b21
+69U14*Initialize 69<26 70r26 3|78b14 81l8 81t18
+69r26 Item{45R9} 3|78b26
+75M9*Atomic_Unsigned 81r29 85r29 88r29 95r21 95r45 98r21 98r45 103r23 3|48r46
+. 51r15 55r47 57r15 69r47 71r15
+80U14*Increment 81=7 3|69b14 72l8 72t17
+81m7 Item{75M9} 3|69b25 71m7 71r37
+84V13*Decrement{boolean} 85=7 3|48b13 53l8 53t17
+85m7 Item{75M9} 3|48b24 51m7 51r37 52r14
+87U14*Decrement 88=7 3|55b14 58l8 58t17
+88m7 Item{75M9} 3|55b25 57m7 57r37
+94y14*"+"{75M9} 95>7 95>13
+95m7 Left{75M9}
+95m13 Right{75M9}
+97y14*"-"{75M9} 98>7 98>13
+98m7 Left{75M9}
+98m13 Right{75M9}
+103m7*Value{75M9}
+

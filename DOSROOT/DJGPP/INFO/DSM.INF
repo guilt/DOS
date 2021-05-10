@@ -1,0 +1,1450 @@
+This is dsm.info, produced by makeinfo version 4.2 from dsm.txi.
+
+INFO-DIR-SECTION DJGPP Package Management
+START-INFO-DIR-ENTRY
+* DSM: (dsm).                 DJGPP Software Manifest (DSM) specification
+END-INFO-DIR-ENTRY
+
+
+File: dsm.info,  Node: Top,  Next: Introduction,  Prev: (dir),  Up: (dir)
+
+
+
+DJGPP Software Manifest Specification 0.6.1 Copyright (C)
+1999-2003 by Richard Dawe
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License" (*note GNU Free Documentation License::).
+
+* Menu:
+
+* Introduction::
+* Descriptive Directives::
+* Installation & Dependency Directives::
+* Dependencies and Package Versions::
+* DSM File Structure::
+* Scripting::
+* Standard Provisions::
+
+* Changelog::
+
+* GNU Free Documentation License::
+
+* Concept Index::
+* Variable Index::
+
+
+File: dsm.info,  Node: Introduction,  Next: Descriptive Directives,  Prev: Top,  Up: (dir)
+
+Introduction
+************
+
+DJGPP has a lot of packages, and is becoming more and more popular.
+This is a testament to those who have worked on it & helped with it,
+and continue to do so (thanks guys & gals).  However, for new users, it
+can be tricky to install and configure.  Even for old users, it is
+somtimes a lot of hassle to install/remove packages. ;)  So, it would
+be nice to have some (standard) way of simplifying this process.  The
+DJGPP Software Manifest, hopefully, will allow this.
+
+DJGPP software often comes with a "manifest file", with a file extension
+of `.mft', which lists the files contained in the package, and a
+"version file", with a file extension of `.ver', which has a brief
+description of the package, often containing no more than the name and
+version.
+
+It would be useful to have a standard way of describing DJGPP packages,
+so that they could be installed/uninstalled/queried by a "package
+manager", taking into account any interactions between the packages.
+The description would also include more information about the package
+than the current manifest & version files do.
+
+Before going any further, the term "package" should be defined in the
+context of this specification.  A "package" is a compressed archive
+containing a file or files describing the package.  Thus, the files in
+the current DJGPP archive qualify as packages because they contain
+manifest and version files.
+
+DJGPP packages are distributed as binaries (pre-compiled), sources
+(compilation required) or documentation (reading required).
+
+DJGPP Software Manifest
+=======================
+
+The name DJGPP Software Manifest (DSM) has been chosen for the
+description.  This is stored in a "DSM file", with a file extension of
+`.dsm'.  This will provide the following information about a package:
+
+   * Package name, version, type, short and long descriptions;
+
+   * Names of binary, source or documentation DSMs for this package;
+
+   * License, author, organisation, maintainer, porter, porting,
+     mailing list and newsgroup information;
+
+   * Home page, download site, location on DJGPP archive;
+
+   * Location of informational files in the package;
+
+   * Dependency of package on other packages, e.g.: requirements,
+     clashes;
+
+If the package contains a DSM file, it should be stored in either the
+top-level directory (the base directory of the archive) or in
+`manifest/' off the top-level directory.  This ensures that the package
+managers can easily find the DSM.
+
+
+File: dsm.info,  Node: Descriptive Directives,  Next: Installation & Dependency Directives,  Prev: Introduction,  Up: Top
+
+DSM File Syntax
+***************
+
+Syntax
+======
+
+Directives
+----------
+
+A DSM is a plain text file.  It describes the package using directives.
+A "directive" is a name, consisting only of alphanumeric and hyphen
+characters, e.g.: `short-description'.  A directive takes a single
+value and is separated from it by a colon, e.g.:
+
+     short-description: V. short
+
+Directives are single-valued - to have multiple values, the directive
+should be used more than once.  This is not allowed with all directives.
+*Note Multiply-Allowed Directives::.  If the directives have some
+logical grouping, e.g.: when describing package authors, then different
+directives are associated by occurrence in the DSM, e.g.: the third
+`author-email' directive refers the third author's e-mail address.
+
+Line Continuation & Escaping
+----------------------------
+
+It may be desirable to have more than one line of data for some of the
+directives, e.g.: `short-description'.  The line continuation character
+is a backslash, \.  This should be the last non-whitespace character on
+the line.
+
+In the informational directives `short-description' and
+`long-description', C-style escapes can be used to insert newlines, etc.
+into the directive.  The following escapes should be supported:
+
+`\n'
+     Newline
+
+`\t'
+     Tab
+
+`\\'
+     Backslash
+
+Formats
+-------
+
+The "version number" must be specified as follows:
+
+     <Major>[.<Minor>[.<Subminor>[.<Subsubminor>]]]
+     [  (alpha <Alpha number>)
+      | (beta <Beta number>)
+      | (pre <Pre-release number>)]
+     [revision <Revision number>] [patchlevel <Patchlevel number>]
+     [snapshot <ISO 8061 hyphenless date>] [release <Release number>]
+     [platform <Platform specifier>]
+
+The components must be in this order.  NB: The versions 1.0.0 and 1.0
+may seem to be the same, but are not.
+
+The "ISO 8061 hyphenless date" is specified by `YYYYMMDD', where `YYYY'
+is the 4-digit year, `MM' is the 2-digit month number and `DD' is the
+2-digit day number (in the month), all padded with zeroes as necessary.
+
+The "platform" is a `<CPU>-<Manufacturer>-<Operating System>' triplet
+or `<CPU>-<Manufacturer>-<Kernel>-<Operating System>' quadruplet
+describing the hardware & software that the package works on.  This
+format is used by autoconf for its `--host', `--target' and `--build'
+options.  For DJGPP the platform is usually `i386-pc-msdosdjgpp'.  The
+CPU could be `i486', `i586' for Pentium-class CPUs or `i686' for
+Pentium II-class CPUs.
+
+The platform should be treated insensitively of case.
+
+Descriptive Directives
+======================
+
+DSM Header
+----------
+
+The following fields comprise the DSM header:
+
+`dsm-file-version'
+     This specifies the revision of this file, e.g.: 1, 0.1 - do not
+     confuse this with `dsm-version'.  This allows the user to check
+     for new versions of a package's DSM file.
+
+`dsm-version'
+     DSM format version number, e.g.: 0.6.1, the version of this
+     specification.
+
+`dsm-name'
+     DSM name = file name without extension.  Usually this should be
+     the same as `manifest'.  Often it is an error, when this is not
+     the case.
+
+The following fields comprise the DSM author information header:
+
+`dsm-author'
+     DSM author's name
+
+`dsm-author-email'
+     DSM author's e-mail address
+
+`dsm-author-im'
+     DSM author's instant messaging details, e.g for ICQ
+
+`dsm-author-web-site'
+     DSM author's web site
+
+`dsm-author-ftp-site'
+     DSM author's FTP site
+
+These fields are needed because the DSM may not have been written by the
+person(s) who made the package.
+
+Information Directives
+----------------------
+
+The following fields give more detailed information about the package
+itself.  The version information is particularly important.
+
+In the `binaries-dsm', `source-dsm' and `documentation-dsm' fields
+below, it is not necessary that the version for those packages will be
+the same as for this package, i.e.: specified by `version'.
+`binaries-dsm' cannot appear in a DSM for a binaries package;
+`sources-dsm' cannot appear in a DSM for a sources package;
+`documentation-dsm' cannot appear in a DSM for a documentation package.
+
+`name'
+     This specifies the package name, which cannot contain whitespace.
+     Instead use hyphens or underscores.  The package name should be
+     treated insensitively of case.
+
+`version'
+     Version number
+
+`type'
+     (binaries|sources|documentation|group|virtual)
+
+     In previous versions of the DSM specification, this was called
+     `dsm-type'.  `dsm-type' should not be used.  The type should be
+     treated insensitively of case.
+
+     The different package types are defined as follows:
+
+    `binaries'
+          The package primarily contains executable programs.
+
+    `sources'
+          The package primarily contains source code.
+
+    `documentation'
+          The package primarily contains documentation.
+
+    `group'
+          The DSM refers to a collection of related packages.  This is
+          so that, for example, the whole of GNU emacs could be
+          installed by referring to its group DSM.  A group package is,
+          in a way, a meta-package.  A group package is implemented by
+          using the `requires' directive.
+
+    `virtual'
+          A virtual package refers to facilities that are outside the
+          domain of a package manager, e.g.: there could be a virtual
+          package for Microsoft Windows.  A virtual package is
+          implemented by using the `provides' directive.
+
+`manifest'
+     Manifest, `.mft', file name without extension.  Usually this should
+     be the same as `dsm-name'.  Often it is an error, when this is not
+     the case.
+
+`binaries-dsm'
+     Binaries DSM name, file name without extension
+
+`sources-dsm'
+     Sources DSM name, file name without extension
+
+`documentation-dsm'
+     Documentation DSM name, file name without extension
+
+`short-description'
+     One line of text
+
+`long-description'
+     Multiple lines of text
+
+`license'
+     Package's license, e.g.: GNU General Public License, BSD License
+
+`organisation'
+     e.g.: FSF
+
+`author'
+     Author's name for this package
+
+`author-email'
+     Author's e-mail address
+
+`author-im'
+     Author's instant messaging details, e.g.: for ICQ
+
+`web-site'
+     Home page for the package or author - this should give the
+     complete URL, e.g.: `http://www.grossprojekt.org/'.
+
+`ftp-site'
+     Download site of the package or author - this should give the
+     complete URL, e.g.: `ftp://ftp.grossprojekt.org/'.
+
+`maintainer'
+     Maintainer's name
+
+`maintainer-email'
+     Maintainer's e-mail address
+
+`maintainer-im'
+     Maintainer's instant messaging details, e.g.: for ICQ
+
+`maintainer-web-site'
+     Maintainer's home page
+
+`maintainer-ftp-site'
+     Maintainer's FTP site
+
+`porter'
+     Porter's name
+
+`porter-email'
+     Porter's e-mail address
+
+`porter-im'
+     Porter's instant messaging details, e.g.: for ICQ
+
+`porter-web-site'
+     Porter's home page, with complete URL.
+
+`porter-ftp-site'
+     Porter's download site, with complete URL.
+
+`porting-web-site'
+     Home page for the port, with complete URL.
+
+`porting-ftp-site'
+     Download site for the port, with complete URL.
+
+`mailing-list'
+     Mailing list's e-mail address
+
+`mailing-list-description'
+     Description of the Mailing list
+
+`mailing-list-request'
+     E-mail address to which request subscription requests should be
+     sent.  Details for how to use this should be on the mailing list's
+     web site.
+
+`mailing-list-administrator'
+     Mailing list administrator's name
+
+`mailing-list-administrator-email'
+     Mailing list administrator's e-mail address
+
+`mailing-list-administrator-im'
+     Mailing list administrator's instant messaging details, e.g.: for
+     ICQ
+
+`mailing-list-web-site'
+     Mailing list home page, with complete URL - this should contain
+     details of how to join the list.
+
+`mailing-list-ftp-site'
+     Mailing list download site, with complete URL.
+
+`newsgroup'
+     Newsgroup for the package
+
+`newsgroup-description'
+     Description of the newsgroup
+
+`newsgroup-email-gateway'
+     This is an e-mail address to send newsgroup items to.  The e-mail
+     will be converted into a newsgroup posting.  An example for DJGPP
+     is `djgpp@delorie.com'.
+
+`newsgroup-administrator'
+     Newsgroup administrator's name
+
+`newsgroup-administrator-email'
+     Newsgroup administrator's e-mail address
+
+`newsgroup-administrator-im'
+     Newsgroup administrator's instant messaging details, e.g.: for ICQ
+
+`newsgroup-web-site'
+     Newsgroup home page, with complete URL.
+
+`newsgroup-ftp-site'
+     Newsgroup download site, with complete URL.
+
+
+File: dsm.info,  Node: Installation & Dependency Directives,  Next: Dependencies and Package Versions,  Prev: Descriptive Directives,  Up: Top
+
+Installion & Dependency Directives
+==================================
+
+Package Archive Information
+---------------------------
+
+`simtelnet-path'
+     This is the location of the package's archive in the DJGPP FTP
+     structure, e.g.: `v2tk/'.  This is for automatic FTP or HTTP
+     downloading by the package manager.  The trailing slash is
+     optional.
+
+`zip'
+     This specifies the archive file names in preferred order of
+     installation.  The file extension must be `.zip' and must be
+     present in this field.
+
+     `.zip' archives are created with PKZIP or a PKZIP-compatible
+     archiver such as Info-ZIP.
+
+`tar-gzip'
+     This specifies the archive file names in preferred order of
+     installation.  The file extension must be one of `.tgz', `.taz' or
+     `.tar.gz' and must be present in this field.
+
+     `.tar.gz' archives are created with tar and the GNU zip program
+     (gzip).
+
+`tar-bzip2'
+     This specifies the archive file names in preferred order of
+     installation.  The file extension must be one of `.tbz', `.tbz2'
+     or `.tar.bz2' and must be present in this field.
+
+     `.tar.bz2' archives are created with tar and bzip2.
+
+`changelog'
+     This specifies the relative path in the archive to the changelog,
+     for use by the package manager.
+
+`pre-install-readme'
+     This specifies the relative path in the archive to "readme" file
+     for pre-install information.
+
+`post-install-readme'
+     This specifies the relative path in the archive to "readme" file
+     for post-install information.
+
+`pre-uninstall-readme'
+     This specifies the relative path in the archive to "readme" file
+     for pre-uninstall information.
+
+`post-uninstall-readme'
+     This specifies the relative path in the archive to "readme" file
+     for post-uninstall information.
+
+`builtin-pre-install-script'
+     [Built-in scripting]
+
+`builtin-post-install-script'
+     [Built-in scripting]
+
+`builtin-pre-uninstall-script'
+     [Built-in scripting]
+
+`builtin-post-uninstall-script'
+     [Built-in scripting]
+
+*Note Scripting::, for a definition of the built-in scripting language.
+
+`pre-install-script'
+     [File name, extracted from zip/tgz]
+
+`post-install-script'
+     [File name]
+
+`pre-uninstall-script'
+     [File name]
+
+`post-uninstall-script'
+     [File name]
+
+The script files can be in any scripting language, so long as the
+scripting host can be invoked by DOS programs.  If this is not the
+case, then any DOS package manager will fail to install/uninstall.  A
+`requires' directive should be used to ensure that the script can be
+run.
+
+`keep-file'
+     `keep-file' can be used to specify files that should not be
+     overwritten on installation or removed on uninstall.  E.g.:
+
+          keep-file: share/prog.cfg
+
+`prefix'
+     If the archive isn't structured to fit into the DJGPP tree, then a
+     prefix can be specified to cope with this; e.g.: if all the files
+     are in the directory `demopkg/' in the archive, the `prefix' could
+     be `contrib/' to put them into `contrib/demopkg/' off the DJGPP
+     directory.  `prefix' should be a relative path.  The trailing
+     slash is optional.
+
+Dependencies
+------------
+
+`<Operator>' can be any of the C operators  `==', `<=', `>=', `!=',
+`<', `>'.  Omission of `<Operator>' implies an equality test.  Omission
+of `<Operator>' and `<Version>' implies any version of the package.
+The version may contain the special wildcard characters `?' and `*'
+(*note Dependencies and Package Versions::).
+
+A package does not automatically clash with other versions of itself.
+
+`requires'
+     `<Package> [[<Operator>] <Version>]'
+     _or_ `<Feature> [[<Operator>] [<Version>]][: <Qualifier>]'
+
+`depends-on'
+     `<Package> [[<Operator>] <Version>]'
+     _or_ `<Feature> [[<Operator>] [<Version>]][: <Qualifier>]'
+
+`conflicts-with'
+     `<Package> [[<Operator>] <Version>]'
+     _or_ `<Feature> [[<Operator>] [<Version>]][: <Qualifier>]'
+
+`replaces'
+     `<Package> [[<Operator>] <Version>]'
+
+`depends-on' has a different emphasis than `requires'.  A package
+`requires' another to function *at all*.  If it `depends-on' then some
+of its functionality may not be available.  Version comparisons are
+described in the section "Dependencies and Package Versions" (*note
+Dependencies and Package Versions::).
+
+`duplicate-action'
+     `duplicate-action' should be treated insensitively of case.
+
+     `(replace|backup|keep|skip|query)'
+
+The default `duplicate-action' will depend on the installation utility.
+
+`provides'
+     `<Feature> [[<Operator>] [<Version>]][: <Qualifier>]'
+
+The `provides' directive is used to indicate the provision of certain
+features by the package.  These can then be used in the `requires',
+`depends-on' and `conflicts-with' dependencies above.  Virtual packages
+can use `provides' to indicate features that are available by default,
+e.g.: the DPMI 0.9 support provided by Windows DOS boxes.
+
+The feature name is like a package name, and so cannot contain
+whitespace - please use hyphens or underscores instead.  The feature
+name should be treated insensitively of case.
+
+If the package provides only certain parts of a standard, e.g.:
+CWSDPMI's support of some DPMI 1.0 function calls, then the optional
+"qualifier" can be used to indicate these.  It is suggested that these
+take the form of `function 0x0501' or `function gethostbyname_r()'.
+Acronyms should be written in uppercase.  *Note Standard Provisions::,
+for the 'provides' defined so far.  The use of feature qualifiers
+should be co-ordinated by incorporation into this specification.
+
+Qualifiers should be treated insensitively of case.
+
+`install-before'
+     `<Package> [[<Operator>] <Version>]'
+
+`install-after'
+     `<Package> [[<Operator>] <Version>]'
+
+`install-warning'
+     Message
+
+
+File: dsm.info,  Node: Dependencies and Package Versions,  Next: DSM File Structure,  Prev: Installation & Dependency Directives,  Up: Top
+
+Dependencies and Package Versions
+=================================
+
+To check that dependencies are satisfied, the package versions specified
+in the dependencies need to be checked carefully.
+
+Precedence in Comparing Package Versions
+----------------------------------------
+
+Here are the precedence rules for the "special" components of a version:
+
+     alpha < (normal)
+     beta  < (normal)
+     pre   < (normal)
+
+Above `(normal)' refers to a version without `alpha', `beta' or `pre'.
+
+     (normal) < revision
+     (normal) < patchlevel
+     (normal) < snapshot
+     (normal) < release
+
+Above `(normal)' refers to a version without a `revision',
+`patchlevel', `snapshot' or `release'.
+
+Wildcards in Package Versions
+-----------------------------
+
+The `?' wildcard character can be used to match a specific component of
+the version.  For example, `4.?' will exactly match 4.0, 4.1, etc.  It
+will not exactly match 4.
+
+The `*' wildcard character can be used to match any component and any
+lower components.  For example, `4.*' will exactly match 4.0, 4.0.1,
+4.0.1.1, etc.  It will not exactly match 4.
+
+
+File: dsm.info,  Node: DSM File Structure,  Next: Required Fields,  Prev: Dependencies and Package Versions,  Up: Top
+
+DSM File Structure
+==================
+
+* Menu:
+
+* Required Fields::
+* Multiply-Allowed Directives::
+
+   * A group of packages has a DSM entry with a name such as "C
+     development" and a list of 'requires' fields.
+
+   * A virtual package has a DSM entry with a name such as "Windows 95"
+     and a list of 'provides' fields such as `provides: DPMI 0.9'.
+
+
+It is recommended that the DSM's author writes their name and contact
+details at the start of each DSM as a comment, in addition to the
+`dsm-author', etc. fields.
+
+
+File: dsm.info,  Node: Required Fields,  Next: Multiply-Allowed Directives,  Prev: DSM File Structure,  Up: DSM File Structure
+
+Required Fields
+---------------
+
+`dsm-author'
+
+`dsm-file-version'
+
+`dsm-version'
+
+`dsm-name'
+
+`name'
+
+`version'
+
+`type'
+
+`short-description'
+
+`simtelnet-path'
+     This is only needed if it's a binaries, documentation or sources
+     package that is actually in (or will be in) the Simtelnet archive.
+
+`zip or tar-gzip'
+     This is only needed if it's a binaries, documentation or sources
+     package.
+
+Any known `requires', `depends-on', `replaces', `install-before' or
+`install-after' dependencies are also required.
+
+
+File: dsm.info,  Node: Multiply-Allowed Directives,  Next: Scripting,  Prev: Required Fields,  Up: DSM File Structure
+
+Multiply-Allowed Directives
+---------------------------
+
+The following directives are allowed multiply:
+
+`author'
+
+`author-email'
+
+`author-im'
+
+`web-site'
+
+`ftp-site'
+
+`maintainer'
+
+`maintainer-email'
+
+`maintainer-im'
+
+`maintainer-web-site'
+
+`maintainer-ftp-site'
+
+`porter'
+
+`porter-email'
+
+`porter-im'
+
+`porter-web-site'
+
+`porter-ftp-site'
+
+`porting-web-site'
+
+`porting-ftp-site'
+
+`mailing-list'
+
+`mailing-list-description'
+
+`mailing-list-request'
+
+`mailing-list-administrator'
+
+`mailing-list-administrator-email'
+
+`mailing-list-administrator-im'
+
+`mailing-list-web-site'
+
+`mailing-list-ftp-site'
+
+`newsgroup'
+
+`newsgroup-description'
+
+`newsgroup-email-gateway'
+
+`newsgroup-administrator'
+
+`newsgroup-administrator-email'
+
+`newsgroup-administrator-im'
+
+`newsgroup-web-site'
+
+`newsgroup-ftp-site'
+
+
+`zip'
+
+`tar-gzip'
+
+
+`requires'
+
+`depends-on'
+
+`conflicts-with'
+
+`replaces'
+
+`provides'
+
+`install-before'
+
+`install-after'
+An example is the case where a package has multiple authors:
+
+     author: Fred Bloggs
+     author-email: fred.bloggs@bigcorp.co.uk
+     author: Ed Wiggins
+     author-email: ed.wiggins@bigcorp.co.uk
+
+
+File: dsm.info,  Node: Scripting,  Next: Standard Provisions,  Prev: Multiply-Allowed Directives,  Up: Top
+
+Scripting
+=========
+
+The built-in scripting language isn't intended for complex operations.
+For that, external scripting should be used.  The following commands are
+supported in the `builtin-pre-install-script',
+`builtin-post-install-script', `builtin-pre-uninstall-script' and
+`builtin-post-uninstall-script' directives.
+
+`echo'
+     `<Arguments>'
+
+     This displays/outputs `Arguments'.  This could be used to remind
+     the user to read the fine manual.
+
+`command'
+     `<Program> <Arguments>'
+
+     This executes `Program' by passing `Arguments' to it.  This could
+     be used to run `install-info'  - *Note Texinfo: (texinfo)Invoking
+     install-info.
+
+Here is a simple example:
+
+     builtin-post-install-script: command: echo Hello Mum!
+
+
+File: dsm.info,  Node: Standard Provisions,  Next: Changelog,  Prev: Scripting,  Up: Top
+
+Standard Provisions
+===================
+
+The following provisions are defined in the DSM specification, so that
+packages have a standard way of requiring the features.
+
+`djgpp-dev-env'
+     This denotes DJGPP 2.03's support of using `/dev/env'-style paths
+     (*note Changes in 2.03: (kb)Changes in 2.03.).
+
+`DPMI 0.9'
+
+`DPMI 1.0'
+
+`DPMI 1.0: function 0x0506'
+
+`DPMI 1.0: function 0x0507'
+
+`DPMI 1.0: function 0x0508'
+
+`DPMI 1.0: function 0x0509'
+
+`DPMI 1.0: function 0x0E01'
+
+`info-reader'
+     This denotes ability to read documentation in info format.
+
+`LFN'
+     This denotes the Windows '95 Long FileName API for DOS boxes.
+
+`web-browser'
+     This denotes a program capable of displaying HTML pages.
+
+
+File: dsm.info,  Node: Changelog,  Next: GNU Free Documentation License,  Prev: Standard Provisions,  Up: Top
+
+Changelog
+*********
+
+Version 0.6.1
+=============
+
+   * Added the `porter-web-site' and `porter-ftp-site' directives.
+
+   * Describe wildcard matching of versions.
+
+   * Suggest that `dsm-name' and `manifest' should be the same.
+
+
+Version 0.6.0
+=============
+
+   * Package names should now be treated insensitively of case.
+
+   * The `type' directive, the `duplicate-action' directive, the
+     platform component of the `version' directive, feature names and
+     qualifiers (in dependencies) should now be treated insensitively
+     of case.
+
+   * Added the `tar-bzip2' directive for specifying archives created
+     with tar and bzip2.
+
+   * Removed the `keep-file' directive from the required directives
+     section, since its use is up to package maintainers.
+
+   * `binaries-dsm' is now forbidden in a DSM for a binaries package;
+     `sources-dsm' is now forbidden in a DSM for a sources package;
+     `documentation-dsm' is now forbidden in a DSM for a documentation
+     package.
+
+Version 0.5.1
+=============
+
+   * Added `release' to the version of package, to allow multiple
+     releases of a package.  Added `keep-file', to allow certain files
+     to be preserved on installation/uninstallation of a package -
+     e.g.: configuration files.
+
+Version 0.5.0
+=============
+
+   * Added new standard provisions: `djgpp-dev-env', `web-browser'.
+
+   * Renamed `dsm-type' to `type'.
+
+Version 0.4.4
+=============
+
+   * Changelog added
+
+   * Support for pre-release versions added (*note Descriptive
+     Directives::).
+
+
+File: dsm.info,  Node: GNU Free Documentation License,  Next: Concept Index,  Prev: Changelog,  Up: Top
+
+GNU Free Documentation License
+******************************
+
+                        Version 1.1, March 2000
+     Copyright (C) 2000 Free Software Foundation, Inc.
+     59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
+     
+     Everyone is permitted to copy and distribute verbatim copies
+     of this license document, but changing it is not allowed.
+
+  0. PREAMBLE
+
+     The purpose of this License is to make a manual, textbook, or other
+     written document "free" in the sense of freedom: to assure everyone
+     the effective freedom to copy and redistribute it, with or without
+     modifying it, either commercially or noncommercially.  Secondarily,
+     this License preserves for the author and publisher a way to get
+     credit for their work, while not being considered responsible for
+     modifications made by others.
+
+     This License is a kind of "copyleft", which means that derivative
+     works of the document must themselves be free in the same sense.
+     It complements the GNU General Public License, which is a copyleft
+     license designed for free software.
+
+     We have designed this License in order to use it for manuals for
+     free software, because free software needs free documentation: a
+     free program should come with manuals providing the same freedoms
+     that the software does.  But this License is not limited to
+     software manuals; it can be used for any textual work, regardless
+     of subject matter or whether it is published as a printed book.
+     We recommend this License principally for works whose purpose is
+     instruction or reference.
+
+  1. APPLICABILITY AND DEFINITIONS
+
+     This License applies to any manual or other work that contains a
+     notice placed by the copyright holder saying it can be distributed
+     under the terms of this License.  The "Document", below, refers to
+     any such manual or work.  Any member of the public is a licensee,
+     and is addressed as "you".
+
+     A "Modified Version" of the Document means any work containing the
+     Document or a portion of it, either copied verbatim, or with
+     modifications and/or translated into another language.
+
+     A "Secondary Section" is a named appendix or a front-matter
+     section of the Document that deals exclusively with the
+     relationship of the publishers or authors of the Document to the
+     Document's overall subject (or to related matters) and contains
+     nothing that could fall directly within that overall subject.
+     (For example, if the Document is in part a textbook of
+     mathematics, a Secondary Section may not explain any mathematics.)
+     The relationship could be a matter of historical connection with
+     the subject or with related matters, or of legal, commercial,
+     philosophical, ethical or political position regarding them.
+
+     The "Invariant Sections" are certain Secondary Sections whose
+     titles are designated, as being those of Invariant Sections, in
+     the notice that says that the Document is released under this
+     License.
+
+     The "Cover Texts" are certain short passages of text that are
+     listed, as Front-Cover Texts or Back-Cover Texts, in the notice
+     that says that the Document is released under this License.
+
+     A "Transparent" copy of the Document means a machine-readable copy,
+     represented in a format whose specification is available to the
+     general public, whose contents can be viewed and edited directly
+     and straightforwardly with generic text editors or (for images
+     composed of pixels) generic paint programs or (for drawings) some
+     widely available drawing editor, and that is suitable for input to
+     text formatters or for automatic translation to a variety of
+     formats suitable for input to text formatters.  A copy made in an
+     otherwise Transparent file format whose markup has been designed
+     to thwart or discourage subsequent modification by readers is not
+     Transparent.  A copy that is not "Transparent" is called "Opaque".
+
+     Examples of suitable formats for Transparent copies include plain
+     ASCII without markup, Texinfo input format, LaTeX input format,
+     SGML or XML using a publicly available DTD, and
+     standard-conforming simple HTML designed for human modification.
+     Opaque formats include PostScript, PDF, proprietary formats that
+     can be read and edited only by proprietary word processors, SGML
+     or XML for which the DTD and/or processing tools are not generally
+     available, and the machine-generated HTML produced by some word
+     processors for output purposes only.
+
+     The "Title Page" means, for a printed book, the title page itself,
+     plus such following pages as are needed to hold, legibly, the
+     material this License requires to appear in the title page.  For
+     works in formats which do not have any title page as such, "Title
+     Page" means the text near the most prominent appearance of the
+     work's title, preceding the beginning of the body of the text.
+
+  2. VERBATIM COPYING
+
+     You may copy and distribute the Document in any medium, either
+     commercially or noncommercially, provided that this License, the
+     copyright notices, and the license notice saying this License
+     applies to the Document are reproduced in all copies, and that you
+     add no other conditions whatsoever to those of this License.  You
+     may not use technical measures to obstruct or control the reading
+     or further copying of the copies you make or distribute.  However,
+     you may accept compensation in exchange for copies.  If you
+     distribute a large enough number of copies you must also follow
+     the conditions in section 3.
+
+     You may also lend copies, under the same conditions stated above,
+     and you may publicly display copies.
+
+  3. COPYING IN QUANTITY
+
+     If you publish printed copies of the Document numbering more than
+     100, and the Document's license notice requires Cover Texts, you
+     must enclose the copies in covers that carry, clearly and legibly,
+     all these Cover Texts: Front-Cover Texts on the front cover, and
+     Back-Cover Texts on the back cover.  Both covers must also clearly
+     and legibly identify you as the publisher of these copies.  The
+     front cover must present the full title with all words of the
+     title equally prominent and visible.  You may add other material
+     on the covers in addition.  Copying with changes limited to the
+     covers, as long as they preserve the title of the Document and
+     satisfy these conditions, can be treated as verbatim copying in
+     other respects.
+
+     If the required texts for either cover are too voluminous to fit
+     legibly, you should put the first ones listed (as many as fit
+     reasonably) on the actual cover, and continue the rest onto
+     adjacent pages.
+
+     If you publish or distribute Opaque copies of the Document
+     numbering more than 100, you must either include a
+     machine-readable Transparent copy along with each Opaque copy, or
+     state in or with each Opaque copy a publicly-accessible
+     computer-network location containing a complete Transparent copy
+     of the Document, free of added material, which the general
+     network-using public has access to download anonymously at no
+     charge using public-standard network protocols.  If you use the
+     latter option, you must take reasonably prudent steps, when you
+     begin distribution of Opaque copies in quantity, to ensure that
+     this Transparent copy will remain thus accessible at the stated
+     location until at least one year after the last time you
+     distribute an Opaque copy (directly or through your agents or
+     retailers) of that edition to the public.
+
+     It is requested, but not required, that you contact the authors of
+     the Document well before redistributing any large number of
+     copies, to give them a chance to provide you with an updated
+     version of the Document.
+
+  4. MODIFICATIONS
+
+     You may copy and distribute a Modified Version of the Document
+     under the conditions of sections 2 and 3 above, provided that you
+     release the Modified Version under precisely this License, with
+     the Modified Version filling the role of the Document, thus
+     licensing distribution and modification of the Modified Version to
+     whoever possesses a copy of it.  In addition, you must do these
+     things in the Modified Version:
+
+       A. Use in the Title Page (and on the covers, if any) a title
+          distinct from that of the Document, and from those of
+          previous versions (which should, if there were any, be listed
+          in the History section of the Document).  You may use the
+          same title as a previous version if the original publisher of
+          that version gives permission.
+
+       B. List on the Title Page, as authors, one or more persons or
+          entities responsible for authorship of the modifications in
+          the Modified Version, together with at least five of the
+          principal authors of the Document (all of its principal
+          authors, if it has less than five).
+
+       C. State on the Title page the name of the publisher of the
+          Modified Version, as the publisher.
+
+       D. Preserve all the copyright notices of the Document.
+
+       E. Add an appropriate copyright notice for your modifications
+          adjacent to the other copyright notices.
+
+       F. Include, immediately after the copyright notices, a license
+          notice giving the public permission to use the Modified
+          Version under the terms of this License, in the form shown in
+          the Addendum below.
+
+       G. Preserve in that license notice the full lists of Invariant
+          Sections and required Cover Texts given in the Document's
+          license notice.
+
+       H. Include an unaltered copy of this License.
+
+       I. Preserve the section entitled "History", and its title, and
+          add to it an item stating at least the title, year, new
+          authors, and publisher of the Modified Version as given on
+          the Title Page.  If there is no section entitled "History" in
+          the Document, create one stating the title, year, authors,
+          and publisher of the Document as given on its Title Page,
+          then add an item describing the Modified Version as stated in
+          the previous sentence.
+
+       J. Preserve the network location, if any, given in the Document
+          for public access to a Transparent copy of the Document, and
+          likewise the network locations given in the Document for
+          previous versions it was based on.  These may be placed in
+          the "History" section.  You may omit a network location for a
+          work that was published at least four years before the
+          Document itself, or if the original publisher of the version
+          it refers to gives permission.
+
+       K. In any section entitled "Acknowledgments" or "Dedications",
+          preserve the section's title, and preserve in the section all
+          the substance and tone of each of the contributor
+          acknowledgments and/or dedications given therein.
+
+       L. Preserve all the Invariant Sections of the Document,
+          unaltered in their text and in their titles.  Section numbers
+          or the equivalent are not considered part of the section
+          titles.
+
+       M. Delete any section entitled "Endorsements".  Such a section
+          may not be included in the Modified Version.
+
+       N. Do not retitle any existing section as "Endorsements" or to
+          conflict in title with any Invariant Section.
+
+     If the Modified Version includes new front-matter sections or
+     appendices that qualify as Secondary Sections and contain no
+     material copied from the Document, you may at your option
+     designate some or all of these sections as invariant.  To do this,
+     add their titles to the list of Invariant Sections in the Modified
+     Version's license notice.  These titles must be distinct from any
+     other section titles.
+
+     You may add a section entitled "Endorsements", provided it contains
+     nothing but endorsements of your Modified Version by various
+     parties--for example, statements of peer review or that the text
+     has been approved by an organization as the authoritative
+     definition of a standard.
+
+     You may add a passage of up to five words as a Front-Cover Text,
+     and a passage of up to 25 words as a Back-Cover Text, to the end
+     of the list of Cover Texts in the Modified Version.  Only one
+     passage of Front-Cover Text and one of Back-Cover Text may be
+     added by (or through arrangements made by) any one entity.  If the
+     Document already includes a cover text for the same cover,
+     previously added by you or by arrangement made by the same entity
+     you are acting on behalf of, you may not add another; but you may
+     replace the old one, on explicit permission from the previous
+     publisher that added the old one.
+
+     The author(s) and publisher(s) of the Document do not by this
+     License give permission to use their names for publicity for or to
+     assert or imply endorsement of any Modified Version.
+
+  5. COMBINING DOCUMENTS
+
+     You may combine the Document with other documents released under
+     this License, under the terms defined in section 4 above for
+     modified versions, provided that you include in the combination
+     all of the Invariant Sections of all of the original documents,
+     unmodified, and list them all as Invariant Sections of your
+     combined work in its license notice.
+
+     The combined work need only contain one copy of this License, and
+     multiple identical Invariant Sections may be replaced with a single
+     copy.  If there are multiple Invariant Sections with the same name
+     but different contents, make the title of each such section unique
+     by adding at the end of it, in parentheses, the name of the
+     original author or publisher of that section if known, or else a
+     unique number.  Make the same adjustment to the section titles in
+     the list of Invariant Sections in the license notice of the
+     combined work.
+
+     In the combination, you must combine any sections entitled
+     "History" in the various original documents, forming one section
+     entitled "History"; likewise combine any sections entitled
+     "Acknowledgments", and any sections entitled "Dedications".  You
+     must delete all sections entitled "Endorsements."
+
+  6. COLLECTIONS OF DOCUMENTS
+
+     You may make a collection consisting of the Document and other
+     documents released under this License, and replace the individual
+     copies of this License in the various documents with a single copy
+     that is included in the collection, provided that you follow the
+     rules of this License for verbatim copying of each of the
+     documents in all other respects.
+
+     You may extract a single document from such a collection, and
+     distribute it individually under this License, provided you insert
+     a copy of this License into the extracted document, and follow
+     this License in all other respects regarding verbatim copying of
+     that document.
+
+  7. AGGREGATION WITH INDEPENDENT WORKS
+
+     A compilation of the Document or its derivatives with other
+     separate and independent documents or works, in or on a volume of
+     a storage or distribution medium, does not as a whole count as a
+     Modified Version of the Document, provided no compilation
+     copyright is claimed for the compilation.  Such a compilation is
+     called an "aggregate", and this License does not apply to the
+     other self-contained works thus compiled with the Document, on
+     account of their being thus compiled, if they are not themselves
+     derivative works of the Document.
+
+     If the Cover Text requirement of section 3 is applicable to these
+     copies of the Document, then if the Document is less than one
+     quarter of the entire aggregate, the Document's Cover Texts may be
+     placed on covers that surround only the Document within the
+     aggregate.  Otherwise they must appear on covers around the whole
+     aggregate.
+
+  8. TRANSLATION
+
+     Translation is considered a kind of modification, so you may
+     distribute translations of the Document under the terms of section
+     4.  Replacing Invariant Sections with translations requires special
+     permission from their copyright holders, but you may include
+     translations of some or all Invariant Sections in addition to the
+     original versions of these Invariant Sections.  You may include a
+     translation of this License provided that you also include the
+     original English version of this License.  In case of a
+     disagreement between the translation and the original English
+     version of this License, the original English version will prevail.
+
+  9. TERMINATION
+
+     You may not copy, modify, sublicense, or distribute the Document
+     except as expressly provided for under this License.  Any other
+     attempt to copy, modify, sublicense or distribute the Document is
+     void, and will automatically terminate your rights under this
+     License.  However, parties who have received copies, or rights,
+     from you under this License will not have their licenses
+     terminated so long as such parties remain in full compliance.
+
+ 10. FUTURE REVISIONS OF THIS LICENSE
+
+     The Free Software Foundation may publish new, revised versions of
+     the GNU Free Documentation License from time to time.  Such new
+     versions will be similar in spirit to the present version, but may
+     differ in detail to address new problems or concerns.  See
+     `http://www.gnu.org/copyleft/'.
+
+     Each version of the License is given a distinguishing version
+     number.  If the Document specifies that a particular numbered
+     version of this License "or any later version" applies to it, you
+     have the option of following the terms and conditions either of
+     that specified version or of any later version that has been
+     published (not as a draft) by the Free Software Foundation.  If
+     the Document does not specify a version number of this License,
+     you may choose any version ever published (not as a draft) by the
+     Free Software Foundation.
+
+ADDENDUM: How to use this License for your documents
+----------------------------------------------------
+
+To use this License in a document you have written, include a copy of
+the License in the document and put the following copyright and license
+notices just after the title page:
+
+       Copyright (C)  YEAR  YOUR NAME.
+       Permission is granted to copy, distribute and/or modify this document
+       under the terms of the GNU Free Documentation License, Version 1.1
+       or any later version published by the Free Software Foundation;
+       with the Invariant Sections being LIST THEIR TITLES, with the
+       Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.
+       A copy of the license is included in the section entitled ``GNU
+       Free Documentation License''.
+
+If you have no Invariant Sections, write "with no Invariant Sections"
+instead of saying which ones are invariant.  If you have no Front-Cover
+Texts, write "no Front-Cover Texts" instead of "Front-Cover Texts being
+LIST"; likewise for Back-Cover Texts.
+
+If your document contains nontrivial examples of program code, we
+recommend releasing these examples in parallel under your choice of
+free software license, such as the GNU General Public License, to
+permit their use in free software.
+
+
+File: dsm.info,  Node: Concept Index,  Next: Variable Index,  Prev: GNU Free Documentation License,  Up: Top
+
+Concept Index
+*************
+
+* Menu:
+
+* binaries package:                      Descriptive Directives.
+* dependency qualification:              Installation & Dependency Directives.
+* dependency qualifier:                  Installation & Dependency Directives.
+* directive:                             Descriptive Directives.
+* directives:                            Descriptive Directives.
+* djgpp-dev-env:                         Standard Provisions.
+* documentation package:                 Descriptive Directives.
+* DPMI:                                  Standard Provisions.
+* DSM file:                              Introduction.
+* escape characters:                     Descriptive Directives.
+* escaping:                              Descriptive Directives.
+* FDL, GNU Free Documentation License:   GNU Free Documentation License.
+* feature:                               Installation & Dependency Directives.
+* features:                              Installation & Dependency Directives.
+* group package:                         Descriptive Directives.
+* info-reader:                           Standard Provisions.
+* ISO 8061 date:                         Descriptive Directives.
+* LFN:                                   Standard Provisions.
+* line continutation:                    Descriptive Directives.
+* manifest file:                         Introduction.
+* multiple values:                       Descriptive Directives.
+* operator:                              Installation & Dependency Directives.
+* package:                               Introduction.
+* package manager:                       Introduction.
+* platform:                              Descriptive Directives.
+* precedence in comparing package versions: Dependencies and Package Versions.
+* qualifier:                             Installation & Dependency Directives.
+* sources package:                       Descriptive Directives.
+* version file:                          Introduction.
+* version number:                        Descriptive Directives.
+* virtual package:                       Descriptive Directives.
+* web-browser:                           Standard Provisions.
+
+
+File: dsm.info,  Node: Variable Index,  Prev: Concept Index,  Up: Top
+
+Variable Index
+**************
+
+* Menu:
+
+* author:                                Descriptive Directives.
+* author-email:                          Descriptive Directives.
+* author-im:                             Descriptive Directives.
+* binaries:                              Descriptive Directives.
+* binaries-dsm:                          Descriptive Directives.
+* builtin-post-install-script:           Installation & Dependency Directives.
+* builtin-post-uninstall-script:         Installation & Dependency Directives.
+* builtin-pre-install-script:            Installation & Dependency Directives.
+* builtin-pre-uninstall-script:          Installation & Dependency Directives.
+* changelog:                             Installation & Dependency Directives.
+* command:                               Scripting.
+* conflicts-with:                        Installation & Dependency Directives.
+* depends-on:                            Installation & Dependency Directives.
+* djgpp-dev-env:                         Standard Provisions.
+* documentation:                         Descriptive Directives.
+* documentation-dsm:                     Descriptive Directives.
+* DPMI 0.9:                              Standard Provisions.
+* DPMI 1.0:                              Standard Provisions.
+* DPMI 1.0: function 0x0506:             Standard Provisions.
+* DPMI 1.0: function 0x0507:             Standard Provisions.
+* DPMI 1.0: function 0x0508:             Standard Provisions.
+* DPMI 1.0: function 0x0509:             Standard Provisions.
+* DPMI 1.0: function 0x0E01:             Standard Provisions.
+* dsm-author:                            Descriptive Directives.
+* dsm-author-email:                      Descriptive Directives.
+* dsm-author-ftp-site:                   Descriptive Directives.
+* dsm-author-im:                         Descriptive Directives.
+* dsm-author-web-site:                   Descriptive Directives.
+* dsm-file-version:                      Descriptive Directives.
+* dsm-name:                              Descriptive Directives.
+* dsm-version:                           Descriptive Directives.
+* duplicate-action:                      Installation & Dependency Directives.
+* echo:                                  Scripting.
+* ftp-site:                              Descriptive Directives.
+* group:                                 Descriptive Directives.
+* info-reader:                           Standard Provisions.
+* install-after:                         Installation & Dependency Directives.
+* install-before:                        Installation & Dependency Directives.
+* install-warning:                       Installation & Dependency Directives.
+* keep-file:                             Installation & Dependency Directives.
+* LFN:                                   Standard Provisions.
+* license:                               Descriptive Directives.
+* long-description:                      Descriptive Directives.
+* mailing-list:                          Descriptive Directives.
+* mailing-list-administrator:            Descriptive Directives.
+* mailing-list-administrator-email:      Descriptive Directives.
+* mailing-list-administrator-im:         Descriptive Directives.
+* mailing-list-description:              Descriptive Directives.
+* mailing-list-ftp-site:                 Descriptive Directives.
+* mailing-list-request:                  Descriptive Directives.
+* mailing-list-web-site:                 Descriptive Directives.
+* maintainer:                            Descriptive Directives.
+* maintainer-email:                      Descriptive Directives.
+* maintainer-ftp-site:                   Descriptive Directives.
+* maintainer-im:                         Descriptive Directives.
+* maintainer-web-site:                   Descriptive Directives.
+* manifest:                              Descriptive Directives.
+* name:                                  Descriptive Directives.
+* newsgroup:                             Descriptive Directives.
+* newsgroup-administrator:               Descriptive Directives.
+* newsgroup-administrator-email:         Descriptive Directives.
+* newsgroup-administrator-im:            Descriptive Directives.
+* newsgroup-description:                 Descriptive Directives.
+* newsgroup-email-gateway:               Descriptive Directives.
+* newsgroup-ftp-site:                    Descriptive Directives.
+* newsgroup-web-site:                    Descriptive Directives.
+* organisation:                          Descriptive Directives.
+* porter:                                Descriptive Directives.
+* porter-email:                          Descriptive Directives.
+* porter-ftp-site:                       Descriptive Directives.
+* porter-im:                             Descriptive Directives.
+* porter-web-site:                       Descriptive Directives.
+* porting-ftp-site:                      Descriptive Directives.
+* porting-web-site:                      Descriptive Directives.
+* post-install-readme:                   Installation & Dependency Directives.
+* post-install-script:                   Installation & Dependency Directives.
+* post-uninstall-readme:                 Installation & Dependency Directives.
+* post-uninstall-script:                 Installation & Dependency Directives.
+* pre-install-readme:                    Installation & Dependency Directives.
+* pre-install-script:                    Installation & Dependency Directives.
+* pre-uninstall-readme:                  Installation & Dependency Directives.
+* pre-uninstall-script:                  Installation & Dependency Directives.
+* prefix:                                Installation & Dependency Directives.
+* provides:                              Installation & Dependency Directives.
+* replaces:                              Installation & Dependency Directives.
+* requires:                              Installation & Dependency Directives.
+* short-description:                     Descriptive Directives.
+* simtelnet-path:                        Installation & Dependency Directives.
+* sources:                               Descriptive Directives.
+* sources-dsm:                           Descriptive Directives.
+* tar-bzip2:                             Installation & Dependency Directives.
+* tar-gzip:                              Installation & Dependency Directives.
+* type:                                  Descriptive Directives.
+* version:                               Descriptive Directives.
+* virtual:                               Descriptive Directives.
+* web-browser:                           Standard Provisions.
+* web-site:                              Descriptive Directives.
+* zip:                                   Installation & Dependency Directives.
+
+
+
+Tag Table:
+Node: Top223
+Node: Introduction1091
+Node: Descriptive Directives3657
+Node: Installation & Dependency Directives12380
+Node: Dependencies and Package Versions18277
+Node: DSM File Structure19524
+Node: Required Fields20167
+Node: Multiply-Allowed Directives20819
+Node: Scripting22062
+Node: Standard Provisions22921
+Node: Changelog23721
+Node: GNU Free Documentation License25359
+Node: Concept Index45237
+Node: Variable Index47509
+
+End Tag Table

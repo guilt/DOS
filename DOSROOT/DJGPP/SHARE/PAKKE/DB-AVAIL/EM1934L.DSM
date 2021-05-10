@@ -1,0 +1,33 @@
+#
+# DSM for Emacs Lisp sources 19.34
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: em1934l
+dsm-version: 0.4.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: emacs-lisp
+version: 19.34
+short-description: GNU Emacs Lisp sources
+license: GNU General Public License, Version 2
+
+organisation: Free Software Foundation
+web-site: http://www.fsf.org/
+newsgroup: gnu.emacs.*
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: em1934l1.zip
+zip: em1934l2.zip
+zip: em1934l3.zip
+
+#
+# Will this work with other versions too?
+#
+requires: emacs 19.34

@@ -1,0 +1,1416 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fastgraph (tm)
+
+
+
+
+
+User's Guide
+Copyright (c) 1991-1993 by Ted Gruber Software.
+
+All rights reserved.  No part of this publication may be reproduced, stored
+in a retrieval system, or transmitted by any means, electronic, mechanical,
+photocopying, recording, or otherwise, without express written permission
+from Ted Gruber Software.  The software described in this publication is
+furnished under a license agreement and may be used or copied only in
+accordance with the terms of that agreement.
+
+This publication and its associated software are sold without warranties,
+either expressed or implied, regarding their merchantability or fitness for
+any particular application or purpose.  The information in this publication
+is subject to change without notice and does not represent a commitment on
+the part of Ted Gruber Software.  In no event shall Ted Gruber Software be
+liable for any loss of profit or any other commercial damage, including but
+not limited to special, incidental, consequential, or other damages resulting
+from the use of or the inability to use this product, even if Ted Gruber
+Software has been notified of the possibility of such damages.
+
+
+First Printing, April 1993
+
+Fastgraph version 3.00
+
+
+
+
+
+
+
+
+
+
+
+All brand and product names mentioned in this publication are trademarks or
+registered trademarks of their respective holders.
+
+
+
+
+
+                      T a b l e   o f   C o n t e n t s
+
+
+Chapter 1  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .    1
+     What is Fastgraph? . . . . . . . . . . . . . . . . . . . . . . . . .    2
+     Fastgraph/Light  . . . . . . . . . . . . . . . . . . . . . . . . . .    2
+     Prerequisite Knowledge . . . . . . . . . . . . . . . . . . . . . . .    2
+     Supported Compilers  . . . . . . . . . . . . . . . . . . . . . . . .    3
+     Memory Models  . . . . . . . . . . . . . . . . . . . . . . . . . . .    3
+     Installing Fastgraph . . . . . . . . . . . . . . . . . . . . . . . .    4
+     The READ.ME File . . . . . . . . . . . . . . . . . . . . . . . . . .    5
+     Fastgraph Naming Conventions . . . . . . . . . . . . . . . . . . . .    5
+     Compilation and Linking  . . . . . . . . . . . . . . . . . . . . . .    5
+          Borland C++ . . . . . . . . . . . . . . . . . . . . . . . . . .    8
+          Borland Pascal  . . . . . . . . . . . . . . . . . . . . . . . .   10
+          Microsoft BASIC PDS 7 . . . . . . . . . . . . . . . . . . . . .   11
+          Microsoft C and C++ . . . . . . . . . . . . . . . . . . . . . .   13
+          Microsoft FORTRAN . . . . . . . . . . . . . . . . . . . . . . .   14
+          Microsoft QuickBASIC  . . . . . . . . . . . . . . . . . . . . .   16
+          Microsoft QuickC  . . . . . . . . . . . . . . . . . . . . . . .   18
+          Microsoft Visual Basic for DOS  . . . . . . . . . . . . . . . .   20
+          Microsoft Visual C++  . . . . . . . . . . . . . . . . . . . . .   22
+          Power C . . . . . . . . . . . . . . . . . . . . . . . . . . . .   23
+          Turbo C and Turbo C++ . . . . . . . . . . . . . . . . . . . . .   25
+          Turbo Pascal  . . . . . . . . . . . . . . . . . . . . . . . . .   27
+          Zortech C++ . . . . . . . . . . . . . . . . . . . . . . . . . .   28
+     Fastgraph/Light Video Driver . . . . . . . . . . . . . . . . . . . .   29
+
+Chapter 2  PC and PS/2 Video Modes  . . . . . . . . . . . . . . . . . . .   31
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   32
+     Text Modes . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   33
+     Graphics Modes . . . . . . . . . . . . . . . . . . . . . . . . . . .   35
+          CGA Graphics Modes  . . . . . . . . . . . . . . . . . . . . . .   35
+          Tandy 1000 and PCjr Graphics Modes  . . . . . . . . . . . . . .   36
+          Hercules Graphics Modes . . . . . . . . . . . . . . . . . . . .   36
+          EGA Graphics Modes  . . . . . . . . . . . . . . . . . . . . . .   37
+          VGA and MCGA Graphics Modes . . . . . . . . . . . . . . . . . .   38
+          Extended VGA (XVGA) Graphics Modes  . . . . . . . . . . . . . .   39
+          SuperVGA (SVGA) Graphics Modes  . . . . . . . . . . . . . . . .   40
+
+Chapter 3  Initializing the Video Environment . . . . . . . . . . . . . .   43
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   44
+     Establishing a Text Mode . . . . . . . . . . . . . . . . . . . . . .   44
+     43-line and 50-line Text Modes . . . . . . . . . . . . . . . . . . .   47
+     Establishing a Graphics Mode . . . . . . . . . . . . . . . . . . . .   48
+     SuperVGA Graphics Modes  . . . . . . . . . . . . . . . . . . . . . .   51
+     Summary of Video Initialization Routines . . . . . . . . . . . . . .   56
+
+Chapter 4  Coordinate Systems . . . . . . . . . . . . . . . . . . . . . .   59
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   60
+     Character Space  . . . . . . . . . . . . . . . . . . . . . . . . . .   60
+     Screen Space . . . . . . . . . . . . . . . . . . . . . . . . . . . .   61
+
+                                     iii
+
+     World Space  . . . . . . . . . . . . . . . . . . . . . . . . . . . .   62
+     Conversion Routines  . . . . . . . . . . . . . . . . . . . . . . . .   64
+     Summary of Coordinate Routines . . . . . . . . . . . . . . . . . . .   64
+
+Chapter 5  The Use of Color . . . . . . . . . . . . . . . . . . . . . . .   67
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   68
+     Text Modes . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   68
+          Color Text Modes  . . . . . . . . . . . . . . . . . . . . . . .   68
+          Monochrome Text Mode  . . . . . . . . . . . . . . . . . . . . .   69
+     Graphics Modes . . . . . . . . . . . . . . . . . . . . . . . . . . .   70
+          CGA Color Modes . . . . . . . . . . . . . . . . . . . . . . . .   70
+          CGA Two-Color Mode  . . . . . . . . . . . . . . . . . . . . . .   72
+          Tandy and PCjr Modes  . . . . . . . . . . . . . . . . . . . . .   73
+          Hercules Mode . . . . . . . . . . . . . . . . . . . . . . . . .   74
+          Hercules Low-Resolution Mode  . . . . . . . . . . . . . . . . .   75
+          EGA 200-Line Modes  . . . . . . . . . . . . . . . . . . . . . .   76
+          EGA Monochrome Mode . . . . . . . . . . . . . . . . . . . . . .   78
+          EGA Enhanced Mode . . . . . . . . . . . . . . . . . . . . . . .   79
+          VGA and MCGA Two-Color Mode . . . . . . . . . . . . . . . . . .   81
+          VGA/SVGA 16-Color Modes . . . . . . . . . . . . . . . . . . . .   83
+          256-Color Modes . . . . . . . . . . . . . . . . . . . . . . . .   83
+     Using Video DAC Registers in EGA Modes . . . . . . . . . . . . . . .   87
+     RGB Color Mapping  . . . . . . . . . . . . . . . . . . . . . . . . .   89
+     Defining All Palette Registers . . . . . . . . . . . . . . . . . . .   90
+     Virtual Colors . . . . . . . . . . . . . . . . . . . . . . . . . . .   90
+     A Multiple-Mode Example  . . . . . . . . . . . . . . . . . . . . . .   92
+     Summary of Color-Related Routines  . . . . . . . . . . . . . . . . .   94
+
+Chapter 6  Graphics Fundamentals  . . . . . . . . . . . . . . . . . . . .   97
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   98
+     Clearing the Screen  . . . . . . . . . . . . . . . . . . . . . . . .   98
+     Clipping . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   98
+     Points . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   99
+     The Graphics Cursor  . . . . . . . . . . . . . . . . . . . . . . . .  101
+     Solid Lines  . . . . . . . . . . . . . . . . . . . . . . . . . . . .  102
+     Dashed Lines . . . . . . . . . . . . . . . . . . . . . . . . . . . .  104
+     Polygons . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  105
+     Circles and Ellipses . . . . . . . . . . . . . . . . . . . . . . . .  109
+     Solid Rectangles . . . . . . . . . . . . . . . . . . . . . . . . . .  111
+     Unfilled Rectangles  . . . . . . . . . . . . . . . . . . . . . . . .  112
+     Dithered Rectangles  . . . . . . . . . . . . . . . . . . . . . . . .  114
+     Region Fill  . . . . . . . . . . . . . . . . . . . . . . . . . . . .  121
+     Summary of Fundamental Graphics Routines . . . . . . . . . . . . . .  122
+
+Chapter 7  Character Display Routines . . . . . . . . . . . . . . . . . .  127
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  128
+     Character Space  . . . . . . . . . . . . . . . . . . . . . . . . . .  128
+     Hardware Characters  . . . . . . . . . . . . . . . . . . . . . . . .  129
+     Character Height . . . . . . . . . . . . . . . . . . . . . . . . . .  137
+     Conversion Routines  . . . . . . . . . . . . . . . . . . . . . . . .  138
+     Software Characters  . . . . . . . . . . . . . . . . . . . . . . . .  139
+     Bit-Mapped Characters  . . . . . . . . . . . . . . . . . . . . . . .  145
+     Summary of Character Display Routines  . . . . . . . . . . . . . . .  145
+
+Chapter 8  Video Page Management  . . . . . . . . . . . . . . . . . . . .  149
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  150
+
+                                      iv
+
+     Physical Pages and Virtual Pages . . . . . . . . . . . . . . . . . .  150
+     Pages With Special Meanings  . . . . . . . . . . . . . . . . . . . .  151
+     Some Simple Examples . . . . . . . . . . . . . . . . . . . . . . . .  152
+     Text Cursors . . . . . . . . . . . . . . . . . . . . . . . . . . . .  159
+     Obtaining Video Page Information . . . . . . . . . . . . . . . . . .  160
+     Considerations for Virtual Pages . . . . . . . . . . . . . . . . . .  161
+     Logical Pages  . . . . . . . . . . . . . . . . . . . . . . . . . . .  162
+     Video Page Resizing  . . . . . . . . . . . . . . . . . . . . . . . .  164
+     Preserving Video Page Contents Across Mode Switches  . . . . . . . .  166
+     Controlling Page Allocation  . . . . . . . . . . . . . . . . . . . .  167
+     Summary of Video Page Management Routines  . . . . . . . . . . . . .  169
+
+Chapter 9  Image Files  . . . . . . . . . . . . . . . . . . . . . . . . .  171
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  172
+     PCX Files  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  172
+     GIF Files  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  175
+     Pixel Run Files  . . . . . . . . . . . . . . . . . . . . . . . . . .  176
+     Display Patterns . . . . . . . . . . . . . . . . . . . . . . . . . .  181
+     Controlling the Image Buffer Size  . . . . . . . . . . . . . . . . .  186
+     Summary of Image File Routines . . . . . . . . . . . . . . . . . . .  187
+
+Chapter 10  Bit-Mapped Images . . . . . . . . . . . . . . . . . . . . . .  189
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  190
+     Mode-Independent Bit-Mapped Images . . . . . . . . . . . . . . . . .  190
+     Mode-Specific Bit-Mapped Images  . . . . . . . . . . . . . . . . . .  194
+          Regular Images  . . . . . . . . . . . . . . . . . . . . . . . .  195
+          Clipped Images  . . . . . . . . . . . . . . . . . . . . . . . .  203
+          Reversed Images . . . . . . . . . . . . . . . . . . . . . . . .  203
+          Reversed Clipped Images . . . . . . . . . . . . . . . . . . . .  203
+          Images Without Transparent Pixels . . . . . . . . . . . . . . .  203
+          Some Examples . . . . . . . . . . . . . . . . . . . . . . . . .  203
+     Retrieving Images  . . . . . . . . . . . . . . . . . . . . . . . . .  207
+     Pixel Run Maps . . . . . . . . . . . . . . . . . . . . . . . . . . .  212
+     Masking Maps . . . . . . . . . . . . . . . . . . . . . . . . . . . .  215
+     Summary of Bit-Mapped Image Display Routines . . . . . . . . . . . .  219
+
+Chapter 11  Block Transfer Routines . . . . . . . . . . . . . . . . . . .  221
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  222
+     Full Page Transfer . . . . . . . . . . . . . . . . . . . . . . . . .  222
+     Byte Boundaries  . . . . . . . . . . . . . . . . . . . . . . . . . .  223
+     Dual SVGA Banks  . . . . . . . . . . . . . . . . . . . . . . . . . .  224
+     The "Hidden" Video Page  . . . . . . . . . . . . . . . . . . . . . .  225
+     Saving and Restoring Blocks  . . . . . . . . . . . . . . . . . . . .  225
+     A More General Block Transfer Routine  . . . . . . . . . . . . . . .  228
+     Blocks with Transparent Colors . . . . . . . . . . . . . . . . . . .  231
+     Transferring Blocks to and from Conventional Memory  . . . . . . . .  233
+     Summary of Block Transfer Routines . . . . . . . . . . . . . . . . .  234
+
+Chapter 12  Animation Techniques  . . . . . . . . . . . . . . . . . . . .  237
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  238
+     Simple Animation . . . . . . . . . . . . . . . . . . . . . . . . . .  238
+     XOR Animation  . . . . . . . . . . . . . . . . . . . . . . . . . . .  240
+     Static Frame Animation . . . . . . . . . . . . . . . . . . . . . . .  242
+     Dynamic Frame Animation  . . . . . . . . . . . . . . . . . . . . . .  244
+     Page Flipping  . . . . . . . . . . . . . . . . . . . . . . . . . . .  246
+     An Animation Example:  The Fastgraph Fish Tank . . . . . . . . . . .  248
+
+                                      v
+
+     Summary of Animation Techniques  . . . . . . . . . . . . . . . . . .  248
+
+Chapter 13  Special Effects . . . . . . . . . . . . . . . . . . . . . . .  249
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  250
+     Screen Dissolving  . . . . . . . . . . . . . . . . . . . . . . . . .  250
+     Scrolling  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  252
+     Changing the Screen Origin . . . . . . . . . . . . . . . . . . . . .  255
+     Summary of Special Effects Routines  . . . . . . . . . . . . . . . .  258
+
+Chapter 14  Input Device Support  . . . . . . . . . . . . . . . . . . . .  259
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  260
+     Keyboard Support . . . . . . . . . . . . . . . . . . . . . . . . . .  260
+          Reading Keystrokes  . . . . . . . . . . . . . . . . . . . . . .  262
+          Testing and Setting Key States  . . . . . . . . . . . . . . . .  263
+          Low-Level Keyboard Handler  . . . . . . . . . . . . . . . . . .  264
+     Mouse Support  . . . . . . . . . . . . . . . . . . . . . . . . . . .  266
+          Initializing the Mouse  . . . . . . . . . . . . . . . . . . . .  267
+          XVGA and SVGA Mouse Considerations  . . . . . . . . . . . . . .  268
+          Controlling the Mouse Cursor  . . . . . . . . . . . . . . . . .  269
+          Reporting the Mouse Status  . . . . . . . . . . . . . . . . . .  271
+          Defining the Mouse Cursor . . . . . . . . . . . . . . . . . . .  273
+     Joystick Support . . . . . . . . . . . . . . . . . . . . . . . . . .  279
+          Initializing Joysticks  . . . . . . . . . . . . . . . . . . . .  279
+          Reporting Joystick Status . . . . . . . . . . . . . . . . . . .  280
+          Keyboard Emulation  . . . . . . . . . . . . . . . . . . . . . .  281
+          Special Joystick Considerations . . . . . . . . . . . . . . . .  283
+     Summary of Input Routines  . . . . . . . . . . . . . . . . . . . . .  283
+
+Chapter 15  Sound Effects . . . . . . . . . . . . . . . . . . . . . . . .  285
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  286
+     Sound Sources  . . . . . . . . . . . . . . . . . . . . . . . . . . .  286
+     Synchronous Sound  . . . . . . . . . . . . . . . . . . . . . . . . .  286
+     Asynchronous Sound . . . . . . . . . . . . . . . . . . . . . . . . .  290
+     Summary of Sound Routines  . . . . . . . . . . . . . . . . . . . . .  296
+
+Chapter 16  Program Timing  . . . . . . . . . . . . . . . . . . . . . . .  299
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  300
+     Real-Time Routines . . . . . . . . . . . . . . . . . . . . . . . . .  300
+     Routines Dependent on the System Speed . . . . . . . . . . . . . . .  301
+     Summary of Timing Routines . . . . . . . . . . . . . . . . . . . . .  303
+
+Chapter 17  Miscellaneous Routines  . . . . . . . . . . . . . . . . . . .  303
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  304
+     Determining Available Memory . . . . . . . . . . . . . . . . . . . .  304
+     Choosing the Video Memory Update Function  . . . . . . . . . . . . .  305
+     Controlling Vertical Retrace Synchronization . . . . . . . . . . . .  306
+     Summary of Miscellaneous Routines  . . . . . . . . . . . . . . . . .  307
+
+Appendix A  Fastgraph Utilities . . . . . . . . . . . . . . . . . . . . .  309
+     Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  310
+     SNAPSHOT Utility . . . . . . . . . . . . . . . . . . . . . . . . . .  310
+     CLIP Utility . . . . . . . . . . . . . . . . . . . . . . . . . . . .  311
+     CONVERT Utility  . . . . . . . . . . . . . . . . . . . . . . . . . .  312
+     EDITSPR Utility  . . . . . . . . . . . . . . . . . . . . . . . . . .  313
+     GrabRGB Utility  . . . . . . . . . . . . . . . . . . . . . . . . . .  313
+     HERCFIX Utility  . . . . . . . . . . . . . . . . . . . . . . . . . .  314
+
+                                      vi
+
+     PCXHEAD Utility  . . . . . . . . . . . . . . . . . . . . . . . . . .  315
+
+Appendix B  Using Fastgraph from Assembly Language  . . . . . . . . . . .  317
+
+Appendix C  Interrupts and Fastgraph  . . . . . . . . . . . . . . . . . .  321
+     Interrupts Used by Fastgraph . . . . . . . . . . . . . . . . . . . .  322
+     Extending the Time-of-Day Interrupt  . . . . . . . . . . . . . . . .  322
+
+Appendix D  Contents of the Compiler-Specific Libraries . . . . . . . . .  329
+
+Appendix E  Contents of the Pascal Unit Files . . . . . . . . . . . . . .  331
+
+Appendix F  Integrating Fastgraph With Other Graphics Software  . . . . .  333
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                     vii
+Chapter 1
+
+
+
+
+
+Introduction
+2   Fastgraph User's Guide
+
+
+What is Fastgraph?
+
+     Fastgraph is a library of more than 200 highly-optimized routines that
+are callable from high-level and assembly language programs running under the
+MS-DOS or PC-DOS operating systems.  This collection of routines provides a
+programmer with proven, powerful tools to take command of the PC and PS/2
+video environment.  In addition to its video support, Fastgraph also includes
+routines to perform keyboard, mouse, and joystick control, as well as music
+and sound capabilities.  Fastgraph is an ideal development tool for
+entertainment and educational software, presentation graphics products,
+scientific and engineering applications, CAD/CAM, animation, or any
+application that demands robust graphics.
+
+     As its name implies, the most notable feature of Fastgraph is its speed.
+Virtually all of Fastgraph is written in 8086 assembly language, and each
+routine has been optimized by hand to provide maximum performance.
+
+     Fastgraph supports all the standard text and graphics video modes used
+by the IBM PC (PC, PC/XT, and PC/AT) and PS/2 families and compatible
+systems.  In addition, Fastgraph provides support for six SuperVGA (SVGA)
+graphics modes, four extended VGA (XVGA) graphics modes, and a 16-color
+graphics mode unique to Tandy 1000 series computers and the PCjr.  Even
+though the graphics mode of the Hercules Graphics Card is not an IBM
+standard, its popularity has made it a de facto standard, and for this reason
+Fastgraph also supports it.  In total, Fastgraph supports 23 graphics modes
+and 5 text modes.  A complete discussion of these video modes appears in the
+next chapter.
+
+
+Fastgraph/Light
+
+     Fastgraph/Light is a subset of Fastgraph.  It includes all of
+Fastgraph's features except the redefinable world space coordinate system and
+the routines pertaining to software characters.  Programs created using
+Fastgraph/Light are 100% source code compatible with Fastgraph.
+
+     The most important difference between Fastgraph/Light and Fastgraph is
+the method of running a program created with the two products.  With
+Fastgraph, any of its routines used in your program are linked directly into
+the resulting .EXE file.  With Fastgraph/Light, however, this is not the
+case.  Instead, the Fastgraph/Light routines provide an interface to an
+external driver, called the Fastgraph/Light Video Driver, which must be
+loaded separately before running programs that call any Fastgraph/Light
+routines.  See the last section of this chapter for more information.
+
+     In this document, and in the accompanying Fastgraph Reference Manual,
+references to Fastgraph also apply to Fastgraph/Light unless stated
+otherwise.
+
+
+Prerequisite Knowledge
+
+     Fastgraph is a programming tool, which means programmers are its
+intended audience.  For this reason, the Fastgraph User's Guide and the
+accompanying Fastgraph Reference Manual assume you have a knowledge of
+                                                  Chapter 1:  Introduction   3
+
+programming.  Additionally, a knowledge of converting numbers between binary,
+decimal, and hexadecimal is assumed.
+
+     Virtually all the examples in this manual are written in the C
+programming language, so a knowledge of C would be especially helpful.  The
+examples intentionally avoid using any of C's features and idioms that might
+not be readily apparent to a programmer unfamiliar with C.  Finally, we'd
+like to point out that the examples are intended to be read not by
+themselves, but as part of the surrounding text.
+
+
+Supported Compilers
+
+     You can use Fastgraph with any compilers or assemblers that use the same
+calling and naming conventions as the small, medium, or large memory models
+of the supported compilers.  Mixed language programming is allowed where
+supported by the language translators and linker being used.  Fastgraph
+supports the following compilers:
+
+       Borland C++ (version 2.0 or later)
+       Borland Pascal (version 7.0 or later)
+       Microsoft C (version 5.0 or later)
+       Microsoft C++ (version 7.0 or later)
+       Microsoft BASIC PDS (version 7.1 or later)
+       Microsoft FORTRAN (version 4.0 or later)
+       Microsoft QuickBASIC (version 4.0 or later)
+       Microsoft QuickC (version 2.0 or later)
+       Microsoft Visual Basic for DOS (version 1.0 or later)
+       Microsoft Visual C++ (version 1.0 or later)
+       Power C (version 2.0 or later)
+       Turbo C (version 2.0 or later)
+       Turbo C++ (version 1.0 or later)
+       Turbo Pascal (version 6.0 or later)
+       Zortech C++ (version 3.0 or later)
+
+The listed version numbers are the compiler versions under which Fastgraph
+was developed and tested.  Fastgraph may or may not work with earlier
+versions of these compilers.  As we constantly add support for new compilers,
+please check the READ.ME file in the \FG directory for additions to the above
+list.  The use of Fastgraph from assembly language programs is addressed in
+Appendix B.
+
+
+Memory Models
+
+     All of Fastgraph's supported compilers except QuickBASIC, Visual Basic
+for DOS, Borland Pascal, and Turbo Pascal offer several memory models.  A
+memory model defines how memory is set up for a program's code and data
+segments.  Fastgraph includes libraries for the small, medium, and large
+memory models.
+
+     The small memory model allows for one code segment and one data segment.
+Programs that use the small model can thus have a maximum of 64K bytes of
+code and 64K bytes of data.  Because the small model implements call
+instructions and data references through near pointers, it produces the most
+efficient code of the three supported memory models.
+4   Fastgraph User's Guide
+
+     The medium memory model allows for multiple code segments and one data
+segment.  Programs that use the medium model thus have no compiler-imposed
+limit to the code size (although no one segment can exceed 64K bytes) and a
+maximum of 64K bytes of data.  Like the small model, the medium model
+implements data references through near pointers, but it implements call
+instructions through far pointers.  The use of far pointers adds two bytes of
+code and 13 clock cycles for each subprogram call.  The medium model is a
+popular choice among programmers.
+
+     The large memory model supports multiple code and data segments.
+Programs that use the large model do not have any compiler-imposed limits for
+code and data sizes.  However, no single code or data segment can exceed 64K
+bytes.  Because the large model implements call instructions and data
+references through far pointers, it produces the least efficient code of the
+three supported memory models.
+
+     For more information about memory models, please refer to the user's
+guide or reference manual supplied with your compiler.
+
+
+Installing Fastgraph
+
+     This section explains how to use the INSTALL program to load Fastgraph
+(or Fastgraph/Light) and its related files on a hard disk.  The installation
+program lets you select the compilers and memory models you wish to use with
+Fastgraph.  It also gives you the opportunity to load many example Fastgraph
+programs specific to the compilers you choose.
+
+     Before you start the installation, we recommend using the DOS commands
+COPY or DISKCOPY to make working copies of the Fastgraph distribution disks
+(refer to your DOS reference manual if you are unfamiliar with these
+commands).  Once you have created the working copies, store the original
+disks in a safe place.  Install Fastgraph from the working copies you just
+created.
+
+     For simplicity, we'll assume you are installing Fastgraph from the
+diskette drive A: to the hard drive C:, but you can of course use any
+available drives.  The Fastgraph distribution disk labeled Installation and
+Utilities contains Fastgraph's INSTALL program.  Place this disk in the A:
+drive, make A: your current drive, and enter the command INSTALL, as shown
+below.
+
+                                  C> A:
+                                  A> INSTALL
+
+From this point, just follow the directions on each screen.  At any time, you
+can press the Esc key to abort the installation.
+
+     The INSTALL program will ask you for the compilers and memory models
+you'll use with Fastgraph, as well as the directory names for the Fastgraph
+utilities, libraries, and include files.  For the utilities, the default
+directory is C:\FG.  For the include files and libraries, we recommend using
+directories where the compiler you've chosen normally searches for such
+files.  INSTALL will automatically try to determine these directories and
+propose them as defaults.
+                                                  Chapter 1:  Introduction   5
+
+     You can install support for additional compilers or memory models at any
+time.  If you choose to do this, you should use the command INSTALL /L to
+avoid copying the files common to all compilers and memory models.
+
+
+The READ.ME File
+
+     The READ.ME file contains additions and changes that may have been made
+to Fastgraph since the publication of the manuals.  We encourage you to
+examine the READ.ME file immediately after installing Fastgraph.  READ.ME is
+an ASCII text file, suitable for any printer or text editor.  The INSTALL
+program places the READ.ME file in the Fastgraph utilities directory (C:\FG
+by default).
+
+
+Fastgraph Naming Conventions
+
+     The names of all Fastgraph routines begin with the three characters
+"fg_".  This prefix helps identify Fastgraph routines within a program, and
+it also reduces the chance of name conflicts that might otherwise occur
+between Fastgraph and other third party libraries.
+
+     Because QuickBASIC and Visual Basic for DOS do not permit underscores in
+identifiers, the BASIC versions of Fastgraph routines begin with the two
+characters "FG".  For example, the fg_version routine is named FGversion in
+the QuickBASIC and Visual Basic for DOS libraries.  All subsequent references
+to Fastgraph routines in this manual and the accompanying Fastgraph Reference
+Manual will use the fg_ naming convention instead of the BASIC names.
+
+
+Compilation and Linking
+
+     To build an executable (.EXE) file for a program that uses Fastgraph
+routines, first compile or assemble the program using the small, medium, or
+large memory model.  This step produces an object file, which is then linked
+with Fastgraph and any other object libraries to produce an executable file.
+
+     Example 1-1 uses the Fastgraph routine fg_version to display the version
+number for your copy of Fastgraph.  Versions of this program are presented
+for each high-level language Fastgraph supports:  C/C++, BASIC, FORTRAN, and
+Pascal.  If you loaded the example programs when you installed Fastgraph, the
+files \FG\EXAMPLES\01-01.C, 01-01.BAS, 01-01.FOR, and 01-01.PAS contain the
+source code for these examples.  You can use them to test the compilation and
+linking process for the memory models and compilers you'll be using with
+Fastgraph.
+
+                         Example 1-1 (C/C++ version).
+
+      #include <fastgraf.h>
+      #include <stdio.h>
+      void main(void);
+
+      void main()
+      {
+         int major;
+         int minor;
+6   Fastgraph User's Guide
+
+         fg_version(&major,&minor);
+         printf("This is version %d.%2.2d of Fastgraph.\n",major,minor);
+      }
+
+
+     The header file FASTGRAF.H contains the C function prototypes for each
+Fastgraph routine.  It should reside in a directory where the compiler
+normally searches for other header files.  For Microsoft C/C++, QuickC, and
+Zortech C++, FASTGRAF.H can reside in any of the directories specified by the
+INCLUDE environment variable.  For Power C, it can reside in any of the
+directories specified by the /i switch in the PCOPTION environment variable.
+
+                         Example 1-1 (BASIC version).
+
+          REM $INCLUDE: 'fastgraf.bi'
+
+          DEFINT A-Z
+
+          FGversion Major, Minor
+          Version! = Major + Minor*0.01
+
+          PRINT USING "This is version #.## of Fastgraph."; Version!
+
+          END
+
+
+     You must include the DECLARE commands in the file FASTGRAF.BI at the
+beginning of each QuickBASIC or Visual Basic for DOS module.  This file
+should reside in the directory where the compiler normally searches for other
+.BI files, or in any of the directories specified by the INCLUDE environment
+variable.  The DECLARE commands in this file automatically provide the
+calling convention and naming convention for each Fastgraph routine.  In
+addition, they relieve the programmer of distinguishing arguments passed by
+value from those passed by reference.
+
+                        Example 1-1 (FORTRAN version).
+
+     $INCLUDE: '\FG\INTRFACE.FOR'
+
+           PROGRAM MAIN
+
+           INTEGER*2 MAJOR
+           INTEGER*2 MINOR
+
+           CALL FG_VERSION (MAJOR, MINOR)
+
+           WRITE (6,10) MAJOR, MINOR
+     10    FORMAT (' This is version ', I1, '.', I2.2, ' of Fastgraph.')
+
+           STOP ' '
+           END
+
+     You must include the INTERFACE statements in the file INTRFACE.FOR at
+the beginning of FORTRAN programs (this file should reside in the \FG
+directory).  The INTERFACE statements in this file automatically provide the
+calling convention and naming convention for each Fastgraph routine.  In
+                                                  Chapter 1:  Introduction   7
+
+addition, they relieve the FORTRAN programmer of distinguishing arguments
+passed by value from those passed by reference.
+
+                        Example 1-1 (Pascal version).
+
+      program main;
+      uses fgmain;
+
+      var
+        Major : integer;
+        Minor : integer;
+
+      begin
+        fg_version(Major,Minor);
+        writeln('This is version ',Major,'.',Minor:2,' of Fastgraph.');
+      end.
+
+
+     Pascal programs that use Fastgraph or Fastgraph/Light must include a
+uses statement specifying the names of the unit files (TPU files) needed in
+the program.  All unit files must reside in a directory where the compiler
+normally searches for units.  Appendix E lists the Fastgraph functions in
+each unit.
+
+     The following sections show the simplest compilation and linking
+procedures for the supported compilers.  In what follows, items enclosed in
+angle brackets, such as <filename>, are placeholders for parameters you must
+supply (the name of a file in this case).  Items enclosed in square brackets,
+such as [/E], are optional.
+8   Fastgraph User's Guide
+
+
+Borland C++
+
+     Borland C++ allows you to compile and link a program directly from the
+DOS command line, or from its integrated development environment (IDE).  To
+use Fastgraph from the IDE, you must make sure the compiler options match one
+of Fastgraph's available memory models (small, medium, or large) and then
+create a project file that links with the corresponding Fastgraph libraries
+(as listed below).
+
+     You also can compile and link a Borland C++ program from the DOS command
+line using the BCC command.  The format of the BCC command for compiling a
+program and linking it with Fastgraph is
+
+
+             BCC <model> <filename> <fg_library> [<fg_extended>]
+
+where:
+
+     <model>        specifies the compiler memory model you'll be using.
+                    It must be either -ms (for the small model), -mm
+                    (for the medium model), or -ml (for the large
+                    model).
+
+     <filename>     is the name of the file containing your program.  It
+                    may include a path specification.
+
+     <fg_library>   is the name of a standard Fastgraph or
+                    Fastgraph/Light library.  For Fastgraph, the library
+                    name is FGS.LIB (for the small model), FGM.LIB (for
+                    the medium model), or FGL.LIB (for the large model).
+                    For Fastgraph/Light, the library name is FGLS.LIB
+                    (for the small model), FGLM.LIB (for the medium
+                    model), or FGLL.LIB (for the large model).
+
+     <fg_extended>  is the name of an optional compiler-specific
+                    extended Fastgraph library.  You need to specify an
+                    extended library name only if your program calls any
+                    of the Fastgraph routines listed in Appendix D.  The
+                    Borland C++ extended library name is FGTCS.LIB (for
+                    the small model), FGTCM.LIB (for the medium model),
+                    or FGTCL.LIB (for the large model).  Fastgraph/Light
+                    does not use extended libraries.
+
+     For example, to compile the program 01-01.C under the medium memory
+model and then link it with Fastgraph, you could use the following BCC
+command:
+
+                      BCC -mm 01-01.C FGM.LIB FGTCM.LIB
+
+Although we specified the extended library name FGTCM.LIB on the command
+line, we didn't need to in this example because the program doesn't call any
+of the compiler-specific Fastgraph routines listed in Appendix D.  If you
+were using Fastgraph/Light instead of Fastgraph, the BCC command would be:
+
+                           BCC -mm 01-01.C FGLM.LIB
+                                                  Chapter 1:  Introduction   9
+
+For more information about project files, memory models, or other compilation
+and linking options, please refer to the Borland C++ User's Guide, published
+by Borland International.
+10   Fastgraph User's Guide
+
+
+Borland Pascal
+
+     Borland Pascal allows you to compile and link a program directly from
+the DOS command line with the TPC command, or from its integrated development
+environment (IDE) with the TURBO command.  To use Fastgraph from the IDE,
+just start the IDE as you would for any other Pascal program, making sure the
+Fastgraph unit files reside in one of the directories listed in the Unit
+Directories option.
+
+     You also can compile and link a Borland Pascal program from the DOS
+command line using the TPC command.  The format of the TPC command for
+compiling a program and linking it with Fastgraph is
+
+                                TPC <filename>
+
+where:
+
+     <filename>          is the name of the file containing your
+                         program.  It may include a path specification.
+
+     For example, to compile the program 01-01.PAS and then link it with
+Fastgraph, you could use the following command:
+
+                                TPC 01-01.PAS
+
+For more information about other compilation and linking options, please
+refer to the Borland Pascal With Objects User's Guide, published by Borland
+International.
+
+     All remaining example programs in the Fastgraph User's Guide are written
+in the C programming language.  However, when you install Fastgraph for
+Borland Pascal, the installation procedure copies Pascal versions of the
+example programs to the \FG\EXAMPLES directory.
+                                                 Chapter 1:  Introduction   11
+
+
+Microsoft BASIC PDS 7
+
+     Microsoft BASIC Professional Development System (PDS) allows you to
+compile and link a program directly from the DOS command line, or from its
+programming environment.  To use Fastgraph from the BASIC PDS programming
+environment, just specify the quick library name FGQBX when starting BASIC
+PDS, as shown below.
+
+                           QBX /LFGQBX [<filename>]
+
+You must use the default "Far Strings" setting within the environment.  There
+are no near string Fastgraph libraries available for BASIC PDS.  If you are
+using Fastgraph/Light, use the library name FGLQBX instead of FGQBX.
+
+     You also can compile and link a BASIC PDS program from the DOS command
+line using the BC and LINK commands.  The format of these commands for
+compiling a program and linking it with Fastgraph is
+
+                  BC /Fs [/O] <filename>;
+                  LINK [/E] <object_file>,,NUL,<fg_library>;
+
+where:
+
+     <filename>     is the name of the file containing your program.  It
+                    may include a path specification.
+
+     <object_file>  is the name of the object file produced by the BC
+                    command.  By default, this will be the same as
+                    <filename>, but with an extension of .OBJ rather
+                    than .BAS.
+
+     <fg_library>   is the name of the standard Fastgraph or
+                    Fastgraph/Light library.  For Fastgraph, the library
+                    name is FGQBX.  For Fastgraph/Light, the library
+                    name is FGLQBX.  QuickBASIC does not use extended
+                    Fastgraph libraries.
+
+When compiling BASIC PDS programs with the BC command, you must include the
+/Fs option to use far strings.  The /O option on the BC command is
+recommended because it creates .EXE files that do not require the BASIC PDS
+run-time module.  The /E linker option is not required but will produce a
+smaller .EXE file if specified.
+
+     For example, to compile the program 01-01.BAS and then link it with
+Fastgraph, you could use the following commands:
+
+                         BC /Fs /O 01-01.BAS;
+                         LINK /E 01-01.OBJ,,NUL,FGQBX;
+
+If you were using Fastgraph/Light instead of Fastgraph, the commands would
+be:
+
+                        BC /Fs /O 01-01.BAS;
+                        LINK /E 01-01.OBJ,,NUL,FGLQBX;
+
+12   Fastgraph User's Guide
+
+For more information about other compilation and linking options, please
+refer to the Microsoft BASIC PDS Programmer's Guide, published by Microsoft
+Corporation.
+
+     All remaining example programs in the Fastgraph User's Guide are written
+in the C programming language.  However, when you install Fastgraph for
+Microsoft BASIC PDS, the installation procedure copies BASIC versions of the
+example programs to the \FG\EXAMPLES directory.
+                                                 Chapter 1:  Introduction   13
+
+
+Microsoft C and C++
+
+     Microsoft C and C++ programs are compiled and linked by entering a CL
+command at the DOS command prompt.  The format of the CL command for
+compiling a program and linking it with Fastgraph is
+
+        CL <model> <filename> /link <fg_library> [<fg_extended>] [/E]
+
+where:
+
+     <model>        specifies the compiler memory model you'll be using.
+                    It must be either /AS (for the small model), /AM
+                    (for the medium model), or /AL (for the large
+                    model).
+
+     <filename>     is the name of the file containing your program.  It
+                    must include the file extension (typically .C) and
+                    may include a path specification.
+
+     <fg_library>   is the name of a standard Fastgraph or
+                    Fastgraph/Light library.  For Fastgraph, the library
+                    name is FGS (for the small model), FGM (for the
+                    medium model), or FGL (for the large model).  For
+                    Fastgraph/Light, the library name is FGLS (for the
+                    small model), FGLM (for the medium model), or FGLL
+                    (for the large model).
+
+     <fg_extended>  is the name of an optional compiler-specific
+                    extended Fastgraph library.  You need to specify an
+                    extended library name only if your program calls any
+                    of the Fastgraph routines listed in Appendix D.  The
+                    Microsoft C/C++ extended library name is FGMSCS (for
+                    the small model), FGMSCM (for the medium model), or
+                    FGMSCL (for the large model).  Fastgraph/Light does
+                    not use extended libraries.
+
+The /E linker option is not required but will produce a smaller .EXE file if
+specified.
+
+     For example, to compile the program 01-01.C under the medium memory
+model and then link it with Fastgraph, you could use the following CL
+command:
+
+                      CL /AM 01-01.C /link FGM FGMSCM /E
+
+Although we specified the extended library name FGMSCM on the command line,
+we didn't need to in this example because the program doesn't call any of the
+compiler-specific Fastgraph routines listed in Appendix D.  If you were using
+Fastgraph/Light instead of Fastgraph, the CL command would be:
+
+                         CL /AM 01-01.C /link FGLM /E
+
+For more information about memory models or other compilation and linking
+options, please refer to the Microsoft C Optimizing Compiler User's Guide,
+published by Microsoft Corporation.
+14   Fastgraph User's Guide
+
+
+Microsoft FORTRAN
+
+     Microsoft FORTRAN programs are compiled and linked by entering an FL
+command at the DOS command prompt.  The format of the FL command for
+compiling a program and linking it with Fastgraph is
+
+           FL /FPi /4I2 /4Nt <model> <filename> /link <fg_library>
+               [<fg_extended>] [/E]
+
+where:
+
+     <model>        specifies the compiler memory model you'll be using.
+                    It must be either /AM (for the medium model) or /AL
+                    (for the large model).  Microsoft FORTRAN does not
+                    support the small model.
+
+     <filename>     is the name of the file containing your program.  It
+                    may include a path specification.
+
+     <fg_library>   is the name of a standard Fastgraph or
+                    Fastgraph/Light library.  For Fastgraph, the library
+                    name is FGM (for the medium model) or FGL (for the
+                    large model).  For Fastgraph/Light, the library name
+                    is FGLM (for the medium model) or FGLL (for the
+                    large model).
+
+     <fg_extended>  is the name of an optional compiler-specific
+                    extended Fastgraph library.  You need to specify an
+                    extended library name only if your program calls any
+                    of the Fastgraph routines listed in Appendix D.  The
+                    Microsoft FORTRAN extended library name is FGMSFM
+                    (for the medium model) or FGMSFL (for the large
+                    model).  Fastgraph/Light does not use extended
+                    libraries.
+
+The /E linker option is not required but will produce a smaller .EXE file if
+specified.
+
+     For example, to compile the program 01-01.FOR under the medium memory
+model and then link it with Fastgraph, you could use the following FL
+command:
+
+             FL /FPi /4I2 /4Nt /AM 01-01.FOR /link FGM FGMSFM /E
+
+Although we specified the extended library name FGMSFM on the command line,
+we didn't need to in this example because the program doesn't call any of the
+compiler-specific Fastgraph routines listed in Appendix D.  If you were using
+Fastgraph/Light instead of Fastgraph, the FL command would be:
+
+                FL /FPi /4I2 /4Nt /AM 01-01.FOR /link FGLM /E
+
+For more information about memory models or other compilation and linking
+options, please refer to the Microsoft FORTRAN Optimizing Compiler User's
+Guide, published by Microsoft Corporation.
+                                                 Chapter 1:  Introduction   15
+
+     All remaining example programs in the Fastgraph User's Guide are written
+in the C programming language.  However, when you install Fastgraph for the
+Microsoft FORTRAN compiler, the installation procedure copies FORTRAN
+versions of the example programs to the \FG\EXAMPLES directory.
+16   Fastgraph User's Guide
+
+Microsoft QuickBASIC
+
+     Microsoft QuickBASIC allows you to compile and link a program directly
+from the DOS command line, or from its programming environment.  To use
+Fastgraph from QuickBASIC's programming environment, just specify the quick
+library name FGQB when starting QuickBASIC, as shown below.
+
+                            QB /LFGQB [<filename>]
+
+If you are using Fastgraph/Light, use the library name FGLQB instead of FGQB.
+
+     You also can compile and link a QuickBASIC program from the DOS command
+line using the BC and LINK commands.  The format of these commands for
+compiling a program and linking it with Fastgraph is
+
+                  BC [/O] <filename>;
+                  LINK [/E] <object_file>,,NUL,<fg_library>;
+
+where:
+
+     <filename>     is the name of the file containing your program.  It
+                    may include a path specification.
+
+     <object_file>  is the name of the object file produced by the BC
+                    command.  By default, this will be the same as
+                    <filename>, but with an extension of .OBJ rather
+                    than .BAS.
+
+     <fg_library>   is the name of the standard Fastgraph or
+                    Fastgraph/Light library.  For Fastgraph, the library
+                    name is FGQB.  For Fastgraph/Light, the library name
+                    is FGLQB.  QuickBASIC does not use extended
+                    Fastgraph libraries.
+
+The /O option on the BC command is recommended because it creates .EXE files
+that do not require the QuickBASIC run-time module.  The /E linker option is
+not required but will produce a smaller .EXE file if specified.
+
+     For example, to compile the program 01-01.BAS and then link it with
+Fastgraph, you could use the following commands:
+
+                         BC /O 01-01.BAS;
+                         LINK /E 01-01.OBJ,,NUL,FGQB;
+
+If you were using Fastgraph/Light instead of Fastgraph, the commands would
+be:
+
+                         BC /O 01-01.BAS;
+                         LINK /E 01-01.OBJ,,NUL,FGLQB;
+
+For more information about other compilation and linking options, please
+refer to the Microsoft QuickBASIC: Programming in BASIC manual, published by
+Microsoft Corporation.
+
+     All remaining example programs in the Fastgraph User's Guide are written
+in the C programming language.  However, when you install Fastgraph for
+                                                 Chapter 1:  Introduction   17
+
+Microsoft QuickBASIC, the installation procedure copies BASIC versions of the
+example programs to the \FG\EXAMPLES directory.
+18   Fastgraph User's Guide
+
+Microsoft QuickC
+
+     Microsoft QuickC allows you to compile and link a program directly from
+the DOS command line, or from its programming environment.  To use Fastgraph
+from the QuickC programming environment, you must make sure the compiler
+options match one of Fastgraph's available memory models (small, medium, or
+large) and then create a make file that includes one or more of the
+corresponding Fastgraph libraries (as listed below).
+
+     You also can compile and link a QuickC program from the DOS command line
+using the QCL command.  The format of the QCL command for compiling a program
+and linking it with Fastgraph is
+
+        QCL <model> <filename> /link <fg_library> [<fg_extended>] [/E]
+
+where:
+
+     <model>        specifies the compiler memory model you'll be using.
+                    It must be either /AS (for the small model), /AM
+                    (for the medium model), or /AL (for the large
+                    model).
+
+     <filename>     is the name of the file containing your program.  It
+                    must include the file extension (typically .C) and
+                    may include a path specification.
+
+     <fg_library>   is the name of a standard Fastgraph or
+                    Fastgraph/Light library.  For Fastgraph, the library
+                    name is FGS (for the small model), FGM (for the
+                    medium model), or FGL (for the large model).  For
+                    Fastgraph/Light, the library name is FGLS (for the
+                    small model), FGLM (for the medium model), or FGLL
+                    (for the large model).
+
+     <fg_extended>  is the name of an optional compiler-specific
+                    extended Fastgraph library.  You need to specify an
+                    extended library name only if your program calls any
+                    of the Fastgraph routines listed in Appendix D.  The
+                    QuickC extended library name is FGMSCS (for the
+                    small model), FGMSCM (for the medium model), or
+                    FGMSCL (for the large model).  Fastgraph/Light does
+                    not use extended libraries.
+
+The /E linker option is not required but will produce a smaller .EXE file if
+specified.
+
+     For example, to compile the program 01-01.C under the medium memory
+model and then link it with Fastgraph, you could use the following QCL
+command:
+
+                     QCL /AM 01-01.C /link FGM FGMSCM /E
+
+Although we specified the extended library name FGMSCM on the command line,
+we didn't need to in this example because the program doesn't call any of the
+compiler-specific Fastgraph routines listed in Appendix D.  If you were using
+Fastgraph/Light instead of Fastgraph, the QCL command would be:
+                                                 Chapter 1:  Introduction   19
+
+
+                        QCL /AM 01-01.C /link FGLM /E
+
+For more information about make files, memory models, or other compilation
+and linking options, please refer to the Microsoft QuickC Tool Kit manual,
+published by Microsoft Corporation.
+20   Fastgraph User's Guide
+
+
+Microsoft Visual Basic for DOS
+
+     Microsoft Visual Basic for DOS allows you to compile and link a program
+directly from the DOS command line, or from its programming environment.  To
+use Fastgraph from the programming environment, just specify the quick
+library name FGVBDOS when starting Visual Basic, as shown below.
+
+                         VBDOS /LFGVBDOS [<filename>]
+
+If you are using Fastgraph/Light, use the library name FGLVBDOS instead of
+FGVBDOS.  When using the Visual Basic for DOS programming environment, you
+may get an "Out of Memory" or "Out of String Space" error message when trying
+to build an EXE file or run an application within the environment.  Should
+this occur, you must specify the /S option on the VBDOS command line to
+increase the amount of memory available to your application.
+
+     You also can compile and link a Visual Basic program from the DOS
+command line using the BC and LINK commands.  The format of these commands
+for compiling a program and linking it with Fastgraph is
+
+                  BC [/O] <filename>;
+                  LINK [/E] <object_file>,,NUL,<fg_library>;
+
+where:
+
+     <filename>     is the name of the file containing your program.  It
+                    may include a path specification.
+
+     <object_file>  is the name of the object file produced by the BC
+                    command.  By default, this will be the same as
+                    <filename>, but with an extension of .OBJ rather
+                    than .BAS.
+
+     <fg_library>   is the name of the standard Fastgraph or
+                    Fastgraph/Light library.  For Fastgraph, the library
+                    name is FGVBDOS.  For Fastgraph/Light, the library
+                    name is FGLVBDOS.  Visual Basic does not use
+                    extended Fastgraph libraries.
+
+The /O option on the BC command is recommended because it creates .EXE files
+that do not require the Visual Basic run-time module.  The /E linker option
+is not required but will produce a smaller .EXE file if specified.
+
+     For example, to compile the program 01-01.BAS and then link it with
+Fastgraph, you could use the following commands:
+
+                         BC /O 01-01.BAS;
+                         LINK /E 01-01.OBJ,,NUL,FGVBDOS;
+
+If you were using Fastgraph/Light instead of Fastgraph, the commands would
+be:
+
+                         BC /O 01-01.BAS;
+                         LINK /E 01-01.OBJ,,NUL,FGLVBDOS;
+
+                                                 Chapter 1:  Introduction   21
+
+When linking Visual Basic for DOS programs that call Fastgraph's world space
+or software character routines (i.e., any of the routines listed in Appendix
+D), you may need to increase the number of segments available to the linker.
+Use the /SEG:n option on the LINK command to do this.  The default value of
+"n" is 128 segments; usually a slightly larger value, such as 144, will be
+sufficient.  For more information about other compilation and linking
+options, please refer to the Microsoft Visual Basic Programmer's Guide,
+published by Microsoft Corporation.
+
+     All remaining example programs in the Fastgraph User's Guide are written
+in the C programming language.  However, when you install Fastgraph for
+Visual Basic, the installation procedure copies BASIC versions of the example
+programs to the \FG\EXAMPLES directory.
+22   Fastgraph User's Guide
+
+
+Microsoft Visual C++
+
+     To use Fastgraph with Microsoft Visual C++, use the same compilation
+sequences as for Microsoft C and C++.
+                                                 Chapter 1:  Introduction   23
+
+
+Power C
+
+     Power C programs are compiled and linked from the DOS command line using
+the PC and PCL commands.  The format of these commands for compiling a
+program and linking it with Fastgraph is
+
+                PC <model> <filename>
+                PCL <mix_file> ;<fg_library> [;<fg_extended>]
+
+where:
+
+     <model>        specifies the compiler memory model you'll be using.
+                    It must be either /ms (for the small model), /mm
+                    (for the medium model), or /ml (for the large
+                    model).
+
+     <filename>     is the name of the file containing your program.  It
+                    may include a path specification.
+
+     <mix_file>     is the name of the object file produced by the PC
+                    command.  By default, this will be the same as
+                    <filename>, but with an extension of .MIX rather
+                    than .C.
+
+     <fg_library>   is the name of a standard Fastgraph or
+                    Fastgraph/Light library.  For Fastgraph, the library
+                    name is FGS (for the small model), FGM (for the
+                    medium model), or FGL (for the large model).  For
+                    Fastgraph/Light, the library name is FGLS (for the
+                    small model), FGLM (for the medium model), or FGLL
+                    (for the large model).
+
+     <fg_extended>  is the name of an optional compiler-specific
+                    extended Fastgraph library.  You need to specify an
+                    extended library name only if your program calls any
+                    of the Fastgraph routines listed in Appendix D.  The
+                    Power C extended library name is FGPCS (for the
+                    small model), FGPCM (for the medium model), or FGPCL
+                    (for the large model).  Fastgraph/Light does not use
+                    extended libraries.
+
+     For example, to compile the program 01-01.C under the medium memory
+model and then link it with Fastgraph, you could use the following commands:
+
+                          PC /mm 01-01.C
+                          PCL 01-01.MIX ;FGM ;FGPCM
+
+Although we specified the extended library name FGPCM on the command line, we
+didn't need to in this example because the program doesn't call any of the
+compiler-specific Fastgraph routines listed in Appendix D.  If you were using
+Fastgraph/Light instead of Fastgraph, the commands would be:
+
+                             PC /mm 01-01.C
+                             PCL 01-01.MIX ;FGPCM
+24   Fastgraph User's Guide
+
+For more information about memory models or other compilation and linking
+options, please refer to the Power C manual, published by Mix Software, Inc.
+                                                 Chapter 1:  Introduction   25
+
+
+Turbo C and Turbo C++
+
+     Turbo C and Turbo C++ allow you to compile and link a program directly
+from the DOS command line, or from their integrated development environment
+(IDE).  To use Fastgraph from the IDE, you must make sure the compiler
+options match one of Fastgraph's available memory models (small, medium, or
+large) and then create a project file that links with the corresponding
+Fastgraph libraries (as listed below).
+
+     You also can compile and link a Turbo C or Turbo C++ program from the
+DOS command line using the TCC command.  The format of the TCC command for
+compiling a program and linking it with Fastgraph is
+
+             TCC <model> <filename> <fg_library> [<fg_extended>]
+
+where:
+
+     <model>        specifies the compiler memory model you'll be using.
+                    It must be either -ms (for the small model), -mm
+                    (for the medium model), or -ml (for the large
+                    model).
+
+     <filename>     is the name of the file containing your program.  It
+                    may include a path specification.
+
+     <fg_library>   is the name of a standard Fastgraph or
+                    Fastgraph/Light library.  For Fastgraph, the library
+                    name is FGS.LIB (for the small model), FGM.LIB (for
+                    the medium model), or FGL.LIB (for the large model).
+                    For Fastgraph/Light, the library name is FGLS.LIB
+                    (for the small model), FGLM.LIB (for the medium
+                    model), or FGLL.LIB (for the large model).
+
+     <fg_extended>  is the name of an optional compiler-specific
+                    extended Fastgraph library.  You need to specify an
+                    extended library name only if your program calls any
+                    of the Fastgraph routines listed in Appendix D.  The
+                    Turbo C/C++ extended library name is FGTCS.LIB (for
+                    the small model), FGTCM.LIB (for the medium model),
+                    or FGTCL.LIB (for the large model).  Fastgraph/Light
+                    does not use extended libraries.
+
+     For example, to compile the program 01-01.C under the medium memory
+model and then link it with Fastgraph, you could use the following TCC
+command:
+
+                      TCC -mm 01-01.C FGM.LIB FGTCM.LIB
+
+Although we specified the extended library name FGTCM.LIB on the command
+line, we didn't need to in this example because the program doesn't call any
+of the compiler-specific Fastgraph routines listed in Appendix D.  If you
+were using Fastgraph/Light instead of Fastgraph, the TCC command would be:
+
+                           TCC -mm 01-01.C FGLM.LIB
+26   Fastgraph User's Guide
+
+For more information about project files, memory models, or other compilation
+and linking options, please refer to the Turbo C User's Guide and the Turbo C
+Reference Guide, both published by Borland International.
+                                                 Chapter 1:  Introduction   27
+
+
+Turbo Pascal
+
+     Turbo Pascal allows you to compile and link a program directly from the
+DOS command line with the TPC command, or from its integrated development
+environment (IDE) with the TURBO command.  To use Fastgraph from the IDE,
+just start the IDE as you would for any other Pascal program, making sure the
+Fastgraph unit files reside in one of the directories listed in the Unit
+Directories option.
+
+     You also can compile and link a Turbo Pascal program from the DOS
+command line using the TPC command.  The format of the TPC command for
+compiling a program and linking it with Fastgraph is
+
+                                TPC <filename>
+
+where:
+
+     <filename>          is the name of the file containing your
+                         program.  It may include a path specification.
+
+     For example, to compile the program 01-01.PAS and then link it with
+Fastgraph, you could use the following command:
+
+                                TPC 01-01.PAS
+
+For more information about other compilation and linking options, please
+refer to the Turbo Pascal User's Guide, published by Borland International.
+
+     All remaining example programs in the Fastgraph User's Guide are written
+in the C programming language.  However, when you install Fastgraph for Turbo
+Pascal, the installation procedure copies Pascal versions of the example
+programs to the \FG\EXAMPLES directory.
+28   Fastgraph User's Guide
+
+
+Zortech C++
+
+     Zortech C++ programs are compiled and linked from the DOS command line
+using the ZTC command.  The format of this command for compiling a program
+and linking it with Fastgraph is
+
+             ZTC <model> <filename> <fg_library> [<fg_extended>]
+
+where:
+
+     <model>        specifies the compiler memory model you'll be using.
+                    It must be either -ms (for the small model), -mm
+                    (for the medium model), or -ml (for the large
+                    model).
+
+     <filename>     is the name of the file containing your program.  It
+                    may include a path specification.
+
+     <fg_library>   is the name of a standard Fastgraph or
+                    Fastgraph/Light library.  For Fastgraph, the library
+                    name is FGS.LIB (for the small model), FGM.LIB (for
+                    the medium model), or FGL.LIB (for the large model).
+                    For Fastgraph/Light, the library name is FGLS.LIB
+                    (for the small model), FGLM.LIB (for the medium
+                    model), or FGLL.LIB (for the large model).
+
+     <fg_extended>  is the name of an optional compiler-specific
+                    extended Fastgraph library.  You need to specify an
+                    extended library name only if your program calls any
+                    of the Fastgraph routines listed in Appendix D.  The
+                    Zortech C++ extended library name is FGZCS.LIB (for
+                    the small model), FGZCM.LIB (for the medium model),
+                    or FGZCL.LIB (for the large model).  Fastgraph/Light
+                    does not use extended libraries.
+
+     For example, to compile the program 01-01.C under the medium memory
+model and then link it with Fastgraph, you could use the following ZTC
+command:
+
+                      ZTC -mm 01-01.C FGM.LIB FGZCM.LIB
+
+Although we specified the extended library name FGZCM.LIB on the command
+line, we didn't need to in this example because the program doesn't call any
+of the compiler-specific Fastgraph routines listed in Appendix D.  If you
+were using Fastgraph/Light instead of Fastgraph, the TCC command would be:
+
+                           ZTC -mm 01-01.C FGLM.LIB
+
+For more information about memory models or other compilation and linking
+options, please refer to the manuals supplied with your Zortech C++ compiler.
+                                                 Chapter 1:  Introduction   29
+
+
+Fastgraph/Light Video Driver
+
+     As mentioned earlier, running any program created with Fastgraph/Light
+requires an external program called the Fastgraph/Light Video Driver.  The
+video driver is a terminate and stay resident program (TSR) that provides an
+interface between your program and Fastgraph.  Once loaded, the video driver
+uses over 100,000 bytes of conventional memory.
+
+     To load the video driver, enter the command FGDRIVER at the DOS command
+prompt (assuming FGDRIVER.EXE is in the current directory, or the \FG
+directory is in your DOS path specification).  The driver will display a
+message indicating whether or not it loaded successfully.  After you load the
+driver, just run a program created with Fastgraph/Light as you would any
+other program.  If you try running a program that uses Fastgraph/Light
+without first loading the video driver, the message "Fastgraph/Light video
+driver not installed" will appear.
+
+     You don't need to load the driver before running each program, just once
+per system boot (in fact, the driver will display an "already loaded" message
+if you try to load it more than once).  If you want to unload the video
+driver, just enter FGDRIVER /U at the DOS command prompt.  The unload
+operation will work completely only if the video driver was the last TSR
+loaded.  If it wasn't the last TSR, the driver will still unload, but the
+memory it uses will not be released back to DOS.
+30   Fastgraph User's Guide

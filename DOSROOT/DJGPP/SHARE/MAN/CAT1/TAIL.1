@@ -1,0 +1,132 @@
+
+
+
+TAIL(1)                        FSF                        TAIL(1)
+
+
+NNAAMMEE
+       tail - output the last part of files
+
+SSYYNNOOPPSSIISS
+       ttaaiill [_O_P_T_I_O_N]... [_F_I_L_E]...
+
+DDEESSCCRRIIPPTTIIOONN
+       Print  the  last 10 lines of each FILE to standard output.
+       With more than one FILE, precede each with a header giving
+       the  file  name.   With  no  FILE, or when FILE is -, read
+       standard input.
+
+       ----rreettrryy
+              keep trying to open a file even if it is
+
+              inaccessible when tail  starts  or  if  it  becomes
+              inaccessible later ---- useful only with --ff
+
+       --cc, ----bbyytteess=_N
+              output the last N bytes
+
+              --ff,  ----ffoollllooww[[=={name|descriptor}]  output  appended
+              data as the file grows;
+
+              --ff, ----ffoollllooww, and ----ffoollllooww=_d_e_s_c_r_i_p_t_o_r  are  equiva-
+              lent
+
+       --nn, ----lliinneess=_N
+              output the last N lines, instead of the last 10
+
+              ----mmaaxx--uunncchhaannggeedd--ssttaattss=_N  see the texinfo documenta-
+              tion
+
+              (the default is 5)
+
+              ----mmaaxx--ccoonnsseeccuuttiivvee--ssiizzee--cchhaannggeess=_N  see  the  texinfo
+              documentation
+
+              (the default is 200)
+
+       ----ppiidd=_P_I_D
+              with --ff, terminate after process ID, PID dies
+
+       --qq, ----qquuiieett, ----ssiilleenntt
+              never output headers giving file names
+
+       --ss, ----sslleeeepp--iinntteerrvvaall=_S
+              with --ff, sleep S seconds between iterations
+
+       --vv, ----vveerrbboossee
+              always output headers giving file names
+
+       ----hheellpp display this help and exit
+
+
+
+
+GNU textutils 2.0          January 2000                         1
+
+
+
+
+
+TAIL(1)                        FSF                        TAIL(1)
+
+
+       ----vveerrssiioonn
+              output version information and exit
+
+       If the first character of N (the number of bytes or lines)
+       is a `+', print beginning with the Nth item from the start
+       of  each  file,  otherwise,  print the last N items in the
+       file.  N may have a multiplier suffix: b for  512,  k  for
+       1024,  m for 1048576 (1 Meg).  A first OPTION of --VVAALLUUEE or
+       +VALUE is treated like --nn VALUE or --nn +VALUE unless  VALUE
+       has  one of the [bkm] suffix multipliers, in which case it
+       is treated like --cc VALUE or --cc +VALUE.
+
+       With ----ffoollllooww (-f), tail defaults to  following  the  file
+       descriptor,  which  means  that  even if a tail'ed file is
+       renamed, tail  will  continue  to  track  its  end.   This
+       default  behavior is not desirable when you really want to
+       track the actual name of the file, not the file descriptor
+       (e.g.,  log  rotation).   Use  ----ffoollllooww=_n_a_m_e in that case.
+       That causes tail to track the named file by  reopening  it
+       periodically  to  see if it has been removed and recreated
+       by some other program.
+
+RREEPPOORRTTIINNGG BBUUGGSS
+       Report bugs to <bug-textutils@gnu.org>.
+
+SSEEEE AALLSSOO
+       The full documentation for ttaaiill is maintained as a Texinfo
+       manual.   If  the  iinnffoo  and  ttaaiill  programs  are properly
+       installed at your site, the command
+
+              iinnffoo ttaaiill
+
+       should give you access to the complete manual.
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (C) 1999 Free Software Foundation, Inc.
+       This is free software; see the source for  copying  condi-
+       tions.  There is NO warranty; not even for MERCHANTABILITY
+       or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GNU textutils 2.0          January 2000                         2
+
+

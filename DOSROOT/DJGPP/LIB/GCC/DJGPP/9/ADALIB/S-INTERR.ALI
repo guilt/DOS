@@ -1,0 +1,504 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV NO_ALLOCATORS
+RV NO_DISPATCHING_CALLS
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTION_PROPAGATION
+RV NO_EXCEPTIONS
+RV NO_LOCAL_ALLOCATORS
+RV NO_SECONDARY_STACK
+RV NO_SELECT_STATEMENTS
+RV NO_STANDARD_ALLOCATORS_AFTER_ELABORATION
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_TASK_ALLOCATORS
+RV NO_TASK_AT_INTERRUPT_PRIORITY
+RV NO_TASKING
+RV NO_UNCHECKED_CONVERSION
+RV NO_DEFAULT_INITIALIZATION
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_IMPLICIT_LOOPS
+RV NO_ELABORATION_CODE
+RV SPARK_05
+RV MAX_SELECT_ALTERNATIVES=9
+RV MAX_TASK_ENTRIES=10
+RV MAX_TASKS=1+
+
+U system.interrupts%b	s-interr.adb		772b62f9 OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+Z ada.real_time%s	a-reatim.adb		a-reatim.ali
+Z ada.tags%s		a-tags.adb		a-tags.ali
+W ada.task_identification%s  a-taside.adb	a-taside.ali
+W ada.unchecked_conversion%s
+W system%s		system.ads		system.ali
+Z system.img_int%s	s-imgint.adb		s-imgint.ali
+W system.interrupt_management%s  s-intman.adb	s-intman.ali
+W system.interrupt_management.operations%s  s-inmaop.adb  s-inmaop.ali  EA
+W system.io%s		s-io.adb		s-io.ali
+W system.parameters%s	s-parame.adb		s-parame.ali
+Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+Z system.soft_links%s	s-soflin.adb		s-soflin.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+Z system.task_info%s	s-tasinf.adb		s-tasinf.ali
+W system.task_primitives%s  s-taspri.ads	s-taspri.ali
+W system.task_primitives.interrupt_operations%s  s-tpinop.adb  s-tpinop.ali
+W system.task_primitives.operations%s  s-taprop.adb  s-taprop.ali
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+W system.tasking.initialization%s  s-tasini.adb	s-tasini.ali
+W system.tasking.rendezvous%s  s-tasren.adb	s-tasren.ali  EA
+Z system.tasking.stages%s  s-tassta.adb		s-tassta.ali
+W system.tasking.utilities%s  s-tasuti.adb	s-tasuti.ali
+
+U system.interrupts%s	s-interr.ads		5e1b7446 EB EE OL PF PK
+Z ada.tags%s		a-tags.adb		a-tags.ali
+W system%s		system.ads		system.ali
+W system.os_interface%s	s-osinte.ads		s-osinte.ali
+Z system.soft_links%s	s-soflin.adb		s-soflin.ali
+Z system.storage_elements%s  s-stoele.adb	s-stoele.ali
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+W system.tasking.protected_objects%s  s-taprob.adb  s-taprob.ali
+W system.tasking.protected_objects.entries%s  s-tpoben.adb  s-tpoben.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-except.ads		20190108125404 291912d5 ada.exceptions%s
+D a-finali.ads		20190108125404 bf4f806b ada.finalization%s
+D a-reatim.ads		20190108125404 0240fc73 ada.real_time%s
+D a-stream.ads		20190108125404 119b8fb3 ada.streams%s
+D a-tags.ads		20190108125404 491b781d ada.tags%s
+D a-taside.ads		20190108125404 c3e0cda8 ada.task_identification%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20190108125404 5ab55268 interfaces%s
+D i-c.ads		20170908181218 5421119b interfaces.c%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-atacco.ads		20190108125404 4c36d12f system.address_to_access_conversions%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-finroo.ads		20190108125404 4ff27390 system.finalization_root%s
+D s-imgint.ads		20190108125404 02dbe0c2 system.img_int%s
+D s-intman.ads		20190108125404 47ba1e06 system.interrupt_management%s
+D s-inmaop.ads		20190108125404 5e0317cf system.interrupt_management.operations%s
+D s-interr.ads		20190108125404 269c22db system.interrupts%s
+D s-interr.adb		20190108125404 022e759a system.interrupts%b
+D s-io.ads		20190108125404 9e42f74f system.io%s
+D s-multip.ads		20170908181218 38ac9f73 system.multiprocessors%s
+D s-osinte.ads		20190108125404 86be1773 system.os_interface%s
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-secsta.ads		20190108125404 20bbe636 system.secondary_stack%s
+D s-soflin.ads		20190108125404 a7318a92 system.soft_links%s
+D s-stache.ads		20190108125404 a37c21ec system.stack_checking%s
+D s-stausa.ads		20190108125404 017a0a05 system.stack_usage%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-stoele.ads		20190108125404 2dc34a04 system.storage_elements%s
+D s-stoele.adb		20190108125404 ed88f8fb system.storage_elements%b
+D s-tasinf.ads		20190108125404 801abd01 system.task_info%s
+D s-taspri.ads		20190108125404 6995cc42 system.task_primitives%s
+D s-tpinop.ads		20190108125404 8ec7759d system.task_primitives.interrupt_operations%s
+D s-taprop.ads		20190108125404 1dd2e1b6 system.task_primitives.operations%s
+D s-taskin.ads		20190108125404 b9d612e2 system.tasking%s
+D s-tasini.ads		20190108125404 45f51104 system.tasking.initialization%s
+D s-taprob.ads		20190108125404 acd6094d system.tasking.protected_objects%s
+D s-tpoben.ads		20190108125404 60ad3dae system.tasking.protected_objects.entries%s
+D s-tasren.ads		20190108125404 a67a9949 system.tasking.rendezvous%s
+D s-tassta.ads		20190108125404 cca55c94 system.tasking.stages%s
+D s-tasuti.ads		20190108125404 4c20fd27 system.tasking.utilities%s
+D s-traent.ads		20190108125404 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20190108125404 34867c83 system.unsigned_types%s
+X 1 ada.ads
+16K9*Ada 20e8 19|55r6 56r6 77r6 89r30 90r7 553r34 1228r36
+X 2 a-except.ads
+54K13*Exceptions 349e19 19|55w10 1228r40
+104V13*Exception_Information{string} 19|1228s51
+X 3 a-finali.ads
+53U14*Initialize<14|44p14>
+X 7 a-taside.ads
+39K13*Task_Identification 95e28 19|56w10 90r11
+47P9*Task_Id<35|109P9> 19|90r31
+X 8 a-unccon.ads
+20v14*Unchecked_Conversion 19|77w10 89r34 553r38
+X 10 i-c.ads
+35I9*int<integer>
+X 11 system.ads
+37K9*System 148e11 18|46r6 47r6 48r6 50r9 59r42 60r6 64r40 67r36 112r40 121r17
+. 122r17 123r17 127r44 142r40 200r22 278r5 19|58r6 59r6 61r6 64r6 66r6 67r6
+. 68r6 69r6 71r6 74r6 75r6 79r14 84r24 85r24 86r25 87r25 133r34 137r24 204r14
+. 204r32 259r17 374r16 392r18 549r25 550r25 591r57 606r57 620r38 654r40 687r36
+. 751r19 1227r16 1228r16 1242r36 1288r10 1409r22 1410r50 1438r10 1472r5
+67M9*Address 18|112r47 123r24 200r29 19|204r21 259r24 549r32 550r32 591r64
+. 606r64
+69m4*Null_Address{67M9} 19|204r39 620r45 1410r57
+81V14*"="{boolean} 19|568r19 620r35
+100I12*Any_Priority{integer} 18|270r18 19|476r18
+102I12*Interrupt_Priority{100I12} 18|59r49 60r13 19|133r41 137r31
+X 14 s-finroo.ads
+42U14*Adjust
+X 16 s-intman.ads
+50K16*Interrupt_Management 111e32 19|59w13 61r13 86r32 87r32 374r23 392r25
+53I9*Interrupt_Mask<22|48I9> 19|102r37 693r36 695r36 960r38 962r37 1244r38
+55I9*Interrupt_ID<10|35I9> 19|374r44 584r33 736r47 788r47 793r49 796r47 1117r53
+. 1157r30 1193r52 1215r53 1254r41 1277r36 1285r34 1426r30
+58A9*Interrupt_Set(boolean)<55I9>
+73i4*Abort_Task_Interrupt{55I9} 19|392r46 778r57 997r36 999r15 1136r44 1280r36
+. 1283r15 1343r51
+86a4*Reserve{58A9} 19|584r19
+X 17 s-inmaop.ads
+32K37*Operations 125e43 19|61w34 62r51 87r53
+34U14*Thread_Block_Interrupt 19|736s18 998s12 1117s24 1282s12
+38U14*Thread_Unblock_Interrupt 19|793s18 1156s27
+42U14*Set_Interrupt_Mask 19|929s18 965s18 1075s27
+45U14*Set_Interrupt_Mask 19|926s18 1072s27
+56V13*Interrupt_Wait{16|55I9} 19|776s40 1133s30 1340s34
+61U14*Install_Default_Action 19|788s18 796s18 1215s24 1254s12
+65U14*Install_Ignore_Action 19|1193s24
+73U14*Empty_Interrupt_Mask 19|995s12 1274s12
+77U14*Add_To_Interrupt_Mask 19|996s12 1276s12 1279s12
+95U14*Copy_Interrupt_Mask 19|964s18
+99U14*Interrupt_Self_Process 19|1425s27
+103U14*Setup_Interrupt_Mask 19|1461s9
+116i4*Environment_Mask{16|53I9} 19|1471r39
+121i4*All_Tasks_Mask{16|53I9} 19|927m21 927r21 1073m30 1073r30
+X 18 s-interr.ads
+50K16*Interrupts 11|37k9 18|278l12 278e22 19|79b21 1472l12 1472t22
+59i4*Default_Interrupt_Priority{11|102I12}
+64I9*Ada_Interrupt_ID<short_short_integer>
+67I9*Interrupt_ID<short_short_integer> 69r35 82r38 84r44 86r46 89r19 98r21
+. 104r21 108r19 112r19 136r43 139r45 142r19 147r37 150r44 153r46 156r37 213r19
+. 223r19 19|106r24 113r24 117r24 123r22 125r42 127r44 129r43 131r45 136r39
+. 161r26 169r24 174r21 178r21 183r13 189r23 236r21 242r26 261r28 262r21 267r26
+. 277r43 281r26 292r19 297r26 319r19 325r26 355r21 361r26 433r44 437r26 490r37
+. 494r26 504r44 508r26 518r46 522r26 532r37 536r26 582r38 591r36 595r26 639r45
+. 643r26 654r19 659r26 669r46 673r26 694r23 702r43 707r45 715r24 720r24 727r43
+. 750r45 776r21 778r38 805r24 857r24 1008r34 1020r34 1029r33 1039r31 1085r28
+. 1106r52 1132r39 1136r25 1141r54 1171r53 1197r55 1245r25 1340r15 1343r32
+69I12*System_Interrupt_Id{67I9}
+73P9*Parameterless_Handler 89r40 97r21 102r25 103r21 214r19 224r19 19|105r24
+. 111r28 112r24 157r16 218r38 235r21 292r40 353r25 354r21 546r38 554r10 696r23
+. 713r28 714r24 808r24 855r28 856r24 1007r34 1018r38 1019r34 1247r25
+82V13*Is_Reserved{boolean} 82>26 19|240s10 265s10 279s10 295s10 323s10 359s10
+. 435s10 492s10 506s10 520s10 534s10 582b13 585l8 585t19 593s10 641s10 657s10
+. 671s10 1086s29
+82i26 Interrupt{67I9} 19|582b26 584r47
+84V13*Is_Entry_Attached{boolean} 84>32 19|504b13 512l8 512t25
+84i32 Interrupt{67I9} 19|504b32 506r23 508r46 511r26
+86V13*Is_Handler_Attached{boolean} 86>34 19|518b13 526l8 526t27
+86i34 Interrupt{67I9} 19|518b34 520r23 522r46 525r28
+88V13*Current_Handler{73P9} 89>7 19|291b13 305l8 305t23
+89i7 Interrupt{67I9} 19|292b7 295r23 297r46 304r28
+96U14*Attach_Handler 97>7 98>7 99>7 19|234b14 247l8 247t22 482s10
+97p7 New_Handler{73P9} 19|235b7 245r41
+98i7 Interrupt{67I9} 19|236b7 240r23 242r46 245r54
+99b7 Static{boolean} 19|237b7 245r65
+101U14*Exchange_Handler 102<7 103>7 104>7 105>7 19|352b14 366l8 366t24 463s10
+102p7 Old_Handler{73P9} 19|353b7 365m10 464r13
+103p7 New_Handler{73P9} 19|354b7 365r23 465r13
+104i7 Interrupt{67I9} 19|355b7 359r23 361r46 365r36 466r13
+105b7 Static{boolean} 19|356b7 365r47 467r13
+107U14*Detach_Handler 108>7 109>7 19|318b14 329l8 329t22
+108i7 Interrupt{67I9} 19|319b7 323r23 325r46 328r41
+109b7 Static{boolean} 19|320b7 328r52
+111V13*Reference{11|67M9} 112>7 19|591b13 600l8 600t17
+112i7 Interrupt{67I9} 19|591b24 593r23 595r46 599r51
+120U14*Bind_Interrupt_To_Entry 121>7 122>7 123>7 19|256b14 271l8 271t31
+121p7 T{35|109P9} 19|257b7 270r50
+122i7 E{35|237I9} 19|258b7 270r53
+123m7 Int_Ref{11|67M9} 19|259b7 262r64
+127U14*Detach_Interrupt_Entries 127>40 19|335b14 338l8 338t32
+127p40 T{35|109P9} 19|335b40 337r51
+136U14*Block_Interrupt 136>31 19|277b14 285l8 285t23
+136i31 Interrupt{67I9} 19|277b31 279r23 281r46 284r42
+139U14*Unblock_Interrupt 139>33 19|639b14 647l8 647t25
+139i33 Interrupt{67I9} 19|639b33 641r23 643r46 646r44
+141V13*Unblocked_By{35|109P9} 142>7 19|653b13 663l8 663t20
+142i7 Interrupt{67I9} 19|654b7 657r23 659r46 662r30
+147V13*Is_Blocked{boolean} 147>25 19|490b13 498l8 498t18
+147i25 Interrupt{67I9} 19|490b25 492r23 494r46 497r23
+150U14*Ignore_Interrupt 150>32 19|433b14 441l8 441t24
+150i32 Interrupt{67I9} 19|433b32 435r23 437r46 440r43
+153U14*Unignore_Interrupt 153>34 19|669b14 677l8 677t26
+153i34 Interrupt{67I9} 19|669b34 671r23 673r46 676r45
+156V13*Is_Ignored{boolean} 156>25 19|532b13 540l8 540t18
+156i25 Interrupt{67I9} 19|532b25 534r23 536r46 539r23
+199U14*Register_Interrupt_Handler 200>7 19|606b14 633l8 633t34
+200m7 Handler_Addr{11|67M9} 19|606b42 620r22 623r25
+207I9*Static_Handler_Index<integer> 209r6 209r38 248r28
+208I12*Positive_Static_Handler_Index{207I9} 220r7 229r13
+212R9*Previous_Handler_Item 216e14 220r50
+213i7*Interrupt{67I9} 19|397m60 456m39
+214p7*Handler{73P9} 19|396m60 464m57
+215b7*Static{boolean} 19|398m60 457m39
+219A9*Previous_Handler_Array(212R9)<207I9> 252r28
+222R9*New_Handler_Item 225e14 229r56
+223i7*Interrupt{67I9} 19|456r69 458r30 466r45 482r61
+224p7*Handler{73P9} 19|465r45 482r39
+228A9*New_Handler_Array(222R9)<207I9> 265r22 271r18 19|449r22 477r18
+234R9*Dynamic_Interrupt_Protection<38|85R9> 3|53P14 14|42p14 18|235e75 240p13
+. 241r23 19|414r23 38|232P25
+240V13*Has_Interrupt_Or_Attach_Handler{boolean} 241^7 19|413b13 419l8 419t39
+241p7 Object(234R9) 19|414b7 416r28
+246R9*Static_Interrupt_Protection<38|85R9> 3|53P14 14|42p14 18|247d7 248d7
+. 253e16 255p13 256r23 259P25 259r51 263p14 264r29 19|372r40 422r23 448r29
+247i7*Num_Entries{37|126I9} 250r60
+248i7*Num_Attach_Handler{207I9} 252r57
+252a8*Previous_Handlers{219A9} 19|394r34 396m38 397m38 398m38 456m17 457m17
+. 464m35
+255V13*Has_Interrupt_Or_Attach_Handler{boolean} 256^7 19|421b13 427l8 427t39
+256p7 Object(246R9) 19|422b7 424r28
+259U25*Finalize<38|232p25> 259=35 19|372b14 405l8 405t16
+259r35 Object{246R9} 19|372b24 394r27 396r31 397r31 398r31 404m64 404r64
+263U14*Install_Handlers 264^7 265>7 19|447b14 469l8 469t24
+264p7 Object(246R9) 19|448b7 456r10 457r10 464r28
+265a7 New_Handlers{228A9} 19|449b7 452r16 456r52 458r13 465r28 466r28
+269U14*Install_Restricted_Handlers 270>7 271>7 19|475b14 484l8 484t35
+270i7 Prio{11|100I12} 19|476b7 479r28
+271a7 Handlers{228A9} 19|477b7 481r16 482r26 482r48
+X 19 s-interr.adb
+84K12 POP=84:47 742r13 767r19 770r19 1127r22 1165r22 1291r13 1294r10 1303r13
+. 1311r13 1326r13 1329r16 1347r16 1350r19 1353r16 1357r19 1360r16 1383r22
+. 1386r25 1392r25 1395r22 1404r25 1407r22 1412r22 1415r25 1432r10 1435r13
+85K12 PIO=85:47 1285r7
+86K12 IMNG=86:32 102r32 584r14 584r28 693r31 695r31 736r42 778r52 788r42
+. 793r44 796r42 960r33 962r32 997r31 999r10 1117r48 1136r39 1157r25 1193r47
+. 1215r48 1244r33 1254r36 1277r31 1280r31 1283r10 1285r29 1343r46 1426r25
+87K12 IMOP=87:53 736r13 776r35 788r13 793r13 796r13 926r13 927r16 929r13
+. 964r13 965r13 995r7 996r7 998r7 1072r22 1073r25 1075r22 1117r19 1133r25
+. 1156r22 1193r19 1215r19 1254r7 1274r7 1276r7 1279r7 1282r7 1340r29 1425r22
+. 1461r4 1471r34
+89V13 To_System[8|20]{35|109P9} 931s38 1077s24 1148s21 1456s28
+99t9 Interrupt_Manager 245r7 270r7 284r7 328r7 337r7 364r7 390r14 395r13
+. 440r7 646r7 676r7 683b14 1232l8 1232t25 1456r39 1471r4
+100Y13 Detach_Interrupt_Entries 100>39 337s25 1084b23 1103l20 1103t44
+100p39 T{35|109P9} 1087r47 1102r19
+102Y13 Initialize 102>25 960b14 967l11 967t21 1471s22
+102i25 Mask{16|53I9} 964r49
+104Y13 Attach_Handler 105>10 106>10 107>10 108>10 245s25 395s31 1006b23 1014l20
+. 1014t34
+105p10 New_Handler{18|73P9} 396r16 1013r35
+106i10 Interrupt{18|67I9} 397r16 1013r48
+107b10 Static{boolean} 398r16 1013r59
+108b10 Restoration{boolean} 399r16 1013r67
+110Y13 Exchange_Handler 111<10 112>10 113>10 114>10 364s25 1017b23 1025l20
+. 1025t36
+111p10 Old_Handler{18|73P9} 1024m22 1024r22
+112p10 New_Handler{18|73P9} 1024r35
+113i10 Interrupt{18|67I9} 1024r48
+114b10 Static{boolean} 1024r59
+116Y13 Detach_Handler 117>10 118>10 328s25 1028b23 1033l20 1033t34
+117i10 Interrupt{18|67I9} 1032r47
+118b10 Static{boolean} 1032r58
+120Y13 Bind_Interrupt_To_Entry 121>10 122>10 123>10 270s25 1036b23 1081l20
+. 1081t43
+121p10 T{35|109P9} 1055r63 1062r19
+122i10 E{35|237I9} 1055r71
+123i10 Interrupt{18|67I9} 1044r36 1045r41 1054r28 1055r31 1067r33 1074r54
+. 1076r33 1080r33
+125Y13 Block_Interrupt 125>30 284s25 1106b23 1138l20 1138t35
+125i30 Interrupt{18|67I9} 1107r31 1111r28 1112r35 1117r67 1119r36 1120r41
+. 1127r49
+127Y13 Unblock_Interrupt 127>32 646s25 1141b23 1148r32 1168l20 1168t37
+127i32 Interrupt{18|67I9} 1142r35 1146r28 1147r35 1150r36 1151r42 1157r44
+. 1165r45
+129Y13 Ignore_Interrupt 129>31 440s25 1171b23 1194l20 1194t36
+129i31 Interrupt{18|67I9} 1172r31 1176r28 1183r36 1185r38 1187r37 1188r34
+. 1190r38 1193r66
+131Y13 Unignore_Interrupt 131>33 676s25 1197b23 1216l20 1216t38
+131i33 Interrupt{18|67I9} 1198r28 1205r36 1207r38 1209r37 1210r34 1212r38
+. 1215r67
+136T14 Server_Task 136d27 143l8 143e19 145r38 928r32 1074r41 1238b14 1449l8
+. 1449t19
+136i27 Interrupt{18|67I9} 1254r55 1277r50 1285r48 1296r27 1297r33 1306r25
+. 1362r36 1378r36 1379r51 1397r37 1398r44 1399r53 1426r44
+145P9 Server_Task_Access(136T14) 211r18
+151R9 Entry_Assoc 154e14 169r47 1055r45 1093r46 1188r48 1210r48
+152p7*T{35|109P9} 170m31 511r37 811r36 862r36 1045r52 1055m58 1087r43 1094m31
+. 1120r52 1151r53 1187r48 1189m25 1209r48 1211m25 1297r44 1397r48 1398r55
+153i7*E{35|237I9} 170m47 1055m66 1094m47 1189m41 1211m41 1399r64
+156R9 Handler_Assoc 159e14 161r49
+157p7*H{18|73P9} 304r39 525r39 838r50 842m35 902r50 906m35 1044r47 1119r47
+. 1150r47 1183r47 1205r47 1296r38 1378r47 1379r62
+158b7*Static{boolean} 162m39 458r41 824r58 843m35 883r47 912m38 915m38
+161a4 User_Handler(156R9) 163r32 304r14 457r52 525r14 824r33 838r25 842m10
+. 843m10 883r22 902r25 906m10 912m13 915m13 1044r22 1119r22 1150r22 1183r22
+. 1205r22 1296r13 1378r22 1379r37
+169a4 User_Entry(151R9) 171r32 511r14 811r13 862r13 1045r29 1055m19 1087r28
+. 1093m28 1120r29 1151r30 1187r25 1188m22 1209r25 1210m22 1297r21 1397r25
+. 1398r32 1399r41
+174a4 Blocked(boolean) 175r30 497r14 729r17 754r17 1107r22 1111m19 1142r26
+. 1146m19 1306r16
+178a4 Ignored(boolean) 179r30 539r14 836m10 898m10 1054m19 1092m28 1172r22
+. 1176m19 1198m19
+182a4 Last_Unblocker(35|109P9) 184r30 662r14 1112m19 1147m19
+189a4 Server_ID(35|109P9) 191r30 742r25 761r23 921r13 931m13 1067r22 1076m22
+. 1127r38 1165r34
+200R9 Registered_Handler 201r30 203c9 206e14 622r27
+201P9 R_Link(200R9) 205r14 208r30 209r30 556r13 607r22
+204m7*H{11|67M9} 568r17 623m20
+205p7*Next{201P9} 572r21 630m34
+208p4 Registered_Handler_Head{201P9} 566r14 625r10 626m10
+209p4 Registered_Handler_Tail{201P9} 627m10 630r10 631m10
+211p4 Access_Hold{145P9} 928m13 931r49 1074m22 1077r35
+218V13 Is_Registered{boolean} 218>28 546b13 576l8 576t21 888s36
+218p28 Handler{18|73P9} 546b28 560r10 564r26
+261i7 Interrupt{18|67I9} 265r23 267r46 270r56
+373V16*State{character} 374>10 375b<c,__gnat_get_interrupt_state>25 392s11
+374i10 Int{16|55I9}
+378e7 Default{character} 392r71
+394i14 N<integer> 396r57 397r57 398r57
+452i11 N<integer> 456r36 456r66 457r36 458r27 464r54 465r42 466r42
+481i11 N<integer> 482r36 482r58
+548R12 Fat_Ptr 551e17 554r33 557r13
+549m10 Object_Addr{11|67M9}
+550m10 Handler_Addr{11|67M9} 568r25
+553V16 To_Fat_Ptr[8|20]{548R12} 564s14
+556p7 Ptr{201P9} 566m7 567r13 568r13 572m10 572r17
+557r7 Fat{548R12} 564m7 568r21
+607p7 New_Node_Ptr{201P9} 622m7 623r7 626r37 627r37 630r42 631r37
+687b7 Ignore{boolean}
+693i7 Intwait_Mask{16|53I9} 776m56 776r56 995m34 995r34 997m10 997r10 1133m46
+. 1133r46
+694i7 Ret_Interrupt{18|67I9} 775m19 778r22 1132m22 1135r25
+695i7 Old_Mask{16|53I9} 927m44 927r44 929m38 929r38 1073m53 1073r53 1075m47
+. 1075r47
+696p7 Old_Handler{18|73P9} 1013m22 1013r22
+702U17 Bind_Handler 702>31 727b17 744l11 744t23 943s13 1080s19
+702i31 Interrupt{18|67I9} 727b31 729r26 736r61 742r36
+707U17 Unbind_Handler 707>33 750b17 798l11 798t25 846s13 936s16 1095s28 1190s22
+. 1212s22
+707i33 Interrupt{18|67I9} 750b33 754r26 761r34 788r61 793r63 796r61
+712U17 Unprotected_Exchange_Handler 713<10 714>10 715>10 716>10 717>10 854b17
+. 945l11 945t39 1012s19 1023s19
+713p10 Old_Handler{18|73P9} 855b10 902m10 935r16 942r13
+714p10 New_Handler{18|73P9} 856b10 888r51 906r40 908r13 934r13
+715i10 Interrupt{18|67I9} 857b10 862r25 883r36 898r19 902r39 906r24 912r27
+. 915r27 921r24 928r45 931r24 936r32 943r27
+716b10 Static{boolean} 858b10 878r42 915r48
+717b10 Restoration{boolean} 859b10 878r17
+719U17 Unprotected_Detach_Handler 720>10 721>10 804b17 848l11 848t37 1032s19
+. 1184s22 1206s22
+720i10 Interrupt{18|67I9} 805b10 811r25 824r47 836r19 838r39 842r24 843r24
+. 846r29 1185r25 1207r25
+721b10 Static{boolean} 806b10 824r17 1185r49 1207r49
+751p10 Server{35|109P9} 761m13 763r18 767r31 767r39 770r35
+808p10 Old_Handler{18|73P9} 838m10 845r13
+960i26 Mask{16|53I9}
+962i13 The_Mask{16|53I9} 964m39 965m38 965r38
+1007p20 New_Handler{18|73P9}
+1008i20 Interrupt{18|67I9}
+1009b20 Static{boolean}
+1010b20 Restoration{boolean}
+1018p20 Old_Handler{18|73P9}
+1019p20 New_Handler{18|73P9}
+1020i20 Interrupt{18|67I9}
+1021b20 Static{boolean}
+1029i19 Interrupt{18|67I9}
+1030b19 Static{boolean}
+1037p19 T{35|109P9}
+1038i19 E{35|237I9}
+1039i19 Interrupt{18|67I9}
+1084p49 T{35|109P9}
+1085i23 J{18|67I9} 1086r42 1087r40 1092r37 1093r40 1095r44
+1106i40 Interrupt{18|67I9}
+1141i42 Interrupt{18|67I9}
+1171i41 Interrupt{18|67I9}
+1197i43 Interrupt{18|67I9}
+1226r18 X{2|63R9} 1228r74
+1242b7 Ignore{boolean}
+1244i7 Intwait_Mask{16|53I9} 1274m34 1274r34 1277m10 1277r10 1280m10 1280r10
+. 1340m50 1340r50
+1245i7 Ret_Interrupt{18|67I9} 1339m13 1343r16 1362r19
+1246p7 Self_ID{35|109P9} 1285r60 1288r53 1294r26 1302r13 1303r24 1304r13
+. 1310r13 1311r24 1312r13 1325r13 1326r25 1335r45 1336r50 1341r13 1353r32
+. 1360r32 1383r34 1395r38 1407r34 1412r38 1432r22 1438r55 1440r13 1441r47
+1247p7 Tmp_Handler{18|73P9} 1379m22 1389r22
+1248p7 Tmp_ID{35|109P9} 1398m22 1410r25
+1249i7 Tmp_Entry_Index{35|237I9} 1399m22 1410r33
+X 20 s-io.ads
+37K16*IO 19|64w13 1227r23 1228r23 20|64e14
+45U14*Put_Line 19|1227s26 1228s26
+X 22 s-osinte.ads
+38K16*OS_Interface 18|48w13 64r47 67r43 22|51e24
+45N4*Max_Interrupt 18|64r60 67r56
+48I9*sigset_t<integer>
+X 23 s-parame.ads
+51K16*Parameters 19|75w13 81r8 1335r16 23|198e22
+154b4*Single_Lock{boolean} 19|1290r13 1328r16 1349r19 1356r19 1385r25 1391r25
+. 1403r25 1414r25 1434r13
+167b4*No_Abort{boolean} 19|1335r27
+X 27 s-stausa.ads
+203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
+268U14*Output_Results 272i<c,__gnat_stack_usage_output_results>22
+X 29 s-stoele.ads
+42K16*Storage_Elements 19|68w13 262r35 598r14 599r17 29|117e28
+105M9*Integer_Address 19|599r34
+107V13*To_Address{11|67M9} 19|598s31
+112V13*To_Integer{105M9} 19|262s52
+X 32 s-taspri.ads
+38K16*Task_Primitives 19|58w13 66r13 67r13 84r31 85r31 32|62e27
+X 33 s-tpinop.ads
+35K32*Interrupt_Operations 19|67w29 85r47 33|50e48
+41U14*Set_Interrupt_ID 19|1285s11
+X 34 s-taprop.ads
+39K32*Operations 19|66w29 84r47 34|571e38
+121U14*Abort_Task 19|770s23 1127s26 1347s20
+187U14*Write_Lock 19|1294s14 1353s20 1360s20 1395s26 1412s26
+241U14*Unlock 19|1326s17 1383s26 1407s26 1432s14
+359U14*Sleep 19|1303s17 1311s17
+397U14*Wakeup 19|742s17 767s23 1165s26
+434U14*Lock_RTS 19|1291s17 1350s23 1357s23 1392s29 1415s29
+437U14*Unlock_RTS 19|1329s20 1386s29 1404s29 1435s17
+X 35 s-taskin.ads
+47K16*Tasking 18|46w13 47r13 121r24 122r24 127r51 142r47 235r6 247r28 250r6
+. 19|69r13 71r13 74r13 82r8 403r7 404r10 654r47 687r43 751r26 1242r43 1288r17
+. 1409r29 1438r17 35|1215e19
+109P9*Task_Id(107R9) 18|121r32 127r59 142r55 19|90r40 100r43 121r22 152r11
+. 183r36 189r46 257r17 335r44 654r55 751r34 1037r29 1084r53 1246r34 1248r25
+112p4*Null_Task{109P9} 19|170r36 183r58 190r29 511r42 811r41 862r41 921r37
+. 1045r57 1067r46 1094r36 1112r49 1120r57 1151r57 1187r53 1189r30 1209r53
+. 1211r30 1297r48 1397r53
+116V13*Self{109P9} 19|1246s45
+147n7*Runnable{132E9} 19|780r21 1304r37 1312r37 1341r37
+193n7*Interrupt_Server_Idle_Sleep{132E9} 19|742r48 765r21 1303r33
+194n7*Interrupt_Server_Blocked_Interrupt_Sleep{132E9} 19|764r21 1166r24 1302r37
+. 1310r37 1311r33
+201n7*Interrupt_Server_Blocked_On_Event_Flag{132E9} 19|769r21 1325r37
+231I9*Entry_Index<integer>
+233N4*Null_Task_Entry 19|170r52 1094r52 1189r46 1211r46
+237I9*Task_Entry_Index<231I9> 18|122r32 19|122r22 153r11 258r17 1038r29 1249r25
+503e7*State{132E9} 19|763r32 767r53 1302m28 1304m28 1310m28 1312m28 1325m28
+. 1341m28
+731p4*Interrupt_Manager_ID{109P9} 19|1347r32 1456m4
+972r7*Common{502R9} 19|763r25 767r46 1302m21 1304m21 1310m21 1312m21 1325m21
+. 1341m21
+1068b7*Interrupt_Entry{boolean} 19|1062m21 1102m21
+1072b7*Pending_Action{boolean} 19|1335r53 1440r21
+X 36 s-tasini.ads
+35K24*Initialization 19|74w21 1288r25 1336r16 1438r25 1441r13 36|178e34
+95U14*Defer_Abort 19|1288s40
+98U14*Undefer_Abort 19|1438s40
+109U14*Do_Pending_Action 19|1336s31 1441s28
+X 37 s-taprob.ads
+48K24*Protected_Objects 18|47r21 235r14 247r36 250r14 19|403r15 404r18 37|241e37
+126I9*Protected_Entry_Index<35|231I9> 18|247r54
+X 38 s-tpoben.ads
+48K42*Entries 18|47w39 235r32 250r32 19|403r33 404r36 38|236e45
+85R9*Protection_Entries<3|50R9> 18|235r40 250r40 19|404r44 38|152e14
+232U25 Finalize<3|54p14> 19|403s41
+X 39 s-tasren.ads
+39K24*Rendezvous 19|71w21 72r38 1409r37 39|330e30
+72U14*Call_Simple 19|1409s48
+X 41 s-tasuti.ads
+38K24*Utilities 19|69w21 687r51 1242r51 41|130e29
+47V13*Make_Independent{boolean} 19|687s61 1242s61
+

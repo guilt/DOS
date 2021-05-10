@@ -1,0 +1,35 @@
+#
+# DSM for Binutils 2.10 binaries
+#
+
+dsm-file-version: 1.2
+dsm-author: Mark E.
+dsm-name: bnu210b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+name: binutils
+version: 2.10
+manifest: bnu210b
+sources-dsm: bnu210s
+short-description: GNU Binary Utilities for DJGPP
+long-description: GNU Binary Utililities for DJGPP includes the assembler \
+linker, and other utilties needed for DJGPP development.
+license: GNU General Public License, Version 2
+
+organisation: FSF
+web-site: http://www.gnu.org/software/binutils.html
+ftp-site: ftp://ftp.gnu.org/pub/gnu/binutils/
+
+mailing-list: binutils@sourceware.cygnus.com
+
+porter: Mark E.
+porter-email: snowball3@bigfoot.com
+
+simtelnet-path: v2gnu/
+zip: bnu210b.zip
+
+replaces: binutils < 2.10
+
+pre-install-readme: gnu/binutl-2.10/readme.dos
+

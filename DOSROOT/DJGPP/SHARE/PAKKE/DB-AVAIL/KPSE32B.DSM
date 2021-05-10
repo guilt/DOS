@@ -1,0 +1,32 @@
+#
+# DSM for kpathsea 3.2 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: kpse32b
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: kpathsea
+version: 3.2
+type: binaries
+manifest: kpse32b
+sources-dsm: kpse32s
+documentation-dsm: webc72d
+
+short-description: kpathsea library
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: kpse32b
+
+changelog: gnu/web2c-7.2/kpathsea/NEWS
+pre-install-readme: gnu/web2c-7.2/djgpp/README
+
+depends-on: texmflib

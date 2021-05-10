@@ -1,0 +1,67 @@
+# DSM for GNU Pth 2.0.7
+# Written by Gordon Schumacher <whiplash@pobox.com>
+#
+# $Id$
+
+dsm-file-version: 1.0
+dsm-version: 0.5.0
+dsm-name: pth207b
+
+dsm-author: Gordon Schumacher
+dsm-author-email: whiplash@pobox.com
+
+name: pth
+version: 2.0.7
+type: binaries
+
+manifest: pth207b
+binaries-dsm: pth207b
+sources-dsm: pth207s
+
+simtelnet-path: v2gnu
+zip: pth207b.zip
+changelog: ChangeLog
+
+provides: pth threads
+replaces: fileutils < 4.1 release 7
+requires: DPMI
+# For using 'ginstall' with COFF images
+depends-on: djdev
+# For using 'ginstall -s'
+depends-on: binutils
+# For reading docs
+depends-on: info-reader
+# For reading manual pages
+depends-on: man
+
+# For rebuilding configure if configure.in is changed
+depends-on: autoconf
+
+short-description: The GNU Pth threading libraryu
+long-description:\
+Pth is a very portable POSIX/ANSI-C based library for Unix platforms\n\
+which provides non-preemptive priority-based scheduling for multiple\n\
+threads of execution (aka `multithreading') inside event-driven\n\
+applications. All threads run in the same address space of the server\n\
+application, but each thread has its own individual program-counter,\n\
+run-time stack, signal mask and errno variable.
+
+license: GNU Lesser General Public License
+organisation: Free Software Foundation
+
+author: Ralf S. Engelschall
+
+# A bug in zippo 0.1.3 causes these to be unsupported, so commented out
+
+#maintainer: Ralf S. Engelschall
+#maintainer-email: rse@engelschall.com
+
+porter: Gordon Schumacher
+porter-email: whiplash@pobox.com
+
+web-site: http://www.gnu.org/software/pth/
+ftp-site: ftp://ftp.gnu.org/gnu/pth/
+
+mailing-list: pth-users@gnu.org
+mailing-list-description: Main Pth mailing list
+mailing-list-web-site: http://www.mail-archive.com/pth-users@gnu.org/info.html

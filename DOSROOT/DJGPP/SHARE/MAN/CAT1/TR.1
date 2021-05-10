@@ -1,0 +1,198 @@
+
+
+
+TR(1)                          FSF                          TR(1)
+
+
+NNAAMMEE
+       tr - translate or delete characters
+
+SSYYNNOOPPSSIISS
+       ttrr [_O_P_T_I_O_N]... _S_E_T_1 [_S_E_T_2]
+
+DDEESSCCRRIIPPTTIIOONN
+       Translate, squeeze, and/or delete characters from standard
+       input, writing to standard output.
+
+       --cc, ----ccoommpplleemmeenntt
+              first complement SET1
+
+       --dd, ----ddeelleettee
+              delete characters in SET1, do not translate
+
+       --ss, ----ssqquueeeezzee--rreeppeeaattss
+              replace sequence of characters with one
+
+       --tt, ----ttrruunnccaattee--sseett11
+              first truncate SET1 to length of SET2
+
+       ----hheellpp display this help and exit
+
+       ----vveerrssiioonn
+              output version information and exit
+
+       SETs are specified as strings of characters.  Most  repre-
+       sent themselves.  Interpreted sequences are:
+
+       \NNN   character  with  octal value NNN (1 to 3 octal dig-
+              its)
+
+       \\     backslash
+
+       \a     audible BEL
+
+       \b     backspace
+
+       \f     form feed
+
+       \n     new line
+
+       \r     return
+
+       \t     horizontal tab
+
+       \v     vertical tab
+
+       CHAR1-CHAR2
+              all characters from CHAR1  to  CHAR2  in  ascending
+              order
+
+
+
+
+
+GNU textutils 2.0          August 1999                          1
+
+
+
+
+
+TR(1)                          FSF                          TR(1)
+
+
+       [CHAR1-CHAR2]
+              same as CHAR1-CHAR2, if both SET1 and SET2 use this
+
+       [CHAR*]
+              in SET2, copies of CHAR until length of SET1
+
+       [CHAR*REPEAT]
+              REPEAT copies of CHAR,  REPEAT  octal  if  starting
+              with 0
+
+       [:alnum:]
+              all letters and digits
+
+       [:alpha:]
+              all letters
+
+       [:blank:]
+              all horizontal whitespace
+
+       [:cntrl:]
+              all control characters
+
+       [:digit:]
+              all digits
+
+       [:graph:]
+              all printable characters, not including space
+
+       [:lower:]
+              all lower case letters
+
+       [:print:]
+              all printable characters, including space
+
+       [:punct:]
+              all punctuation characters
+
+       [:space:]
+              all horizontal or vertical whitespace
+
+       [:upper:]
+              all upper case letters
+
+       [:xdigit:]
+              all hexadecimal digits
+
+       [=CHAR=]
+              all characters which are equivalent to CHAR
+
+       Translation  occurs  if  --dd is not given and both SET1 and
+       SET2 appear.  --tt may be used only when translating.   SET2
+       is  extended to length of SET1 by repeating its last char-
+       acter  as  necessary.   Excess  characters  of  SET2   are
+       ignored.   Only  [:lower:] and [:upper:] are guaranteed to
+
+
+
+GNU textutils 2.0          August 1999                          2
+
+
+
+
+
+TR(1)                          FSF                          TR(1)
+
+
+       expand in ascending order; used in SET2 while translating,
+       they may only be used in pairs to specify case conversion.
+       --ss uses SET1 if not translating nor deleting; else squeez-
+       ing uses SET2 and occurs after translation or deletion.
+
+RREEPPOORRTTIINNGG BBUUGGSS
+       Report bugs to <bug-textutils@gnu.org>.
+
+SSEEEE AALLSSOO
+       The  full  documentation for ttrr is maintained as a Texinfo
+       manual.   If  the  iinnffoo  and  ttrr  programs  are   properly
+       installed at your site, the command
+
+              iinnffoo ttrr
+
+       should give you access to the complete manual.
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (C) 1999 Free Software Foundation, Inc.
+       This  is  free software; see the source for copying condi-
+       tions.  There is NO warranty; not even for MERCHANTABILITY
+       or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GNU textutils 2.0          August 1999                          3
+
+

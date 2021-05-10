@@ -1,0 +1,38 @@
+#
+# DSM for m4 1.4 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.5
+dsm-name: m4-14s
+dsm-version: 0.4.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: m4
+version: 1.4
+manifest: m4-14s
+binaries-dsm: m4-14b
+documentation-dsm: m4-14d
+short-description: GNU M4
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: m4-14s.zip
+
+requires: djdev
+requires: gcc
+requires: bash
+requires: fileutils
+requires: sed
+requires: textutils
+requires: grep
+requires: sh-utils
+requires: diffutils
+# For testsuite:
+depends-on: gawk

@@ -1,0 +1,66 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+
+U ada.interrupts.names%s  a-intnam.ads		5ab6be39 NE OL PK
+W ada.interrupts%s	a-interr.adb		a-interr.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-except.ads		20190108125404 291912d5 ada.exceptions%s
+D a-finali.ads		20190108125404 bf4f806b ada.finalization%s
+D a-interr.ads		20190108125404 bdf68b51 ada.interrupts%s
+D a-intnam.ads		20190108125404 e7403568 ada.interrupts.names%s
+D a-stream.ads		20190108125404 119b8fb3 ada.streams%s
+D a-tags.ads		20190108125404 491b781d ada.tags%s
+D a-taside.ads		20190108125404 c3e0cda8 ada.task_identification%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20190108125404 5ab55268 interfaces%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-atacco.ads		20190108125404 4c36d12f system.address_to_access_conversions%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-finroo.ads		20190108125404 4ff27390 system.finalization_root%s
+D s-interr.ads		20190108125404 269c22db system.interrupts%s
+D s-multip.ads		20170908181218 38ac9f73 system.multiprocessors%s
+D s-osinte.ads		20190108125404 86be1773 system.os_interface%s
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-secsta.ads		20190108125404 20bbe636 system.secondary_stack%s
+D s-soflin.ads		20190108125404 a7318a92 system.soft_links%s
+D s-stache.ads		20190108125404 a37c21ec system.stack_checking%s
+D s-stausa.ads		20190108125404 017a0a05 system.stack_usage%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-stoele.ads		20190108125404 2dc34a04 system.storage_elements%s
+D s-tasinf.ads		20190108125404 801abd01 system.task_info%s
+D s-taspri.ads		20190108125404 6995cc42 system.task_primitives%s
+D s-taskin.ads		20190108125404 b9d612e2 system.tasking%s
+D s-taprob.ads		20190108125404 acd6094d system.tasking.protected_objects%s
+D s-tpoben.ads		20190108125404 60ad3dae system.tasking.protected_objects.entries%s
+D s-traent.ads		20190108125404 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20190108125404 34867c83 system.unsigned_types%s
+X 1 ada.ads
+16K9*Ada 20e8 5|41r9 50r5
+X 4 a-interr.ads
+40K13*Interrupts 1|16k9 4|100e19 5|41r13 50r9
+42I9*Interrupt_ID<15|64I9> 5|47r33 48r33
+X 5 a-intnam.ads
+41K24*Names 4|40k13 5|50l20 50e25
+47i4*DUMMY_INTERRUPT_1{4|42I9}
+48i4*DUMMY_INTERRUPT_2{4|42I9}
+X 15 s-interr.ads
+64I9*Ada_Interrupt_ID<short_short_integer>
+X 22 s-stausa.ads
+203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
+268U14*Output_Results 272i<c,__gnat_stack_usage_output_results>22
+

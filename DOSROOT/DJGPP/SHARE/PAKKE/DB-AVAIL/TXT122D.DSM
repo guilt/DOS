@@ -1,0 +1,27 @@
+#
+# DSM for textutils 1.22 documentation
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: txt122d
+dsm-version: 0.4.0
+dsm-type: documentation
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: textutils
+version: 1.22
+manifest: txt122d
+binaries-dsm: txt122b
+sources-dsm: txt122s
+short-description: GNU textutils
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: txt122d.zip
+

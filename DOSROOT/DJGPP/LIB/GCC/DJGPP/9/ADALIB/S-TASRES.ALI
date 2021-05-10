@@ -1,0 +1,49 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+
+U system.tasking.restricted%s  s-tasres.ads	b558e419 NE OL PK
+W system.tasking%s	s-taskin.adb		s-taskin.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-except.ads		20190108125404 291912d5 ada.exceptions%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20190108125404 5ab55268 interfaces%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-atacco.ads		20190108125404 4c36d12f system.address_to_access_conversions%s
+D s-multip.ads		20170908181218 38ac9f73 system.multiprocessors%s
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-secsta.ads		20190108125404 20bbe636 system.secondary_stack%s
+D s-soflin.ads		20190108125404 a7318a92 system.soft_links%s
+D s-stache.ads		20190108125404 a37c21ec system.stack_checking%s
+D s-stausa.ads		20190108125404 017a0a05 system.stack_usage%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-stoele.ads		20190108125404 2dc34a04 system.storage_elements%s
+D s-tasinf.ads		20190108125404 801abd01 system.task_info%s
+D s-taspri.ads		20190108125404 6995cc42 system.task_primitives%s
+D s-taskin.ads		20190108125404 b9d612e2 system.tasking%s
+D s-tasres.ads		20190108125404 0c8ef6fb system.tasking.restricted%s
+D s-traent.ads		20190108125404 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20190108125404 34867c83 system.unsigned_types%s
+X 5 system.ads
+37K9*System 148e11 18|34r9 35r5
+X 12 s-stausa.ads
+203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
+268U14*Output_Results 272i<c,__gnat_stack_usage_output_results>22
+X 17 s-taskin.ads
+47K16*Tasking 5|37k9 17|1215e19 18|34r16 35r12
+X 18 s-tasres.ads
+34K24*Restricted 17|47k16 18|35l20 35e30
+

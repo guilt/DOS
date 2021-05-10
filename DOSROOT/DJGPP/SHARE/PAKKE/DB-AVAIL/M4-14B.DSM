@@ -1,0 +1,31 @@
+#
+# DSM for m4 1.4 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.2
+dsm-name: m4-14b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: m4
+version: 1.4
+manifest: m4-14b
+sources-dsm: m4-14s
+documentation-dsm: m4-14d
+short-description: GNU M4
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: m4-14b.zip
+
+replaces: m4 < 1.4
+requires: DPMI
+# For reading docs
+depends-on: info-reader

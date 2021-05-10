@@ -1,0 +1,41 @@
+#
+# DSM for gcc 9.2.0
+#
+
+dsm-file-version: 1.1
+dsm-name: ada920b
+dsm-version: 0.5.0
+
+dsm-author: @porter@
+dsm-author-email: @e_mail@
+
+name: ada
+version: 9.2.0
+manifest: ada920b
+sources-dsm: gcc920s
+type: binaries
+short-description: GNU Compiler Collection, Ada compiler
+organisation: Free Software Foundation
+license: GNU General Public License
+web-site: http://gcc.gnu.org
+
+porter: @porter@
+porter-email: @e_mail@
+
+simtelnet-path: v2gnu/
+zip: ada920b.zip
+
+#
+# Dependencies
+#
+
+replaces: objc < 9.2.0
+
+requires: DPMI
+requires: djdev 
+requires: binutils >= 2.30
+requires: gcc 9.2.0
+conflicts-with: ada < 9.2.0
+
+# For reading docs
+depends-on: info-reader

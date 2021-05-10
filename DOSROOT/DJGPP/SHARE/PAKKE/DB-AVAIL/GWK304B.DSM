@@ -1,0 +1,27 @@
+#
+# DSM for gawk 3.0.4 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com> 2000-04-02
+#
+
+dsm-file-version: 1.2
+dsm-name: gwk304b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: gawk
+version: 3.0.4
+manifest: gwk304b
+sources-dsm: gwk304s
+short-description: GNU awk
+license: GNU General Public License, Version 2
+
+simtelnet-path: v2gnu/
+zip: gwk304b.zip
+
+requires: DPMI
+replaces: gawk < 3.0.4
+# For reading docs
+depends-on: info-reader

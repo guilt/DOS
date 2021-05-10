@@ -1,0 +1,66 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV SIMPLE_BARRIERS
+RV NO_PROTECTED_TYPES
+RV STATIC_PRIORITIES
+RV SPARK_05
+RV MAX_PROTECTED_ENTRIES=2
+
+U gnat.bounded_buffers%b  g-boubuf.adb		75e0e0ea NE OL PK GE
+W gnat%s		gnat.ads		gnat.ali
+
+U gnat.bounded_buffers%s  g-boubuf.ads		de9764ee BN NE OL PU PK GE
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D gnat.ads		20190108125404 b5988c27 gnat%s
+D g-boubuf.ads		20190108125404 4c4d866b gnat.bounded_buffers%s
+D g-boubuf.adb		20190108125404 39ad6681 gnat.bounded_buffers%b
+D system.ads		20190108125404 27426ea2 system%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+X 3 gnat.ads
+34K9*GNAT 57e9 4|46r9 101r5 5|31r14 90r5
+X 4 g-boubuf.ads
+43+9 Element 49r49 67r28 70r32 5|43r28 54r32
+46k14*Bounded_Buffers 3|34k9 4|43z9 101l10 101e25 5|31b19 90l10 90t25
+49A9*Content(43+9)<integer> 88r18
+53i4*Default_Ceiling{6|101I12}
+56W19*Bounded_Buffer 57d8 61d7 88E7 99l8 99e22 5|37b19 88l8 88t22
+57i8 Capacity{positive} 88r32 5|43r51 46r34 57r36 76r25
+61i7 Ceiling{6|101I12} 65r24
+67Y13 Insert 67>21 5|43b13 48l11 48t17
+67*21 Item{43+9} 5|45r30
+70Y13 Remove 70<21 5|54b13 59l11 59t17
+70*21 Item{43+9} 5|56m10
+74V16 Empty{boolean} 5|65b16 68l11 68t16
+78V16 Full{boolean} 5|74b16 77l11 77t15
+82V16 Extent{natural} 5|83b16 86l11 86t17
+88a7 Values{49A9} 5|45m10 56r18
+91i7 Next_In{positive} 5|45r18 46m10 46r22
+94i7 Next_Out{positive} 5|56r26 57m10 57r23
+97i7 Count{natural} 5|43r42 47m10 47r19 54r46 58m10 58r19 67r17 76r17 85r17
+X 5 g-boubuf.adb
+43*21 Item{4|43+9}
+54*21 Item{4|43+9}
+X 6 system.ads
+37K9*System 4|40w6 53r31 53r50 61r17 6|148e11
+100I12*Any_Priority{integer}
+101I12*Priority{100I12} 4|53r38 61r24
+104i4*Default_Priority{101I12} 4|53r57
+

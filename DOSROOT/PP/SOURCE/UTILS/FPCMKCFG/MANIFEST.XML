@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<packages>
+<package name="utils-fpcmkcfg">
+ <version major="3" minor="0" micro="0"/>
+ <filename>fcmk.zip</filename>
+ <author>&lt;various&gt;</author>
+ <license>LGPL with modification</license>
+ <homepageurl>www.freepascal.org</homepageurl>
+ <email></email>
+ <description>A utility to create the Free Pascal configuration files.</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+  <dependency>
+   <package packagename="fcl-base"/>
+  </dependency>
+  <dependency>
+   <package packagename="fpmkunit"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

@@ -1,0 +1,41 @@
+#
+# DSM for Perl 5.005_02 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com> 2001-03-18
+#
+
+dsm-file-version: 1.0
+dsm-name: perl552b
+dsm-version: 0.5.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: perl
+version: 5.005 patchlevel 02
+manifest: perl552b
+sources-dsm: perl552s
+short-description: perl, Practical Extraction and Report Language
+
+author: Larry Wall
+author-email: larry@wall.org
+
+porter: Laszlo Molnar
+porter-email: molnarl@cdata.tvnet.hu
+
+license: Artistic License or GNU General Public License (version 1 or later)
+
+web-site: http://www.perl.com/CPAN/
+
+simtelnet-path: v2gnu/
+zip: perl552b.zip
+
+pre-install-readme: gnu/perl-5.005/README.djgpp
+
+# Replace earlier versions of perl
+replaces: perl < 5.005 patchlevel 02
+
+requires: DPMI
+
+# Laszlo said: "Perl works best with a unixy shell..."
+depends-on: bash

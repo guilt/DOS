@@ -1,0 +1,41 @@
+#
+# DSM for cvs 1.10 binaries
+#
+
+# DSM header
+dsm-file-version: 1.2
+dsm-version: 0.4.0
+dsm-name: cvs110b
+dsm-type: binaries
+
+# DSM author info
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+dsm-author-im: 47595498
+dsm-author-web-site: http://www.bigfoot.com/~richdawe/
+
+# Main info
+name: cvs
+version: 1.10
+manifest: cvs110b
+sources-dsm: cvs110s
+short-description: CVS version control system
+license: GNU General Public License
+
+# Contact details
+web-site: http://www.loria.fr/~molli/cvs-index.html
+ftp-site: ftp://ftp.gnu.org/
+porter: Tim "Zastai" Van Holder
+porter-email: zastai@hotmail.com
+mailing-list: info-cvs@prep.ai.mit.edu
+mailing-list-request: info-cvs-request@prep.ai.mit.edu
+newsgroup: comp.software.config-mgmt
+
+# File locations
+simtelnet-path: v2gnu/
+zip: cvs110b.zip
+
+# Dependencies
+replaces: cvs < 1.10
+requires: DPMI
+depends-on: info-reader

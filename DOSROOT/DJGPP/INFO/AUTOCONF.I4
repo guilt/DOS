@@ -1,0 +1,1196 @@
+This is Info file autoconf.info, produced by Makeinfo version 1.68 from
+the input file autoconf.tex.
+
+START-INFO-DIR-ENTRY
+* Autoconf: (autoconf).         Create source code configuration scripts.
+END-INFO-DIR-ENTRY
+
+   Autoconf: Creating Automatic Configuration Scripts, by David
+MacKenzie.
+
+   This file documents the GNU Autoconf package for creating scripts to
+configure source code packages using templates and an `m4' macro
+package.
+
+   Copyright (C) 1992, 1993, 1994, 1995, 1996, 1998 Free Software
+Foundation, Inc.
+
+   Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+   Permission is granted to copy and distribute modified versions of
+this manual under the conditions for verbatim copying, provided that
+the entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
+
+   Permission is granted to copy and distribute translations of this
+manual into another language, under the above conditions for modified
+versions, except that this permission notice may be stated in a
+translation approved by the Foundation.
+
+
+File: autoconf.info,  Node: Macro Definitions,  Next: Macro Names,  Prev: Writing Macros,  Up: Writing Macros
+
+Macro Definitions
+=================
+
+   Autoconf macros are defined using the `AC_DEFUN' macro, which is
+similar to the `m4' builtin `define' macro.  In addition to defining a
+macro, `AC_DEFUN' adds to it some code which is used to constrain the
+order in which macros are called (*note Prerequisite Macros::.).
+
+   An Autoconf macro definition looks like this:
+
+     AC_DEFUN(MACRO-NAME, [MACRO-BODY])
+
+The square brackets here do not indicate optional text: they should
+literally be present in the macro definition to avoid macro expansion
+problems (*note Quoting::.).  You can refer to any arguments passed to
+the macro as `$1', `$2', etc.
+
+   To introduce comments in `m4', use the `m4' builtin `dnl'; it causes
+`m4' to discard the text through the next newline.  It is not needed
+between macro definitions in `acsite.m4' and `aclocal.m4', because all
+output is discarded until `AC_INIT' is called.
+
+   *Note How to define new macros: (m4.info)Definitions, for more
+complete information on writing `m4' macros.
+
+
+File: autoconf.info,  Node: Macro Names,  Next: Quoting,  Prev: Macro Definitions,  Up: Writing Macros
+
+Macro Names
+===========
+
+   All of the Autoconf macros have all-uppercase names starting with
+`AC_' to prevent them from accidentally conflicting with other text.
+All shell variables that they use for internal purposes have
+mostly-lowercase names starting with `ac_'.  To ensure that your macros
+don't conflict with present or future Autoconf macros, you should
+prefix your own macro names and any shell variables they use with some
+other sequence.  Possibilities include your initials, or an abbreviation
+for the name of your organization or software package.
+
+   Most of the Autoconf macros' names follow a structured naming
+convention that indicates the kind of feature check by the name.  The
+macro names consist of several words, separated by underscores, going
+from most general to most specific.   The names of their cache
+variables use the same convention (*note Cache Variable Names::., for
+more information on them).
+
+   The first word of the name after `AC_' usually tells the category of
+feature being tested.  Here are the categories used in Autoconf for
+specific test macros, the kind of macro that you are more likely to
+write.  They are also used for cache variables, in all-lowercase.  Use
+them where applicable; where they're not, invent your own categories.
+
+`C'
+     C language builtin features.
+
+`DECL'
+     Declarations of C variables in header files.
+
+`FUNC'
+     Functions in libraries.
+
+`GROUP'
+     UNIX group owners of files.
+
+`HEADER'
+     Header files.
+
+`LIB'
+     C libraries.
+
+`PATH'
+     The full path names to files, including programs.
+
+`PROG'
+     The base names of programs.
+
+`STRUCT'
+     Definitions of C structures in header files.
+
+`SYS'
+     Operating system features.
+
+`TYPE'
+     C builtin or declared types.
+
+`VAR'
+     C variables in libraries.
+
+   After the category comes the name of the particular feature being
+tested.  Any further words in the macro name indicate particular aspects
+of the feature.  For example, `AC_FUNC_UTIME_NULL' checks the behavior
+of the `utime' function when called with a `NULL' pointer.
+
+   A macro that is an internal subroutine of another macro should have a
+name that starts with the name of that other macro, followed by one or
+more words saying what the internal macro does.  For example,
+`AC_PATH_X' has internal macros `AC_PATH_X_XMKMF' and
+`AC_PATH_X_DIRECT'.
+
+
+File: autoconf.info,  Node: Quoting,  Next: Dependencies Between Macros,  Prev: Macro Names,  Up: Writing Macros
+
+Quoting
+=======
+
+   Macros that are called by other macros are evaluated by `m4' several
+times; each evaluation might require another layer of quotes to prevent
+unwanted expansions of macros or `m4' builtins, such as `define' and
+`$1'.  Quotes are also required around macro arguments that contain
+commas, since commas separate the arguments from each other.  It's a
+good idea to quote any macro arguments that contain newlines or calls
+to other macros, as well.
+
+   Autoconf changes the `m4' quote characters from the default ``' and
+`'' to `[' and `]', because many of the macros use ``' and `'',
+mismatched.  However, in a few places the macros need to use brackets
+(usually in C program text or regular expressions).  In those places,
+they use the `m4' builtin command `changequote' to temporarily change
+the quote characters to `<<' and `>>'.  (Sometimes, if they don't need
+to quote anything, they disable quoting entirely instead by setting the
+quote characters to empty strings.)  Here is an example:
+
+     AC_TRY_LINK(
+     changequote(<<, >>)dnl
+     <<#include <time.h>
+     #ifndef tzname /* For SGI.  */
+     extern char *tzname[]; /* RS6000 and others reject char **tzname.  */
+     #endif>>,
+     changequote([, ])dnl
+     [atoi(*tzname);], ac_cv_var_tzname=yes, ac_cv_var_tzname=no)
+
+   When you create a `configure' script using newly written macros,
+examine it carefully to check whether you need to add more quotes in
+your macros.  If one or more words have disappeared in the `m4' output,
+you need more quotes.  When in doubt, quote.
+
+   However, it's also possible to put on too many layers of quotes.  If
+this happens, the resulting `configure' script will contain unexpanded
+macros.  The `autoconf' program checks for this problem by doing `grep
+AC_ configure'.
+
+
+File: autoconf.info,  Node: Dependencies Between Macros,  Prev: Quoting,  Up: Writing Macros
+
+Dependencies Between Macros
+===========================
+
+   Some Autoconf macros depend on other macros having been called first
+in order to work correctly.  Autoconf provides a way to ensure that
+certain macros are called if needed and a way to warn the user if
+macros are called in an order that might cause incorrect operation.
+
+* Menu:
+
+* Prerequisite Macros::         Ensuring required information.
+* Suggested Ordering::          Warning about possible ordering problems.
+* Obsolete Macros::             Warning about old ways of doing things.
+
+
+File: autoconf.info,  Node: Prerequisite Macros,  Next: Suggested Ordering,  Prev: Dependencies Between Macros,  Up: Dependencies Between Macros
+
+Prerequisite Macros
+-------------------
+
+   A macro that you write might need to use values that have previously
+been computed by other macros.  For example, `AC_DECL_YYTEXT' examines
+the output of `flex' or `lex', so it depends on `AC_PROG_LEX' having
+been called first to set the shell variable `LEX'.
+
+   Rather than forcing the user of the macros to keep track of the
+dependencies between them, you can use the `AC_REQUIRE' macro to do it
+automatically.  `AC_REQUIRE' can ensure that a macro is only called if
+it is needed, and only called once.
+
+ - Macro: AC_REQUIRE (MACRO-NAME)
+     If the `m4' macro MACRO-NAME has not already been called, call it
+     (without any arguments).  Make sure to quote MACRO-NAME with
+     square brackets.  MACRO-NAME must have been defined using
+     `AC_DEFUN' or else contain a call to `AC_PROVIDE' to indicate that
+     it has been called.
+
+   An alternative to using `AC_DEFUN' is to use `define' and call
+`AC_PROVIDE'.  Because this technique does not prevent nested messages,
+it is considered obsolete.
+
+ - Macro: AC_PROVIDE (THIS-MACRO-NAME)
+     Record the fact that THIS-MACRO-NAME has been called.
+     THIS-MACRO-NAME should be the name of the macro that is calling
+     `AC_PROVIDE'.  An easy way to get it is from the `m4' builtin
+     variable `$0', like this:
+
+          AC_PROVIDE([$0])
+
+
+File: autoconf.info,  Node: Suggested Ordering,  Next: Obsolete Macros,  Prev: Prerequisite Macros,  Up: Dependencies Between Macros
+
+Suggested Ordering
+------------------
+
+   Some macros should be run before another macro if both are called,
+but neither *requires* that the other be called.  For example, a macro
+that changes the behavior of the C compiler should be called before any
+macros that run the C compiler.  Many of these dependencies are noted in
+the documentation.
+
+   Autoconf provides the `AC_BEFORE' macro to warn users when macros
+with this kind of dependency appear out of order in a `configure.in'
+file.  The warning occurs when creating `configure' from
+`configure.in', not when running `configure'.  For example,
+`AC_PROG_CPP' checks whether the C compiler can run the C preprocessor
+when given the `-E' option.  It should therefore be called after any
+macros that change which C compiler is being used, such as
+`AC_PROG_CC'.  So `AC_PROG_CC' contains:
+
+     AC_BEFORE([$0], [AC_PROG_CPP])dnl
+
+This warns the user if a call to `AC_PROG_CPP' has already occurred
+when `AC_PROG_CC' is called.
+
+ - Macro: AC_BEFORE (THIS-MACRO-NAME, CALLED-MACRO-NAME)
+     Make `m4' print a warning message on the standard error output if
+     CALLED-MACRO-NAME has already been called.  THIS-MACRO-NAME should
+     be the name of the macro that is calling `AC_BEFORE'.  The macro
+     CALLED-MACRO-NAME must have been defined using `AC_DEFUN' or else
+     contain a call to `AC_PROVIDE' to indicate that it has been called.
+
+
+File: autoconf.info,  Node: Obsolete Macros,  Prev: Suggested Ordering,  Up: Dependencies Between Macros
+
+Obsolete Macros
+---------------
+
+   Configuration and portability technology has evolved over the years.
+Often better ways of solving a particular problem are developed, or
+ad-hoc approaches are systematized.  This process has occurred in many
+parts of Autoconf.  One result is that some of the macros are now
+considered "obsolete"; they still work, but are no longer considered
+the best thing to do.  Autoconf provides the `AC_OBSOLETE' macro to
+warn users producing `configure' scripts when they use obsolete macros,
+to encourage them to modernize.  A sample call is:
+
+     AC_OBSOLETE([$0], [; use AC_CHECK_HEADERS(unistd.h) instead])dnl
+
+ - Macro: AC_OBSOLETE (THIS-MACRO-NAME [, SUGGESTION])
+     Make `m4' print a message on the standard error output warning that
+     THIS-MACRO-NAME is obsolete, and giving the file and line number
+     where it was called.  THIS-MACRO-NAME should be the name of the
+     macro that is calling `AC_OBSOLETE'.  If SUGGESTION is given, it
+     is printed at the end of the warning message; for example, it can
+     be a suggestion for what to use instead of THIS-MACRO-NAME.
+
+
+File: autoconf.info,  Node: Manual Configuration,  Next: Site Configuration,  Prev: Writing Macros,  Up: Top
+
+Manual Configuration
+********************
+
+   A few kinds of features can't be guessed automatically by running
+test programs.  For example, the details of the object file format, or
+special options that need to be passed to the compiler or linker.  You
+can check for such features using ad-hoc means, such as having
+`configure' check the output of the `uname' program, or looking for
+libraries that are unique to particular systems.  However, Autoconf
+provides a uniform method for handling unguessable features.
+
+* Menu:
+
+* Specifying Names::            Specifying the system type.
+* Canonicalizing::              Getting the canonical system type.
+* System Type Variables::       Variables containing the system type.
+* Using System Type::           What to do with the system type.
+
+
+File: autoconf.info,  Node: Specifying Names,  Next: Canonicalizing,  Prev: Manual Configuration,  Up: Manual Configuration
+
+Specifying the System Type
+==========================
+
+   Like other GNU `configure' scripts, Autoconf-generated `configure'
+scripts can make decisions based on a canonical name for the system
+type, which has the form:
+
+     CPU-COMPANY-SYSTEM
+
+   `configure' can usually guess the canonical name for the type of
+system it's running on.  To do so it runs a script called
+`config.guess', which derives the name using the `uname' command or
+symbols predefined by the C preprocessor.
+
+   Alternately, the user can specify the system type with command line
+arguments to `configure'.  Doing so is necessary when cross-compiling.
+In the most complex case of cross-compiling, three system types are
+involved.  The options to specify them are:
+
+`--build=BUILD-TYPE'
+     the type of system on which the package is being configured and
+     compiled (rarely needed);
+
+`--host=HOST-TYPE'
+     the type of system on which the package will run;
+
+`--target=TARGET-TYPE'
+     the type of system for which any compiler tools in the package will
+     produce code.
+
+If the user gives `configure' a non-option argument, it is used as the
+default for the host, target, and build system types if the user does
+not specify them explicitly with options.  The target and build types
+default to the host type if it is given and they are not.  If you are
+cross-compiling, you still have to specify the names of the cross-tools
+you use, in particular the C compiler, on the `configure' command line,
+e.g.,
+
+     CC=m68k-coff-gcc configure --target=m68k-coff
+
+   `configure' recognizes short aliases for many system types; for
+example, `decstation' can be given on the command line instead of
+`mips-dec-ultrix4.2'.  `configure' runs a script called `config.sub' to
+canonicalize system type aliases.
+
+
+File: autoconf.info,  Node: Canonicalizing,  Next: System Type Variables,  Prev: Specifying Names,  Up: Manual Configuration
+
+Getting the Canonical System Type
+=================================
+
+   The following macros make the system type available to `configure'
+scripts.  They run the shell script `config.guess' to determine any
+values for the host, target, and build types that they need and the user
+did not specify on the command line.  They run `config.sub' to
+canonicalize any aliases the user gave.  If you use these macros, you
+must distribute those two shell scripts along with your source code.
+*Note Output::, for information about the `AC_CONFIG_AUX_DIR' macro
+which you can use to control which directory `configure' looks for
+those scripts in.  If you do not use either of these macros,
+`configure' ignores any `--host', `--target', and `--build' options
+given to it.
+
+ - Macro: AC_CANONICAL_SYSTEM
+     Determine the system type and set output variables to the names of
+     the canonical system types.  *Note System Type Variables::, for
+     details about the variables this macro sets.
+
+ - Macro: AC_CANONICAL_HOST
+     Perform only the subset of `AC_CANONICAL_SYSTEM' relevant to the
+     host type.  This is all that is needed for programs that are not
+     part of a compiler toolchain.
+
+ - Macro: AC_VALIDATE_CACHED_SYSTEM_TUPLE (CMD)
+     If the cache file is inconsistent with the current host, target
+     and build system types, execute CMD or print a default error
+     message.
+
+
+File: autoconf.info,  Node: System Type Variables,  Next: Using System Type,  Prev: Canonicalizing,  Up: Manual Configuration
+
+System Type Variables
+=====================
+
+   After calling `AC_CANONICAL_SYSTEM', the following output variables
+contain the system type information.  After `AC_CANONICAL_HOST', only
+the `host' variables below are set.
+
+``build', `host', `target''
+     the canonical system names;
+
+``build_alias', `host_alias', `target_alias''
+     the names the user specified, or the canonical names if
+     `config.guess' was used;
+
+``build_cpu', `build_vendor', `build_os''
+``host_cpu', `host_vendor', `host_os''
+``target_cpu', `target_vendor', `target_os''
+     the individual parts of the canonical names (for convenience).
+
+
+File: autoconf.info,  Node: Using System Type,  Prev: System Type Variables,  Up: Manual Configuration
+
+Using the System Type
+=====================
+
+   How do you use a canonical system type?  Usually, you use it in one
+or more `case' statements in `configure.in' to select system-specific C
+files.  Then link those files, which have names based on the system
+name, to generic names, such as `host.h' or `target.c'.  The `case'
+statement patterns can use shell wildcards to group several cases
+together, like in this fragment:
+
+     case "$target" in
+     i386-*-mach* | i386-*-gnu*) obj_format=aout emulation=mach bfd_gas=yes ;;
+     i960-*-bout) obj_format=bout ;;
+     esac
+
+ - Macro: AC_LINK_FILES (SOURCE..., DEST...)
+     Make `AC_OUTPUT' link each of the existing files SOURCE to the
+     corresponding link name DEST.  Makes a symbolic link if possible,
+     otherwise a hard link.  The DEST and SOURCE names should be
+     relative to the top level source or build directory.  This macro
+     may be called multiple times.
+
+     For example, this call:
+
+          AC_LINK_FILES(config/${machine}.h config/${obj_format}.h, host.h object.h)
+
+     creates in the current directory `host.h', which is a link to
+     `SRCDIR/config/${machine}.h', and `object.h', which is a link to
+     `SRCDIR/config/${obj_format}.h'.
+
+   You can also use the host system type to find cross-compilation
+tools.  *Note Generic Programs::, for information about the
+`AC_CHECK_TOOL' macro which does that.
+
+
+File: autoconf.info,  Node: Site Configuration,  Next: Invoking configure,  Prev: Manual Configuration,  Up: Top
+
+Site Configuration
+******************
+
+   `configure' scripts support several kinds of local configuration
+decisions.  There are ways for users to specify where external software
+packages are, include or exclude optional features, install programs
+under modified names, and set default values for `configure' options.
+
+* Menu:
+
+* External Software::           Working with other optional software.
+* Package Options::             Selecting optional features.
+* Site Details::                Configuring site details.
+* Transforming Names::          Changing program names when installing.
+* Site Defaults::               Giving `configure' local defaults.
+
+
+File: autoconf.info,  Node: External Software,  Next: Package Options,  Prev: Site Configuration,  Up: Site Configuration
+
+Working With External Software
+==============================
+
+   Some packages require, or can optionally use, other software packages
+which are already installed.  The user can give `configure' command
+line options to specify which such external software to use.  The
+options have one of these forms:
+
+     --with-PACKAGE[=ARG]
+     --without-PACKAGE
+
+   For example, `--with-gnu-ld' means work with the GNU linker instead
+of some other linker.  `--with-x' means work with The X Window System.
+
+   The user can give an argument by following the package name with `='
+and the argument.  Giving an argument of `no' is for packages that are
+used by default; it says to *not* use the package.  An argument that is
+neither `yes' nor `no' could include a name or number of a version of
+the other package, to specify more precisely which other package this
+program is supposed to work with.  If no argument is given, it defaults
+to `yes'.  `--without-PACKAGE' is equivalent to `--with-PACKAGE=no'.
+
+   `configure' scripts do not complain about `--with-PACKAGE' options
+that they do not support.  This behavior permits configuring a source
+tree containing multiple packages with a top-level `configure' script
+when the packages support different options, without spurious error
+messages about options that some of the packages support.  An
+unfortunate side effect is that option spelling errors are not
+diagnosed.  No better approach to this problem has been suggested so
+far.
+
+   For each external software package that may be used, `configure.in'
+should call `AC_ARG_WITH' to detect whether the `configure' user asked
+to use it.  Whether each package is used or not by default, and which
+arguments are valid, is up to you.
+
+ - Macro: AC_ARG_WITH (PACKAGE, HELP-STRING [, ACTION-IF-GIVEN [,
+          ACTION-IF-NOT-GIVEN]])
+     If the user gave `configure' the option `--with-PACKAGE' or
+     `--without-PACKAGE', run shell commands ACTION-IF-GIVEN.  If
+     neither option was given, run shell commands ACTION-IF-NOT-GIVEN.
+     The name PACKAGE indicates another software package that this
+     program should work with.  It should consist only of alphanumeric
+     characters and dashes.
+
+     The option's argument is available to the shell commands
+     ACTION-IF-GIVEN in the shell variable `withval', which is actually
+     just the value of the shell variable `with_PACKAGE', with any `-'
+     characters changed into `_'.  You may use that variable instead,
+     if you wish.
+
+     The argument HELP-STRING is a description of the option which
+     looks like this:
+            --with-readline         support fancy command line editing
+
+     HELP-STRING may be more than one line long, if more detail is
+     needed.  Just make sure the columns line up in `configure --help'.
+     Avoid tabs in the help string.  You'll need to enclose it in `['
+     and `]' in order to produce the leading spaces.
+
+ - Macro: AC_WITH (PACKAGE, ACTION-IF-GIVEN [, ACTION-IF-NOT-GIVEN])
+     This is an obsolete version of `AC_ARG_WITH' that does not support
+     providing a help string.
+
+
+File: autoconf.info,  Node: Package Options,  Next: Site Details,  Prev: External Software,  Up: Site Configuration
+
+Choosing Package Options
+========================
+
+   If a software package has optional compile-time features, the user
+can give `configure' command line options to specify whether to compile
+them.  The options have one of these forms:
+
+     --enable-FEATURE[=ARG]
+     --disable-FEATURE
+
+   These options allow users to choose which optional features to build
+and install.  `--enable-FEATURE' options should never make a feature
+behave differently or cause one feature to replace another.  They
+should only cause parts of the program to be built rather than left out.
+
+   The user can give an argument by following the feature name with `='
+and the argument.  Giving an argument of `no' requests that the feature
+*not* be made available.  A feature with an argument looks like
+`--enable-debug=stabs'.  If no argument is given, it defaults to `yes'.
+`--disable-FEATURE' is equivalent to `--enable-FEATURE=no'.
+
+   `configure' scripts do not complain about `--enable-FEATURE' options
+that they do not support.  This behavior permits configuring a source
+tree containing multiple packages with a top-level `configure' script
+when the packages support different options, without spurious error
+messages about options that some of the packages support.  An
+unfortunate side effect is that option spelling errors are not
+diagnosed.  No better approach to this problem has been suggested so
+far.
+
+   For each optional feature, `configure.in' should call
+`AC_ARG_ENABLE' to detect whether the `configure' user asked to include
+it.  Whether each feature is included or not by default, and which
+arguments are valid, is up to you.
+
+ - Macro: AC_ARG_ENABLE (FEATURE, HELP-STRING [, ACTION-IF-GIVEN [,
+          ACTION-IF-NOT-GIVEN]])
+     If the user gave `configure' the option `--enable-FEATURE' or
+     `--disable-FEATURE', run shell commands ACTION-IF-GIVEN.  If
+     neither option was given, run shell commands ACTION-IF-NOT-GIVEN.
+     The name FEATURE indicates an optional user-level facility.  It
+     should consist only of alphanumeric characters and dashes.
+
+     The option's argument is available to the shell commands
+     ACTION-IF-GIVEN in the shell variable `enableval', which is
+     actually just the value of the shell variable `enable_FEATURE',
+     with any `-' characters changed into `_'.  You may use that
+     variable instead, if you wish.  The HELP-STRING argument is like
+     that of `AC_ARG_WITH' (*note External Software::.).
+
+ - Macro: AC_ENABLE (FEATURE, ACTION-IF-GIVEN [, ACTION-IF-NOT-GIVEN])
+     This is an obsolete version of `AC_ARG_ENABLE' that does not
+     support providing a help string.
+
+
+File: autoconf.info,  Node: Site Details,  Next: Transforming Names,  Prev: Package Options,  Up: Site Configuration
+
+Configuring Site Details
+========================
+
+   Some software packages require complex site-specific information.
+Some examples are host names to use for certain services, company
+names, and email addresses to contact.  Since some configuration
+scripts generated by Metaconfig ask for such information interactively,
+people sometimes wonder how to get that information in
+Autoconf-generated configuration scripts, which aren't interactive.
+
+   Such site configuration information should be put in a file that is
+edited *only by users*, not by programs.  The location of the file can
+either be based on the `prefix' variable, or be a standard location
+such as the user's home directory.  It could even be specified by an
+environment variable.  The programs should examine that file at run
+time, rather than at compile time.  Run time configuration is more
+convenient for users and makes the configuration process simpler than
+getting the information while configuring.  *Note Variables for
+Installation Directories: (standards)Directory Variables, for more
+information on where to put data files.
+
+
+File: autoconf.info,  Node: Transforming Names,  Next: Site Defaults,  Prev: Site Details,  Up: Site Configuration
+
+Transforming Program Names When Installing
+==========================================
+
+   Autoconf supports changing the names of programs when installing
+them.  In order to use these transformations, `configure.in' must call
+the macro `AC_ARG_PROGRAM'.
+
+ - Macro: AC_ARG_PROGRAM
+     Place in output variable `program_transform_name' a sequence of
+     `sed' commands for changing the names of installed programs.
+
+     If any of the options described below are given to `configure',
+     program names are transformed accordingly.  Otherwise, if
+     `AC_CANONICAL_SYSTEM' has been called and a `--target' value is
+     given that differs from the host type (specified with `--host' or
+     defaulted by `config.sub'), the target type followed by a dash is
+     used as a prefix.  Otherwise, no program name transformation is
+     done.
+
+* Menu:
+
+* Transformation Options::      `configure' options to transform names.
+* Transformation Examples::     Sample uses of transforming names.
+* Transformation Rules::        `Makefile' uses of transforming names.
+
+
+File: autoconf.info,  Node: Transformation Options,  Next: Transformation Examples,  Prev: Transforming Names,  Up: Transforming Names
+
+Transformation Options
+----------------------
+
+   You can specify name transformations by giving `configure' these
+command line options:
+
+`--program-prefix=PREFIX'
+     prepend PREFIX to the names;
+
+`--program-suffix=SUFFIX'
+     append SUFFIX to the names;
+
+`--program-transform-name=EXPRESSION'
+     perform `sed' substitution EXPRESSION on the names.
+
+
+File: autoconf.info,  Node: Transformation Examples,  Next: Transformation Rules,  Prev: Transformation Options,  Up: Transforming Names
+
+Transformation Examples
+-----------------------
+
+   These transformations are useful with programs that can be part of a
+cross-compilation development environment.  For example, a
+cross-assembler running on a Sun 4 configured with
+`--target=i960-vxworks' is normally installed as `i960-vxworks-as',
+rather than `as', which could be confused with a native Sun 4 assembler.
+
+   You can force a program name to begin with `g', if you don't want
+GNU programs installed on your system to shadow other programs with the
+same name.  For example, if you configure GNU `diff' with
+`--program-prefix=g', then when you run `make install' it is installed
+as `/usr/local/bin/gdiff'.
+
+   As a more sophisticated example, you could use
+     --program-transform-name='s/^/g/; s/^gg/g/; s/^gless/less/'
+
+to prepend `g' to most of the program names in a source tree, excepting
+those like `gdb' that already have one and those like `less' and
+`lesskey' that aren't GNU programs.  (That is assuming that you have a
+source tree containing those programs that is set up to use this
+feature.)
+
+   One way to install multiple versions of some programs simultaneously
+is to append a version number to the name of one or both.  For example,
+if you want to keep Autoconf version 1 around for awhile, you can
+configure Autoconf version 2 using `--program-suffix=2' to install the
+programs as `/usr/local/bin/autoconf2', `/usr/local/bin/autoheader2',
+etc.
+
+
+File: autoconf.info,  Node: Transformation Rules,  Prev: Transformation Examples,  Up: Transforming Names
+
+Transformation Rules
+--------------------
+
+   Here is how to use the variable `program_transform_name' in a
+`Makefile.in':
+
+     transform=@program_transform_name@
+     install: all
+             $(INSTALL_PROGRAM) myprog $(bindir)/`echo myprog|sed '$(transform)'`
+     
+     uninstall:
+             rm -f $(bindir)/`echo myprog|sed '$(transform)'`
+
+If you have more than one program to install, you can do it in a loop:
+
+     PROGRAMS=cp ls rm
+     install:
+             for p in $(PROGRAMS); do \
+               $(INSTALL_PROGRAM) $$p $(bindir)/`echo $$p|sed '$(transform)'`; \
+             done
+     
+     uninstall:
+             for p in $(PROGRAMS); do \
+               rm -f $(bindir)/`echo $$p|sed '$(transform)'`; \
+             done
+
+   Whether to do the transformations on documentation files (Texinfo or
+`man') is a tricky question; there seems to be no perfect answer, due
+to the several reasons for name transforming.  Documentation is not
+usually particular to a specific architecture, and Texinfo files do not
+conflict with system documentation.  But they might conflict with
+earlier versions of the same files, and `man' pages sometimes do
+conflict with system documentation.  As a compromise, it is probably
+best to do name transformations on `man' pages but not on Texinfo
+manuals.
+
+
+File: autoconf.info,  Node: Site Defaults,  Prev: Transforming Names,  Up: Site Configuration
+
+Setting Site Defaults
+=====================
+
+   Autoconf-generated `configure' scripts allow your site to provide
+default values for some configuration values.  You do this by creating
+site- and system-wide initialization files.
+
+   If the environment variable `CONFIG_SITE' is set, `configure' uses
+its value as the name of a shell script to read.  Otherwise, it reads
+the shell script `PREFIX/share/config.site' if it exists, then
+`PREFIX/etc/config.site' if it exists.  Thus, settings in
+machine-specific files override those in machine-independent ones in
+case of conflict.
+
+   Site files can be arbitrary shell scripts, but only certain kinds of
+code are really appropriate to be in them.  Because `configure' reads
+any cache file after it has read any site files, a site file can define
+a default cache file to be shared between all Autoconf-generated
+`configure' scripts run on that system.  If you set a default cache
+file in a site file, it is a good idea to also set the output variable
+`CC' in that site file, because the cache file is only valid for a
+particular compiler, but many systems have several available.
+
+   You can examine or override the value set by a command line option to
+`configure' in a site file; options set shell variables that have the
+same names as the options, with any dashes turned into underscores.
+The exceptions are that `--without-' and `--disable-' options are like
+giving the corresponding `--with-' or `--enable-' option and the value
+`no'.  Thus, `--cache-file=localcache' sets the variable `cache_file'
+to the value `localcache'; `--enable-warnings=no' or
+`--disable-warnings' sets the variable `enable_warnings' to the value
+`no'; `--prefix=/usr' sets the variable `prefix' to the value `/usr';
+etc.
+
+   Site files are also good places to set default values for other
+output variables, such as `CFLAGS', if you need to give them non-default
+values: anything you would normally do, repetitively, on the command
+line.  If you use non-default values for PREFIX or EXEC_PREFIX
+(wherever you locate the site file), you can set them in the site file
+if you specify it with the `CONFIG_SITE' environment variable.
+
+   You can set some cache values in the site file itself.  Doing this is
+useful if you are cross-compiling, so it is impossible to check features
+that require running a test program.  You could "prime the cache" by
+setting those values correctly for that system in
+`PREFIX/etc/config.site'.  To find out the names of the cache variables
+you need to set, look for shell variables with `_cv_' in their names in
+the affected `configure' scripts, or in the Autoconf `m4' source code
+for those macros.
+
+   The cache file is careful to not override any variables set in the
+site files.  Similarly, you should not override command-line options in
+the site files.  Your code should check that variables such as `prefix'
+and `cache_file' have their default values (as set near the top of
+`configure') before changing them.
+
+   Here is a sample file `/usr/share/local/gnu/share/config.site'.  The
+command `configure --prefix=/usr/share/local/gnu' would read this file
+(if `CONFIG_SITE' is not set to a different file).
+
+     # config.site for configure
+     #
+     # Change some defaults.
+     test "$prefix" = NONE && prefix=/usr/share/local/gnu
+     test "$exec_prefix" = NONE && exec_prefix=/usr/local/gnu
+     test "$sharedstatedir" = '${prefix}/com' && sharedstatedir=/var
+     test "$localstatedir" = '${prefix}/var' && localstatedir=/var
+     #
+     # Give Autoconf 2.x generated configure scripts a shared default
+     # cache file for feature test results, architecture-specific.
+     if test "$cache_file" = ./config.cache; then
+       cache_file="$prefix/var/config.cache"
+       # A cache file is only valid for one C compiler.
+       CC=gcc
+     fi
+
+
+File: autoconf.info,  Node: Invoking configure,  Next: Invoking config.status,  Prev: Site Configuration,  Up: Top
+
+Running `configure' Scripts
+***************************
+
+   Below are instructions on how to configure a package that uses a
+`configure' script, suitable for inclusion as an `INSTALL' file in the
+package.  A plain-text version of `INSTALL' which you may use comes
+with Autoconf.
+
+* Menu:
+
+* Basic Installation::          Instructions for typical cases.
+* Compilers and Options::       Selecting compilers and optimization.
+* Multiple Architectures::      Compiling for multiple architectures at once.
+* Installation Names::          Installing in different directories.
+* Optional Features::           Selecting optional features.
+* System Type::                 Specifying the system type.
+* Sharing Defaults::            Setting site-wide defaults for `configure'.
+* Operation Controls::          Changing how `configure' runs.
+
+
+File: autoconf.info,  Node: Basic Installation,  Next: Compilers and Options,  Up: Invoking configure
+
+Basic Installation
+==================
+
+   These are generic installation instructions.
+
+   The `configure' shell script attempts to guess correct values for
+various system-dependent variables used during compilation.  It uses
+those values to create a `Makefile' in each directory of the package.
+It may also create one or more `.h' files containing system-dependent
+definitions.  Finally, it creates a shell script `config.status' that
+you can run in the future to recreate the current configuration, a file
+`config.cache' that saves the results of its tests to speed up
+reconfiguring, and a file `config.log' containing compiler output
+(useful mainly for debugging `configure').
+
+   If you need to do unusual things to compile the package, please try
+to figure out how `configure' could check whether to do them, and mail
+diffs or instructions to the address given in the `README' so they can
+be considered for the next release.  If at some point `config.cache'
+contains results you don't want to keep, you may remove or edit it.
+
+   The file `configure.in' is used to create `configure' by a program
+called `autoconf'.  You only need `configure.in' if you want to change
+it or regenerate `configure' using a newer version of `autoconf'.
+
+The simplest way to compile this package is:
+
+  1. `cd' to the directory containing the package's source code and type
+     `./configure' to configure the package for your system.  If you're
+     using `csh' on an old version of System V, you might need to type
+     `sh ./configure' instead to prevent `csh' from trying to execute
+     `configure' itself.
+
+     Running `configure' takes awhile.  While running, it prints some
+     messages telling which features it is checking for.
+
+  2. Type `make' to compile the package.
+
+  3. Optionally, type `make check' to run any self-tests that come with
+     the package.
+
+  4. Type `make install' to install the programs and any data files and
+     documentation.
+
+  5. You can remove the program binaries and object files from the
+     source code directory by typing `make clean'.  To also remove the
+     files that `configure' created (so you can compile the package for
+     a different kind of computer), type `make distclean'.  There is
+     also a `make maintainer-clean' target, but that is intended mainly
+     for the package's developers.  If you use it, you may have to get
+     all sorts of other programs in order to regenerate files that came
+     with the distribution.
+
+
+File: autoconf.info,  Node: Compilers and Options,  Next: Multiple Architectures,  Prev: Basic Installation,  Up: Invoking configure
+
+Compilers and Options
+=====================
+
+   Some systems require unusual options for compilation or linking that
+the `configure' script does not know about.  You can give `configure'
+initial values for variables by setting them in the environment.  Using
+a Bourne-compatible shell, you can do that on the command line like
+this:
+     CC=c89 CFLAGS=-O2 LIBS=-lposix ./configure
+
+Or on systems that have the `env' program, you can do it like this:
+     env CPPFLAGS=-I/usr/local/include LDFLAGS=-s ./configure
+
+
+File: autoconf.info,  Node: Multiple Architectures,  Next: Installation Names,  Prev: Compilers and Options,  Up: Invoking configure
+
+Compiling For Multiple Architectures
+====================================
+
+   You can compile the package for more than one kind of computer at the
+same time, by placing the object files for each architecture in their
+own directory.  To do this, you must use a version of `make' that
+supports the `VPATH' variable, such as GNU `make'.  `cd' to the
+directory where you want the object files and executables to go and run
+the `configure' script.  `configure' automatically checks for the
+source code in the directory that `configure' is in and in `..'.
+
+   If you have to use a `make' that does not supports the `VPATH'
+variable, you have to compile the package for one architecture at a time
+in the source code directory.  After you have installed the package for
+one architecture, use `make distclean' before reconfiguring for another
+architecture.
+
+
+File: autoconf.info,  Node: Installation Names,  Next: Optional Features,  Prev: Multiple Architectures,  Up: Invoking configure
+
+Installation Names
+==================
+
+   By default, `make install' will install the package's files in
+`/usr/local/bin', `/usr/local/man', etc.  You can specify an
+installation prefix other than `/usr/local' by giving `configure' the
+option `--prefix=PATH'.
+
+   You can specify separate installation prefixes for
+architecture-specific files and architecture-independent files.  If you
+give `configure' the option `--exec-prefix=PATH', the package will use
+PATH as the prefix for installing programs and libraries.
+Documentation and other data files will still use the regular prefix.
+
+   In addition, if you use an unusual directory layout you can give
+options like `--bindir=PATH' to specify different values for particular
+kinds of files.  Run `configure --help' for a list of the directories
+you can set and what kinds of files go in them.
+
+   If the package supports it, you can cause programs to be installed
+with an extra prefix or suffix on their names by giving `configure' the
+option `--program-prefix=PREFIX' or `--program-suffix=SUFFIX'.
+
+
+File: autoconf.info,  Node: Optional Features,  Next: System Type,  Prev: Installation Names,  Up: Invoking configure
+
+Optional Features
+=================
+
+   Some packages pay attention to `--enable-FEATURE' options to
+`configure', where FEATURE indicates an optional part of the package.
+They may also pay attention to `--with-PACKAGE' options, where PACKAGE
+is something like `gnu-as' or `x' (for the X Window System).  The
+`README' should mention any `--enable-' and `--with-' options that the
+package recognizes.
+
+   For packages that use the X Window System, `configure' can usually
+find the X include and library files automatically, but if it doesn't,
+you can use the `configure' options `--x-includes=DIR' and
+`--x-libraries=DIR' to specify their locations.
+
+
+File: autoconf.info,  Node: System Type,  Next: Sharing Defaults,  Prev: Optional Features,  Up: Invoking configure
+
+Specifying the System Type
+==========================
+
+   There may be some features `configure' can not figure out
+automatically, but needs to determine by the type of host the package
+will run on.  Usually `configure' can figure that out, but if it prints
+a message saying it can not guess the host type, give it the
+`--host=TYPE' option.  TYPE can either be a short name for the system
+type, such as `sun4', or a canonical name with three fields:
+     CPU-COMPANY-SYSTEM
+
+See the file `config.sub' for the possible values of each field.  If
+`config.sub' isn't included in this package, then this package doesn't
+need to know the host type.
+
+   If you are building compiler tools for cross-compiling, you can also
+use the `--target=TYPE' option to select the type of system they will
+produce code for and the `--build=TYPE' option to select the type of
+system on which you are compiling the package.
+
+
+File: autoconf.info,  Node: Sharing Defaults,  Next: Operation Controls,  Prev: System Type,  Up: Invoking configure
+
+Sharing Defaults
+================
+
+   If you want to set default values for `configure' scripts to share,
+you can create a site shell script called `config.site' that gives
+default values for variables like `CC', `cache_file', and `prefix'.
+`configure' looks for `PREFIX/share/config.site' if it exists, then
+`PREFIX/etc/config.site' if it exists.  Or, you can set the
+`CONFIG_SITE' environment variable to the location of the site script.
+A warning: not all `configure' scripts look for a site script.
+
+
+File: autoconf.info,  Node: Operation Controls,  Prev: Sharing Defaults,  Up: Invoking configure
+
+Operation Controls
+==================
+
+   `configure' recognizes the following options to control how it
+operates.
+
+`--cache-file=FILE'
+     Use and save the results of the tests in FILE instead of
+     `./config.cache'.  Set FILE to `/dev/null' to disable caching, for
+     debugging `configure'.
+
+`--help'
+     Print a summary of the options to `configure', and exit.
+
+`--quiet'
+`--silent'
+`-q'
+     Do not print messages saying which checks are being made.  To
+     suppress all normal output, redirect it to `/dev/null' (any error
+     messages will still be shown).
+
+`--srcdir=DIR'
+     Look for the package's source code in directory DIR.  Usually
+     `configure' can determine that directory automatically.
+
+`--version'
+     Print the version of Autoconf used to generate the `configure'
+     script, and exit.
+
+`configure' also accepts some other, not widely useful, options.
+
+
+File: autoconf.info,  Node: Invoking config.status,  Next: Questions,  Prev: Invoking configure,  Up: Top
+
+Recreating a Configuration
+**************************
+
+   The `configure' script creates a file named `config.status' which
+describes which configuration options were specified when the package
+was last configured.  This file is a shell script which, if run, will
+recreate the same configuration.
+
+   You can give `config.status' the `--recheck' option to update
+itself.  This option is useful if you change `configure', so that the
+results of some tests might be different from the previous run.  The
+`--recheck' option re-runs `configure' with the same arguments you used
+before, plus the `--no-create' option, which prevent `configure' from
+running `config.status' and creating `Makefile' and other files, and
+the `--no-recursion' option, which prevents `configure' from running
+other `configure' scripts in subdirectories.  (This is so other
+`Makefile' rules can run `config.status' when it changes; *note
+Automatic Remaking::., for an example).
+
+   `config.status' also accepts the options `--help', which prints a
+summary of the options to `config.status', and `--version', which
+prints the version of Autoconf used to create the `configure' script
+that generated `config.status'.
+
+   `config.status' checks several optional environment variables that
+can alter its behavior:
+
+ - Variable: CONFIG_SHELL
+     The shell with which to run `configure' for the `--recheck'
+     option.  It must be Bourne-compatible.  The default is `/bin/sh'.
+
+ - Variable: CONFIG_STATUS
+     The file name to use for the shell script that records the
+     configuration.  The default is `./config.status'.  This variable is
+     useful when one package uses parts of another and the `configure'
+     scripts shouldn't be merged because they are maintained separately.
+
+   The following variables provide one way for separately distributed
+packages to share the values computed by `configure'.  Doing so can be
+useful if some of the packages need a superset of the features that one
+of them, perhaps a common library, does.  These variables allow a
+`config.status' file to create files other than the ones that its
+`configure.in' specifies, so it can be used for a different package.
+
+ - Variable: CONFIG_FILES
+     The files in which to perform `@VARIABLE@' substitutions.  The
+     default is the arguments given to `AC_OUTPUT' in `configure.in'.
+
+ - Variable: CONFIG_HEADERS
+     The files in which to substitute C `#define' statements.  The
+     default is the arguments given to `AC_CONFIG_HEADER'; if that
+     macro was not called, `config.status' ignores this variable.
+
+   These variables also allow you to write `Makefile' rules that
+regenerate only some of the files.  For example, in the dependencies
+given above (*note Automatic Remaking::.), `config.status' is run twice
+when `configure.in' has changed.  If that bothers you, you can make
+each run only regenerate the files for that rule:
+
+     config.h: stamp-h
+     stamp-h: config.h.in config.status
+             CONFIG_FILES= CONFIG_HEADERS=config.h ./config.status
+             echo > stamp-h
+     
+     Makefile: Makefile.in config.status
+             CONFIG_FILES=Makefile CONFIG_HEADERS= ./config.status
+
+(If `configure.in' does not call `AC_CONFIG_HEADER', there is no need
+to set `CONFIG_HEADERS' in the `make' rules.)
+
+
+File: autoconf.info,  Node: Questions,  Next: Upgrading,  Prev: Invoking config.status,  Up: Top
+
+Questions About Autoconf
+************************
+
+   Several questions about Autoconf come up occasionally.  Here some of
+them are addressed.
+
+* Menu:
+
+* Distributing::                Distributing `configure' scripts.
+* Why GNU m4::                  Why not use the standard `m4'?
+* Bootstrapping::               Autoconf and GNU `m4' require each other?
+* Why Not Imake::               Why GNU uses `configure' instead of Imake.
+
+
+File: autoconf.info,  Node: Distributing,  Next: Why GNU m4,  Prev: Questions,  Up: Questions
+
+Distributing `configure' Scripts
+================================
+
+     What are the restrictions on distributing `configure'
+     scripts that Autoconf generates?  How does that affect my
+     programs that use them?
+
+   There are no restrictions on how the configuration scripts that
+Autoconf produces may be distributed or used.  In Autoconf version 1,
+they were covered by the GNU General Public License.  We still
+encourage software authors to distribute their work under terms like
+those of the GPL, but doing so is not required to use Autoconf.
+
+   Of the other files that might be used with `configure',
+`config.h.in' is under whatever copyright you use for your
+`configure.in', since it is derived from that file and from the public
+domain file `acconfig.h'.  `config.sub' and `config.guess' have an
+exception to the GPL when they are used with an Autoconf-generated
+`configure' script, which permits you to distribute them under the same
+terms as the rest of your package.  `install-sh' is from the X
+Consortium and is not copyrighted.
+
+
+File: autoconf.info,  Node: Why GNU m4,  Next: Bootstrapping,  Prev: Distributing,  Up: Questions
+
+Why Require GNU `m4'?
+=====================
+
+     Why does Autoconf require GNU `m4'?
+
+   Many `m4' implementations have hard-coded limitations on the size
+and number of macros, which Autoconf exceeds.  They also lack several
+builtin macros that it would be difficult to get along without in a
+sophisticated application like Autoconf, including:
+
+     builtin
+     indir
+     patsubst
+     __file__
+     __line__
+
+   Since only software maintainers need to use Autoconf, and since GNU
+`m4' is simple to configure and install, it seems reasonable to require
+GNU `m4' to be installed also.  Many maintainers of GNU and other free
+software already have most of the GNU utilities installed, since they
+prefer them.
+
+
+File: autoconf.info,  Node: Bootstrapping,  Next: Why Not Imake,  Prev: Why GNU m4,  Up: Questions
+
+How Can I Bootstrap?
+====================
+
+     If Autoconf requires GNU `m4' and GNU `m4' has an
+     Autoconf `configure' script, how do I bootstrap?  It seems
+     like a chicken and egg problem!
+
+   This is a misunderstanding.  Although GNU `m4' does come with a
+`configure' script produced by Autoconf, Autoconf is not required in
+order to run the script and install GNU `m4'.  Autoconf is only
+required if you want to change the `m4' `configure' script, which few
+people have to do (mainly its maintainer).
+

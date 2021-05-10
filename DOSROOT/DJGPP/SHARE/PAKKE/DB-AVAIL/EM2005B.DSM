@@ -1,0 +1,38 @@
+#
+# DSM for Emacs 20.5
+# Written by Richard Dawe <rich@phekda.freeserve.co.uk> 2001-06-24
+#
+
+dsm-file-version: 1.1
+dsm-name: em2005b
+dsm-version: 0.5.0
+
+dsm-author: Richard Dawe
+dsm-author-email: rich@phekda.freeserve.co.uk
+
+name: emacs
+version: 20.5
+type: binaries
+manifest: em2005b
+sources-dsm: em2005s
+documentation-dsm: em2005d
+short-description: GNU Emacs
+license: GNU General Public License, Version 2
+
+organisation: Free Software Foundation
+web-site: http://www.fsf.org/
+newsgroup: gnu.emacs.*
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: em2005b.zip
+
+replaces: emacs < 20.5
+requires: DPMI
+provides: info-reader
+
+#
+# Emacs lisp is recommended
+#
+depends-on: emacs-lisp 20.5

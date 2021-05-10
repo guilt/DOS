@@ -1,0 +1,9 @@
+Name=fppkg
+Version=3.0.0
+Checksum=1198613563
+CPU=i386
+OS=go32v2
+FPMakeOptions=-o -Tgo32v2 -o -XPi386-go32v2- -o -Xr -o -Ur -o -Xs -o -O2 -o -n -o -di386 -o -dRELEASE -o -XX -o -CX
+Depends=rtl,fcl-base|1198613552,fcl-xml|1198613553,fcl-process|1198613558,paszlib|1198613556,fpmkunit|1198613563
+NeedLibC=N
+FPMakeAddIn=N

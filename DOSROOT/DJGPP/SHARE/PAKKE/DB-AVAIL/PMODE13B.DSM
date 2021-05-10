@@ -1,0 +1,34 @@
+#
+# DSM for PMODE/DJ 1.3 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com> 2001-04-13
+#
+
+# DSM information
+dsm-file-version: 1.1
+dsm-version: 0.5.0
+dsm-name: pmode13b
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+# Package information
+name: PMODE/DJ
+version: 1.3
+manifest: pmode13b
+sources-dsm: pmode13s
+
+short-description: DPMI 0.9 server stub & TSR
+license: Free without warranty (but see the sources)
+
+porter: Matthias Grimrath
+porter-email: m.grimrath@tu-bs.de
+porter: Charles Sandmann
+porter-email: sandmann@clio.rice.edu
+
+simtelnet-path: v2misc/
+zip: pmode13b.zip
+
+# Dependencies
+replaces: PMODE/DJ < 1.3
+provides: DPMI 0.9

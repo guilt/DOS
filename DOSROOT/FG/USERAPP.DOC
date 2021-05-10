@@ -1,0 +1,1330 @@
+Appendix A
+
+
+
+
+
+Fastgraph Utilities
+310   Fastgraph User's Guide
+
+
+Overview
+
+     This appendix describes the utility programs supplied with Fastgraph.
+By default, the Fastgraph installation procedure places these utilities in
+the \FG directory.  To use these utilities, you must either (1) copy the .EXE
+file from \FG to your current directory, (2) make \FG your current directory,
+or (3) include the \FG directory in your DOS path specification.
+
+
+SNAPSHOT Utility
+
+     The SNAPSHOT utility is a terminate and stay resident program (TSR) to
+capture graphic images.  It stores the image in Fastgraph's standard pixel
+run format.  To load SNAPSHOT, just enter the command SNAPSHOT at the DOS
+prompt, and you'll see messages similar to the following if SNAPSHOT loads
+successfully.
+
+
+        C> SNAPSHOT
+
+        SNAPSHOT  Version 1.02
+        Copyright (c) 1991 Ted Gruber Software.  All Rights Reserved.
+
+        Press <alt>-<left shift> to activate.
+
+
+     After SNAPSHOT loads, control returns to the DOS prompt.  At this point,
+you can use any method whatsoever to display a graphic image and then press
+the Alt and left shift keys at the same time to capture the image.  You don't
+need to load SNAPSHOT for each image capture, just once per system boot.
+SNAPSHOT uses about 14,000 bytes of conventional memory once loaded.
+
+     To illustrate the use of SNAPSHOT, suppose you have drawn and saved an
+image with a commercial paint program, and you want to incorporate this image
+into a Fastgraph application.  Once you load SNAPSHOT, start the paint
+program and retrieve your image.  Then press the Alt and left shift keys
+simultaneously and wait for the success tone (three quick medium-pitched
+sounds).  Finally, exit the paint program to return to the DOS prompt.
+
+     The sequence described in the preceding paragraph will store the
+captured image in Fastgraph's standard pixel run format, in a file named
+SNAPSHOT.nnn in the current directory.  The file type nnn will be the first
+sequence of digits that does not result in a duplicate file name.  That is,
+if there are no captured image files in the current directory, SNAPSHOT will
+use the file name SNAPSHOT.000.  The next time you capture an image, SNAPSHOT
+will store it in SNAPSHOT.001, then SNAPSHOT.002, and so forth.  If you
+rename or delete one of these files, SNAPSHOT will again use that file name.
+For example, if you delete SNAPSHOT.000 but keep SNAPSHOT.001, SNAPSHOT will
+store the next image it captures in SNAPSHOT.000.
+
+     If SNAPSHOT is unable to capture the image, it will produce its error
+tone (a single low-pitched sound).  The most common cause of this is trying
+to capture an image from a text video mode, but it also will occur if there
+is not enough disk space or if all 1,000 image file names are already being
+used.
+                                        Appendix A:  Fastgraph Utilities   311
+
+CLIP Utility
+
+     The SNAPSHOT utility described in the previous section captures the
+entire screen.  While this might be desirable in some cases, other times
+you'll just need a portion of the screen.  CLIP is an interactive utility
+that you can use to reduce the size of any image stored in Fastgraph's
+standard or packed pixel run format.  The syntax of the command for invoking
+the CLIP utility from the DOS prompt is
+
+                     CLIP input_file output_file options
+
+where input_file is the name of the original image file, and output_file is
+the name of the new image file.  CLIP does not modify the input_file in any
+way, but it will overwrite the output_file if an identically named file
+exists in the current directory.  The options list specifies one or more
+optional switches as shown below.
+
+option    meaning
+
+/M:mode   Specifies the video mode number in which to display the image.  The
+          mode value must be an integer between 0 and 29.  If that video mode
+          is a text mode, an unsupported graphics mode, or an unavailable
+          graphics mode, CLIP displays an error message stating this.  If the
+          /M switch is not present, CLIP uses the first available video mode
+          from the list 18, 16, 15, 19, 13, 9, 4, 12.
+
+/P        Indicates the input_file is in Fastgraph's packed pixel run format.
+          If the /P switch is not present, CLIP assumes it is in standard
+          pixel run format.  The output_file will be in the same format as
+          the input_file.
+
+/W:width  Specifies the image width in pixels.  The width value must be an
+          integer between 1 and the horizontal resolution of the selected
+          video mode.  If the /W switch is not present, CLIP uses the
+          horizontal resolution of the selected video mode.
+
+For example, if you wanted to create the image file PARTIAL.PPR from the
+packed pixel run file SCREEN.PPR, and use the native 320 by 200 EGA graphics
+video mode (mode 13), you would start CLIP with the following command.
+
+                     CLIP PARTIAL.PPR SCREEN.PPR /P /M:13
+
+Because no /W switch appears in the above command and the horizontal
+resolution of mode 13 is 320 pixels, CLIP assumes the image width is 320
+pixels.
+
+     When CLIP displays the image and the plus-shaped cursor, you are ready
+to define one corner of the clipping region (that part of the image used to
+create the output_file).  To do this, use the directional keys on the numeric
+keypad to move the cursor to the desired position, then press the Enter key.
+You are then ready to define the clipping region's opposite corner.  Again,
+use the directional keys to move the cursor to the desired position.  When
+defining the second corner, however, CLIP uses a rectangular box instead of
+the plus-shaped cursor to simplify marking the clipping region's boundaries.
+After you press Enter to define the second corner, CLIP creates the
+312   Fastgraph User's Guide
+
+output_file and displays the resulting image width and the number of pixel
+runs the image contains.
+
+     CLIP includes some features that may help you define the clipping
+region.  You can change the distance the cursor moves in response to the
+directional keys, display the current (x,y) pixel coordinates of the cursor,
+and change the cursor color.  The following table explains the keystrokes
+that CLIP recognizes when you are defining the clipping region.
+
+key       meaning
+
+F1        Displays the (x,y) coordinate bar at the top of the screen.  If the
+          coordinate bar is already on, F1 removes it.
+F2        Displays the (x,y) coordinate bar at the bottom of the screen.  If
+          the coordinate bar is already on, F2 removes it.
+F3        Changes the cursor or box color from white to black, or from black
+          to white.
+F4        Displays a summary of the keys CLIP recognizes when defining the
+          clipping region.
+KP1       Moves the cursor one unit down and to the left.
+KP2       Moves the cursor one unit down.
+KP3       Moves the cursor one unit down and to the right.
+KP4       Moves the cursor one unit to the left.
+KP6       Moves the cursor one unit to the right.
+KP7       Moves the cursor one unit up and to the left.
+KP8       Moves the cursor one unit up.
+KP9       Moves the cursor one unit up and to the right.
++         Increases the unit of cursor movement by one pixel.  The default
+          cursor movement is one pixel.
+-         Decreases the unit of cursor movement by one pixel.
+Enter     Defines a corner of the clipping region at the cursor position.
+Esc       Exits to DOS without creating the output_file.  CLIP will first
+          issue an "Exit to DOS?" prompt in case you pressed the Esc key
+          accidentally.
+
+
+CONVERT Utility
+
+     The CONVERT utility lets you translate files between Fastgraph's SPR and
+PPR image file formats.  The syntax of the command for invoking CONVERT from
+the DOS prompt is
+
+                        CONVERT input_file output_file
+
+where input_file is the name of the original image file, and output_file is
+the name of the new translated image file.  CONVERT does not modify the
+input_file in any way, but it will overwrite the output_file if an
+identically named file exists in the current directory.
+
+     By default, the file type of the input_file and output_file determine
+the image format of that file.  If the file type is .PPR, CONVERT assumes the
+image is in Fastgraph's packed pixel run format.  If the file type is .SPR,
+CONVERT assumes it is in the Fastgraph's standard pixel run format.  If your
+image files use other file types, you can explicitly specify the file's image
+format by appending one of the switches /PPR or /SPR to the file name.  The
+                                        Appendix A:  Fastgraph Utilities   313
+
+input_file and output_file must not both specify the same image format
+(CONVERT will display an error message if this is so).
+
+     The following command will translate the standard pixel run file
+PICTURE.SPR to packed format.  The packed image will be stored in the file
+PICTURE.IMG, so we must append the switch /PPR to tell CONVERT that it will
+be a packed file.
+
+                     CONVERT PICTURE.SPR PICTURE.IMG/PPR
+
+
+EDITSPR Utility
+
+     The EDITSPR utility changes all pixel runs of one color to another color
+in an image file stored in Fastgraph's standard pixel run (SPR) format.  The
+syntax of the command for invoking the EDITSPR utility from the DOS command
+prompt is
+
+                        EDITSPR input_file output_file
+
+where input_file is the name of the original image file, and output_file is
+the name of the new image file.  EDITSPR does not modify the input_file in
+any way, but it will overwrite the output_file if an identically named file
+exists in the current directory.
+
+     After it reads the pixel runs from the input_file, EDITSPR will perform
+the requested color changes.  It does this iteratively by asking for an old
+color value followed by a new color value (each value must be between 0 and
+255).  EDITSPR then finds the pixel runs of the old color value and changes
+them to the new color value.  Following this, EDITSPR displays a message
+stating how many pixel runs it changed.  This process repeats until you enter
+a negative number for either color value.
+
+     EDITSPR will next combine adjacent pixel runs of like colors.  For
+example, suppose the original image file contained a color 1 pixel run of
+length 50, followed by a color 2 pixel run of length 20, followed by another
+color 1 pixel run of length 10.  If you changed all color 2 pixel runs to
+color 1, EDITSPR will combine these three pixel runs into a single run of
+length 80.
+
+     Finally, EDITSPR will close the output_file.
+
+
+GrabRGB Utility
+
+     The GrabRGB utility is a terminate and stay resident program (TSR) to
+capture the current red, green, and blue color components of video DAC
+registers in 256-color graphics modes.  You can use GrabRGB together with
+Fastgraph's SNAPSHOT utility to preserve the original colors of a captured
+image.
+
+     To load GrabRGB, just enter the command GRABRGB at the DOS prompt.
+After GrabRGB loads, control returns to the DOS prompt.  At this point, you
+can use any method whatsoever to display a 256-color graphic image and then
+press the Alt and right shift keys at the same time to capture the current
+DAC values.  You don't need to load GrabRGB for each image, just once per
+314   Fastgraph User's Guide
+system boot.  GrabRGB uses about 15,000 bytes of conventional memory once
+loaded.
+
+     To illustrate the use of GrabRGB, suppose you have drawn and saved a
+256-color image with a commercial paint program, and you want to incorporate
+this image into a Fastgraph application.  Once you load SNAPSHOT and GrabRGB,
+start the paint program and retrieve your image.  Then press the Alt and left
+shift keys to capture the image with SNAPSHOT.  After SNAPSHOT's success tone
+(three quick medium-pitched sounds), press Alt and right shift to capture the
+RGB components of each DAC register with GrabRGB, and wait for GrabRGB's
+success tone.  Finally, exit the paint program and return to the DOS prompt.
+
+     The sequence described in the preceding paragraph will write the RGB
+color components for each DAC register to a file named GRABRGB.nnn in the
+current directory.  The file type nnn will be the first sequence of digits
+that does not result in a duplicate file name.  That is, if there are no
+GrabRGB output files in the current directory, GrabRGB will use the file name
+GRABRGB.000.  The next time you use GrabRGB, it will store the RGB
+information in GRABRGB.001, then GRABRGB.002, and so forth.  If you rename or
+delete one of these files, GrabRGB will again use that file name.  For
+example, if you delete GRABRGB.000 but keep GRABRGB.001, GrabRGB will next
+use the file name GRABRGB.000.
+
+     If GrabRGB is unable to obtain the RGB components of each DAC register,
+it will produce its error tone (a single low-pitched sound).  The most common
+cause of this is trying to capture an image from a text video mode, or from a
+graphics video mode with fewer than 256 colors.  It also will occur if there
+is not enough disk space or if all 1,000 output file names are already being
+used.
+
+     Each line in the output file created by GrabRGB is of the form
+
+                                nnn,rr,gg,bb,
+
+where nnn is a DAC register index (between 0 and 255), rr is the red
+component of that DAC register, gg is the green component, and bb is the blue
+component.  Each color component is between 0 and 63.  You can edit and
+reformat these lines as necessary for inclusion in a C initializer list, a
+BASIC or FORTRAN data statement, or a Pascal array-type constant list.  Such
+an array of RGB components, but without the nnn indices, is in the format
+expected by fg_setdacs.
+
+     By default, GrabRGB captures information for all 256 DAC registers.  If
+you want to consider only the DAC registers with color components different
+from their initial values, just include the /D option when you load GrabRGB
+(that is, use the command GRABRGB /D).  If you specify the /D option and all
+256 DACs use their default values, the output file will contain a message
+stating this.
+
+
+HERCFIX Utility
+
+     The HERCFIX utility allows you to use SNAPSHOT (and possibly other TSRs)
+with programs that do not update the BIOS data area when establishing the 720
+by 348 Hercules graphics mode.  If you use SNAPSHOT with such a program, it
+will think the monochrome text mode (video mode 7) is active and will produce
+its low-pitched error tone when activated.
+                                        Appendix A:  Fastgraph Utilities   315
+
+     If this occurs, use HERCFIX to load the application from which you are
+trying to capture the image.  To do this, enter
+
+                               HERCFIX command
+
+at the DOS prompt, where command is the command that starts the application.
+For example, suppose you use the command PAINTER /H to run a commercial paint
+program in Hercules graphics mode.  To load the paint program with HERCFIX,
+you would enter the command HERCFIX PAINTER /H.
+
+
+PCXHEAD Utility
+
+     The PCXHEAD utility displays the most important information from the
+header of a PCX file.  This consists of the PCX version number, the number of
+bits per pixel, the number of bit planes, the scan line width, and the image
+dimensions and screen position.  It also proposes the optimal video mode for
+displaying the PCX file.  By optimal, we mean the compatible video mode
+having the lowest resolution larger than or equal to the image dimensions.
+For 256-color PCX images, PCXHEAD displays the extended color palette if one
+is present.
+
+     The syntax of the command for invoking the PCXHEAD utility from the DOS
+command prompt is
+
+                               PCXHEAD pcx_file
+
+where pcx_file is the name of the PCX file to examine.  PCXHEAD does not
+modify the pcx_file in any way.  If the PCX file includes an extended color
+palette, you may prefer to direct the PCXHEAD output to a file using the DOS
+redirection operator (>).
+316   Fastgraph User's Guide
+Appendix B
+
+
+
+
+
+Using Fastgraph
+from Assembly Language
+318   Fastgraph User's Guide
+
+     Fastgraph uses the same naming and calling conventions as Microsoft C
+and Turbo C.  The details of these conventions that are important to assembly
+language programming are summarized below.  If you are calling Fastgraph
+routines from an assembly language program, the program must follow these
+conventions.
+
+       All arrays and pointers are passed by reference
+       All other items are passed by value
+       Arguments are pushed onto the stack in reverse order
+       16-bit function values are returned in the AX register
+       32-bit function values are returned in the DX:AX register pair
+       Fastgraph routine names are prefixed with an underscore
+
+The small and medium model Fastgraph libraries pass arrays and pointers by
+near reference, while the large model library does so by far reference.  This
+is consistent with the run-time libraries for the supported compilers.
+
+     All Fastgraph routines preserve the BP, DS, DI, and SI registers.  The
+contents of any other registers are unknown upon return from a Fastgraph
+routine (except for the AX register, which will either contain zero or the
+routine's return value).
+
+     The following DOS commands show how to assemble a program (using the
+Microsoft Macro Assembler) and then link it with Fastgraph.  In all cases,
+we'll assume the file EXAMPLE.ASM contains the source code for the program.
+The resulting executable file will be called EXAMPLE.EXE.
+
+                              small memory model
+
+                    MASM EXAMPLE.ASM;
+                    LINK /CP:4096 /E EXAMPLE,,NUL.MAP,FGS
+
+
+                             medium memory model
+
+                    MASM EXAMPLE.ASM;
+                    LINK /CP:4096 /E EXAMPLE,,NUL.MAP,FGM
+
+
+                              large memory model
+
+                    MASM EXAMPLE.ASM;
+                    LINK /CP:4096 /E EXAMPLE,,NUL.MAP,FGL
+
+
+     Example B-1 calls the fg_getmode, fg_setmode, fg_reset, and fg_version
+routines from an assembly language program.  The fg_getmode routine returns
+its function value in the AX register.  The fg_setmode routine has a single
+argument, while fg_reset has no arguments.  The fg_version routine has two
+arguments, both passed by reference.  Notice how they are pushed on the stack
+in reverse order.  This example would work with either the medium or large
+memory model Fastgraph libraries.  To make it work with the small model
+library, all you would need to do is change the word "far" to "near" in the
+EXTRN declarations, and change the name of the code segment from "main_TEXT"
+to "_TEXT".
+
+                     Appendix B:  Using Fastgraph from Assembly Language   319
+
+                                 Example B-1.
+
+                EXTRN   _fg_getmode:far  ; Fastgraph's GETMODE routine
+                EXTRN   _fg_reset:far    ; Fastgraph's RESET routine
+                EXTRN   _fg_setmode:far  ; Fastgraph's SETMODE routine
+                EXTRN   _fg_version:far  ; Fastgraph's VERSION routine
+
+      stackseg  SEGMENT stack         ; suppress the linker's
+      stackseg  ENDS                  ; "no stack segment" error message
+
+      _DATA     SEGMENT word public 'DATA'
+
+      major     dw      ?             ; major version number
+      minor     dw      ?             ; minor version number
+      old_mode  dw      ?             ; original video mode
+
+      _DATA     ENDS
+
+      dgroup    GROUP   _DATA
+                ASSUME  cs:main_TEXT,ds:dgroup
+
+      main_TEXT SEGMENT byte public 'CODE'
+
+      start:    mov     ax,_DATA      ; load segment location
+                mov     ds,ax         ; into DS register
+
+                call    _fg_getmode   ; AX = current video mode
+                mov     old_mode,ax   ; save it
+
+                mov     ax,4          ; use video mode 4
+                push    ax            ; pass argument to SETMODE
+                call    _fg_setmode   ; establish CGA four-color mode
+                add     sp,2          ; remove SETMODE argument
+
+                push    old_mode      ; pass argument to SETMODE
+                call    _fg_setmode   ; restore original video mode
+                add     sp,2          ; remove SETMODE argument
+
+                call    _fg_reset     ; restore screen attributes
+
+                lea     ax,minor      ; get address of minor variable
+                push    ax            ; pass argument #2 to VERSION
+                lea     ax,major      ; get address of major variable
+                push    ax            ; pass argument #1 to VERSION
+                call    _fg_version   ; get the Fastgraph version number
+                add     sp,4          ; remove VERSION arguments
+
+                mov     ah,76         ; function 76: terminate process
+                xor     al,al         ; errorlevel 0
+                int     21h           ; exit to DOS
+
+      main_TEXT ENDS
+                END     start
+
+320   Fastgraph User's Guide
+Appendix C
+
+
+
+
+
+Interrupts and Fastgraph
+322   Fastgraph User's Guide
+
+Interrupts Used by Fastgraph
+
+     DOS maintains an interrupt vector table that contains the addresses of
+256 interrupt handlers, or routines, that perform various functions.  The
+handlers are usually referenced by their hexadecimal interrupt number,
+between 00 and FF.  Of these, only interrupts 60 through 66 and F1 through FF
+are not used by DOS, the ROM BIOS, or other software and are thus available
+for user applications.
+
+     Certain Fastgraph routines use some of the available interrupts.
+Namely, the fg_music routine uses interrupt 60, the asynchronous sound
+routines (fg_musicb, fg_sounds, and fg_voices) use interrupts 60 and 61, and
+all Fastgraph/Light routines use interrupt 62.  If your program defines its
+own interrupt handlers, it must not use any of the interrupts reserved for
+Fastgraph (unless, of course, it doesn't use any of the Fastgraph routines
+that would create a conflict).
+
+
+Extending the Time-of-Day Interrupt
+
+     As mentioned in Chapter 16, the BIOS time-of-day clock is incremented by
+an interrupt handler.  The routine that does this is interrupt 08, a hardware
+interrupt automatically activated 18.2 times per second.  After incrementing
+the clock, interrupt 08 invokes interrupt 1C, which by default references a
+"do-nothing" interrupt handler.  While changing interrupt 08 can be tricky,
+it is fairly straightforward to define our own handler for interrupt 1C.
+This handler also will be executed automatically 18.2 times per second.
+Example C-1 illustrates how to do this.
+
+     When we discussed joysticks in Chapter 14, we said there were two ways
+to monitor joystick button status.  One is to intersperse calls to the
+fg_button routine at strategic places in your program and then take necessary
+action depending on the button status.  However, the problem with this scheme
+is the chance of missing a button press -- if you press the joystick button
+and then release it between calls to fg_button, the program will not detect
+the joystick activity.  A preferable method is to call fg_button from a
+handler for interrupt 1C, which essentially provides continuous monitoring of
+the joystick buttons.  When we need the button status within our program, all
+we need to do is examine a global variable.
+
+     Example C-1 consists of a main program (written in C) and an assembly
+language subroutine named int1C (suitable for the medium memory model).  The
+main program calls int1C to define a handler for interrupt 1C.  In response
+to any keystroke (except Escape), the program displays the button press
+information for each joystick since the previous keystroke (refer to the
+discussion of the fg_button routine for the meanings of the status values).
+When you press the Escape key, the program exits to DOS, but not before
+calling int1C to restore the original interrupt 1C handler.
+
+                         Example C-1 (main program).
+
+               #include <fastgraf.h>
+               #include <stdio.h>
+               void main(void);
+
+               #define ESC 27
+                                   Appendix C:  Interrupts and Fastgraph   323
+
+               int status1, status2;
+
+               void main()
+               {
+                  unsigned char key, aux;
+
+                  int1C(1);
+
+                  status1 = 0;
+                  status2 = 0;
+
+                  do {
+                     printf("\n");
+                     printf("Joystick 1 status: %d\n",status1);
+                     printf("Joystick 2 status: %d\n",status2);
+                     status1 = 0;
+                     status2 = 0;
+                     fg_getkey(&key,&aux);
+                     }
+                  while (key != ESC);
+
+                  int1C(0);
+               }
+
+
+     We'll now examine the int1C assembly language subroutine.  It actually
+consists of three parts:  a portion to enable our interrupt handler, our
+handler itself, and a portion to disable the handler.  When we call int1C
+with a nonzero argument, it saves the original data segment (so we can access
+the global variables within the handler), saves the original handler's
+address (called the vector) for interrupt 1C, and then enables our handler,
+which takes the form of a far procedure.
+
+     The handler routine then begins to be activated at 18.2 times per
+second.  After saving all the important registers, the handler calls the
+Fastgraph routine fg_button twice, once for each joystick.  The return values
+are logically ORed with the status1 and status2 C global variables to update
+the button status information.  Finally, the handler restores the original
+registers and returns control to the point of the interrupt.
+
+     Before the main program exits, it calls int1C with a zero argument to
+restore the original handler for interrupt 1C.  No provision is made in the
+program to check if we had previously defined our own handler (and hence
+saved the original interrupt 1C vector), but this could be added with little
+difficulty.
+
+                 Example C-1 (assembly language subroutine).
+
+
+              EXTRN   _status1:word ; C global variable for button 1 status
+
+              EXTRN   _status2:word ; C global variable for button 2 status
+
+              EXTRN   _fg_button:far ; Fastgraph routine
+
+324   Fastgraph User's Guide
+
+
+   int1C_TEXT SEGMENT byte public 'CODE'
+
+              ASSUME  cs:int1C_TEXT
+
+
+
+   int1C_CS   dw      ?             ; holds original INT 1C segment address
+
+   int1C_IP   dw      ?             ; holds original INT 1C offset
+
+   orig_DS    dw      ?             ; holds original data segment
+
+
+
+   _int1C     PROC    far
+
+              PUBLIC  _int1C
+
+
+
+              push    bp            ; save caller's BP register
+
+              mov     bp,sp         ; make BP point to argument list
+
+              push    si            ; save caller's SI register
+
+              push    di            ; save caller's DI register
+
+
+
+              mov     dx,[bp+6]     ; get the flag parameter
+
+              or      dx,dx         ; replace the old interrupt handler?
+
+              jz      replace       ; yes, branch to that processing
+
+
+
+   ; define a new handler for INT 1C
+
+
+
+   define:    mov     ax,ds         ; put current data segment in AX
+
+              mov     cs:orig_DS,ax ; save it in the control information area
+
+
+
+              mov     al,1Ch        ; interrupt vector to save
+
+              mov     ah,53         ; function 53: get interrupt vector
+
+              int     21h           ; get the interrupt vector
+
+                                   Appendix C:  Interrupts and Fastgraph   325
+
+              mov     cs:int1C_CS,es; save the segment
+
+              mov     cs:int1C_IP,bx; save the offset
+
+
+
+              push    ds            ; save our DS register
+
+              mov     dx,offset handler ; get offset of interrupt handler
+
+              mov     ax,seg handler; get segment of interrupt handler
+
+              mov     ds,ax         ; put it in DS
+
+              mov     al,1Ch        ; interrupt vector to change
+
+              mov     ah,37         ; function 37: set interrupt vector
+
+              int     21h           ; change the INT 1C vector to our handler
+
+              pop     ds            ; restore our DS register
+
+
+
+              jmp     short return  ; return to the caller
+
+
+
+   ; replace the original handler for INT 1C
+
+
+
+   replace:   push    ds            ; save our DS register
+
+              mov     dx,cs:int1C_IP; put original INT 1C offset in DX
+
+              mov     ds,cs:int1C_CS; put original INT 1C segment in DS
+
+              mov     ah,37         ; function 37: set interrupt vector
+
+              mov     al,1Ch        ; interrupt vector 1C
+
+              int     21h           ; restore original INT 1C vector
+
+              pop     ds            ; restore our DS register
+
+
+
+   return:    xor     ax,ax         ; in case int1C was called as a function
+
+              pop     di            ; restore our DI register
+
+              pop     si            ; restore our SI register
+
+              pop     bp            ; restore our BP register
+
+326   Fastgraph User's Guide
+
+              ret
+
+
+
+   _int1C     ENDP
+
+
+
+
+
+   handler    PROC    far           ; interrupt handler that replaces INT 1C
+
+
+
+              cli                   ; disable interrupts while handler active
+
+              push    ax            ; save registers that may be altered
+
+              push    bx
+
+              push    cx
+
+              push    dx
+
+              push    di
+
+              push    si
+
+              push    ds
+
+              push    es
+
+
+
+              mov     ds,cs:orig_DS ; retrieve the original data segment
+
+
+
+              mov     ax,1          ; use joystick 1
+
+              push    ax            ; pass joystick number to button routine
+
+              call    _fg_button    ; AX = button status for joystick 1
+
+              add     sp,2          ; remove the argument
+
+              or      _status1,ax   ; update status variable for joystick 1
+
+
+
+              mov     ax,2          ; use joystick 2
+
+              push    ax            ; pass joystick number to button routine
+
+              call    _fg_button    ; AX = button status for joystick 2
+
+                                   Appendix C:  Interrupts and Fastgraph   327
+
+              add     sp,2          ; remove the argument
+
+              or      _status2,ax   ; update status variable for joystick 2
+
+
+
+              pop     es            ; restore altered registers
+
+              pop     ds
+
+              pop     si
+
+              pop     di
+
+              pop     dx
+
+              pop     cx
+
+              pop     bx
+
+              pop     ax
+
+              iret                  ; return from the interrupt routine
+
+
+
+   handler    ENDP
+
+
+
+   int1C_TEXT ENDS
+
+              END
+
+
+
+
+     The example just presented is not meant to be a tutorial on interrupts;
+there are many good references on DOS that explain them in detail.  However,
+an example specific to Fastgraph should be helpful.
+328   Fastgraph User's Guide
+Appendix D
+
+
+
+
+
+Contents of the
+Compiler-Specific Libraries
+330   Fastgraph User's Guide
+
+     Each supported Fastgraph compiler except QuickBASIC and Visual Basic for
+DOS have a compiler-specific Fastgraph library (also called the extended
+Fastgraph library) that contains the following routines:
+
+          fg_boxw        fg_drawxw      fg_panw        fg_setsize
+          fg_boxxw       fg_drectw      fg_pointw      fg_setsizew
+          fg_circlew     fg_ellipsew    fg_pointxw     fg_setworld
+          fg_circlefw    fg_ellipsfw    fg_polygonw    fg_swchar
+          fg_clprectw    fg_floodw      fg_rectw       fg_swlength
+          fg_dashrw      fg_getworld    fg_restorew    fg_swtext
+          fg_dashw       fg_initw       fg_savew       fg_xscreen
+          fg_drawrw      fg_moverw      fg_setangle    fg_xworld
+          fg_drawrxw     fg_movew       fg_setclipw    fg_yscreen
+          fg_draww       fg_paintw      fg_setratio    fg_yworld
+
+These routines use the world space coordinate system, either directly or
+internally.  Note that none of them are included in Fastgraph/Light.
+
+     As mentioned in Chapter 1, if your program uses any of these routines,
+you must link it with the standard Fastgraph library and the corresponding
+extended Fastgraph library.
+Appendix E
+
+
+
+
+
+Contents of the
+Pascal Unit Files
+332   Fastgraph User's Guide
+
+     Borland Pascal and Turbo Pascal restrict the total size of all code
+segments in a unit file 65,520 bytes.  Because the size of Fastgraph's code
+exceeds this amount, the Fastgraph functions are split among several unit
+files.  This appendix lists the contents of each Pascal unit file.
+
+Fastgraph routines in FGBITMAP.TPU
+
+          fg_clipmask       fg_flipmask      fg_imagebuf       fg_revimage
+          fg_clpimage       fg_flpimage      fg_imagesiz       fg_revmask
+          fg_drawmask       fg_getblock      fg_putblock
+          fg_drwimage       fg_getimage      fg_putimage
+
+Fastgraph routines in FGGIF.TPU
+
+          fg_makegif        fg_showgif
+
+Fastgraph routines in FGMISC.TPU
+
+          fg_button         fg_intkey        fg_mousepos       fg_setcaps
+          fg_capslock       fg_kbinit        fg_mouseptr       fg_setnum
+          fg_cursor         fg_kbtest        fg_mousespd       fg_sound
+          fg_getclock       fg_measure       fg_mousevis       fg_sounds
+          fg_getkey         fg_memavail      fg_music          fg_suspend
+          fg_getxjoy        fg_mousebut      fg_musicb         fg_voice
+          fg_getyjoy        fg_mousecur      fg_numlock        fg_voices
+          fg_hush           fg_mousefin      fg_playing        fg_waitfor
+          fg_hushnext       fg_mouseini      fg_quiet          fg_waitkey
+          fg_initjoy        fg_mouselim      fg_resume
+          fg_intjoy         fg_mousemov      fg_scrlock
+
+Fastgraph routines in FGPCX.TPU
+
+          fg_makepcx        fg_pcxhead       fg_pcxmode        fg_showpcx
+
+Fastgraph routines in FGPR.TPU
+
+          fg_dispfile       fg_displayp      fg_makespr        fg_showspr
+          fg_display        fg_makeppr       fg_showppr
+
+Fastgraph routines in FGSVGA.TPU
+
+          fg_defpages       fg_svgainit      fg_svgaver
+          fg_memory         fg_svgastat
+
+Pascal versions of the routines listed in Appendix D are in the unit file
+FGWORLD.TPU.  All other Fastgraph routines are in the FGMAIN.TPU unit file.
+
+As mentioned in Chapter 1, Pascal programs must include a uses statement
+listing all units referenced in the program.  The FGMAIN unit is always
+required.  Other unit files are needed when you call the Fastgraph functions
+they contain.
+Appendix F
+
+
+
+
+
+Integrating Fastgraph With
+Other Graphics Software
+334   Fastgraph User's Guide
+
+     Sometimes you may want to use Fastgraph with other graphics software,
+such as when converting an existing graphics application to Fastgraph.  This
+appendix may clarify some points about doing this.
+
+     First, let the other graphics software establish the video mode, then
+initialize Fastgraph for that mode by calling fg_setmode(-1).  Passing -1 to
+fg_setmode does not physically change video modes but merely initializes
+Fastgraph's internal parameters for the current video mode.
+
+     Second, if you're using the EGA/VGA/SVGA 16-color graphics modes (modes
+13 to 18, 28, and 29), you'll probably need to explicitly define the value of
+the EGA/VGA Enable Set/Reset register (port address 03CE hex, index 01).
+Fastgraph's functions expect this register to have the value 0F hex; this
+allows Fastgraph take advantage of a more efficient variant available in
+EGA/VGA write mode 0.  The default value for the Enable Set/Reset register is
+zero.
+
+     After you've called fg_setmode(-1) and need to call a third party
+graphics function, set the Enable Set/Reset register to its default value by
+including the following statement just before calling the third party
+function:
+
+outport(0x03CE,0x0001);       Borland C++, Turbo C/C++, or Power C
+outpw(0x03CE,0x0001);         Microsoft C or QuickC
+OUT &h03CE,1 : OUT &h03CF,0   QuickBASIC or Visual Basic
+
+Just before you call the next Fastgraph function, restore the Enable
+Set/Reset register value with the following statement:
+
+outport(0x03CE,0x0F01);       Borland C++, Turbo C/C++, or Power C
+outpw(0x03CE,0x0F01);         Microsoft C or QuickC
+OUT &h03CE,1 : OUT &h03CF,15  QuickBASIC or Visual Basic
+                                                                   Index   335
+
+                                  I n d e x
+
+8253-5 programmable timer chip               /M option  311
+          286                                /P option  311
+Active page  151, 152                        /W option  311
+Animation  238                          Clipping  98
+     dynamic frame  244                 Clock tick  300-302
+     dynamic page flipping  246         Clock tick interrupt  291, 293,
+     page flipping  246                           300
+     simple  238                        Color  68
+     static frame  242                  Color indices  90
+     static page flipping  246          Color number  70
+     summary  248                       Color value  70
+     XOR  240                           Compilation  5
+ANSI.SYS  45                                 BASIC PDS  11
+Assembly language  318                       Borland C++  8
+Attribute  68, 132, 133                      Borland Pascal  10
+Available memory  304                        Microsoft C  13
+Background color  68-70                      Microsoft C++  13
+BASIC PDS  11                                Microsoft FORTRAN  14
+Bit maps  190                                Power C  23
+     CGA  195, 196, 203                      QuickBASIC  16
+     EGA  198, 205                           QuickC  18
+     filler bits  191                        Turbo C  25
+     Hercules  198                           Turbo C++  25
+     MCGA  199                               Turbo Pascal  27
+     memory requirements  209                Visual Basic  20
+     mode-independent  190                   Visual C++  22
+     mode-specific  194                      Zortech C++  28
+     PCjr  198                          Compiler-specific Fastgraph
+     retrieving  207                              library  330
+     subscript order  191, 192,         CONVERT  312, 313
+          202                                /PPR switch  312
+     SVGA  198, 199                          /SPR switch  312
+     Tandy  198                         Convex shape  108
+     text modes  201                    Coordinate conversion  64, 137,
+     VGA  198, 199                                138
+Bit-mapped characters  145              Current color  70
+Bit-mapped images  190                  Cursor mask  273, 275
+BitBlt  222                             Dash pattern  104, 105
+Blit  222                               Delay units  301, 302
+Block transfer routines  222            Display patterns  181
+Borland C++  3, 8                            CGA  181, 182
+Borland Pascal  3, 10                        EGA  184
+Byte boundary  223, 224                      Hercules  184
+CapsLock  262-264                            MCGA  184
+CGA palettes  70                             PCjr  183
+Character cells  32                          SVGA  184
+Character space  60, 128                     Tandy  183
+Characters                                   VGA  184
+     bit-mapped  145                    Dithering  114
+     hardware  129                      Dithering matrix  114
+     software  139                           256-color modes  119
+Circles  109                                 alignment  120
+Clearing the screen  98                      CGA  115, 116
+CLIP  311, 312                               EGA  118
+336   Fastgraph User's Guide
+Dithering matrix (cont.)                     fg_dash  104, 105, 123
+     Hercules  117                           fg_dashrel  104, 123
+     PCjr  117                               fg_dashrw  104, 123
+     SVGA  118                               fg_dashw  104, 123
+     Tandy  117                              fg_defcolor  91, 94, 120
+     VGA  118                                fg_dispfile  180, 181, 188,
+EDITSPR  313                                      214
+Ellipses  109                                fg_display  212-214, 219
+EMM386.EXE  162                              fg_displayp  213, 214, 219
+EMS  162                                     fg_draw  102, 123, 254
+Expanded memory  162                         fg_drawmap  145, 190, 192,
+Expanded Memory Manager  162                      193, 194, 195, 207,
+Extended Fastgraph library  330                   208, 209, 212, 215,
+Extended memory  162                              218, 219, 230, 248,
+Fade  85, 86                                      275, 278
+FASTGRAF.BI  6                               fg_drawmask  216-219
+FASTGRAF.H  6                                fg_drawrel  102, 121, 123
+Fastgraph  2                                 fg_drawrelx  102, 123
+Fastgraph routines                           fg_drawrw  102, 123
+     fg_allocate  154, 155,                  fg_drawrxw  102, 123
+          157, 158, 160-162,                 fg_draww  102, 124
+          167-169, 222, 226,                 fg_drawx  102, 124
+          227, 304                           fg_drawxw  102, 124
+     fg_alloccms  162, 163,                  fg_drect  114, 115, 118,
+          166, 167                                119, 120, 124
+     fg_allocems  162, 163, 169              fg_drectw  115, 120, 124
+     fg_allocxms  162, 163, 169              fg_drwimage  145, 195-198,
+     fg_automode  49, 50, 56,                     200-204, 207, 209,
+          99, 109, 111, 256                       212, 215, 217, 218,
+     fg_bestmode  46, 50, 51,                     219, 248, 278
+          53, 57, 121, 155,                  fg_ellipse  109, 124, 242
+          157, 158, 233                      fg_ellipsef  109, 124
+     fg_box  112, 122                        fg_ellipsew  109, 124
+     fg_boxdepth  112, 122                   fg_ellipsfw  109, 124
+     fg_boxw  112, 122                       fg_erase  98, 124, 168
+     fg_boxx  113, 114, 122                  fg_fadein  250, 251, 258
+     fg_boxxw  113, 122                      fg_fadeout  250, 258
+     fg_button  280, 281, 283,               fg_fillpage  98, 124
+          322, 323                           fg_flipmask  216, 217, 219
+     fg_capslock  263, 283                   fg_flood  121, 124
+     fg_chgattr  132, 145                    fg_floodw  121, 124
+     fg_chgtext  132, 146                    fg_flpimage  203, 204, 207,
+     fg_circle  109, 123                          215, 217, 219
+     fg_circlef  109, 123                    fg_fontsize  137, 146
+     fg_circlefw  109, 123                   fg_freepage  155, 157, 158,
+     fg_circlew  109, 123                         162, 165, 169, 304
+     fg_clipmask  216, 217, 219              fg_getaddr  160, 169
+     fg_clpimage  203, 204,                  fg_getattr  133, 146
+          207, 215, 217, 219                 fg_getblock  233, 234
+     fg_clprect  111, 123, 238,              fg_getchar  133, 146
+          245, 246                           fg_getclock  301, 303
+     fg_clprectw  111, 123                   fg_getcolor  69, 70, 77, 94
+     fg_copypage  163, 164,                  fg_getdacs  86-88, 94, 306
+          166, 168, 169, 222,                fg_getentry  166, 169
+          234                                fg_gethpage  225, 234
+     fg_cursor  44, 57, 94,                  fg_getimage  133, 207, 209,
+          134, 226                                210, 219, 233, 248
+                                                                   Index   337
+Fastgraph routines (cont.)                   fg_mouseini  165, 267-269,
+     fg_getindex  94                              271, 284
+     fg_getkey  262, 265, 283                fg_mouselim  269, 270, 284
+     fg_getlines  47, 57                     fg_mousemov  269, 270, 284
+     fg_getmap  207-210, 219,                fg_mousepos  271, 272, 284
+          230, 248                           fg_mouseptr  273, 277, 284
+     fg_getmaxx  61, 62, 64,                 fg_mousespd  269, 270, 284
+          111                                fg_mousevis  269, 272, 284
+     fg_getmaxy  61, 62, 64,                 fg_move  101, 102, 105,
+          111                                     121, 125, 135, 178,
+     fg_getmode  46, 57, 318                      180, 193, 194, 208,
+     fg_getpage  160, 169                         210, 214, 230, 254
+     fg_getpixel  99, 124                    fg_moverel  101, 102, 125
+     fg_getrgb  84-86, 94                    fg_moverw  101, 125
+     fg_getvpage  160, 169                   fg_movew  101, 125
+     fg_getworld  63, 64                     fg_music  289-291, 293,
+     fg_getxjoy  280-283                          296, 322
+     fg_getxpos  102, 124                    fg_musicb  293-296, 322
+     fg_getyjoy  280-283                     fg_numlock  263, 284
+     fg_getypos  102, 124                    fg_pagesize  161, 168, 170
+     fg_hush  291, 293, 294,                 fg_paint  121, 125, 254
+          296                                fg_paintw  121, 125
+     fg_hushnext  291, 293,                  fg_palette  71-80, 82-84,
+          294, 296                                89, 90, 94, 95, 201
+     fg_imagebuf  186, 187                   fg_palettes  90, 95, 306
+     fg_imagesiz  209, 210,                  fg_pan  255-258, 306
+          219, 233                           fg_panw  255, 256, 258
+     fg_initems  162, 163, 165,              fg_pattern  181, 185, 188,
+          169                                     212, 213
+     fg_initjoy  165, 279-281,               fg_pcxhead  174, 188
+          283                                fg_pcxmode  174, 188
+     fg_initw  62, 64, 101, 140              fg_playing  291, 294, 296
+     fg_initxms  162, 165, 170               fg_point  99, 101, 125
+     fg_inside  109, 125                     fg_pointw  99, 101, 125
+     fg_intjoy  281-283                      fg_pointx  101, 125
+     fg_intkey  262, 263, 265,               fg_pointxw  101, 125
+          281, 283, 294, 301                 fg_polyfill  107-109, 125
+     fg_justify  133-135, 146                fg_polygon  105-107, 125
+     fg_kbinit  265, 266, 283                fg_polygonw  106, 125
+     fg_kbtest  265, 266, 283                fg_polyline  107-109, 125
+     fg_locate  129-131, 134,                fg_polyoff  107
+          137, 146, 152, 159,                fg_print  133-137, 146
+          210                                fg_putblock  233, 234
+     fg_makegif  175, 176, 188,              fg_putimage  203, 207, 215,
+          306                                     219, 233
+     fg_makepcx  172, 173, 175,              fg_quiet  287-289, 296
+          176, 178, 188, 306                 fg_rect  80, 84, 111, 112,
+     fg_makeppr  180, 188                         114, 125, 137-139,
+     fg_makespr  178, 180, 188                    152, 192, 196, 227,
+     fg_maprgb  89, 94                            238, 245
+     fg_measure  302, 303                    fg_rectw  111, 125, 144
+     Fg_memavail  304, 307                   fg_reset  45, 46, 57, 318
+     fg_memory  55, 57                       fg_resize  164, 165, 170,
+     fg_mousebut  271, 272, 283                   257, 258
+     fg_mousecur  273, 274, 284              fg_restore  225, 227, 228,
+     fg_mousefin  268, 284                        233, 235, 245, 251
+                                             fg_restorew  225, 235
+338   Fastgraph User's Guide
+Fastgraph routines (cont.)                   fg_showspr  178, 180, 181,
+     fg_resume  295, 296                          188
+     fg_revimage  203, 204,                  fg_sound  286-289, 291,
+          207, 215, 217, 220                      292, 296
+     fg_revmask  216, 217, 220               fg_sounds  291, 292, 294,
+     fg_save  225-228, 233, 235                   296, 322
+     fg_savew  225, 235                      fg_stall  301-303
+     fg_scrlock  263, 284                    fg_suspend  295, 296
+     fg_scroll  252-254, 258                 fg_svgainit  53-55, 57
+     fg_setangle  143, 146                   fg_svgaver  55, 57
+     fg_setattr  68, 69, 95,                 fg_swchar  140-144, 146
+          98, 129, 130, 132,                 fg_swlength  144, 147
+          146, 152, 153, 156,                fg_swtext  143, 144, 147
+          158                                fg_tcdefine  231-233, 235
+     fg_setcaps  264, 284                    fg_tcmask  231-233, 235
+     fg_setclip  98, 126, 203                fg_tcxfer  231-233, 235
+     fg_setclipw  98, 126                    fg_testmode  45, 46, 51,
+     fg_setcolor  44, 69-80,                      53, 55, 57, 87, 152,
+          82, 83, 84, 95, 98,                     155, 205, 225, 288
+          99, 118, 119, 129,                 fg_text  44, 129-134, 136,
+          132, 140, 146, 152,                     137, 138, 140, 146,
+          153, 156, 158, 192,                     147
+          239, 240, 241, 252,                fg_transfer  228, 230-233,
+          253                                     235, 244-246, 251
+     fg_setdacs  86-88, 95,                  fg_version  5, 55, 318
+          306, 314                           fg_voice  287-289, 291-293,
+     fg_setentry  166, 168, 170                   296
+     fg_setfunc  240, 305, 307               fg_voices  292-294, 297,
+     fg_sethpage  225, 226,                       322
+          235, 250, 252                      fg_waitfor  85, 238, 244,
+     fg_setlines  47, 57                          246, 254, 256, 263,
+     fg_setmode  44, 46, 53,                      270, 289, 300-303
+          57, 70, 77, 83, 88,                fg_waitkey  45, 262, 265,
+          90, 91, 98, 99, 101,                    284
+          109, 111, 117, 118,                fg_waitvr  306, 307
+          129, 130, 132, 140,                fg_where  131, 147, 159
+          152, 159, 165, 166,                fg_xalpha  64, 65, 138, 147
+          182, 183-185, 205,                 fg_xconvert  64, 65, 138,
+          260, 267, 279, 318,                     139, 147
+          334                                fg_xscreen  64, 65, 99
+     fg_setnum  264, 284                     fg_xworld  64, 65, 102
+     fg_setpage  152, 170, 225               fg_yalpha  64, 65, 138, 147
+     fg_setratio  140, 142, 146              fg_yconvert  64, 65, 138,
+     fg_setrgb  73, 76, 80, 82,                   139, 147
+          83, 84, 86, 89, 94,                fg_yscreen  64, 65, 99
+          95, 185, 201                       fg_yworld  64, 65, 102
+     fg_setsize  140, 146               Fastgraph/Light  2
+     fg_setsizew  140, 146              Fastgraph/Light Video Driver  2,
+     fg_setvpage  152, 161,                       29
+          170, 246, 269, 306,           FGDRIVER  29
+          307                                /U option  29
+     fg_setworld  62-64, 140            Filler bits  191
+     fg_showgif  175, 176, 188,         Fish tank animation demo  248
+          306                           Flickering  306
+     fg_showpcx  172-175, 187,          Foreground color  68, 69
+          188, 306                      Full page transfer  222
+     fg_showppr  180, 188               Game port  279
+                                                                   Index   339
+GetMem (TP procedure)  186, 233              vertical position  280
+GIF file  175                           Keyboard  260
+     creating  175                           buffer  262, 301
+     displaying  175                         extended codes  260
+GrabRGB  181, 313, 314                       handler  264
+     /D option  314                          standard codes  260
+     output file format  314                 state light  264
+Graphics cursor  101                    Lines
+Graphics modes  32, 35, 70                   dashed  104
+     256-color  83                           solid  102
+     CGA  35, 70, 72                    Linking  5
+     EGA  37, 76, 78, 79                Logical pages  162
+     Hercules  36, 74, 75                    creating  162
+     MCGA  38, 81                            releasing  162
+     native EGA  37                     Masking map  201, 215-218
+     native VGA  38                     Memory conflicts
+     PCjr  36, 73                            logical pages  167
+     SVGA  40, 83                            virtual pages  167
+     Tandy  73                          Memory models  3
+     Tandy 1000  36                          large  4
+     VGA  38, 81, 83                         medium  4
+     XVGA  39                                small  3
+Hardware characters  129                Memory update function  305
+     graphics modes  133                Mickeys  269
+     height  137                        Microsoft BASIC PDS  11
+     side effects  136                  Microsoft C  3, 13
+     text modes  129                    Microsoft C++  3, 13
+HERCFIX  314, 315                       Microsoft FORTRAN  3, 14
+Hidden page  151, 225                   Microsoft Mouse  267
+HIMEM.SYS  162                          Microsoft QuickBASIC  3, 16
+Hot spot  277                           Microsoft QuickC  3, 18
+Image array  201                        Microsoft Visual Basic for DOS
+Image buffer  186                                 3, 20
+Images  172                             Microsoft Visual C++  3, 22
+     clipped  203                       Mode X  39
+     regular  195                       Mouse  266
+     reversed  203                           button status  271
+     reversed clipped  203                   CGA Considerations  278
+     without transparent pixels              cursor  269, 273
+          203                                cursor mask  273, 275
+INCLUDE environment variable  6              cursor visibility  269
+Input devices  260                           default cursor  275
+INSTALL program  4                           hot spot  277
+     /L option  5                            initialize  267
+Installation  4                              limits  269
+Interrupts  322                              position  269, 271
+INTRFACE.FOR  6                              screen mask  273, 275
+Joystick  279                                screen updates  269
+     button status  280, 281,                speed  269
+          322                                SVGA  268
+     calibration  280                        XVGA  268
+     characteristics  280               Mouse cursor  269, 273
+     horizontal position  280                graphics modes  275
+     initialize  279                         hot spot  277
+     keyboard emulation  281                 text modes  273
+     special considerations             Mouse driver  266
+          283                           Music  289
+340   Fastgraph User's Guide
+Music (cont.)                                unfilled  112
+     asynchronous  293                  Region fill  121
+     restarting  295                    Register preservation  318
+     stopping  294                      Resolution  32
+     suspending  295                    Reverse video  132
+     synchronous  289                   RGB color mapping  89
+Music commands  289                     Rubberband boxes  102, 113
+Music string  289, 293                  Scan codes  265
+Musical notes  289                      Screen dissolving  250
+Naming conventions  5                   Screen mask  273, 275
+NumLock  262-264                        Screen origin  255
+Overscan  71                            Screen space  60, 61
+Packed pixel run file  176, 179         Scrolling  252
+Packed pixel run map  180, 213               circular  252
+Page flipping  246, 247, 306,                end-off  252
+          307                                increment  252
+Palette  33                                  region  252
+Palette number  73, 76, 78, 79,         ScrollLock  262, 263
+          82                            SETMEM (BASIC function)  161
+Palette registers  73, 76, 78,          Shadow  132
+          79, 81, 83, 90, 91            Sliding tone  287
+Palette value  73, 76, 78, 79           SNAPSHOT  181, 310, 311, 313,
+Palettes  73, 76, 78, 79, 81,                     314
+          83                                 error tone  310
+Panning  164, 257, 306                       image files  310
+PC Paintbrush  172                           success tone  310
+PCOPTION environment variable           Software characters  139
+          6                                  alternate font  139, 140,
+PCX file  172                                     143
+     creating  172                           angle  143
+     displaying  172                         aspect ratio  140
+     video mode compatibility                font change operator (\)
+          174                                     141
+PCXHEAD  315                                 primary font  139, 140
+Periodic noise  288                          size  140
+Physical pages  150                          string length  144
+Pixel bleeding  279                          subscript operator (\v)
+Pixel run  177                                    142
+Pixel run file  176, 178, 180,               superscript operator (\^)
+          181, 214                                142
+Pixel run map  177, 181, 212                 underline operator (_)  142
+Pixels  32                              Sound  286
+Points  99                                   asynchronous  290
+Polygon                                      disk accesses during  291
+     filled  107, 108                        duration  286
+     unfilled  105-107                       frequency  286
+     vertex offsets  107                     PCjr  286
+Power C  3, 23                               stopping  294
+PPR file  176, 179                           synchronous  286
+Put_string  131                              Tandy  286
+QuickBASIC  3, 16                            volume  286
+QuickC  3, 18                           Sound effects  286-288
+READ.ME file  5                         Splitter cable  279
+Real-time operations  300               SPR file  176
+Rectangles                              Standard color set  70
+     dithered  114                      Standard pixel run file  176
+     solid  111                         Strlen  131
+                                                                   Index   341
+Stroke characters  139                       mode 23  40
+SuperVGA  51                                 mode 24  40
+SVGA  51                                     mode 25  40
+     chipset  52                             mode 26  40
+     dual banks  224                         mode 27  41
+     initialization  53-55                   mode 28  41
+     kernel  40, 52-56                       mode 29  41
+     kernel version  54, 55                  mode X  39
+     monitor compatibility  56               summary  32
+     problematic cards  56              Video page resizing  257
+     supported chipsets  52, 53         Video pages  33, 150
+     VESA compatibility  52, 53              active  151, 152
+     video memory present  55                hidden  151, 225
+Texas Instruments SN76496A                   logical  162
+          sound chip  286                    physical  150
+Text cursor  44, 129, 159                    preserving  160, 166
+Text modes  32, 33, 68                       resizing  164
+     43 lines  47                            segment address  160
+     50 lines  47                            virtual  150, 154
+     color  68                               visual  151, 152
+     monochrome  69                     Video subsystem  33
+TI sound chip  286                      Virtual colors  90, 91
+Transparency  190, 195, 197,            Virtual pages  150
+          198, 200, 201, 203,                creating  154
+          204, 212, 215, 218,                heap requirements  161
+          231, 232, 233                      page flipping  161
+Turbo C  3, 25                               releasing  155
+Turbo C++  3, 25                             writing to unallocated  162
+Turbo Pascal  3, 27                     Visual Basic  3, 20
+Vector characters  139                  Visual C++  3, 22
+Vertical retrace  306                   Visual effects  251
+VESA  52, 53                            Visual page  151, 152
+Video DAC registers  81-84, 86,         Warbling  287
+          90, 306                       White noise  288
+     EGA modes  87                      World space  60, 62
+Video modes  32                         XMS  162
+     mode 00  34                        XOR boxes  113
+     mode 01  34                        XOR lines  102
+     mode 02  34                        XOR pixels  101
+     mode 03  34                        Zortech C++  3, 28
+     mode 04  35
+     mode 05  35
+     mode 06  36
+     mode 07  35
+     mode 09  36
+     mode 11  36
+     mode 12  37
+     mode 13  37
+     mode 14  37
+     mode 15  37
+     mode 16  38
+     mode 17  38
+     mode 18  38
+     mode 19  39
+     mode 20  39
+     mode 21  39
+     mode 22  39

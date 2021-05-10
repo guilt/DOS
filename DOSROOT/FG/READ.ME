@@ -1,0 +1,450 @@
+------------------------------------------------------------------------------
+ ************ Action Arcade Adventure Set Software Release Notes ************
+------------------------------------------------------------------------------
+
+Thank you for purchasing the Action Arcade Adventure Set. I hope you
+enjoy the book and the accompanying software. This file contains some
+suggestions for using the software and some information about Fastgraph.
+
+For best results, please use the install program to copy the files to
+your hard disk. If you prefer, you may install the files yourself by
+copying the ARJ files into the proper subdirectories and running the 
+UNARJ.EXE program. For a complete list of installed files, please see
+FILELIST.TXT.
+
+------------------------------------------------------------------------------
+                         Installing the Software
+------------------------------------------------------------------------------
+
+The INSTALL.EXE program installs both Fastgraph/Light and all the game files
+and source code for the Action Arcade Adventure Set. 
+
+
+The install program will ask you for the compilers and memory models you wish
+to use. It also will ask for the name of the directories for the Fastgraph
+utilities, include files, and libraries. For the Fastgraph utilities, I
+suggest using the default name \FG. For the include files and libraries, I
+recommend using the directories where the compiler you've chosen normally
+searches for such files. The install program will try to determine these
+directories and propose them as defaults.
+
+I recommend you install Fastgraph/Light (FGL) for the large memory model. If
+you want to install FGL for more memory models, you will need to run the
+install program again.  Careful! If you modify the source code files for
+Tommy's Adventures and then run the install program again, it is possible to
+overwrite the modified files. I recommend you make backups of any modified
+source code files before running the install program a second time. Also,
+use the /L option on the command line to install FGL for more memory models.
+
+   A:\INSTALL     -- to install Fastgraph/Light and all the other software
+   A:\INSTALL \L  -- to install Fastgraph/Light again for more memory models
+
+Note that Fastgraph/Light may be installed for many compilers, including
+Fortran, Pascal and BASIC compilers. You are welcome to use Fastgraph/Light
+with any of these compilers, but the Tommy's Adventures source code is
+written in C, and you will need a C compiler if you want to recompile it. I
+recommend using one of the C compilers listed in the next section.
+
+------------------------------------------------------------------------------
+                          Compiling and Linking
+------------------------------------------------------------------------------
+
+Both the Tommy's Adventures game and the Fastgraph Game Editor can
+be compiled by using one of the 4 batch files on the disk:
+
+BUILDBCC.BAT for Borland C/C++
+
+BUILDMS5.BAT for Microsoft C version 5
+             
+BUILDMS6.BAT for Microsoft C version 6, Microsoft C/C++ version 7,
+             or Microsoft Visual C++
+
+BUILDTCC.BAT for Turbo C++
+
+The batch files were written to work with Fastgraph/Light, which is included
+on the disk. If you want to link with Fastgraph, you must modify the
+appropriate batch file. Replace the Fastgraph/Light library name, "FGLL.LIB"
+with the Fastgraph library name, "FGL.LIB".
+
+* FGLL.LIB is the Fastgraph/Light large model library
+* FGL.LIB is the Fastgraph large model library.
+
+Separate copies of these batch files will be found in the \fg\tomsrce\
+subdirectory for the Tommy game source code, and the \fg\fgesrce\
+subdirectory for the Fastgraph Game Editor source code.
+
+If you are using the Borland C++ IDE, you must make a project file! I am
+not kidding, you really must do this. It is quite simple. Refer to your
+Borland manual, or see Chapter 2 of the Action Arcade Adventure Set book
+for more details. Similarly, the Turbo C++ IDE requires a project file.
+
+------------------------------------------------------------------------------
+                            Troubleshooting
+------------------------------------------------------------------------------
+
+Every effort has been made to thoroughly test the software on this disk. 
+If you have any problems with any programs on this disk, please notify
+the Coriolis Group. We are not responsible for any damage done to anybody's
+hardware or data, or any other damage, as stated elsewhere in the disclaimer.
+
+------------------------------------------------------------------------------
+Known problems:
+------------------------------------------------------------------------------
+
+Problem: Compiling with Borland C++ will generate a harmless warning message
+on the file MENU.C. This warning has to do with calling a function as a
+pointer. Visual C++ and Turbo C++ generate a similar warning message.
+
+Solution: Ignore the warning message.
+
+------------------------------------------------------------------------------
+
+Problem: Linking the Fastgraph Game Editor with Fastgraph Light may reduce
+the number of sprites you can edit in the sprite editor. The reason is the
+FGDRIVER.EXE program takes up quite a bit of room in RAM. The editor will
+only allow you to edit as many sprites as it can allocate room for. This
+could be 8 or fewer sprites.
+
+Solution: Use the FGE.EXE program provided on the disk which does not
+require FGDRIVER.EXE. If you are using this program and you are still short
+on sprite memory, try removing any unnecessary TSR's. Also, do not try to
+run FGE.EXE in a Windows DOS box. Exit Windows before using the game editor. 
+
+If you change the game editor source code and must rebuild FGE.EXE, and find
+you need more sprite memory, consider buying Fastgraph which does not require
+the FGDRIVER program.
+
+------------------------------------------------------------------------------
+
+Problem: The Turbo C compiler does not produce a clean compile on the
+game source code. It has problems with the interrupt handler declarations.
+
+Solution: Use the Turbo C++ compiler. It works fine.
+
+------------------------------------------------------------------------------
+
+Problem: The Power C compiler similarly does not produce a clean compile.
+
+Solution: This source code may be a little too intense for Power C. I
+recommend using another compiler. The Borland C++, Turbo C++ and Microsoft
+C/C++ compilers version 5 and above have been tested with this source code.
+
+------------------------------------------------------------------------------
+                            Software Creations BBS
+------------------------------------------------------------------------------
+
+For the latest Fastgraph/Light files, patches, updates and goodies, call
+the Software Creations BBS at (503) 368-7036! Software Creations, home of
+the authors.
+
+------------------------------------------------------------------------------
+ ************************** Fastgraph Release Notes *************************
+------------------------------------------------------------------------------
+
+Ted Gruber Software                                      Voice: (702) 735-1980
+PO Box 13408                                               FAX: (702) 735-4603
+Las Vegas, NV  89112                                       BBS: (702) 796-7134
+                                                           CIS:     72000,1642
+
+------------------------------------------------------------------------------
+                                  Fastgraph
+------------------------------------------------------------------------------
+
+Fastgraph is a versatile, high-performance programmer's graphics library for
+DOS-based PC systems.  It is powerful enough to satisfy the most demanding
+graphics application, yet it is easy enough for even the novice graphics
+programmer.  Fastgraph includes more than 200 hand-optimized routines, from
+pixel display to sophisticated animation tools.  This collection of routines
+provides a programmer with proven, powerful tools to take command of the PC
+and PS/2 text and graphics video environment.
+
+Fastgraph's major functional areas include:
+
+* Video mode detection and initialization
+* Support for 28 video modes, including SuperVGA, standard and extended VGA,
+  MCGA, EGA, Hercules, Tandy, CGA, and color and monochrome text
+* SVGA support for 20 chipsets plus VESA in resolutions of 640x400x256,
+  640x480x256, 800x600x256, 1024x768x256, 800x600x16, and 1024x768x16
+* SVGA chipset autodetection
+* Colors, virtual colors, and palettes
+* Graphics fundamentals, including points, solid and dashed lines,
+  polygons, circles, ellipses, solid and dithered rectangles, region
+  fill, and clipping
+* Redefinable world space coordinate system
+* A scalable stroked character font
+* GIF and PCX display and creation routines
+* Bit-mapped image support, including mode-specific and mode-independent
+  images, transparent pixels, clipped and reversed images, image retrieval,
+  pixel run maps, and masking maps
+* Fast block transfer routines (BitBlt)
+* Physical, virtual, and logical video page management
+* Resizeable video pages for smooth, flicker-free panning
+* Animation and special effects
+* Keyboard, mouse, and joystick support
+* Low-level keyboard handler, ideal for game development
+* Sound effects and music, both synchronous and asynchronous
+* Support for most popular C, Pascal, BASIC, and FORTRAN compilers
+* Support for small, medium, and large memory models where appropriate
+* Extensive tutorial-style user's guide and reference manual
+* No royalties
+
+Fastgraph is an ideal development tool for entertainment and educational
+software, presentation graphics products, scientific and engineering
+applications, CAD/CAM, animation, and any application that requires robust
+graphics.  With Fastgraph, it's possible to write programs that run in many
+different video modes by changing only a few lines of code, resulting in fast
+program development.
+
+Originally developed for use in commercial video games, Fastgraph represents
+the cutting edge in graphics technology for the IBM PC.  It has been used in
+commercial products such as Accolade's Test Drive III, Day of the Viper, Steel
+Thunder, and Gunboat; ComputerEasy's Video Poker a la Carte; Compu-Teach's
+Once Upon a Time series, Puppet Playhouse, and Destination Mars; and all our
+shareware products.
+
+------------------------------------------------------------------------------
+                               Fastgraph/Light
+------------------------------------------------------------------------------
+
+Fastgraph/Light is the shareware version of Fastgraph.  It includes all the
+features of Fastgraph except the world space coordinate system, stroked
+character font, and GIF file support.  Unlike Fastgraph, Fastgraph/Light uses
+an external video driver (FGDRIVER) that you load before running a program
+developed with Fastgraph/Light, just as you load a mouse driver before you
+run a program that uses a mouse.  Fastgraph does not use the external video
+driver but instead includes the necessary functions directly in your EXE or
+COM file.
+
+Any programs developed using Fastgraph/Light are 100% source code compatible
+with Fastgraph.  If you purchase Fastgraph after trying Fastgraph/Light, all
+you need to do is re-link your programs.  As with Fastgraph, we don't charge
+royalties for using Fastgraph/Light.  The registered version of FG/Light
+includes a software license agreement that lets you distribute the external
+video driver without charge as part of your applications.
+
+------------------------------------------------------------------------------
+                     Terms of Fastgraph/Light Evaluation
+------------------------------------------------------------------------------
+
+This is an EVALUATION VERSION of Fastgraph/Light and is distributed as
+shareware.  It is a full-functioned version with all features found in the
+registered version of Fastgraph/Light.  However, programs created with the
+evaluation version will display an evaluation notice when run.  In addition,
+programs created with the evaluation version may not be sold, given away, or
+distributed in any form.
+
+The Fastgraph/Light evaluation version is provided so you can see firsthand
+what Fastgraph can do in the context of your own applications.  You may use
+the evaluation version for 30 days, after which you must purchase Fastgraph
+or Fastgraph/Light, or discontinue using the evaluation version.
+
+The Fastgraph and Fastgraph/Light purchase price includes disks containing
+the latest version of the product and a license agreement that entitles you
+to use the product without royalties in any programs.  Orders for Fastgraph
+include professionally printed versions of the Fastgraph User's Guide and
+Reference Manual (you can purchase Fastgraph/Light with or without printed
+manuals).  You'll also receive access to special conferences on our technical
+support bulletin board.  Please see "Ordering Information" at the end of this
+file for complete registration information.
+
+------------------------------------------------------------------------------
+                          Notice to Shareware Vendors
+------------------------------------------------------------------------------
+
+Shareware vendors must obtain WRITTEN PERMISSION from Ted Gruber Software to
+distribute the evaluation version of Fastgraph/Light.  See the LICENSE.DOC
+file for details.  If you do not find a LICENSE.DOC file, contact Ted Gruber
+Software.
+
+------------------------------------------------------------------------------
+                               On-line Manuals
+------------------------------------------------------------------------------
+
+Fastgraph/Light includes on-line versions of the tutorial-style "Fastgraph
+User's Guide" and the "Fastgraph Reference Manual".  These two extensive
+manuals explain Fastgraph and Fastgraph/Light in detail and are the definitive
+references for learning and using the products.  While they specifically
+describe Fastgraph, everything in the manuals also applies to Fastgraph/Light
+unless stated otherwise.
+
+The User's Guide is a detailed tutorial about Fastgraph.  The companion
+Reference Manual gives descriptions of each Fastgraph routine in alphabetical
+order.  We recommend reading Chapter 1 of the User's Guide and the first
+section of the Reference Manual before you try Fastgraph or Fastgraph/Light.
+
+The User's Guide is split into separate files for each chapter, USER01.DOC to
+USER17.DOC.  There is also a file USERAPP.DOC containing the appendices and
+index.  The file REF.DOC contains the Reference Manual.  The INSTALL program
+places these files in the \FG directory.  All these files are ASCII text
+files, suitable for any 80-column (or wider) printer.  Be forwarned that the
+on-line versions of the User's Guide and Reference manual total nearly 600
+pages!
+
+The price of Fastgraph includes a professionally printed and bound copy of
+the User's Guide and Reference Manual.  You may purchase the printed manual
+separately with Fastgraph/Light.
+
+------------------------------------------------------------------------------
+                               Example Programs
+------------------------------------------------------------------------------
+
+Fastgraph/Light contains files for all the example programs in the Fastgraph
+User's Guide.  The INSTALL program places these files in the \FG\EXAMPLES
+directory.
+
+------------------------------------------------------------------------------
+                              Distribution Files
+------------------------------------------------------------------------------
+
+The Fastgraph/Light evaluation version on the Fastgraph demo disk contains the
+following files:
+
+     READ.ME        This file
+     WHATS.NEW      Text file describing new features in Fastgraph 3.0
+     ORDER.FRM      Product order form
+     INSTALL.EXE    Fastgraph/Light installation program
+     FGLIGHT.ARJ    Fastgraph/Light libraries and utilities (compressed)
+     FGLBP.ARJ      Fastgraph/Light units for Borland Pascal 7 (compressed)
+     FGLTP.ARJ      Fastgraph/Light units for Turbo Pascal 6 (compressed)
+     MANUALS.ARJ    Fastgraph User's Guide and Reference Manual (compressed)
+     EXCOMMON.ARJ   Files common to all example programs (compressed)
+     EXBAS.ARJ      Example programs written in QuickBASIC (compressed)
+     EXC.ARJ        Example programs written in C (compressed)
+     EXFOR.ARJ      Example programs written in FORTRAN (compressed)
+     EXPAS.ARJ      Example programs written in Turbo Pascal (compressed)
+     UNARJ.EXE      Robert Jung's file decompression utility
+
+If your Fastgraph/Light evaluation kit does not include all these files, you
+may download a complete kit from our technical support BBS by calling (702)
+796-7134.  There is no charge (other than the phone call) for using the BBS.
+
+We'd like to personally thank Robert Jung for his liberal licensing agreement
+covering the use of his UNARJ utility.  UNARJ and its companion product, ARJ,
+are excellent products that we highly recommend.
+
+------------------------------------------------------------------------------
+                               Fastgraph/Fonts
+------------------------------------------------------------------------------
+
+Fastgraph/Fonts lets you easily add bit-mapped character support to Fastgraph
+applications.  The product includes 40 font files in several point sizes.  A
+program can load up to 32 fonts simultaneously.  Font files shipped with
+Fastgraph/Fonts may be distributed without royalties in your applications.
+
+The Fastgraph/Fonts manual includes a detailed description of the font file
+format, so you can create your own font files.  PCX templates and a MAKEFONT
+utility are included to assist in font file creation.
+
+Fastgraph/Fonts requires any version of Fastgraph or Fastgraph/Light.
+
+------------------------------------------------------------------------------
+                               Fastgraph/Image
+------------------------------------------------------------------------------
+
+Fastgraph/Image is a Fastgraph add-on product that provides functions and
+utilities for managing libraries containing images and other files.  While
+the product was designed to manage and display GIF, PCX, PPR, and SPR images
+stored in a library file, Fastgraph/Image can be used with any type of file,
+including bit maps, text files, and Fastgraph/Fonts font files.
+
+Functions are provided for opening a library, displaying an image file from
+a library, retrieving a file from a library, and closing a library.  The
+product also includes a library management utility that lets you add, delete,
+extract, and replace files in a library.
+
+If an application uses several image files, Fastgraph/Image is especially
+valuable because it lets you distribute these images in a single file.  This
+provides added security because users can't take your image files and use
+them for other purposes (at least not easily).  Another benefit is that
+combining many images in a single file uses less disk space than distributing
+separate files for each image.
+
+Fastgraph/Fonts requires any version of Fastgraph.
+
+------------------------------------------------------------------------------
+                             Ordering Information
+------------------------------------------------------------------------------
+
+The Fastgraph family of products represents a high-performance, comprehensive
+development system for graphics programmers. For more information about any
+of our products, please call, write, or FAX. You can download evaluation
+versions and product demos from our technical support BBS at (702) 796-7134.
+
+We accept Visa, MasterCard, and COD (extra charge for COD orders).  Purchase
+orders are welcome from most companies, schools, and government agencies.
+After July 31, 1995, please call first for current version and pricing
+information.
+
+Source code and site licenses are available for all products.  Please call,
+write, or FAX for details.
+
+Due to a special joint marketing effort with the Coriolis group, Fastgraph
+orders will be shipped from the Coriolis warehouse in Scottsdale, Arizona.
+If you have specific questions about your order, please call the Coriolis
+group at (800) 410-0192. For answers to all your other questions, including
+technical support questions, call Ted Gruber Software in Las Vegas at
+(702) 735-1980.
+
+For your convenience, the order form below appears by itself in the ORDER.FRM
+file.
+
+Order from:                                              Voice: (800) 410-0192
+Ted Gruber Software                                 Outside US: (602) 483-0192
+PO Box 13408                                               FAX: (602) 483-0193
+Las Vegas, NV  89112                              Tech Support: (702) 735-1980         
+                                                           CIS:     72000,1642
+Name:    _____________________________________________________________________
+
+Company: _____________________________________________________________________
+
+Address: _____________________________________________________________________
+
+City:    _____________________________________  State: ________  Zip: ________
+
+Country: _____________________________________  Phone: _______________________
+
++=====+=========================================+=======+============+=======+
+|     |                                         | Price |  Shipping  |       |
+| Qty |            Product Description          | Each  | Code  Cost | Total |
++=====+=========================================+=======+=====+======+=======+
+|     | Fastgraph graphics library              | $249  |  1  |      |       |
++-----+-----------------------------------------+-------+-----+------+-------+
+|     | Fastgraph/Light with on-line manual     |  $49  |  2  |      |       |
++-----+-----------------------------------------+-------+-----+------+-------+
+|     | Fastgraph/Light with printed manual     |  $79  |  1  |      |       |
++-----+-----------------------------------------+-------+-----+------+-------+
+|     | Fastgraph/Fonts bit-mapped font support |  $69  |  2  |      |       |
+|     | (requires Fastgraph or Fastgraph/Light) |       |     |      |       |
++-----+-----------------------------------------+-------+-----+------+-------+
+|     | Fastgraph/Image image management library|  $69  |  2  |      |       |
+|     | (requires Fastgraph)                    |       |     |      |       |
++-----+-----------------------------------------+-------+-----+------+-------+
+|     | FG/Fonts and FG/Image bundle            | $118  |  2  |      |       |
++-----+-----------------------------------------+-------+-----+------+-------+
+|     | Graphics Power Pack                     | $359  |  1  |      |       |
+|     | Fastgraph, FG/Fonts, and FG/Image       |       |     |      |       |
++=====+=========================================+=======+=====+======+=======+
+                                                           Subtotal  |       |
+*********************************                                    +=======+
+*                               *    Nevada residents add sales tax  |       |
+* Shipping charges per product: *                                    +=======+
+*                               *     COD orders (U.S. only) add $5  |       |
+*     Code 1         Code 2     *                                    +=======+
+*   ----------     ----------   *                             Total  |       |
+*   U.S.    $5     U.S.    $3   *                                    +=======+
+*   Canada  $7     Canada  $3   *    Specify disk format:
+*   Other call     Other   $6   *
+*                               *       [ ]  3.5-inch    [ ]  5.25-inch
+*********************************
+                                     Method of payment:
+
+                                        [ ] payment enclosed
+                                        [ ] Visa or MasterCard
+                                        [ ] COD
+                                        [ ] purchase order # _________________
+For credit card orders only:
+
+Card number: ____________________________________  Expiration date: __________
+
+Signature:   _________________________________________________________________
+

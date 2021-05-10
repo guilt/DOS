@@ -1,0 +1,30 @@
+#
+# DSM for tex4ht alpha 8 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: t4ht-a8b
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: tex4ht
+version: 0 alpha 8
+type: binaries
+manifest: t4ht-a8b
+sources-dsm: t4ht-a8s
+
+short-description: TeX4Ht, a TeX to HTML convertor
+license: Free
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: t4ht-a8b.zip
+
+pre-install-readme: gnu/web2c-7.2/tex4htk/README.djgpp
+
+requires: texmflib

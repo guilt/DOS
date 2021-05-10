@@ -1,0 +1,309 @@
+The companion disk to Action Arcade Adventures contains the following
+files:
+
+EXC.ARJ              Example programs from the Fastgraph User's Guide
+FADE.ARJ             Palette fade program from Eric Lund
+FGE.ARJ              Fastgraph Game Editor program and data files
+FGESRCE.ARJ          Source code for Fastgraph Game Editor
+FGLIGHT.ARJ          Fastgraph/Light libraries, driver and utilities
+FILELIST.TXT         This file
+HEDGE.ARJ            Game: Hedge Row with source code
+INSTALL.EXE          Installation program--run this first!
+LEVEL.ARJ            Level Editor and source code from Chapter 6
+MAKEFONT.ARJ         Utility to make a character font header file
+MANUALS.ARJ          Fastgraph User's Guide and Fastgraph Reference Manual
+ORDER.FRM            Order form for Fastgraph and special offers
+PALETTE.ARJ          Palette matching and reduction utility
+PCX.ARJ              Display any PCX file
+QF.ARJ               QuickFire demo
+READ.ME              Release notes
+RIPPER.ARJ           Tile Ripper program with source from Chapter 4
+TOMMY.ARJ            Game: Tommy's Adventures
+TOMSRCE.ARJ          Source code for Tommy's Adventures
+UNARJ.EXE            Unarchiving program
+XTRA_ART.ARJ         Additional artwork to play with
+
+It is recommended you run the install program to load these files
+onto your hard disk. The following subdirectories are created by the
+install program:
+
+\FG\EXAMPLES\
+\FG\FGE\
+\FG\FGESRCE\
+\FG\HEDGE\
+\FG\QF\
+\FG\TOMMY\
+\FG\TOMSRCE\
+\FG\UTIL\
+
+The files are installed by copying and unarchiving into the subdirectories
+as follows:
+
+\FG\
+        FGLIGHT.ARJ   
+        FILELIST.TXT
+        INSTALL.EXE   
+        UNARJ.EXE     
+        MANUALS.ARJ   
+        ORDER.FRM     
+        READ.ME       
+
+        \EXAMPLES\
+                    EXC.ARJ       
+        \FGE\
+                    FGE.ARJ       
+        \FGESRCE\  
+                    FGESRCE.ARJ   
+        \HEDGE\
+                    HEDGE.ARJ   
+        \QF\
+                    QF.ARJ        
+        \TOMMY\
+                    TOMMY.ARJ     
+        \TOMSRCE\
+                    TOMSRCE.ARJ   
+        \UTIL\
+                    FADE.ARJ      
+                    LEVEL.ARJ     
+                    MAKEFONT.ARJ  
+                    PALETTE.ARJ   
+                    PCX.ARJ       
+                    RIPPER.ARJ    
+                    XTRA_ART.ARJ
+
+In addition, the Fastgraph libraries are installed in the appropriate
+library subdirectories, for example \BORLANDC\LIB and the FASTGRAF.H
+include file is installed in te appropriate include file
+subdirectory, for example \BORLANDC\INCLUDE.
+
+The contents of each archive file are as follows:
+
+EXC.ARJ     
+          01-01.C   06-02.C   08-03.C   10-15.C   14-07.C   
+          03-01.C   06-03.C   08-04.C   10-16.C   14-08.C   
+          03-02.C   06-04.C   08-05.C   10-17.C   14-09.C   
+          03-03.C   06-05.C   08-06.C   10-18.C   14-10.C   
+          03-04.C   06-06.C   08-07.C   11-01.C   14-11.C   
+          03-05.C   06-07.C   08-08.C   11-02.C   14-12.C   
+          03-06.C   06-08.C   08-09.C   11-03.C   14-13.C   
+          03-07.C   06-09.C   08-10.C   11-04.C   15-01.C   
+          03-08.C   06-10.C   08-11.C   11-05.C   15-02.C   
+          03-09.C   06-11.C   08-12.C   11-06.C   15-03.C   
+          03-10.C   06-12.C   09-01.C   11-07.C   15-04.C   
+          04-01.C   06-13.C   09-02.C   11-08.C   15-05.C   
+          04-02.C   06-14.C   09-03.C   12-01.C   15-06.C   
+          04-03.C   06-15.C   09-04.C   12-02.C   15-07.C   
+          05-01.C   06-16.C   09-05.C   12-03.C   15-08.C   
+          05-02.C   06-17.C   09-06.C   12-04.C   16-01.C   
+          05-03.C   07-01.C   09-07.C   12-05.C   16-02.C   
+          05-04.C   07-02.C   10-01.C   12-06.C   16-03.C   
+          05-05.C   07-03.C   10-02.C   13-01.C   17-01.C   
+          05-06.C   07-04.C   10-03.C   13-02.C   17-02.C   
+          05-07.C   07-05.C   10-04.C   13-03.C   BB-01.ASM 
+          05-08.C   07-06.C   10-05.C   13-04.C   CC-01.ASM 
+          05-09.C   07-07.C   10-06.C   13-05.C   CC-01.C   
+          05-10.C   07-08.C   10-07.C   13-06.C   CORAL.GIF 
+          05-11.C   07-09.C   10-08.C   13-07.C   CORAL.PCX 
+          05-12.C   07-10.C   10-09.C   14-01.C   CORAL.PPR 
+          05-13.C   07-11.C   10-10.C   14-02.C   CORAL.SPR 
+          05-14.C   07-12.C   10-11.C   14-03.C   FISH.PPR  
+          05-15.C   07-13.C   10-12.C   14-04.C   FISHTANK.C
+          05-16.C   08-01.C   10-13.C   14-05.C   
+          06-01.C   08-02.C   10-14.C   14-06.C   
+          
+FADE.ARJ    
+          FADE.C
+          FADE.EXE
+
+FGE.ARJ     
+          EGYPT.ATT   
+          EGYPT.LEV   
+          EGYPT.PCX   
+          ENEMY.LST   
+          FGE.EXE     
+          SPACBACK.ATT
+          SPACBACK.PCX
+          SPACE.LEV   
+          SPACFORE.ATT
+          SPACFORE.PCX
+          TOMJUMP.LST 
+          TOMKICK.LST 
+          TOMRUN.LST  
+          TOMSCORE.LST
+          TOMSHOOT.LST
+          GAME.DAT    
+          TOMSTAND.LST
+          SPRITE.DAT  
+
+FGESRCE.ARJ 
+          BUILDBCC.BAT
+          BUILDMS5.BAT
+          BUILDMS6.BAT
+          BUILDTCC.BAT
+          CHAR.C     
+          COMMON.C   
+          EDITDEFS.H 
+          FGE.C      
+          FONT5.H    
+          LEVEL.C    
+          MENU.C     
+          RIPPER.C   
+          SPRITE.C   
+          TILE.C     
+
+FGLIGHT.ARJ 
+          WHATS.NEW     
+          FGDRIVER.EXE  
+          CLIP.EXE      
+          CONVERT.EXE   
+          GRABRGB.EXE   
+          SNAPSHOT.EXE  
+          FGLL.LIB      
+          FGLM.LIB      
+          FGLS.LIB      
+          FGLL.MIX      
+          FGLM.MIX      
+          FGLS.MIX      
+          FGLQB.LIB     
+          FGLQB.QLB     
+          FGLQBX.LIB    
+          FGLQBX.QLB    
+          FGLVBDOS.LIB  
+          FGLVBDOS.QLB  
+          FASTGRAF.BI   
+          FASTGRAF.H    
+          INTRFACE.FOR  
+          
+HEDGE.ARJ 
+          COMMON.C      
+          COMMON.H      
+          DEFS.H        
+          DUBDINER.PCX  
+          FILE_ID.DIZ   
+          HEDGE.ATT     
+          HEDGE.C       
+          HEDGE.DOC     
+          HEDGE.EXE     
+          HEDGE.H       
+          HEDGE.PCX     
+          MAZE001.LEV   
+          MAZE002.LEV   
+          MAZE003.LEV   
+          MAZE004.LEV   
+          MAZE005.LEV   
+          MAZE006.LEV   
+          MAZE007.LEV   
+LEVEL.ARJ   
+          CASTLE.LEV   
+          CASTLE.PCX   
+          LEVEL.C      
+          LEVEL.EXE    
+          LEVEL.H      
+
+MAKEFONT.ARJ
+          FONT5.PCX   
+          MAKEFONT.C  
+          MAKEFONT.EXE
+
+MANUALS.ARJ 
+          USER01.DOC 
+          USER02.DOC 
+          USER03.DOC 
+          USER04.DOC 
+          USER05.DOC 
+          USER06.DOC 
+          USER07.DOC 
+          USER08.DOC 
+          USER09.DOC 
+          USER10.DOC 
+          USER11.DOC 
+          USER12.DOC 
+          USER13.DOC 
+          USER14.DOC 
+          USER15.DOC 
+          USER16.DOC 
+          USER17.DOC 
+          USERAPP.DOC
+          REF.DOC    
+
+PALETTE.ARJ 
+          CHAR.C       
+          FONT5.H      
+          JUNGLE.PCX   
+          PALDEFS.H       
+          PALETTE.C    
+          PALETTE.EXE  
+          SCORPIAN.PCX 
+          TOMMY.PCX    
+          TOMRUN.PCX   
+
+PCX.ARJ     
+          PCX.EXE
+          PCX.C
+
+QF.ARJ      
+          QF.BMP   
+          QF.EXE   
+          QF.LEV   
+          QF.PCX   
+          QF0.PCX  
+          QF1.PCX  
+
+RIPPER.ARJ  
+          GO.BAT        
+          LAUNCH1.PCX   
+          LAUNCH2.PCX   
+          RIPPER.C      
+          RIPPER.EXE    
+
+TOMMY.ARJ   
+          EGYPT.ATT    
+          EGYPT.LEV    
+          EGYPT.PCX    
+          ENEMY.LST    
+          GAME.DAT     
+          SLIDE.SPR
+          SPACBACK.ATT 
+          SPACBACK.PCX 
+          SPACE.LEV    
+          SPACFORE.ATT 
+          SPACFORE.PCX 
+          TOMJUMP.LST  
+          TOMKICK.LST  
+          TOMMY.EXE    
+          TOMMY.PCX    
+          TOMRUN.LST   
+          TOMSCORE.LST 
+          TOMSHOOT.LST 
+          TOMSTAND.LST 
+
+TOMSRCE.ARJ 
+          ACTION.C     
+          BUILDBCC.BAT
+          BUILDMS5.BAT
+          BUILDMS6.BAT
+          BUILDTCC.BAT
+          CHAR.C       
+          EFFECTS.C    
+          FONT5.H      
+          GAMEDEFS.H   
+          MAP.C        
+          MOTION.C     
+          TIMER.ASM
+          TIMER.OBJ
+          TOMMY.C      
+
+XTRA_ART.ARJ
+          CASTLE1.PCX
+          CASTLE2.PCX
+          EGYPT1.PCX
+          EGYPT2.PCX
+          JUNGLE1.PCX
+          JUNGLE2.PCX
+          PLANES.PCX
+          SPACE.PCX
+          TOMFLIP.PCX
+          TOMJUMP.PCX
+          TOMPUNCH.PCX
+
+

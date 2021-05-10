@@ -1,0 +1,132 @@
+
+
+
+PTH-CONFIG(1)          GNU Portable Threads         PTH-CONFIG(1)
+
+
+NNAAMMEE
+       pptthh--ccoonnffiigg - Pth library build utility
+
+VVEERRSSIIOONN
+       GNU Pth 2.0.7 (08-Jun-2006)
+
+SSYYNNOOPPSSIISS
+       pptthh--ccoonnffiigg [----hheellpp] [----vveerrssiioonn] [----aallll] [----pprreeffiixx]
+       [----eexxeecc--pprreeffiixx] [----bbiinnddiirr] [----lliibbddiirr] [----iinncclluuddeeddiirr]
+       [----mmaannddiirr] [----ddaattaaddiirr] [----aaccddiirr] [----ccffllaaggss] [----llddffllaaggss]
+       [----lliibbss]
+
+DDEESSCCRRIIPPTTIIOONN
+       The pptthh--ccoonnffiigg program is a little helper utility for easy
+       configuring and building applications based on the _p_t_h(3)
+       library.  It can be used to query the C compiler and
+       linker flags which are required to correctly compile and
+       link the application against the _p_t_h(3) library.
+
+OOPPTTIIOONNSS
+       pptthh--ccoonnffiigg accepts the following options:
+
+       ----hheellpp
+           Prints the short usage information.
+
+       ----vveerrssiioonn
+           Prints the version number and date of the installed
+           _p_t_h(3) library.
+
+       ----aallll
+           Forces the output of all flags, that is, including
+           extra flags which are not PPtthh specific.
+
+       ----pprreeffiixx
+           Prints the installation prefix of architecture
+           independent files
+
+       ----eexxeecc--pprreeffiixx
+           Prints the installation prefix of architecture
+           dependent files.
+
+       ----bbiinnddiirr
+           Prints the installation directory of binaries.
+
+       ----lliibbddiirr
+           Prints the installation directory of libraries.
+
+       ----iinncclluuddeeddiirr
+           Prints the installation directory of include headers.
+
+       ----mmaannddiirr
+           Prints the installation directory of manual pages.
+
+
+
+
+
+08-Jun-2006               GNU Pth 2.0.7                         1
+
+
+
+
+
+PTH-CONFIG(1)          GNU Portable Threads         PTH-CONFIG(1)
+
+
+       ----ddaattaaddiirr
+           Prints the installation directory of shared data.
+
+       ----aaccddiirr
+           Prints the installation directory of aauuttooccoonnff data.
+
+       ----ccffllaaggss
+           Prints the C compiler flags which are needed to
+           compile the _p_t_h(3)-based application. The output is
+           usually added to the "CFLAGS" variable of the
+           applications "Makefile".
+
+       ----llddffllaaggss
+           Prints the linker flags ("-L") which are needed to
+           link the application with the _p_t_h(3) library. The
+           output is usually added to the "LDFLAGS" variable of
+           the applications "Makefile".
+
+       ----lliibbss
+           Prints the library flags ("-l") which are needed to
+           link the application with the _p_t_h(3) library. The
+           output is usually added to the "LIBS" variable of the
+           applications "Makefile".
+
+EEXXAAMMPPLLEE
+        CC      = cc
+        CFLAGS  = -O `pth-config --cflags`
+        LDFLAGS = `pth-config --ldflags`
+        LIBS    = -lm `pth-config --libs`
+
+        all: foo
+        foo: foo.o
+            $(CC) $(LDFLAGS) -o foo foo.o $(LIBS)
+        foo.o: foo.c
+            $(CC) $(CFLAGS) -c foo.c
+
+SSEEEE AALLSSOO
+       _p_t_h(3), _c_c(1).
+
+AAUUTTHHOORR
+        Ralf S. Engelschall
+        rse@engelschall.com
+        www.engelschall.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+08-Jun-2006               GNU Pth 2.0.7                         2
+
+

@@ -1,0 +1,30 @@
+#
+# DSM for less 340 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com> 2000-04-02
+#
+
+dsm-file-version: 1.2
+dsm-name: lss340b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: less
+version: 340
+manifest: lss340b
+sources-dsm: lss340s
+short-description: A paginator similar to "more" or "pg"
+license: GNU General Public License, Version 2
+
+author: Mark Nudelman
+author-email: marknu@flash.net
+web-site: http://www.flash.net/~markn/less
+mailing-list: bug-less@gnu.org
+
+simtelnet-path: v2gnu/
+zip: lss340b.zip
+
+requires: DPMI
+replaces: less < 340

@@ -1,0 +1,40 @@
+#
+# DSM for id-utils 3.2 binaries
+# Written by Richard Dawe <rich@phekda.freeserve.co.uk> 2001-06-30
+#
+
+dsm-file-version: 1.0
+dsm-name: idu32b
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: rich@phekda.freeserve.co.uk
+
+name: id-utils
+version: 3.2
+type: binaries
+manifest: idu32b
+sources-dsm: idu32s
+short-description: ID utilities find tokens in files using a database.
+license: GNU GPL
+
+# Copied from readme.dos
+long-description: \
+ID Utilities are used to scan a directory tree, create a database\n\
+that records which tokens appear in which files, and then query that\n\
+database, thus making a variety of text-searching tasks much simpler\n\
+and faster.  A typical example of a query is ``list all files that #include\n\
+a particular header file''.  Another example is to search\n\
+mail archives for certain keywords.
+
+author: Greg McGary
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: idu32b.zip
+
+pre-install-readme: gnu/id-utils.32/README.dos
+
+requires: DPMI

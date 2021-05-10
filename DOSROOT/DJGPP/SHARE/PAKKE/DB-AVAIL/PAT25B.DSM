@@ -1,0 +1,26 @@
+#
+# DSM for patch 2.5 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.3
+dsm-name: pat25b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: patch
+version: 2.5
+manifest: pat25b
+sources-dsm: pat25s
+short-description: GNU patch
+license: GNU General Public License, Version 2
+
+simtelnet-path: v2gnu/
+zip: pat25b.zip
+
+replaces: patch < 2.5
+requires: DPMI
+depends-on: info-reader

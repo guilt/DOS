@@ -1,0 +1,23 @@
+#
+# DSM for gawk 3.0.3 documentation
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: gwk303d
+dsm-version: 0.4.0
+dsm-type: documentation
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: gawk
+version: 3.0.3
+manifest: gwk303d
+binaries-dsm: gwk303b
+sources-dsm: gwk303s
+short-description: GNU awk
+license: GNU General Public License, Version 2
+
+simtelnet-path: v2gnu/
+zip: gwk303d.zip

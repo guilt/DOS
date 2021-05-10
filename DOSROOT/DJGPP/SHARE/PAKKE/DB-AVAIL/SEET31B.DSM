@@ -1,0 +1,30 @@
+#
+# DSM for seetex 3.1 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: seet31b
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: seetex
+version: 3.1
+type: binaries
+manifest: seet31b
+sources-dsm: seet31s
+
+short-description: Seetex, DVI manipulation utilities
+license: Free
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: seet31b.zip
+
+pre-install-readme: gnu/web2c-7.2/djgpp/README
+
+requires: texmflib

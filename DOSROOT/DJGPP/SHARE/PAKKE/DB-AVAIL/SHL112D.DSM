@@ -1,0 +1,27 @@
+#
+# DSM for sh-utils 1.12 documentation
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.2
+dsm-name: shl112d
+dsm-version: 0.4.0
+dsm-type: documentation
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: sh-utils
+version: 1.12
+manifest: shl112d
+binaries-dsm: shl112b
+sources-dsm: shl112s
+short-description: GNU shell utilities
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: shl112d.zip
+

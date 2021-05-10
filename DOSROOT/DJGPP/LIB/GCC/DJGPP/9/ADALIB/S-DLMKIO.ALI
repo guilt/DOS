@@ -1,0 +1,95 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.dim.long_mks_io%b  s-dlmkio.ads	ab6ffb49 NE OL PK
+W ada%s			ada.ads			ada.ali
+Z ada.exceptions%s	a-except.adb		a-except.ali
+Z ada.text_io%s		a-textio.adb		a-textio.ali
+Z ada.text_io.float_aux%s  a-tiflau.adb		a-tiflau.ali
+Z ada.text_io.float_io%s
+W system%s		system.ads		system.ali
+W system.dim%s		s-dim.ads		s-dim.ali
+W system.dim.float_io%s
+W system.dim.long_mks%s	s-dilomk.ads		s-dilomk.ali
+Z system.fat_lflt%s	s-fatlfl.ads		s-fatlfl.ali
+Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U system.dim.long_mks_io%s  s-dlmkio.ads	7dda9a5f EB NE OL PK
+W ada%s			ada.ads			ada.ali
+Z ada.text_io%s		a-textio.adb		a-textio.ali
+Z ada.text_io.float_io%s
+W system%s		system.ads		system.ali
+W system.dim%s		s-dim.ads		s-dim.ali
+W system.dim.float_io%s
+W system.dim.long_mks%s	s-dilomk.ads		s-dilomk.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-except.ads		20190108125404 291912d5 ada.exceptions%s
+D a-ioexce.ads		20170908181218 e4a01f64 ada.io_exceptions%s
+D a-numeri.ads		20170908181218 bb51c45a ada.numerics%s
+D a-stream.ads		20190108125404 119b8fb3 ada.streams%s
+D a-tags.ads		20190108125404 491b781d ada.tags%s
+D a-textio.ads		20190108125404 881db35a ada.text_io%s
+D a-tiflau.ads		20190108125404 c0393f21 ada.text_io.float_aux%s
+D a-tiflio.ads		20190108125404 56fbda09 ada.text_io.float_io%s
+D a-tiflio.adb		20190108125404 fd9b1cfc ada.text_io.float_io%b
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20190108125404 5ab55268 interfaces%s
+D i-cstrea.ads		20190108125404 e53d8b8e interfaces.c_streams%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-crtl.ads		20190108125404 0ebbdb71 system.crtl%s
+D s-dim.ads		20190108125404 ec3077cc system.dim%s
+D s-diflio.ads		20190108125404 8cb04bc1 system.dim.float_io%s
+D s-diflio.adb		20190108125404 04b36c01 system.dim.float_io%b
+D s-digemk.ads		20190108125404 d6ab2b3c system.dim.generic_mks%s
+D s-dilomk.ads		20190108125404 b6355d1b system.dim.long_mks%s
+D s-dlmkio.ads		20190108125404 ab6ffb49 system.dim.long_mks_io%s
+D s-dlmkio.ads		20190108125404 ab6ffb49 system.dim.long_mks_io%b
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-fatgen.ads		20190108125404 49cbaf86 system.fat_gen%s
+D s-fatlfl.ads		20190108125404 378cba9f system.fat_lflt%s
+D s-ficobl.ads		20190108125404 078245e4 system.file_control_block%s
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-secsta.ads		20190108125404 20bbe636 system.secondary_stack%s
+D s-soflin.ads		20190108125404 a7318a92 system.soft_links%s
+D s-stache.ads		20190108125404 a37c21ec system.stack_checking%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-stoele.ads		20190108125404 2dc34a04 system.storage_elements%s
+D s-traent.ads		20190108125404 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20190108125404 34867c83 system.unsigned_types%s
+D s-wchcon.ads		20190108125404 1b7d22d2 system.wch_con%s
+X 14 system.ads
+37K9*System 148e11 22|35r6 35r31 36r6 38r9 38r39
+X 16 s-dim.ads
+65K16*Dim 14|37k9 16|68e15 22|35r13 35r38 36r13 38r16 38r46
+X 17 s-diflio.ads
+133k20*Float_IO 184e24 22|36w17 38r50
+X 19 s-digemk.ads
+52F9*Mks_Type<long_float> 22|38r60[20|34]
+X 20 s-dilomk.ads
+34K20*Long_Mks[19|45] 22|35w17 35r42
+X 22 s-dlmkio.ads
+38K20*Long_Mks_IO[17|133] 16|65k16
+

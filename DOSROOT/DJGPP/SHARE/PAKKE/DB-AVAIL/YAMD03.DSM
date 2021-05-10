@@ -1,0 +1,26 @@
+#
+# DSM for YAMD (Yet Another Malloc Debugger)
+# DSM written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: yamd03
+dsm-version: 0.3.6
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: yamd
+version: 0.30 platform i386-pc-msdosdjgpp
+short-description: YAMD, Yet Another Malloc Debugger, find bugs in memory allocation
+license: GNU General Public License, Version 2
+
+author: Nate Eldredge
+author-email: nate@cartsys.com
+web-site: http://www.cartsys.com/eldredge/n/yamd/
+
+zip: yamd03.zip
+
+requires: DPMI 0.9
+requires: DPMI 1.0: function 0x0507

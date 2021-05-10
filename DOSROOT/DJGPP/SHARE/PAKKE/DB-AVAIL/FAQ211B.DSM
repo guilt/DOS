@@ -1,0 +1,29 @@
+#
+# DSM for faq 2.11 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: faq211b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: faq
+version: 2.11
+manifest: faq211b
+sources-dsm: faq211s
+short-description: DJGPP Frequently Asked Questions (FAQ)
+license: Freely distributable, as long as the copyright messages are intact
+
+author: Eli Zaretskii
+author-email: eliz@is.elta.co.il
+
+simtelnet-path: v2/
+zip: faq211b.zip
+
+replaces: faq < 2.11
+# For reading docs
+depends-on: info-reader

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<packages>
+<package name="oggvorbis">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+  <os name="linux"/>
+  <os name="win32"/>
+  <os name="wince"/>
+ </oses>
+ <filename>oggv.zip</filename>
+ <author></author>
+ <license></license>
+ <email></email>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

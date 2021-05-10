@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<packages>
+<package name="utils-rmwait">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+  <os name="go32v2"/>
+  <os name="win32"/>
+  <os name="os2"/>
+  <os name="emx"/>
+  <os name="win64"/>
+  <os name="wince"/>
+ </oses>
+ <filename>rmw.zip</filename>
+ <author>Tomas Hajny</author>
+ <license>LGPL with modification</license>
+ <homepageurl>www.freepascal.org</homepageurl>
+ <email></email>
+ <description>Tool to remove (delete) file(s) with optional retries</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

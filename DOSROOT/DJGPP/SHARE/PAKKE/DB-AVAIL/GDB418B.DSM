@@ -1,0 +1,31 @@
+#
+# DSM for gdb 4.18
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.2
+dsm-name: gdb418b
+dsm-version: 0.3.6
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: gdb
+version: 4.18
+manifest: gdb418b
+short-description: GNU debugger
+license: GNU General Public License, Version 2
+
+organisation: Free Software Foundation
+
+porter: Robert Hoehne
+porter-email: robert.hoehne@gmx.net
+
+simtelnet-path: v2gnu/
+zip: gdb418b.zip
+
+replaces: gdb < 4.18
+requires: DPMI
+# For reading docs
+depends-on: info-reader

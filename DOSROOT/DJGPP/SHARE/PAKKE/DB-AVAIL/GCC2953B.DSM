@@ -1,0 +1,42 @@
+#
+# DSM for gcc 2.95.3
+# Written by Richard Dawe <richdawe@bigfoot.com> 2001-03-31
+#
+
+dsm-file-version: 1.0
+dsm-name: gcc2953b
+dsm-version: 0.5.0
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: gcc
+version: 2.95.3
+manifest: gcc2953b
+type: binaries
+short-description: GNU Compiler Collection, C compiler
+organisation: Free Software Foundation
+license: GNU General Public License
+web-site: http://gcc.gnu.org/gcc-2.95/gcc-2.95.3.html
+
+porter: Andris Pavenis
+porter-email: pavenis@lanet.lv
+
+simtelnet-path: v2gnu/
+zip: gcc2953b.zip
+
+pre-install-readme: gnu/gcc-2.953/readme.DJGPP
+
+#
+# Dependencies
+#
+
+replaces: gcc < 2.95.3
+
+requires: DPMI
+requires: djdev >= 2.03
+requires: binutils >= 2.10
+conflicts-with: gcc < 2.8.0
+
+# For reading docs
+depends-on: info-reader

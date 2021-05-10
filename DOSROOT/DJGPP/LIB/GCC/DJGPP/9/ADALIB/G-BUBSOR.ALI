@@ -1,0 +1,50 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV SPARK_05
+
+U gnat.bubble_sort%b	g-bubsor.adb		3f56ccb5 NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+
+U gnat.bubble_sort%s	g-bubsor.ads		a239c9dd NE OL PU PK
+W gnat%s		gnat.ads		gnat.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D gnat.ads		20190108125404 b5988c27 gnat%s
+D g-bubsor.ads		20190108125404 17a145fa gnat.bubble_sort%s
+D g-bubsor.adb		20190108125404 28f7894f gnat.bubble_sort%b
+D system.ads		20190108125404 27426ea2 system%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+X 3 gnat.ads
+34K9*GNAT 57e9 4|44r9 66r5 5|32r14 56r5
+X 4 g-bubsor.ads
+44K14*Bubble_Sort 3|34k9 4|66l10 66e21 5|32b19 56l10 56t21
+50P9*Xchg_Procedure 50>45 50>50 60r40 5|38r40
+50i45 Op1{natural}
+50i50 Op2{natural}
+54P9*Lt_Function(boolean) 54>41 54>46 60r61 5|38r61
+54i41 Op1{natural}
+54i46 Op2{natural}
+60U14*Sort 60>20 60>33 60>56 5|38b14 54l8 54t12
+60i20 N{natural} 5|38b20 45r24
+60p33 Xchg{50P9} 5|38b33 47r16
+60p56 Lt{54P9} 5|38b56 46r16
+X 5 g-bubsor.adb
+39b7 Switched{boolean} 43m10 48m16 52r24
+45i14 J{integer} 46r20 46r27 47r22 47r25
+

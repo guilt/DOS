@@ -1,0 +1,35 @@
+#
+# DSM for sed 3.02 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.2
+dsm-name: sed302s
+dsm-version: 0.4.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: sed
+version: 3.02
+manifest: sed302s
+binaries-dsm: sed302b
+short-description: GNU sed
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: sed302s.zip
+
+requires: gcc
+requires: djdev
+requires: bash
+requires: make >= 3.75
+requires: fileutils
+requires: textutils
+requires: grep
+requires: diffutils
+depends-on: sed

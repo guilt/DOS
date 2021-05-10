@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<packages>
+<package name="graph">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+  <os name="linux"/>
+  <os name="go32v2"/>
+  <os name="win32"/>
+  <os name="freebsd"/>
+  <os name="darwin"/>
+  <os name="win64"/>
+  <os name="msdos"/>
+ </oses>
+ <cpus>
+  <cpu name="i386"/>
+  <cpu name="powerpc"/>
+  <cpu name="x86_64"/>
+  <cpu name="i8086"/>
+ </cpus>
+ <filename>grph.zip</filename>
+ <author>FPC team</author>
+ <license>LGPL with modification, </license>
+ <homepageurl>www.freepascal.org</homepageurl>
+ <email></email>
+ <description>A portable, yet usable substitute for the Turbo Pascal Graph unit.</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+  <dependency>
+   <package packagename="sdl"/>
+   <oses>
+    <os name="linux"/>
+    <os name="win32"/>
+    <os name="freebsd"/>
+    <os name="darwin"/>
+   </oses>
+   <cpus>
+    <cpu name="i386"/>
+    <cpu name="powerpc"/>
+   </cpus>
+  </dependency>
+  <dependency>
+   <package packagename="ptc"/>
+   <oses>
+    <os name="linux"/>
+    <os name="win32"/>
+    <os name="win64"/>
+   </oses>
+  </dependency>
+  <dependency>
+   <package packagename="fcl-base"/>
+   <oses>
+    <os name="linux"/>
+    <os name="win32"/>
+    <os name="win64"/>
+   </oses>
+  </dependency>
+  <dependency>
+   <package packagename="x11"/>
+   <oses>
+    <os name="linux"/>
+    <os name="freebsd"/>
+   </oses>
+  </dependency>
+  <dependency>
+   <package packagename="hermes"/>
+   <oses>
+    <os name="linux"/>
+    <os name="win32"/>
+    <os name="win64"/>
+   </oses>
+  </dependency>
+  <dependency>
+   <package packagename="opengl"/>
+   <oses>
+    <os name="linux"/>
+    <os name="win32"/>
+    <os name="win64"/>
+   </oses>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

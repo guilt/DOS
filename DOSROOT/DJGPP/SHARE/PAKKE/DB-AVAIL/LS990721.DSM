@@ -1,0 +1,26 @@
+#
+# ls990721.dsm
+# Constructed by Richard Dawe <richdawe@bigfoot.com> 1999-07-21
+#
+
+dsm-file-version: 1.2
+dsm-version: 0.5.0
+dsm-name: ls990721
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: libsocket
+version: 0.7.4 snapshot 19990721
+type: sources
+manifest: ls990721
+short-description: libsocket 0.7.4 pre-release snapshot 1999-07-21
+license: GNU Library General Public License, Version 2
+author: Richard Dawe
+author-email: richdawe@bigfoot.com
+web-site: http://libsocket.tsx.org/
+mailing-list-administrator: Richard Dawe
+mailing-list-administrator-email: richdawe@bigfoot.com
+mailing-list-web-site: http://www.phekda.freeserve.co.uk/richdawe/lsck/lsck_ml.htm
+
+zip: ls990721.zip

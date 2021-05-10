@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<packages>
+<package name="fftw">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+  <os name="linux"/>
+  <os name="win32"/>
+  <os name="freebsd"/>
+  <os name="beos"/>
+  <os name="netbsd"/>
+  <os name="solaris"/>
+  <os name="openbsd"/>
+  <os name="darwin"/>
+  <os name="win64"/>
+  <os name="wince"/>
+  <os name="haiku"/>
+  <os name="iphonesim"/>
+  <os name="aix"/>
+  <os name="android"/>
+  <os name="dragonfly"/>
+ </oses>
+ <filename>fftw.zip</filename>
+ <author>Library: Matteo Frigo and Steven G. Johnson, header: Daniel Mantione</author>
+ <license>Library: GPL or commercial, header: LGPL with modification, </license>
+ <homepageurl>www.freepascal.org</homepageurl>
+ <email></email>
+ <description>Library for computing the discrete Fourier transform (DFT) in one or more dimensions, of arbitrary input size, and of both real and complex data</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

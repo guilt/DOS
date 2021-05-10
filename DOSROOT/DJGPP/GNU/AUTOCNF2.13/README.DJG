@@ -1,0 +1,129 @@
+This is the port of GNU Autoconf 2.13 to DJGPP.
+
+What is GNU Autoconf?
+=====================
+From the Autoconf documentation:
+"Autoconf is a tool for producing shell scripts that automatically
+configure software source code packages to adapt to many kinds of
+UNIX-like systems.  The configuration scripts produced by Autoconf are
+independent of Autoconf when they are run, so their users do not need to
+have Autoconf."
+
+DJGPP specific changes:
+=======================
+
+* Makefile.in: Changed editsh so sed changes the value of ${DJDIR}
+  back to '${DJDIR}' since DJDIR is installation dependant.
+  Changed instances of '*.info*' to '*.inf*' to avoid problems
+  on non-LFN DJGPP installations.
+
+* acgeneral.m4: Changed AC_PATH_PROG and AC_CHECK_PROGS so a search for
+  'm4' finds 'm4.exe'
+
+* acspecific.m4: Same changes made to AC_PATH_PROG and AC_CHECK_PROGS above
+  were applied to AC_INSTALL_PROG.
+
+* autoheader.sh: Fixed to prevent file sharing problems under Windows.
+
+These patches are done in the 'djgppcfg.sh' script, which
+is called by configure.bat.
+
+
+Upgrade notes:
+==============
+
+Those using DJGPP in long file name environments (Windows 95 & 98)
+and upgrading from 2.12 can delete acoldname.m4 in the
+share/autoconf/ directory. It has been renamed to acoldnames.m4
+in this release. 'autoscan' is included in this release and requires
+perl to use.
+
+
+Requirements:
+=============
+
+- GNU bash
+- GNU sed
+- GNU m4
+- GNU install (ginstall)
+
+
+Building and installing:
+========================
+
+Create from the root directory (if not done already):
+
+/bin
+
+NOTE: This must be the on the same drive as your DJGPP installation.
+
+Then copy bash.exe to /bin/sh.exe.
+
+To build autoconf, type:
+
+configure
+
+To install it:
+
+make install
+
+The source comes with prebuilt unsplit info files. To generate split
+info files like the ones included in the binary package, run makeinfo:
+makeinfo -I. autoconf.texi
+makeinfo -I. standards.texi
+
+How to use autoconf
+===================
+
+Read the autoconf documentation for all the autoconf options.
+
+bash autoconf
+
+That's (hopefully) the only difference in running autoconf on DJGPP.
+
+
+How to run configure scripts
+============================
+
+When you have a package with a configure script, which was
+created by autoconf, then run it like:
+
+bash configure
+
+NOTE: If the configure script was created by autoconf not from
+DJGPP, first run the autoconf from this package, because it
+creates a configure script which knows about the DJGPP specific
+things (see the changes at the beginning of this file).
+
+bash autoconf
+
+In the next version of autoconf, this should not be neccessary.
+
+
+Documentation for autoconf:
+===========================
+
+After the 'make install' the INFO files, which contain
+the documentation about autoconf are copied to your
+INFO directory. To access these files also from the
+main dir info-file, edit the file dir.txi by adding
+the following lines:
+
+* Standards: (standards).        GNU coding standards.
+
+* Autoconf: (autoconf).         Create source code configuration scripts.
+
+
+If you have any questions about the DJGPP specific parts
+of autoconf post them to
+
+comp.os.msdos.djgpp (or djgpp@delorie.com)
+
+or mail me directly.
+
+Mark E. <snowball3@usa.net>
+
+All other autoconf questions should be sent to autoconf@gnu.org, the
+autoconf mailing list. For more information about autoconf, visit the
+official autoconf homepage:
+http://sourceware.cygnus.com/autoconf/

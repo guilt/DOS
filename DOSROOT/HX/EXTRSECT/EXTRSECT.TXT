@@ -1,0 +1,25 @@
+
+  1. About
+
+  EXTRSECT extracts data from MZ or PE binaries.
+
+
+  2. Make binary
+
+  There's a NMAKE makefile supplied which is to be used to 
+  create EXTRSECT.EXE.
+
+
+  3. History
+
+  v1.3: source cleaned to make it compatible with HX Win32.
+  v1.2: DOS 32bit binary
+
+
+  4. License
+
+  EXTRSECT is freeware.
+  Copyright Japheth.
+
+  Japheth   ( http://www.japheth.de )
+

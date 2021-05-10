@@ -1,0 +1,27 @@
+#
+# DSM for patch 2.5 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.2
+dsm-name: pat25s
+dsm-version: 0.4.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: patch
+version: 2.5
+manifest: pat25s
+binaries-dsm: pat25b
+short-description: GNU patch
+license: GNU General Public License, Version 2
+
+simtelnet-path: v2gnu/
+zip: pat25s.zip
+
+requires: gcc
+requires: djdev
+requires: make
+depends-on: sed

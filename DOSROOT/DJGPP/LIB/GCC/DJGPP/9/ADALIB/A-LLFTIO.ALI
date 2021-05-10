@@ -1,0 +1,74 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_IO
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV SPARK_05
+
+U ada.long_long_float_text_io%b  a-llftio.ads	9009cfb3 NE OL PK
+W ada%s			ada.ads			ada.ali
+Z ada.exceptions%s	a-except.adb		a-except.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+Z ada.text_io.float_aux%s  a-tiflau.adb		a-tiflau.ali
+Z ada.text_io.float_io%s
+Z system.fat_llf%s	s-fatllf.ads		s-fatllf.ali
+
+U ada.long_long_float_text_io%s  a-llftio.ads	6e6ce148 EB NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+Z ada.text_io.float_io%s
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-except.ads		20190108125404 291912d5 ada.exceptions%s
+D a-ioexce.ads		20170908181218 e4a01f64 ada.io_exceptions%s
+D a-llftio.ads		20170908181218 9009cfb3 ada.long_long_float_text_io%s
+D a-llftio.ads		20170908181218 9009cfb3 ada.long_long_float_text_io%b
+D a-stream.ads		20190108125404 119b8fb3 ada.streams%s
+D a-tags.ads		20190108125404 491b781d ada.tags%s
+D a-textio.ads		20190108125404 881db35a ada.text_io%s
+D a-tiflau.ads		20190108125404 c0393f21 ada.text_io.float_aux%s
+D a-tiflio.ads		20190108125404 56fbda09 ada.text_io.float_io%s
+D a-tiflio.adb		20190108125404 fd9b1cfc ada.text_io.float_io%b
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20190108125404 5ab55268 interfaces%s
+D i-cstrea.ads		20190108125404 e53d8b8e interfaces.c_streams%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-crtl.ads		20190108125404 0ebbdb71 system.crtl%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-fatgen.ads		20190108125404 49cbaf86 system.fat_gen%s
+D s-fatllf.ads		20190108125404 4d5c1475 system.fat_llf%s
+D s-ficobl.ads		20190108125404 078245e4 system.file_control_block%s
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-secsta.ads		20190108125404 20bbe636 system.secondary_stack%s
+D s-soflin.ads		20190108125404 a7318a92 system.soft_links%s
+D s-stache.ads		20190108125404 a37c21ec system.stack_checking%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-stoele.ads		20190108125404 2dc34a04 system.storage_elements%s
+D s-traent.ads		20190108125404 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20190108125404 34867c83 system.unsigned_types%s
+D s-wchcon.ads		20190108125404 1b7d22d2 system.wch_con%s
+X 1 ada.ads
+16K9*Ada 20e8 5|16r6 18r9 19r7
+X 5 a-llftio.ads
+18K13*Long_Long_Float_Text_IO[10|46] 1|16k9
+X 8 a-textio.ads
+49K13*Text_IO 5|16w10 19r11 8|471e16
+X 10 a-tiflio.ads
+46k21*Float_IO 5|19r19 10|89e25
+

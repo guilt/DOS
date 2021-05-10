@@ -1,0 +1,29 @@
+#
+# DSM for texinfo 4.0 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.2
+dsm-name: txi40b
+dsm-version: 0.4.2
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: texinfo
+version: 4.0
+manifest: txi40b
+sources-dsm: txi40s
+short-description: Texinfo, the GNU documentation system
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: txi40b.zip
+
+replaces: texinfo < 4.0
+requires: DPMI
+provides: info-reader

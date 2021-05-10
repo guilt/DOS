@@ -1,0 +1,42 @@
+#
+# DSM for textutils 2.0 sources
+# Written by Richard Dawe <richdawe@bigfoot.com> 2000-04-02
+#
+
+dsm-file-version: 1.3
+dsm-name: txt20s
+dsm-version: 0.4.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: textutils
+version: 2.0
+manifest: txt20s
+binaries-dsm: txt20b
+short-description: GNU textutils
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: txt20s.zip
+
+requires: gcc
+requires: djdev
+requires: make >= 3.75
+requires: bash
+requires: sed
+requires: fileutils
+requires: textutils
+requires: sh-utils
+# If you need to format man pages:
+depends-on: groff
+# If you want to reconfigure sources:
+depends-on: grep
+# If you want to run the testsuite:
+depends-on: diffutils
+# If you want to change test scripts:
+depends-on: perl

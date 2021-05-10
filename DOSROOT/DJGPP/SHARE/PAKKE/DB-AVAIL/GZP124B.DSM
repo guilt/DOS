@@ -1,0 +1,26 @@
+#
+# DSM for gzip 1.2.4 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.2
+dsm-name: gzp124b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: gzip
+version: 1.2.4
+manifest: gzp124b
+sources-dsm: gzp124s
+documentation-dsm: gzp124d
+short-description: GNU zip, LZ77 file compressor
+license: GNU General Public License, Version 2
+
+simtelnet-path: v2gnu/
+zip: gzp124b.zip
+
+replaces: gzip < 1.2.4
+requires: DPMI

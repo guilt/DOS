@@ -1,0 +1,46 @@
+#
+# DSM for Perl 5.005_02 sources
+# Written by Richard Dawe <richdawe@bigfoot.com> 2001-03-18
+#
+
+dsm-file-version: 1.0
+dsm-name: perl552s
+dsm-version: 0.5.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: perl
+version: 5.005 patchlevel 02
+manifest: perl552s
+binaries-dsm: perl552b
+short-description: perl, Practical Extraction and Report Language
+
+author: Larry Wall
+author-email: larry@wall.org
+
+porter: Laszlo Molnar
+porter-email: molnarl@cdata.tvnet.hu
+
+license: Artistic License or GNU General Public License (version 1 or later)
+
+web-site: http://www.perl.com/CPAN/
+
+simtelnet-path: v2gnu/
+zip: perl552s.zip
+
+pre-install-readme: gnu/perl-5.005/README.dos
+
+# For building perl from sources
+requires: djdev
+requires: gcc
+requires: binutils
+requires: make
+requires: bash
+requires: fileutils
+requires: textutils
+requires: diffutils
+requires: sh-utils
+requires: sed
+requires: gawk

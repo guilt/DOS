@@ -1,0 +1,789 @@
+OLD: pakke To-Dos & Random Gibber
+OLD: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+$Id: TODO.old,v 1.1 2003/03/12 19:49:11 richdawe Exp $
+
+- Write info-format docs for DSM
+. Started, so i'll finish
+. Sync'd, just needs polishing.
++++ONGOING
+
+- Use same ?_load_all() func for dsm, mft (.ver).
+. Later: Eh? What was I talking about?
++++NEVER MIND
+
+- Issue warnings when any dsm, mft paths not found.
++++DONE
+
+- Work out version number for manifest name? No, version file.
++++DONE
+
+- Add querying of available packages to install?
++++DONE
+
+- Rewrite manifest routines to allow listing of files from zip. Or should
+  the filenames in the zip file just be listed?
++++DONE, find manifest file
+
+- Make the version routines cope with leading zeros, e.g. in DJGPP 2.01
+. How? 2.01 != 2.1. Need some kind of leading digit flag <ugh>
++++DONE, but needs doing to ver.c.+++COMPLETED
+
+- Fix bug in version file parsing (see rcs version).
++++DONE
+
+- Put all sources into the src/ directory.
++++DONE
+
+- Test with memory management system?
+. MSS installed - tell authors about mistake in docs about def log file name
+  - msg.log not msg.cfg!
+  - Should copy to /usr/local/include/ rather than /usr/local/include, because
+    /usr/local/include may not exist.
+  - Config Makefile rather than settings for CC, AR in Makefile
+    & samples/Makefile?
+. Put note in docs about MSS.
+. netrc.c & unzip.c need to include common.h too! +++ DONE
+
+- LB suggests addition of 'host-os' DSM field.
+. GNU way, allow regexps.
+. <CPU type>-<Manufacturer>-<Operating System> - see autoconf files
+  config.guess & config.sub.
+. 'host-os' -> 'platform'
+. Just need to add to pakke ;)
+. Should the platform be spec'd in the version?
++++DONE
+
+- LB suggests addition of virtual packages.
+. OK, but how to dep check on required 'provides' fields?
++++DONE
+
+- Produce DSM spec on the web from info docs => sync!
++++DONE
+
+- libpakke for LB - make pakke and dsmcheck use it.
+. How to resolve problem with unzip? It's used by DSM code I think. => zlib
+  req'd linking in too!
++++DONE, but libz still req'd
+
+- Confusion between dsm-version & version in the code?
++++NOPE
+
+- Blank lines are delimiters! Not hashes!
++++Later, NAAH
+
+- DSM author info fields, like with package?
++++DONE
+
+- SET suggests strcasecmp() if no stricmp().
++++DONE, now in configure script
+
+- Multiple argument versions of die(), warn() - dief(), warnf()? Make them
+  similar to printf().
++++DONE
+
+- Make it buildable on plain ol'DOS - currently configure files violate 8+3
+  format file names.
++++DONE
+
+- Try to get the memory usage down? Takes ~2MB at max!
++++DONE
+
+- '--with-pakke' to install pakke binary in to 'bin/' directory of root?
++++DONE
+
+- Default simtelrc too, like with pakkerc?
++++DONE
+
+- 'newsgroup-email' field for newsgroups that have an e-mail gateway, e.g.
+  DJGPP.
+. Changed to newsgroup-email-gateway
++++DONE
+
+- On MS-DOS, pakke.exe should be copied to bin/, not pakke.
++++DONE
+
+- Remove platform.o, mkplat.oa
++++DONE
+
+- Make configure script fail if req'd libraries aren't present. Try to find
+  a better way of detecting libsocket.
+. Look for __lsck_init() to detect libsocket. On Linux, just look for socket()
+  in libc. This will allow us to distinguish libsocket vs. other networking.
++++DONE
+
+- Write/correct binutils DSM.
++++DONE
+
+- Licence details in DSM?
++++DONE
+
+- Finish the DSM for man properly
++++DONE
+
+- Include standard configure doc?
++++COULDN'T FIND ONE
+
+- Mailing list request field
++++DONE
+
+- Elimination of manifest vs. DSM files not working - i.e. DSM & manifest
+  present -> both in package list?
++++FIXED
+
+- Is '--prefix' option supported for installs?
++++DONE, it works!
+
+- Dedupe between DSM, manifest fails?
++++FIXED
+
+- Create dirs before writing files, if necess, for archs with dirs after files
+  in those dirs?
++++DONE
+
+- Compile with PMODE/DJ, so CWSDPMI isn't needed?
++++DONE
+
+- Make DSM parsing code log failures to find directive too as error.
++++DONE
+
+- Make DSM parsing code skip blank lines, so you don't have to use shedloads
+  of #'s to separate directive blocks.
++++DONE
+
+- Don't print blank lines at end of manifest.
++++DONE
+
+- grep22?
++++DONE
+
+- Fix broken comptime.h building?
+. What is going on with it? Maybe it worked OK with bash 2.03?
++++FIXED, thanks to Laurynas.
+
+- Install target.
++++DONE, may need improvement.
+
+- Fix the dsm-author fields on these DSMs:
+. win95
+. acnf213b
+. gpp2952b
+. zlib112b
+. gcc2952b
+. djlsr202
+. em1934l
+. em1934b
+. Actually, the problems are slightly more numerous than that :(
++++FIXED
+
+- Use more intelligent Makefile to eliminate need for TARGETS and TARGETS_EXE,
+  i.e. RTFM.
++++DONE
+
+- --syncdb broken? Used bin/pakke --syncdb -> $DJDIR/share/pakke/db had only
+  a .dsm file in it.
++++FIXED
+
+- Source dist: can't run make when no Makefiles! Need to run autoconf first.
++++FIXED in docs
+
+- How to get defaults/ dir to disappear from CVS co? Maybe it'll work when I
+  switch to proper CVS on Linux?
+. It works with Linux CVS, but DJGPP port seems not to be able to remove dirs
+  on checkout, export, etc.
++++NON-PROBLEM
+
+- Spec exactly which directives escapes can be used in.
++++DONE
+
+- Duh! Can't run make before config's been run! Sort it out laddie!
++++FIXED install.txt
+
+- Put @ifinfo/@end ifinfo round @menu in dsm spec
++++DONE
+
+- Fix up NULL problem with src/defaults/def_plat.c
+. DJGPP version independent?
++++SORTED, needed to include string.h when not using MSS.
+
+- --syncdb should allow all DSMs to be updated from available database, if
+  newer DSMs are available?
++++DONE
+
+- Support for archives and '-l' query option.
++++DONE
+
+- distclean to clean up bin dir.
++++DONE
+
+- Doc mailing list http://www.onelist.com/community/pakke-workers
+. Done, but add icons for joining, archives. Check dossock list at same time.
++++DONE
+
+- Test mak379's DSM.
+. Add changelog, command (gen warning) support, so make 3.79 can be installed.
++++DONE
+
+- '--help' doesn't work unless db init'd; warning too long.
++++FIXED
+
+- Write DSM for texinfo 4.0
++++DONE
+
+- man 1.3 uses less by default => requirement?
++++DONE, added to 1.2 & 1.3 DSMs.
+
+- Add support for newsgroup-description directive.
++++DONE
+
+- Add GNU FDL, thanks, etc. to DSM, pakke docs.
+. Done dsmcheck, pakke docs, need to do DSM docs.
++++DONE
+
+- Switch from txi2html to makeinfo's HTML gen switch.
++++DONE
+
+- Renovate pakke web pages.
++++DONE (ish)
+
+- Sort out doc/Makefile for 'all' target w.r.t. 'text'.
++++DONE
+
+- install shouldn't create prefix until checked to see that all archives exist
++++DONE
+
+- Add query option to view licence.
++++DONE
+
+- Do proper port of popt.
++++DONE
+
+- config.guess patch from Laurynas
+. and new version of config.sub
++++DONE
+
+- Warning on installing a ZIP that has no DSM - should be a bit more friendly
+  than saying "error in DSM" (or whatever).
++++DONE
+
+- Why doesn't removing popt/libpopt.a force a rebuild of the popt lib?
++++IRRELEVANT
+
+- Fix test/zip/useless.zip - make it a binary import this time!
++++DONE, now test/zip/nodsm.zip (CVS problem - grrr).
+
+- Make install target copy HTML docs into contrib/pakke012/doc.
++++DONE
+
+- Add details of GPL to '--version' display; add a switch to display license,
+  a la prozilla.
++++DONE
+
+- Use gcc's varargs checking facilities?
++++DONE
+
+- Add Makefile targets for etags, id.
++++DONE
+
+- texi2dvi target for dox
++++DONE
+
+- Do to-dos in dsm_perror(), install.c for dsm_get_and_parse().
++++DONE
+
+- Support for archives and '-f' query option.
++++DONE
+
+- Add support for 'pre' versions.
++++DONE
+
+- Fix install target to install HTML, text docs properly.
++++DONE
+
+- Put todo.old in CVS.
++++DONE
+
+- Possible regression in missing test?
++++FIXED
+
+- Use chomp() everywhere
+
+- Write packlist_*() properly.
+. It was sorted, but it still sucks.
+
+- Platform auto-detection for --initdb? Need DSMs for DOSes that provide
+  their own DPMI providers, e.g. Caldera's DR-DOS (actually, IIRC that provides
+  DPMS rather than DPMI).
++++DONE
+
+- DSMs to write before I can re-install using pakke:
+. texinfo - txi312b +++DONE
+. gzip - gzp124b +++DONE
+. bash - bsh1147b +++DONE
+. grx - grx20 - now upto v3?
+. fileutils - fil316b +++DONE
+. findutils - find41b +++DONE
+. less - lss332b +++DONE
+. groff - gro110b +++DONE
+. textutils - txt122b +++DONE
+. patch - pat25b +++DONE
+. diff - dif271b +++DONE
+. tar - tar112b +++DONE
+. make - mak377b +++DONE
+. sed - sed118b +++DONE for 3.02
+. shellutils - shl112b, shl112s +++DONE
+. faq - faq211b +++DONE
+. gawk - gwk303b +++DONE
+. GDBM - gdbm173b +++DONE
+. flex - flx254b +++DONE
+. m4 - m4-14b +++DONE
+. indent - ind191b, ind191d +++DONE
+. bison - bsn125b +++DONE
+
+- Need to apply Laurynas's patch to todo.txt about the build system.
++++DONE
+
+- Sort out problem with TeX dvga .ver file parsing.
++++FIXED? Seems OK...
+
+- Spring clean files - sort out TODOs.
++++DOING
+
+- Query matches on package or manifest name
+. Should also be possible to use version, e.g. 'fileutils 4.0'.
++++DONE
+
+- Support multiple manifest files?
++++NO
+
+- Pass argv[0] to '--initdb' to get correct executable name, i.e.
+  self-replicates.
+. It already is - leave code as is.
+. Actually, it needs to chop path of pakke to get stem+extension part (i.e.
+  pakke on Unix, pakke.exe on DOS, or whatever it's renamed to.).
++++NO, always copies it to pakke.exe (DJGPP) or pakke (Unix).
+
+- 'binaries-dsm', 'sources-dsm' and 'documentation-dsm' fields should be
+  checked for no '.dsm' extension => warning?
+. Later: They _should not_ have a '.dsm' extension.
++++DONE
+
+- scripts/mkconfig.sh fails?
+. Strange, seems to work OK now?
++++OK
+
+- -q <package> broken?
++++FIXED
+
+- Add support for maintainer directives.
++++DONE
+
+- Allow multiple occurrences of author directives, etc.
+. See list of directives we should support in DSM spec.
++++DONE
+
+- Multiple mailing lists (with comments).
++++DONE
+
+- For .ver files, manifest field is filled in from .ver contents. Bug: this
+  should just be done on the filename. The manifest filename is a constant,
+  depending on package. The .ver file could contain anything, e.g. see gcc
+  2.95.2 binaries. This can cause syncdb not to work.
++++DONE
+
+- Update generally to use Laurynas's new graph code (plus add to changelog).
++++DONE
+
+- Standard provision for web-browsers?
++++DONE
+
+- /dev/env feature?
+. 'djgpp-dev-env'?
++++DONE
+
+- Start version test-suite as part of dep rejig.
++++DONE
+
+- Constify interfaces more, to continue Laurynas's work - do 'int' params.
++++DONE
+
+- Use diffutils 2.7.1 -> 2.7.2 as upgrade test case (cheap excuse to make
+  myself upgrade ;) ).
++++DONE
+
+- pakke logo
++++DONE
+
+- Fix '-q package n.n2.*'
++++DONE
+
+- '-q <package> -l' fails to dump manifest (e.g. gnumaniak)?
+. This happens because package->path has not been set up correctly for the
+  manifest file. This probably happens for the DSM, maybe archives too?
++++FIXED, but should the results be returned in some kind of list?
++++DONE, now returned in list.
+
+- Add '-q', '--quiet' options for use when spawned by other installers.
+. '-q' used already - '-Q' used instead.
++++DONE
+
+- Quiet option to suppress output for FrontPakke, etc.?
++++ADDED
+
+- Which $(INSTALL) should be used for headers, libs?
++++SORTED, used $(INSTALL) for libs, $(INSTALL_DATA) for headers
+
+- Function to extract DSM from an archive in libpakke?
++++DONE, dsm_get_and_parse()
+
+- Update source DSMs to include dependencies on tools needed to build them.
++++OK
+
+- Support for leading zeroes in patchlevel?
++++NO, that's silly.
+
+- How to cope with diff binary packages for FAQ?
+. bash 1.14.7 man pages too? +++REMOVED, not a problem anymore
+. faq (faq230b.zip) & faq-printable (faq230p.zip)
++++OK
+
+- Switch from stricmp() -> strcasecmp(), strnicmp() -> strncasecmp(),
+  because stricmp(), strnicmp() wrappers can then be removed.
++NAAAH, who cares?
+
+- --with-platform <other-option> broken; tries to find <other-option>'s DSM.
+  This seems to be a generic problem with long options ignoring whether the
+  next param is an arg or not - bug in getopt_long()?
+. Oops, we're using popt now.
++++NO BUG, this is how long options work with popt, presumably getopt_long()
+   too.
+
+- Set up bugzilla info for pakke.
+. Done for 0.1.2, see
+  http://www.phekda.freeserve.co.uk/richdawe/pakke/bugs012.htm
+. Need to do for 0.1.3.
++++DONE
+
+- '--syncdb' should synchronise platform DSMs too.
++++DONE
+
+- '--install' doesn't work?
+. OK, fixed it, but now '-qi <blah>' doesn't work. The option parsing needs a
+  careful fix, I think.
++++FIXED
+
+- Fix P-mode stub addition - bin/pakke.exe should be executable from DOS
+  (bash handles differently?).
++++OK NOW
+
+- DSM for Windows 3.x?
++++DONE
+
+- Write 'dsmcheck' docs.
++++DONE
+
+- Write more DSMs:
+. mlp106s - executable packer
+. info - SET's info viewer - inf024b
+. rcs - rcs5713b
+. perl - perl552s +++DONE
+. New DJGPP packages
++++DO IT SOME OTHER TIME
+
+- PMODE/DJ crashes? Look at the sources..
+. Also add option to use WDOSX? See http://www.wuschel.demon.co.uk/
++++1.3 may have fixed these.
+
+- Now vercmp comp's types, remove superfluous checks in code.
++++DONE
+
+- Check correctness of config file?
++++DONE, now we have new parser.
+
+- Can rcfile routines cope with filenames with spaces? Quotes?
++++YES, now we have new parser (with some mods to finish support for this).
+
+- Include pakke's DSM in itself, so it can plonk it in the database when it's
+  being created (using the '--with-pakke' option).
++++DONE
+
+- Use AC_EXEEXT macro?
++++NOT NEEDED, but may be later? I don't think so.
+
+- Weird errors on installing gcc?
++++HUH? Seems to work OK now.
+
+- Finally, make '--long-info' display long info!
+. Made a start
++++OK
+
+- BACKUP in install/uninstall
++++DONE, but needs testing. It seems to work.
+
+- Document backup strategy.
++++DONE
+
+- Include PMODE/DJ info in build.
++++NO, there's no easy way to do it.
+
+- Document requirement of bison, flex.
++++DONE
+
+- Run 'install-info' to add info files to index, if info files in info/
+  in archive.
+. Add this code to src/install.c, with removal code in src/uinstall.c.
+. Done, but could make messages nicer.
++++OK
+
+- scripts/pmstub.sh broken?
+. scripts/pmstub.sh will fail to run when bash 2.03 is used to build, because
+  cat from Fileutils 3.16 does not support /dev/<drive> syntax. I better hurry
+  up with my port of Fileutils 4.0!
+. Problem may be more subtle than that.
+. Nope, it's 'cat' from textutils that's the problem - require textutils 2.0
+  to build pakke, since its 'cat' understands /dev/?/ paths.
++++OK
+
+- Run up to release:
+. fix shift-reduce conflict +++DONE
+. document $Id: TODO.old,v 1.1 2003/03/12 19:49:11 richdawe Exp $ in coding standards +++DONE
+. update readme.txt file +++OK
++++DONE
+
+- Add query to list whether packages have DSM or not.
++++DONE, query now does it.
+
+- Add 'release' to version string, to allow multiple releases of
+  a DJGPP package.
++++DONE
+
+- Fix test suite breakage
++++DONE
+
+- No support for maintainer & maintainer-email directives - add to Bugzilla
+  (need to fix Bugzilla tables?)
++++DONE
+
+- Add friendlier messages when maxima reached on arrays.
++++DONE
+
+- Zip extraction should preserve file timestamps.
++++DONE
+
+- WinME detection?
++++DONE
+
+- Check integrity of (all) zip files before extracting.
++++DONE
+
+- Add basic support for builtin-* - ignore them for minute, but at least
+  don't barf on them.
++++DONE
+
+- Write some decent docs.
++++DONE (ish) ;)
+
+- Set script permissions correctly in the ZIP distros.
++++DONE, by making source packages on Linux.
+
+- Need to include getting started guide in binary distribution -
+  maybe text formatted manual instead?
++++DONE, included getting started guide in install.txt, plus include text
+copy of pakke manual.
+
+- Tim van Holder suggests:
+
+   "Also, you may want to mention --initdb either in
+    install.txt or in the 'can't read config file' error
+    message; as it is, it's hidden away inside the info
+    file.  I was in the progress of writing a bug report
+    about there not being a pakkerc in the binary distro
+    when I scrolled down far enough to see --initdb
+    mentioned :-)"
++++DONE
+
+- Dependency checking on packages when using '-qpi'?
++++DONE
+
+- Fix test-suite on platforms that don't support stricmp(), etc.
+. Include implementation of stricmp(), etc. in libpakke?
+. No, just use strcasecmp() instead of stricmp().
++++DONE
+
+- Fix the tests to use their own pakkerc, rather using default one.
++++DONE
+
+- Make sure package->path is set up for archives.
++++DONE
+. Later: But is this the original purpose for this field?
+. Todo: Add description to header file.
++++DONE
+
+- Audit messages in new OS detection code. Sort out TODOs also.
++++DONE
+
+- Automatic dependency generation - use .d files. This will eliminate
+  the 'make dep' stage, which is annoying.
++++DONE
+
+- Error on failure to install!
++++OK
+
+- Something wrong with version comparison?
+. binutils 2.95.1 snapshot 20000227 < binutils 2.8.1? (write test program)
+. Now '-i bnu2951b.dsm' tries to install when bnu281b.dsm present!
+. Probably out of date?
++++IGNORED
+
+- '--syncdb' doesn't update DSMs from $DJDIR/manifest if package version
+  different
+. Later: Huh, it's not supposed to.
+. Need to look for removed packages too, I think.
++++OLD
+
+- Sort inconsistency between use of -A for query & install - i.e. fix usage
+  for queries.
+. Need to update --help & documentation too!
++++DONE
+
+- Write DSMs:
+. id-utils 3.2 +++DONE
+. TeX +++DONE
++++DONE
+
+- Line numbers in error messages wrong - blank lines omitted from count?
++++FIXED
+
+- Don't run install-info automatically - make it command-line option?
+  This will require all DSMs to have 'install-info' lines.
+. Now we write commands to a batch file, which the user can run later.
++++OK
+
+- Support for .pakkerc, _pakkerc in home directory, to override system global
+  file?
+. How would this work? Parse global and then home directory one, use home dir
+  settings in preference?
+. This is a lot easier, now we have a new parser.
++++NO, this should be a DJGPP installation-specific thing.
+
+- Add test/dsm to the test suite
++++DONE
+
+- Move ZIP integrity check to after dep check on install, upgrade.
+. Naah, just return all errors before aborting.
++++DONE
+
+- 'Makefile.in' should contain rule to build 'config.hin' from 'config.in'?
++++NO, handled by scripts/mkconfig.sh.
+
+- '-qal' doesn't have headers between file lists?
++++NO, seems to work OK.
+
+- Type on deps without ver number?
++++DONE
+
+- Don't be case sensitive on extraction of changelogs, etc.
++++DONE
+
+- Make dsm_free_file_error_list(), etc. set pointers to NULL after freeing
+  memory, to avoid memory corruption-type bugs.
++++DONE
+
+- Does 'requires: foo == 1.2.3' work if multiple versions of foo (including
+  1.2.3) are installed?
++++YES, seems to - see tests/dep/multi.c.
+
+- Check that 'package == numbers' works in 'requires', etc.
++++YES, seems to - see tests/dep/multi.c.
+
+- Add some kind of checking on dsm-file-version? Should it do something?
+. It's already parsed in the same way as other versions, so it is checked.
++++OK
+
+- Call package_free() when dsm_parse() fails? Avoid memory leaks.
+. What about packlist_free() - should that free package structs too?
++++DONE
+
+- Querying, etc., should work with available packages also if none found in
+  installed database? Maybe this should occur with the '-p' option, i.e. if
+  spec'd file doesn't exist, then query available ones. But what if file
+  exists, but isn't package? OK, use '-q' option because the package is either
+  installed or in the available database.
++++NAAH
+
+- Sort out the error handling - it's terrible right now
+. DSM parsing now provides info.
++++OK
+
+- Duplicate DSMs? How is this resolved? Take the one with the later version?
+. dsm-version should be the version of the DSM? Where would info about DSM
+  spec version go?
+. dsm-version      -> DSM specification version
+. dsm-file-version -> file version
++++OK
+
+- When using package lists (linked-lists) and removing elements, check that
+  the head element isn't being removed!
+. packlist_dedupe() needs to cope with the case where the head is a duplicate.
++++DONE
+
+- distclean to clean up Makefiles generated by config script.
+. Added 'maintainer-distclean' target.
++++OK
+
+- Add licence details to DSMs - licence should be compulsory part of DSM?
+. Probably should generate warning if 'license' not present, but there's no
+  real support in DSM error code for warnings right now.
++++DONE
+
+- Need order of precedence in verdiff() for alpha, beta, etc. These can't
+  be compared in the same way as numbers.
++++DONE
+
+- Add shell-style wildcards for package queries.
+. Coded, now need to document how packages are matched.
++++DONE
+
+- Warn about versions that only have a major version component.
++++DONE
+
+- Scripts: dsm2ver - make .ver out of .dsm; mkmft - make a manifest from
+  files in current directory - optionally get manifest filename from
+  .dsm.
++++DONE
+
+- Check that FTP downloading works.
++++DONE
+
+- Add support for downloading from mirrors.
++++DONE
+
+- Add support for --syncdb downloading of ds*.zip.
++++DONE
+
+- configure test for locating 'basename', to build without warnings
+  on Linux. <unistd.h> on DJGPP, <libgen.h> on POSIX?
++++DONE
+
+- Use termios rather than getch().
++++DONE
+
+- Write test for isspecialpath().
++++DONE
+
+- doc/Makefile should have dependencies on version.txi.
++++OK
+
+- Allow HTTP/FTP mirror to be specified on command-line.
++++DONE
+
+- Fix problems with handling of $(MAKEFLAGS) on recursion.
++++DONE, removed usages of -$(MAKEFLAGS), since they were bogus.
+
+- Add porter-web-site and porter-ftp-site.
++++DONE
+
+- Add licence directives to all db-avail DSMs.
++++DONE
+
+Richard Dawe <rich@phekda.freeserve.co.uk>

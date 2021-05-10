@@ -1,0 +1,1632 @@
+Chapter 6
+
+
+
+
+
+Graphics Fundamentals
+98   Fastgraph User's Guide
+
+
+Overview
+
+     This chapter describes Fastgraph's fundamental graphics routines,
+sometimes called graphics primitives.  These routines perform such functions
+as clearing the screen, drawing points, drawing solid and dashed lines,
+drawing closed shapes (polygons, circles, and ellipses), drawing rectangles
+(solid, hollow, and dithered), and filling arbitrary regions.  Most of these
+routines have no effect in text video modes, but there are a few exceptions,
+and they will be noted in the descriptions of those routines.
+
+
+Clearing the Screen
+
+     The Fastgraph routine fg_erase clears the entire screen in any video
+mode.  In text modes, fg_erase stores a space character (ASCII 32) with a
+gray foreground attribute in each character cell.  In graphics modes,
+fg_erase sets each pixel to zero.  This of course causes each pixel to be
+displayed its background color.  The fg_erase routine has no arguments.
+
+     The fg_erase routine always sets the entire screen to the background
+color.  Another routine, fg_fillpage, fills the screen with the current
+color.  In text modes, fg_fillpage stores a solid block character (ASCII 219)
+with the current display attribute (as defined in the most recent call to
+fg_setcolor or fg_setattr).  In graphics modes, fg_fillpage sets each pixel
+to the current color (as defined in the most recent call to fg_setcolor).
+Like fg_erase, the fg_fillpage routine has no arguments.
+
+
+Clipping
+
+     The suppression of graphics outside a pre-defined area is called
+clipping.  Many of Fastgraph's graphics-oriented routines provide clipping,
+either automatically or through a special version of the routine.
+
+     Fastgraph includes two routines, fg_setclip and fg_setclipw, to define a
+rectangular clipping region.  The fg_setclip routine defines the clipping
+region in screen space, while the fg_setclipw routine performs the same
+function in world space.  Each routine takes four arguments:  the minimum x,
+the maximum x, the minimum y, and the maximum y coordinate of the clipping
+region.  The arguments are integer quantities for fg_setclip and floating
+point quantities for fg_setclipw.  For example, the statement
+
+                           fg_setclip(0,159,0,99);
+
+would define the upper left quadrant of the screen as the clipping region in
+a 320 by 200 graphics mode.
+
+     An implicit clipping region equal to the entire screen is defined as
+part of the fg_setmode routine's initializations.  Clipping is not supported
+for text modes.
+                                        Chapter 6:  Graphics Fundamentals   99
+
+
+Points
+
+     The Fastgraph routine fg_point provides the most basic graphics
+operation -- setting a pixel to a specified color.  The fg_point routine has
+two integer arguments.  The first specifies the pixel's x coordinate, and the
+second its y coordinate.  The pixel is drawn using the current color value,
+as specified in the most recent call to fg_setcolor.  There is also a world
+space version of this routine, fg_pointw, that uses floating point arguments.
+
+     Another Fastgraph routine is available for reading a pixel's color
+value.  The fg_getpixel routine has two integer arguments that specify the
+(x,y) coordinates for the pixel of interest.  There is no world space version
+of the fg_getpixel routine, but you can obtain a pixel's color value in world
+space by applying the fg_xscreen and fg_yscreen functions to the world space
+coordinates and passing the resulting values to fg_getpixel.
+
+     Example 6-1 uses the fg_point routine to draw 100 random points in
+random colors.  It also uses the fg_getpixel routine to insure no two points
+are adjacent.  The program establishes a graphics video mode with the
+fg_automode and fg_setmode routines.  Next, it determines the maximum color
+value for the selected video mode; note if we used virtual colors (color
+indices above the maximum color value), some of the colors would be the
+background color and would thus produce invisible points.  The main part of
+the program is a while loop that first generates a random pair of (x,y)
+screen coordinates.  It then calls the fg_getpixel routine to check the
+pixels at (x,y) and the eight adjacent positions.  If none of these pixels
+are set, the program generates a random color value and draws a point in that
+color.  After doing this 100 times, the program waits for a keystroke,
+restores the original video mode and screen attributes, and then returns to
+DOS.
+
+                                 Example 6-1.
+
+
+  #include <fastgraf.h>
+
+  #include <stdlib.h>
+
+  void main(void);
+
+
+
+  void main()
+
+  {
+
+     int area;
+
+     int color, old_color;
+
+     int left;
+
+     int max_color, max_x, max_y;
+
+     int new_mode, old_mode;
+
+100   Fastgraph User's Guide
+
+     int x, y;
+
+
+
+     old_mode = fg_getmode();
+
+     new_mode = fg_automode();
+
+     fg_setmode(new_mode);
+
+
+
+     if (new_mode == 4)
+
+        max_color = 3;
+
+     else if (new_mode == 11 || new_mode == 17)
+
+        max_color = 1;
+
+     else if (new_mode == 19)
+
+        max_color = 255;
+
+     else
+
+        max_color = 15;
+
+
+
+     left = 100;
+
+     max_x = fg_getmaxx() - 1;
+
+     max_y = fg_getmaxy() - 1;
+
+
+
+     while (left > 0) {
+
+
+
+        x = rand() % max_x + 1;
+
+        y = rand() % max_y + 1;
+
+        area = fg_getpixel(x-1,y-1)+fg_getpixel(x,y-1)+fg_getpixel(x+1,y-1)
+             + fg_getpixel(x-1,y)  +fg_getpixel(x,y)  +fg_getpixel(x+1,y)
+             + fg_getpixel(x-1,y+1)+fg_getpixel(x,y+1)+fg_getpixel(x+1,y+1);
+
+                                       Chapter 6:  Graphics Fundamentals   101
+
+        if (area == 0) {
+
+           color = rand() % max_color + 1;
+
+           fg_setcolor(color);
+
+           fg_point(x,y);
+
+           left--;
+
+           }
+
+        }
+
+
+
+     fg_waitkey();
+
+
+
+     fg_setmode(old_mode);
+
+     fg_reset();
+
+  }
+
+
+
+
+     Sometimes you may want to display a pixel using an "exclusive or"
+operation (usually called XOR) to guarantee its visibility.  The color of a
+pixel drawn in XOR mode will be c xor p, where c is the current color and p
+is the color of the pixel already at that position.  This means the pixel's
+new color will be different from the background as long as the current color
+is not zero.  The Fastgraph routine fg_pointx displays a screen space pixel
+in XOR mode, while fg_pointxw does the same thing in world space.  Their
+respective parameters are the same as for fg_point and fg_pointw.
+
+
+The Graphics Cursor
+
+     Many of Fastgraph's graphics routines depend on the position of the
+graphics cursor as a reference point.  For example, Fastgraph includes
+routines to draw lines from the graphics cursor position to a specified
+position, and the bit-mapped image display routines discussed in Chapter 10
+display or retrieve an image relative to the graphics cursor position.  The
+graphics cursor is not a cursor in the true sense; it is simply a pair of
+(x,y) coordinates with a special meaning.  The fg_setmode routine sets the
+graphics cursor position to the screen space coordinates (0,0), and the
+fg_initw routine sets it to the world space coordinates (0.0,0.0).
+
+     Fastgraph includes four routines for changing the graphics cursor
+position.  The fg_move routine sets it to an absolute screen space position,
+while the fg_movew routine sets it to an absolute world space position.  The
+fg_moverel routine sets the graphics cursor position to a screen space
+position relative to its current position.  The fg_moverw routine does the
+same in world space.
+102   Fastgraph User's Guide
+
+
+     Each of these routines has two arguments that specify the (x,y)
+coordinates of the new position.  For the screen space routines, the
+arguments are integer quantities.  For the world space routines, the
+arguments are floating point quantities.
+
+     You can obtain the screen space coordinates of the graphics cursor
+position with the fg_getxpos and fg_getypos routines.  These routines have no
+arguments and respectively return the x and y coordinates of the graphics
+cursor position as the function value.  To obtain the world space coordinates
+of the graphics cursor position, you can apply the fg_xworld and fg_yworld
+functions to the return values of fg_getxpos and fg_getypos.
+
+
+Solid Lines
+
+     Fastgraph includes eight routines for drawing solid lines.  All of them
+draw lines in the current color value and observe the clipping limits.  The
+fg_draw routine draws a line from the current graphics cursor position to an
+absolute screen space position, while fg_draww draws a line to an absolute
+world space position.  The fg_drawrel routine draws a line from the current
+graphics cursor position to a screen space position relative to it.  The
+fg_drawrw routine does the same in world space.  You can draw absolute lines
+in XOR mode with fg_drawx and relative XOR lines with fg_drawrelx, or with
+their world space counterparts fg_drawxw and fg_drawrxw.  XOR lines are often
+used when drawing cursors (such as cross hairs) or rubberband boxes to insure
+they are visible against colored backgrounds.  Another useful property of XOR
+lines is that drawing the same lines twice restores what was originally
+beneath the lines.
+
+     Each of these routines has two arguments that specify the (x,y)
+coordinates of the destination position.  For the screen space routines, the
+arguments are integer quantities.  For the world space routines, the
+arguments are floating point quantities.  In either case the destination
+position becomes the new graphics cursor position.  This makes it possible to
+draw connected lines without calling a graphics cursor movement routine
+between successive calls to a line drawing routine.
+
+     Examples 6-2 and 6-3 each draw a pair of crossed lines that divide the
+screen into quadrants.  Example 6-2 does this using the fg_move and fg_draw
+routines, while example 6-3 uses the fg_moverel and fg_drawrel routines.
+Both examples draw the lines in white, the default for color 15 in all
+graphics video modes.
+
+              Example 6-2.                          Example 6-3.
+
+     #include <fastgraf.h>                 #include <fastgraf.h>
+     void main(void);                      void main(void);
+
+     void main()                           void main()
+     {                                     {
+        int max_x, max_y;                     int max_x, max_y;
+        int mid_x, mid_y;                     int mid_x, mid_y;
+        int new_mode, old_mode;               int new_mode, old_mode;
+
+        old_mode = fg_getmode();              old_mode = fg_getmode();
+        new_mode = fg_automode();             new_mode = fg_automode();
+
+                                       Chapter 6:  Graphics Fundamentals   103
+
+        fg_setmode(new_mode);                 fg_setmode(new_mode);
+
+        max_x = fg_getmaxx();                 max_x = fg_getmaxx();
+        max_y = fg_getmaxy();                 max_y = fg_getmaxy();
+        mid_x = max_x / 2;                    mid_x = max_x / 2;
+        mid_y = max_y / 2;                    mid_y = max_y / 2;
+
+        fg_setcolor(15);                      fg_setcolor(15);
+        fg_move(mid_x,0);                     fg_move(mid_x,0);
+        fg_draw(mid_x,max_y);                 fg_drawrel(0,max_y);
+        fg_move(0,mid_y);                     fg_moverel(-mid_x,-mid_y);
+        fg_draw(max_x,mid_y);                 fg_drawrel(max_x,0);
+        fg_waitkey();                         fg_waitkey();
+
+        fg_setmode(old_mode);                 fg_setmode(old_mode);
+        fg_reset();                           fg_reset();
+     }                                     }
+
+
+     Examples 6-4 and 6-5 are variations of example 6-2.  Example 6-4 uses
+world space rather than screen space to draw the crossed lines.  Example 6-5
+is the same as example 6-2 except it defines a clipping area to restrict
+drawing to the upper left quadrant of the screen.  The clipping suppresses
+the right half of the horizontal line and the lower half of the vertical
+line.
+
+               Example 6-4.                           Example 6-5.
+
+
+
+  #include <fastgraf.h>                     #include <fastgraf.h>
+
+  void main(void);                          void main(void);
+
+
+
+  void main()                               void main()
+
+  {                                          {
+
+     int new_mode, old_mode;                   int max_x, max_y;
+
+                                               int mid_x, mid_y;
+
+     old_mode = fg_getmode();                  int new_mode, old_mode;
+
+     new_mode = fg_automode();
+
+     fg_setmode(new_mode);                     old_mode = fg_getmode();
+
+     fg_initw();                               new_mode = fg_automode();
+
+     fg_setworld(-10.0,10.0,-10.0,10.0);       fg_setmode(new_mode);
+
+104   Fastgraph User's Guide
+
+     fg_setcolor(15);                          max_x = fg_getmaxx();
+
+     fg_movew(0.0,10.0);                       max_y = fg_getmaxy();
+
+     fg_draww(0.0,-10.0);                      mid_x = max_x / 2;
+
+     fg_movew(-10.0,0.0);                      mid_y = max_y / 2;
+
+     fg_draww(10.0,0.0);
+
+     fg_waitkey();                             fg_setclip(0,mid_x,0,mid_y);
+
+
+     fg_setmode(old_mode);                     fg_setcolor(15);
+
+     fg_reset();                               fg_move(mid_x,0);
+
+  }                                            fg_draw(mid_x,max_y);
+
+                                               fg_move(0,mid_y);
+
+                                               fg_draw(max_x,mid_y);
+
+                                               fg_waitkey();
+
+
+
+                                               fg_setmode(old_mode);
+
+                                               fg_reset();
+
+                                            }
+
+
+
+
+
+Dashed Lines
+
+     Fastgraph includes four routines for drawing dashed lines.  All of them
+draw lines in the current color value and observe the clipping limits.  The
+fg_dash routine draws a dashed line from the current graphics cursor position
+to an absolute screen space position, while fg_dashw draws a dashed line to
+an absolute world space position.  The fg_dashrel routine draws a dashed line
+from the current graphics cursor position to a screen space position relative
+to it.  The fg_dashrw routine does the same in world space.
+
+     Each of these routines has three arguments.  The first two specify the
+(x,y) coordinates of the destination position.  For the screen space
+routines, these arguments are integer quantities.  For the world space
+routines, these arguments are floating point quantities.  The third argument
+is a 16-bit pattern that defines the appearance of the dashed line.  Bits
+that are set in the pattern produce the visible part of the line, while bits
+that are reset produce the invisible part.  This pattern is repeated as
+necessary to draw the entire line.  For example, the pattern value 3333 hex
+would produce a dashed line with the first two pixels off, the next two on,
+                                       Chapter 6:  Graphics Fundamentals   105
+
+the next two off, and so forth.  Similarly, the pattern value FFFF hex would
+produce a solid line.
+
+     The destination position passed to any of the dashed line routines
+becomes the new graphics cursor position.  This makes it possible to draw
+connected dashed lines without calling a graphics cursor movement routine
+between successive calls to a line drawing routine.
+
+     Example 6-6 draws a pair of crossed dashed lines that divide the screen
+into quadrants.  It does this using the fg_move and fg_dash routines and
+draws the lines in white, the default for color 15 in all graphics video
+modes.  The dash pattern for each line is 3333 hex, which alternates two
+pixels off and on.
+
+                                 Example 6-6.
+
+                       #include <fastgraf.h>
+                       void main(void);
+
+                       void main()
+                       {
+                          int max_x, max_y;
+                          int mid_x, mid_y;
+                          int new_mode, old_mode;
+
+                          old_mode = fg_getmode();
+                          new_mode = fg_automode();
+                          fg_setmode(new_mode);
+
+                          max_x = fg_getmaxx();
+                          max_y = fg_getmaxy();
+                          mid_x = max_x / 2;
+                          mid_y = max_y / 2;
+
+                          fg_setcolor(15);
+                          fg_move(mid_x,0);
+                          fg_dash(mid_x,max_y,0x3333);
+                          fg_move(0,mid_y);
+                          fg_dash(max_x,mid_y,0x3333);
+                          fg_waitkey();
+
+                          fg_setmode(old_mode);
+                          fg_reset();
+                       }
+
+
+
+Polygons
+
+     Fastgraph includes routines for drawing filled and unfilled polygons, as
+well as a routine for determining if a given point is inside a convex
+polygon.  All the polygon routines observe the clipping limits.
+
+     The fg_polygon routine draws an unfilled polygon in screen space.
+Fg_polygon requires an array of integer x coordinates as its first argument,
+and an array of integer y coordinates as its second argument.  Each (x,y)
+coordinate pair from the two arrays is treated as a polygon vertex.  In other
+106   Fastgraph User's Guide
+
+words, the x coordinate of the first polygon vertex is the first element of
+the x coordinate array, and the y coordinate of the first vertex is the first
+element of the y coordinate array.  Similarly, the second elements of each
+array define the second vertex, and so forth.  The third argument for
+fg_polygon is an integer quantity that specifies the number of elements in
+the two coordinate arrays (that is, the number of polygon vertices).
+
+     Another routine, fg_polygonw, draws an unfilled polygon in world space.
+The fg_polygonw routine is the same as the fg_polygon routine, except its x
+and y coordinate arrays must contain floating point values instead of
+integers.
+
+     The polygon drawing begins at the first vertex specified in the
+coordinate arrays.  The polygon routines then draw a solid line to the second
+vertex, then to the third vertex, and continue in this manner through the
+last vertex.  If necessary, they then close the polygon by drawing a line
+connecting the last vertex and the first vertex.  Example 6-7 illustrates
+unfilled polygon drawing using the fg_polygon routine in the EGA monochrome
+or enhanced modes (modes 15 and 16).  The program exits if neither of these
+video modes are available.
+
+                                 Example 6-7.
+
+             #include <fastgraf.h>
+             #include <stdio.h>
+             #include <stdlib.h>
+             void main(void);
+
+             #define VERTICES 10
+
+             int x[] = {200,300,400,400,300,240,160,160,200,210};
+             int y[] = {100, 80,100,220,320,320,240,200,160,150};
+
+             void main()
+             {
+                int old_mode;
+
+                old_mode = fg_getmode();
+                if (fg_testmode(16,1))
+                   fg_setmode(16);
+                else if (fg_testmode(15,1))
+                   fg_setmode(15);
+                else {
+                   printf("This program requires a 640 x 350 ");
+                   printf("EGA graphics mode.\n");
+                   exit(1);
+                   }
+
+                fg_setcolor(1);
+                fg_polygon(x,y,VERTICES);
+                fg_waitkey();
+
+                fg_setmode(old_mode);
+                fg_reset();
+             }
+
+                                       Chapter 6:  Graphics Fundamentals   107
+
+     As shown in this example, the fg_polygon routine expects the x and y
+components defining the polygon vertices to be in separate arrays.  Another
+routine, fg_polyline, draws an unfilled polygon from polygon vertices in one
+integer array.  With fg_polyline, the first array element is the x component
+of the first vertex, the second element is the y component of the first
+vertex, the third element is the x component of the second vertex, and so
+forth.  The first fg_polyline argument is the vertex coordinate array of
+alternating x and y components, and the second argument specifies the number
+of vertices.  In other respects, fg_polyline is identical to fg_polygon.
+
+     An additional feature available with fg_polyline but not fg_polygon is
+the ability to specify vertex offsets.  The fg_polyoff routine's two integer
+arguments respectively define offset values that are added to each
+fg_polyline vertex.  This makes it possible to define polygon vertices as
+relative values, that when combined with the offsets, determine the polygon's
+absolute position.
+
+     Perhaps the most important polygon display routine is fg_polyfill, which
+displays a filled convex polygon in screen space (the polygon is filled with
+pixels of the current color).  Its first argument is a vertex array in the
+same format used by fg_polyline.  The next argument is a work array used
+internally.  The size of the work array must be at least twice the polygon
+height if defined as an integer array, or four times the polygon height if
+defined as a byte array.  The final argument specifies the number of polygon
+vertices.
+
+     Example 6-8 illustrates the use of the fg_polyline, fg_polyoff, and
+fg_polyfill routines.  The program first draws an unfilled polygon, centered
+within the left half of the screen.  It then draws a filled version of the
+same polygon, centered within the right half of the screen.  In each case,
+the centering is accomplished by passing appropriate values to fg_polyoff.
+After waiting for a keystroke, the program establishes a clipping region in
+the lower right corner and redraws the filled polygon at the same position
+but in a different color.  This of course results in only a portion of the
+filled polygon being drawn.  Like example 6-7, this example requires a 640 by
+350 graphics mode.
+
+                                 Example 6-8.
+
+          #include <fastgraf.h>
+          #include <stdio.h>
+          #include <stdlib.h>
+          void main(void);
+
+          #define VERTICES 10
+
+          int xy[] = {200,100, 300, 80, 400,100, 400,220, 300,320,
+                      240,320, 160,240, 160,200, 200,160, 210,150};
+          int work_array[700];
+
+          void main()
+          {
+             int old_mode;
+
+             old_mode = fg_getmode();
+             if (fg_testmode(16,1))
+                fg_setmode(16);
+
+108   Fastgraph User's Guide
+
+             else if (fg_testmode(15,1))
+                fg_setmode(15);
+             else {
+                printf("This program requires a 640 x 350 ");
+                printf("EGA graphics mode.\n");
+                exit(1);
+                }
+
+             fg_setcolor(1);
+             fg_polyoff(-120,-25);
+             fg_polyline(xy,VERTICES);
+             fg_polyoff(200,-25);
+             fg_polyfill(xy,work_array,VERTICES);
+             fg_waitkey();
+
+             fg_setcolor(2);
+             fg_setclip(480,639,175,349);
+             fg_polyfill(xy,work_array,VERTICES);
+             fg_waitkey();
+
+             fg_setmode(old_mode);
+             fg_reset();
+          }
+
+
+     The fg_polyfill routine fills convex polygons.  From Fastgraph's
+perspective, a polygon is convex if any horizontal line drawn through the
+polygon crosses the left edge exactly once and the right edge exactly once
+(excluding horizontal and zero-length edge segments).  Note that this
+definition includes shapes that are not convex in the traditional sense.  In
+addition, any non-convex polygon can be decomposed into two or more convex
+polygons.
+
+     The filled convex polygon is a fundamental tool of three-dimensional
+computer graphics.  A common practice is to build an image or object from
+several adjacent or connecting polygons.  Such polygons typically overlap at
+one or more edges.  For instance, the coordinates defining the right edge of
+one polygon may also define the left edge of another polygon immediately to
+its right.  For an overall image to appear correct, its component polygons
+must fit together correctly.  The fg_polyfill routine applies the following
+rules to handle overlapping polygon edges:
+
+          Points located exactly on non-horizontal edges are drawn
+          only if the polygon's interior is directly to the right.
+
+          Points located exactly on horizontal edges are drawn only
+          if the polygon's interior is directly below them.
+
+          A vertex is drawn only if all lines ending at that point
+          meet the above two conditions.
+
+These three rules ensure that no pixel is drawn more than once when filling
+adjacent polygons.  However, they may not be suitable for displaying polygons
+that are not adjacent because some of the pixels on the polygon's edge will
+not be included.  If this is an issue, first draw the filled polygon with
+fg_polyfill, then draw an unfilled polygon having the same vertices with
+fg_polyline.
+                                       Chapter 6:  Graphics Fundamentals   109
+
+
+     The final Fastgraph routine relating to polygons is fg_inside, which
+checks if a specified point lies inside a convex polygon.  Its first argument
+is a vertex array in the same format used by fg_polyline and fg_polyfill.
+The second argument is the number of vertices in the polygon, while the last
+two arguments specify the screen space x and y coordinates of the point being
+tested.  The fg_inside function returns 1 if the point lies inside the
+polygon and 0 if not.  If the vertex array does not define a convex polygon,
+the return value is undefined.
+
+
+Circles and Ellipses
+
+     Fastgraph includes routines for drawing filled and unfilled circles and
+ellipses.  Both screen space and world space versions of these routines are
+available, and all of them observe the clipping limits.
+
+     The fg_circle routine draws an unfilled circle in screen space, centered
+at the graphics cursor position, using the current color.  The routine's only
+argument specifies the circle's radius in horizontal screen space units.
+Another routine, fg_circlew, draws an unfilled circle where the radius is
+measured in horizontal world space units.  The analogous routines for drawing
+filled circles are fg_circlef and fg_circlefw.  All four circle drawing
+routines leave the graphics cursor position unchanged.
+
+     The fg_ellipse routine draws an unfilled ellipse in screen space,
+centered at the graphics cursor position, using the current color.  The
+routine requires two arguments that respectively specify the length of its
+horizontal and vertical semi-axes.  In other words, the first argument is the
+absolute distance from the center of the ellipse to its horizontal extremity,
+and the second argument is the absolute distance from the center to the
+vertical extremity.  Another routine, fg_ellipsew, draws an unfilled ellipse
+in world space.  The analogous routines for drawing filled ellipses are
+fg_ellipsef and fg_ellipsfw.  All four ellipse drawing routines leave the
+graphics cursor position unchanged.
+
+     Example 6-9 illustrates the use of the fg_circlew and fg_ellipsew
+routines.  The program first uses the fg_automode routine to propose a
+graphics video mode and then uses the fg_setmode routine to select that video
+mode.  It then makes color 15 the current color, which by default is white in
+all color graphics modes and "on" in the monochrome graphics modes.  Next, it
+establishes a 200-unit by 200-unit world space coordinate system.  The
+program then uses fg_ellipsew to draw an ellipse and fg_circlew to draw a
+circle, both centered at the middle of the screen (which is the origin of our
+world space coordinate system).  The circle has a radius of 1/16 the width of
+the screen (12.5 horizontal world space units), and the ellipse is
+horizontally inscribed within the circle.
+
+     Example 6-10 illustrates the use of the fg_circle and fg_ellipse
+routines.  It is functionally identical to example 6-9, but it uses screen
+space rather than world space coordinates to draw the circle and ellipse.
+Note the arguments to the fg_circle and fg_ellipse routines are dependent on
+the maximum x and y coordinates of the selected video mode.  If we didn't
+compute these arguments in this manner, the actual size of the circle and
+ellipse would be proportional to the pixel resolution of the video mode.  No
+such dependency exists when using world space, but we pay a price for this
+feature in slightly slower execution speed.
+110   Fastgraph User's Guide
+
+
+                 Example 6-9.                              Example 6-10.
+
+
+
+  #include <fastgraf.h>                        #include <fastgraf.h>
+
+  void main(void);                             void main(void);
+
+
+
+  void main()                                  void main()
+
+  {                                            {
+
+     int old_mode;                                int mid_x, mid_y;
+
+                                                  int old_mode;
+
+     old_mode = fg_getmode();                     int x,y;
+
+     fg_setmode(fg_automode());
+
+     fg_setcolor(15);                             old_mode = fg_getmode();
+
+                                                  fg_setmode(fg_automode());
+
+     fg_initw();                                  fg_setcolor(15);
+
+     fg_setworld(-100.0,100.0,-100.0,100.0);
+
+                                                  mid_x = fg_getmaxx() / 2;
+
+     fg_movew(0.0,0.0);                           mid_y = fg_getmaxy() / 2;
+
+     fg_ellipsew(12.5,12.5);                      x = mid_x / 8;
+
+     fg_circlew(12.5);                            y = mid_y / 8;
+
+     fg_waitkey();
+
+                                                  fg_move(mid_x,mid_y);
+
+     fg_setmode(old_mode);                        fg_ellipse(x,y);
+
+     fg_reset();                                  fg_circle(x);
+
+  }                                               fg_waitkey();
+
+
+
+                                                  fg_setmode(old_mode);
+
+                                                  fg_reset();
+
+                                               }
+
+                                       Chapter 6:  Graphics Fundamentals   111
+
+Solid Rectangles
+
+     Fastgraph includes four routines for drawing solid rectangles, two for
+screen space and two for world space, with and without clipping.  None of
+these routines affect the graphics cursor position.
+
+     The fg_rect routine draws a solid rectangle in screen space, without
+regard to the clipping limits, using the current color.  Fg_rect requires
+four integer arguments that respectively define the minimum x, maximum x,
+minimum y, and maximum y screen space coordinates of the rectangle.  The
+minimum coordinates must be less than or equal to the maximum coordinates, or
+else the results are unpredictable.  The fg_clprect routine is identical in
+all respects to the fg_rect routine, except it observes the clipping limits.
+
+     The world space versions of the solid rectangle drawing routines are
+fg_rectw and fg_clprectw.  Like fg_rect and fg_clprect, they require four
+arguments that define the extremes of the rectangle, but the arguments are
+floating point world space coordinates.
+
+     You also can use fg_rect in text modes.  When used in a text mode,
+fg_rect expects its four arguments to be expressed in character space (that
+is, rows and columns) rather than screen space.  This means the four
+arguments respectively specify the minimum column, maximum column, minimum
+row, and maximum row of the rectangle.  Fastgraph constructs the rectangle by
+storing the solid block character (ASCII decimal value 219) in each character
+cell comprising the rectangle.  The rectangle is drawn using the current
+character attribute, but because the solid block character occupies the
+entire character cell, the background component of the attribute is
+essentially meaningless.
+
+     Example 6-11 demonstrates the use of the fg_rect routine by drawing 200
+random-size rectangles in random colors.  The program first uses the
+fg_automode routine to propose a graphics video mode and then uses the
+fg_setmode routine to select that video mode.  Next, it determines the
+horizontal and vertical screen resolution for the selected video mode, using
+the fg_getmaxx and fg_getmaxy routines.  The main part of the program is a
+for loop that generates a random rectangle in each iteration.  Inside the
+loop, the C library function rand is used to generate the extremes of the
+rectangle.  If necessary, the program then exchanges the coordinates to make
+the minimum coordinates less than or equal to the maximum coordinates.
+Finally, it again uses rand to generate a random color number between 0 and
+15, and then draws the rectangle in that color.  After drawing all 200
+rectangles, the program restores the original video mode and screen
+attributes before returning to DOS.
+
+                                Example 6-11.
+
+            #include <fastgraf.h>
+            void main(void);
+
+            #define RECTANGLES 200
+            #define SWAP(a,b,temp) { temp = a; a = b; b = temp; }
+
+112   Fastgraph User's Guide
+
+            void main()
+            {
+               int i;
+               int minx, maxx, miny, maxy;
+               int old_mode;
+               int temp;
+               int xres, yres;
+
+               old_mode = fg_getmode();
+               fg_setmode(fg_automode());
+
+               xres = fg_getmaxx() + 1;
+               yres = fg_getmaxy() + 1;
+
+               for (i = 0; i < RECTANGLES; i++) {
+                  minx = rand() % xres;
+                  maxx = rand() % xres;
+                  miny = rand() % yres;
+                  maxy = rand() % yres;
+                  if (minx > maxx)
+                     SWAP(minx,maxx,temp);
+                  if (miny > maxy)
+                     SWAP(miny,maxy,temp);
+                  fg_setcolor(rand()%16);
+                  fg_rect(minx,maxx,miny,maxy);
+                  }
+
+               fg_setmode(old_mode);
+               fg_reset();
+            }
+
+
+
+Unfilled Rectangles
+
+     Fastgraph includes a routine for drawing unfilled rectangles.  The
+fg_box routine draws an unfilled rectangle in screen space, with regard to
+the clipping limits, using the current color.  The arguments to fg_box are
+the same as those for fg_rect.  The depth of the rectangle's edges is one
+pixel by default, but you can change the depth by calling fg_boxdepth.  The
+fg_boxdepth routine expects two arguments.  The first argument is the width
+of the rectangle's left and right sides, while the second is the height of
+its top and bottom sides.  Once you call fg_boxdepth, fg_box draws all
+unfilled rectangles using the depth values specified in the most recent call
+to fg_boxdepth.  Unlike fg_rect, the fg_box routine has no effect in text
+video modes.  The analogous world space routine is fg_boxw.
+
+     Example 6-12 is the same as example 6-11, but it draws unfilled instead
+of solid rectangles.  The program uses fg_box to draw the each rectangle and
+fg_boxdepth to define the rectangle depth at three pixels in each direction.
+Note that you don't need to call fg_boxdepth for each rectangle if you want
+all of them to have the same depth.
+
+                                Example 6-12.
+
+            #include <fastgraf.h>
+            void main(void);
+
+                                       Chapter 6:  Graphics Fundamentals   113
+
+
+            #define RECTANGLES 200
+            #define SWAP(a,b,temp) { temp = a; a = b; b = temp; }
+
+            void main()
+            {
+               int i;
+               int minx, maxx, miny, maxy;
+               int old_mode;
+               int temp;
+               int xres, yres;
+
+               old_mode = fg_getmode();
+               fg_setmode(fg_automode());
+               fg_boxdepth(3,3);
+
+               xres = fg_getmaxx() + 1;
+               yres = fg_getmaxy() + 1;
+
+               for (i = 0; i < RECTANGLES; i++) {
+                  minx = rand() % xres;
+                  maxx = rand() % xres;
+                  miny = rand() % yres;
+                  maxy = rand() % yres;
+                  if (minx > maxx)
+                     SWAP(minx,maxx,temp);
+                  if (miny > maxy)
+                     SWAP(miny,maxy,temp);
+                  fg_setcolor(rand()%16);
+                  fg_box(minx,maxx,miny,maxy);
+                  }
+
+               fg_setmode(old_mode);
+               fg_reset();
+            }
+
+
+     The fg_boxx and fg_boxxw routines are screen space and world space
+"exclusive or" versions of the box drawing routines.  They simplify
+displaying rubberband boxes (hollow rectangles that move in response to
+keystrokes or mouse movement) because drawing an object in XOR mode makes it
+appear, but drawing it again in the same position and in the same color
+restores what was under the object originally.  Given this useful property,
+here is an outline of what's necessary to draw a rubberband box:
+
+   1.     Draw the box in its initial position with fg_boxx or
+          fg_boxxw.
+   2.     Wait for a user response that signifies box movement.
+   3.     Use fg_boxx or fg_boxxw to redraw the box in the same
+          position as in step 1.  This restores what was there
+          originally.
+   4.     Draw the box in its new position with fg_boxx or
+          fg_boxxw.
+   5.     Repeat steps 2, 3, and 4 until the box is no longer
+          needed.
+114   Fastgraph User's Guide
+
+     Example 6-13 shows a simple use of fg_boxx in the 320 by 200 MCGA/VGA
+256-color mode (mode 19).  The program fills the left and right halves of the
+screen with different colors and then displays an XOR box the overlaps each
+half.  Even though the box is drawn in the same color as the right half, it
+is still visible because drawing something in an XOR mode (except in color 0)
+guarantees that it will be visible against its background.  After a
+keystroke, the program redraws the same box, which of course restores what
+was there in the first place.
+
+                                Example 6-13.
+
+                         #include <fastgraf.h>
+                         void main(void);
+
+                         void main()
+                         {
+                            int old_mode;
+
+                            old_mode = fg_getmode();
+                            fg_setmode(19);
+                            fg_setcolor(9);
+                            fg_rect(0,159,0,199);
+                            fg_setcolor(15);
+                            fg_rect(160,319,0,199);
+                            fg_waitkey();
+
+                            fg_boxx(80,239,50,149);
+                            fg_waitkey();
+                            fg_boxx(80,239,50,149);
+                            fg_waitkey();
+
+                            fg_setmode(old_mode);
+                            fg_reset();
+                         }
+
+
+
+Dithered Rectangles
+
+     The process of alternating different color pixels across a region of the
+display area is called dithering.  This technique is especially useful in the
+graphics modes with few colors, such as CGA and Hercules modes, because you
+can simulate additional colors through effective uses of dithering.
+Fastgraph includes two routines for drawing dithered rectangles, one for
+screen space and one for world space.  Neither routine observes the clipping
+limits, nor do they affect the graphics cursor position.
+
+     The fg_drect routine draws a dithered rectangle in screen space.  Like
+the fg_rect routine, fg_drect requires four integer arguments that
+respectively define the minimum x, maximum x, minimum y, and maximum y screen
+space coordinates of the rectangle.  The minimum coordinates must be less
+than or equal to the maximum coordinates, or else the results are
+unpredictable.  However, fg_drect also requires a fifth argument that defines
+the dithering matrix, which in turn determines the pixel pattern used to
+build the dithered rectangle.  The size and format of the dithering matrix
+are dependent on the video mode.
+                                       Chapter 6:  Graphics Fundamentals   115
+
+     The world space version of the dithered rectangle drawing routine is
+fg_drectw.  Like fg_drect, it requires four arguments that define the
+extremes of the rectangle, and a fifth argument that defines the dithering
+matrix.
+
+     As mentioned earlier, the size and format of the dithering matrix are
+dependent on the video mode.  The dithering matrix is a four byte array in
+all video modes except the 256 color graphics modes (modes 19 through 27),
+where it is an eight byte array.  This array contains a pixel pattern that
+fg_drect or fg_drectw replicates across the rectangle's area.  The structure
+of the dithering matrix closely mimics the structure of video memory in each
+graphics mode.
+
+     The remainder of this section will present some simple mode-specific
+examples to illustrate the structure of the dithering matrix in the different
+graphics modes.  Suppose we would like to produce a "checkerboard" of light
+blue and white pixels.  That is, in a given row of a rectangle, consecutive
+pixels will alternate between these two colors.  Additionally, the pattern
+for adjacent rows will be shifted such that there will always be a white
+pixel above and below a light blue pixel, and vice versa.  Hence this pixel
+pattern would look something like
+
+                                   B W B W
+                                   W B W B
+                                   B W B W
+                                   W B W B
+
+where each B represents a light blue pixel, and each W represents a white
+pixel.  The following examples describe the dithering matrix that could be
+used to produce such a pixel pattern in each graphics mode.
+
+CGA Four-Color Graphics Modes
+
+     The CGA four-color graphics modes (modes 4 and 5) use a four-byte
+dithering matrix that Fastgraph treats as a four-row by one-column array.
+Since each pixel in these modes requires two bits of video memory, each byte
+of the dithering matrix holds four pixels.  Thus, the pixel representation of
+the dithering matrix would appear as shown below on the left; its translation
+to numeric values appears on the right.
+
+
+                   [3]   B W B W       [3]   01 11 01 11
+
+                   [2]   W B W B       [2]   11 01 11 01
+
+                   [1]   B W B W       [1]   01 11 01 11
+
+                   [0]   W B W B       [0]   11 01 11 01
+
+
+Because these modes do not offer a light blue color, we've used light cyan
+(color value 1 in palette 1) to approximate light blue.  The B pixels thus
+translate to color value 1, or 01 binary.  White is available as color value
+3 in palette 1, so the W pixels translate to color value 3, or 11 binary.
+The hexadecimal equivalent of the binary value 11011101 (for array elements
+[0] and [2]) is DD, and the hexadecimal equivalent of the binary value
+01110111 (for array elements [1] and [3]) is 77.  As shown in example 6-12,
+116   Fastgraph User's Guide
+
+these are precisely the values assigned to the elements of the dithering
+matrix.
+
+     Example 6-14 uses mode 4 to display a 50-pixel by 50-pixel dithered
+rectangle in the upper left corner of the screen.  The dithering matrix
+represents the blue and white checkerboard pattern discussed in the preceding
+paragraph.
+
+                                Example 6-14.
+
+                       #include <fastgraf.h>
+                       void main(void);
+
+                       void main()
+                       {
+                          char matrix[4];
+                          int old_mode;
+
+                          old_mode = fg_getmode();
+                          fg_setmode(4);
+
+                          matrix[0] = matrix[2] = 0xDD;
+                          matrix[1] = matrix[3] = 0x77;
+                          fg_drect(0,49,0,49,matrix);
+                          fg_waitkey();
+
+                          fg_setmode(old_mode);
+                          fg_reset();
+                       }
+
+
+CGA Two-Color Graphics Mode
+
+     The CGA two-color graphics mode (mode 6) uses a four-byte dithering
+matrix that Fastgraph treats as a four-row by one-column array, as in the
+other four-color CGA modes.  However, each pixel in this mode only requires
+one bit of video memory, so each byte of the dithering matrix holds eight
+pixels.  Thus, the pixel representation of the dithering matrix would appear
+as shown below on the left; its translation to numeric values appears on the
+right.
+
+
+             [3]   B W B W B W B W       [3]   0 1 0 1 0 1 0 1
+
+             [2]   W B W B W B W B       [2]   1 0 1 0 1 0 1 0
+
+             [1]   B W B W B W B W       [1]   0 1 0 1 0 1 0 1
+
+             [0]   W B W B W B W B       [0]   1 0 1 0 1 0 1 0
+
+
+Mode 6 obviously does not offer a light blue color, so we've used black
+(color value 0) in its place.  The B pixels thus translate to color value 0.
+White is available as color value 1, so the W pixels translate to color value
+1.  The hexadecimal equivalent of the binary value 10101010 (for array
+elements [0] and [2]) is AA, and the hexadecimal equivalent of the binary
+value 01010101 (for array elements [1] and [3]) is 55.  Thus, to make example
+                                       Chapter 6:  Graphics Fundamentals   117
+
+6-14 run in mode 6, we only need to change the fg_setmode argument from 4 to
+6 and change the dithering matrix values as shown below.
+
+
+                        matrix[0] = matrix[2] = 0xAA;
+                        matrix[1] = matrix[3] = 0x55;
+
+
+Tandy/PCjr 16-Color Graphics Mode
+
+     The Tandy/PCjr 16-color graphics mode (mode 9) also uses a four-byte
+dithering matrix that Fastgraph treats as a four-row by one-column array.
+Each pixel in this mode requires four bits of video memory, so each byte of
+the dithering matrix only holds two pixels.  Thus, the pixel representation
+of the dithering matrix would appear as shown below on the left; its
+translation to numeric values appears on the right.
+
+
+                      [3]   B W       [3]   1001 1111
+
+                      [2]   W B       [2]   1111 1001
+
+                      [1]   B W       [1]   1001 1111
+
+                      [0]   W B       [0]   1111 1001
+
+
+The B pixels translate to color value 9 (light blue), or 1001 binary, and the
+W pixels translate to color value 15 (white), or 1111 binary.  The
+hexadecimal equivalent of the binary value 11111001 (for array elements [0]
+and [2]) is F9, and the hexadecimal equivalent of the binary value 10011111
+(for array elements [1] and [3]) is 9F.  Thus, to make example 6-14 run in
+mode 9, we only need to change the fg_setmode argument from 4 to 9 and change
+the dithering matrix values as shown below.
+
+
+                        matrix[0] = matrix[2] = 0xF9;
+                        matrix[1] = matrix[3] = 0x9F;
+
+
+Hercules Graphics Mode
+
+     The size and format of the dithering matrix in the Hercules graphics
+mode (mode 11) are the same as in the CGA two-color mode (mode 6).
+
+Hercules Low-Resolution Graphics Mode
+
+     The size and format of the dithering matrix in the Hercules low-
+resolution graphics mode (mode 12) are the same as in the CGA four-color
+modes (modes 4 and 5).  As far as our checkerboard example goes, we'll use
+black (color value 0) in place of light blue, and bold (color value 3)
+instead of white.  Thus, the B pixels translate to 00 binary, while the W
+pixels translate to 11 binary.  The hexadecimal equivalent of the binary
+value 11001100 (for array elements [0] and [2]) is CC, and the hexadecimal
+equivalent of the binary value 00110011 (for array elements [1] and [3]) is
+33.  Thus, to make example 6-14 run in mode 12, we only need to change the
+118   Fastgraph User's Guide
+
+fg_setmode argument from 4 to 12 and change the dithering matrix values as
+shown below.
+
+
+                        matrix[0] = matrix[2] = 0xCC;
+                        matrix[1] = matrix[3] = 0x33;
+
+
+EGA/VGA/SVGA 16-Color Graphics Modes
+
+     The EGA/VGA/SVGA 16-color graphics modes (modes 13 through 18, 28, and
+29) use a four-byte dithering matrix that Fastgraph treats as a four-row by
+one-column array.  Unlike the other graphics modes, which allow you to store
+pixels of several colors in the dithering matrix, these modes treat the
+dithering matrix as a bit map for a specific color.  Since each color in the
+dither pattern must be stored in a separate bit map (that is, in a separate
+dithering matrix), you must call fg_drect once for each color.  Furthermore,
+you must use the fg_setcolor routine before each call to fg_drect to define
+the color used with the dithering matrix.
+
+     In all EGA/VGA/SVGA graphics modes, each byte of the dithering matrix is
+a bit map that represents eight pixels.  Using our familiar checkerboard
+example, the pixel representation of the dithering matrix would appear as
+shown below.
+
+
+                           [3]   B W B W B W B W
+
+                           [2]   W B W B W B W B
+
+                           [1]   B W B W B W B W
+
+                           [0]   W B W B W B W B
+
+
+Translating this pattern to numeric values is simple.  Just construct one
+dithering matrix for each color in the pattern (there are two colors in this
+example), where pixels of the current color translate to 1, and other pixels
+translate to 0.  Following our example, the translation for the B pixels
+appears below on the left, while the translation for the W pixels appears on
+the right.
+
+
+             [3]   1 0 1 0 1 0 1 0       [3]   0 1 0 1 0 1 0 1
+
+             [2]   0 1 0 1 0 1 0 1       [2]   1 0 1 0 1 0 1 0
+
+             [1]   1 0 1 0 1 0 1 0       [1]   0 1 0 1 0 1 0 1
+
+             [0]   0 1 0 1 0 1 0 1       [0]   1 0 1 0 1 0 1 0
+
+
+The hexadecimal equivalent of the binary value 01010101 is 55, and the
+hexadecimal equivalent of the binary value 10101010 is AA.  As shown in
+example 6-15, these are precisely the values assigned to the elements of the
+dithering matrices.
+                                       Chapter 6:  Graphics Fundamentals   119
+
+     Example 6-15 uses mode 13 to display our light blue and white
+checkerboard pattern.  Note you must call fg_drect twice -- once for the
+light blue pixels (color value 9), and again for the white pixels (color
+value 15).  Note also how fg_setcolor is used before each call to fg_drect to
+define the color of the pixels fg_drect will display.
+
+                                Example 6-15.
+
+                       #include <fastgraf.h>
+                       void main(void);
+
+                       void main()
+                       {
+                          char matrix[4];
+                          int old_mode;
+
+                          old_mode = fg_getmode();
+                          fg_setmode(13);
+
+                          matrix[0] = matrix[2] = 0x55;
+                          matrix[1] = matrix[3] = 0xAA;
+                          fg_setcolor(9);
+                          fg_drect(0,49,0,49,matrix);
+
+                          matrix[0] = matrix[2] = 0xAA;
+                          matrix[1] = matrix[3] = 0x55;
+                          fg_setcolor(15);
+                          fg_drect(0,49,0,49,matrix);
+                          fg_waitkey();
+
+                          fg_setmode(old_mode);
+                          fg_reset();
+                       }
+
+
+256-Color Graphics Modes
+
+     The 256-color graphics modes (modes 19 through 27) use an eight-byte
+dithering matrix that Fastgraph treats as a four-row by two-column array.
+Each pixel in these modes requires eight bits of video memory, so each byte
+of the dithering matrix only holds a single pixel.  We therefore need the two
+column dithering matrix to produce a meaningful dither pattern.  The pixel
+representation of the dithering matrix would appear as shown below on the
+left; its translation to numeric values appears on the right.
+
+
+                    [6]   B   W   [7]     [6]    9   15   [7]
+
+                    [4]   W   B   [5]     [4]   15    9   [5]
+
+                    [2]   B   W   [3]     [2]    9   15   [3]
+
+                    [0]   W   B   [1]     [0]   15    9   [1]
+
+120   Fastgraph User's Guide
+
+The B pixels translate to color value 9 (light blue), and the W pixels
+translate to color value 15 (white).  Example 6-16 uses mode 19 to draw our
+light blue and white checkerboard pattern.
+
+                                Example 6-16.
+
+            #include <fastgraf.h>
+            void main(void);
+
+            void main()
+            {
+               char matrix[8];
+               int old_mode;
+
+               old_mode = fg_getmode();
+               fg_setmode(19);
+
+               matrix[0] = matrix[3] = matrix[4] = matrix[7] = 15;
+               matrix[1] = matrix[2] = matrix[5] = matrix[6] =  9;
+               fg_drect(0,49,0,49,matrix);
+               fg_waitkey();
+
+               fg_setmode(old_mode);
+               fg_reset();
+            }
+
+
+Closing Remarks
+
+     There are two other important items pertaining to the fg_drect and
+fg_drectw routines.  These items apply regardless of which graphics video
+mode is being used.
+
+     First, the dithering matrix may not contain virtual color values.  That
+is, the pixel color values stored in the dithering matrix must be between 0
+and the maximum color value for the current video mode.  If any color value
+is redefined using the fg_defcolor routine, Fastgraph always ignores the
+redefinition and instead uses the actual color value.  Note this does not
+apply to palette registers or video DAC registers, because in these cases we
+are redefining the color associated with a color value and not the color
+value itself.
+
+     Second, Fastgraph aligns the dithering matrix to specific pixel rows.
+Fastgraph draws the dithered rectangle starting with the pixel row specified
+by the rectangle's lower limit (the maximum y coordinate for fg_drect, or the
+minimum y coordinate for fg_drectw) and proceeds upward until reaching the
+rectangle's upper limit.  In all cases the dithering matrix used by fg_drect
+and fg_drectw contains four rows.  If we let r represent the pixel row
+corresponding to the rectangle's lower limit, then the first row used in the
+dithering matrix is r modulo 4 (assuming the dithering matrix rows are
+numbered 0 to 3).  This alignment enables you to use the same dithering
+matrix in multiple calls to fg_drect and fg_drectw for building an object of
+adjacent dithered rectangles (for example, an L-shaped area) and still have
+the dither pattern match where the rectangles intersect.
+                                       Chapter 6:  Graphics Fundamentals   121
+
+
+Region Fill
+
+     Fastgraph includes routines for filling arbitrary regions.  The fg_flood
+and fg_paint routines fill a region with the current color value by
+specifying a screen space point in the region's interior.  The fg_floodw and
+fg_paintw routine also fill a region, but they require the interior point to
+be expressed in world space.  All region fill routines have two arguments
+that specify the (x,y) coordinates of the interior point.  For fg_flood and
+fg_paint, the arguments are integer quantities.  For fg_floodw and fg_paintw,
+they are floating point quantities.  None of them change the graphics cursor
+position.  The difference between the "flood" and "paint" versions of these
+routines is simple:  fg_flood and fg_floodw will not extend the region fill
+beyond the clipping limits, while fg_paint and fg_paintw ignore the clipping
+limits.  As a result, fg_paint and fg_paintw are significantly faster.
+
+     The region being filled must be a closed polygon whose boundary color is
+different from that of the specified interior point.  The region may contain
+holes (interior areas that will not be filled).  Fastgraph fills the region
+by changing every interior pixel whose color is the same as the specified
+interior point, to the current color.  If the interior point is already the
+current color, the region fill routines do nothing.  It is important to note
+fg_paint and fg_paintw do not treat the screen edges as polygon boundaries.
+Filling an open polygon will cause these routines to behave unpredictably.
+This is not the case with fg_flood and fg_floodw as long as the clipping
+limits are not beyond the screen edges.
+
+     Example 6-17 illustrates a simple use of the fg_paint routine in a 320
+by 200 graphics mode.  The program uses fg_bestmode to select an available
+video mode (if no 320 by 200 graphics mode is available, the program exits).
+After establishing the selected video mode, the program uses fg_move and
+fg_drawrel to draw a hollow rectangle in color 10 and a hollow diamond in
+color 9.  The diamond is drawn in the middle of the rectangle, thus making it
+a hole with respect to the rectangle.  The program leaves these shapes on the
+screen until a key is pressed.  At that time, it calls fg_paint to fill that
+part of the rectangle outside the diamond with color 10.  After waiting for
+another keystroke, the program again uses fg_paint to fill the interior of
+the diamond with color 15.  Finally, the program waits for another keystroke,
+restores the original video mode and screen attributes, and returns to DOS.
+
+                                Example 6-17.
+
+             #include <fastgraf.h>
+             #include <stdio.h>
+             #include <stdlib.h>
+             void main(void);
+
+             void main()
+             {
+                int old_mode, new_mode;
+
+                new_mode = fg_bestmode(320,200,1);
+                if (new_mode < 0) {
+                   printf("This program requires a 320 x 200 ");
+                   printf("graphics mode.\n");
+                   exit(1);
+                   }
+
+122   Fastgraph User's Guide
+
+
+                old_mode = fg_getmode();
+                fg_setmode(new_mode);
+
+                fg_setcolor(10);
+                fg_move(100,50);
+                fg_drawrel(120,0);
+                fg_drawrel(0,100);
+                fg_drawrel(-120,0);
+                fg_drawrel(0,-100);
+
+                fg_setcolor(9);
+                fg_move(160,80);
+                fg_drawrel(30,20);
+                fg_drawrel(-30,20);
+                fg_drawrel(-30,-20);
+                fg_drawrel(30,-20);
+                fg_waitkey();
+
+                fg_setcolor(10);
+                fg_paint(160,70);
+                fg_waitkey();
+
+                fg_setcolor(15);
+                fg_paint(160,100);
+                fg_waitkey();
+
+                fg_setmode(old_mode);
+                fg_reset();
+             }
+
+
+
+Summary of Fundamental Graphics Routines
+
+     This section summarizes the functional descriptions of the Fastgraph
+routines presented in this chapter.  More detailed information about these
+routines, including their arguments and return values, may be found in the
+Fastgraph Reference Manual.
+
+     FG_BOX draws an unfilled rectangle in screen space, with respect to the
+clipping region.  The width of the rectangle's edges is one pixel unless
+changed with the fg_boxdepth routine.
+
+     FG_BOXDEPTH defines the depth of rectangles drawn with the box display
+routines.  The fg_setmode routine initializes the box depth to one pixel.
+
+     FG_BOXW draws an unfilled rectangle in world space, with respect to the
+clipping region.  The width of the rectangle's edges is one pixel unless
+changed with the fg_boxdepth routine.
+
+     FG_BOXX draws an unfilled rectangle in screen space, with respect to the
+clipping region, in "exclusive or" mode.  The width of the rectangle's edges
+is one pixel unless changed with the fg_boxdepth routine.
+                                       Chapter 6:  Graphics Fundamentals   123
+
+     FG_BOXXW draws an unfilled rectangle in world space, with respect to the
+clipping region, in "exclusive or" mode.  The width of the rectangle's edges
+is one pixel unless changed with the fg_boxdepth routine.
+
+     FG_CIRCLE draws an unfilled circle in screen space.  The circle is
+centered at the graphics cursor position.
+
+     FG_CIRCLEF draws a filled circle in screen space.  The circle is
+centered at the graphics cursor position.
+
+     FG_CIRCLEFW draws a filled circle in world space.  The circle is
+centered at the graphics cursor position.
+
+     FG_CIRCLEW draws an unfilled circle in world space.  The circle is
+centered at the graphics cursor position.
+
+     FG_CLPRECT draws a solid (filled) rectangle in screen space, with
+respect to the clipping region.
+
+     FG_CLPRECTW draws a solid (filled) rectangle in world space, with
+respect to the clipping region.
+
+     FG_DASH draws a dashed line from the graphics cursor position to an
+absolute screen space position.  It also makes the destination position the
+new graphics cursor position.
+
+     FG_DASHREL draws a dashed line from the graphics cursor position to a
+screen space position relative to it.  It also makes the destination position
+the new graphics cursor position.
+
+     FG_DASHRW draws a dashed line from the graphics cursor position to a
+world space position relative to it.  It also makes the destination position
+the new graphics cursor position.
+
+     FG_DASHW draws a dashed line from the graphics cursor position to an
+absolute world space position.  It also makes the destination position the
+new graphics cursor position.
+
+     FG_DRAW draws a solid line from the graphics cursor position to an
+absolute screen space position.  It also makes the destination position the
+new graphics cursor position.
+
+     FG_DRAWREL draws a solid line from the graphics cursor position to a
+screen space position relative to it.  It also makes the destination position
+the new graphics cursor position.
+
+     FG_DRAWRELX draws a solid line in "exclusive or" mode from the graphics
+cursor position to a screen space position relative to it.  It also makes the
+destination position the new graphics cursor position.
+
+     FG_DRAWRW draws a solid line from the graphics cursor position to a
+world space position relative to it.  It also makes the destination position
+the new graphics cursor position.
+
+     FG_DRAWRXW draws a solid line in "exclusive or" mode from the graphics
+cursor position to a world space position relative to it.  It also makes the
+destination position the new graphics cursor position.
+124   Fastgraph User's Guide
+
+
+     FG_DRAWW draws a solid line from the graphics cursor position to an
+absolute world space position.  It also makes the destination position the
+new graphics cursor position.
+
+     FG_DRAWX draws a solid line in "exclusive or" mode from the graphics
+cursor position to an absolute screen space position.  It also makes the
+destination position the new graphics cursor position.
+
+     FG_DRAWXW draws a solid line in "exclusive or" mode from the graphics
+cursor position to an absolute world space position.  It also makes the
+destination position the new graphics cursor position.
+
+     FG_DRECT draws a dithered rectangle in screen space, without regard to
+the clipping region.  The rectangle's dither pattern is defined through a
+dithering matrix whose format is dependent on the video mode being used.
+
+     FG_DRECTW draws a dithered rectangle in world space, without regard to
+the clipping region.  The rectangle's dither pattern is defined through a
+dithering matrix whose format is dependent on the video mode being used.
+
+     FG_ELLIPSE draws an unfilled ellipse in screen space.  The ellipse is
+centered at the graphics cursor position, and its size is determined by the
+specified lengths of the semi-axes.
+
+     FG_ELLIPSEF draws a filled ellipse in screen space.  The ellipse is
+centered at the graphics cursor position, and its size is determined by the
+specified lengths of the semi-axes.
+
+     FG_ELLIPSEW draws an unfilled ellipse in world space.  The ellipse is
+centered at the graphics cursor position, and its size is determined by the
+specified lengths of the semi-axes.
+
+     FG_ELLIPSFW draws a filled ellipse in world space.  The ellipse is
+centered at the graphics cursor position, and its size is determined by the
+specified lengths of the semi-axes.
+
+     FG_ERASE clears the screen in either text or graphics modes.
+
+     FG_FILLPAGE fills the screen with the current color in either text or
+graphics modes.
+
+     FG_FLOOD fills an arbitrary closed region with the current color value,
+with respect to the clipping limits.  The region is defined by specifying a
+screen space point within its interior.
+
+     FG_FLOODW fills an arbitrary closed region with the current color value,
+with respect to the clipping limits.  The region is defined by specifying a
+world space point within its interior.
+
+     FG_GETPIXEL returns the color value of a specified pixel.
+
+     FG_GETXPOS returns the screen space x coordinate of the graphics cursor
+position.
+
+     FG_GETYPOS returns the screen space y coordinate of the graphics cursor
+position.
+                                       Chapter 6:  Graphics Fundamentals   125
+
+
+     FG_INSIDE determines if the specified point is inside a given convex
+polygon.
+
+     FG_MOVE establishes the graphics cursor position at an absolute screen
+space point.
+
+     FG_MOVEREL establishes the graphics cursor position at a screen space
+point relative to the current position.
+
+     FG_MOVERW establishes the graphics cursor position at a world space
+point relative to the current position.
+
+     FG_MOVEW establishes the graphics cursor position at an absolute world
+space point.
+
+     FG_PAINT fills an arbitrary closed region with the current color value,
+without respect to the clipping limits.  The region is defined by specifying
+a screen space point within its interior.
+
+     FG_PAINTW fills an arbitrary closed region with the current color value,
+without respect to the clipping limits.  The region is defined by specifying
+a world space point within its interior.
+
+     FG_POINT draws a point (that is, displays a pixel) in screen space.
+
+     FG_POINTW draws a point in world space.
+
+     FG_POINTX draws a point in "exclusive or" mode in screen space.
+
+     FG_POINTXW draws a point in "exclusive or" mode in world space.
+
+     FG_POLYFILL draws a filled convex polygon in screen space.  The polygon
+is closed if necessary.
+
+     FG_POLYGON draws an unfilled polygon in screen space, using two
+coordinate arrays to define the polygon vertices.  The polygon is closed if
+necessary.
+
+     FG_POLYGONW draws an unfilled polygon in world space.  It is the same as
+the fg_polygon routine, except the coordinate arrays contain world space
+values.
+
+     FG_POLYLINE draws an unfilled polygon in screen space, using a single
+coordinate array to define the polygon vertices.  The polygon is closed if
+necessary.
+
+     FG_POLYOFF defines the screen space offset applied to each vertex for
+polygons drawn with fg_polyfill or fg_polyline.
+
+     FG_RECT draws a solid (filled) rectangle in screen space or character
+space, without regard to the clipping region.
+
+     FG_RECTW draws a solid (filled) rectangle in world space, without regard
+to the clipping region.
+126   Fastgraph User's Guide
+
+     FG_SETCLIP defines the clipping region in screen space.  The clipping
+region is a rectangular area outside of which graphics are suppressed.
+
+     FG_SETCLIPW defines the clipping region in world space.
+

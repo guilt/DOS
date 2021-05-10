@@ -1,0 +1,19 @@
+#include <fastgraf.h>
+
+void main(void);
+
+void main()
+{
+   int mode;
+
+   mode = fg_getmode();
+   fg_setmode(12);
+
+   fg_setcolor(3);
+   fg_text("Hello",5);
+   fg_waitkey();
+
+   fg_setmode(mode);
+   fg_reset();
+}
+

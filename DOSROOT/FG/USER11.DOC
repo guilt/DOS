@@ -1,0 +1,794 @@
+Chapter 11
+
+
+
+
+
+Block Transfer Routines
+222   Fastgraph User's Guide
+
+Overview
+
+     The Fastgraph routines described in this chapter transfer rectangular
+blocks between areas of video memory (such routines are sometimes called Blit
+or BitBlt routines in other literature).  Block transfers are useful in many
+graphics applications, but they are especially important in animation.
+Fastgraph provides several types of block transfer routines, each optimized
+for its specific function.  This chapter will discuss these routines in
+detail.  The information presented here, combined with the video page and
+image management techniques described in the previous three chapters, will
+provide the tools we need for the animation techniques presented in the next
+chapter.
+
+
+Full Page Transfer
+
+     Fastgraph's simplest block transfer routine is fg_copypage, which we
+introduced in Chapter 8.  The fg_copypage routine transfers the entire
+contents of one video page to another.  The first argument is the number of
+the source video page, and the second argument is the number of the
+destination video page.  The pages may be physical, virtual, or logical video
+pages.  If both the source and destination pages are logical pages, the pages
+must exist in the same type of memory.  For example, you cannot copy a
+logical page in extended memory to a logical page in conventional memory.
+
+     Example 11-1 illustrates the use of the fg_copypage routine in a 320 by
+200 color graphics mode.  The program displays the word "test" in the middle
+of the visual page (page 0) and then uses fg_allocate to create a virtual
+video page (page 1).  The virtual page is needed in case the program is
+running in a video mode with only one physical page.  Next, the program uses
+fg_copypage to transfer the visual page contents to page 1.  After waiting
+for a keystroke, the program erases the visual page, waits for another
+keystroke, and copies the contents of page 1 back to the visual page.  It
+then releases the virtual page and exits.
+
+                                Example 11-1.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                void main()
+                {
+                   int new_mode, old_mode;
+
+                   new_mode = fg_bestmode(320,200,2);
+                   if (new_mode < 0 || new_mode == 12) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 color graphics mode.\n");
+                      exit(1);
+                      }
+                   old_mode = fg_getmode();
+                   fg_setmode(new_mode);
+
+                   fg_setcolor(7);
+                                    Chapter 11:  Block Transfer Routines   223
+
+                   fg_rect(0,319,0,199);
+                   fg_setcolor(9);
+                   fg_locate(12,18);
+                   fg_text("test",4);
+                   fg_waitkey();
+
+                   fg_allocate(1);
+                   fg_copypage(0,1);
+                   fg_erase();
+                   fg_waitkey();
+
+                   fg_copypage(1,0);
+                   fg_waitkey();
+
+                   fg_freepage(1);
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+
+Byte Boundaries
+
+     Video memory, like standard random-access memory, is divided into units
+called bytes.  In text modes, each byte holds either a character or an
+attribute.  In graphics modes, each byte of video memory holds one or more
+horizontally contiguous pixels.  If two adjacent horizontal pixels are stored
+in different bytes, then we say a byte boundary exists between the two
+pixels.
+
+     The number of pixels per byte depends on the video mode being used, so
+the location of the byte boundaries also depends on the video mode.  That is,
+a byte boundary in a CGA graphics mode is not necessarily a byte boundary in
+a VGA graphics mode.  The following table summarizes the number of pixels per
+byte of video memory and the byte boundary sequences for each supported
+graphics video mode.  Note that any horizontal coordinate whose value is a
+multiple of 8 is always a byte boundary, regardless of the video mode.
+
+                  mode     pixels     horizontal coordinates
+                 number   per byte    of byte boundaries
+
+                    4         4       0, 4,  8, 12, ... , 316
+                    5         4       0, 4,  8, 12, ... , 316
+                    6         8       0, 8, 16, 24, ... , 632
+                    9         2       0, 2,  4,  6, ... , 318
+                   11         8       0, 8, 16, 24, ... , 712
+                   12         4       0, 4,  8, 12, ... , 316
+                   13         8       0, 8, 16, 24, ... , 312
+                   14         8       0, 8, 16, 24, ... , 632
+                   15         8       0, 8, 16, 24, ... , 632
+                   16         8       0, 8, 16, 24, ... , 632
+                   17         8       0, 8, 16, 24, ... , 632
+                   18         8       0, 8, 16, 24, ... , 632
+                   19         1       0, 1,  2,  3, ... , 319
+                   20         1       0, 4,  8, 12, ... , 316
+                   21         1       0, 4,  8, 12, ... , 316
+                   22         1       0, 4,  8, 12, ... , 316
+224   Fastgraph User's Guide
+                   23         1       0, 4,  8, 12, ... , 316
+                   24         1       0, 1,  2,  3, ... , 639
+                   25         1       0, 1,  2,  3, ... , 639
+                   26         1       0, 1,  2,  3, ... , 799
+                   27         1       0, 1,  2,  3, ... , 1023
+                   28         8       0, 8, 16, 24, ... , 792
+                   29         8       0, 8, 16, 24, ... , 1016
+
+     Block transfer routines are often used in animation sequences requiring
+high-performance graphics, so these routines must be as efficient as
+possible.  To this end, Fastgraph will force their horizontal pixel
+coordinates to byte boundaries, which eliminates the need to process any
+pixels individually.  Fastgraph accomplishes this by reducing minimum
+horizontal coordinates to a byte boundary and extending maximum horizontal
+coordinates to the last pixel in a video memory byte.  Note that since we are
+talking about pixel coordinates and not character cells, the coordinate
+modification only occurs in graphics video modes.  Designing an application
+so that block transfers occur on byte boundaries might take additional
+planning, but it will be time well spent.
+
+     An example might best help explain this important feature.  In the
+EGA/VGA/SVGA 16-color graphics modes (modes 13 to 18, 28, and 29),  byte
+boundaries occur at every eighth pixel.  Thus, when you use the block
+transfer routines in these modes, Fastgraph reduces minimum x coordinates to
+the next lower multiple of eight.  Similarly, it extends their maximum x
+coordinates to the next higher multiple of eight, less one pixel.  That is,
+if a minimum x coordinate is 10 and a maximum x coordinate is 30, Fastgraph
+will modify these values to 8 and 31 respectively.  If the x coordinates were
+originally 8 and 31, Fastgraph would leave them unchanged.
+
+     In the MCGA and SVGA 256-color graphics modes (modes 19 and 24 to 27)
+each pixel occupies a separate byte of video memory, so Fastgraph does not
+need to modify horizontal coordinates.  However, in the XVGA graphics modes
+(modes 20 to 23), some coordinate modification might be needed.  The XVGA
+modes store four pixels at each video memory address, one in each of four bit
+planes.  The bit plane number for a pixel whose horizontal coordinate is x is
+given by the quantity x mod 4.  In XVGA modes, the source and destination
+minimum x coordinates must reference pixels in the same bit plane.  Put
+another way, the relation
+
+                  xmin_source mod 4 = xmin_destination mod 4
+
+must be true.  If it isn't, Fastgraph reduces the destination minimum x value
+to the same bit plane as the source minimum x value.
+
+
+Dual SVGA Banks
+
+     Accessing video memory in SVGA graphics modes is controlled through a
+banking scheme that maps contiguous 64KB blocks of video memory into a
+segmented address space.  In other words, referencing a specific byte in
+video memory requires a bank number and an address within that bank.  Some
+SVGA chipsets provide separate read and write bank registers, while others
+perform both operations through the same bank register.
+
+     If a chipset supports separate read and write banks, Fastgraph's block
+transfer routines can copy the source region directly to the destination
+                                    Chapter 11:  Block Transfer Routines   225
+region.  However, chipsets that employ a single bank register require that
+these routines copy the source region to an intermediate buffer and then copy
+the buffer contents to the destination.  This obviously makes a block
+transfer operation slower on single-bank chipsets.
+
+
+The "Hidden" Video Page
+
+     Some of Fastgraph's block transfer routines reference a video page
+called the hidden page.  The Fastgraph routine fg_sethpage defines which
+video page will be used as the hidden page.  This routine takes as its only
+argument an integer value specifying the hidden page number.  If you are
+using a virtual video page for the hidden page, you must call the fg_sethpage
+routine after allocating that page.  There is also a routine named
+fg_gethpage that returns the hidden page number, as specified in the most
+recent call to fg_sethpage, as its function value.  The fg_gethpage routine
+takes no arguments.
+
+
+Saving and Restoring Blocks
+
+     The next two block transfer routines we'll discuss are fg_save and
+fg_restore.  The fg_save routine transfers a rectangular region from the
+active video page (as defined in the most recent call to fg_setpage) to the
+same position on the hidden video page (as defined in the most recent call to
+fg_sethpage).  The fg_restore routine performs the complementary task -- it
+transfers a rectangular region from the hidden page to the active page.  Each
+of these routines requires four arguments that define the coordinates of the
+block to transfer, in the order minimum x, maximum x, minimum y, and maximum
+y.  In text modes, the coordinates are expressed as character space
+quantities (rows and columns).  In graphics modes, they are expressed as
+screen space values (pixels), with the x coordinates extended to byte
+boundaries if required.  There are also world space versions of these
+routines named fg_savew and fg_restorew available in graphics modes.
+
+     Example 11-2 demonstrates the use of Fastgraph's fg_save, fg_restore,
+and fg_sethpage routines in an 80-column text video mode.  After establishing
+the video mode (note the calls to fg_testmode specify that two video pages
+are needed), the program fills the screen with text and then waits for a
+keystroke.  Following this, the program displays a small pop-up window
+prompting for another keystroke.  After waiting for the second keystroke, the
+program erases the pop-up window by restoring the original screen contents,
+and then waits for yet another keystroke before returning to DOS.  We'll
+present the program now, and afterward analyze it in detail.
+
+                                Example 11-2.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                void main()
+                {
+                   int row;
+                   int old_mode;
+                   char string[17];
+226   Fastgraph User's Guide
+
+
+                   old_mode = fg_getmode();
+
+                   if (fg_testmode(3,2))
+                      fg_setmode(3);
+                   else if (fg_testmode(7,2))
+                      fg_setmode(7);
+                   else {
+                      printf("This program requires\n");
+                      printf("an 80-column display.\n");
+                      exit(1);
+                      }
+
+                   fg_cursor(0);
+                   fg_setattr(9,7,0);
+
+                   for (row = 0; row < 25; row++) {
+                      sprintf(string," This is row %2d ",row);
+                      fg_locate(row,0);
+                      fg_text(string,16);
+                      fg_text(string,16);
+                      fg_text(string,16);
+                      fg_text(string,16);
+                      fg_text(string,16);
+                      }
+                   fg_waitkey();
+
+                   fg_allocate(1);
+                   fg_sethpage(1);
+                   fg_save(32,47,11,13);
+                   fg_setcolor(1);
+                   fg_rect(32,47,11,13);
+                   fg_setattr(15,1,0);
+                   fg_locate(12,33);
+                   fg_text("Press any key.",14);
+                   fg_waitkey();
+
+                   fg_restore(32,47,11,13);
+                   fg_waitkey();
+
+                   fg_freepage(1);
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+     Example 11-2 first establishes the video mode and uses the fg_cursor
+routine to make the BIOS cursor invisible.  It then executes a for loop that
+fills each row of the screen with the phrase "This is row n", where n is the
+row number (between 0 and 24).  Next, the program uses the fg_allocate
+routine to create video page 1 as a virtual video page.  This is needed in
+case the program is running in mode 7, which has only one true page (if the
+program is running in mode 3, the call to fg_allocate has no effect).  The
+program then makes page 1 the hidden page by calling the fg_sethpage routine.
+
+     After setting up the hidden video page, but before displaying the pop-up
+window, example 11-2 uses the fg_save routine to save the current contents of
+                                    Chapter 11:  Block Transfer Routines   227
+the area that the pop-up window will replace.  The fg_save routine copies
+this region to the hidden page.  The program then displays the pop-up window
+in the middle of the screen and leaves it there until a key is pressed.
+Following this, the program uses the fg_restore routine to replace the pop-up
+window with the original contents of that region.  This effectively erases
+the pop-up window and restores the original screen.  The program then waits
+for another keystroke, after which it releases the virtual page and returns
+to DOS.
+
+     The next example, 11-3, is similar to example 11-2, but it runs in a 320
+by 200 color graphics mode instead of a text mode.  The main differences
+between this program and example 11-2 are the use of 40-column text and the
+use of screen space coordinates instead of character space coordinates in the
+calls to fg_save, fg_restore, and fg_rect.  Note that the call to fg_allocate
+creates a virtual page if the program is running in modes 4, 9, or 19.  In
+modes 13 and 20, which respectively have four and eight physical pages,
+fg_allocate does nothing.
+
+                                Example 11-3.
+
+              #include <fastgraf.h>
+              #include <stdio.h>
+              #include <stdlib.h>
+              void main(void);
+
+              void main()
+              {
+                 int row;
+                 int new_mode, old_mode;
+                 char string[21];
+
+                 new_mode = fg_bestmode(320,200,2);
+                 if (new_mode < 0 || new_mode == 12) {
+                    printf("This program requires a 320 ");
+                    printf("x 200 color graphics mode.\n");
+                    exit(1);
+                    }
+                 old_mode = fg_getmode();
+                 fg_setmode(new_mode);
+
+                 fg_setcolor(7);
+                 fg_rect(0,319,0,199);
+                 fg_setcolor(9);
+
+                 for (row = 0; row < 25; row++) {
+                    sprintf(string,"   This is row %2d   ",row);
+                    fg_locate(row,0);
+                    fg_text(string,20);
+                    fg_text(string,20);
+                    }
+                 fg_waitkey();
+
+                 fg_allocate(1);
+                 fg_sethpage(1);
+                 fg_save(96,223,88,111);
+                 fg_setcolor(1);
+                 fg_rect(96,223,88,111);
+228   Fastgraph User's Guide
+
+                 fg_setcolor(15);
+                 fg_locate(12,13);
+                 fg_text("Press any key.",14);
+                 fg_waitkey();
+
+                 fg_restore(96,223,88,111);
+                 fg_waitkey();
+
+                 fg_freepage(1);
+                 fg_setmode(old_mode);
+                 fg_reset();
+              }
+
+
+
+A More General Block Transfer Routine
+
+     The fg_save and fg_restore routines each copy a rectangular region from
+one video page to the same position on another video page.  What if you need
+to copy the region to a different position on another video page, or copy it
+elsewhere on the same video page?  Fastgraph provides a more general block
+transfer routine named fg_transfer.  The fg_transfer routine copies a
+rectangular region on any video page to any position on any video page.  Like
+fg_save and fg_restore, the fg_transfer routine works in text and graphics
+video modes.  In graphics modes, fg_transfer extends its x coordinates to
+byte boundaries if necessary.
+
+     The fg_transfer routine requires eight integer arguments.  The first
+four arguments define the region to copy, in the same order as expected by
+fg_save and fg_restore.  The next two arguments define the lower left corner
+of the block destination, while the final two arguments respectively specify
+the source and destination video page numbers.  In short, fg_transfer copies
+the specified region from the source page to the specified position on the
+destination page.
+
+     Example 11-4 is the same as example 11-2, but it uses fg_transfer rather
+than fg_save and fg_restore.  We have arbitrarily chosen to copy the region
+overwritten by the pop-up window to the lower left corner of the hidden page
+(page 1).  When we copy this region back to the visual page, we copy from the
+lower left corner of the hidden page back to the original position on the
+visual page (page 0).  This sequence is shown in the following diagram.
+
+             (11,32)    (11,47)               (22,0)     (22,15)
+                                first call
+               This is row 11   ------------>   This is row 11
+               This is row 12                   This is row 12
+               This is row 13   <------------   This is row 13
+                                  second call
+             (13,32)    (13,47)               (24,0)     (24,15)
+
+                visual page (0)                  hidden page (1)
+
+To copy one region to a new position and then back to its original position,
+note how we make the fifth and sixth arguments in the first call to
+fg_transfer the same values as the first and fourth arguments in the second
+call.  Similarly, the fifth and sixth arguments in the second call must be
+                                    Chapter 11:  Block Transfer Routines   229
+the same as the first and fourth arguments in the first call.  With all that
+out of the way, here is example 11-4.
+
+                                Example 11-4.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                void main()
+                {
+                   int row;
+                   int old_mode;
+                   char string[17];
+
+                   old_mode = fg_getmode();
+                   if (fg_testmode(3,2))
+                      fg_setmode(3);
+                   else if (fg_testmode(7,2))
+                      fg_setmode(7);
+                   else {
+                      printf("This program requires\n");
+                      printf("an 80-column display.\n");
+                      exit(1);
+                      }
+
+                   fg_cursor(0);
+                   fg_setattr(9,7,0);
+
+                   for (row = 0; row < 25; row++) {
+                      sprintf(string," This is row %2d ",row);
+                      fg_locate(row,0);
+                      fg_text(string,16);
+                      fg_text(string,16);
+                      fg_text(string,16);
+                      fg_text(string,16);
+                      fg_text(string,16);
+                      }
+                   fg_waitkey();
+
+                   fg_allocate(1);
+                   fg_transfer(32,47,11,13,0,24,0,1);
+                   fg_setcolor(1);
+                   fg_rect(32,47,11,13);
+                   fg_setattr(15,1,0);
+                   fg_locate(12,33);
+                   fg_text("Press any key.",14);
+                   fg_waitkey();
+
+                   fg_transfer(0,15,22,24,32,13,1,0);
+                   fg_fg_waitkey();
+
+                   fg_freepage(1);
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+230   Fastgraph User's Guide
+
+     Example 11-5 illustrates another use of the fg_transfer routine.  This
+example is functionally identical to example 10-10, but it uses fg_transfer
+instead of fg_getmap and fg_drawmap.  With the fg_transfer routine, we
+eliminate the calls to fg_getmap and fg_drawmap, the two calls to fg_move,
+and the 32-byte array needed to retrieve the block.  As an added bonus, using
+fg_transfer is much faster than the technique of example 10-10, although we
+probably won't notice this gain with such a small block.
+
+     The block copied in example 11-5 is one row of four characters, so its
+width in screen space is 32 pixels and its height is 8 pixels.  Because the
+block is in the upper left corner of the screen, the block boundaries are
+xmin=0, xmax=31, ymin=0, and ymax=7.  We want to move the block one-half
+character cell (4 pixels) to the right and one row (8 pixels) down, so our
+destination coordinates are x=4 (xmin+4) and y=15 (ymax+8).  Note how the
+program restricts itself to modes 19 and 20 to insure the block copy is not
+affected by byte boundaries.  Also, we are copying the block from one
+position to another on the visual page, so both the source and destination
+pages are 0.
+
+                                Example 11-5.
+
+                 #include <fastgraf.h>
+                 #include <stdio.h>
+                 #include <stdlib.h>
+                 void main(void);
+
+                 void main()
+                 {
+                    int old_mode, new_mode;
+
+                    new_mode = fg_bestmode(320,200,1);
+                    if (new_mode < 19) {
+                       printf("This program requires a ");
+                       printf("256-color graphics mode.\n");
+                       exit(1);
+                       }
+
+                    old_mode = fg_getmode();
+                    fg_setmode(new_mode);
+
+                    fg_setcolor(9);
+                    fg_text("text",4);
+                    fg_waitkey();
+
+                    fg_transfer(0,31,0,7,4,15,0,0);
+                    fg_waitkey();
+
+                    fg_setmode(old_mode);
+                    fg_reset();
+                 }
+
+
+     Example 11-6 shows yet another application of the fg_transfer routine in
+a graphics video mode.  The program displays a rectangle in the upper left
+                                    Chapter 11:  Block Transfer Routines   231
+
+quadrant of the screen and then centers the word "quadrant" inside the
+rectangle.  After waiting for a keystroke, the program uses fg_transfer to
+first copy the upper left quadrant to the upper right quadrant.  It then uses
+fg_transfer again to copy the upper half of the screen to the lower half.
+The result of this is the screen being filled with what was originally in the
+upper left quadrant.
+
+                                Example 11-6.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                void main()
+                {
+                   int new_mode, old_mode;
+
+                   new_mode = fg_bestmode(320,200,1);
+                   if (new_mode < 0 || new_mode == 12) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 color graphics mode.\n");
+                      exit(1);
+                      }
+                   old_mode = fg_getmode();
+                   fg_setmode(new_mode);
+
+                   fg_setcolor(7);
+                   fg_rect(0,159,0,99);
+                   fg_setcolor(9);
+                   fg_locate(6,6);
+                   fg_text("quadrant",8);
+                   fg_waitkey();
+
+                   fg_transfer(0,159,0,99,160, 99,0,0);
+                   fg_transfer(0,319,0,99,  0,199,0,0);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+
+
+Blocks with Transparent Colors
+
+     The final routines pertaining to block transfer are fg_tcxfer,
+fg_tcmask, and fg_tcdefine.  The fg_tcxfer routine is similar to fg_transfer
+in that it copies a rectangular region from one position to another, but
+fg_tcxfer allows you to treat one or more colors as transparent (the name
+fg_tcxfer stands for transparent color transfer).  In other words, any pixel
+whose color value is defined to be transparent is not copied to the
+destination area.  The fg_tcxfer routine's arguments are the same as for the
+fg_transfer routine, but fg_tcxfer has no effect in text video modes.
+Because fg_tcxfer must examine the color of individual pixels, it is not
+nearly as fast as fg_transfer.
+232   Fastgraph User's Guide
+
+     You can use either fg_tcmask or fg_tcdefine to define which colors are
+considered transparent in subsequent calls to fg_tcxfer.  The fg_tcmask
+routine's argument is an integer bit mask (specifically, a 16-bit mask) where
+each bit indicates whether or not the color is transparent.  For example, if
+bit 0 (the rightmost bit) is set in the mask, then color 0 will be
+transparent; if bit 0 is reset, color 0 will not be transparent.  Because the
+bit mask size is 16 bits, only the first 16 color values may be defined as
+transparent using fg_tcmask.
+
+     Example 11-7 illustrates the use of the fg_tcxfer and fg_tcmask
+routines.  This program is similar to example 11-6, except the color of the
+word "quadrant" (color 9) is defined to be transparent, and fg_tcxfer is used
+in place of fg_transfer.  Because color 9 maps to color 1 in the CGA four-
+color graphics mode (mode 4), we must define both colors 1 and 9 to be
+transparent (remember, fg_tcmask considers actual color values transparent,
+not color indices).  The bit mask passed to fg_tcmask thus will be 0000 0010
+0000 0010 binary, or 0202 hex.  This causes the word "quadrant" to appear in
+the background color (color 0) instead of color 9 in the upper right, lower
+left, and lower right quadrants.
+
+                                Example 11-7.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                void main()
+                {
+                   int new_mode, old_mode;
+
+                   new_mode = fg_bestmode(320,200,1);
+                   if (new_mode < 0 || new_mode == 12) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 color graphics mode.\n");
+                      exit(1);
+                      }
+                   old_mode = fg_getmode();
+                   fg_setmode(new_mode);
+
+                   fg_setcolor(7);
+                   fg_rect(0,159,0,99);
+                   fg_setcolor(9);
+                   fg_locate(6,6);
+                   fg_text("quadrant",8);
+                   fg_waitkey();
+
+                   fg_tcmask(0x0202);
+                   fg_tcxfer(0,159,0,99,160, 99,0,0);
+                   fg_tcxfer(0,319,0,99,  0,199,0,0);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+                                    Chapter 11:  Block Transfer Routines   233
+
+     The fg_tcdefine routine expects two integer arguments -- one defining
+the color number (between 0 and 255) and another defining the transparency
+state associated with that color.  If the state is zero, the specified color
+will be opaque (non-transparent).  If it is any other value, the color will
+be transparent.  In the previous example, we could use fg_tcdefine instead of
+fg_tcmask to make colors 1 and 9 transparent by replacing the call to
+fg_tcmask with the following:
+
+                              fg_tcdefine(1,1);
+                              fg_tcdefine(9,1);
+
+If you don't call fg_tcmask or fg_tcdefine, the fg_tcxfer routine considers
+no colors transparent.
+
+
+Transferring Blocks to and from Conventional Memory
+
+     The final two block transfer routines we'll discuss are fg_getblock and
+fg_putblock.  The fg_getblock routine transfers a rectangular region from the
+active video page to a buffer (you can use fg_imagesiz to determine the
+buffer size needed to store the block).  The fg_putblock routine transfers a
+block previously retrieved with fg_getblock to the active page.  While these
+two routines are faster than fg_getimage and fg_putimage, they are not as
+fast as fg_restore, fg_save, and fg_transfer.
+
+     Each of these routines requires five arguments.  The first is the
+address of the buffer that will receive or that contains the block.  The
+remaining four arguments define the position of the block on the active page,
+in the order minimum x, maximum x, minimum y, and maximum y.  In text modes,
+the coordinates are expressed as character space quantities (rows and
+columns).  In graphics modes, they are expressed as screen space values
+(pixels), with the x coordinates extended to byte boundaries if required.
+
+     Note that both fg_getblock and fg_putblock expect the buffer address to
+be passed by far reference except in QuickBASIC.  This means Pascal programs
+must use the GetMem procedure to allocate storage for the buffer, as this is
+the only way to pass something by far reference in Pascal.  Regardless of
+which compiler you're using, the maximum size of a block is 64K bytes.
+
+     Example 11-8 is similar to example 11-5 and shows fg_getblock and
+fg_putblock in action in a 320 by 200 graphics mode.  The program displays
+the word "text" and retrieves it into a 32 by 8 pixel block.  After a
+keystroke, it displays the block 8 pixels below and 8 pixels to the right of
+its original position.  The size of the buffer was chosen to be 256 bytes to
+accommodate the largest size required for a 32 by 8 block (which occurs in
+the 256-color graphics modes).  Note also how the source and destination
+horizontal block extremes were chosen for byte boundary alignment in case
+fg_bestmode selected a 16-color graphics mode.
+
+                                Example 11-8.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+234   Fastgraph User's Guide
+
+
+                char far buffer[256];
+
+                void main()
+                {
+                   int old_mode, new_mode;
+
+                   new_mode = fg_bestmode(320,200,1);
+                   if (new_mode < 0 || new_mode == 12) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 color graphics mode.\n");
+                      exit(1);
+                      }
+
+                   old_mode = fg_getmode();
+                   fg_setmode(new_mode);
+
+                   fg_setcolor(9);
+                   fg_text("text",4);
+                   fg_getblock(buffer,0,31,0,7);
+                   fg_waitkey();
+
+                   fg_putblock(buffer,8,39,8,15);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+
+Summary of Block Transfer Routines
+
+     This section summarizes the functional descriptions of the Fastgraph
+routines presented in this chapter.  More detailed information about these
+routines, including their arguments and return values, may be found in the
+Fastgraph Reference Manual.
+
+     For all block transfer routines, Fastgraph extends the horizontal pixel
+coordinates to a byte boundary when the routines are used in a graphics video
+mode.
+
+     FG_COPYPAGE transfers the contents of one video page to another.  The
+pages may be physical, virtual, or logical video pages.  If both pages are
+logical pages, they must exist in the same type of memory.
+
+     FG_GETBLOCK retrieves the block (for later display with fg_putblock) at
+the specified position on the active video page.  In text modes, the block
+extremes are defined in character space; in graphics modes, they are defined
+in screen space.
+
+     FG_GETHPAGE returns the hidden page number, as defined in the most
+recent call to fg_sethpage.
+
+     FG_PUTBLOCK displays the block (previously obtained with fg_getblock) at
+the specified position on the active video page.  In text modes, the block
+                                    Chapter 11:  Block Transfer Routines   235
+
+extremes are defined in character space; in graphics modes, they are defined
+in screen space.
+
+     FG_RESTORE copies a block from the hidden video page to the same
+position on the active video page.
+
+     FG_RESTOREW is the same as fg_restore, but the block extremes are
+specified as world space coordinates.
+
+     FG_SAVE copies a block from the active video page to the same position
+on the hidden video page.
+
+     FG_SAVEW is the same as fg_save, but the block extremes are specified as
+world space coordinates.
+
+     FG_SETHPAGE defines the hidden video page (used by fg_restore,
+fg_restorew, fg_save, and fg_savew).
+
+     FG_TCDEFINE defines the transparent attribute of a color index for use
+with the fg_tcxfer routine.  This routine has no effect when used in a text
+video mode.
+
+     FG_TCMASK defines which of the first 16 colors the fg_tcxfer routine
+will consider transparent.  This routine has no effect when used in a text
+video mode.
+
+     FG_TCXFER copies a block from any position on any video page to any
+position on any video page, excluding any pixels whose color value is
+transparent.  This routine has no effect when used in a text video mode.
+
+     FG_TRANSFER copies a block from any position on any video page to any
+position on any video page.  It is Fastgraph's most general block transfer
+routine.
+236   Fastgraph User's Guide

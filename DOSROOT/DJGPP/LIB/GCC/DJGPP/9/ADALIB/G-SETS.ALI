@@ -1,0 +1,113 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_FLOATING_POINT
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U gnat.sets%b		g-sets.adb		a32214e6 NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+
+U gnat.sets%s		g-sets.ads		1c115707 BN EE NE OL PK
+W gnat%s		gnat.ads		gnat.ali
+W gnat.dynamic_htables%s  g-dynhta.adb		g-dynhta.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D a-uncdea.ads		20170908181218 eff36322 ada.unchecked_deallocation%s
+D gnat.ads		20190108125404 b5988c27 gnat%s
+D g-dynhta.ads		20190108125404 d6024919 gnat.dynamic_htables%s
+D g-dynhta.adb		20190108125404 904d2c33 gnat.dynamic_htables%b
+D g-sets.ads		20190108125404 7f8b9239 gnat.sets%s
+D g-sets.adb		20190108125404 dca986df gnat.sets%b
+D system.ads		20190108125404 27426ea2 system%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+X 4 gnat.ads
+34K9*GNAT 57e9 7|34r6 34r32 36r9 161r5 8|32r14 131r5
+40M9*Bucket_Range_Type 7|65r54
+X 5 g-dynhta.ads
+51K14*Dynamic_HTables 493e25 7|34w11 34r37
+294F12*Threshold_Type{long_float}
+297+12 Key_Type 7|145r10
+298+12 Value_Type 7|146r10
+301*7 No_Value{298+12} 7|147r10
+304f7 Expansion_Threshold{294F12} 7|148r10
+305m7 Expansion_Factor{289M12} 7|149r10
+315f7 Compression_Threshold{294F12} 7|150r10
+316m7 Compression_Factor{289M12} 7|151r10
+326V22 "="{boolean} 7|152r11
+330V21 Hash{4|40M9} 7|153r10
+333k12*Dynamic_HTable 491e22 7|144r33
+342P12 Instance 7|155r39[144] 8|46r44[7|144] 64r40[7|144] 73r41[7|144] 91r37[7|144]
+. 100r49[7|144] 109r58[7|144] 127r45[7|144]
+343p7 Nil{342P12[7|144]} 7|156r55[144]
+345V16 Create{342P12[7|144]} 8|55s38[7|144]
+349U17 Delete 8|64s21[7|144]
+356U17 Destroy 8|73s21[7|144]
+362V16 Get{boolean} 8|46s28[7|144]
+366V16 Is_Empty{boolean} 8|100s28[7|144]
+369U17 Put 8|91s21[7|144]
+382V16 Size{natural} 8|127s28[7|144]
+402R12 Iterator 7|158r39[144] 8|82r49[7|144] 118r38[7|144]
+404V16 Iterate{402R12[7|144]} 8|109s38[7|144]
+408V16 Has_Next{boolean} 8|82s28[7|144]
+413U17 Next 8|118s21[7|144]
+X 7 g-sets.ads
+36K14*Sets 4|34k9 7|161l10 161e14 8|32b19 131l10 131t14
+59+12 Element_Type 62r23 63r23 65r33 80r47 87r46 98r46 136r58 145r35 8|44r47
+. 62r46 89r46 116r58
+61V22 "="{boolean} 62>15 63>15 152r36
+62*15 Left{59+12}
+63*15 Right{59+12}
+65V21 Hash{4|40M9} 65>27 153r35
+65*27 Key{59+12}
+68k12*Membership_Set 59z12 61z22 65z21 144E15 159l8 159e22 8|38b17 129l8
+. 129t22
+77P12*Instance<5|342P12[144]> 78r22 80r30 83r56 87r29 92r37 98r29 103r30
+. 106r26 127r29 155c12 156r22 156r34 8|44r30 53r56 55r17 62r29 71r37 89r29
+. 98r30 107r29 125r26
+78p7*Nil{77P12} 156c7
+80V16*Contains{boolean} 80>26 80>40 8|44b16 47l11 47t19
+80p26 S{77P12} 8|44b26 46r54
+80*40 Elem{59+12} 8|44b40 46r58
+83V16*Create{77P12}<5|345p16> 83>24 8|53b16 56l11 56t17
+83i24 Initial_Size{positive} 8|53b24 55r46
+87U17*Delete<5|349p17> 87>25 87>39 8|62b17 65l11 65t17
+87p25 S{77P12} 8|62b25 64r50
+87*39 Elem{59+12} 8|62b39 64r54
+92U17*Destroy<5|356p17> 92=26 8|71b17 74l11 74t18
+92p26 S{77P12} 8|71b26 73m51 73r51
+98U17*Insert 98>25 98>39 8|89b17 92l11 92t17
+98p25 S{77P12} 8|89b25 91r47
+98*39 Elem{59+12} 8|89b39 91r51
+103V16*Is_Empty{boolean}<5|366p16> 103>26 8|98b16 101l11 101t19
+103p26 S{77P12} 8|98b26 100r59
+106V16*Size{natural}<5|382p16> 106>22 8|125b16 128l11 128t15
+106p22 S{77P12} 8|125b22 127r55
+125R12*Iterator<5|402R12[144]> 127r46 131r33 136r37 158c12 8|80r33 107r46
+. 109r17 116r37
+127V16*Iterate{125R12} 127>25 8|107b16 110l11 110t18
+127p25 S{77P12} 8|107b25 109r68
+131V16*Has_Next{boolean}<5|408p16> 131>26 8|80b16 83l11 83t19
+131r26 Iter{125R12} 8|80b26 82r59
+136U17*Next<5|413p17> 136=23 136<47 8|116b17 119l11 119t15
+136r23 Iter{125R12} 8|116b23 118m48 118r48
+136*47 Elem{59+12} 8|116b47 118m55
+144K15 Hashed_Set[5|333] 155r28 156r44 158r28 8|46r17 46r33 55r27 64r10 64r29
+. 73r10 73r30 82r17 82r38 91r10 91r26 100r17 100r38 109r27 109r47 118r10
+. 118r27 127r17 127r34
+

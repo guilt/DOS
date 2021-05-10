@@ -1,0 +1,982 @@
+Chapter 9
+
+
+
+
+
+Image Files
+172   Fastgraph User's Guide
+
+Overview
+
+     Within the context of Fastgraph, an image is a rectangular area
+containing some type of picture.  An image might be something as simple as a
+pointing hand icon, or as detailed as the dashboard of a sports car.
+Fastgraph includes several routines to display, retrieve, and manipulate
+images.  In this chapter we'll begin our discussion of images by looking at
+the image file formats Fastgraph supports, as well as the routines available
+for displaying and creating image files.
+
+
+PCX Files
+
+     The PCX file format was originally developed by ZSoft Corporation for
+their commercial paint program, PC Paintbrush.  It has evolved into one of
+the more popular image file formats because so many products can read and
+write PCX files to at least some extent.  Fastgraph includes routines for
+displaying and creating PCX files, as well as other PCX support functions.
+
+     The fg_showpcx routine displays an image stored in a PCX file.  It can
+position the image using the coordinate information in the PCX header, or
+such that its upper left corner is at the graphics cursor position on the
+active video page.  The first argument to fg_showpcx is the name of the PCX
+file (it may include a path name), and its second argument is a 16-bit mask
+that controls how the image is displayed.  The file name must be terminated
+with a null character, so BASIC, FORTRAN, and Pascal programmers will need to
+store a zero byte as the last character of the file name string.
+
+     In the current version of Fastgraph, only the low-order two bits (bits 0
+and 1) of the bit mask argument are meaningful.  The following table
+summarizes the meanings of these bits.
+
+              Bit Value  Meaning
+
+               0    0    Use palette values stored in the PCX file
+               0    1    Use the current palette settings
+               1    0    Display image at position indicated in PCX header
+               1    1    Display image at current graphics position
+
+All other bits are reserved and should be zero to guarantee compatibility
+with future releases.  The fg_showpcx routine returns a value of 0 if
+successful, 1 if the specified file wasn't found, and 2 if the file is not a
+PCX file.
+
+     The fg_makepcx routine creates a PCX file from the specified rectangular
+region of the active video page.  Its first four arguments define the minimum
+x, maximum x, minimum y, and maximum y screen space coordinates of the region
+(the minimum x coordinate is reduced to a byte boundary if necessary).  Its
+fifth argument is the name of the PCX file to create (it may include a path
+name).  As with fg_showpcx, the file name must be terminated with a null
+character.  If an identically named file exists, it is overwritten.  The
+fg_makepcx routine returns a value of 0 if successful, and 1 if the PCX file
+was not created.
+
+     Example 9-1 uses the fg_showpcx and fg_makepcx routines to create a new
+PCX file from selected rows of an existing 256-color 320 by 200 PCX file.  As
+                                                 Chapter 9:  Image Files   173
+
+written, the program uses the file CORAL.PCX to create NEW.PCX, but it could
+easily be extended to work with any PCX files.  The call to fg_showpcx
+displays the image in CORAL.PCX using the screen position and palette
+settings defined in the PCX file.  After waiting for a keystroke, the program
+calls fg_makepcx to create a PCX file named NEW.PCX from pixel rows 80
+through 99 of the original image.  In case the program encounters any
+problems, it prints an error message before exiting.
+
+                                 Example 9-1.
+
+           #include <fastgraf.h>
+           #include <stdio.h>
+           #include <stdlib.h>
+           void main(void);
+
+           void main()
+           {
+              int old_mode;
+              int read_status, write_status;
+
+              if (fg_testmode(19,1) == 0) {
+                 printf("This program requires a 320 ");
+                 printf("x 200 MCGA graphics mode.\n");
+                 exit(1);
+                 }
+              old_mode = fg_getmode();
+              fg_setmode(19);
+
+              read_status = fg_showpcx("CORAL.PCX",0);
+              fg_waitkey();
+              if (read_status == 0)
+                 write_status = fg_makepcx(0,319,80,99,"NEW.PCX");
+              else
+                 write_status = 1;
+
+              fg_setmode(old_mode);
+              fg_reset();
+
+              if (read_status == 1)
+                 printf("CORAL.PCX not found.\n");
+              else if (read_status == 2)
+                 printf("CORAL.PCX is not a PCX file.\n");
+              if (write_status == 1)
+                 printf("NEW.PCX not created.\n");
+           }
+
+
+     In the Tandy/PCjr 16-color graphics mode (mode 9) and the native EGA
+graphics modes (modes 13 through 16), the palette registers are not readable.
+Hence, fg_makepcx will use the default palette settings when used in these
+video modes on Tandy and EGA systems.  Displaying a PCX file at a lower
+resolution (for example, a 640x480 PCX file at 320x200) will truncate the
+display on the right and on the bottom.  This effectively displays the upper
+left corner of the image.  The fg_showpcx and fg_makepcx routines have no
+effect in text video modes or in the Hercules low-resolution graphics mode.
+174   Fastgraph User's Guide
+     Because their structure parallels that of video memory, PCX files are
+specific to certain video modes.  If you try to display a PCX file in an
+incompatible video mode, fg_showpcx will still display something, but it will
+be garbled.  The following table summarizes the compatible video modes for
+PCX files.
+
+          If PCX file was     You can display
+          created in mode     it in these modes
+
+          4, 5                4, 5
+          6, 11               6, 11, 13-18, 28, 29
+          9                   9
+          13-18               13-18, 28, 29
+          19-27               19-27
+          28-29               13-18, 28, 29
+
+     Fastgraph includes a function fg_pcxmode that determines the optimal
+video mode for displaying a PCX file.  By optimal, we mean the compatible
+video mode having the lowest resolution larger than or equal to the image
+dimensions.  The fg_pcxmode routine has a single argument -- the address of a
+buffer that contains a 128-byte PCX file header.  Specific values defined in
+certain fields of the PCX header determine which video mode is optimal.  A
+positive return value from fg_pcxmode represents the optimal video mode
+number.  The possible error returns are -1 if the buffer does not contain a
+valid PCX header, and -2 if fg_pcxmode cannot find any compatible video mode.
+
+     How do we get the header from a PCX file into the buffer passed to
+fg_pcxmode?  The easiest way is with the fg_pcxhead function.  Its first
+argument is the name of the PCX file from which to retrieve the header (as
+before, the file name must be null-terminated).  The second argument is the
+address of the buffer that will receive the PCX header.  The size of this
+buffer must be at least 128 bytes.  If successful, fg_pcxmode returns zero.
+Otherwise, the return value is -1 if the specified file could not be opened,
+or -2 if the specified file is not a PCX file.  After successfully reading
+the PCX header, you can pass it to fg_pcxmode to determine the optimal video
+mode for the PCX file.  Example 9-2 demonstrates this process.
+
+                                 Example 9-2.
+
+               #include <fastgraf.h>
+               #include <stdio.h>
+               #include <stdlib.h>
+               void main(void);
+
+               main()
+               {
+                  int mode, status;
+                  char header[128];
+
+                  status = fg_pcxhead("CORAL.PCX",header);
+                  if (status == -1) {
+                     printf("Can't open CORAL.PCX.\n");
+                     exit(1);
+                  }
+                  else if (status == -2) {
+                     printf("CORAL.PCX is not a PCX file.\n");
+                     exit(1);
+                                                 Chapter 9:  Image Files   175
+
+                  }
+
+                  mode = fg_pcxmode(header);
+                  printf("Optimal display mode is %d.\n",mode);
+              }
+
+
+GIF Files
+
+     The GIF file format was originally created by CompuServe, Inc., as a
+transmission format for images and graphics data across the CompuServe
+network.  It has evolved into what is probably the most popular image file
+format in use today.  GIF files are especially prevalent on bulletin boards
+and electronic data networks because their efficient image compression
+results in less storage space and faster transmission times than other image
+file formats.  GIF, pronounced "jif", is an acronym for Graphics Interchange
+Format.  The format is the copyright property of CompuServe, Inc., whose GIF
+specification "grants a limited, non-exclusive, royalty-free license for the
+use of the Graphics Interchange Format in computer software; computer
+software utilizing GIF must acknowledge ownership of the Graphics Interchange
+Format and its Service Mark by CompuServe, Inc., in user and technical
+documentation".
+
+     Two GIF specifications, released in 1987 and 1989, are defined.  The
+1989 specification (known as "89a") is a superset of the original 1987
+specification (known as "87a").  Fastgraph's GIF file display routine can
+handle either 87a or 89a files.  For maximum portability, the GIF file
+creation routine always produces files conforming to the 87a specification.
+
+     The fg_showgif routine displays an image stored in a GIF file.  It can
+position the image using the coordinate information in the GIF header, or
+such that its upper left corner is at the graphics cursor position on the
+active video page.  The fg_showgif arguments are the same as for fg_showpcx,
+except the file name must of course reference a GIF file rather than a PCX
+file.  Likewise, the fg_showgif return values are analogous to those of
+fg_showpcx.
+
+     The fg_makegif routine creates a GIF file from the specified rectangular
+region of the active video page.  Its arguments and return value are
+analogous to those of fg_makepcx.
+
+     Example 9-3 uses the fg_showgif and fg_makegif routines to create a new
+GIF file from selected rows of an existing 256-color 320 by 200 GIF file.
+Similar to example 9-1, the program uses the file CORAL.GIF to create
+NEW.GIF, but it could easily be extended to work with any GIF files.  The
+call to fg_showgif displays the image in CORAL.GIF using the screen position
+and palette settings defined in the GIF file.  After waiting for a keystroke,
+the program calls fg_makegif to create a GIF file named NEW.GIF from pixel
+rows 80 through 99 of the original image.  In case the program encounters any
+problems, it prints an error message before exiting.
+
+                                 Example 9-3.
+
+           #include <fastgraf.h>
+           #include <stdio.h>
+           #include <stdlib.h>
+176   Fastgraph User's Guide
+
+           void main(void);
+
+           void main()
+           {
+              int old_mode;
+              int read_status, write_status;
+
+              if (fg_testmode(19,1) == 0) {
+                 printf("This program requires a 320 ");
+                 printf("x 200 MCGA graphics mode.\n");
+                 exit(1);
+                 }
+              old_mode = fg_getmode();
+              fg_setmode(19);
+
+              read_status = fg_showgif("CORAL.GIF",0);
+              fg_waitkey();
+              if (read_status == 0)
+                 write_status = fg_makegif(0,319,80,99,"NEW.GIF");
+              else
+                 write_status = 1;
+
+              fg_setmode(old_mode);
+              fg_reset();
+
+              if (read_status == 1)
+                 printf("CORAL.GIF not found.\n");
+              else if (read_status == 2)
+                 printf("CORAL.GIF is not a GIF file.\n");
+              if (write_status == 1)
+                 printf("NEW.GIF not created.\n");
+           }
+
+
+     Like fg_makepcx, the fg_makegif routine will use the default palette
+settings when used on Tandy and EGA systems.  Displaying a GIF file at a
+lower resolution (for example, a 640x480 GIF file at 320x200) will truncate
+the display on the right and on the bottom.  This effectively displays the
+upper left corner of the image.  Unlike PCX files, GIF files do not exhibit
+compatibility problems between 16-color and 256-color graphics modes.  When
+fg_showgif displays a 256-color GIF in a 16-color mode, it displays pixels of
+color c in color c mod 16.  The fg_showgif and fg_makegif routines have no
+effect in text video modes, or in CGA and Hercules graphics modes.
+
+
+Pixel Run Files
+
+     Fastgraph also provides its own mode-independent image file format
+called pixel run format.  Pixel run files are useful in programs that must
+run in different video modes (but with the same resolution) because you can
+use the same image files for two-color modes as for 256-color modes.  Two
+variations of the pixel run format exist -- standard pixel run files (SPR
+files) and packed pixel run files (PPR files).  The packed pixel run format
+does not support 256-color images but will produce a smaller file if the
+image has 16 colors or less.  Pixel run files do not include a header or any
+color palette information.
+                                                 Chapter 9:  Image Files   177
+
+     The best way to illustrate the pixel run file format is with an example.
+Suppose we want to display a small triangle whose perimeter is a different
+color than its interior.  To create the standard pixel run equivalent of this
+image, we must inscribe the triangle in a rectangular area.  Hence, the pixel
+representation of our triangle might appear as shown below.
+
+                              . . . . * . . . .
+                              . . . * x * . . .
+                              . . * x x x * . .
+                              . * x x x x x * .
+                              * * * * * * * * *
+
+     As shown in this diagram, our triangle image is nine pixels wide at its
+base and five pixels high.  The pixels indicated by an asterisk (*) are the
+triangle's perimeter, while those indicated by an x represent its interior
+points.  The pixels shown as periods (.) are not part of the triangle itself,
+but they are part of the image.  In this example, we can treat them as
+background pixels.
+
+     If we start at the lower left corner of the image and proceed to the
+right, we could represent the first row of the image as nine pixels of color
+"asterisk".  Such a group of consecutive identically colored pixels is called
+a pixel run, so a single pixel run describes the first row of the image.  The
+row above this one is a bit more complex.  It consists of five pixel runs:
+one pixel of color "period", followed by one of color "asterisk", then five
+of color "x", one of color "asterisk", and finally one of color "period".
+
+     While we could construct separate pixel runs for each row of the image,
+notice that three of the five rows in our triangle begin with the same color
+pixel as the rightmost pixel in the previous row.  Fastgraph's pixel run
+formats let you take advantage of this property by allowing pixel runs to
+wrap from one row to the next.  This means we can represent the pixel run of
+color "period" extending from the right side of the second row to the left
+side of the third row as a single run of three pixels.
+
+     An standard pixel run (SPR) file is nothing more than such a sequence of
+(color,count) pairs, as shown in the following diagram.
+
+
+                          byte 0   color for run 1
+
+                               1   count for run 1
+
+                               2   color for run 2
+
+                               3   count for run 2
+                                          .
+                                          .
+                                          .
+                                          .
+                                          .
+                            2n-2   color for run n
+
+                            2n-1   count for run n
+
+178   Fastgraph User's Guide
+Each color is a value between 0 and 255 specifying the color index for that
+pixel run.  Each count is a value between 0 and 255 specifying the length in
+pixels of that pixel run.  If a single run exceeds 255 pixels, it must be
+broken into two or more runs.  For example, we could represent a pixel run of
+length 265 as a run of length 255 followed by a run of length 10 of the same
+color.  Note that the space in bytes needed to store an SPR image is twice
+the number of runs.
+
+     Fastgraph's fg_showspr routine displays an SPR file.  Its first argument
+is the name of the file containing the image (it may include a path name).
+The file name must be terminated with a null character, so BASIC, FORTRAN,
+and Pascal programmers will need to store a zero byte as the last character
+of the file name string.  The second argument is the width in pixels of the
+image.  The fg_showspr routine displays the image such that its lower left
+corner is at the graphics cursor position.  The possible return values for
+fg_showspr are success (0) and file not found (1).  To create an SPR file,
+use the fg_makespr routine.  Its arguments and return values are the same as
+for fg_makepcx and fg_makegif.
+
+     Example 9-4 uses the fg_showspr and fg_makespr routines to create a new
+SPR file from selected rows of an existing 16-color 320 by 200 SPR file.
+Similar to examples 9-1 and 9-3, the program uses the file CORAL.SPR to
+create NEW.SPR, but it could easily be extended to work with any SPR files.
+The call to fg_move to establishes the lower left corner of the screen as the
+graphics cursor position (contrast this with the upper left corner being the
+reference point for PCX and GIF files).  Then program then calls fg_showspr
+to display the image.  After waiting for a keystroke, the program calls
+fg_makespr to create an SPR file named NEW.SPR from pixel rows 80 through 99
+of the original image.  In case the program encounters any problems, it
+prints an error message before exiting.
+
+                                 Example 9-4.
+
+           #include <fastgraf.h>
+           #include <stdio.h>
+           #include <stdlib.h>
+           void main(void);
+
+           void main()
+           {
+              int new_mode, old_mode;
+              int read_status, write_status;
+
+              new_mode = fg_bestmode(320,200,1);
+              if (new_mode < 0 || new_mode == 12) {
+                 printf("This program requires a 320 ");
+                 printf("x 200 color graphics mode.\n");
+                 exit(1);
+                 }
+              old_mode = fg_getmode();
+              fg_setmode(new_mode);
+              fg_move(0,199);
+
+              read_status = fg_showspr("CORAL.SPR",320);
+              fg_waitkey();
+              if (read_status == 0)
+                 write_status = fg_makespr(0,319,80,99,"NEW.SPR");
+                                                 Chapter 9:  Image Files   179
+
+              else
+                 write_status = 1;
+
+              fg_setmode(old_mode);
+              fg_reset();
+
+              if (read_status == 1)
+                 printf("CORAL.SPR not found.\n");
+              if (write_status == 1)
+                 printf("NEW.SPR not created.\n");
+           }
+
+
+     If you have an image that only uses the first 16 color indices (0 to
+15), you can use Fastgraph's packed pixel run (PPR) image format.  This
+format packs two color values into each color byte, so it takes three bytes
+instead of four to represent two pixel runs.  This means a PPR file is 25%
+smaller than its SPR equivalent.  In each set of three bytes, the high four
+bits of the first byte contain the color of the first run, and the low four
+bits contain the color of the second run.  The second byte contains the
+length of the first run, and the third byte contains the length of the second
+run.
+
+     The following diagram illustrates the structure of the packed pixel
+file.  In this example, the file is assumed to contain n pixel runs, where n
+is an even number.  If n is odd, the byte offset for the last element is 3n/2
+(truncated) instead of 3n/2-1, and the low four bits of the last color byte
+(that is, the color for pixel run n+1) are ignored.
+
+                      7                4   3                0
+
+               byte 0    color for run 1     color for run 2
+
+                    1              count for run 1
+
+                    2              count for run 2
+
+                    3    color for run 3     color for run 4
+
+                    4              count for run 3
+
+                    5              count for run 4
+                                       .
+                                       .
+                                       .
+                                       .
+                                       .
+               3n/2-3   color for run n-1    color for run n
+
+               3n/2-2             count for run n-1
+
+               3n/2-1              count for run n
+
+
+     The structure of the PPR file allows for color values between 0 and 15,
+and run lengths between 0 and 255.  The space in bytes needed to store an
+180   Fastgraph User's Guide
+
+image in PPR format is 1.5 times the number of runs, compared to twice the
+number of runs for the SPR format.
+
+     The fg_showppr and fg_makeppr routines display and create PPR files,
+respectively.  Their arguments and return values are the same as those of
+fg_showspr and fg_makespr.  If we wanted to display PPR files instead of SPR
+files in example 9-4, all that's necessary is changing the fg_showspr and
+fg_makespr calls to fg_showppr and fg_makeppr.
+
+     Fastgraph's fg_dispfile routine displays both SPR and PPR files.  The
+first of its three arguments is the name of the image file (it may include a
+path name).  The file name must be terminated with a null character, so
+BASIC, FORTRAN, and Pascal programmers will need to store a zero byte as the
+last character of the file name string.  The second argument is the image
+width in pixels, and the third argument defines the image format (that is,
+SPR or PPR).  As with other pixel run display routines, fg_dispfile displays
+the image such that its lower left corner is at the graphics cursor position.
+
+     Example 9-5 illustrates how to use the fg_dispfile routine to display an
+image stored in a pixel run file.  The program displays two identical images,
+one in an SPR file and the other in a PPR file.  Each image is a picture of
+the sea floor and some coral, as might be used for the background in an
+aquarium.  The program runs in a 320 by 200 graphics mode, and the images
+fill the entire screen.
+
+     The SPR image is in file CORAL.SPR.  The program uses the fg_move
+routine to establish the lower left corner of the screen as the graphics
+cursor position and then calls fg_dispfile to display the image.  The value
+of fg_dispfile's third argument tells Fastgraph the image format.  A value of
+0 indicates the file contains an image in SPR format, while a value of 1
+indicates an image in PPR format.  As mentioned earlier, the image fills the
+entire screen, so its width is 320 pixels.
+
+     After waiting for a keystroke, the program clears the previous image
+from the screen and then calls fg_dispfile to display the PPR image from the
+file CORAL.PPR.  The program leaves the second image on the screen until
+another keypress, at which time it restores the original video mode and
+screen attributes and returns to DOS.
+
+                                 Example 9-5.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                void main()
+                {
+                   int old_mode, new_mode;
+
+                   new_mode = fg_bestmode(320,200,1);
+                   if (new_mode < 0 || new_mode == 12) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 color graphics mode.\n");
+                      exit(1);
+                      }
+                                                 Chapter 9:  Image Files   181
+
+                   old_mode = fg_getmode();
+                   fg_setmode(new_mode);
+
+                   fg_move(0,199);
+                   fg_dispfile("CORAL.SPR",320,0);
+                   fg_waitkey();
+
+                   fg_erase();
+                   fg_dispfile("CORAL.PPR",320,1);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+
+     The SNAPSHOT utility distributed with Fastgraph is a terminate and stay
+resident program (TSR) that can capture graphics mode screen images and save
+them in SPR files.  Thus, you can easily create files with SNAPSHOT and
+display them with the fg_showspr or fg_dispfile routines.  Another TSR
+utility, GrabRGB, is useful for capturing RGB color values from 256-color
+images.  Appendix A contains complete descriptions of the SNAPSHOT and
+GrabRGB utilities.
+
+
+Display Patterns
+
+     Example 9-5 works well in the graphics video modes with 16 or 256
+available colors.  However, in the four-color CGA graphics modes the
+resulting image is not too good because of our limited color choices, and it
+would look even worse in the Hercules graphics mode.  The Fastgraph routine
+fg_pattern allows you to associate a dither pattern (actually, any pixel
+sequence) with one of Fastgraph's 256 color indices appearing in a pixel run
+map.  When displaying an SPR or PPR file, Fastgraph will use the pattern
+associated with that color index instead of displaying the color itself.
+
+     The fg_pattern routine requires two integer arguments -- a color index
+(between 0 and 255) and the display pattern defined for that color index.  A
+display pattern's structure resembles the structure of video memory and is
+thus dependent on the current video mode.  The following sections list the
+initial display patterns and explain how to construct new display patterns
+for different graphics video modes.
+
+CGA four-color graphics modes
+
+     In the four-color CGA graphics modes (modes 4 and 5), the display
+pattern is a 16-bit quantity consisting of an 8-bit shift count followed by
+an 8-bit pixel pattern.  Each pixel assumes a value between 0 and 3, so the
+pattern represents four pixels.  In even-numbered pixel rows, Fastgraph uses
+the pixel pattern itself.  In odd-numbered pixel rows, Fastgraph rotates the
+original pattern to the left by the number of bits specified by the shift
+count.
+
+     For example, if we are using the default CGA color palette, we could
+create a darker shade of cyan by alternating cyan pixels (color 1, 01 binary)
+with white pixels (color 3, 11 binary), as shown below.
+182   Fastgraph User's Guide
+
+
+                                 01 11 01 11
+
+
+If we convert this pixel pattern to its hexadecimal equivalent, we get the
+value 77.
+
+     To complete the display pattern, we need to determine the shift count.
+If we use a shift count of zero, the resulting display will simply be a
+series of cyan and white vertical lines.  What we really need is a
+checkerboard effect where a white pixel is above and below each cyan pixel,
+and vice versa.  If we rotate the pattern one pixel (two bits) to the left,
+we will achieve the desired effect.  That is, a shift count of two produces
+the following pixel patterns:
+
+                       even-numbered rows   01 11 01 11
+                        odd-numbered rows   11 01 11 01
+
+Combining the shift count with the pixel pattern yields the display pattern
+0277 hex.  The shift count is normally a multiple of two; note that a zero
+shift count results in the same pattern being applied to all pixel rows.
+
+     For the CGA four-color graphics modes, the fg_setmode routine
+establishes the following initial display patterns:
+
+                  color  shift count    hexadecimal
+                  index  and pattern    equivalent
+
+                    0    0 00000000        0000
+                    1    0 01010101        0055
+                    2    0 10101010        00AA
+                    3    0 11111111        00FF
+
+These values are repeated as necessary to define color indices 4 to 255.
+That is, colors 4, 8, 12, ... , 252 use the same defaults as color 0.  Colors
+5, 9, 13, ... , 253 use the same defaults as color 1, and so forth.  Also
+note that pattern 0000 represents four pixels of color 0, 0055 represents
+four pixels of color 1, 00AA represents four pixels of color 2, and 00FF
+represents four pixels of color 3.
+
+CGA two-color graphics mode
+
+     In the two-color CGA graphics mode (mode 6), the display pattern is also
+a 16-bit quantity consisting of an 8-bit shift count followed by an 8-bit
+pixel pattern.  Each pixel assumes the value 0 or 1, so the pattern
+represents eight pixels.  In even-numbered pixel rows, Fastgraph uses the
+pixel pattern itself.  In odd-numbered pixel rows, Fastgraph rotates the
+original pattern to the left by the number of bits specified by the shift
+count.
+
+     For example, we could create a lighter shade of white by alternating
+black pixels (color 0) with white pixels (color 1), as shown below.
+
+
+                               0 1 0 1 0 1 0 1
+
+                                                 Chapter 9:  Image Files   183
+
+If we convert this pixel pattern to its hexadecimal equivalent, we get the
+value 55.
+
+     To complete the display pattern, we need to determine the shift count.
+We must rotate the pattern one pixel (one bit) to the left to achieve the
+checkerboard effect as in the CGA four color graphics modes.  That is, a
+shift count of one produces the following pixel patterns:
+
+                     even-numbered rows   0 1 0 1 0 1 0 1
+                      odd-numbered rows   1 0 1 0 1 0 1 0
+
+Combining the shift count with the pixel pattern yields the display pattern
+0155 hex.
+
+     For the CGA two-color graphics mode, the fg_setmode routine establishes
+the initial display patterns such that all even-numbered color indices are
+assigned the value 0000, while all odd-numbered color indices are assigned
+the value 00FF.  Note that pattern 0000 represents eight pixels of color 0,
+and 00FF represents eight pixels of color 1.
+
+Tandy/PCjr 16-color graphics mode
+
+     In the Tandy/PCjr 16-color graphics mode (mode 9), the display pattern
+is also 16-bit quantity consisting of an 8-bit shift count followed by an 8-
+bit pixel pattern.  Each pixel assumes a value between 0 and 15, so the
+pattern represents two pixels.  In even-numbered pixel rows, Fastgraph uses
+the pixel pattern itself.  In odd-numbered pixel rows, Fastgraph rotates the
+original pattern to the left by the number of bits specified by the shift
+count.
+
+     For example, we could create a lighter shade of blue by alternating blue
+pixels (color 1, 0001 binary) with white pixels (color 15, 1111 binary), as
+shown below.
+
+                                  0001 1111
+
+If we convert this pixel pattern to its hexadecimal equivalent, we get the
+value 1F.
+
+     To complete the display pattern, we need to determine the shift count.
+Using the same process as in the CGA graphics modes, we must rotate the
+pattern one pixel (four bits) to the left to achieve the checkerboard effect.
+That is, a shift count of four produces the following pixel patterns:
+
+                        even-numbered rows   0001 1111
+                         odd-numbered rows   1111 0001
+
+Combining the shift count with the pixel pattern yields the display pattern
+041F hex.  The shift count is normally zero or four; note that a zero shift
+count results in the same pattern being applied to all pixel rows.
+
+     For the Tandy/PCjr 16-color graphics modes, the fg_setmode routine
+establishes the initial display patterns such that color 0 is assigned the
+value 0000 (two pixels of color 0), color 1 is assigned the value 0011 (two
+pixels of color 1), color 2 is assigned the value 0022 (two pixels of color
+184   Fastgraph User's Guide
+
+2), and so forth.  These values are repeated as necessary to define color
+indices 16 to 255.  That is, colors 0, 16, 32, ... , 240 use the same
+defaults as color 0.  Colors 1, 17, 33, ... , 241 use the same defaults as
+color 1, and so forth.
+
+Hercules graphics modes
+
+     The structure of the display patterns for the Hercules graphics modes
+(modes 11 and 12) is the same as two of the CGA graphics modes.  For the
+standard Hercules graphics mode (mode 11), please refer to the discussion of
+CGA two-color (mode 6) display patterns.  For the low-resolution Hercules
+graphics mode (mode 12), please refer to the discussion of the CGA four-color
+(mode 4) display patterns.
+
+EGA/VGA/SVGA 16-color graphics modes
+
+     In the EGA/VGA/SVGA 16-color graphics modes (modes 13 to 16, 18, 28, and
+29), the display pattern is an 8-bit quantity consisting of two 4-bit color
+values (for consistency with the other video modes, we still pass the display
+pattern as a 16-bit quantity).  Each pixel assumes a value between 0 and 15
+(0 and 5 in the EGA monochrome graphics mode), so the pattern represents two
+pixels.  In even-numbered pixel rows, Fastgraph uses the pixel pattern
+itself.  In odd-numbered pixel rows, Fastgraph rotates the original pattern
+one pixel (four bits) to the left.
+
+     For example, we could create a lighter shade of blue by alternating blue
+pixels (color 1, 0001 binary) with white pixels (color 15, 1111 binary), as
+shown below.
+
+                                  0001 1111
+
+If we convert this pixel pattern to its hexadecimal equivalent, we get the
+value 1F.  The implied four-bit shift count produces the following pixel
+patterns:
+
+                        even-numbered rows   0001 1111
+                         odd-numbered rows   1111 0001
+
+Extending the pixel pattern to a 16-bit quantity yields the display pattern
+001F hex.
+
+     For the EGA/VGA/SVGA 16-color graphics modes, the fg_setmode routine
+establishes the initial display patterns such that color 0 is assigned the
+value 0000 (two pixels of color 0), color 1 is assigned the value 0011 (two
+pixels of color 1), color 2 is assigned the value 0022 (two pixels of color
+2), and so forth.  These values are repeated as necessary to define color
+indices 16 to 255.  That is, colors 0, 16, 32, ... , 240 use the same
+defaults as color 0.  Colors 1, 17, 33, ... , 241 use the same defaults as
+color 1, and so forth.
+
+MCGA/VGA 2-color graphics mode
+
+     In the two-color MCGA/VGA graphics mode (mode 17), the display pattern
+is a 2-bit quantity consisting of two 1-bit color values (for consistency
+with the other video modes, we still pass the display pattern as a 16-bit
+                                                 Chapter 9:  Image Files   185
+
+quantity).  Each pixel assumes the value 0 or 1, so the pattern represents
+two pixels.  In even-numbered pixel rows, Fastgraph uses the pixel pattern
+itself.  In odd-numbered pixel rows, Fastgraph rotates the original pattern
+one pixel (one bit) to the left.
+
+     For example, we could create a lighter shade of white by alternating
+black pixels (color 0) with white pixels (color 1), as shown below.
+
+                                     0 1
+
+If we convert this pixel pattern to its hexadecimal equivalent, we get the
+value 01.  The implied one-bit shift count produces the following pixel
+patterns:
+
+                           even-numbered rows   0 1
+                            odd-numbered rows   1 0
+
+Extending the pixel pattern to a 16-bit quantity yields the display pattern
+0001 hex.
+
+     For the MCGA/VGA two-color graphics mode, the fg_setmode routine
+establishes the initial display patterns such that all even-numbered color
+indices are assigned the value 0000 (two pixels of color 0), while all odd-
+numbered color indices are assigned the value 0003 (11 binary, or two pixels
+of color 1).
+
+256-color graphics modes
+
+     The 256-color graphics modes (modes 19 through 27) offer 262,144
+different colors, so dithering is seldom (if ever) required.  For this
+reason, the fg_pattern routine has no effect in these video modes.
+
+An example
+
+     Example 9-6 illustrates the use of display patterns in several graphics
+modes.  This program runs in any 320 by 200 color graphics mode and displays
+the CORAL.PPR image with one or more of the color indices redefined.  If the
+program runs in the standard CGA four-color mode (mode 4), it redefines the
+first 16 display patterns using the fg_pattern routine and the values in the
+CGApatterns array.  In the Tandy/PCjr 16-color graphics mode (mode 9) and the
+EGA low-resolution graphics mode (mode 13), the program redefines color index
+15 to produce an alternating gray and white dither pattern.  In the MCGA 256-
+color mode (mode 19), display patterns are not available, so the program uses
+fg_setrgb to define color index 15 as slightly darker shade of gray than the
+default for color 7.
+
+                                 Example 9-6.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                int CGApatterns[] = {
+                   0x0000,0x00FF,0x00FF,0x00FF,
+
+186   Fastgraph User's Guide
+
+                   0x02BB,0x0000,0x0222,0x0255,
+                   0x00FF,0x00FF,0x00FF,0x0055,
+                   0x00AA,0x00AA,0x00FF,0x0277
+                   };
+
+                void main()
+                {
+                   int color;
+                   int old_mode, new_mode;
+
+                   new_mode = fg_bestmode(320,200,1);
+                   if (new_mode < 0 || new_mode == 12) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 color graphics mode.\n");
+                      exit(1);
+                      }
+
+                   old_mode = fg_getmode();
+                   fg_setmode(new_mode);
+
+                   if (new_mode == 4) {
+                      fg_palette(0,0);
+                      for (color = 0; color < 16; color++)
+                         fg_pattern(color,CGApatterns[color]);
+                      }
+                   else if (new_mode == 9 || new_mode == 13)
+                      fg_pattern(15,0x04F7);
+                   else
+                      fg_setrgb(15,38,38,38);
+
+                   fg_move(0,199);
+                   fg_showppr("CORAL.PPR",320);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+
+Controlling the Image Buffer Size
+
+     By default, all of Fastgraph's image file display and creation routines
+use an internal 4,096-byte buffer.  This buffer provides an intermediate
+storage area, making it possible to perform more efficient buffered I/O when
+reading or writing the image files.  The fg_imagebuf routine lets you define
+your own buffer (up to 64K bytes) for this purpose.  Larger buffers generally
+make image display and creation faster.
+
+     The fg_imagebuf routine does not allocate storage for the internal
+buffer.  Rather, it just defines the array or dynamically allocated memory
+block to be used as the buffer.  The first argument passed to fg_imagebuf is
+the far address of this array or memory block.  Using a far address doesn't
+waste valuable space in the default data segment, and almost always results
+in the ability to use a larger buffer.  In Pascal programs, the space for the
+internal buffer must be allocated dynamically with the GetMem procedure
+because it provides the only way to pass something by far reference in
+                                                 Chapter 9:  Image Files   187
+
+Pascal.  The second fg_imagebuf argument is the size of the internal buffer,
+represented as an unsigned integer.  QuickBASIC programs must pass the image
+buffer as a fixed-length string because that language does not support far
+pointers.
+
+     Example 9-7 shows how to use fg_imagebuf to define a larger buffer when
+displaying the CORAL.PCX file.  In this example, we'll use a 20,000-byte
+static array as the image buffer.  This size was chosen because it's larger
+than the PCX file size, so fg_showpcx can read the entire PCX file in one
+pass.
+
+                                 Example 9-7.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                char far buffer[20000];
+
+                void main()
+                {
+                   int old_mode;
+
+                   if (fg_testmode(19,1) == 0) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 MCGA graphics mode.\n");
+                      exit(1);
+                      }
+                   old_mode = fg_getmode();
+                   fg_setmode(19);
+                   fg_imagebuf(buffer,20000);
+                   fg_showpcx("CORAL.PCX",0);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+
+     You don't need to create separate buffers for each image you display or
+create.  Once you define an internal image buffer with fg_imagebuf, Fastgraph
+will use that buffer until your program exits, or until you call fg_imagebuf
+with a buffer size equal to zero.
+
+
+Summary of Image File Routines
+
+     This section summarizes the functional descriptions of the Fastgraph
+routines presented in this chapter.  More detailed information about these
+routines, including their arguments and return values, may be found in the
+Fastgraph Reference Manual.  The image display and creation functions are
+applicable only to graphics video modes.
+
+     FG_IMAGEBUF specifies the size and address of the buffer used internally
+when creating or displaying GIF, PCX, PPR, or SPR files.  Fastgraph's default
+188   Fastgraph User's Guide
+
+internal buffer size is 4,096 bytes.  Image display or creation is typically
+faster when a larger buffer is used.
+
+     FG_DISPFILE displays an image stored in a standard or packed pixel run
+file.  The image is positioned so that its lower left corner is at the
+current graphics position.
+
+     FG_MAKEGIF creates a GIF file from the specified rectangular region of
+the active video page.  The region's extremes are expressed in screen space
+units.  This routine is meaningful only in 16-color and 256-color graphics
+modes.
+
+     FG_MAKEPCX creates a PCX file from the specified rectangular region of
+the active video page.  The region's extremes are expressed in screen space
+units.
+
+     FG_MAKEPPR creates a packed pixel run file from the specified
+rectangular region of the active video page.  The region's extremes are
+expressed in screen space units.
+
+     FG_MAKESPR creates a standard pixel run file from the specified
+rectangular region of the active video page.  The region's extremes are
+expressed in screen space units.
+
+     FG_PATTERN defines a display pattern for use when displaying pixel run
+files in video modes that offer 16 or less colors.
+
+     FG_PCXHEAD reads a PCX file header into a 128-byte buffer.
+
+     FG_PCXMODE determines the optimal video mode for displaying a PCX file.
+The optimal mode is the compatible video mode having the lowest resolution
+larger than or equal to the image dimensions.
+
+     FG_SHOWGIF displays an image stored in a GIF file.  By default, the
+image will be positioned so its upper left corner is at the graphics cursor
+position of the active video page.  This routine is meaningful only in 16-
+color and 256-color graphics modes.
+
+     FG_SHOWPCX displays an image stored in a PCX file.  By default, the
+image will be positioned so its upper left corner is at the graphics cursor
+position of the active video page.
+
+     FG_SHOWPPR displays an image stored in a packed pixel run file.  The
+image will be positioned so its lower left corner is at the graphics cursor
+position of the active video page.
+
+     FG_SHOWSPR displays an image stored in a standard pixel run file.  The
+image will be positioned so its lower left corner is at the graphics cursor
+position of the active video page.

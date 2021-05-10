@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<packages>
+<package name="zlib">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+  <os name="linux"/>
+  <os name="win32"/>
+  <os name="os2"/>
+  <os name="freebsd"/>
+  <os name="beos"/>
+  <os name="netbsd"/>
+  <os name="solaris"/>
+  <os name="netware"/>
+  <os name="openbsd"/>
+  <os name="darwin"/>
+  <os name="emx"/>
+  <os name="netwlibc"/>
+  <os name="win64"/>
+  <os name="wince"/>
+  <os name="haiku"/>
+  <os name="iphonesim"/>
+  <os name="aix"/>
+  <os name="android"/>
+  <os name="dragonfly"/>
+ </oses>
+ <filename>zlib.zip</filename>
+ <author></author>
+ <license></license>
+ <email></email>
+ <description>Interface units for the ZLIB library - support for deflate compression method used for GZIP, PNG, ZIP, etc.</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

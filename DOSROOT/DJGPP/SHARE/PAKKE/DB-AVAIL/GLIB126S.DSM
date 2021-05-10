@@ -1,0 +1,44 @@
+#
+# DSM for glib 1.2.6 sources
+# Written by Richard Dawe <rich@phekda.freeserve.co.uk> 2001-06-17
+#
+
+dsm-name: glib126s
+dsm-file-version: 1.1
+dsm-version: 0.5.0
+dsm-author: Richard Dawe
+dsm-author-email: rich@phekda.freeserve.co.uk
+
+name: glib
+version: 1.2.6
+type: sources
+binaries-dsm: glib126b
+manifest: glib126s
+short-description: glib, a handy library of utility functions
+license: GNU LGPL
+
+web-site: http://www.gtk.org/
+ftp-site: ftp://ftp.gtk.org/
+
+porter: Richard Dawe
+porter-email: rich@phekda.freeserve.co.uk
+
+simtelnet-path: v2tk/
+zip: glib126s.zip
+
+pre-install-readme: gnu/glib-1.29/djgpp/README
+
+# Packages required to build glib
+requires: djdev
+requires: gcc
+requires: binutils
+requires: make
+requires: bash
+requires: sed
+requires: fileutils
+requires: shellutils
+requires: textutils
+requires: grep
+requires: texinfo
+
+replaces: glib < 1.2.6

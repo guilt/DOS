@@ -1,0 +1,45 @@
+#
+# DSM for gcc 9.2.0
+#
+
+dsm-file-version: 1.1
+dsm-name: g77920b
+dsm-version: 0.5.0
+
+dsm-author: @porter@
+dsm-author-email: @e_mail@
+
+name: g77
+version: 9.2.0
+manifest: g77920b
+type: binaries
+sources-dsm: gcc920s
+short-description: GNU Compiler Collection, GNU Fortran 95 compiler
+organisation: Free Software Foundation
+license: GNU General Public License
+web-site: http://gcc.gnu.org
+
+porter: @porter@
+porter-email: @e_mail@
+
+simtelnet-path: v2gnu/
+zip: g77920b.zip
+
+#
+# Dependencies
+#
+
+replaces: g77 < 9.2.0
+
+requires: DPMI
+requires: djdev 
+requires: binutils >= 2.30
+requires: gcc 9.2.0
+conflicts-with: gcc < 9.2.0
+
+# For reading docs
+depends-on: info-reader
+
+# This updates the info/DIR menu
+builtin-post-install-script: command:\
+  install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/info/gfortran.info\n\

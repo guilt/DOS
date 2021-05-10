@@ -1,0 +1,17 @@
+
+
+ About DPMIST32.BIN
+
+ DPMIST32.BIN is a stub file supposed to replace the default stub of
+ Win32 console mode apps. The replacement is done by:
+
+   - for new executables use a linker option (i.e. /STUB:DPMIST32.BIN)
+   - for existing apps use tool PEStub.exe
+
+ The modified application should run as before as long as it runs in a
+ Win32 environment. In true DOS, however, the stub will gain control
+ and try to find and launch HX's PE file loader DPMILD32.EXE. DPMILD32
+ will be searched in the current directory and then in the directories
+ of the PATH environment variable. 
+ 
+ Japheth 

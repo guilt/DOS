@@ -1,0 +1,799 @@
+OBJDUMP(1)                   GNU Development Tools                  OBJDUMP(1)
+
+
+
+NNAAMMEE
+       objdump - display information from object files.
+
+SSYYNNOOPPSSIISS
+       objdump [--aa|----aarrcchhiivvee--hheeaaddeerrss]
+               [--bb _b_f_d_n_a_m_e|----ttaarrggeett==_b_f_d_n_a_m_e]
+               [--CC|----ddeemmaannggllee[=_s_t_y_l_e] ]
+               [--dd|----ddiissaasssseemmbbllee[=_s_y_m_b_o_l]]
+               [--DD|----ddiissaasssseemmbbllee--aallll]
+               [--zz|----ddiissaasssseemmbbllee--zzeerrooeess]
+               [--EEBB|--EELL|----eennddiiaann=={big | little }]
+               [--ff|----ffiillee--hheeaaddeerrss]
+               [--FF|----ffiillee--ooffffsseettss]
+               [----ffiillee--ssttaarrtt--ccoonntteexxtt]
+               [--gg|----ddeebbuuggggiinngg]
+               [--ee|----ddeebbuuggggiinngg--ttaaggss]
+               [--hh|----sseeccttiioonn--hheeaaddeerrss|----hheeaaddeerrss]
+               [--ii|----iinnffoo]
+               [--jj _s_e_c_t_i_o_n|----sseeccttiioonn==_s_e_c_t_i_o_n]
+               [--ll|----lliinnee--nnuummbbeerrss]
+               [--SS|----ssoouurrccee]
+               [--mm _m_a_c_h_i_n_e|----aarrcchhiitteeccttuurree==_m_a_c_h_i_n_e]
+               [--MM _o_p_t_i_o_n_s|----ddiissaasssseemmbblleerr--ooppttiioonnss==_o_p_t_i_o_n_s]
+               [--pp|----pprriivvaattee--hheeaaddeerrss]
+               [--PP _o_p_t_i_o_n_s|----pprriivvaattee==_o_p_t_i_o_n_s]
+               [--rr|----rreelloocc]
+               [--RR|----ddyynnaammiicc--rreelloocc]
+               [--ss|----ffuullll--ccoonntteennttss]
+               [--WW[[llLLiiaapprrmmffFFssooRRttUUuuTTggAAcckkKK]]|
+                ----ddwwaarrff[=rawline,=decodedline,=info,=abbrev,=pubnames,=aranges,=macro,=frames,=frames-interp,=str,=loc,=Ranges,=pubtypes,=trace_info,=trace_abbrev,=trace_aranges,=gdb_index,=addr,=cu_index,=links,=follow-links]]
+               [--GG|----ssttaabbss]
+               [--tt|----ssyymmss]
+               [--TT|----ddyynnaammiicc--ssyymmss]
+               [--xx|----aallll--hheeaaddeerrss]
+               [--ww|----wwiiddee]
+               [----ssttaarrtt--aaddddrreessss==_a_d_d_r_e_s_s]
+               [----ssttoopp--aaddddrreessss==_a_d_d_r_e_s_s]
+               [----pprreeffiixx--aaddddrreesssseess]
+               [----[[nnoo--]]sshhooww--rraaww--iinnssnn]
+               [----aaddjjuusstt--vvmmaa==_o_f_f_s_e_t]
+               [----ddwwaarrff--ddeepptthh==_n]
+               [----ddwwaarrff--ssttaarrtt==_n]
+               [----nnoo--rreeccuurrssee--lliimmiitt|----rreeccuurrssee--lliimmiitt]
+               [----ssppeecciiaall--ssyymmss]
+               [----pprreeffiixx==_p_r_e_f_i_x]
+               [----pprreeffiixx--ssttrriipp==_l_e_v_e_l]
+               [----iinnssnn--wwiiddtthh==_w_i_d_t_h]
+               [--VV|----vveerrssiioonn]
+               [--HH|----hheellpp]
+               _o_b_j_f_i_l_e...
+
+DDEESSCCRRIIPPTTIIOONN
+       oobbjjdduummpp displays information about one or more object files.  The
+       options control what particular information to display.  This
+       information is mostly useful to programmers who are working on the
+       compilation tools, as opposed to programmers who just want their
+       program to compile and work.
+
+       _o_b_j_f_i_l_e... are the object files to be examined.  When you specify
+       archives, oobbjjdduummpp shows information on each of the member object files.
+
+OOPPTTIIOONNSS
+       The long and short forms of options, shown here as alternatives, are
+       equivalent.  At least one option from the list
+       --aa,,--dd,,--DD,,--ee,,--ff,,--gg,,--GG,,--hh,,--HH,,--pp,,--PP,,--rr,,--RR,,--ss,,--SS,,--tt,,--TT,,--VV,,--xx must be given.
+
+       --aa
+       ----aarrcchhiivvee--hheeaaddeerr
+           If any of the _o_b_j_f_i_l_e files are archives, display the archive
+           header information (in a format similar to llss --ll).  Besides the
+           information you could list with aarr ttvv, oobbjjdduummpp --aa shows the object
+           file format of each archive member.
+
+       ----aaddjjuusstt--vvmmaa==_o_f_f_s_e_t
+           When dumping information, first add _o_f_f_s_e_t to all the section
+           addresses.  This is useful if the section addresses do not
+           correspond to the symbol table, which can happen when putting
+           sections at particular addresses when using a format which can not
+           represent section addresses, such as a.out.
+
+       --bb _b_f_d_n_a_m_e
+       ----ttaarrggeett==_b_f_d_n_a_m_e
+           Specify that the object-code format for the object files is
+           _b_f_d_n_a_m_e.  This option may not be necessary; _o_b_j_d_u_m_p can
+           automatically recognize many formats.
+
+           For example,
+
+                   objdump -b oasys -m vax -h fu.o
+
+           displays summary information from the section headers (--hh) of _f_u_._o,
+           which is explicitly identified (--mm) as a VAX object file in the
+           format produced by Oasys compilers.  You can list the formats
+           available with the --ii option.
+
+       --CC
+       ----ddeemmaannggllee[[==_s_t_y_l_e]]
+           Decode (_d_e_m_a_n_g_l_e) low-level symbol names into user-level names.
+           Besides removing any initial underscore prepended by the system,
+           this makes C++ function names readable.  Different compilers have
+           different mangling styles. The optional demangling style argument
+           can be used to choose an appropriate demangling style for your
+           compiler.
+
+       ----rreeccuurrssee--lliimmiitt
+       ----nnoo--rreeccuurrssee--lliimmiitt
+       ----rreeccuurrssiioonn--lliimmiitt
+       ----nnoo--rreeccuurrssiioonn--lliimmiitt
+           Enables or disables a limit on the amount of recursion performed
+           whilst demangling strings.  Since the name mangling formats allow
+           for an inifinite level of recursion it is possible to create
+           strings whose decoding will exhaust the amount of stack space
+           available on the host machine, triggering a memory fault.  The
+           limit tries to prevent this from happening by restricting recursion
+           to 2048 levels of nesting.
+
+           The default is for this limit to be enabled, but disabling it may
+           be necessary in order to demangle truly complicated names.  Note
+           however that if the recursion limit is disabled then stack
+           exhaustion is possible and any bug reports about such an event will
+           be rejected.
+
+       --gg
+       ----ddeebbuuggggiinngg
+           Display debugging information.  This attempts to parse STABS
+           debugging format information stored in the file and print it out
+           using a C like syntax.  If no STABS debuging was found this option
+           falls back on the --WW option to print any DWARF information in the
+           file.
+
+       --ee
+       ----ddeebbuuggggiinngg--ttaaggss
+           Like --gg, but the information is generated in a format compatible
+           with ctags tool.
+
+       --dd
+       ----ddiissaasssseemmbbllee
+       ----ddiissaasssseemmbbllee==_s_y_m_b_o_l
+           Display the assembler mnemonics for the machine instructions from
+           the input file.  This option only disassembles those sections which
+           are expected to contain instructions.  If the optional _s_y_m_b_o_l
+           argument is given, then display the assembler mnemonics starting at
+           _s_y_m_b_o_l.  If _s_y_m_b_o_l is a function name then disassembly will stop at
+           the end of the function, otherwise it will stop when the next
+           symbol is encountered.  If there are no matches for _s_y_m_b_o_l then
+           nothing will be displayed.
+
+       --DD
+       ----ddiissaasssseemmbbllee--aallll
+           Like --dd, but disassemble the contents of all sections, not just
+           those expected to contain instructions.
+
+           This option also has a subtle effect on the disassembly of
+           instructions in code sections.  When option --dd is in effect objdump
+           will assume that any symbols present in a code section occur on the
+           boundary between instructions and it will refuse to disassemble
+           across such a boundary.  When option --DD is in effect however this
+           assumption is supressed.  This means that it is possible for the
+           output of --dd and --DD to differ if, for example, data is stored in
+           code sections.
+
+           If the target is an ARM architecture this switch also has the
+           effect of forcing the disassembler to decode pieces of data found
+           in code sections as if they were instructions.
+
+       ----pprreeffiixx--aaddddrreesssseess
+           When disassembling, print the complete address on each line.  This
+           is the older disassembly format.
+
+       --EEBB
+       --EELL
+       ----eennddiiaann=={{bbiigg||lliittttllee}}
+           Specify the endianness of the object files.  This only affects
+           disassembly.  This can be useful when disassembling a file format
+           which does not describe endianness information, such as S-records.
+
+       --ff
+       ----ffiillee--hheeaaddeerrss
+           Display summary information from the overall header of each of the
+           _o_b_j_f_i_l_e files.
+
+       --FF
+       ----ffiillee--ooffffsseettss
+           When disassembling sections, whenever a symbol is displayed, also
+           display the file offset of the region of data that is about to be
+           dumped.  If zeroes are being skipped, then when disassembly
+           resumes, tell the user how many zeroes were skipped and the file
+           offset of the location from where the disassembly resumes.  When
+           dumping sections, display the file offset of the location from
+           where the dump starts.
+
+       ----ffiillee--ssttaarrtt--ccoonntteexxtt
+           Specify that when displaying interlisted source code/disassembly
+           (assumes --SS) from a file that has not yet been displayed, extend
+           the context to the start of the file.
+
+       --hh
+       ----sseeccttiioonn--hheeaaddeerrss
+       ----hheeaaddeerrss
+           Display summary information from the section headers of the object
+           file.
+
+           File segments may be relocated to nonstandard addresses, for
+           example by using the --TTtteexxtt, --TTddaattaa, or --TTbbssss options to lldd.
+           However, some object file formats, such as a.out, do not store the
+           starting address of the file segments.  In those situations,
+           although lldd relocates the sections correctly, using oobbjjdduummpp --hh to
+           list the file section headers cannot show the correct addresses.
+           Instead, it shows the usual addresses, which are implicit for the
+           target.
+
+           Note, in some cases it is possible for a section to have both the
+           READONLY and the NOREAD attributes set.  In such cases the NOREAD
+           attribute takes precedence, but oobbjjdduummpp will report both since the
+           exact setting of the flag bits might be important.
+
+       --HH
+       ----hheellpp
+           Print a summary of the options to oobbjjdduummpp and exit.
+
+       --ii
+       ----iinnffoo
+           Display a list showing all architectures and object formats
+           available for specification with --bb or --mm.
+
+       --jj _n_a_m_e
+       ----sseeccttiioonn==_n_a_m_e
+           Display information only for section _n_a_m_e.
+
+       --ll
+       ----lliinnee--nnuummbbeerrss
+           Label the display (using debugging information) with the filename
+           and source line numbers corresponding to the object code or relocs
+           shown.  Only useful with --dd, --DD, or --rr.
+
+       --mm _m_a_c_h_i_n_e
+       ----aarrcchhiitteeccttuurree==_m_a_c_h_i_n_e
+           Specify the architecture to use when disassembling object files.
+           This can be useful when disassembling object files which do not
+           describe architecture information, such as S-records.  You can list
+           the available architectures with the --ii option.
+
+           If the target is an ARM architecture then this switch has an
+           additional effect.  It restricts the disassembly to only those
+           instructions supported by the architecture specified by _m_a_c_h_i_n_e.
+           If it is necessary to use this switch because the input file does
+           not contain any architecture information, but it is also desired to
+           disassemble all the instructions use --mmaarrmm.
+
+       --MM _o_p_t_i_o_n_s
+       ----ddiissaasssseemmbblleerr--ooppttiioonnss==_o_p_t_i_o_n_s
+           Pass target specific information to the disassembler.  Only
+           supported on some targets.  If it is necessary to specify more than
+           one disassembler option then multiple --MM options can be used or can
+           be placed together into a comma separated list.
+
+           For ARC, ddsspp controls the printing of DSP instructions, ssppffpp
+           selects the printing of FPX single precision FP instructions, ddppffpp
+           selects the printing of FPX double precision FP instructions,
+           qquuaarrkkssee__eemm selects the printing of special QuarkSE-EM instructions,
+           ffppuuddaa selects the printing of double precision assist instructions,
+           ffppuuss selects the printing of FPU single precision FP instructions,
+           while ffppuudd selects the printing of FPU double precision FP
+           instructions.  Additionally, one can choose to have all the
+           immediates printed in hexadecimal using hheexx.  By default, the short
+           immediates are printed using the decimal representation, while the
+           long immediate values are printed as hexadecimal.
+
+           ccppuu==...... allows to enforce a particular ISA when disassembling
+           instructions, overriding the --mm value or whatever is in the ELF
+           file.  This might be useful to select ARC EM or HS ISA, because
+           architecture is same for those and disassembler relies on private
+           ELF header data to decide if code is for EM or HS.  This option
+           might be specified multiple times - only the latest value will be
+           used.  Valid values are same as for the assembler --mmccppuu==...... option.
+
+           If the target is an ARM architecture then this switch can be used
+           to select which register name set is used during disassembler.
+           Specifying --MM rreegg--nnaammeess--ssttdd (the default) will select the register
+           names as used in ARM's instruction set documentation, but with
+           register 13 called 'sp', register 14 called 'lr' and register 15
+           called 'pc'.  Specifying --MM rreegg--nnaammeess--aappccss will select the name set
+           used by the ARM Procedure Call Standard, whilst specifying --MM rreegg--
+           nnaammeess--rraaww will just use rr followed by the register number.
+
+           There are also two variants on the APCS register naming scheme
+           enabled by --MM rreegg--nnaammeess--aattppccss and --MM rreegg--nnaammeess--ssppeecciiaall--aattppccss which
+           use the ARM/Thumb Procedure Call Standard naming conventions.
+           (Either with the normal register names or the special register
+           names).
+
+           This option can also be used for ARM architectures to force the
+           disassembler to interpret all instructions as Thumb instructions by
+           using the switch ----ddiissaasssseemmbblleerr--ooppttiioonnss==ffoorrccee--tthhuummbb.  This can be
+           useful when attempting to disassemble thumb code produced by other
+           compilers.
+
+           For AArch64 targets this switch can be used to set whether
+           instructions are disassembled as the most general instruction using
+           the --MM nnoo--aalliiaasseess option or whether instruction notes should be
+           generated as comments in the disasssembly using --MM nnootteess.
+
+           For the x86, some of the options duplicate functions of the --mm
+           switch, but allow finer grained control.  Multiple selections from
+           the following may be specified as a comma separated string.
+
+           "x86-64"
+           "i386"
+           "i8086"
+               Select disassembly for the given architecture.
+
+           "intel"
+           "att"
+               Select between intel syntax mode and AT&T syntax mode.
+
+           "amd64"
+           "intel64"
+               Select between AMD64 ISA and Intel64 ISA.
+
+           "intel-mnemonic"
+           "att-mnemonic"
+               Select between intel mnemonic mode and AT&T mnemonic mode.
+               Note: "intel-mnemonic" implies "intel" and "att-mnemonic"
+               implies "att".
+
+           "addr64"
+           "addr32"
+           "addr16"
+           "data32"
+           "data16"
+               Specify the default address size and operand size.  These four
+               options will be overridden if "x86-64", "i386" or "i8086"
+               appear later in the option string.
+
+           "suffix"
+               When in AT&T mode, instructs the disassembler to print a
+               mnemonic suffix even when the suffix could be inferred by the
+               operands.
+
+           For PowerPC, the --MM argument rraaww selects disasssembly of hardware
+           insns rather than aliases.  For example, you will see "rlwinm"
+           rather than "clrlwi", and "addi" rather than "li".  All of the --mm
+           arguments for ggaass that select a CPU are supported.  These are: 440033,
+           440055, 444400, 446644, 447766, 660011, 660033, 660044, 662200, 77440000, 77441100, 77445500, 77445555,
+           775500ccll, 882211, 885500, 886600, aa22, bbooookkee, bbooookkee3322, cceellll, ccoomm, ee220000zz44, ee330000,
+           ee550000, ee550000mmcc, ee550000mmcc6644, ee550000xx22, ee55550000, ee66550000, eeffss, ppoowweerr44, ppoowweerr55,
+           ppoowweerr66, ppoowweerr77, ppoowweerr88, ppoowweerr99, ppppcc, ppppcc3322, ppppcc6644, ppppcc6644bbrriiddggee,
+           ppppccppss, ppwwrr, ppwwrr22, ppwwrr44, ppwwrr55, ppwwrr55xx, ppwwrr66, ppwwrr77, ppwwrr88, ppwwrr99, ppwwrrxx,
+           ttiittaann, and vvllee.  3322 and 6644 modify the default or a prior CPU
+           selection, disabling and enabling 64-bit insns respectively.  In
+           addition, aallttiivveecc, aannyy, hhttmm, vvssxx, and ssppee add capabilities to a
+           previous _o_r _l_a_t_e_r CPU selection.  aannyy will disassemble any opcode
+           known to binutils, but in cases where an opcode has two different
+           meanings or different arguments, you may not see the disassembly
+           you expect.  If you disassemble without giving a CPU selection, a
+           default will be chosen from information gleaned by BFD from the
+           object files headers, but the result again may not be as you
+           expect.
+
+           For MIPS, this option controls the printing of instruction mnemonic
+           names and register names in disassembled instructions.  Multiple
+           selections from the following may be specified as a comma separated
+           string, and invalid options are ignored:
+
+           "no-aliases"
+               Print the 'raw' instruction mnemonic instead of some pseudo
+               instruction mnemonic.  I.e., print 'daddu' or 'or' instead of
+               'move', 'sll' instead of 'nop', etc.
+
+           "msa"
+               Disassemble MSA instructions.
+
+           "virt"
+               Disassemble the virtualization ASE instructions.
+
+           "xpa"
+               Disassemble the eXtended Physical Address (XPA) ASE
+               instructions.
+
+           "gpr-names=_A_B_I"
+               Print GPR (general-purpose register) names as appropriate for
+               the specified ABI.  By default, GPR names are selected
+               according to the ABI of the binary being disassembled.
+
+           "fpr-names=_A_B_I"
+               Print FPR (floating-point register) names as appropriate for
+               the specified ABI.  By default, FPR numbers are printed rather
+               than names.
+
+           "cp0-names=_A_R_C_H"
+               Print CP0 (system control coprocessor; coprocessor 0) register
+               names as appropriate for the CPU or architecture specified by
+               _A_R_C_H.  By default, CP0 register names are selected according to
+               the architecture and CPU of the binary being disassembled.
+
+           "hwr-names=_A_R_C_H"
+               Print HWR (hardware register, used by the "rdhwr" instruction)
+               names as appropriate for the CPU or architecture specified by
+               _A_R_C_H.  By default, HWR names are selected according to the
+               architecture and CPU of the binary being disassembled.
+
+           "reg-names=_A_B_I"
+               Print GPR and FPR names as appropriate for the selected ABI.
+
+           "reg-names=_A_R_C_H"
+               Print CPU-specific register names (CP0 register and HWR names)
+               as appropriate for the selected CPU or architecture.
+
+           For any of the options listed above, _A_B_I or _A_R_C_H may be specified
+           as nnuummeerriicc to have numbers printed rather than names, for the
+           selected types of registers.  You can list the available values of
+           _A_B_I and _A_R_C_H using the ----hheellpp option.
+
+           For VAX, you can specify function entry addresses with --MM
+           eennttrryy::00xxff0000bbaa.  You can use this multiple times to properly
+           disassemble VAX binary files that don't contain symbol tables (like
+           ROM dumps).  In these cases, the function entry mask would
+           otherwise be decoded as VAX instructions, which would probably lead
+           the rest of the function being wrongly disassembled.
+
+       --pp
+       ----pprriivvaattee--hheeaaddeerrss
+           Print information that is specific to the object file format.  The
+           exact information printed depends upon the object file format.  For
+           some object file formats, no additional information is printed.
+
+       --PP _o_p_t_i_o_n_s
+       ----pprriivvaattee==_o_p_t_i_o_n_s
+           Print information that is specific to the object file format.  The
+           argument _o_p_t_i_o_n_s is a comma separated list that depends on the
+           format (the lists of options is displayed with the help).
+
+           For XCOFF, the available options are:
+
+           "header"
+           "aout"
+           "sections"
+           "syms"
+           "relocs"
+           "lineno,"
+           "loader"
+           "except"
+           "typchk"
+           "traceback"
+           "toc"
+           "ldinfo"
+
+           Not all object formats support this option.  In particular the ELF
+           format does not use it.
+
+       --rr
+       ----rreelloocc
+           Print the relocation entries of the file.  If used with --dd or --DD,
+           the relocations are printed interspersed with the disassembly.
+
+       --RR
+       ----ddyynnaammiicc--rreelloocc
+           Print the dynamic relocation entries of the file.  This is only
+           meaningful for dynamic objects, such as certain types of shared
+           libraries.  As for --rr, if used with --dd or --DD, the relocations are
+           printed interspersed with the disassembly.
+
+       --ss
+       ----ffuullll--ccoonntteennttss
+           Display the full contents of any sections requested.  By default
+           all non-empty sections are displayed.
+
+       --SS
+       ----ssoouurrccee
+           Display source code intermixed with disassembly, if possible.
+           Implies --dd.
+
+       ----pprreeffiixx==_p_r_e_f_i_x
+           Specify _p_r_e_f_i_x to add to the absolute paths when used with --SS.
+
+       ----pprreeffiixx--ssttrriipp==_l_e_v_e_l
+           Indicate how many initial directory names to strip off the
+           hardwired absolute paths. It has no effect without ----pprreeffiixx==_p_r_e_f_i_x.
+
+       ----sshhooww--rraaww--iinnssnn
+           When disassembling instructions, print the instruction in hex as
+           well as in symbolic form.  This is the default except when
+           ----pprreeffiixx--aaddddrreesssseess is used.
+
+       ----nnoo--sshhooww--rraaww--iinnssnn
+           When disassembling instructions, do not print the instruction
+           bytes.  This is the default when ----pprreeffiixx--aaddddrreesssseess is used.
+
+       ----iinnssnn--wwiiddtthh==_w_i_d_t_h
+           Display _w_i_d_t_h bytes on a single line when disassembling
+           instructions.
+
+       --WW[[llLLiiaapprrmmffFFssooRRttUUuuTTggAAcckkKK]]
+       ----ddwwaarrff[[==rraawwlliinnee,,==ddeeccooddeeddlliinnee,,==iinnffoo,,==aabbbbrreevv,,==ppuubbnnaammeess,,==aarraannggeess,,==mmaaccrroo,,==ffrraammeess,,==ffrraammeess--iinntteerrpp,,==ssttrr,,==lloocc,,==RRaannggeess,,==ppuubbttyyppeess,,==ttrraaccee__iinnffoo,,==ttrraaccee__aabbbbrreevv,,==ttrraaccee__aarraannggeess,,==ggddbb__iinnddeexx,,==aaddddrr,,==ccuu__iinnddeexx,,==lliinnkkss,,==ffoollllooww--lliinnkkss]]
+           Displays the contents of the DWARF debug sections in the file, if
+           any are present.  Compressed debug sections are automatically
+           decompressed (temporarily) before they are displayed.  If one or
+           more of the optional letters or words follows the switch then only
+           those type(s) of data will be dumped.  The letters and words refer
+           to the following information:
+
+           "a"
+           "=abbrev"
+               Displays the contents of the ..ddeebbuugg__aabbbbrreevv section.
+
+           "A"
+           "=addr"
+               Displays the contents of the ..ddeebbuugg__aaddddrr section.
+
+           "c"
+           "=cu_index"
+               Displays the contents of the ..ddeebbuugg__ccuu__iinnddeexx and/or
+               ..ddeebbuugg__ttuu__iinnddeexx sections.
+
+           "f"
+           "=frames"
+               Display the raw contents of a ..ddeebbuugg__ffrraammee section.
+
+           "F"
+           "=frame-interp"
+               Display the interpreted contents of a ..ddeebbuugg__ffrraammee section.
+
+           "g"
+           "=gdb_index"
+               Displays the contents of the ..ggddbb__iinnddeexx and/or ..ddeebbuugg__nnaammeess
+               sections.
+
+           "i"
+           "=info"
+               Displays the contents of the ..ddeebbuugg__iinnffoo section.  Note: the
+               output from this option can also be restricted by the use of
+               the ----ddwwaarrff--ddeepptthh and ----ddwwaarrff--ssttaarrtt options.
+
+           "k"
+           "=links"
+               Displays the contents of the ..ggnnuu__ddeebbuugglliinnkk and/or
+               ..ggnnuu__ddeebbuuggaallttlliinnkk sections.  Also displays the link to a
+               separate dwarf object file (dwo), if one is specified by the
+               DW_AT_GNU_dwo_name or DW_AT_dwo_name attributes in the
+               ..ddeebbuugg__iinnffoo section.
+
+           "K"
+           "=follow-links"
+               Display the contents of any selected debug sections that are
+               found in a linked, separate debug info file.  This can result
+               in multiple versions of the same debug section being displayed
+               if both the main file and the separate debug info file contain
+               sections with the same name.
+
+               In addition, when displaying DWARF attributes, if a form is
+               found that references the separate debug info file, then the
+               referenced contents will also be displayed.
+
+           "l"
+           "=rawline"
+               Displays the contents of the ..ddeebbuugg__lliinnee section in a raw
+               format.
+
+           "L"
+           "=decodedline"
+               Displays the interpreted contents of the ..ddeebbuugg__lliinnee section.
+
+           "m"
+           "=macro"
+               Displays the contents of the ..ddeebbuugg__mmaaccrroo and/or ..ddeebbuugg__mmaacciinnffoo
+               sections.
+
+           "o"
+           "=loc"
+               Displays the contents of the ..ddeebbuugg__lloocc and/or ..ddeebbuugg__lloocclliissttss
+               sections.
+
+           "p"
+           "=pubnames"
+               Displays the contents of the ..ddeebbuugg__ppuubbnnaammeess and/or
+               ..ddeebbuugg__ggnnuu__ppuubbnnaammeess sections.
+
+           "r"
+           "=aranges"
+               Displays the contents of the ..ddeebbuugg__aarraannggeess section.
+
+           "R"
+           "=Ranges"
+               Displays the contents of the ..ddeebbuugg__rraannggeess and/or
+               ..ddeebbuugg__rrnngglliissttss sections.
+
+           "s"
+           "=str"
+               Displays the contents of the ..ddeebbuugg__ssttrr, ..ddeebbuugg__lliinnee__ssttrr and/or
+               ..ddeebbuugg__ssttrr__ooffffsseettss sections.
+
+           "t"
+           "=pubtype"
+               Displays the contents of the ..ddeebbuugg__ppuubbttyyppeess and/or
+               ..ddeebbuugg__ggnnuu__ppuubbttyyppeess sections.
+
+           "T"
+           "=trace_aranges"
+               Displays the contents of the ..ttrraaccee__aarraannggeess section.
+
+           "u"
+           "=trace_abbrev"
+               Displays the contents of the ..ttrraaccee__aabbbbrreevv section.
+
+           "U"
+           "=trace_info"
+               Displays the contents of the ..ttrraaccee__iinnffoo section.
+
+           Note: displaying the contents of ..ddeebbuugg__ssttaattiicc__ffuunnccss,
+           ..ddeebbuugg__ssttaattiicc__vvaarrss and ddeebbuugg__wweeaakknnaammeess sections is not currently
+           supported.
+
+       ----ddwwaarrff--ddeepptthh==_n
+           Limit the dump of the ".debug_info" section to _n children.  This is
+           only useful with ----ddeebbuugg--dduummpp==iinnffoo.  The default is to print all
+           DIEs; the special value 0 for _n will also have this effect.
+
+           With a non-zero value for _n, DIEs at or deeper than _n levels will
+           not be printed.  The range for _n is zero-based.
+
+       ----ddwwaarrff--ssttaarrtt==_n
+           Print only DIEs beginning with the DIE numbered _n.  This is only
+           useful with ----ddeebbuugg--dduummpp==iinnffoo.
+
+           If specified, this option will suppress printing of any header
+           information and all DIEs before the DIE numbered _n.  Only siblings
+           and children of the specified DIE will be printed.
+
+           This can be used in conjunction with ----ddwwaarrff--ddeepptthh.
+
+       ----ddwwaarrff--cchheecckk
+           Enable additional checks for consistency of Dwarf information.
+
+       --GG
+       ----ssttaabbss
+           Display the full contents of any sections requested.  Display the
+           contents of the .stab and .stab.index and .stab.excl sections from
+           an ELF file.  This is only useful on systems (such as Solaris 2.0)
+           in which ".stab" debugging symbol-table entries are carried in an
+           ELF section.  In most other file formats, debugging symbol-table
+           entries are interleaved with linkage symbols, and are visible in
+           the ----ssyymmss output.
+
+       ----ssttaarrtt--aaddddrreessss==_a_d_d_r_e_s_s
+           Start displaying data at the specified address.  This affects the
+           output of the --dd, --rr and --ss options.
+
+       ----ssttoopp--aaddddrreessss==_a_d_d_r_e_s_s
+           Stop displaying data at the specified address.  This affects the
+           output of the --dd, --rr and --ss options.
+
+       --tt
+       ----ssyymmss
+           Print the symbol table entries of the file.  This is similar to the
+           information provided by the nnmm program, although the display format
+           is different.  The format of the output depends upon the format of
+           the file being dumped, but there are two main types.  One looks
+           like this:
+
+                   [  4](sec  3)(fl 0x00)(ty   0)(scl   3) (nx 1) 0x00000000 .bss
+                   [  6](sec  1)(fl 0x00)(ty   0)(scl   2) (nx 0) 0x00000000 fred
+
+           where the number inside the square brackets is the number of the
+           entry in the symbol table, the _s_e_c number is the section number,
+           the _f_l value are the symbol's flag bits, the _t_y number is the
+           symbol's type, the _s_c_l number is the symbol's storage class and the
+           _n_x value is the number of auxilary entries associated with the
+           symbol.  The last two fields are the symbol's value and its name.
+
+           The other common output format, usually seen with ELF based files,
+           looks like this:
+
+                   00000000 l    d  .bss   00000000 .bss
+                   00000000 g       .text  00000000 fred
+
+           Here the first number is the symbol's value (sometimes refered to
+           as its address).  The next field is actually a set of characters
+           and spaces indicating the flag bits that are set on the symbol.
+           These characters are described below.  Next is the section with
+           which the symbol is associated or _*_A_B_S_* if the section is absolute
+           (ie not connected with any section), or _*_U_N_D_* if the section is
+           referenced in the file being dumped, but not defined there.
+
+           After the section name comes another field, a number, which for
+           common symbols is the alignment and for other symbol is the size.
+           Finally the symbol's name is displayed.
+
+           The flag characters are divided into 7 groups as follows:
+
+           "l"
+           "g"
+           "u"
+           "!" The symbol is a local (l), global (g), unique global (u),
+               neither global nor local (a space) or both global and local
+               (!).  A symbol can be neither local or global for a variety of
+               reasons, e.g., because it is used for debugging, but it is
+               probably an indication of a bug if it is ever both local and
+               global.  Unique global symbols are a GNU extension to the
+               standard set of ELF symbol bindings.  For such a symbol the
+               dynamic linker will make sure that in the entire process there
+               is just one symbol with this name and type in use.
+
+           "w" The symbol is weak (w) or strong (a space).
+
+           "C" The symbol denotes a constructor (C) or an ordinary symbol (a
+               space).
+
+           "W" The symbol is a warning (W) or a normal symbol (a space).  A
+               warning symbol's name is a message to be displayed if the
+               symbol following the warning symbol is ever referenced.
+
+           "I"
+           "i" The symbol is an indirect reference to another symbol (I), a
+               function to be evaluated during reloc processing (i) or a
+               normal symbol (a space).
+
+           "d"
+           "D" The symbol is a debugging symbol (d) or a dynamic symbol (D) or
+               a normal symbol (a space).
+
+           "F"
+           "f"
+           "O" The symbol is the name of a function (F) or a file (f) or an
+               object (O) or just a normal symbol (a space).
+
+       --TT
+       ----ddyynnaammiicc--ssyymmss
+           Print the dynamic symbol table entries of the file.  This is only
+           meaningful for dynamic objects, such as certain types of shared
+           libraries.  This is similar to the information provided by the nnmm
+           program when given the --DD (----ddyynnaammiicc) option.
+
+           The output format is similar to that produced by the ----ssyymmss option,
+           except that an extra field is inserted before the symbol's name,
+           giving the version information associated with the symbol.  If the
+           version is the default version to be used when resolving
+           unversioned references to the symbol then it's displayed as is,
+           otherwise it's put into parentheses.
+
+       ----ssppeecciiaall--ssyymmss
+           When displaying symbols include those which the target considers to
+           be special in some way and which would not normally be of interest
+           to the user.
+
+       --VV
+       ----vveerrssiioonn
+           Print the version number of oobbjjdduummpp and exit.
+
+       --xx
+       ----aallll--hheeaaddeerrss
+           Display all available header information, including the symbol
+           table and relocation entries.  Using --xx is equivalent to specifying
+           all of --aa --ff --hh --pp --rr --tt.
+
+       --ww
+       ----wwiiddee
+           Format some lines for output devices that have more than 80
+           columns.  Also do not truncate symbol names when they are
+           displayed.
+
+       --zz
+       ----ddiissaasssseemmbbllee--zzeerrooeess
+           Normally the disassembly output will skip blocks of zeroes.  This
+           option directs the disassembler to disassemble those blocks, just
+           like any other data.
+
+       @@_f_i_l_e
+           Read command-line options from _f_i_l_e.  The options read are inserted
+           in place of the original @_f_i_l_e option.  If _f_i_l_e does not exist, or
+           cannot be read, then the option will be treated literally, and not
+           removed.
+
+           Options in _f_i_l_e are separated by whitespace.  A whitespace
+           character may be included in an option by surrounding the entire
+           option in either single or double quotes.  Any character (including
+           a backslash) may be included by prefixing the character to be
+           included with a backslash.  The _f_i_l_e may itself contain additional
+           @_f_i_l_e options; any such options will be processed recursively.
+
+SSEEEE AALLSSOO
+       nnmm(1), rreeaaddeellff(1), and the Info entries for _b_i_n_u_t_i_l_s.
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (c) 1991-2019 Free Software Foundation, Inc.
+
+       Permission is granted to copy, distribute and/or modify this document
+       under the terms of the GNU Free Documentation License, Version 1.3 or
+       any later version published by the Free Software Foundation; with no
+       Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+       Texts.  A copy of the license is included in the section entitled "GNU
+       Free Documentation License".
+
+
+
+binutils-2.31.90                  2019-01-19                        OBJDUMP(1)

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<packages>
+<package name="paszlib">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+  <os name="osnone"/>
+  <os name="linux"/>
+  <os name="go32v2"/>
+  <os name="win32"/>
+  <os name="os2"/>
+  <os name="freebsd"/>
+  <os name="beos"/>
+  <os name="netbsd"/>
+  <os name="amiga"/>
+  <os name="atari"/>
+  <os name="solaris"/>
+  <os name="qnx"/>
+  <os name="netware"/>
+  <os name="openbsd"/>
+  <os name="wdosx"/>
+  <os name="palmos"/>
+  <os name="macos"/>
+  <os name="darwin"/>
+  <os name="emx"/>
+  <os name="watcom"/>
+  <os name="morphos"/>
+  <os name="netwlibc"/>
+  <os name="win64"/>
+  <os name="wince"/>
+  <os name="gba"/>
+  <os name="nds"/>
+  <os name="symbian"/>
+  <os name="haiku"/>
+  <os name="iphonesim"/>
+  <os name="aix"/>
+  <os name="java"/>
+  <os name="android"/>
+  <os name="wii"/>
+  <os name="aros"/>
+  <os name="dragonfly"/>
+ </oses>
+ <filename>pzl.zip</filename>
+ <author></author>
+ <license></license>
+ <email></email>
+ <description>Pascal port of the ZLIB library - support for deflate compression method using for GZIP, PNG, ZIP, etc.</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+  <dependency>
+   <package packagename="hash"/>
+   <version major="3" minor="0" micro="0"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

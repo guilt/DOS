@@ -1,0 +1,1735 @@
+Chapter 10
+
+
+
+
+
+Bit-Mapped Images
+190   Fastgraph User's Guide
+
+
+Overview
+
+     In this chapter, we'll continue our discussion of images by
+concentrating on an important class of images called bit-mapped images.
+Fastgraph includes routines to display, retrieve, and manipulate bit-mapped
+images in mode-specific and mode-independent formats.  This chapter will
+discuss the Fastgraph routines that deal with both classes of bit-mapped
+images.
+
+     Displaying bit-mapped images is an essential part of animation with
+Fastgraph.  While the image files discussed in the previous chapter are
+useful for displaying backgrounds or importing pictures from other sources,
+an animation sequence can only achieve its speed through the bit-mapped image
+display routines described in this chapter, along with the block transfer
+routines of the next chapter.
+
+
+Mode-Independent Bit-Mapped Images
+
+     This section will discuss the image display routines that use the same
+bit-mapped image format for all graphics video modes.  Another class of
+routines, described in the next section, use different formats for different
+video modes.  While these mode-independent image display routines are more
+general, they achieve this generality at the sake of execution speed.  This
+may especially be a concern if the image is large, or if speed is critical in
+an application (as in arcade-style graphics).  For many programs, however,
+the mode-independent routines provide all the image display capability
+needed.
+
+     Let's begin by returning to an example of a very simple image -- the
+triangle introduced in the previous chapter:
+
+                              . . . . * . . . .
+                              . . . * x * . . .
+                              . . * x x x * . .
+                              . * x x x x x * .
+                              * * * * * * * * *
+
+Recall that the triangle's perimeter is a different color than its interior
+pixels, and to use this image with Fastgraph, we must inscribe the triangle
+in a rectangular area.  As before, our triangle is nine pixels wide at its
+base and five pixels high.  The pixels indicated by an asterisk (*) are the
+triangle's perimeter, while those indicated by an x represent its interior
+points.  We need to distinguish between these pixels because they will be
+different colors.  The pixels shown as periods (.) are not part of the
+triangle itself.  They are required to make the image rectangular, so from
+Fastgraph's perspective they are indeed part of the image.
+
+     The Fastgraph routine fg_drawmap is a suitable routine for drawing our
+triangle.  To use fg_drawmap, we must create separate bit maps for each color
+in the image (excluding the points used to fill the rectangular region, which
+are considered transparent).  In this example, we will thus need two bit
+maps -- one for the perimeter points, and one for the interior points.  Let's
+break the image into these two bit maps.
+                                          Chapter 10:  Bit-Mapped Images   191
+
+                  . . . . * . . . .        . . . . . . . . .
+                  . . . * . * . . .        . . . . x . . . .
+                  . . * . . . * . .        . . . x x x . . .
+                  . * . . . . . * .        . . x x x x x . .
+                  * * * * * * * * *        . . . . . . . . .
+
+                  perimeter points          interior points
+
+     The next step is to convert these two bit maps into their binary
+representations.  Just as there are eight bits in a byte, we will create a
+data structure (an array in this case) with each byte holding eight pixels.
+Bits that are set (1) indicate the corresponding pixel will appear displayed
+in the color associated with that bit map.  Bits that are reset (0) leave the
+corresponding pixel unchanged.  The size of each bit map array must be at
+least 10 bytes because each bit map contains five rows with nine pixels in
+each row (that is, two bytes are required for each row of the image).  Hence,
+when we convert these bit maps to their binary representations, and
+subsequently to their hexadecimal equivalent, the results will appear as
+shown below.  The boldface bits represent the actual image; the other bits
+are filler bits needed to complete each row of the bit maps after the ninth
+pixel.  All filler bits must be zero.
+
+              0 0 0 0 1 0 0 0   0 0 0 0 0 0 0 0         08   00
+
+              0 0 0 1 0 1 0 0   0 0 0 0 0 0 0 0         14   00
+
+              0 0 1 0 0 0 1 0   0 0 0 0 0 0 0 0         22   00
+
+              0 1 0 0 0 0 0 1   0 0 0 0 0 0 0 0         41   00
+
+              1 1 1 1 1 1 1 1   1 0 0 0 0 0 0 0         FF   80
+
+                              perimeter bit map
+
+
+              0 0 0 0 0 0 0 0   0 0 0 0 0 0 0 0         00   00
+
+              0 0 0 0 1 0 0 0   0 0 0 0 0 0 0 0         08   00
+
+              0 0 0 1 1 1 0 0   0 0 0 0 0 0 0 0         1C   00
+
+              0 0 1 1 1 1 1 0   0 0 0 0 0 0 0 0         3E   00
+
+              0 0 0 0 0 0 0 0   0 0 0 0 0 0 0 0         00   00
+
+                               interior bit map
+
+     The next question is the order in which the bit maps are stored in the
+corresponding data structures.  Since our data structure is an array, it is
+only necessary to show the relationship of the subscripts to the bit map
+structures above.  The next diagram shows the subscript order for the case of
+a two-column by five-row bit map.
+
+                                  [8]   [9]
+
+                                  [6]   [7]
+192   Fastgraph User's Guide
+
+                                  [4]   [5]
+
+                                  [2]   [3]
+
+                                  [0]   [1]
+
+     From this diagram, we see the first element of the array (that is, the
+element with subscript [0]) represents the lower left corner of the image.
+The subscript progression then continues right until reaching the end of the
+first row.  It then resumes at the leftmost element of the second row and
+continues to the right until the end of that row.  It continues in this
+manner for all remaining rows.
+
+     We are now ready to present an example program to display our triangle.
+The program will use the Fastgraph routine fg_drawmap, which expects three
+arguments.  The first argument is the bit map array (passed by reference),
+the second is the width of the bit map in bytes, and the last is the height
+of the bit map in pixel rows.  The fg_drawmap routine displays the image such
+that its lower left corner is at the graphics cursor position on the active
+video page.  The routine has no effect in text video modes.  Additionally,
+fg_drawmap displays the image using the current color index, which means we
+will need to call fg_drawmap once for each color in the image.
+
+     Example 10-1 runs in any 320 by 200 color graphics mode (it could be
+made to run in mode 12 too, but that would detract from the purpose of the
+example).  After establishing the video mode, the program uses fg_rect to
+fill the entire screen with a gray rectangle (white in CGA).  Next, the
+program establishes (156,101) as the graphics cursor position; this causes
+the triangle to be centered on the screen.  The two calls to fg_drawmap, one
+for each color in the image, actually display the triangle.  Note especially
+how fg_setcolor is used before each call to fg_drawmap to define the current
+color index.  The result is a triangle with a blue perimeter (cyan in CGA)
+and green interior (magenta in CGA).
+
+                                Example 10-1.
+
+             #include <fastgraf.h>
+             #include <stdio.h>
+             #include <stdlib.h>
+             void main(void);
+
+             char perimeter[] = {
+                0xFF,0x80,0x41,0x00,0x22,0x00,0x14,0x00,0x08,0x00
+                };
+             char interior[] = {
+                0x00,0x00,0x3E,0x00,0x1C,0x00,0x08,0x00,0x00,0x00
+                };
+
+             void main()
+             {
+                int old_mode, new_mode;
+
+                new_mode = fg_bestmode(320,200,1);
+                if (new_mode < 0 || new_mode == 12) {
+                   printf("This program requires a 320 ");
+
+                                          Chapter 10:  Bit-Mapped Images   193
+
+                   printf("x 200 color graphics mode.\n");
+                   exit(1);
+                   }
+
+                old_mode = fg_getmode();
+                fg_setmode(new_mode);
+
+                fg_setcolor(7);
+                fg_rect(0,319,0,199);
+
+                fg_move(156,101);
+                fg_setcolor(1);
+                fg_drawmap(perimeter,2,5);
+                fg_setcolor(2);
+                fg_drawmap(interior,2,5);
+                fg_waitkey();
+
+                fg_setmode(old_mode);
+                fg_reset();
+             }
+
+     The different color bit maps used by fg_drawmap do not all have to be
+the same size.  In our triangle example, the perimeter is 9 pixels wide by 5
+pixels high, but the interior is only 5 pixels wide by 3 pixels high.  Hence,
+the bit map for the interior pixels only requires one byte for each of its
+three rows, so we can store it in a three-byte array.  Its structure would
+be:
+
+                                  [2]   08
+
+                                  [1]   1C
+
+                                  [0]   3E
+
+     Example 10-2 is similar to example 10-1, but it uses a three-byte array
+for the interior bit map.  Note the second call to fg_move in this example.
+It is needed because the bottom row of the smaller interior bit map
+corresponds to the second row of the larger perimeter bit map.  In other
+words, the interior bit map must be displayed one row above the perimeter bit
+map.
+
+                                Example 10-2.
+
+             #include <fastgraf.h>
+             #include <stdio.h>
+             #include <stdlib.h>
+             void main(void);
+
+             char perimeter[] = {
+                0xFF,0x80,0x41,0x00,0x22,0x00,0x14,0x00,0x08,0x00
+                };
+             char interior[] = {
+                0x3E,0x1C,0x08
+                };
+
+194   Fastgraph User's Guide
+
+
+             void main()
+             {
+                int old_mode, new_mode;
+
+                new_mode = fg_bestmode(320,200,1);
+                if (new_mode < 0 || new_mode == 12) {
+                   printf("This program requires a 320 ");
+                   printf("x 200 color graphics mode.\n");
+                   exit(1);
+                   }
+
+                old_mode = fg_getmode();
+                fg_setmode(new_mode);
+
+                fg_setcolor(7);
+                fg_rect(0,319,0,199);
+
+                fg_move(156,101);
+                fg_setcolor(1);
+                fg_drawmap(perimeter,2,5);
+                fg_move(156,100);
+                fg_setcolor(2);
+                fg_drawmap(interior,1,3);
+                fg_waitkey();
+
+                fg_setmode(old_mode);
+                fg_reset();
+             }
+
+
+     In example 10-2, the time required to execute the second call to fg_move
+may not be worth the saving of 7 bytes.  When array space is critical, or
+when the images are larger, the use of smaller bit maps for certain colors
+may be more valuable.
+
+     Yet another possibility for example 10-2 would be to shift the elements
+of the interior bit map two pixels to the left.  In this way, the bit map
+would be aligned against the left side of the array, just as the perimeter
+bit map is.  The three values comprising the interior bit map would then
+become F8, 70, and 20.  We also would need to change the x coordinate in the
+second call to fg_move from 156 to 158.
+
+
+Mode-Specific Bit-Mapped Images
+
+     This section will discuss the image display routines that use bit-mapped
+image formats that are specific to each text and graphics video mode.  The
+different image formats closely resemble the structure of video memory in
+each mode, so these routines are much faster than displaying mode-independent
+bit maps with fg_drawmap.  If you use the mode-specific bit maps in a program
+that supports several video modes, there will be some additional programming
+that is not needed when using mode-independent bit maps.  Usually, however,
+your efforts will be rewarded with significantly faster graphics.
+                                          Chapter 10:  Bit-Mapped Images   195
+
+     We'll demonstrate the use of mode-specific bit maps in graphics modes
+with the familiar two-color triangle whose pixel representation appears
+below.
+
+                              . . . . * . . . .
+                              . . . * x * . . .
+                              . . * x x x * . .
+                              . * x x x x x * .
+                              * * * * * * * * *
+
+     As before, our triangle is nine pixels wide at its base and five pixels
+high.  The pixels indicated by an asterisk (*) are the triangle's perimeter,
+while those indicated by an x represent its interior points.  We need to
+distinguish between these pixels because they will be different colors.  The
+pixels shown as periods (.) are not part of the triangle itself.  They are
+required to make the image rectangular, so from Fastgraph's perspective they
+are indeed part of the image.
+
+
+Regular Images
+
+     The Fastgraph routine fg_drwimage displays regular mode-specific bit-
+mapped images (by regular, we mean an image that is neither clipped nor
+rotated).  Its arguments are the same as for the fg_drawmap routine, and the
+bit map array's subscript order is also the same as for fg_drawmap.  The
+major difference is the bit map structure -- we combine the information for
+all colors into a single bit map, in a way consistent with the structure of
+video memory for the various modes.  As with the other image display
+routines, fg_drwimage displays the image on the active video page with its
+lower left corner at the graphics cursor position (or the text cursor
+position for text modes).  We'll now examine the use of fg_drwimage in
+several video modes.
+
+CGA four-color graphics modes
+
+     In the four-color CGA graphics modes (modes 4 and 5), each pixel can
+assume a value between 0 and 3.  This means it takes two bits to represent a
+pixel, or put another way, each byte of video memory holds four pixels.  Our
+triangle image is nine pixels wide, so three bytes are needed for each row of
+the image.  Because the image is five pixels high, we need a bit map array of
+at least 15 bytes (five rows times three bytes per row) to hold the image.
+
+     The image's binary representation and its hexadecimal equivalent for the
+four-color CGA graphics modes are shown below.  The binary values in boldface
+represent the actual image; the others are the filler bits needed to complete
+each row of the bit map after the ninth pixel.  We have coded the perimeter
+pixels to be color 1 (01 binary) and the interior pixels to be color 2 (10
+binary).  Any pixel whose value is zero (00 binary) is transparent and will
+thus leave the contents of video memory at that position unchanged.
+
+         00 00 00 00   01 00 00 00   00 00 00 00         00   40   00
+
+         00 00 00 01   10 01 00 00   00 00 00 00         01   90   00
+
+         00 00 01 10   10 10 01 00   00 00 00 00         06   A4   00
+
+196   Fastgraph User's Guide
+
+         00 01 10 10   10 10 10 01   00 00 00 00         1A   A9   00
+
+         01 01 01 01   01 01 01 01   01 00 00 00         55   55   40
+
+     Example 10-3 uses this mode-specific bit map to display the triangle in
+the standard CGA four-color graphics mode (mode 4).  After establishing the
+video mode, the program uses fg_rect to fill the entire screen with a white
+rectangle.  Next, the program establishes (156,101) as the graphics cursor
+position; this causes the triangle to be centered on the screen.  The call to
+fg_drwimage produces a triangle with a cyan perimeter (color 1) and a magenta
+interior (color 2).
+
+                                Example 10-3.
+
+              #include <fastgraf.h>
+              #include <stdio.h>
+              #include <stdlib.h>
+              void main(void);
+
+              char triangle[] = {
+                 0x55,0x55,0x40, 0x1A,0xA9,0x00, 0x06,0xA4,0x00,
+                 0x01,0x90,0x00, 0x00,0x40,0x00
+                 };
+
+              void main()
+              {
+                 int old_mode;
+
+                 if (fg_testmode(4,1) == 0) {
+                    printf("This program requires a 320 ");
+                    printf("x 200 CGA graphics mode.\n");
+                    exit(1);
+                    }
+
+                 old_mode = fg_getmode();
+                 fg_setmode(4);
+
+                 fg_setcolor(7);
+                 fg_rect(0,319,0,199);
+
+                 fg_move(156,101);
+                 fg_drwimage(triangle,3,5);
+                 fg_waitkey();
+
+                 fg_setmode(old_mode);
+                 fg_reset();
+              }
+
+
+CGA two-color graphics mode
+
+     In the two-color CGA graphics mode (mode 6), each pixel can assume the
+values 0 or 1.  This means it takes just one bit to represent a pixel, so
+each byte of video memory holds eight pixels.  Our triangle image is nine
+pixels wide, so two bytes are needed for each row of the image.  Because the
+                                          Chapter 10:  Bit-Mapped Images   197
+
+image is five pixels high, we need a bit map array of at least 10 bytes (five
+rows times two bytes per row) to hold the image.
+
+     The image's binary representation and its hexadecimal equivalent for the
+two-color CGA graphics mode is shown below.  The binary values in boldface
+represent the actual image; the others are the filler bits needed to complete
+each row of the bit map after the ninth pixel.  We have coded both the
+perimeter pixels and the interior pixels to be color 1.  Any pixel whose
+value is zero is transparent and will thus leave the contents of video memory
+at that position unchanged.
+
+              0 0 0 0 1 0 0 0   0 0 0 0 0 0 0 0         08   00
+
+              0 0 0 1 1 1 0 0   0 0 0 0 0 0 0 0         1C   00
+
+              0 0 1 1 1 1 1 0   0 0 0 0 0 0 0 0         3E   00
+
+              0 1 1 1 1 1 1 1   0 0 0 0 0 0 0 0         7F   00
+
+              1 1 1 1 1 1 1 1   1 0 0 0 0 0 0 0         FF   80
+
+     Example 10-4 uses this mode-specific bit map to display the triangle in
+the CGA two-color graphics mode (mode 6).  After establishing the video mode,
+the program establishes (316,101) as the graphics cursor position; this
+causes the triangle to be centered on the screen.  The call to fg_drwimage
+produces a solid triangle.
+
+                                Example 10-4.
+
+                  #include <fastgraf.h>
+                  #include <stdio.h>
+                  #include <stdlib.h>
+                  void main(void);
+
+                  char triangle[] = {
+                     0xFF,0x80, 0x7F,0x00, 0x3E,0x00,
+                     0x1C,0x00, 0x08,0x00
+                     };
+
+                  void main()
+                  {
+                     int old_mode;
+
+                     if (fg_testmode(6,1) == 0) {
+                        printf("This program requires a ");
+                        printf("CGA graphics mode.\n");
+                        exit(1);
+                        }
+
+                     old_mode = fg_getmode();
+                     fg_setmode(6);
+
+                     fg_move(316,101);
+                     fg_drwimage(triangle,2,5);
+                     fg_waitkey();
+
+198   Fastgraph User's Guide
+
+
+                     fg_setmode(old_mode);
+                     fg_reset();
+                  }
+
+
+Tandy/PCjr 16-color graphics mode
+
+     The structure of the mode-specific bit maps for the Tandy/PCjr 16-color
+graphics mode (mode 9) is the same as the mode-specific bit map structure for
+the EGA/VGA/SVGA 16-color graphics modes discussed later in this section.
+
+Hercules graphics modes
+
+     The structure of the mode-specific bit maps for the Hercules graphics
+modes (modes 11 and 12) is the same as two of the CGA graphics modes.  For
+the standard Hercules graphics mode (mode 11), please refer to the discussion
+of CGA two-color (mode 6) bit maps.  For the low-resolution Hercules graphics
+mode (mode 12), please refer to the discussion of the CGA four-color (mode 4)
+bit maps.
+
+EGA/VGA/SVGA 16-color graphics modes
+
+     In the native EGA and VGA graphics modes (modes 13 through 18) and the
+16-color SVGA graphics modes (modes 28 and 29), each pixel can assume a value
+between 0 and 15.  This means it takes four bits to represent a pixel, so
+each byte of the bit map holds two pixels.  Our triangle image is nine pixels
+wide, so five bytes are needed for each row of the image.  Because the image
+is five pixels high, we need a bit map array of at least 25 bytes (five rows
+times five bytes per row) to hold the image.
+
+     In these modes, it is easy to develop the hexadecimal representation of
+a bit map without first producing its binary equivalent.  This is because a
+pixel value and a hexadecimal digit each occupy four bits.  The triangle's
+hexadecimal representation for these video modes is shown below.  The pixels
+in boldface represent the actual image; the others are the filler values
+needed to complete each row of the bit map after the ninth pixel.  We have
+chosen to display the perimeter pixels in color 1 and the interior pixels in
+color 2.  Any pixel whose value is zero is transparent and will thus leave
+the contents of video memory at that position unchanged.
+
+                            00   00   10   00   00
+
+                            00   01   21   00   00
+
+                            00   12   22   10   00
+
+                            01   22   22   21   00
+
+                            11   11   11   11   10
+
+     Example 10-5 is similar to example 10-3, but it uses the 320 by 200 EGA
+graphics mode (mode 13) and the mode-specific bit map just constructed to
+display the triangle.  The call to fg_drwimage produces a triangle with a
+blue perimeter (color 1) and a green interior (color 2).
+                                          Chapter 10:  Bit-Mapped Images   199
+
+
+                                Example 10-5.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                char triangle[] = {
+                   0x11,0x11,0x11,0x11,0x10,
+                   0x01,0x22,0x22,0x21,0x00,
+                   0x00,0x12,0x22,0x10,0x00,
+                   0x00,0x01,0x21,0x00,0x00,
+                   0x00,0x00,0x10,0x00,0x00
+                   };
+
+                void main()
+                {
+                   int old_mode;
+
+                   if (fg_testmode(13,1) == 0) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 EGA graphics mode.\n");
+                      exit(1);
+                      }
+
+                   old_mode = fg_getmode();
+                   fg_setmode(13);
+
+                   fg_setcolor(7);
+                   fg_rect(0,319,0,199);
+
+                   fg_move(156,101);
+                   fg_drwimage(triangle,5,5);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+
+256-color graphics modes
+
+     In the 256-color graphics modes (modes 19 through 27), each pixel can
+assume a value between 0 and 255 (FF hex).  This means it takes eight bits to
+represent a pixel, or each byte of video memory holds one pixel.  Our
+triangle image is nine pixels wide, so nine bytes are needed for each row of
+the image.  Because the image is five pixels high, we need a bit map array of
+at least 45 bytes (five rows times nine bytes per row) to hold the image.
+Note we will never need any filler bits in the 256-color video modes.
+
+     It is especially simple to develop the bit map for an image in the 256-
+color modes because each byte holds exactly one pixel.  The triangle's
+hexadecimal representation for the 256-color graphics modes is shown below.
+As before, we have coded the perimeter pixels to be color 1 (01 hex) and the
+interior pixels to be color 2 (02 hex).  Any pixel whose value is zero is
+200   Fastgraph User's Guide
+
+transparent and will thus leave the contents of video memory at that position
+unchanged.
+
+                  00   00   00   00   01   00   00   00   00
+
+                  00   00   00   01   02   01   00   00   00
+
+                  00   00   01   02   02   02   01   00   00
+
+                  00   01   02   02   02   02   02   01   00
+
+                  01   01   01   01   01   01   01   01   01
+
+     Example 10-6 is also similar to example 10-3, but it uses the MCGA 256-
+color graphics mode (mode 19) and the mode-specific bit map just constructed
+to display the triangle.  The call to fg_drwimage produces a triangle with a
+blue perimeter (color 1) and a green interior (color 2).
+
+                                Example 10-6.
+
+               #include <fastgraf.h>
+               #include <stdio.h>
+               #include <stdlib.h>
+               void main(void);
+
+               char triangle[] = {
+                  0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x01,
+                  0x00,0x01,0x02,0x02,0x02,0x02,0x02,0x01,0x00,
+                  0x00,0x00,0x01,0x02,0x02,0x02,0x01,0x00,0x00,
+                  0x00,0x00,0x00,0x01,0x02,0x01,0x00,0x00,0x00,
+                  0x00,0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x00
+                  };
+
+               void main()
+               {
+                  int old_mode;
+
+                  if (fg_testmode(19,1) == 0) {
+                     printf("This program requires a 320 ");
+                     printf("x 200 MCGA graphics mode.\n");
+                     exit(1);
+                     }
+
+                  old_mode = fg_getmode();
+                  fg_setmode(19);
+
+                  fg_setcolor(7);
+                  fg_rect(0,319,0,199);
+
+                  fg_move(156,101);
+                  fg_drwimage(triangle,9,5);
+                  fg_waitkey();
+
+                  fg_setmode(old_mode);
+                  fg_reset();
+               }
+                                          Chapter 10:  Bit-Mapped Images   201
+
+     Sometimes you may need to include black pixels that are not transparent
+in a mode-specific bit-mapped image.  The easiest way to do this is to use
+fg_palette or fg_setrgb to make an unused color index black and then use that
+color index for non-transparent black pixels.  For example, calling
+fg_palette(8,0) in a 16-color graphics mode would display color 8 pixels as
+black.  Similarly, fg_setrgb(248,0,0,0) in a 256-color graphics mode would
+display color 248 pixels as black.  The choice of colors 8 and 248 in these
+examples is arbitrary; any unused color will do.  Another possibility is to
+use masking maps, discussed later in this chapter.
+
+
+Text Modes
+
+     You also can use the fg_drwimage routine to display images in text video
+modes (modes 0, 1, 2, 3, and 7).  As one might expect, the image structure in
+the text modes is rather different from the graphics modes.  In Chapter 5 we
+saw that each character cell on the screen actually consists of a character
+and an attribute.  The character value determines what character is
+displayed, while the attribute value controls the character's appearance.
+The structure of the attribute is:
+
+                  bits   attribute
+
+                   0-3   foreground color
+                   4-6   background color
+                    7    blinking
+
+     The text mode image structure used with fg_drwimage also consists of a
+series of characters and attributes.  For example, the following diagram
+illustrates the structure of an image that is three characters wide and two
+characters high.
+
+
+                   char   attr   char   attr   char   attr
+
+                   char   attr   char   attr   char   attr
+
+
+     To illustrate the use of fg_drwimage in a text video mode, we'll display
+the phrase "hello there" on two different lines in the center of the screen.
+Furthermore, let's assume we would like the first character of each word to
+appear in foreground color 1, the second in color 2, and so forth.  Our image
+will consist of two lines each containing five characters, and each character
+requires two bytes of storage (one for the character and another for its
+attribute), so we'll need a 20-byte array for holding the image.  The array
+really doesn't hold a bit map as in the graphics modes, so in the text modes
+the first argument passed to fg_drwimage is instead called the image array.
+In our example, the structure of the image array is:
+
+           'h'    1    'e'    2    'l'    3    'l'    4    'o'    5
+
+           't'    1    'h'    2    'e'    3    'r'    4    'e'    5
+
+202   Fastgraph User's Guide
+
+The subscript order that fg_drwimage uses for text modes is the same as for
+the graphics modes.  For our five-row by two-column image, this means the
+array subscripts would be numbered as follows:
+
+              [10] [11] [12] [13] [14] [15] [16] [17] [18] [19]
+
+               [0]  [1]  [2]  [3]  [4]  [5]  [6]  [7]  [8]  [9]
+
+     Depending on the character and attribute values in the image array,
+fg_drwimage can display new characters and attributes, new characters leaving
+the existing attribute unchanged, new attributes leaving the existing
+character unchanged, or leave both the existing character and attribute
+unchanged in video memory.  To keep an existing character or attribute,
+simply specify a value of 0 in the corresponding element of the image array.
+This capability is analogous to the fact that zero-valued pixels in graphics
+mode bit maps leave video memory unchanged.
+
+     Example 10-7 demonstrates the use of the fg_drwimage routine in the 80-
+column color text mode (mode 3).  After establishing the video mode and
+making the cursor invisible, the program calls fg_drwimage to display the
+"hello there" image just discussed (note we pass the dimensions of the image
+array as the number of bytes, not the number of characters).  The program
+waits for a keystroke and then calls fg_drwimage again, passing a different
+image array (called "image") of the same size.  This array changes the first
+letter of both words from lower case to upper case (leaving the attribute
+unchanged), and it makes the remaining characters have the same attribute as
+the first character.  This is done in part by using zero-valued characters
+and attributes to leave video memory unchanged.  After waiting for another
+keystroke, the program exits.
+
+                                Example 10-7.
+
+                    #include <fastgraf.h>
+                    void main(void);
+
+                    char hello[] = {
+                       't',1, 'h',2, 'e',3, 'r',4, 'e',5,
+                       'h',1, 'e',2, 'l',3, 'l',4, 'o',5
+                       };
+
+                    char image[] = {
+                       'T',0, 0,1, 0,1, 0,1, 0,1,
+                       'H',0, 0,1, 0,1, 0,1, 0,1
+                       };
+
+                    void main()
+                    {
+                       int old_mode;
+
+                       old_mode = fg_getmode();
+                       fg_setmode(3);
+                       fg_cursor(0);
+
+                       fg_locate(12,37);
+
+                                          Chapter 10:  Bit-Mapped Images   203
+
+                       fg_drwimage(hello,10,2);
+                       fg_waitkey();
+
+                       fg_drwimage(image,10,2);
+                       fg_waitkey();
+
+                       fg_setmode(old_mode);
+                       fg_reset();
+                    }
+
+
+
+Clipped Images
+
+     The fg_drwimage routine displays an image without regard to the current
+clipping limits.  If you want the image to be displayed with respect to the
+clipping limits (as established by the most recent call to fg_setclip), you
+should use the fg_clpimage routine instead of fg_drwimage.  Fg_clpimage takes
+the same three arguments as fg_drwimage, and also displays the image such
+that its lower left corner is at the graphics cursor position.  Unlike
+fg_drwimage, the fg_clpimage routine has no effect when used in a text video
+mode.  Because of the additional overhead involved in checking the clipping
+limits, fg_clpimage is not as fast as fg_drwimage.
+
+
+Reversed Images
+
+     The fg_revimage routine displays an image reversed (that is, mirrored
+about the y-axis).  Fg_revimage takes the same three arguments as
+fg_drwimage, and also displays the image such that its lower left corner is
+at the graphics cursor position.  The fg_revimage routine has no effect when
+used in a text video mode.
+
+
+Reversed Clipped Images
+
+     The fg_flpimage routine combines the effects of the fg_revimage and
+fg_clpimage routines -- it displays a reversed image with respect to the
+current clipping limits.  Fg_flpimage takes the same three arguments as
+fg_drwimage, and also displays the image such that its lower left corner is
+at the graphics cursor position.  Like the fg_clpimage routine, fg_flpimage
+has no effect when used in a text video mode.
+
+
+Images Without Transparent Pixels
+
+     The fg_putimage routine is the same as fg_drwimage except it does not
+consider color 0 pixels to be transparent.  Because it does not need to check
+for transparent pixels, fg_putimage is faster than fg_drwimage.  Using
+fg_putimage is recommended for cases where transparency is not an issue.
+
+
+Some Examples
+
+     Example 10-8 illustrates the use of the fg_drwimage, fg_clpimage,
+fg_revimage, fg_flpimage, and fg_putimage routines in the standard CGA four-
+204   Fastgraph User's Guide
+
+color graphics mode (mode 4).  The program uses each of these routines to
+display a small white arrow, as shown in the pixel map below.
+
+                             . . . . . . * . . .
+                             . . . . . . * * . .
+                             * * * * * * * * * .
+                             * * * * * * * * * *
+                             * * * * * * * * * .
+                             . . . . . . * * . .
+                             . . . . . . * . . .
+
+As before, we must first convert this image to a bit map.  The image is ten
+pixels wide and seven high.  In mode 4, each pixel occupies two bits, so we
+need a 21-byte array (7 rows by 3 columns) to store the image.  Since we want
+to make the arrow white, each pixel will be displayed in color 3 (11 binary).
+Here is the bit map and its hexadecimal equivalent for the arrow image in
+mode 4 (the actual image is in boldface).
+
+         00 00 00 00   00 00 11 00   00 00 00 00         00   0C   00
+
+         00 00 00 00   00 00 11 11   00 00 00 00         00   0F   00
+
+         11 11 11 11   11 11 11 11   11 00 00 00         FF   FF   C0
+
+         11 11 11 11   11 11 11 11   11 11 00 00         FF   FF   F0
+
+         11 11 11 11   11 11 11 11   11 00 00 00         FF   FF   C0
+
+         00 00 00 00   00 00 11 11   00 00 00 00         00   0F   00
+
+         00 00 00 00   00 00 11 00   00 00 00 00         00   0C   00
+
+     After establishing the video mode, the program fills the screen with
+color 1 pixels and defines a clipping region.  It then uses fg_drwimage to
+display the arrow pointing to the right and fg_clpimage to do the same thing,
+but with respect to the clipping limits.  Because the left edge of the arrow
+is displayed at x=10 and the right clipping limit is at x=15, the call to
+fg_clpimage only draws the first six columns of the arrow (that is, it does
+not draw the arrow head).
+
+     Next, example 10-8 uses fg_revimage to display the arrow pointing to the
+left.  To allow for the filler pixels, we must establish the graphics cursor
+position two pixels to the left of the position used by fg_drwimage if we
+want the tip of the left-pointing arrow to align with the tail of the right-
+pointing arrow.  The program then uses fg_flpimage to display an arrow
+pointing to the left with regard to the clipping limits.  The call to
+fg_flpimage displays the arrow head and the first two columns of the arrow
+shaft.  Finally, the program uses fg_putimage to display the unclipped right-
+pointing arrow without transparent pixels (this produces a black border
+around the arrow).
+
+                                Example 10-8.
+
+              #include <fastgraf.h>
+              #include <stdio.h>
+
+                                          Chapter 10:  Bit-Mapped Images   205
+
+              #include <stdlib.h>
+              void main(void);
+
+              char arrow[] = {
+                 0x00,0x0C,0x00, 0x00,0x0F,0x00, 0xFF,0xFF,0xC0,
+                 0xFF,0xFF,0xF0, 0xFF,0xFF,0xC0, 0x00,0x0F,0x00,
+                 0x00,0x0C,0x00
+                 };
+
+              void main()
+              {
+                 int old_mode;
+
+                 if (fg_testmode(4,1) == 0) {
+                    printf("This program requires a 320 ");
+                    printf("x 200 CGA graphics mode.\n");
+                    exit(1);
+                    }
+
+                 old_mode = fg_getmode();
+                 fg_setmode(4);
+                 fg_setcolor(1);
+                 fg_fillpage();
+                 fg_setclip(0,15,0,199);
+
+                 fg_move(10,10);
+                 fg_drwimage(arrow,3,7);
+                 fg_move(10,20);
+                 fg_clpimage(arrow,3,7);
+                 fg_move(8,30);
+                 fg_revimage(arrow,3,7);
+                 fg_move(8,40);
+                 fg_flpimage(arrow,3,7);
+                 fg_move(8,50);
+                 fg_putimage(arrow,3,7);
+                 fg_waitkey();
+
+                 fg_setmode(old_mode);
+                 fg_reset();
+              }
+
+
+     Example 10-9 is the same as example 10-8, but it uses the low resolution
+EGA graphics mode (mode 13).  If we changed the mode number specified in the
+calls to fg_testmode and fg_setmode, the program also would run in any 16-
+color graphics mode.  In these modes, we store two pixels per byte in the bit
+map array, so we need a 35-byte array (7 rows by 5 columns) to store the
+image.  Here is the bit map's hexadecimal equivalent for the arrow image in
+mode 13, followed by the program to display it.
+
+                            00   00   00   F0   00
+
+                            00   00   00   FF   00
+
+                            FF   FF   FF   FF   F0
+
+206   Fastgraph User's Guide
+                            FF   FF   FF   FF   FF
+
+                            FF   FF   FF   FF   F0
+
+                            00   00   00   FF   00
+
+                            00   00   00   F0   00
+
+
+                                Example 10-9.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                char arrow[] = {
+                   0x00,0x00,0x00,0xF0,0x00,
+                   0x00,0x00,0x00,0xFF,0x00,
+                   0xFF,0xFF,0xFF,0xFF,0xF0,
+                   0xFF,0xFF,0xFF,0xFF,0xFF,
+                   0xFF,0xFF,0xFF,0xFF,0xF0,
+                   0x00,0x00,0x00,0xFF,0x00,
+                   0x00,0x00,0x00,0xF0,0x00
+                   };
+
+                void main()
+                {
+                   int old_mode;
+
+                   if (fg_testmode(13,1) == 0) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 EGA graphics mode.\n");
+                      exit(1);
+                      }
+
+                   old_mode = fg_getmode();
+                   fg_setmode(13);
+                   fg_setcolor(1);
+                   fg_fillpage();
+                   fg_setclip(0,15,0,199);
+
+                   fg_move(10,10);
+                   fg_drwimage(arrow,5,7);
+                   fg_move(10,20);
+                   fg_clpimage(arrow,5,7);
+                   fg_move(8,30);
+                   fg_revimage(arrow,5,7);
+                   fg_move(8,40);
+                   fg_flpimage(arrow,5,7);
+                   fg_move(8,50);
+                   fg_putimage(arrow,5,7);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+                                          Chapter 10:  Bit-Mapped Images   207
+
+
+Retrieving Images
+
+     Sometimes it is necessary to retrieve an image from video memory and
+store it in one or more arrays as a bit-mapped image.  Fastgraph includes two
+routines, fg_getmap and fg_getimage, for this purpose.  The fg_getmap routine
+retrieves pixels of the current color index and stores them in the mode-
+independent bit map format used by fg_drawmap.  The fg_getimage routine
+retrieves an image and stores it in the mode-specific bit map format used by
+fg_drwimage, fg_clpimage, fg_revimage, fg_flpimage, and fg_putimage.  The
+arguments to fg_getmap and fg_getimage are respectively analogous to those of
+fg_drawmap and fg_drwimage:  the first is an array (passed by reference) to
+receive the bit map, the second is the width of the bit map in bytes, and the
+last is the height of the bit map in pixel rows.  With either routine, the
+graphics cursor position on the active video page defines the lower left
+corner of the image to retrieve.
+
+     If we want to use the fg_getmap routine to retrieve an image containing
+more than one color, we must call the routine once per color.  In this case
+we'll usually want to pass different bit map arrays to fg_getmap (or perhaps
+different offsets into the same array).  This might seem unusual at first,
+but it parallels the behavior of the fg_drawmap routine.  That is, to display
+a multicolor image using fg_drawmap, we must call it once for each color in
+the image.
+
+     Example 10-10 demonstrates a typical use of the fg_getmap routine.  The
+program displays the word "text" in the upper left corner of the screen using
+a 320 by 200 graphics mode.  It uses fg_getmap to retrieve the word as an
+image and then displays it in a new position with the fg_drawmap routine.
+Let's look at the program now, and afterward we'll more closely examine the
+screen coordinates and the structure of the bit map array.
+
+                                Example 10-10.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                void main()
+                {
+                   char bitmap[32];
+                   int old_mode, new_mode;
+
+                   new_mode = fg_bestmode(320,200,1);
+                   if (new_mode < 0 || new_mode == 12) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 color graphics mode.\n");
+                      exit(1);
+                      }
+
+                   old_mode = fg_getmode();
+                   fg_setmode(new_mode);
+
+                   fg_setcolor(9);
+
+208   Fastgraph User's Guide
+
+                   fg_text("text",4);
+                   fg_waitkey();
+
+                   fg_move(0,7);
+                   fg_getmap(bitmap,4,8);
+                   fg_move(4,15);
+                   fg_drawmap(bitmap,4,8);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+     In all 320 by 200 graphics video modes, individual characters are 8
+pixels wide and 8 pixels high.  This means the lower left corner of the (0,0)
+character cell is referenced by the screen coordinates (0,7).  Hence, these
+are the coordinates of the first call to fg_move.  The image retrieved in
+example 10-10 is four characters long (32 pixels wide), so we need a bit map
+array capable of holding 8 rows of 32 pixels (4 bytes) each.  Our bit map
+array is therefore a 32-byte array, logically structured to have 4 columns
+and 8 rows.  These values are the width and height arguments passed to
+fg_getmap and fg_drawmap.
+
+     After it retrieves the image, example 10-10 displays it one line below
+and one-half character cell (four pixels) to the right of its original
+position.  In other words, the program displays the image four pixels to the
+right of the (1,0) character cell.  The lower left corner of that cell is
+referenced by the screen coordinates (0,15), so the image should appear at
+the position (4,15).  These are the coordinates of the second call to
+fg_move.
+
+     Example 10-11 illustrates the use of the fg_getmap and fg_drawmap
+routines to retrieve and display a two-color image.  This example is similar
+to example 10-10, but this program first draws a rectangle in the upper left
+corner of the screen and then displays the word "text" on top of the
+rectangle in a different color.  Each character in a 320 by 200 graphics
+video mode is 8 pixels wide and 8 pixels high, so the rectangle must be 32
+pixels wide (4 characters times 8 pixels per character) and 8 pixels high.
+The image to retrieve will be the same size as the rectangle.
+
+     The image retrieved in example 10-10 required a 32-byte array, logically
+structured to have 4 columns and 8 rows.  Example 10-11 will retrieve an
+image of the same structure, but the image contains two colors instead of
+just one.  This means we need two 32-byte arrays, one for each color, to hold
+the image.  We could instead use a single 64-byte array and pass an offset
+into that array (specifically, &bitmap[32]) for processing the second color.
+
+                                Example 10-11.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                void main()
+                {
+                                          Chapter 10:  Bit-Mapped Images   209
+
+                   char bitmap1[32], bitmap2[32];
+                   int old_mode, new_mode;
+
+                   new_mode = fg_bestmode(320,200,1);
+                   if (new_mode < 0 || new_mode == 12) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 color graphics mode.\n");
+                      exit(1);
+                      }
+
+                   old_mode = fg_getmode();
+                   fg_setmode(new_mode);
+
+                   fg_setcolor(7);
+                   fg_rect(0,31,0,7);
+                   fg_setcolor(9);
+                   fg_text("text",4);
+                   fg_waitkey();
+
+                   fg_move(0,7);
+                   fg_setcolor(7);
+                   fg_getmap(bitmap1,4,8);
+                   fg_setcolor(9);
+                   fg_getmap(bitmap2,4,8);
+
+                   fg_move(4,15);
+                   fg_setcolor(7);
+                   fg_drawmap(bitmap1,4,8);
+                   fg_setcolor(9);
+                   fg_drawmap(bitmap2,4,8);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+
+     Example 10-12 is similar to example 10-11, but it uses fg_getimage and
+fg_drwimage instead of fg_getmap and fg_drawmap to retrieve and display the
+image.  That is, it uses the mode-specific rather than the mode-independent
+image retrieval and display routines.  When using the mode-specific routines,
+the size of the bit map needed to hold the image depends on the video mode.
+For programs that run in only one video mode, bit map widths are constant,
+but when a program must run in several video modes, the width is variable.
+The Fastgraph routine fg_imagesiz computes the number of bytes required to
+store a mode-specific bit-mapped image of specified dimensions.  Its two
+integer arguments specify the image width and height in pixels.
+
+     The program computes the image width in bytes by passing a height of 1
+to fg_imagesiz.  The size of the bit map array in example 10-12 is 256 bytes,
+the size required in 256-color graphics modes (32 bytes times 8 bytes).
+Other video modes require less storage, so in these modes only a portion of
+the bit map array will actually be used.  The image width is then used in the
+calls to both fg_getimage and fg_drwimage.
+210   Fastgraph User's Guide
+                                Example 10-12.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                void main()
+                {
+                   char bitmap[256];
+                   int old_mode, new_mode;
+                   int width;
+
+                   new_mode = fg_bestmode(320,200,1);
+                   if (new_mode < 0 || new_mode == 12) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 color graphics mode.\n");
+                      exit(1);
+                      }
+
+                   old_mode = fg_getmode();
+                   fg_setmode(new_mode);
+                   width = (int)fg_imagesiz(32,1);
+
+                   fg_setcolor(7);
+                   fg_rect(0,31,0,7);
+                   fg_setcolor(9);
+                   fg_text("text",4);
+                   fg_waitkey();
+
+                   fg_move(0,7);
+                   fg_getimage(bitmap,width,8);
+                   fg_move(4,15);
+                   fg_drwimage(bitmap,width,8);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+While this example used an array to store the image, it's usually preferable
+to allocate dynamic memory for this purpose.  We could have done this in
+example 10-12 by calling fg_imagesiz with arguments of 32 (width) and 8
+(height).  The routine's return value would then tell us the number of bytes
+we would need to allocate.
+
+     We also can use the fg_getimage routine to retrieve images in text video
+modes.  In text modes, however, there are a few differences we must consider
+when using fg_getimage.  First, the text cursor position, not the graphics
+cursor position, specifies the lower left corner of the image.  Hence, we
+must use the fg_locate routine instead of fg_move to define the image
+location.  Second, the image width is always twice the number of characters
+per image row (that is, for each character we have a character byte and an
+attribute byte).  The fg_getmap routine has no effect when used in a text
+video mode.
+                                          Chapter 10:  Bit-Mapped Images   211
+     Example 10-13 shows a simple use of fg_getimage in text modes.  This
+program is similar to example 10-12, but it runs in an 80-column text mode
+rather than a 320 by 200 graphics mode.  As before, the program will retrieve
+the four characters "text" as an image from the upper left corner of the
+screen and then display it in a different location.  Because the image
+consists of four characters in one row, the image width is 8 bytes and the
+image height is 1.
+
+                                Example 10-13.
+
+                   #include <fastgraf.h>
+                   #include <stdio.h>
+                   #include <stdlib.h>
+                   void main(void);
+
+                   void main()
+                   {
+                      int old_mode;
+                      char image[8];
+
+                      old_mode = fg_getmode();
+
+                      if (fg_testmode(3,1))
+                         fg_setmode(3);
+                      else if (fg_testmode(7,1))
+                         fg_setmode(7);
+                      else {
+                         printf("This program requires\n");
+                         printf("an 80-column display.\n");
+                         exit(1);
+                         }
+
+                      fg_cursor(0);
+
+                      fg_setattr(9,7,0);
+                      fg_text("text",4);
+                      fg_waitkey();
+
+                      fg_locate(0,0);
+                      fg_getimage(image,8,1);
+                      fg_locate(1,1);
+                      fg_drwimage(image,8,1);
+                      fg_waitkey();
+
+                      fg_setmode(old_mode);
+                      fg_reset();
+                   }
+
+
+     Finally, here's a tip that's worth remembering.  In the native EGA and
+VGA graphics modes (13 to 18) and the 16-color SVGA graphics modes (28 and
+29), the routines for displaying and retrieving mode-specific bit maps can be
+anywhere from 10% to 20% faster if the current graphics x position is an even
+number.  This is because these routines must perform additional bit map
+alignment when displaying or retrieving images starting at odd-numbered
+pixels.
+212   Fastgraph User's Guide
+
+Pixel Run Maps
+
+     The bit maps used with the fg_drawmap, fg_drwimage, and related routines
+can consume array space quite rapidly.  This is especially true if the image
+is large or contains many colors.  For example, a mode-independent bit-mapped
+image that occupies the entire screen in a 320 by 200 graphics mode requires
+8,000 bytes of space per color.  Fastgraph provides another mode-independent
+image format called pixel run maps, which are more efficient in terms of
+space.  Pixel run maps are structured just like the pixel run files
+introduced in the previous chapter, but the image resides in an array instead
+of a file.
+
+     Let's return to our familiar triangle example and show how we could use
+a pixel run map to display it.
+
+                              . . . . * . . . .
+                              . . . * x * . . .
+                              . . * x x x * . .
+                              . * x x x x x * .
+                              * * * * * * * * *
+
+As before, the pixels indicated by an asterisk (*) are the triangle's
+perimeter, while those indicated by an x represent its interior points.  The
+pixels shown as periods (.) are not part of the triangle itself, but they are
+part of the pixel run map.
+
+     Using the standard pixel run format introduced in the previous chapter,
+we see it takes 16 pixel runs to store our triangle image as a pixel run map.
+If we want to display the perimeter pixels in color 1, the interior pixels in
+color 2, and the filler area in color 7, the pixel run map would contain 16
+sets of (color,count) pairs:  (1,9), (7,1), (1,1), (2,5), (1,1), (7,3),
+(1,1), (2,3), (1,1), (7,5), (1,1), (2,1), (1,1), (7,7), (1,1), and (7,4).
+Unlike the bit-mapped image formats already discussed, pixel run maps have no
+provision for transparent colors.
+
+     The Fastgraph routine fg_display displays an image stored as a pixel run
+map.  The fg_display routine expects three arguments.  The first is an array
+containing the pixel runs (passed by reference), the second is the number of
+pixel runs in the array, and the third is the width in pixels of the image.
+As with the other image display routines, the fg_display routine displays the
+image such that its lower left corner is at the graphics cursor position on
+the active video page.  Again, the format of the pixel run map is the same as
+that of a standard pixel run file.  In addition, any display patterns defined
+by fg_pattern also apply to fg_display.
+
+     Example 10-14 uses the fg_display routine to display the triangle as a
+pixel run map in a 320 by 200 graphics mode.  The program displays the
+triangle against a background of color 7, so the selection of color 7 for the
+filler area was important.  If some other color were chosen, the filler area
+would not blend in with the background.
+
+                                Example 10-14.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                                          Chapter 10:  Bit-Mapped Images   213
+
+                void main(void);
+
+                char triangle[] = {
+                   1,9, 7,1, 1,1, 2,5, 1,1, 7,3, 1,1, 2,3,
+                   1,1, 7,5, 1,1, 2,1, 1,1, 7,7, 1,1, 7,4
+                   };
+
+                void main()
+                {
+                   int old_mode, new_mode;
+
+                   new_mode = fg_bestmode(320,200,1);
+                   if (new_mode < 0 || new_mode == 12) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 color graphics mode.\n");
+                      exit(1);
+                      }
+
+                   old_mode = fg_getmode();
+                   fg_setmode(new_mode);
+
+                   fg_setcolor(7);
+                   fg_rect(0,319,0,199);
+
+                   fg_move(156,101);
+                   fg_display(triangle,16,9);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+     As you might guess, Fastgraph also offers a packed pixel run map image
+format analogous to the packed pixel run file format introduced in the
+previous chapter.  Example 10-15 is the same as example 10-14, but it uses
+fg_displayp rather than fg_display to display the image.  Note the use of
+hexadecimal numbers for defining the packed color values, which of course is
+not necessary but certainly easier to read than expressing the quantities as
+decimal numbers.  As with fg_display, any display patterns defined by
+fg_pattern also apply to fg_displayp.
+
+                                Example 10-15.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                char triangle[] = {
+                   0x17,9,1, 0x12,1,5, 0x17,1,3, 0x12,1,3,
+                   0x17,1,5, 0x12,1,1, 0x17,1,7, 0x17,1,4
+                   };
+
+                void main()
+                {
+                   int old_mode, new_mode;
+214   Fastgraph User's Guide
+
+                   new_mode = fg_bestmode(320,200,1);
+                   if (new_mode < 0 || new_mode == 12) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 color graphics mode.\n");
+                      exit(1);
+                      }
+
+                   old_mode = fg_getmode();
+                   fg_setmode(new_mode);
+
+                   fg_setcolor(7);
+                   fg_rect(0,319,0,199);
+
+                   fg_move(156,101);
+                   fg_displayp(triangle,16,9);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+
+     Both the fg_display and fg_displayp routines require the pixel run image
+to be stored in an array.  In examples 10-14 and 10-15, the image is defined
+within the program itself.  We can also use these routines in place of
+fg_dispfile when the image is stored in a file if we first read the file
+contents into an array.  Example 10-16 demonstrates this procedure.  The
+program displays two identical images stored in files, one in standard pixel
+run format and the other in packed pixel run format.
+
+     The first image, in standard pixel run format, is in the file CORAL.SPR.
+Note the program must open the file for reading in binary mode ("rb" in the
+call to fopen).  The program reads the file's entire contents into the
+pixel_runs array, whose size must be at least as large as the file size.
+Because the image is stored in standard pixel run format, the number of pixel
+runs is one-half the file size.  The program then uses the fg_move routine to
+establish the lower left corner of the screen as the graphics cursor position
+and then calls fg_display to display the image.  The image fills the entire
+screen, so its width is 320 pixels.
+
+     After waiting for a keystroke, the program similarly displays the second
+image.  This image is in the file CORAL.PPR and is stored in packed pixel run
+format.  Because the image is packed, the number of pixel runs is two-thirds
+the file size.  The program then clears the previous image from the screen
+and calls fg_displayp to display the image.  After another keystroke, the
+program restores the original video mode and screen attributes and returns to
+DOS.
+
+                                Example 10-16.
+
+             #include <fastgraf.h>
+             #include <io.h>
+             #include <stdio.h>
+             #include <stdlib.h>
+             void main(void);
+
+                                          Chapter 10:  Bit-Mapped Images   215
+
+             char pixel_runs[20000];
+
+             void main()
+             {
+                long filelength();
+                FILE *stream;
+                int file_size, run_count;
+                int old_mode, new_mode;
+
+                new_mode = fg_bestmode(320,200,1);
+                if (new_mode < 0 || new_mode == 12) {
+                   printf("This program requires a 320 ");
+                   printf("x 200 color graphics mode.\n");
+                   exit(1);
+                   }
+
+                old_mode = fg_getmode();
+                fg_setmode(new_mode);
+
+                stream = fopen("CORAL.SPR","rb");
+                file_size = (int)(filelength(fileno(stream)));
+                fread(pixel_runs,sizeof(char),file_size,stream);
+                fclose(stream);
+                run_count = file_size / 2;
+                fg_move(0,199);
+                fg_display(pixel_runs,run_count,320);
+                fg_waitkey();
+
+                stream = fopen("CORAL.PPR","rb");
+                file_size = (int)(filelength(fileno(stream)));
+                fread(pixel_runs,sizeof(char),file_size,stream);
+                fclose(stream);
+                run_count = file_size / 3 * 2;
+                fg_erase();
+                fg_displayp(pixel_runs,run_count,320);
+                fg_waitkey();
+
+                fg_setmode(old_mode);
+                fg_reset();
+             }
+
+
+Masking Maps
+
+     It is not possible to include color 0 pixels in an image displayed with
+the fg_drwimage, fg_clpimage, fg_revimage, or fg_flpimage routines.  This is
+because these routines consider color 0 pixels to be transparent, which means
+such pixels do not affect the corresponding pixels in video memory.  There
+are times, however, when you will want color 0 pixels to be destructive, or
+replace the video memory contents.
+
+     Consider again the arrow image of example 10-8.  In that example, we
+displayed a white (color 3) arrow against a black (color 0) background in the
+standard CGA four-color graphics mode.  Suppose, though, that we want to do
+just the opposite -- display a black (color 0) arrow against a white (color
+3) background.  We could of course use fg_putimage, fg_drawmap, or one of the
+216   Fastgraph User's Guide
+
+routines for displaying pixel run maps, but these methods do not support
+clipping or reversing an image.  There are, however, four Fastgraph routines
+designed just for this purpose.  These routines are fg_drawmask, fg_clipmask,
+fg_revmask, and fg_flipmask.
+
+     Each of these routines uses a data structure called a masking map.  A
+masking map is similar in structure to a pixel run map, but it does not
+include any information about colors.  Instead, it consists of a series of
+pixel runs that alternate between protected and unprotected pixels.  An
+example might best clarify this.
+
+     Once again, here is the arrow image of example 10-8.
+
+                             . . . . . . * . . .
+                             . . . . . . * * . .
+                             * * * * * * * * * .
+                             * * * * * * * * * *
+                             * * * * * * * * * .
+                             . . . . . . * * . .
+                             . . . . . . * . . .
+
+This time, though, we want the arrow to appear in color 0.  Put another way,
+we need the "period" pixels (.) to protect video memory, while we want the
+"asterisk" pixels (*) to zero video memory.  Looking at this problem from the
+perspective of a pixel run map, we have an alternating series of "protect"
+and "zero" runs.  We don't need any information about pixel colors, just
+whether to protect or to zero video memory.
+
+     This is precisely the structure of a masking map.  Starting from the
+lower left corner of the image and proceeding to the right, wrapping up to
+the next row when needed, we could represent this image as a masking map with
+6 protected pixels, 1 zeroed pixel, 9 protected pixels, 2 zeroed pixels, and
+so on.  In general, the structure of a masking map is as follows.
+
+                      [1]   length of 1st protect run
+
+                      [2]   length of 1st  zero   run
+
+                      [3]   length of 2nd protect run
+
+                      [4]   length of 2nd  zero   run
+                                        .
+                                        .
+                                        .
+                                        .
+                                        .
+                    [n-2]   length of final protect run
+
+                    [n-1]   length of final  zero   run
+
+     Looking at this diagram, we see that the even-numbered array elements
+hold the length of the "protect" runs, and the odd-numbered elements hold the
+length of the "zero" runs.  If you need the first run to be a "zero" run,
+just include a "protect" run of length zero as the first element of the
+array.  If the final run is a "protect" run, you do not need to include a
+                                          Chapter 10:  Bit-Mapped Images   217
+
+zero-length "zero" run at the end of the array.  Finally, if either type of
+run exceeds 255 pixels, you'll need to split this into two or more pixel
+runs.  In this case, be sure to include a zero-length run of the other type
+between the two array elements.
+
+     Example 10-17 illustrates the use of a masking map through the
+fg_drawmask, fg_clipmask, fg_revmask, and fg_flipmask routines in the
+standard CGA four-color graphics mode (mode 4) to draw a black (color 0)
+arrow against a white background.  These four routines are respectively
+analogous to the fg_drwimage, fg_clpimage, fg_revimage, and fg_flpimage
+routines, but they use masking maps rather than bit maps.  The first argument
+of each routine is the masking map array (passed by reference), the second
+argument is the number of runs (that is, the number of elements) in the
+masking map array, and the third argument is the width in pixels of the
+image.
+
+                                Example 10-17.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                char arrow[] = {6,1,9,2,2,9,1,19,7,2,8,1};
+
+                void main()
+                {
+                   int old_mode;
+
+                   if (fg_testmode(4,1) == 0) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 CGA graphics mode.\n");
+                      exit(1);
+                      }
+
+                   old_mode = fg_getmode();
+                   fg_setmode(4);
+                   fg_setclip(0,15,0,199);
+
+                   fg_setcolor(3);
+                   fg_rect(0,319,0,199);
+
+                   fg_move(10,10);
+                   fg_drawmask(arrow,12,10);
+                   fg_move(10,20);
+                   fg_clipmask(arrow,12,10);
+                   fg_move(10,30);
+                   fg_revmask(arrow,12,10);
+                   fg_move(10,40);
+                   fg_flipmask(arrow,12,10);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+218   Fastgraph User's Guide
+     One of the more useful features of masking maps is the ability to clear
+a portion of video memory before placing an image there.  This technique
+provides an efficient, simple way to include color 0 pixels in an image.  It
+is especially effective when displaying large or dithered images because the
+masking map is typically much smaller than the bit map required by fg_drawmap
+or its related routines.  Example 10-18 illustrates this process in the
+standard CGA four-color graphics mode (mode 4) by displaying our arrow image
+against a colored background.  In this example, the arrow has a white (color
+3) perimeter and a black (color 0) interior.
+
+     The program displays the arrow in two steps.  It first uses fg_drawmask
+to clear the video memory where the arrow will be displayed.  It then draws
+the arrow's perimeter using the fg_drwimage routine.  The interior pixels in
+the perimeter bit map are transparent, but since we just zeroed that video
+memory, they appear in color 0.  Note we could improve this example by
+creating a smaller masking map that only applies to the rectangle inscribing
+the arrow's interior.  That is, we don't need to zero the video memory under
+the arrow's perimeter because we will immediately display other pixels there.
+
+                                Example 10-18.
+
+              #include <fastgraf.h>
+              #include <stdio.h>
+              #include <stdlib.h>
+              void main(void);
+
+              char arrow_white[] = {
+                 0x00,0x0C,0x00, 0x00,0x0F,0x00, 0xFF,0xFC,0xC0,
+                 0xC0,0x00,0x30, 0xFF,0xFC,0xC0, 0x00,0x0F,0x00,
+                 0x00,0x0C,0x00
+                 };
+              char arrow_black[] = {6,1,9,2,2,9,1,19,7,2,8,1};
+
+              void main()
+              {
+                 int old_mode;
+
+                 if (fg_testmode(4,1) == 0) {
+                    printf("This program requires a 320 ");
+                    printf("x 200 CGA graphics mode.\n");
+                    exit(1);
+                    }
+
+                 old_mode = fg_getmode();
+                 fg_setmode(4);
+
+                 fg_setcolor(2);
+                 fg_rect(0,319,0,199);
+
+                 fg_move(10,10);
+                 fg_drawmask(arrow_black,12,10);
+                 fg_drwimage(arrow_white,3,7);
+                 fg_waitkey();
+
+                 fg_setmode(old_mode);
+                 fg_reset();
+              }
+                                          Chapter 10:  Bit-Mapped Images   219
+
+Summary of Bit-Mapped Image Display Routines
+
+     This section summarizes the functional descriptions of the Fastgraph
+routines presented in this chapter.  More detailed information about these
+routines, including their arguments and return values, may be found in the
+Fastgraph Reference Manual.
+
+     For all bit-mapped image routines, images are displayed or retrieved so
+their lower left corner is at the graphics cursor position (or text cursor
+position for those routines that also work in text video modes).
+
+     FG_CLIPMASK displays a clipped image stored as a masking map.  This
+routine has no effect when used in a text video mode.
+
+     FG_CLPIMAGE displays a clipped image stored as a mode-specific bit map.
+Color 0 pixels are considered transparent.  This routine has no effect when
+used in a text video mode.
+
+     FG_DISPLAY displays an image stored in Fastgraph's standard pixel run
+format, where the image resides in an array.  This routine has no effect when
+used in a text video mode.
+
+     FG_DISPLAYP displays an image stored in Fastgraph's packed pixel run
+format, where the image resides in an array.  This routine has no effect when
+used in a text video mode.
+
+     FG_DRAWMAP displays an image stored as a mode-independent bit map.  This
+routine has no effect when used in a text video mode.
+
+     FG_DRAWMASK displays an image stored as a masking map.  This routine has
+no effect when used in a text video mode.
+
+     FG_DRWIMAGE displays an image stored as a mode-specific bit map.  Color
+0 pixels are considered transparent.
+
+     FG_FLIPMASK displays a reversed clipped image stored as a masking map.
+This routine has no effect when used in a text video mode.
+
+     FG_FLPIMAGE displays a reversed clipped image stored as a mode-specific
+bit map.  Color 0 pixels are considered transparent.  This routine has no
+effect when used in a text video mode.
+
+     FG_GETIMAGE retrieves an image as a mode-specific bit map.
+
+     FG_GETMAP retrieves an image as a mode-independent bit map.  This
+routine has no effect when used in a text video mode.
+
+     FG_IMAGESIZ determines the number of bytes required to store a mode-
+specific bit-mapped image of specified dimensions.
+
+     FG_PUTIMAGE displays an image stored as a mode-specific bit map.  No
+support is provided for transparent pixels.
+220   Fastgraph User's Guide
+
+     FG_REVIMAGE displays a reversed image stored as a mode-specific bit map.
+Color 0 pixels are considered transparent.  This routine has no effect when
+used in a text video mode.
+
+     FG_REVMASK displays a reversed image stored as a masking map.  This
+routine has no effect when used in a text video mode.

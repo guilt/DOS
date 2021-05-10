@@ -1,0 +1,1430 @@
+Chapter 14
+
+
+
+
+
+Input Device Support
+260   Fastgraph User's Guide
+
+Overview
+
+     The selection of application input devices is an important part of
+designing a program for the IBM PC and PS/2 family of systems.  The keyboard
+and mouse are the most popular, and in fact more and more applications,
+especially those that use a graphical interface, actually require a mouse to
+use the product.  Another input device, primarily used in entertainment
+software, is the joystick.  Although not as popular as the mouse, joysticks
+nevertheless can simplify the use of certain applications.  Fastgraph
+provides support for these three types of input devices, and this chapter
+will discuss this in detail.
+
+
+Keyboard Support
+
+     Fastgraph's keyboard support includes routines to read keystrokes, check
+the state of certain keys, and set the state of these keys.  In addition,
+Fastgraph provides a low-level keyboard handler that replaces the BIOS
+keyboard handler to increase keyboard responsiveness.  These routines are
+independent of the other parts of Fastgraph and thus do not require that you
+call fg_setmode.  All keyboard-related routines work in text and graphics
+video modes.
+
+     The IBM PC and PS/2 keyboards produce two types of character codes --
+standard codes and extended codes (extended codes are sometimes called
+auxiliary codes).  The standard codes correspond to the 128 characters in the
+ASCII character set.  In general, pressing keys on the main part of the
+keyboard, or on the numeric keypad with NumLock turned on, will generate a
+standard code.  The 128 extended codes are specific to the IBM PC and PS/2
+keyboards.  Some common keystrokes that produce extended codes are keys on
+the numeric keypad with NumLock turned off, the function keys, or pressing
+Alt with another key.  The following tables show the standard and extended
+keyboard codes.
+
+                       Table of standard keyboard codes
+
+          key     code   key     code   key     code   key     code
+
+          (none)    0    space    32    @        64    `        96
+          Ctrl+A    1    !        33    A        65    a        97
+          Ctrl+B    2    "        34    B        66    b        98
+          Ctrl+C    3    #        35    C        67    c        99
+          Ctrl+D    4    $        36    D        68    d       100
+          Ctrl+E    5    %        37    E        69    e       101
+          Ctrl+F    6    &        38    F        70    f       102
+          Ctrl+G    7    '        39    G        71    g       103
+          Ctrl+H    8    (        40    H        72    h       104
+          Ctrl+I    9    )        41    I        73    i       105
+          Ctrl+J   10    *        42    J        74    j       106
+          Ctrl+K   11    +        43    K        75    k       107
+          Ctrl+L   12    ,        44    L        76    l       108
+          Ctrl+M   13    -        45    M        77    m       109
+          Ctrl+N   14    .        46    N        78    n       110
+          Ctrl+O   15    /        47    O        79    o       111
+          Ctrl+P   16    0        48    P        80    p       112
+          Ctrl+Q   17    1        49    Q        81    q       113
+                                       Chapter 14:  Input Device Support   261
+          Ctrl+R   18    2        50    R        82    r       114
+          Ctrl+S   19    3        51    S        83    s       115
+          Ctrl+T   20    4        52    T        84    t       116
+          Ctrl+U   21    5        53    U        85    u       117
+          Ctrl+V   22    6        54    V        86    v       118
+          Ctrl+W   23    7        55    W        87    w       119
+          Ctrl+X   24    8        56    X        88    x       120
+          Ctrl+Y   25    9        57    Y        89    y       121
+          Ctrl+Z   26    :        58    Z        90    z       122
+          Ctrl+[   27    ;        59    [        91    {       123
+          Ctrl+\   28    <        60    \        92    |       124
+          Ctrl+]   29    =        61    ]        93    }       125
+          Ctrl+^   30    >        62    ^        94    ~       126
+          Ctrl+-   31    ?        63    _        95    Ctrl+BS 127
+
+
+                       Table of extended keyboard codes
+
+              code        key
+
+               3          Ctrl+@
+              15          Shift+Tab (back tab)
+              16-25       Alt+Q to Alt+P (top row of letters)
+              30-38       Alt+A to Alt+L (middle row of letters)
+              44-50       Alt+Z to Alt+M (bottom row of letters)
+              59-68       F1 to F10
+              71          Home
+              72          up arrow
+              73          PgUp
+              75          left arrow
+              77          right arrow
+              79          End
+              80          down arrow
+              81          PgDn
+              82          Ins
+              83          Del
+              84-93       Shift+F1 to Shift+F10
+              94-103      Ctrl+F1 to Ctrl+F10
+              104-113     Alt+F1 to Alt+F10
+              114         Ctrl+PrtSc
+              115         Ctrl+left arrow
+              116         Ctrl+right arrow
+              117         Ctrl+End
+              118         Ctrl+PgDn
+              119         Ctrl+Home
+              120-131     Alt+1 to Alt+= (top row of keys)
+              132         Ctrl+PgUp
+
+In addition, four keys generate the same standard codes as other control key
+combinations.  These keys are:
+
+                         key       same as   code
+
+                         Backspace Ctrl+H      8
+                         Tab       Ctrl+I      9
+                         Enter     Ctrl+M     13                         Escape    Ctrl+[     27
+262   Fastgraph User's Guide
+
+     The CapsLock, NumLock, and ScrollLock keys do not generate a standard or
+extended code when pressed.  Instead, they toggle between off and on states.
+
+
+Reading Keystrokes
+
+     When you press a key or key combination, the standard or extended code
+representing that keystroke is stored in the ROM BIOS keyboard buffer.  This
+buffer can hold up to 16 keystrokes and thus provides a type-ahead
+capability.  Fastgraph includes three routines for reading keystroke
+information from the keyboard buffer.  The fg_getkey routine reads the next
+item in the keyboard buffer if one is available (that is, if a key has been
+pressed).  If the keyboard buffer is empty (meaning no key has been pressed),
+fg_getkey waits for a keystroke and then reports information about it.
+Another routine, fg_intkey, reads the next keystroke from the keyboard buffer
+if one is available.  If the keyboard buffer is empty, fg_intkey immediately
+returns and reports this condition.  The fg_intkey routine is useful when a
+program must continue performing a task until a key is pressed.  We've
+already seen the third routine, fg_waitkey, which flushes the keyboard buffer
+and then waits for another keystroke.  Unlike fg_getkey and fg_intkey,
+fg_waitkey does not return any keystroke information.  It is most useful in
+"press any key to continue" situations.
+
+     Both fg_getkey and fg_intkey require two one-byte arguments passed by
+reference.  If the keystroke is represented by a standard keyboard code,
+fg_getkey and fg_intkey return its code in the first argument and set the
+second argument to zero.  Similarly, if the keystroke generates an extended
+code, the routines return its code in the second argument and set the first
+argument to zero.  If the fg_intkey routine detects an empty keyboard buffer,
+it sets both arguments to zero.
+
+     Example 14-1 is a simple program that uses the fg_getkey routine.  It
+solicits keystrokes and then displays the two values returned by fg_getkey,
+one of which will always be zero.  The variable key receives the key's
+standard code, while aux receives its extended code.  Note that fg_getkey is
+the only Fastgraph routine in the program; this can be done because the
+keyboard support routines are logically independent from the rest of
+Fastgraph.  The program returns to DOS when you press the Escape key.
+
+                                Example 14-1.
+
+               #include <fastgraf.h>
+               #include <stdio.h>
+               void main(void);
+
+               #define ESC 27
+
+               void main()
+               {
+                  unsigned char key, aux;
+
+                  do {
+                     fg_getkey(&key,&aux);
+                     printf("key = %3d  aux = %3d\n",key,aux);
+                     }
+
+                                       Chapter 14:  Input Device Support   263
+
+                  while (key != ESC);
+               }
+
+
+     Example 14-2 reads keystrokes using the fg_intkey routine at half-second
+intervals (18 fg_waitfor units equals one second).  As in the previous
+example, the program displays the standard and extended codes for each
+keystroke.  However, example 14-2 will continuously execute the while loop
+even if no keystrokes are available, in which case the key and aux values
+will both be zero.  The program returns to DOS when you press the Escape key.
+
+                                Example 14-2.
+
+               #include <fastgraf.h>
+               #include <stdio.h>
+               void main(void);
+
+               #define ESC 27
+
+               void main()
+               {
+                  unsigned char key, aux;
+
+                  do {
+                     fg_waitfor(9);
+                     fg_intkey(&key,&aux);
+                     printf("key = %3d  aux = %3d\n",key,aux);
+                     }
+                  while (key != ESC);
+               }
+
+     When you use fg_intkey in a "tight" loop that does little else, you
+should force a small delay within the loop by calling fg_waitfor as in
+example 14-2.  Typically a delay of one or two clock ticks is enough.
+Without this delay, the BIOS may not be able to handle all keyboard activity,
+and thus some keystrokes may not be available to your program.
+
+
+Testing and Setting Key States
+
+     As mentioned earlier, the CapsLock, NumLock, and ScrollLock keys do not
+generate a standard or extended code when pressed but instead toggle between
+off and on states.  Fastgraph includes routines for checking the state of
+these keys, as well as setting the state of the CapsLock and NumLock keys.
+
+     The Fastgraph routines fg_capslock, fg_numlock, and fg_scrlock
+respectively read the state of the CapsLock, NumLock, and ScrollLock keys.
+Each routine has no arguments and returns the key state as its function
+value.  A return value of 0 means the associated key is in the off state,
+while 1 indicates the key is in the on state.  If the keyboard does not have
+a ScrollLock key, fg_scrlock considers the key off and returns a value of
+zero.
+
+     Example 14-3 is a simple program that uses the fg_capslock, fg_numlock,
+and fg_scrlock routines to print messages describing the current state of
+these three keys.
+264   Fastgraph User's Guide
+
+
+                                Example 14-3.
+
+                    #include <fastgraf.h>
+                    #include <stdio.h>
+                    void main(void);
+
+                    void main()
+                    {
+                       if (fg_capslock())
+                          printf("CapsLock is on.\n");
+                       else
+                          printf("CapsLock is off.\n");
+
+                       if (fg_numlock())
+                          printf("NumLock is on.\n");
+                       else
+                          printf("NumLock is off.\n");
+
+                       if (fg_scrlock())
+                          printf("ScrollLock is on.\n");
+                       else
+                          printf("ScrollLock is off.\n");
+                    }
+
+     You also can set the state of the CapsLock and NumLock keys within a
+program.  Fastgraph includes two routines, fg_setcaps and fg_setnum, for this
+purpose.  Each routine requires an integer argument that specifies the new
+key state.  If the argument value is 0, the key will be turned off; if the
+value is 1, the key will be turned on.  Example 14-4 uses fg_setcaps and
+fg_setnum to turn off CapsLock and NumLock.
+
+                                Example 14-4.
+
+                            #include <fastgraf.h>
+                            void main(void);
+
+                            void main()
+                            {
+                               fg_setcaps(0);
+                               fg_setnum(0);
+                            }
+
+     On most keyboards, changing key states with fg_setcaps or fg_setnum also
+will change the keyboard state light to reflect the new key state.  However,
+some older keyboards, especially when used on PC, PC/XT, or Tandy 1000
+systems, do not update the state light.  This makes the state light
+inconsistent with the true key state.
+
+
+Low-Level Keyboard Handler
+
+     Fastgraph includes a low-level keyboard handler that replaces the BIOS
+keyboard handler.  The replacement handler intercepts keystrokes ahead of the
+BIOS and thus eliminates the annoying beep that sounds upon filling the BIOS
+                                       Chapter 14:  Input Device Support   265
+
+keyboard buffer.  Fastgraph's keyboard handler is especially well-suited to
+game development because it increases keyboard responsiveness in high-speed
+action games.  However, when the low-level keyboard handler is enabled, it is
+not possible to use fg_getkey, fg_intkey, fg_waitkey, or any third party
+functions that use BIOS or DOS services for keyboard activity.  For this
+reason, a program that enables the low-level keyboard handler must disable it
+before exiting to DOS.
+
+     The low-level keyboard handler can be enabled and disabled at any time.
+The fg_kbinit routine is provided for this purpose.  To enable Fastgraph's
+low-level keyboard handler, pass the value 1 to fg_kbinit.  To disable
+Fastgraph's handler and re-enable the BIOS keyboard handler, pass the value
+zero.  No harm is caused if you try to enable Fastgraph's keyboard handler
+when it is already active, or if you try to disable it when the BIOS handler
+is active.
+
+     When the low-level keyboard handler is enabled, you can use the
+fg_kbtest routine to check if keys are currently pressed or released.  This
+routine provides the only mechanism for accessing the keyboard when the low-
+level handler is enabled.  It specifies the keys through the use of scan
+codes.  If the corresponding key is pressed, fg_kbtest returns 1.  If it is
+released, the routine returns zero.  The following table lists the scan codes
+returned by pressing the keys on a standard PC keyboard.
+
+                             Table of scan codes
+
+                  scan           scan           scan           scan
+          key     code   key     code   key     code   key     code
+
+          Esc       1    I        23    X        45    F9       67
+          1         2    O        24    C        46    F10      68
+          2         3    P        25    V        47    NumLock  69
+          3         4    [        26    B        48    ScrLock  70
+          4         5    ]        27    N        49    Home     71
+          5         6    Enter    28    M        50    Up arrow 72
+          6         7    Ctrl     29    ,        51    PgUp     73
+          7         8    A        30    .        52    KP-      74
+          8         9    S        31    /        53    L arrow  75
+          9        10    D        32    R shift  54    KP5      76
+          0        11    F        33    KP*      55    R arrow  77
+          -        12    G        34    Alt      56    KP+      78
+          =        13    H        35    Space    57    End      79
+          BS       14    J        36    CapsLock 58    Dn arrow 80
+          Tab      15    K        37    F1       59    PgDn     81
+          Q        16    L        38    F2       60    Ins      82
+          W        17    ;        39    F3       61    Del      83
+          E        18    '        40    F4       62    (unused) 84
+          R        19    `        41    F5       63    (unused) 85
+          T        20    L shift  42    F6       64    (unused) 86
+          Y        21    \        43    F7       65    F11      87
+          U        22    Z        44    F8       66    F12      88
+
+     There are actually more scan codes defined for PC keyboards than listed
+in this table.  Such scan codes are generated when a key is pressed as a
+combination of one or more keys, such as when the shift and slash keys are
+pressed together to produce a question mark (?) character.  Fastgraph's low-
+266   Fastgraph User's Guide
+
+level keyboard handler is designed to report the pressing or releasing of
+keys themselves, as opposed to reporting the actual characters so produced.
+It is thus not possible for the keyboard handler to report the scan code for
+a multi-key character.  If needed, such characters can be identified by the
+scan codes generated for each individual key in the sequence.  For example, a
+question mark character would be reported as a forward slash (scan code 53)
+generated while pressing the left shift (42) or right shift (54) keys.
+
+     Example 14-5 illustrates the use of Fastgraph's low-level keyboard
+handler.  It first uses fg_kbinit to enable Fastgraph's keyboard handler and
+displays a message stating this.  Then, at approximately one second
+intervals, the program calls fg_kbtest to check which of the four arrow keys
+are pressed and displays an appropriate message.  Pressing Escape restores
+the BIOS keyboard handler and exits to DOS.
+
+                                Example 14-5.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                void main(void);
+
+                #define ESC    1
+                #define LEFT  75
+                #define RIGHT 77
+                #define UP    72
+                #define DOWN  80
+
+                void main()
+                {
+                   fg_kbinit(1);
+                   printf("Keyboard handler enabled.\n");
+
+                   do {
+                      printf("keys pressed:  ");
+                      if (fg_kbtest(LEFT))   printf("Left ");
+                      if (fg_kbtest(RIGHT))  printf("Right ");
+                      if (fg_kbtest(UP))     printf("Up ");
+                      if (fg_kbtest(DOWN))   printf("Down ");
+                      printf("\n");
+                      fg_waitfor(18);
+                   } while (fg_kbtest(ESC) == 0);
+
+                   fg_kbinit(0);
+                   printf("Keyboard handler disabled.\n");
+                }
+
+Mouse Support
+
+     The mouse is a very popular input and pointing device, especially in
+graphically-oriented programs.  Fastgraph contains several routines to
+support mice.  These routines perform such tasks as mouse initialization,
+controlling and defining the mouse cursor, and reporting information about
+the mouse position and button status.
+
+     The underlying software that controls the mouse is called the mouse
+driver.  Fastgraph's mouse support routines provide a high-level interface to
+                                       Chapter 14:  Input Device Support   267
+this driver.  The Microsoft Mouse and its accompanying mouse driver have
+become an industry standard, and other manufacturers of mice have also made
+their mouse drivers Microsoft compatible.  For this reason, the Fastgraph
+mouse support routines assume you are using a Microsoft or compatible mouse
+driver.
+
+     Unfortunately, not all mouse drivers are created equal.  That is, some
+drivers are not Microsoft compatible, even though they may be advertised as
+such.  In some cases, these incompatibilities are rather trivial, but others
+are significant.  For example, early versions of some third party mouse
+drivers had real problems in the EGA graphics modes.  The Microsoft mouse
+driver, the Logitech mouse driver (version 3.2 or above), and the DFI mouse
+driver (version 3.00 or above) are known to work well with Fastgraph's mouse
+support routines.  Any other Microsoft compatible mouse driver also should
+work properly.
+
+
+Initializing the Mouse
+
+     There are two steps required to use Fastgraph's mouse support routines
+within an application program.  First, you must install the mouse driver.
+This is done before running the application, typically by entering the
+command MOUSE at the DOS command prompt.  Second, you must use the Fastgraph
+routine fg_mouseini to initialize the mouse within the program.
+
+     The fg_mouseini routine has no arguments and returns a "success or
+failure" indicator as its function value.  If the return value is -1, it
+means fg_mouseini could not initialize the mouse (either because the mouse
+driver is not installed, or the driver is installed but the mouse is
+physically disconnected).  If fg_mouseini returns a positive integer value,
+the mouse initialization was successful.  The value itself indicates the
+number of buttons (either 2 or 3) on the mouse.  If you don't call
+fg_mouseini, or if fg_mouseini can't initialize the mouse, none of
+Fastgraph's other mouse support routines will have any effect.3
+
+     Example 14-6 illustrates how to initialize the mouse.  Unlike the
+keyboard support routines, Fastgraph's mouse support routines require that
+fg_setmode be called first.  In this example, we simply pass fg_setmode the
+value -1 to initialize Fastgraph for whatever video mode is in effect when we
+run the program.  The program then calls fg_mouseini and prints a message
+indicating whether or not the initialization was successful.  If it was, the
+message includes the number of buttons on the mouse.
+
+                                Example 14-6.
+
+               #include <fastgraf.h>
+               #include <stdio.h>
+               void main(void);
+
+               void main()
+               {
+____________________
+
+     (3) If you use another mouse library or communicate directly with the
+     mouse driver, you must still call fg_mouseini if your program runs in
+     modes 13 through 18.  Otherwise, Fastgraph won't know that your program
+     is using a mouse and may display graphics incorrectly.
+268   Fastgraph User's Guide
+
+                  int status;
+
+                  fg_setmode(-1);
+                  status = fg_mouseini();
+
+                  if (status < 0)
+                     printf("Mouse not available.\n");
+                  else
+                     printf("%d button mouse found.\n",status);
+               }
+
+
+     You should be aware that certain mouse drivers do not fully initialize
+the mouse when a program changes video modes.  This problem most frequently
+occurs when you restore the original video mode at the end of a program that
+has called fg_mouseini.  When changing video modes, you must first make the
+mouse cursor invisible (this is described in the next section), change the
+video mode, and then call fg_mouseini again to initialize the mouse for the
+new video mode.
+
+
+XVGA and SVGA Mouse Considerations
+
+     Mouse drivers do not have the ability to directly display the mouse
+cursor in XVGA and SVGA graphics modes (modes 20 to 29).  Hence, Fastgraph
+must display the mouse cursor through an interrupt handler that is activated
+whenever the mouse moves.  The handler is automatically installed when you
+call fg_mouseini in modes 20 to 29.
+
+     If you do not disable this handler before your program exits, it will
+remain "hooked" to the mouse driver.  This will most likely hang your system
+the next time you try doing anything of consequence.  The fg_mousefin routine
+removes Fastgraph's mouse interrupt handler from the mouse driver.  In XVGA
+and SVGA graphics modes, you should call fg_mousefin just before restoring
+the original video mode, as illustrated below:
+
+
+                            fg_mousefin();
+                            fg_setmode(old_mode);
+                            fg_reset();
+
+
+Again, calling fg_mousefin is required only in XVGA and SVGA graphics modes.
+Calling it in other video modes is not applicable, though it causes no
+problems.
+
+     In the standard VGA/MCGA 256-color mode (mode 19), white pixels in the
+mouse cursor are displayed in color 15.  This is inconsistent with other
+graphics modes, where the mouse cursor's white pixels are displayed in the
+highest-numbered color value available in that mode.  Fastgraph corrects this
+inconsistency in XVGA and SVGA 256-color graphics modes by displaying white
+mouse cursor pixels in color 255.  Like color 15, color 255 is white by
+default.  This allows you to redefine color 15 in your 256-color applications
+without interfering with the mouse cursor colors.
+                                       Chapter 14:  Input Device Support   269
+
+Controlling the Mouse Cursor
+
+     The mouse cursor indicates the current position of the mouse.  By
+default, the cursor is a small white arrow in graphics modes and a one-
+character rectangle in text modes.  After you use fg_mouseini to initialize
+the mouse, the mouse cursor is invisible.  To make it visible, you must use
+the fg_mousevis routine.  This routine has a single integer argument that
+defines the mouse cursor visibility.  If it is 0, the mouse cursor will be
+invisible; if it is 1, the mouse cursor becomes visible.
+
+     If the mouse cursor is in an area of the screen that is being updated,
+or if it moves into this area during the update process, you must make the
+mouse cursor invisible.  Additionally, when performing any video output in
+the native EGA and VGA graphics modes (modes 13 through 18), you also must
+make the mouse cursor invisible.  Instead of checking for these conditions,
+it is more convenient and efficient to make the mouse cursor invisible during
+all screen updates and then make it visible again when the updating is
+finished.  Finally, you must make the mouse cursor invisible whenever you
+change the visual page number with fg_setvpage.
+
+     After you initialize the mouse, the cursor is positioned in the center
+of the screen.  Moving the mouse of course changes the cursor position, but
+you also can position the mouse cursor with the Fastgraph routine
+fg_mousemov.  This routine has two arguments that specify the new horizontal
+and vertical cursor position.  The position is expressed in screen space
+units for graphics modes, while it is expressed in character cells for text
+modes.  The fg_mousemov routine moves the cursor whether or not it is
+visible.
+
+     Sometimes it is useful to restrict the mouse cursor to a specific area
+of the screen.  The Fastgraph routine fg_mouselim prevents the mouse cursor
+from moving outside the specified rectangular area.  It requires four
+arguments that specify the minimum horizontal coordinate, maximum horizontal
+coordinate, minimum vertical coordinate, and maximum vertical coordinate of
+this area.  Again, the coordinates are expressed in screen space units for
+graphics modes and character cells for text modes.
+
+     One of the most important functions of the mouse driver is to translate
+the horizontal and vertical mouse movements into a position on the screen.
+The mouse reports these movements to the mouse driver in units called mickeys
+(one mickey is about 1/200 of an inch).  By default, moving the mouse 8
+mickeys in the horizontal direction moves the mouse cursor one horizontal
+pixel.  Similarly, moving the mouse 16 mickeys vertically moves the cursor
+one vertical pixel.  Fastgraph provides a routine named fg_mousespd that can
+change these values, which effectively allows you to control the speed at
+which the mouse cursor moves relative to the movement of the mouse itself.
+The fg_mousespd routine requires two arguments that define the number of
+mickeys required for eight pixels of mouse cursor movement.  The first
+argument specifies this for the horizontal direction, and the second for the
+vertical direction.
+
+     Example 14-7, which runs in any graphics mode, demonstrates the
+fg_mousevis, fg_mousemov, fg_mouselim, and fg_mousespd routines.  The program
+first establishes the video mode, initializes the mouse, and fills the screen
+with a white rectangle.  Next, the program calls fg_mousevis to make the
+mouse cursor visible and then calls fg_mouselim to restrict the mouse cursor
+270   Fastgraph User's Guide
+to an area one-fourth the size of the screen, centered in the middle of the
+screen.  At this point you should move the mouse cursor around the screen to
+see the effect of fg_mouselim and note the speed at which the cursor moves
+relative to the mouse itself.  The program continues when you press any key.
+
+     The program then uses fg_mousemov to move the mouse cursor to each
+corner of the region established by fg_mouselim.  The call to fg_waitfor
+keeps the cursor in each corner for two seconds, unless you move the mouse.
+Note how the program tries to move the mouse cursor to each corner of the
+screen, but since doing so would move the cursor outside the defined region
+of movement, fg_mousemov just positions the cursor at the nearest point
+possible within this region.  The last call to fg_mousemov moves the cursor
+back to the middle of the screen.  After doing this, the program calls
+fg_mousespd to change the mouse cursor speed.  The values passed to
+fg_mousespd (16 and 32) are twice the defaults and therefore make you move
+the mouse twice as far as before to move the mouse cursor the same distance.
+When you run the program, compare the mouse sensitivity to the original
+speed.  After a keystroke, the program returns to DOS.
+
+                                Example 14-7.
+
+               #include <fastgraf.h>
+               #include <stdio.h>
+               #include <stdlib.h>
+               void main(void);
+
+               void main()
+               {
+                  int maxx, maxy;
+                  int old_mode;
+
+                  old_mode = fg_getmode();
+                  fg_setmode(fg_automode());
+
+                  if (fg_mouseini() < 0) {
+                     fg_setmode(old_mode);
+                     fg_reset();
+                     exit(1);
+                     }
+
+                  maxx = fg_getmaxx();
+                  maxy = fg_getmaxy();
+                  fg_setcolor(15);
+                  fg_rect(0,maxx,0,maxy);
+
+                  fg_mousevis(1);
+                  fg_mouselim(maxx/4,3*maxx/4,maxy/4,3*maxy/4);
+                  fg_waitkey();
+
+                  fg_mousemov(0,0);
+                  fg_waitfor(36);
+                  fg_mousemov(maxx,0);
+                  fg_waitfor(36);
+                  fg_mousemov(maxx,maxy);
+                  fg_waitfor(36);
+                  fg_mousemov(0,maxy);
+                  fg_waitfor(36);
+                                       Chapter 14:  Input Device Support   271
+                  fg_mousemov(maxx/2,maxy/2);
+                  fg_mousespd(16,32);
+                  fg_waitkey();
+
+                  fg_setmode(old_mode);
+                  fg_reset();
+               }
+
+
+
+Reporting the Mouse Status
+
+     It is obviously important to be able to track the mouse position and
+button status.  The Fastgraph routines fg_mousepos and fg_mousebut enable you
+to do this.
+
+     The fg_mousepos routine returns information about the current mouse
+cursor position and button status.  It requires three integer arguments, all
+passed by reference.  The first two arguments respectively receive the
+horizontal and vertical coordinates of the mouse cursor.  These values are
+expressed in screen space units for graphics modes and character cells for
+text modes.  The third argument receives a three-bit mask containing the
+button status as indicated below.
+
+                   bit
+                 number  meaning
+
+                    0    1 if left button pressed, 0 if not
+                    1    1 if right button pressed, 0 if not
+                    2    1 if middle button pressed, 0 if not
+
+For example, if both the left and right buttons are pressed, the button
+status will be set to 3.  If the mouse only has two buttons, bit 2 will
+always be zero.
+
+     Another routine, fg_mousebut, is available for returning the number of
+button press or release counts that have occurred since the last check, or
+since calling fg_mouseini.  Each mouse button maintains its own separate
+counters, so fg_mousebut returns this information for a specific button.
+Additionally, fg_mousebut returns the horizontal and vertical position of the
+mouse cursor at the time the specified button was last pressed or released.
+
+     The fg_mousebut routine takes four integer arguments, of which the last
+three are passed by reference.  The first argument specifies the button of
+interest (1 means the left button, 2 is the right button, and 3 is the middle
+button).  If this value is positive, button press counts will be reported.
+If it is negative, release counts will be reported.  The second, third, and
+fourth arguments respectively receive the press or release count, the
+horizontal mouse cursor position at the time of the last press or release,
+and the vertical position at that same time.  If the press or release count
+is zero, the mouse cursor position is returned as (0,0).  The coordinate
+positions are expressed in screen space units for graphics modes and
+character cells for text modes.
+
+     Example 14-8 runs in any graphics video mode and illustrates the use of
+the fg_mousepos and fg_mousebut routines.  The program first establishes the
+video mode and then initializes the mouse (the program exits if the
+272   Fastgraph User's Guide
+initialization fails).  It next fills the entire screen with a white
+rectangle and then calls fg_mousevis to make the mouse cursor visible.
+
+     The main part of example 14-8 is a while loop that polls the mouse at
+three-second intervals (the call fg_waitfor(54) delays the program for three
+seconds).  Within the loop, the program first uses fg_mousebut to get the
+number of times the left mouse button was pressed in the last three seconds.
+Following this, the fg_mousepos routine gets the current mouse position.  The
+program then displays this information in the upper left corner of the
+screen; note how fg_mousevis is used to make the cursor invisible during
+graphics operations.  The program continues until you press the right mouse
+button, checked by the call to fg_mousebut at the end of the loop.
+
+                                Example 14-8.
+
+          #include <fastgraf.h>
+          #include <stdio.h>
+          #include <stdlib.h>
+          void main(void);
+
+          void main()
+          {
+             int old_mode;
+             int buttons, count;
+             int x, y;
+             char string[25];
+
+             old_mode = fg_getmode();
+             fg_setmode(fg_automode());
+
+             if (fg_mouseini() < 0) {
+                fg_setmode(old_mode);
+                fg_reset();
+                exit(1);
+                }
+
+             fg_setcolor(15);
+             fg_rect(0,fg_getmaxx(),0,fg_getmaxy());
+             fg_mousevis(1);
+
+             do {
+                fg_waitfor(54);
+                fg_mousebut(1,&count,&x,&y);
+                fg_mousepos(&x,&y,&buttons);
+                sprintf(string,"X=%3d  Y=%3d  count=%4d",x,y,count);
+                fg_mousevis(0);
+                fg_setcolor(15);
+                fg_rect(0,fg_xconvert(25),0,fg_yconvert(1));
+                fg_setcolor(0);
+                fg_locate(0,0);
+                fg_text(string,24);
+                fg_mousevis(1);
+                fg_mousebut(2,&count,&x,&y);
+                }
+             while (count == 0);
+
+             fg_setmode(old_mode);
+                                       Chapter 14:  Input Device Support   273
+
+             fg_reset();
+          }
+
+
+Defining the Mouse Cursor
+
+     By default, the mouse cursor is a small white arrow in graphics modes
+and a one-character rectangle in text modes.  In graphics modes, you can
+change the mouse cursor to any 16 by 16 pixel image with the Fastgraph
+routine fg_mouseptr (in the CGA four-color graphics modes, the cursor size is
+8 by 16 pixels).  You cannot change the mouse cursor shape in text modes, but
+you can use the Fastgraph routine fg_mousecur to define how it interacts with
+existing characters on the screen.
+
+Text Modes
+
+     To change the mouse cursor in text modes, you must first define two 16-
+bit quantities called the screen mask and cursor mask.  The following figure
+defines the format of each mask.
+
+                    bits      meaning
+
+                    0 to 7    ASCII character value
+                    8 to 11   foreground color
+                    12 to 14  background color
+                    15        blink
+
+Notice how this structure parallels the character and attribute bytes
+associated with each character cell.  The default screen mask is 77FF hex,
+and the default cursor mask is 7700 hex.
+
+     When you position the mouse over a specific character cell, the mouse
+driver uses the current screen and cursor masks to determine the mouse
+cursor's appearance.  First, the mouse driver logically ANDs the screen mask
+with the existing contents of that character cell.  It then XORs that result
+with the cursor mask to display the mouse cursor.
+
+     For example, consider how the mouse cursor is produced in the 80-column
+color text mode (mode 3).  Suppose a specific character cell contains the
+ASCII character 0 (48 decimal, 30 hex) and an attribute byte that specifies a
+white (color 15) foreground on a blue background (color 1) and does not blink
+(blink bit 0).  The binary structure of the character and its attribute are:
+
+                            attribute    character
+
+                            0 001 1111   00110000
+
+Now let's see what happens when we apply the screen and cursor masks to the
+character and its attribute.
+
+            attribute/character   0001 1111 0011 0000   (1F30 hex)
+            default screen mask   0111 0111 1111 1111   (77FF hex)
+                                  -------------------
+            result of AND         0001 0111 0011 0000   (1730 hex)
+
+274   Fastgraph User's Guide
+
+            default cursor mask   0111 0111 0000 0000   (7700 hex)
+                                  -------------------
+            result of XOR         0110 0000 0011 0000   (6030 hex)
+
+The resulting character (30 hex) is the original character, but the new
+attribute (60 hex) represents a black foreground with a brown background and
+does not blink.  As long as the mouse cursor remains positioned on this
+character cell, it would appear black on brown.
+
+     When we use the default screen and cursor masks, the mouse cursor will
+always display the original character and it will not blink.  The cursor
+foreground color will be 15-F, where F is the displayed character's
+foreground color.  Similarly, the cursor background color will be 7-B, where
+B is the displayed character's background color.  The default masks will
+virtually always produce a satisfactory mouse cursor.
+
+     It is possible, however, to change the appearance of the mouse cursor in
+text modes by using your own screen and cursor masks.  The Fastgraph routine
+fg_mousecur does just that.  It expects two arguments, the first being the
+cursor mask and the second the screen mask.  Example 14-9 demonstrates the
+use of fg_mousecur.  The program displays some text and uses the default
+mouse cursor.  After waiting for a keystroke, the program calls fg_mousecur
+to define a new mouse cursor.  The new cursor is similar to the default
+cursor, but it displays the foreground colors in the opposite intensity as
+the default cursor.  The program then waits for another keystroke before
+returning to DOS.
+
+                                Example 14-9.
+
+                  #include <fastgraf.h>
+                  #include <stdio.h>
+                  #include <stdlib.h>
+                  void main(void);
+
+                  void main()
+                  {
+                     int old_mode;
+                     int row;
+
+                     old_mode = fg_getmode();
+                     fg_setmode(3);
+
+                     if (fg_mouseini() < 0) {
+                        fg_setmode(old_mode);
+                        fg_reset();
+                        exit(1);
+                        }
+
+                     fg_setattr(7,0,0);
+                     fg_rect(0,fg_getmaxx(),0,fg_getmaxy());
+
+                     fg_setattr(12,7,0);
+                     for (row = 0; row < 25; row++) {
+                        fg_locate(row,34);
+                        fg_text("example 14-9",12);
+                        }
+                                       Chapter 14:  Input Device Support   275
+
+
+                     fg_mousevis(1);
+                     fg_waitkey();
+                     fg_mousecur(0x7FFF,0x7F00);
+                     fg_waitkey();
+
+                     fg_setmode(old_mode);
+                     fg_reset();
+                  }
+
+Graphics Modes
+
+     Defining the mouse cursor in graphics video modes also requires creating
+a screen mask and cursor mask, but as one might expect, the structure of
+these masks is vastly different from for text modes.  In fact, it closely
+resembles the mode-independent bit map format used by the fg_drawmap routine.
+Although their structure differs, the way the mouse driver applies the masks
+is the same as in the text modes.  That is, the driver displays the mouse
+cursor by first logically ANDing video memory with the screen mask, and then
+XORing that result with the cursor mask.
+
+     Let's begin by looking at the masks for the default mouse cursor in
+graphics modes.  The size of each mask (and hence the mouse cursor) is 16
+pixels wide and 16 pixels high.  As mentioned earlier, the default cursor is
+a small white arrow with a black outline around it.  Here are its screen and
+cursor masks expressed as binary values.
+
+              screen                cursor                cursor
+               mask                  mask               appearance
+
+         1001111111111111      0000000000000000       **
+         1000111111111111      0010000000000000       *x*
+         1000011111111111      0011000000000000       *xx*
+         1000001111111111      0011100000000000       *xxx*
+         1000000111111111      0011110000000000       *xxxx*
+         1000000011111111      0011111000000000       *xxxxx*
+         1000000001111111      0011111100000000       *xxxxxx*
+         1000000000111111      0011111110000000       *xxxxxxx*
+         1000000000011111      0011111111000000       *xxxxxxxx*
+         1000000000001111      0011111000000000       *xxxxx*****
+         1000000011111111      0011011000000000       *xx*xx*
+         1000100001111111      0010001100000000       *x* *xx*
+         1001100001111111      0000001100000000       **  *xx*
+         1111110000111111      0000000110000000            *xx*
+         1111110000111111      0000000110000000            *xx*
+         1111111000111111      0000000000000000             ***
+
+     The mouse driver first ANDs the screen mask with video memory at the
+mouse cursor position.  This means the screen mask 1 bits leave video memory
+intact, while the 0 bits change the corresponding pixels to black.  Next, the
+mouse driver XORs the result with the cursor mask.  This time the cursor mask
+0 bits leave video memory unchanged, while the 1 bits change the
+corresponding pixels to white.  This produces a mouse cursor as shown above
+on the right, where a dot ( ) represents an unchanged pixel, an asterisk (*)
+a black pixel, and an x a white pixel.  The following table summarizes the
+cursor appearance for all possible combinations of mask bits.
+276   Fastgraph User's Guide
+
+        screen mask bit     cursor mask bit resulting cursor pixel
+
+               0                   0                 black
+               0                   1                 white
+               1                   0               unchanged
+               1                   1               inverted
+
+     The color of an "inverted" pixel is n-k, where n is the maximum color
+number in the current video mode, and k is the color of the pixel being
+replaced.  Also, "black" and "white" pixels are not necessarily these colors
+in 16-color and 256-color modes.  More correctly, "black" pixels are
+displayed in the color assigned to palette 0, and "white" pixels are the
+displayed in the color assigned to palette 15 (255 in XVGA and SVGA 256-color
+modes).  If you're using the CGA color modes, "black" pixels are displayed in
+the background color, and "white" pixels appear in color 3 (whose actual
+color is determined by the selected CGA palette).
+
+     With an understanding of the way the default mouse cursor works in
+graphics modes, we're now ready to define our own mouse cursor.  Shown below
+are the screen mask, cursor mask, and resulting appearance for a solid plus-
+shaped cursor.  The hexadecimal equivalents of the binary mask values are
+also given.
+
+   ----- screen mask ----      ----- cursor mask ----
+                                                                cursor
+        binary       hex            binary       hex          appearance
+
+   1110000000111111  E03F      0000000000000000  0000      ...*******......
+   1110000000111111  E03F      0000111110000000  0F80      ...*xxxxx*......
+   1110000000111111  E03F      0000111110000000  0F80      ...*xxxxx*......
+   0000000000000111  0007      0000111110000000  0F80      ****xxxxx****...
+   0000000000000111  0007      0111111111110000  7FF0      *xxxxxxxxxxx*...
+   0000000000000111  0007      0111111111110000  7FF0      *xxxxxxxxxxx*...
+   0000000000000111  0007      0111111111110000  7FF0      *xxxxxxxxxxx*...
+   0000000000000111  0007      0111111111110000  7FF0      *xxxxxxxxxxx*...
+   0000000000000111  0007      0111111111110000  7FF0      *xxxxxxxxxxx*...
+   0000000000000111  0007      0000111110000000  0F80      ****xxxxx****...
+   1110000000111111  E03F      0000111110000000  0F80      ...*xxxxx*......
+   1110000000111111  E03F      0000111110000000  0F80      ...*xxxxx*......
+   1110000000111111  E03F      0000000000000000  0000      ...*******......
+   1111111111111111  FFFF      0000000000000000  0000      ................
+   1111111111111111  FFFF      0000000000000000  0000      ................
+   1111111111111111  FFFF      0000000000000000  0000      ................
+
+If we wanted to make the mouse cursor hollow rather than solid, the masks and
+resulting cursor appearance would look like this.
+
+   ----- screen mask ----      ----- cursor mask ----
+                                                                cursor
+        binary       hex            binary       hex          appearance
+
+   1110000000111111  E03F      0000000000000000  0000      ...*******......
+   1110111110111111  EFBF      0000000000000000  0000      ...*.....*......
+   1110111110111111  EFBF      0000000000000000  0000      ...*.....*......
+   0000111110000111  0F87      0000000000000000  0000      ****.....****...
+   0111111111110111  7FF7      0000000000000000  0000      *...........*...
+                                       Chapter 14:  Input Device Support   277
+   0111111111110111  7FF7      0000000000000000  0000      *...........*...
+   0111111111110111  7FF7      0000001000000000  0200      *.....x.....*...
+   0111111111110111  7FF7      0000000000000000  0000      *...........*...
+   0111111111110111  7FF7      0000000000000000  0000      *...........*...
+   0000111110000111  0F87      0000000000000000  0000      ****.....****...
+   1110111110111111  EFBF      0000000000000000  0000      ...*.....*......
+   1110111110111111  EFBF      0000000000000000  0000      ...*.....*......
+   1110000000111111  E03F      0000000000000000  0000      ...*******......
+   1111111111111111  FFFF      0000000000000000  0000      ................
+   1111111111111111  FFFF      0000000000000000  0000      ................
+   1111111111111111  FFFF      0000000000000000  0000      ................
+
+Note that the center bit defined in the cursor mask causes the corresponding
+pixel in video memory to be inverted.
+
+     There is one more item needed to define a graphics mode mouse cursor
+completely.  That item is the hot spot, or the actual screen position used or
+reported by the mouse driver.  For the plus-shaped cursors just constructed,
+it would be sensible to define the hot spot in the center of the plus.  The
+hot spot is specified relative to the upper left corner of the cursor, so its
+position within the cursor would be (6,6) -- that is, six pixels to the right
+and six pixels below the upper left corner.  You can specify the hot spot
+offsets using negative values or values above 15 to position it outside the
+mouse cursor matrix if desired.
+
+     The Fastgraph routine fg_mouseptr defines a mouse cursor in graphics
+modes.  The first of its three arguments is a 32-element integer array,
+passed by reference.  The array's first 16 elements contain the screen mask,
+and its second 16 elements contain the cursor mask.  The remaining two
+arguments respectively specify the horizontal and vertical offsets for the
+hot spot.  The fg_mouseptr routine has no effect in a text video mode.
+
+     Example 14-10 is similar to example 14-9.  It shows how to define a
+graphics mode mouse cursor using fg_mouseptr.  The values stored in the solid
+and hollow arrays define the screen and cursor masks for the solid and hollow
+plus-shaped mouse cursors discussed earlier.  After making the mouse cursor
+visible, the program uses the default mouse cursor until a key is pressed.
+Following this, it changes to the solid cursor.  After another keystroke, the
+program changes to the hollow cursor.  When you run example 14-10, compare
+the differences among the three mouse cursors.
+
+                                Example 14-10.
+
+  #include <fastgraf.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  void main(void);
+
+  int solid[]  = {0xE03F,0xE03F,0xE03F,0x0007,0x0007,0x0007,0x0007,0x0007,
+                  0x0007,0x0007,0xE03F,0xE03F,0xE03F,0xFFFF,0xFFFF,0xFFFF,
+                  0x0000,0x0F80,0x0F80,0x0F80,0x7FF0,0x7FF0,0x7FF0,0x7FF0,
+                  0x7FF0,0x0F80,0x0F80,0x0F80,0x0000,0x0000,0x0000,0x0000};
+
+  int hollow[] = {0xE03F,0xEFBF,0xEFBF,0x0F87,0x7FF7,0x7FF7,0x7FF7,0x7FF7,
+                  0x7FF7,0x0F87,0xEFBF,0xEFBF,0xE03F,0xFFFF,0xFFFF,0xFFFF,
+                  0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0200,0x0000,
+                  0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000};
+278   Fastgraph User's Guide
+
+  void main()
+  {
+     int old_mode;
+     int column, row, last_row;
+
+     old_mode = fg_getmode();
+     fg_setmode(fg_automode());
+
+     if (fg_mouseini() < 0) {
+        fg_setmode(old_mode);
+        fg_reset();
+        exit(1);
+        }
+
+     fg_setcolor(15);
+     fg_rect(0,fg_getmaxx(),0,fg_getmaxy());
+
+     fg_setcolor(12);
+     column = fg_xalpha(fg_getmaxx()/2) - 6;
+     last_row = fg_yalpha(fg_getmaxy()) + 1;
+
+     for (row = 0; row < last_row; row++) {
+        fg_locate(row,column);
+        fg_text("example 14-10",13);
+        }
+
+     fg_mousevis(1);
+     fg_waitkey();
+     fg_mouseptr(solid,6,6);
+     fg_waitkey();
+     fg_mouseptr(hollow,6,6);
+     fg_waitkey();
+
+     fg_setmode(old_mode);
+     fg_reset();
+  }
+
+
+CGA Considerations
+
+     The mouse driver treats the screen and cursor masks differently in the
+CGA four-color graphics modes (modes 4 and 5) than in the other graphics
+modes.  In the CGA modes, each pair of mask bits corresponds to one pixel.
+This means the masks more closely resemble the mode-specific format used by
+fg_drwimage instead of the mode-independent format of fg_drawmap.
+
+     Fastgraph uses a different default mouse cursor for modes 4 and 5.  Its
+screen and cursor masks, as well as the resulting cursor appearance, are
+shown in the following diagram.
+
+                screen                  cursor              cursor
+                mask                    mask             appearance
+
+           0000111111111111        0000000000000000        **
+           0000001111111111        0011000000000000        ***
+           0000000011111111        0011110000000000        ****
+                                       Chapter 14:  Input Device Support   279
+
+           0000000000111111        0011111100000000        *****
+           0000000000001111        0011111111000000        ******
+           0000000000000011        0011111111110000        *******
+           0000000000000011        0011111100000000        *******
+           0000000000111111        0011111110000000        *****
+           0000000000001111        0011000011000000        ******
+           0000110000001111        0000000011000000        ** ***
+           1111111100000011        0000000000110000            ***
+           1111111100000011        0010000000110000            ***
+           1111111111000011        0000000000000000             **
+           1111111111111111        0000000000000000
+           1111111111111111        0000000000000000
+           1111111111111111        0000000000000000
+
+As you can see, the resulting mouse cursor is eight pixels wide instead of
+16.
+
+     Another important point concerning mouse cursors in modes 4 and 5 is the
+chance of pixel bleeding, or the changing of colors within the mouse cursor
+as it moves horizontally.  Bleeding will occur if you use the bit pairs 01 or
+10 in either mask to represent a pixel.  In the default masks for modes 4 and
+5, note that only the binary values 00 and 11 appear as bit pairs.  Keep this
+in mind if you create your own masks in these video modes.
+
+
+Joystick Support
+
+     The third type of input device supported by Fastgraph is the joystick.
+Although joysticks are not as popular as mice, they are often preferable when
+a user's reactions are critical, such as in an arcade-style game.  Fastgraph
+includes routines for initializing a joystick, reading a joystick's position
+or button status, and making a joystick behave analogously to the keyboard.
+These routines are independent of the rest of Fastgraph and thus do not
+require that you first call the fg_setmode routine.
+
+     Joysticks are connected to a system through a game port.  The PCjr and
+Tandy 1000 systems come equipped with two game ports, and hence support two
+joysticks.  On other systems in the IBM family, you can install a game port
+card that contains either one or two game ports.  If the card only has one
+game port, you can use a splitter cable to fork two joysticks into the port.
+
+
+Initializing Joysticks
+
+     Before you can use any of Fastgraph's joystick support routines with a
+specific joystick, you must initialize that joystick.  The fg_initjoy routine
+performs this task.  This routine requires a single integer argument that
+specifies which joystick to initialize, either 1 or 2.  If successful,
+fg_initjoy returns 0 as the function value.  If the machine has no game port,
+or if the requested joystick is not connected to the game port, fg_initjoy
+returns -1.  When you use fg_initjoy, the joystick being initialized must be
+centered (that is, the stick itself must not be tilted in either direction).
+
+     Example 14-11 uses the fg_initjoy routine to try to initialize both
+joysticks.  For each joystick, the program prints a message stating whether
+or not the initialization was successful.
+280   Fastgraph User's Guide
+
+                                Example 14-11.
+
+                 #include <fastgraf.h>
+                 #include <stdio.h>
+                 void main(void);
+
+                 void main()
+                 {
+                    if (fg_initjoy(1) < 0)
+                       printf("Joystick 1 not available.\n");
+                    else
+                       printf("Joystick 1 found.\n");
+
+                    if (fg_initjoy(2) < 0)
+                       printf("Joystick 2 not available.\n");
+                    else
+                       printf("Joystick 2 found.\n");
+                 }
+
+
+
+Reporting Joystick Status
+
+     Each joystick can report three items:  its horizontal position, its
+vertical position, and the button status.  Fastgraph includes routines for
+obtaining each of these quantities.
+
+     The fg_getxjoy and fg_getyjoy routines respectively return the
+horizontal and vertical position of the indicated joystick.  Both routines
+require a single integer argument, whose value is either 1 or 2, to identify
+the joystick.  The requested position is returned as the function value.
+Horizontal coordinates increase as the joystick moves to the right, while
+vertical coordinates increase as the joystick moves downward.  If fg_initjoy
+did not initialize the specified joystick, or if your program hasn't yet
+called fg_initjoy, both fg_getxjoy and fg_getyjoy will return the value -1.
+
+     Joystick characteristics vary more than those of any other input device.
+The values returned by fg_getxjoy and fg_getyjoy depend on the system's
+processor speed and the brand of joystick used.  It often suffices to know
+the joystick position relative to its previous position, in which case the
+actual coordinate values do not matter.  However, if you must rely on
+specific coordinate values, your program must perform some type of manual
+joystick calibration and then scale the coordinates reported by fg_getxjoy
+and fg_getyjoy as needed.
+
+     The other piece of information joysticks provide is the button status.
+Most joysticks have two buttons, called the top and bottom buttons.  Others
+have three buttons, but one of them duplicates the functionality of another
+(for example, a joystick might have one bottom button on its left side and
+another on its right side).  The Fastgraph routine fg_button returns the
+joystick button status as its function value.  Like fg_getxjoy and
+fg_getyjoy, the fg_button routine requires a single argument that specifies
+the joystick number.  The meaning of the returned value is shown below.
+                                       Chapter 14:  Input Device Support   281
+                  value  meaning
+
+                    0    neither button pressed
+                    1    top button pressed
+                    2    bottom button pressed
+                    3    top and bottom buttons pressed
+
+     You don't need to call fg_initjoy before using fg_button.  If the
+specified joystick is not present, the fg_button routine will return zero.
+
+     Example 14-12 uses fg_getxjoy, fg_getyjoy, and fg_button to poll both
+joysticks at half-second intervals.  It then displays the joystick number (1
+or 2), horizontal position, vertical position, and button status for each
+joystick.  As the program runs, you can move the joysticks and watch how the
+movements affect the displayed coordinate values.  The program continues
+doing this until you press Ctrl/C or Ctrl/Break to stop it.
+
+                                Example 14-12.
+
+                  #include <fastgraf.h>
+                  #include <stdio.h>
+                  void main(void);
+                  void main()
+                  {
+                     int b, x, y;
+
+                     fg_initjoy(1);
+                     fg_initjoy(2);
+
+                     while (1) {
+                        x = fg_getxjoy(1);
+                        y = fg_getyjoy(1);
+                        b = fg_button(1);
+                        printf("1:  %3d %3d %1d\n",x,y,b);
+                        x = fg_getxjoy(2);
+                        y = fg_getyjoy(2);
+                        b = fg_button(2);
+                        printf("2:  %3d %3d %1d\n\n",x,y,b);
+                        fg_waitfor(9);
+                        }
+                  }
+
+     There are two ways of effectively monitoring joystick button status.
+One is to call fg_button at many places in your program and then take the
+necessary action depending on the button status.  However, the preferable
+method is to extend the BIOS time-of-day interrupt to check the button status
+at each clock tick (there are 18.2 clock ticks per second), set a flag if a
+button is pressed, and then check the flag as needed in your program.
+Information on changing the BIOS time-of-day interrupt appears in Appendix C
+of this document.
+
+
+Keyboard Emulation
+
+     Although we can use the fg_getxjoy and fg_getyjoy routines to monitor
+relative joystick movements, it is usually easier to do this with another
+Fastgraph routine, fg_intjoy.  This routine is similar to the fg_intkey
+282   Fastgraph User's Guide
+
+routine in that it returns two values that are equivalent to the standard or
+extended keyboard codes for analogous keystrokes.
+
+     The fg_intjoy routine needs three arguments.  The first argument
+specifies the joystick number, either 1 or 2.  The second and third
+arguments, both one-byte quantities passed by reference, receive the standard
+and extended keyboard codes analogous to the joystick movement and button
+status.  The second argument receives a value of 13 (the standard keyboard
+code for the Enter key) if any joystick button is pressed; it receives a
+value of 0 if not.  The third argument receives a value corresponding to the
+extended keyboard code for one of the directional keys on the numeric keypad,
+as summarized in the following table.
+
+       joystick position   corresponding key   extended key code
+
+          up and left            Home                 71
+              up               up arrow               72
+         up and right            PgUp                 73
+             left             left arrow              75
+           centered           (no action)              0
+             right            right arrow             77
+         down and left            End                 79
+             down             down arrow              80
+        down and right           PgDn                 81
+
+The fg_intjoy routine will set both key code arguments to zero if the
+specified joystick has not yet been initialized.
+
+     Example 14-13 is similar to example 14-11, but it uses fg_intjoy in
+place of fg_getxjoy and fg_getyjoy to report relative joystick position.
+This program does not report the joystick button status as example 14-11
+does, but you could readily add this feature to it.
+
+                                Example 14-13.
+
+                   #include <fastgraf.h>
+                   #include <stdio.h>
+                   void main(void);
+
+                   void main()
+                   {
+                      char key, aux;
+
+                      fg_initjoy(1);
+                      fg_initjoy(2);
+
+                      while (1) {
+                         fg_intjoy(1,&key,&aux);
+                         printf("1: %2d %2d\n",key,aux);
+                         fg_intjoy(2,&key,&aux);
+                         printf("2: %2d %2d\n\n",key,aux);
+                         fg_waitfor(9);
+                         }
+                   }
+
+                                       Chapter 14:  Input Device Support   283
+
+Special Joystick Considerations
+
+     If you develop a program that supports only one joystick, you should use
+joystick 1.  The reasons for this are twofold.  First, it will make your
+program consistent with most other products that support joysticks.  Second,
+and perhaps more importantly, many Tandy 1000 series machines cannot
+determine if joystick 2 is present when neither joystick is connected.  This
+means if you use joystick 2 instead of joystick 1 in a single joystick
+program, you won't be able to tell if a joystick is available when running on
+a Tandy 1000.
+
+
+Summary of Input Routines
+
+     This section summarizes the functional descriptions of the Fastgraph
+routines presented in this chapter.  More detailed information about these
+routines, including their arguments and return values, may be found in the
+Fastgraph Reference Manual.
+
+     FG_BUTTON returns information about the state of either joystick's
+buttons.
+
+     FG_CAPSLOCK determines the state of the CapsLock key.
+
+     FG_GETKEY waits for a keystroke (or reads the next entry from the BIOS
+keyboard buffer). It returns the keystroke's standard or extended keyboard
+code.
+
+     FG_GETXJOY and FG_GETYJOY return the horizontal and vertical coordinate
+position of the specified joystick.  The actual coordinates depend on the
+processor speed and brand of joystick used.
+
+     FG_INITJOY initializes joystick 1 or 2 and must be called before using
+fg_getxjoy, fg_getyjoy, or fg_intjoy.  It returns a status code indicating
+whether or not the initialization was successful.
+
+     FG_INTJOY returns the standard and extended keyboard codes analogous to
+the current position and button status of the specified joystick.
+
+     FG_INTKEY reads the next entry from the BIOS keyboard buffer and returns
+the keystroke's standard or extended keyboard code.  It is similar to
+fg_getkey, but it does not wait for a keystroke if the keyboard buffer is
+empty.
+
+     FG_KBINIT enables or disables the Fastgraph low-level keyboard handler.
+If the keyboard handler is already in the requested state, nothing happens.
+
+     FG_KBTEST determines if the key having the specified scan code is now
+pressed or released.  The low-level keyboard handler must be enabled for this
+routine to work properly.
+
+     FG_MOUSEBUT returns information about mouse button press or release
+counts, as well as the mouse cursor position at the time of the last button
+press or release.
+284   Fastgraph User's Guide
+
+     FG_MOUSECUR defines the appearance of the mouse cursor in text video
+modes.
+
+     FG_MOUSEFIN unhooks Fastgraph's XVGA or SVGA mouse handler from the
+mouse driver.  This routine should be used just before reverting to text mode
+in programs that have called fg_mouseini in XVGA or SVGA graphics modes.  It
+has no effect in other video modes.
+
+     FG_MOUSEINI initializes the mouse and must be called before any of
+Fastgraph's other mouse support routines.  It returns an error status if the
+mouse driver has not been loaded, or if the mouse is not connected.
+
+     FG_MOUSELIM defines the rectangular area in which the mouse cursor may
+move.
+
+     FG_MOUSEMOV moves the mouse cursor to the specified character cell (in
+text modes) or screen space position (in graphics modes).
+
+     FG_MOUSEPOS returns the current mouse position and button status.
+
+     FG_MOUSEPTR defines the shape and appearance of the mouse cursor in
+graphics video modes.
+
+     FG_MOUSESPD defines the number of mickey units per eight pixels of
+cursor movement.  This effectively controls the speed at which the mouse
+cursor moves relative to the movement of the mouse itself.
+
+     FG_MOUSEVIS makes the mouse cursor visible or invisible.
+
+     FG_NUMLOCK determines the state of the NumLock key.
+
+     FG_SCRLOCK determines the state of the ScrollLock key (which is not
+present on some keyboards).
+
+     FG_SETCAPS controls the state of the CapsLock key.
+
+     FG_SETNUM controls the state of the NumLock key.
+
+     FG_WAITKEY flushes the BIOS keyboard buffer (that is, removes any type-
+ahead characters) and then waits for another keystroke.

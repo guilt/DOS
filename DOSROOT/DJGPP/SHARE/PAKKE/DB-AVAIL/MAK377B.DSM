@@ -1,0 +1,31 @@
+#
+# DSM for make 3.77 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.2
+dsm-name: mak377b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: make
+version: 3.77
+manifest: mak377b
+sources-dsm: mak377s
+documentation-dsm: mak377d
+short-description: GNU make
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: mak377b.zip
+
+replaces: make < 3.77
+requires: DPMI
+# For reading docs
+depends-on: info-reader

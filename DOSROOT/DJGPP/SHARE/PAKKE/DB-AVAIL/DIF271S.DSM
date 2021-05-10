@@ -1,0 +1,27 @@
+#
+# DSM for diffutils 2.7.1 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.3
+dsm-name: dif271s
+dsm-version: 0.4.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: diffutils
+version: 2.7.1
+manifest: dif271s
+binaries-dsm: dif271b
+documentation-dsm: dif271d
+short-description: GNU diffutils
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: dif271s.zip
+

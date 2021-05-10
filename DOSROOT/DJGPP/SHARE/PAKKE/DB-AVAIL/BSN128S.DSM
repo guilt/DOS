@@ -1,0 +1,33 @@
+#
+# DSM for bison 1.28 sources
+# Written by Richard Dawe <richdawe@bigfoot.com> 2000-04-02
+#
+
+dsm-file-version: 1.2
+dsm-name: bsn128s
+dsm-version: 0.4.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: bison
+version: 1.28
+manifest: bsn128s
+binaries-dsm: bsn128b
+documentation-dsm: bsn128d
+short-description: GNU bison
+license: GNU General Public License, Version 2
+
+porter: Mark E.
+porter-email: snowball3@bigfoot.com
+porting-web-site: http://snowball.frogspace.net/djgpp/
+
+simtelnet-path: v2gnu/
+zip: bsn128s.zip
+
+requires: gcc
+requires: djdev >= 2.03
+requires: bash >= 2.03
+requires: make
+requires: sed

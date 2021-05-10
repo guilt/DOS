@@ -1,0 +1,81 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_ACCESS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U ada.strings.unbounded.aux%b  a-stunau.adb	0e42e9ab NE OL PK
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+Z ada.tags%s		a-tags.adb		a-tags.ali
+Z system%s		system.ads		system.ali
+
+U ada.strings.unbounded.aux%s  a-stunau.ads	9d3572dd BN NE OL PR PK
+W ada.strings.unbounded%s  a-strunb.adb		a-strunb.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-charac.ads		20170908181218 2d3ec45b ada.characters%s
+D a-chlat1.ads		20170908181218 66457d31 ada.characters.latin_1%s
+D a-except.ads		20190108125404 291912d5 ada.exceptions%s
+D a-finali.ads		20190108125404 bf4f806b ada.finalization%s
+D a-stream.ads		20190108125404 119b8fb3 ada.streams%s
+D a-string.ads		20170908181218 90ac6797 ada.strings%s
+D a-strmap.ads		20190108125404 e8bb714a ada.strings.maps%s
+D a-strunb.ads		20190108125404 fe8d9a91 ada.strings.unbounded%s
+D a-stunau.ads		20190108125404 63b8e84c ada.strings.unbounded.aux%s
+D a-stunau.adb		20190108125404 6dfa01e7 ada.strings.unbounded.aux%b
+D a-tags.ads		20190108125404 491b781d ada.tags%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-finmas.ads		20190108125404 7811a767 system.finalization_masters%s
+D s-finroo.ads		20190108125404 4ff27390 system.finalization_root%s
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-secsta.ads		20190108125404 20bbe636 system.secondary_stack%s
+D s-soflin.ads		20190108125404 a7318a92 system.soft_links%s
+D s-stache.ads		20190108125404 a37c21ec system.stack_checking%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-stoele.ads		20190108125404 2dc34a04 system.storage_elements%s
+D s-stopoo.ads		20190108125404 b16154c2 system.storage_pools%s
+D s-stposu.ads		20190108125404 97a6219c system.storage_pools.subpools%s
+D s-stratt.ads		20190108125404 aedef97e system.stream_attributes%s
+D s-traent.ads		20190108125404 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20190108125404 34867c83 system.unsigned_types%s
+X 1 ada.ads
+16K9*Ada 20e8 10|37r9 77r5 11|32r14 62r5
+X 7 a-string.ads
+16K13*Strings 1|16k9 7|35e16 10|37r13 77r9 11|32r18 62r9
+X 9 a-strunb.ads
+39K21*Unbounded 7|16k13 9|437e26 10|37r21 77r17 11|32r26 62r17
+42R9*Unbounded_String<5|43R9> 404e14 10|55r11 71r38 11|39r11 55r38
+49P9*String_Access(string) 10|71r60 11|55r60
+402p7*Reference{49P9} 11|44r27 58m10 59r21
+403i7*Last{natural} 11|48r14 59m10
+420U14 Finalize<5|48p14> 11|57s7
+X 10 a-stunau.ads
+37K31*Aux 9|39k21 10|77l27 77e30 11|32b36 62l27 62t30
+40A12*Big_String{string}<integer> 41r36 47r41 11|43r19
+47P9*Big_String_Access(40A12) 48r8 56r15 11|40r15
+54U14*Get_String 55>7 56<7 57<7 58r19 11|38b14 49l8 49t18
+55r7 U{9|42R9} 11|39b7 44r25 48r12
+56p7 S{47P9} 11|40b7 47m7
+57i7 L{natural} 11|41b7 48m7
+71U14*Set_String 71=26 71>56 72r19 11|55b14 60l8 60t18
+71r26 UP{9|42R9} 11|55b26 57m17 58m7 59m7 59r18
+71p56 S{9|49P9} 11|55b56 58r23
+X 11 a-stunau.adb
+43a7 X{10|40A12} 44m11 44r11 47m12 47r12
+

@@ -1,0 +1,100 @@
+      To order our products, please follow one of the following ways:
+
+      a) if you can pay in Euro or DM (German Marks), send an e-mail to
+             sales@optivec.com
+         or send a printout of the order form, given on the next page,
+         by snail mail or FAX to the author.
+
+      b) for international credit-card and US cheque payment, please either
+         go to our web-site
+                 http://www.optivec.com
+         or to one of the following secure-server web sites.
+         Pricing: CMATH   educational edition  $ 39
+                  CMATH   commercial  edition  $ 60
+                  OptiVec educational edition  $ 89
+                  OptiVec commercial  edition  $199
+                  (plus shipping and handling).
+
+
+         through Atlantic Coast's SoftShop
+         for CMATH and OptiVec, English-language versions:
+         http://www.swreg.org/soft_shop/47/
+                 (this is the SoftShop sales page for all our products)
+                 Discounted 5-user and 10-user licences available here!
+
+
+         through ShareIt!
+         for OptiVec for Borland C++, English (commercial or educational):
+         http://www.shareit.com/programs/101557.htm
+
+         for OptiVec for Visual C++, English (commercial only):
+         http://www.shareit.com/programs/103421.htm
+
+         for OptiVec fÅr Borland C++, German (commercial or educational):
+         http://www.shareit.com/deutsch/programs/101556.htm
+
+         for CMATH, English and German (commercial or educational):
+         http://www.shareit.com/programs/101353.htm
+
+
+
+
+
+
+
+      To:
+      Dr. Martin Sander Software Development
+      Steinachstr. 9A
+      D-69198 Schriesheim
+      Germany
+
+
+      FROM:   __________________________________
+              __________________________________
+              __________________________________
+              __________________________________
+      Phone:  _________________________   FAX: _________________________
+
+      VAT identification number (only for companies within the
+      European Union):  ______________________________________
+
+    Hereby I order the following items  (one licence required for
+    each computer on which the product will be used):
+
+    ____   OptiVec for   O Borland C/C++   or   O Visual C++
+           printed handbook in   O  English  or  O  German
+           O  educational edition
+              Unit price incl. German VAT: DM 159.
+           O  commercial edition
+              Unit price ex VAT: DM 257.76, incl. German VAT: DM 299
+              5 units:            861.21    /   999
+             10 units:          1,550.86    /  1799
+
+    ____   CMATH separately, for    O Borland C/C++   or   O Visual C++
+           printed manual in   O  English  or  O  German
+           O  educational edition
+              Unit price incl. German VAT: DM 59.
+           O  commercial edition
+              Unit price ex VAT: DM 85.35,  incl. German VAT: DM  99
+              5 units:             300.85  /     349
+             10 units:             516.35 /      599
+
+    Prices including German VAT apply to all users within Germany
+    and to all users within the European Union without a VAT number.
+    All other users do not pay German VAT, but may have to pay local
+    VAT and possibly import tax according to local laws.
+    Shipping & Handling (Postal):  DM  10,-                     DM ______
+
+    Total payment                                               DM ______
+
+
+    TERMS (please check the desired option):
+       O    Upon invoice (net 14 days) (only within Germany)
+       O    C.O.D. (Cash-On-Delivery). Only if available for your country.
+       O    pre-paid by EuroCheque in DM (German Marks)
+
+
+    Signature of person ordering: ____________________________________
+
+    Prices and terms subject to change without notice.
+    Our VAT identification number (USt-IdNr): DE174887686

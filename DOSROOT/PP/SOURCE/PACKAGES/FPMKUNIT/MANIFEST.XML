@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<packages>
+<package name="fpmkunit">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+  <os name="osnone"/>
+  <os name="linux"/>
+  <os name="go32v2"/>
+  <os name="win32"/>
+  <os name="os2"/>
+  <os name="freebsd"/>
+  <os name="beos"/>
+  <os name="netbsd"/>
+  <os name="amiga"/>
+  <os name="atari"/>
+  <os name="solaris"/>
+  <os name="qnx"/>
+  <os name="netware"/>
+  <os name="openbsd"/>
+  <os name="wdosx"/>
+  <os name="palmos"/>
+  <os name="macos"/>
+  <os name="darwin"/>
+  <os name="emx"/>
+  <os name="watcom"/>
+  <os name="morphos"/>
+  <os name="netwlibc"/>
+  <os name="win64"/>
+  <os name="wince"/>
+  <os name="gba"/>
+  <os name="nds"/>
+  <os name="symbian"/>
+  <os name="haiku"/>
+  <os name="iphonesim"/>
+  <os name="aix"/>
+  <os name="java"/>
+  <os name="android"/>
+  <os name="wii"/>
+  <os name="aros"/>
+  <os name="dragonfly"/>
+ </oses>
+ <filename>fpmk.zip</filename>
+ <author>Peter Vreman</author>
+ <license>LGPL with modification, </license>
+ <homepageurl>www.freepascal.org</homepageurl>
+ <email></email>
+ <description>Basic library of the fpmake/fppkg build system.</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+  <dependency>
+   <package packagename="hash"/>
+   <version major="3" minor="0" micro="0"/>
+  </dependency>
+  <dependency>
+   <package packagename="paszlib"/>
+   <version major="3" minor="0" micro="0"/>
+  </dependency>
+  <dependency>
+   <package packagename="fcl-process"/>
+   <version major="3" minor="0" micro="0"/>
+  </dependency>
+  <dependency>
+   <package packagename="libtar"/>
+   <version major="3" minor="0" micro="0"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<packages>
+<package name="httpd13">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+ </oses>
+ <filename>hd13.zip</filename>
+ <author>Library: Apache Foundation, header: Felipe Monteiro de Carvalho</author>
+ <license>Library: Apache License 2, header: LGPL with modification, </license>
+ <homepageurl>www.freepascal.org</homepageurl>
+ <email></email>
+ <description>Headers for the Apache 1.3 www server</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

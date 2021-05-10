@@ -1,0 +1,96 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_ALLOCATORS
+RV NO_LOCAL_ALLOCATORS
+RV NO_LONG_LONG_INTEGERS
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_CONVERSION
+RV NO_DEFAULT_INITIALIZATION
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.exceptions.machine%b  s-excmac.adb	69416224 NE OL PK
+W system.exceptions%s	s-except.adb		s-except.ali
+
+U system.exceptions.machine%s  s-excmac.ads	d27d9682 NE OL PR PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.unchecked_conversion%s
+W system.exceptions%s	s-except.adb		s-except.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-except.ads		20190108125404 291912d5 ada.exceptions%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-except.ads		20190108125404 68636df6 system.exceptions%s
+D s-excmac.ads		20190108125404 9d9ccece system.exceptions.machine%s
+D s-excmac.adb		20190108125404 f4ddacea system.exceptions.machine%b
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-traent.ads		20190108125404 005bf670 system.traceback_entries%s
+X 1 ada.ads
+16K9*Ada 20e8 7|38r6 39r6 149r28 158r6 161r6
+X 2 a-except.ads
+54K13*Exceptions 349e19 7|39w10 149r32
+63R9*Exception_Occurrence 317e14 7|149r43
+X 3 a-unccon.ads
+20v14*Unchecked_Conversion 7|38w10 158r10 161r10
+X 4 system.ads
+37K9*System 148e11 7|41r9 86r33 87r29 92r18 158r32 167r5 8|32r14 43r5
+67M9*Address 7|92r25 158r39
+69m4*Null_Address{67M9} 8|38r33
+72N4*Word_Size 7|86r40 87r36
+X 6 s-except.ads
+34K16*Exceptions 4|37k9 6|66e22 7|41r16 167r12 8|32r21 43r12
+X 7 s-excmac.ads
+41K27*Machine 6|34k16 7|167l23 167e30 8|32b32 43l23 43t30
+54E9*Unwind_Reason_Code 63e27 76r26
+55n7*URC_NO_REASON{54E9} 66r7
+56n7*URC_FOREIGN_EXCEPTION_CAUGHT{54E9} 67r7
+57n7*URC_PHASE2_ERROR{54E9} 68r7
+58n7*URC_PHASE1_ERROR{54E9} 69r7
+59n7*URC_NORMAL_STOP{54E9} 70r7
+60n7*URC_END_OF_STACK{54E9} 71r7
+61n7*URC_HANDLER_FOUND{54E9} 72r7
+62n7*URC_INSTALL_CONTEXT{54E9} 73r7
+63n7*URC_CONTINUE_UNWIND{54E9} 74r7
+81M9*Exception_Class 83r36 91r18
+83m4*GNAT_Exception_Class{81M9} 8|37r33
+86M9*Unwind_Word 87r8 93r18 94r18 100r18 101r18 102r18 103r18
+90R9*Unwind_Exception 104e14 105r26 108r8 131r44 146r16
+91m7*Class{81M9} 8|37m22
+92m7*Cleanup{4|67M9} 8|38m22
+93m7*Private1{86M9}
+94m7*Private2{86M9}
+100m7*Private3{86M9}
+101m7*Private4{86M9}
+102m7*Private5{86M9}
+103m7*Private6{86M9}
+131P9*GCC_Exception_Access(90R9) 134r54 158r48 162r9
+134U14*Unwind_DeleteException 134>38 135b<c,_Unwind_DeleteException>22
+134p38 Excp{131P9}
+145R9*GNAT_GCC_Exception 151e14 153r26 155r49 8|36r18
+146r7*Header{90R9} 8|37m11
+149r7*Occurrence{2|63R9}
+155P9*GNAT_GCC_Exception_Access(145R9) 162r31 164r35 8|33r35 34r13
+157V13*To_GCC_Exception[3|20]{131P9}
+160V13*To_GNAT_GCC_Exception[3|20]{155P9}
+164V13*New_Occurrence{155P9} 8|33b13 41l8 41t22
+X 8 s-excmac.adb
+34p7 Res{7|155P9} 36m7 37r7 40r14
+

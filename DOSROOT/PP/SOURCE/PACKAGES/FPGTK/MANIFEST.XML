@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<packages>
+<package name="fpgtk">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+  <os name="linux"/>
+  <os name="win32"/>
+  <os name="os2"/>
+  <os name="freebsd"/>
+  <os name="beos"/>
+  <os name="netbsd"/>
+  <os name="solaris"/>
+  <os name="openbsd"/>
+  <os name="darwin"/>
+  <os name="emx"/>
+  <os name="win64"/>
+  <os name="haiku"/>
+  <os name="aix"/>
+  <os name="dragonfly"/>
+ </oses>
+ <filename>fpgt.zip</filename>
+ <author>Luk Vandelaer &amp; Sebastian Guenther (?)</author>
+ <license>LGPL with modification, </license>
+ <homepageurl>www.freepascal.org</homepageurl>
+ <email></email>
+ <description>Lightweight OOP wrapper over GTK1.</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+  <dependency>
+   <package packagename="gtk1"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

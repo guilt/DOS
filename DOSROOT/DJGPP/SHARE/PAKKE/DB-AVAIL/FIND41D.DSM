@@ -1,0 +1,28 @@
+#
+# DSM for findutils 4.1 documentation
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: find41d
+dsm-version: 0.4.0
+dsm-type: documentation
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: findutils
+version: 4.1
+manifest: find41d
+binaries-dsm: find41b
+sources-dsm: find41s
+short-description: GNU Findutils
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: find41d.zip
+
+mailing-list: bug-gnu-utils@prep.ai.mit.edu

@@ -1,0 +1,9 @@
+Free Pascal for i8086 requires an installation of Open Watcom, which can be obtained from:
+
+http://www.openwatcom.org/
+
+Version 1.9 of Open Watcom has been tested and known to work well. Note that it is not necessary to install the 16-bit Open Watcom C/C++ compiler (although it does no harm to install it as well), since we only use the Open Watcom linker (wlink) and library manager (wlib), which are installed even if you install the 32-bit compiler only.
+
+Additional information about the i8086 version of Free Pascal is available in the Free Pascal wiki:
+
+http://wiki.freepascal.org/DOS

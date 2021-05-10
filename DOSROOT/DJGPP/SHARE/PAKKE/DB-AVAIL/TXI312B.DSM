@@ -1,0 +1,29 @@
+#
+# DSM for texinfo 3.12 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.3
+dsm-name: txi312b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: texinfo
+version: 3.12
+manifest: txi312b
+sources-dsm: txi312s
+short-description: Texinfo, the GNU documentation system
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: txi312b.zip
+
+replaces: texinfo < 3.12
+requires: DPMI
+provides: info-reader

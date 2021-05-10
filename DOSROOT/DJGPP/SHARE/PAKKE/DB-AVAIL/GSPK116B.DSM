@@ -1,0 +1,28 @@
+#
+# DSM for gspk 1.16 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: gspk116b
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: gspk
+version: 1.16
+type: binaries
+manifest: gspk116b
+sources-dsm: gspk116s
+
+short-description: GSFtoPK, a font convertor
+license: Free without warranty
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: gspk116b.zip
+
+pre-install-readme: gnu/web2c-7.2/djgpp/README

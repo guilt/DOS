@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<packages>
+<package name="os2units">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+  <os name="os2"/>
+  <os name="emx"/>
+ </oses>
+ <filename>os2.zip</filename>
+ <author></author>
+ <license></license>
+ <email></email>
+ <description>Interface units for various libraries included with OS/2 and/or eComStation (multimedia, direct graphics I/O, management of disk partitions / volumes, simple FTP communication library, etc.).</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

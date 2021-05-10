@@ -1,0 +1,32 @@
+#
+# DSM for ps2pk 1.5 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: pspk15s
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: ps2pk
+version: 1.5
+type: sources
+manifest: pspk15s
+binaries-dsm: pspk15b
+
+short-description: Ps2PK, a font convertor
+license: Unspecified
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: pspk15s.zip
+
+changelog: gnu/web2c-7.2/ps2pkm/ChangeLog
+pre-install-readme: gnu/web2c-7.2/djgpp/README
+
+depends-on: texmflib
+depends-on: kpathsea

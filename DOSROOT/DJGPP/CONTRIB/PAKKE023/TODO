@@ -1,0 +1,263 @@
+pakke 0.2.3 To-Dos & Random Gibber
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+$Id: TODO,v 1.5 2003/03/15 14:50:34 richdawe Exp $
+
+- Verbosity? i.e. add some messages, different levels
+. Audit verbosity, error messages & levels.
+
+- RAR?
+. This has freeware unrar sources.
+
+- bzip2 support? This has been ported to DJGPP.
+. Continue adding bz2 framework.
+
+- Need freeware untarring source too - djtarx? Probably could just use sources
+  from GNU tar, because pakke is GPL'd.
+. Ah, but libpakke is LGPL'd, so we need LGPL (or compatible) tar library.
+
+- Query by package type?
+. Add more flexible query options.
+
+- More stringent checking of versions.
+
+- Type as part of requirement? Default to binaries here - makes most sense.
+. Maybe later, when things are a little more developed.
+
+- How to add packages to available database? Should be fairly easy - copy DSM
+  into db-avail/. Ah, which directory? First in DSM path would make sense.
+  This should be the root path, if the config is correct.
+
+. Option to install DSMs into available database?
+
+. Later: should the install just write out a DSM with all the settings in it?
+  This could include any prefix used, etc. This would then be a "pure" DSM with
+  no comments, etc. in it.
+
+- Is it possible to have two versions of a package installed and satisfy the
+  dependencies? I think the package list may have to be sorted by name &
+  version to make this function correctly.
+
+- Manifests not found, no error given sometimes?
+
+- Remove the distinction between different types of archive. This is pretty
+  pointless really. It can remain in the DSM standard though.
+. Maybe I should remove it from there too, but let the extension spec the
+  archive type?
+
+- Sort package list according to package name?
+. Later: The sort order should be user selectable? Certainly have the install
+  order logged somewhere.
+
+- Add options to modify paths on CLI.
+
+- Add support for digital signatures - RSA, DSA, etc.?
+
+- Move modifiers to bitfields from enum; remove QM_ALLDEPS, because the
+  bitfield can then take care of it.
+
+- Replace AC_CHECK_FUNCS plus object includes in makefile by AC_REPLACE_FUNCS.
+
+- Preserve some files and not others? e.g. config files?
+. keep-file directive - overrides overwriting directives.
+
+- Timestamps on files? Only overwrite if existing file is older!
+. Better to use MD5 hash; also store file attributes.
+. How about using MD5 to check for changed files? Uninstall refuses to delete
+  files with changed signature?
+. See discussion on pakke-workers.
+
+- Make file query use file creation logs from install rather than manifests
+  => more accurate.
+. Create manifests in share/pakke/db, rather than relying on manifest/*.mft,
+  since not all packages have this (e.g. emacs).
+. Later: we can use the MD5 file to get a list of files, although we'd need
+  to strip the prefix off each filename.
+
+- When querying an installed package, the prefix should be obtained from the
+  installed db (the install log), so the user doesn't need to use the
+  --prefix option.
+. Prefix handling needs to be tidied up a lot.
+
+- Use bison for parsing?
+. Yep, switch DSM parser to use it in the future.
+
+- When using pakke on Linux, how should it extract the files? What case
+  filenames should it use? Should it automatically lowercase them? Command-line
+  option / config option?
+
+- Checking & errors on directory with /dev in it.
+. Added isspecialpath() function - needs appropriate usage.
+
+- DSM writing HOWTO
+
+- Use GNU gettext for internationalisation.
+
+- Auto set-up on NT? Generate registry key file, auto-insert into registry
+  (via start command)? (for user's environment).
+
+- DSM for ActiveState's Perl for Win32? So that automake can be installed?
+  It seems to work OK with AS's Perl.
+. Done, but need version numbers too?
+
+- pakke + MSS on CD-ROM -> error, because cannot create log file
+. Partial fix, probably could do better.
+
+- If installing a ZIP file, search for the matching DSM and then install using
+  that, if no DSM in the ZIP file.
+
+- Make a maintainer's target for building source distributions.
+
+- build system needs rewriting - now it builds too much, dependency
+  detection is flawed etc.
+
+- Discuss extending the DSM spec w.r.t.:
+
+. Adding 'configuration-file' directive / file permissions & install/uninstall
+  actions on a per-file basis => --purge, --erase for uninstall (see
+  Laurynas's mail that mentions dpkg's options).
+
+- Keeping track of files - allow them to belong to multiple packages, to cope
+  with broken packages that include files they shouldn't.
+
+- Allow types in deps, so (weird example) sources conflicts-with binary is
+  allowed (bizarre semantics?).
+
+- Add support for installing group DSMs?
+
+- Fix 'install' to do text docs too.
+. Fixed temporarily, but should be done better.
++++OK
+
+- Support for letters in version numbers, to handle e.g. bzip2 0.9.5d.
+
+- Document regexp matches - confusing treatment of '.' in regexp vs.
+  user strings?
+
+- Support operation on several packages simultaneously. Upgrade is probably
+  only useful when you can do this, e.g. upgrading gcc release.
+
+- Support for scripts, built-in scripting language.
+
+- Sort out allowed characters in pakkerc.
+. Added more, still have all allowed characters?
+
+- Fix popt warnings on Linux - const char ** on argv.
+
+- Add package building utils (see discussion with Tim van Holder
+  on pakke-workers).
+
+- Types in package comparison - xref, etc. should compare types explicitly.
+  Maybe package_vercmp() should take a flag to indicate whether type should
+  be included in comparison.
+
+- Obsolete simple match type, since this is just a simple case of
+  user-specifier and can be handled by the same code.
+
+- Upgrading to previous version of a package - need to look at 'replaces: <'
+  in package of same name - reverse dependency - installed vs. new.
+
+- Update all DSMs to invoke install-info like this:
+
+    install-info --info-dir=<prefix>/info \
+    --info-file=<prefix>/info/thingy.info
+
+  as post-install and post-uninstall step. We need to define substitution
+  syntax for scripting commands.
+
+- '--syncdb' needs to look for removed packages too, I think.
+
+- Add a test for dependencies like:
+
+    requires: libfoo >= 4.*
+    requires: libfoo < 5
+
+- Type of dependencies doesn't default to binary anymore => deps broken!
+. Actually, we need to specify types in dependencies, but default to
+  the same type as the parent package.
+. provides directives shouldn't have a type? But how to match
+  provides vs. requires on a provision?
+
+- Munch CRLFs at the end of line, when dumping text docs in
+  --pre-install-readme, etc.
+. Hmmm, which package did that happen with? It seems to display OK now.
+. Fileutils 4.1 alpha 1, when piped through less.
+
+- How does --syncdb cope if more than one DSM matches a manifest name
+  for a package that it needs to synchronise?
+
+- Uses of packlist_find() do not free memory after done with list?
+
+- Make 'dsmcheck' check if 'short-description' and 'long-description' have
+  a line length greater than 80 characters (once formatted).
+. Check other directives too?
+
+- Does libpakke cope when there's no manifest path?
+
+- '--initdb' should copy wget too.
+
+- Allow HTTP/FTP mirrors to always be used in non-interactive mode
+  via a command-line switch.
+
+- Use RATS to audit code for possible buffer overruns. (There are
+  quite a few - e.g.: lazy use of strcpy()).
+
+- Make dsmcheck detect duplicate DSMs, to help catch the case
+  where you copy one DSM file for a package, e.g. binary, to another
+  which should be a sources DSM, but forget to change the dsm-type.
+
+- HOWTO for HTTP/FTP downloading.
+
+- Use __dpmi_yield() in package (ZIP) checking, to hog processor less.
+
+- --syncdb when dsXXXXXX.zip doesn't exist?
+
+- Cope with duff downloads into the package directory: zero-length files,
+  ZIPs with bad CRCs, etc.
+
+- Add a diff option to upgrade, a` la dpkg.
+
+- Weird message on editing & syncing binutils 2.12.1 (binaries)'s DSM?
+". Matched package: $B_NAME -> binutils 2.12.1 (binaries)"
+
+- Write DSM for readline.
+
+- Add support for backing/whatever everything up
+  on install/upgrade/uninstall, to avoid having to press lots of keys.
+
+- Remove empty directories, when uninstalling.
+. This should probably only be done, if the directory did not exist
+  before or was not created by another package.
+
+- Add a progress indicator.
+
+- Tidy-up after automakification:
+
+* Use (GNU) options in all Makefile.ams?
+* Remove scripts/mkconfig.sh. +++DONE
+* Sort out licensing docs. +++DONE
+* Actually generate src/version.h from src/version.hin. +++DONE
+* Sort out Make-cfg.in - possibly eliminate it. +++DONE
+* Sort out test/Makefile.tst - possibly eliminate it.
+* Rename todo.txt -> TODO? +++DONE
+* DSMs should have entries for readmes, changelogs. +++DONE
+* Use error-reporting from config.h in pakke, dsmcheck help output. +++DONE
+
+- How to handle removes, when multiple packages match?
+
+- pakke & dsmcheck should work on arbitrary file names?
+
+- Copy DSMs from manifest into db-avail, on --syncdb?
+
+- Warn when manifest != dsm-name.
++++DONE
+
+- --syncdb fails when the database is empty?
++++FIXED
+
+- Fix bin, when there's no pmstub specified.
++++DONE - always use pmstub.sh
+
+- Add a test for find_archive().
+
+Richard Dawe <rich@phekda.freeserve.co.uk>

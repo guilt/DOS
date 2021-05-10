@@ -1,0 +1,554 @@
+Chapter 2
+
+
+
+
+
+PC and PS/2 Video Modes
+32   Fastgraph User's Guide
+
+Overview
+
+     In the PC and PS/2 worlds, the method by which information appears on
+the computer's display screen is determined by the video mode currently in
+effect.  The video modes have different resolutions, different character or
+pixel attributes, different video memory structures, and other inherent
+hardware differences.  However, you do not need an in-depth knowledge of
+these video internals, because Fastgraph handles the necessary details.
+
+     The PC and PS/2 video modes may be separated into two major classes:
+text modes and graphics modes.  In text modes, the display screen is divided
+into character cells.  By default, there are 25 rows and either 40 or 80
+columns of cells, and in each cell we can store any of the 256 characters in
+the IBM PC character set.  Each character has an associated attribute that
+determines such things as its foreground color, its background color, and
+whether or not the character blinks.  In graphics modes, the display screen
+is divided into picture elements, or pixels.  Depending on the video mode,
+the number of pixel rows ranges between 200 and 768, while the number of
+columns ranges between 320 and 1,024.  Each pixel has an associated value
+that determines the color of the pixel.  The number of character cells or
+pixels available is called the resolution of the screen.
+
+     The display adapter (graphics card) and the video display (monitor)
+connected to it determine the video modes available on a given system.  The
+following table summarizes the characteristics of the PC and PS/2 video modes
+that Fastgraph supports.
+
+Mode                     No. of    Supported                Supported
+No.  Type Resolution     Colors    Adapters                 Displays
+
+ 0   T    40 x 25        16/8      CGA,EGA,VGA,MCGA,SVGA    RGB,ECD,VGA,SVGA
+ 1   T    40 x 25        16/8      CGA,EGA,VGA,MCGA,SVGA    RGB,ECD,VGA,SVGA
+ 2   T    80 x 25        16/8      CGA,EGA,VGA,MCGA,SVGA    RGB,ECD,VGA,SVGA
+ 3   T    80 x 25        16/8      CGA,EGA,VGA,MCGA,SVGA    RGB,ECD,VGA,SVGA
+ 4   G    320 x 200      4         CGA,EGA,VGA,MCGA,SVGA    RGB,ECD,VGA,SVGA
+ 5   G    320 x 200      4         CGA,EGA,VGA,MCGA,SVGA    RGB,ECD,VGA,SVGA
+ 6   G    640 x 200      2/16      CGA,EGA,VGA,MCGA,SVGA    RGB,ECD,VGA,SVGA
+ 7   T    80 x 25        b/w       MDA,HGC,EGA,VGA,SVGA     Monochrome
+ 9   G    320 x 200      16        Tandy 1000,PCjr          RGB
+11   G    720 x 348      b/w       HGC                      Monochrome
+12   G    320 x 200      b/w       HGC                      Monochrome
+13   G    320 x 200      16        EGA,VGA,SVGA             RGB,ECD,VGA,SVGA
+14   G    640 x 200      16        EGA,VGA,SVGA             RGB,ECD,VGA,SVGA
+15   G    640 x 350      b/w       EGA,VGA,SVGA             Mono,VGA,SVGA
+16   G    640 x 350      16/64     EGA,VGA,SVGA             ECD,VGA,SVGA
+17   G    640 x 480      2/256K    VGA,MCGA,SVGA            VGA,SVGA
+18   G    640 x 480      16/256K   VGA,SVGA                 VGA,SVGA
+19   G    320 x 200      256/256K  VGA,MCGA,SVGA            VGA,SVGA
+20   G    320 x 200      256/256K  VGA,SVGA                 VGA,SVGA
+21   G    320 x 400      256/256K  VGA,SVGA                 VGA,SVGA
+22   G    320 x 240      256/256K  VGA,SVGA                 VGA,SVGA
+23   G    320 x 480      256/256K  VGA,SVGA                 VGA,SVGA
+24   G    640 x 400      256/256K  SVGA                     SVGA
+25   G    640 x 480      256/256K  SVGA                     SVGA
+26   G    800 x 600      256/256K  SVGA                     SVGA
+27   G    1024 x 768     256/256K  SVGA                     SVGA
+                                      Chapter 2:  PC and PS/2 Video Modes   33
+
+28   G    800 x 600      16/256K   SVGA                     SVGA
+29   G    1024 x 768     16/256K   SVGA                     SVGA
+
+     Some notes about the format and abbreviations used in this table are in
+order.  In the "type" column, "T" means a text mode and "G" means a graphics
+mode.  A single value in the "number of colors" column refers to the number
+of colors available in that video mode.  In text modes, a pair of numbers
+such as 16/8 means each displayed character can have one of 16 foreground
+colors and one of 8 background colors.  In graphics modes, a pair of numbers
+such as 16/64 means 16 colors can be displayed simultaneously from a
+collection, or palette, of 64.  The "b/w" listed in the monochrome modes
+stands for "black and white".  Characters or pixels in these video modes do
+not really have associated colors but instead have display attributes such as
+blinking or different intensities.
+
+     The meanings of the abbreviations in the "supported adapters" and
+"supported displays" columns are:
+
+     CGA       Color Graphics Adapter
+     ECD       Enhanced Color Display
+     EGA       Enhanced Graphics Adapter
+     HGC       Hercules Graphics Card
+     MCGA      Multi-Color Graphics Array
+     MDA       Monochrome Display Adapter
+     RGB       Red-Green-Blue Color Display
+     VGA       Video Graphics Array
+     SVGA      SuperVGA
+
+The use of the term "VGA" in the "supported display" column refers to any
+analog display, such as a VGA or Multisync monitor.  The term "SVGA" refers
+explicitly to a SuperVGA monitor or adapter.
+
+     The IBM PS/2 family does not have an adapter and display combination per
+se.  Instead, the video hardware used in these systems is called the video
+subsystem.  The Model 25 and Model 30 have an MCGA-based video subsystem,
+while other models have a VGA-based video subsystem.  From Fastgraph's
+perspective, the PS/2 video subsystem is no different than an ordinary VGA
+card and monitor.
+
+     This rest of this chapter will provide an overview of the most important
+features and restrictions of each video mode.  The first section will discuss
+the text modes, while the following section will discuss the graphics modes.
+
+
+Text Modes
+
+     There are five text video modes in the IBM PC and PS/2 family.  Four of
+these modes (0, 1, 2, and 3) are designed for color displays, while the
+remaining mode (7) is designed for monochrome displays.  All text modes were
+introduced with the original IBM PC.
+
+     In text modes, the screen is divided into character cells.  There are
+two bytes of video memory associated with each character cell -- one byte for
+the character's ASCII value, and another for the character's display
+attribute.  The amount of video memory required to store one screen of
+information (called a video page) is thus
+34   Fastgraph User's Guide
+
+                    number_of_columns x number_of_rows x 2
+
+All text modes use 25 rows, so for the 40-column modes (0 and 1) the size of
+a video page is 2,000 bytes, and for the 80-column modes (2, 3, and 7) the
+size of a video page is 4,000 bytes.
+
+Mode                     No. of    Supported                Supported
+No.  Type Resolution     Colors    Adapters                 Displays
+
+ 0   T    40 x 25        16/8      CGA,EGA,VGA,MCGA,SVGA    RGB,ECD,VGA,SVGA
+ 1   T    40 x 25        16/8      CGA,EGA,VGA,MCGA,SVGA    RGB,ECD,VGA,SVGA
+ 2   T    80 x 25        16/8      CGA,EGA,VGA,MCGA,SVGA    RGB,ECD,VGA,SVGA
+ 3   T    80 x 25        16/8      CGA,EGA,VGA,MCGA,SVGA    RGB,ECD,VGA,SVGA
+ 7   T    80 x 25        b/w       MDA,HGC,EGA,VGA,SVGA     Monochrome
+
+     The remainder of this section will describe the text video modes in more
+detail.
+
+Mode 0
+
+     Mode 0 is a 40-column by 25-row color text mode.  It is often called a
+colorless mode since it was designed to be used with composite or television
+monitors (as opposed to RGB monitors).  When used with these types of
+monitors, the available 16 "colors" appear as distinct shades of gray.  When
+used with an RGB monitor, mode 0 is identical in all respects to mode 1.  The
+use of composite or television monitors as PC video displays has virtually
+disappeared today.  As a result, mode 0 is used infrequently.
+
+Mode 1
+
+     Mode 1 is a 40-column by 25-row color text mode.  It is supported across
+all video adapter and color display combinations in the PC and PS/2 families.
+Characters displayed in mode 1 have an associated display attribute that
+defines the character's foreground color, its background color, and whether
+or not it blinks.  Sixteen foreground colors and eight background colors are
+available.
+
+Mode 2
+
+     Mode 2 is an 80-column by 25-row color text mode.  Like mode 0, it is
+often called a colorless mode since it was designed to be used with composite
+or television monitors (as opposed to RGB monitors).  When used with these
+types of monitors, the available 16 "colors" appear as distinct shades of
+gray.  When used with an RGB monitor, mode 2 is identical in all respects to
+mode 3.  The use of composite or television monitors as PC video displays has
+virtually disappeared today.  As a result, mode 2 is used infrequently.
+
+Mode 3
+
+     Mode 3 is an 80-column by 25-row color text mode.  It is the default
+video mode for systems that use any type of color display.  This mode is
+supported across all video adapter and color display combinations in the PC
+and PS/2 families.  Characters displayed in mode 3 have an associated display
+attribute that defines the character's foreground color, its background
+color, and whether or not it blinks.  Sixteen foreground colors and eight
+background colors are available.
+                                      Chapter 2:  PC and PS/2 Video Modes   35
+
+Mode 7
+
+     Mode 7 is the 80-column by 25-row monochrome text mode.  It is the
+default video mode for systems that use a monochrome display.  To use this
+mode, you must have a Monochrome Display Adapter (MDA), Hercules Graphics
+Card (HGC), or an Enhanced Graphics Adapter (EGA) connected to a monochrome
+display.  Most VGA and SVGA display adapters also provide an emulation mode
+that allows you to use mode 7 with analog displays.  Characters displayed in
+mode 7 have an associated display attribute that defines whether the
+character is invisible, normal, bold, underlined, reversed, blinking, or a
+combination of these.
+
+
+Graphics Modes
+
+     There are 13 standard graphics video modes available in the IBM PC and
+PS/2 family.  Fastgraph provides support for 11 of the 13 modes (modes 8 and
+10, which are specific to the PCjr and Tandy 1000 systems, are not
+supported).  In addition to these 13 modes, Fastgraph supports six SuperVGA
+graphics modes (modes 24 to 29), four extended VGA modes (modes 20 to 23),
+and two video modes for the Hercules Graphics Card (modes 11 and 12).  The
+following sections discuss these graphics modes in more detail.  The
+discussions include an overview of video memory organization in each mode,
+but you don't need a knowledge of this subject to use Fastgraph.
+
+
+CGA Graphics Modes
+
+     Modes 4, 5, and 6 are designed to be used with the Color Graphics
+Adapter (CGA) and for this reason are called the native CGA modes.  They were
+the only graphics modes available with the original IBM PC.  Newer graphics
+adapters (EGA, VGA, MCGA, and SVGA) can emulate the CGA, which means that the
+CGA graphics modes are available on any PC or PS/2 system equipped with a
+color display.
+
+Mode                     No. of    Supported                Supported
+No.  Type Resolution     Colors    Adapters                 Displays
+
+ 4   G    320 x 200      4         CGA,EGA,VGA,MCGA,SVGA    RGB,ECD,VGA,SVGA
+ 5   G    320 x 200      4         CGA,EGA,VGA,MCGA,SVGA    RGB,ECD,VGA,SVGA
+ 6   G    640 x 200      2/16      CGA,EGA,VGA,MCGA,SVGA    RGB,ECD,VGA,SVGA
+
+Mode 4
+
+     Mode 4 is a CGA graphics mode with a resolution of 320 horizontal pixels
+by 200 vertical pixels.  Each pixel can assume one of four colors (the
+available colors are determined by which one of six palettes has been
+selected), so each pixel requires two bits of video memory.  This means that
+each byte of video memory represents four pixels.
+
+Mode 5
+
+     Mode 5 is the colorless analog of mode 4.  It was designed to be used
+with composite or television monitors (as opposed to RGB monitors).  When
+used with these types of monitors, the four colors appear as distinct shades
+of gray.  When used with an RGB monitor, mode 5 is essentially identical to
+36   Fastgraph User's Guide
+
+mode 4.  The use of composite or television monitors as PC video displays has
+virtually disappeared today.  As a result, mode 5 is used infrequently.
+
+Mode 6
+
+     Mode 6 is a CGA graphics mode with a resolution of 640 horizontal pixels
+by 200 vertical pixels.  Each pixel can assume two states -- on or off.  The
+color in which the "on" pixels appear can be selected from a palette of 16
+available colors.  Each pixel thus requires one bit of video memory, which
+means that each byte of video memory represents eight pixels.
+
+
+Tandy 1000 and PCjr Graphics Modes
+
+     Modes 8, 9, and 10 are only available on the PCjr and Tandy 1000 series
+computers (these systems also support modes 4, 5, and 6).  Modes 8 and 10 are
+not widely used, and for this reason Fastgraph does not support them.
+
+Mode                     No. of    Supported                Supported
+No.  Type Resolution     Colors    Adapters                 Displays
+
+ 8   G    160 x 200      16        Tandy 1000,PCjr          RGB
+ 9   G    320 x 200      16        Tandy 1000,PCjr          RGB
+10   G    640 x 200       4        Tandy 1000,PCjr          RGB
+
+Mode 9
+
+     Mode 9 is a Tandy 1000 and PCjr graphics mode with a resolution of 320
+horizontal pixels by 200 vertical pixels.  Each pixel can assume one of 16
+colors, so each pixel requires four bits of video memory.  This means that
+each byte of video memory represents two pixels.  The Tandy 1000 and PCjr use
+standard random-access memory (RAM) as video memory.
+
+
+Hercules Graphics Modes
+
+     Modes 11 and 12 are used with the Hercules Graphics Card (HGC) and a
+monochrome display.  As such, they are not true IBM video modes, but because
+of the popularity of the HGC, Fastgraph provides support for this adapter.
+
+Mode                     No. of    Supported                Supported
+No.  Type Resolution     Colors    Adapters                 Displays
+
+11   G    720 x 348      b/w       HGC                      Monochrome
+12   G    320 x 200      b/w       HGC                      Monochrome
+
+Mode 11
+
+     Mode 11 is a true Hercules graphics mode with a resolution of 720
+horizontal pixels by 348 vertical pixels.  Each pixel can assume two
+states -- on or off.  Each pixel thus requires one bit of video memory, which
+means that each byte of video memory represents eight pixels.
+                                      Chapter 2:  PC and PS/2 Video Modes   37
+Mode 12
+
+     Mode 12 is a software-simulated Hercules graphics mode with an effective
+resolution of 320 horizontal pixels by 200 vertical pixels.  Its purpose is
+to provide a resolution that is available with all other graphics display
+adapters.
+
+     This mode converts all coordinates from the 320 by 200 space (called
+virtual coordinates) into the 720 by 348 coordinate system (called physical
+coordinates).  It does this by using two physical pixels for each virtual
+pixel and scan doubling the odd-numbered virtual rows.  Finally, offsets are
+added to the resulting physical coordinates to center the image area on the
+display.  This creates an image area bounded horizontally by the physical
+coordinates 40 and 679 and vertically by the physical coordinates 24 and 323.
+
+
+EGA Graphics Modes
+
+     Modes 13 through 16 were introduced with the Enhanced Graphics Adapter
+(EGA) and for this reason are called the native EGA modes.  VGA and SVGA
+adapters also provide support for these modes, but the MCGA does not.  The
+original IBM EGA only contained 64K bytes of video memory, but memory could
+be added in 64K increments to fully populate the adapter with 256K bytes of
+video memory.  As other manufacturers developed EGA cards, they generally
+included 256K bytes of video memory as a standard feature.
+
+Mode                     No. of    Supported                Supported
+No.  Type Resolution     Colors    Adapters                 Displays
+
+13   G    320 x 200      16        EGA,VGA,SVGA             RGB,ECD,VGA,SVGA
+14   G    640 x 200      16        EGA,VGA,SVGA             RGB,ECD,VGA,SVGA
+15   G    640 x 350      b/w       EGA,VGA,SVGA             Mono,VGA,SVGA
+16   G    640 x 350      16/64     EGA,VGA,SVGA             ECD,VGA,SVGA
+
+Mode 13
+
+     Mode 13 is an EGA graphics mode with a resolution of 320 horizontal
+pixels by 200 vertical pixels.  Each pixel can assume one of 16 colors, so
+each pixel requires four bits of video memory.  In this mode, video memory is
+organized as four bit planes.  Each video memory address actually references
+four bytes, one in each plane.  Put another way, each video memory byte
+references eight pixels, stored one bit per plane.
+
+Mode 14
+
+     Mode 14 is an EGA graphics mode with a resolution of 640 horizontal
+pixels by 200 vertical pixels.  Each pixel can assume one of 16 colors, so
+each pixel requires four bits of video memory.  In this mode, video memory is
+organized as four bit planes.  Each video memory address actually references
+four bytes, one in each plane.  Put another way, each video memory byte
+references eight pixels, stored one bit per plane.
+
+Mode 15
+
+     Mode 15 is an EGA monochrome graphics mode with a resolution of 640
+horizontal pixels by 350 vertical pixels.  Each pixel can assume one of 4
+display attributes, so each pixel requires two bits of video memory.  In this
+38   Fastgraph User's Guide
+
+mode, video memory is organized as four bit planes, two of which are
+disabled.  Each video memory address actually references two bytes, one in
+each enabled plane.  Put another way, each video memory byte references eight
+pixels, stored one bit per plane.
+
+Mode 16
+
+     Mode 16 is an EGA graphics mode with a resolution of 640 horizontal
+pixels by 350 vertical pixels.1  Each pixel can assume one of 16 colors (the
+16 colors can be selected from a palette of 64 colors), so each pixel
+requires four bits of video memory.  In this mode, video memory is organized
+as four bit planes.  Each video memory address actually references four
+bytes, one in each plane.  Put another way, each video memory byte references
+eight pixels, stored one bit per plane.
+
+
+VGA and MCGA Graphics Modes
+
+     Modes 17, 18, and 19 were introduced with the MCGA and VGA video
+subsystems of the IBM PS/2 computers.  Since the introduction of the PS/2,
+other manufacturers have developed VGA cards that can be used with the PC
+family.  VGA and SVGA adapters support all three of these modes, but the MCGA
+does not support mode 18.  Modes 17 and 18 are called native VGA modes.
+
+Mode                     No. of    Supported                Supported
+No.  Type Resolution     Colors    Adapters                 Displays
+
+17   G    640 x 480      2/256K    VGA,MCGA,SVGA            VGA,SVGA
+18   G    640 x 480      16/256K   VGA,SVGA                 VGA,SVGA
+19   G    320 x 200      256/256K  VGA,MCGA,SVGA            VGA,SVGA
+
+Mode 17
+
+     Mode 17 is a VGA and MCGA graphics mode with a resolution of 640
+horizontal pixels by 480 vertical pixels.  Each pixel can assume two
+states -- on or off.  The color in which the "on" and "off" pixels appear can
+be selected from a palette of 262,144 available colors.  Each pixel thus
+requires one bit of video memory, which means that each byte of video memory
+represents eight pixels.  On VGA and SVGA systems, video memory is organized
+as four bit planes, and mode 17 is implemented by enabling one of these
+planes.
+
+Mode 18
+
+     Mode 18 is a native VGA graphics mode with a resolution of 640
+horizontal pixels by 480 vertical pixels.  Each pixel can assume one of 16
+colors (the 16 colors can be selected from a palette of 262,144 colors), so
+each pixel requires four bits of video memory.  In this mode, video memory is
+organized as four bit planes.  Each video memory address actually references
+four bytes, one in each plane.  Put another way, each video memory byte
+references eight pixels, stored one bit per plane.
+____________________
+
+     (1) In mode 16, the video page size actually is 640 by 400 pixels, though
+the screen resolution is 640 by 350.  The final 50 pixel rows (350 to 399) on
+each video page are not displayed but are available for off-screen storage.
+                                      Chapter 2:  PC and PS/2 Video Modes   39
+
+Mode 19
+
+     Mode 19 is a VGA and MCGA graphics mode with a resolution of 320
+horizontal pixels by 200 vertical pixels.  Each pixel can assume one of 256
+colors (the 256 colors can be selected from a palette of 262,144 colors), so
+each pixel requires eight bits of video memory.  This means that each byte of
+video memory represents one pixel.
+
+
+Extended VGA (XVGA) Graphics Modes
+
+     Modes 20 through 23 are the extended VGA or XVGA graphics modes.
+Although these video modes are not standard VGA modes, they will work on any
+register-compatible VGA or SVGA adapter.  These video modes are especially
+popular for game development because they offer video page resizing, whereas
+the standard 256-color mode does not.  Mode 20 is the XVGA version of mode
+19, while mode 21 uses scan doubling to achieve a 400-line display.  Mode 22
+is the so-called "mode X" and is appealing because it has a 1:1 aspect ratio.
+Mode 23 is identical to mode 22, but it uses scan doubling to achieve a 480-
+line display.
+
+Mode                     No. of    Supported                Supported
+No.  Type Resolution     Colors    Adapters                 Displays
+
+20   G    320 x 200      256/256K  VGA,SVGA                 VGA,SVGA
+21   G    320 x 400      256/256K  VGA,SVGA                 VGA,SVGA
+22   G    320 x 240      256/256K  VGA,SVGA                 VGA,SVGA
+23   G    320 x 480      256/256K  VGA,SVGA                 VGA,SVGA
+
+Mode 20
+
+     Mode 20 is an XVGA graphics mode with a resolution of 320 horizontal
+pixels by 200 vertical pixels.  Each pixel can assume one of 256 colors (the
+256 colors can be selected from a palette of 262,144 colors), so each pixel
+requires eight bits of video memory.  This means that each byte of video
+memory represents one pixel.  This mode offers the same resolution and number
+of colors as mode 19, but its video memory is organized as a series of four
+bit planes.  Every fourth pixel is stored in the same plane (that is, a pixel
+whose horizontal coordinate is x resides in plane x mod 4).
+
+Mode 21
+
+     Mode 21 is an XVGA color graphics mode with a resolution of 320
+horizontal pixels by 400 vertical pixels.  Except for the resolution, its
+video memory organization is identical to mode 20.
+
+Mode 22
+
+     Mode 22 is an XVGA color graphics mode with a resolution of 320
+horizontal pixels by 240 vertical pixels.  This is the so-called "mode X"
+made famous by Michael Abrash in Dr. Dobb's Journal.  Except for the
+resolution, its video memory organization is identical to mode 20.
+40   Fastgraph User's Guide
+
+Mode 23
+
+     Mode 23 is an XVGA color graphics mode with a resolution of 320
+horizontal pixels by 480 vertical pixels.  Except for the resolution, its
+video memory organization is identical to mode 20.
+
+
+SuperVGA (SVGA) Graphics Modes
+
+     Modes 24 through 29 are the SuperVGA or SVGA graphics modes.  If you've
+done any work with SVGA cards, you probably know that different manufacturers
+use different numbers to reference the SVGA video modes.  For example, the
+640 by 480 256-color graphics mode number is 62 hex on ATI cards, 5D hex on
+Trident cards, and 2E hex on Tseng Labs cards.  Fastgraph's SVGA kernel,
+described in detail in the next chapter, handles the details of mapping
+Fastgraph's general SVGA video mode numbers (24 to 29) to the chipset-
+specific video mode numbers of the supported SVGA cards.
+
+Mode                     No. of    Supported                Supported
+No.  Type Resolution     Colors    Adapters                 Displays
+
+24   G    640 x 400      256/256K  SVGA                     SVGA
+25   G    640 x 480      256/256K  SVGA                     SVGA
+26   G    800 x 600      256/256K  SVGA                     SVGA
+27   G    1024 x 768     256/256K  SVGA                     SVGA
+28   G    800 x 600      16/256K   SVGA                     SVGA
+29   G    1024 x 768     16/256K   SVGA                     SVGA
+
+Mode 24
+
+     Mode 24 is a SuperVGA graphics mode with a resolution of 640 horizontal
+pixels by 400 vertical pixels.  Each pixel can assume one of 256 colors (the
+256 colors can be selected from a palette of 262,144 colors), so each pixel
+requires eight bits of video memory.  This means that each byte of video
+memory represents one pixel, so at least 256K of video memory is needed for
+this mode.  Note that a fair number of SVGA cards do not support this video
+mode.
+
+Mode 25
+
+     Mode 25 is a SuperVGA graphics mode with a resolution of 640 horizontal
+pixels by 480 vertical pixels.  It is probably the most popular SVGA graphics
+mode.  Each pixel can assume one of 256 colors (the 256 colors can be
+selected from a palette of 262,144 colors), so each pixel requires eight bits
+of video memory.  This means that each byte of video memory represents one
+pixel, so at least 512K of video memory is needed for this mode.
+
+Mode 26
+
+     Mode 26 is a SuperVGA graphics mode with a resolution of 800 horizontal
+pixels by 600 vertical pixels.  Each pixel can assume one of 256 colors (the
+256 colors can be selected from a palette of 262,144 colors), so each pixel
+requires eight bits of video memory.  This means that each byte of video
+memory represents one pixel, so at least 512K of video memory is needed for
+this mode.
+                                      Chapter 2:  PC and PS/2 Video Modes   41
+
+Mode 27
+
+     Mode 27 is a SuperVGA graphics mode with a resolution of 1024 horizontal
+pixels by 768 vertical pixels.  Each pixel can assume one of 256 colors (the
+256 colors can be selected from a palette of 262,144 colors), so each pixel
+requires eight bits of video memory.  This means that each byte of video
+memory represents one pixel, so at least 768K of video memory is needed for
+this mode.
+
+
+Mode 28
+
+     Mode 28 is a SuperVGA graphics mode with a resolution of 800 horizontal
+pixels by 600 vertical pixels.  Each pixel can assume one of 16 colors (the
+16 colors can be selected from a palette of 262,144 colors), so each pixel
+requires four bits of video memory.  In this mode, video memory is organized
+as four bit planes.  Each video memory address actually references four
+bytes, one in each plane.  Put another way, each video memory byte references
+eight pixels, stored one bit per plane.  At least 256K of video memory is
+needed to use this mode.
+
+Mode 29
+
+     Mode 29 is a SuperVGA graphics mode with a resolution of 1024 horizontal
+pixels by 768 vertical pixels.  Each pixel can assume one of 16 colors (the
+16 colors can be selected from a palette of 262,144 colors), so each pixel
+requires four bits of video memory.  In this mode, video memory is organized
+as four bit planes.  Each video memory address actually references four
+bytes, one in each plane.  Put another way, each video memory byte references
+eight pixels, stored one bit per plane.  At least 512K of video memory is
+needed to use this mode.
+42   Fastgraph User's Guide

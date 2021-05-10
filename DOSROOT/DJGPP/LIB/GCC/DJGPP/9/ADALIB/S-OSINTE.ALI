@@ -1,0 +1,31 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV SPARK_05
+
+U system.os_interface%s	s-osinte.ads		a1fc79d1 NE OL PR PK
+W system%s		system.ads		system.ali
+
+D system.ads		20190108125404 27426ea2 system%s
+D s-osinte.ads		20190108125404 86be1773 system.os_interface%s
+X 1 system.ads
+37K9*System 148e11 2|38r9 51r5
+X 2 s-osinte.ads
+38K16*OS_Interface 1|37k9 2|51l12 51e24
+45N4*Max_Interrupt 46r42
+46I9*Signal<integer>
+48I9*sigset_t<integer>
+49I9*Thread_Id<integer>
+

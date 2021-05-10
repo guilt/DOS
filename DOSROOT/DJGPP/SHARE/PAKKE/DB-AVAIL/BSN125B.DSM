@@ -1,0 +1,31 @@
+#
+# DSM for bison 1.25 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.2
+dsm-name: bsn125b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: bison
+version: 1.25
+manifest: bsn125b
+sources-dsm: bsn125s
+documentation-dsm: bsn125d
+short-description: GNU bison
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: bsn125b.zip
+
+replaces: bison < 1.25
+requires: DPMI
+# For reading docs
+depends-on: info-reader

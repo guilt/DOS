@@ -1,0 +1,42 @@
+#
+# DSM for make 3.78.1 sources
+# Written by Richard Dawe <richdawe@bigfoot.com> 2000-04-02
+#
+
+dsm-file-version: 1.5
+dsm-name: mak3781s
+dsm-version: 0.4.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: make
+version: 3.78.1
+manifest: mak3781s
+binaries-dsm: mak3781b
+short-description: GNU make
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: mak3781s.zip
+
+requires: gcc
+requires: djdev
+
+# Build process is possible without having make installed, so 'make' is only
+# suggested, not mandatory:
+depends-on: make
+
+# If you want to do it in unixy way:
+depends-on: bash
+depends-on: fileutils
+depends-on: sed
+depends-on: texinfo
+
+# Wanna run testsuite?
+depends-on: perl
+depends-on: sh-utils

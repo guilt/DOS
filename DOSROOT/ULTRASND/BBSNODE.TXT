@@ -1,0 +1,153 @@
+
+                                           A d v a n c e d
+                   ÜÜÜÜ  ÜÜÜÜÜ    ÜÜÜÜ  ÜÜ    ÜÜ Ü  ÜÜÜÜÜ
+                  Þ  ÜÜ  Þ    Ý  ÞÛ  ÛÝ ÞÛ    ÛÝ Û ÞÜÜÜÜÜ
+                  Þ    Ý ÞßßÛß  ÞÛ    ÛÝ ÞÛ  ÛÝ  Û       Ý
+                   ßßßß  ß   ß  ß      ß  ßßßß   ß  ßßßßß
+                  Advanced Gravis Computer Technology Ltd.
+
+      Fax (604) 431-5155                   BBS  (604) 431-5927 V32bis
+      Compuserve: GO PCVENB (71333,350)         (604) 431-7553 V.Fast
+      FidoNET: 1:153/978                   InterNET EMail: tech@gravis.com
+      AOL: Adv Gravis                      SBCNET: 13:900/3
+
+        Copyright (C) 1993 by Advanced Gravis Computer Technology Ltd.
+                           All Rights Reserved
+
+                     Authorized Gravis BBS Nodes List
+                                 as of
+                            August 21, 1994
+                     --------------------------------
+
+Name                    Location           Node No.    BBS Phone No.   Speed
+=============================================================================
+Advanced Gravis         Burnaby, Canada   *1:153/978   (604) 431-5927  V32bis
+|                                         *13:900/3
+|                                         *94:850/103
+|                                         %gravis.com
+MIDI 1040               Vancouver, Canada  1:153/7040  (604) 732-4446  V32bis
+Infinite Dreams         Vancouver, Canada  1:153/7042  (604) 733-6432  DS
+Home Hardware           Vancouver, Canada  1:153/923   (604) 948-0275  DS
+|                                                      (604) 948-1175  DS
+WolfPack                Richmond, Canada   1:153/811   (604) 275-3047  DS
+T-8000 Info. System     Calgary, Canada   *1:134/160   (403) 686-2236  DS16.8
+|                                     t8000.cuc.ab.ca  (403) 246-4487  V32bis
+|                             ftpmail@t8000.cuc.ab.ca  (403) 686-0816  V32bis
+Download Dungeon        Ontario, Canada    1:229/318   (705) 749-3233  V32bis
+|                                                      (705) 749-2345  V32bis
+|                                                      (705) 749-9632  V32bis
+Super Sonic             Ontario, Canada    1:250/722   (416) 225-2872  2400
+|                                                      (416) 225-8942  DS
+QWERTY                  Quebec, Canada     1:167/625   (514) 473-9357  VFC28
+Software Creations      MA, USA            1:322/601   (508) 368-7139  V32bis
+| Voted #1 BBS in NA
+Vipers Layer            New York, USA      13:435/100  (716) 787-1155  DS
+The Sound Barrier       New York, USA      13:420/0    (718) 979-6629  DS
+|                                                      (718) 979-9406  V32bis
+Music Connection        Texas, USA (Plano) 1:124/3109  (214) 596-2827 =DS
+|                                          1:124/3110  (214) 964-3743  DS
+CyberSpace - The Matrix Texas, USA(Carrol) 1:124/6201  (214) 394-9339  V32bis
+|                                          13:100/22
+PSyCHOTRON              Texas, USA(El Pas) 13:110/100  (915) 592-6747  V32bis
+Contrailes BBS          Texas, USA(Euless) 1:130/83    (817) 355-9252  V32bis
+JoyFul Noise            Oregon, USA        1:105/5     (503) 335-9600 ZV32bis
+|                                          1:105/55    (503) 335-3053 &DS
+Whammy Bar BBS          IL, USA           13:555/1     (708) 941-7551  DS
+QuadriPhonic Illusions  Florida, USA      13:206/1     (904) 684-1272  V32bis
+Planet of Magrathea     PA, USA            1:2607/105  (215) 820-9145  DS
+I can 'C' Clearly Now!  Iowa, USA          1:290/102   (515) 472-3651  V32bis
+The AANThill            California, USA    1:202/244   (619) 550-8168  DS
+BECSS Computers         Washington, USA   13:650/3     (509) 735-8532  V32bis
+Zyllex BBS              Belgium, Europe   14:1900/415  +32-54-568436  ZV32bis
+Open Access BBS         Norway, Europe     2:210/18    +47-61-97945    V32bis
+The 1st Dutch MIDI BBS  Netherland, Europe 2:281/610   +31-15-138754   DS
+|                                          2:283/222   +31-85-811892   V32bis
+Geniaal BBS 2           Netherland, Europe 14:1000/3   +31-2294-3154   V32bis
+|                                                      +31-2294-2959   V32bis
+New Age System          Estonia, Europe    2:490/12    +372-6-316928   V32bis
+StarPort                Finland, Europe    2:220/630   +358-0-804-4626 DS
+|                                                      +358-0-804-1133 V32bis
+Unreal (Malex Data)     Sweden, Europe     14:1700/300 +46-8-59076168  DS
+StarFire                Germany, Europe    2:2400/105  +49-9131-538303 V32bis
+WaveSpeed               Germany, Europe    2:2445/107  +49-201-358726  DS
+|                                                      +49-201-350064 ZV32bis
+|                                                      +49-201-8343343 ISDN
+S.Ex-System             Germany, Europe    2:240/5812  +49-4102-320125 ISDN +
+|                                                      +49-4102-320126 ISDN +
+|                                                      +49-4102-320128 DS   +
+AWAX-CBL                Moscow, Europe     2:5020/105  +7-095201-5115 ZV32bis
+Blaster Sound           Spain, Europe      2:345/805   +34-58-293583  ZV32bis
+MultiMedia              Singapore, Asia    6:600/408   +65-2521220    ZV32bis
+Paranoimia-Art of Noise Victoria,Australia 3:635/541   +61-3-379-7041  V32bis
+|                                                      +61-3-379-3560  V32bis
+|                                                      +61-3-379-3504  V32bis
+|
+Files Only
+=============================================================================
+UltraSound Connection   Florida, USA                   (813) 787-8644  DS
+=============================================================================
+
+NOTE(S): - All systems are No Parity, 8 Data Bits, 1 Stop bit (N81)
+|        - All systems are online 24 hours/day
+|        - Speeds: V32bis - 14,400 bits per second (CCITT standard)
+|                  HST    - 14,400/16,800 bits per second (US Robotics Prop.)
+|                  DS     - 14,400/16,800 bits per second (HST/V32bis)
+|                  VFC    - 28,800 bits per second (V.FC/V32bis)
+|        - * - Files are File Requestable
+|        - % - EMail Only.  No FTP or Telnet.
+|        - & - Does not accept >= 2400 baud calls
+|        - Z - Zyxel (16.8K and 19.2K bps)
+|        - = - DS 21.6k bits per second (HST/V32bis)
+|        - + - Nodes just added
+About the Gravis Nodes
+------------------------------------------------------------------------------
+ All nodes are independent BBSs', and are not run or sponsored by Gravis.  As
+ such the logon procedures for each BBS may vary.  For instance, some give
+ you immediate access, while others have a probation period which may last
+ several days.  All nodes are encouraged to offer all the Gravis files and
+ messages to first time callers but this may not always be the case.
+
+ If you are interested in becoming an Authorized Gravis Node you may file
+ request or download GRAV-APP.ZIP from the Gravis BBS.
+
+Other Sources for UltraSound Files:
+------------------------------------------------------------------------------
+|     CompuServe:         GO PCVENB  area #14                      71333,350
+|     AOL:                                                        Adv Gravis
+|     Genie:              Games RoundTable Cat#1 Topic #6             Gravis
+|     Apple Link:                                                    CDA0312
+|     Internet EMail:     Tech Support                       tech@gravis.com
+|                         Sales                             sales@gravis.com
+
+|                  Gravis UltraSound Internet Archives News
+------------------------------------------------------------------------------
+|                      FTP Sites                         Archive Directories
+|                      ---------                         -------------------
+Main N.American Site:  archive.orst.edu              	 pub/packages/gravis
+|                      wuarchive.wustl.edu          systems/ibmpc/ultrasound
+Main Asian Site:       nctuccca.edu.tw               	       PC/ultrasound
+Main European Site:    src.doc.ic.ac.uk           computing/audio/ultrasound
+Main Australian Site:  ftp.mpx.com.au                	 /ultrasound/general
+|                                                         /ultrasound/submit
+Submissions:           archive.epas.utoronto.ca     pub/pc/ultrasound/submit
+Newly Validated Files: archive.epas.utoronto.ca      	   pub/pc/ultrasound
+Mirrors:               garbo.uwasa.fi                	   mirror/ultrasound
+
+|                      Gopher Sites                           Menu directory
+|                      ------------                           --------------
+Main Site:             src.doc.ic.ac.uk           computing/audio/ultrasound
+
+|                      World Wide Webb Page (WWW)
+|                      --------------------------
+Main Site:    http://www.cs.utah.edu/people/ugrad/debry/.public_html/gus.html
+
+Main European Site:       http://src.doc.ic.ac.uk/computing/audio/ultrasound/
+Main Australian Site:     http://ftp.mpx.com.au/archive/ultrasound/general/
+|                         http://ftp.mpx.com.au/archive/ultrasound/submit/
+|                         http://ftp.mpx.com.au/gravis.html
+
+MailServer For Archive Access: Email to <mail-server@nike.rz.uni-konstanz.de>
+|                              Email to <ftpmail@doc.ic.ac.uk>
+|
+New Submit Files Mailing List: Email to <majordomo@wotan.rz.uni-konstanz.de>
+================================================================================

@@ -1,0 +1,32 @@
+#
+# DSM for gsftopk 1.16 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: gspk116s
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: gsftopk
+version: 1.16
+type: sources
+manifest: gspk116s
+binaries-dsm: gspk116b
+
+short-description: GSFtoPK, a font convertor
+license: Free without warranty
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: gspk116s.zip
+
+changelog: gnu/web2c-7.2/gsftopk/ChangeLog
+pre-install-readme: gnu/web2c-7.2/djgpp/README
+
+depends-on: texmflib
+depends-on: kpathsea

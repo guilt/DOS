@@ -1,0 +1,25 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RR NO_ELABORATION_CODE
+
+U ada%s			ada.ads			76789da1 NE OL PU PK
+
+D ada.ads		20170911114842 76789da1 ada%s
+D system.ads		20190108125404 27426ea2 system%s
+X 1 ada.ads
+16K9*Ada 20l5 20e8
+

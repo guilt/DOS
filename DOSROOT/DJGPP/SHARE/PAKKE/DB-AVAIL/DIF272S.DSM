@@ -1,0 +1,31 @@
+#
+# DSM for diffutils 2.7.2 sources
+# Written by Richard Dawe <richdawe@bigfoot.com> 2001-01-27
+#
+
+dsm-file-version: 1.1
+dsm-name: dif272s
+dsm-version: 0.5.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: diffutils
+version: 2.7.2
+manifest: dif272s
+binaries-dsm: dif272b
+documentation-dsm: dif272d
+short-description: GNU diffutils
+license: GNU General Public Licence, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+mailing-list: bug-gnu-utils@gnu.org
+
+changelog: gnu/diffutil.272/News
+pre-install-readme: gnu/diffutil.272/Readme
+
+simtelnet-path: v2gnu/
+zip: dif272s.zip

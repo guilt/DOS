@@ -1,0 +1,1583 @@
+Chapter 5
+
+
+
+
+
+The Use of Color
+68   Fastgraph User's Guide
+
+Overview
+
+     The use of color is an important part of any text or graphics
+application.  This chapter explains color as it applies to text and graphics
+modes.  It also describes palettes and video DAC registers for the graphics
+video modes that offer this functionality.  Finally, an explanation of
+Fastgraph's virtual colors is provided.
+
+
+Text Modes
+
+     The term color is not really correct in text modes because each
+character cell has an associated attribute that controls the character's
+appearance in that cell.  The meaning of the attribute differs for color and
+monochrome text modes.
+
+
+Color Text Modes
+
+     In color text modes (modes 0, 1, 2, and 3), the attribute determines a
+character's foreground color (the color of the character itself), its
+background color (the color of that part of the character cell not covered by
+the character), and whether or not it blinks.  Sixteen foreground colors
+(numbered 0 to 15) are available, but only eight background colors (numbered
+0 to 7) are available.  The colors assigned to these values are listed in the
+following table.
+
+                         number  color     number    color
+
+                           0     black       8     dark gray
+                           1     blue        9    light blue
+                           2     green       10   light green
+                           3     cyan        11   light cyan
+                           4      red        12    light red
+                           5    magenta      13  light magenta
+                           6     brown       14     yellow
+                           7     gray        15      white
+
+At first it may seem the numbers have been arbitrarily assigned to the
+colors.  Upon further inspection, however, it becomes apparent this is not
+the case.  Each color number is a four bit quantity of the form IRGB, with I
+representing the intensity, R the red component, G the green component, and B
+the blue component.  If the corresponding bit is 1, it means the intensity or
+color component is set.  For example, normal red would be represented by the
+IRGB bit pattern 0100, which is 4 decimal, the color number for red.
+
+     The fg_setattr routine defines the current text attribute.  Once
+fg_setattr is called, Fastgraph displays all subsequent text using that
+attribute.  The first argument of fg_setattr defines the foreground color,
+which must be an integer between 0 and 15.  Its second argument defines the
+background color, which must be between 0 and 7.  Its third argument
+determines if the foreground color blinks (1 means it blinks, 0 means it does
+not).  For example, the statement
+
+                             fg_setattr(14,1,0);
+                                             Chapter 5:  The Use of Color   69
+
+specifies subsequent text will be displayed with a yellow foreground (14) on
+a blue background (1) and will not blink (0).
+
+     Another Fastgraph routine, fg_setcolor, also can define text attributes.
+The fg_setcolor routine packs the three values passed to fg_setattr into a
+single argument, as shown below.
+
+                         bits      attribute
+
+                         0-3       foreground color
+                         4-6       background color
+                         7         blinking
+
+For example, calling fg_setcolor with an argument of 30 (1E hex) is
+equivalent to calling fg_setattr with arguments of 14, 1, and 0.
+
+     The Fastgraph routine fg_getcolor returns the current text attribute, as
+defined in the most recent call to fg_setattr or fg_setcolor.  The
+fg_getcolor routine has no arguments and returns the attribute as its
+function value.  The returned value is encoded using the same scheme for
+passing a text attribute to the fg_setcolor routine.
+
+
+Monochrome Text Mode
+
+     In the monochrome text mode (mode 7), colors are obviously not
+available.  The attribute instead determines whether a character is
+invisible, normal, bold, reversed, or certain combinations of these.  The
+following table shows the values assigned to the available display
+characteristics.
+
+                    foreground  background  characteristic
+
+                    0           0           invisible
+                    0           7           reversed
+                    1           0           underlined
+                    7           0           normal
+                    9           0           underlined bold
+                    15          0           bold
+
+Additionally, you can turn blinking on or off for each of these combinations.
+Any combination of foreground and background values not listed in the above
+table produces a normal display characteristic.
+
+     As in the color modes, the Fastgraph routines fg_setattr and fg_setcolor
+define the current text attribute.  For example, the statement
+
+                              fg_setattr(0,7,1);
+
+specifies subsequent text will be displayed in reverse video (0,7) and will
+blink (1).  The same attribute could be defined by calling fg_setcolor with
+an argument of 240 (F0 hex).  The fg_getcolor routine is also available and
+works as it does in the color text modes.
+70   Fastgraph User's Guide
+
+
+Graphics Modes
+
+     In graphics modes, each pixel has an associated color value that
+determines the color in which the pixel is displayed.  The number of
+available colors depends on the video mode.  Some of the graphics modes also
+have palette registers or video DAC registers to provide additional color
+capabilities.  The example programs presented in this section show the use of
+color in specific graphics video modes.
+
+     The following subsections will discuss the use of color in each graphics
+video mode.  In these discussions, there will be several references to a
+group of colors called the standard color set.  This is a set of 16 colors
+common to many of the graphics video modes (and to the color text modes).
+The colors in the standard color set are listed in the following table.
+
+                         number  color     number    color
+
+                           0     black       8     dark gray
+                           1     blue        9    light blue
+                           2     green       10   light green
+                           3     cyan        11   light cyan
+                           4      red        12    light red
+                           5    magenta      13  light magenta
+                           6     brown       14     yellow
+                           7     gray        15      white
+
+     At this point it is important to understand the difference between the
+terms color number and color value.  Color number refers to the number that
+defines a color in the standard color set (for example, green is color number
+2).  Color value refers to the actual value of a pixel in video memory, which
+ultimately determines the color in which that pixel is displayed.  The color
+value is sometimes just called the color.
+
+     In each graphics mode, video memory is cleared when the fg_setmode
+routine is called.  This means all pixels are initially set to color value 0,
+which by default is black.  For this reason, color value 0 is often called
+the background color in graphics video modes.
+
+     The Fastgraph routine fg_setcolor defines the color in which subsequent
+graphics operations are performed.  This color is called the current color.
+Depending on the video mode, the current color can reference a color value
+(in CGA and Hercules graphics modes), a palette register (in Tandy, EGA, and
+VGA graphics modes), or a video DAC register (in 256-color modes).  The
+fg_setcolor routine takes a single integer argument that specifies the color.
+When fg_setmode is called, it sets the current color to 0.  The Fastgraph
+routine fg_getcolor returns the current color, as defined in the most recent
+call to fg_setcolor.  The fg_getcolor routine has no arguments and returns
+the current color as its function value.
+
+
+CGA Color Modes
+
+     The CGA color modes (modes 4 and 5) have six sets of available colors,
+called palettes, numbered 0 to 5.  Each palette consists of four colors,
+numbered 0 to 3.  In each palette, the background color (color value 0) can
+                                             Chapter 5:  The Use of Color   71
+
+be selected from the standard color set, but the other 3 colors are fixed.
+The following table shows the fixed colors assigned to each palette.
+
+                     palette 0       palette 1       palette 2
+
+           color 1   light green     light cyan      light cyan
+           color 2   light red       light magenta   light red
+           color 3   yellow          white           white
+
+                     palette 3       palette 4       palette 5
+
+           color 1   green           cyan            cyan
+           color 2   red             magenta         red
+           color 3   brown           gray            gray
+
+Palette 1, with a black background, is the default palette when you select
+mode 4.  Palette 2, with a black background, is the default palette when you
+select mode 5.
+
+     The CGA color modes have a border area called the overscan between the
+addressable pixel space and the physical edges of the screen.  The overscan
+area is always displayed in the background color, regardless of which CGA
+palette is used.
+
+     In CGA color modes, the fg_setcolor routine defines the current color by
+referencing one of the four color values.  The fg_palette routine selects one
+of the six palettes and defines the background color for that palette.  The
+first argument of the fg_palette routine is an integer between 0 and 5 that
+specifies the palette number.  The second argument is an integer between 0
+and 15 that defines the background color, using the color numbers in the
+standard color set.
+
+     Example 5-1 demonstrates the use of the fg_palette and fg_setcolor
+routines in mode 4.  After establishing the video mode, the program selects
+palette 0 and makes the background color blue (color number 1).  It then
+makes color 3 in palette 0 (yellow) the current color and displays the word
+"Hello".  Finally, it restores the original video mode and screen attributes
+before returning to DOS.
+
+                                 Example 5-1.
+
+                           #include <fastgraf.h>
+                           void main(void);
+
+                           void main()
+                           {
+                              int mode;
+
+                              mode = fg_getmode();
+                              fg_setmode(4);
+
+                              fg_palette(0,1);
+                              fg_setcolor(3);
+                              fg_text("Hello",5);
+                              fg_waitkey();
+
+72   Fastgraph User's Guide
+
+
+                              fg_setmode(mode);
+                              fg_reset();
+                           }
+
+
+
+CGA Two-Color Mode
+
+     The CGA two-color mode (mode 6) has a fixed background color (color
+value 0) and a user-definable foreground color (color value 1).  The
+background color is always black.  The foreground color is white by default,
+but it can be changed to any of the colors in the standard color set.  It
+should be mentioned that changing the foreground color works on true CGA
+adapters, but there are very few EGA and VGA adapters that correctly
+implement changing the foreground color in their mode 6 emulation.
+
+     In mode 6, the fg_setcolor routine defines the current color by
+referencing one of the two color values.  The fg_palette routine defines the
+actual foreground color (that is, the color of pixels whose color value is
+1).  For consistency with other graphics modes, the fg_palette routine has
+two arguments, but the first one is not used.  The second argument is an
+integer between 0 and 15 that defines the foreground color, using the color
+numbers in the standard color set.
+
+     Example 5-2 demonstrates the use of the fg_palette and fg_setcolor
+routines in mode 6.  After establishing the video mode, the program makes the
+foreground color yellow (color number 14).  It then makes color 1 the current
+color and displays the word "Hello".  Finally, it restores the original video
+mode and screen attributes before returning to DOS.
+
+                                 Example 5-2.
+
+                           #include <fastgraf.h>
+                           void main(void);
+
+                           void main()
+                           {
+                              int mode;
+
+                              mode = fg_getmode();
+                              fg_setmode(6);
+
+                              fg_palette(0,14);
+                              fg_setcolor(1);
+                              fg_text("Hello",5);
+                              fg_waitkey();
+
+                              fg_setmode(mode);
+                              fg_reset();
+                           }
+
+                                             Chapter 5:  The Use of Color   73
+
+Tandy and PCjr Modes
+
+     The supported Tandy 1000 or PCjr graphics mode (mode 9) has 16 color
+values, numbered 0 to 15.  Each color value references one of 16 user-
+definable palette registers, often simply called palettes, also numbered 0 to
+15.  The values assigned to the palette registers determine the colors in
+which pixels are displayed.  For example, if you assign palette register 2
+the value for red, then pixels whose color value is 2 will be red.
+
+     Each palette can assume one of the 16 colors in the standard color set.
+By default, the values assigned to the 16 palettes correspond to the
+identically numbered colors in the standard color set.  In other words,
+palette 0 is assigned the value for black, palette 1 is assigned the value
+for blue, and so forth.
+
+     In mode 9, the fg_setcolor routine defines the current color by
+referencing one of the 16 palette registers.  The fg_palette routine defines
+the actual color assigned to a specific palette register.  The first argument
+of the fg_palette routine is an integer between 0 and 15 that specifies the
+palette number.  The second argument is an integer between 0 and 15 that
+defines the palette value (the color assigned to the palette), using the IRGB
+color numbers in the standard color set.
+
+     You also can use the Fastgraph routine fg_setrgb to define the color
+assigned to a specific palette register.  Whereas the fg_palette routine does
+this using a color number from the standard color set, fg_setrgb defines a
+palette register using red, green, and blue color components plus an
+intensity component.  The first argument of the fg_setrgb routine is an
+integer between 0 and 15 that specifies the palette register number.  The
+remaining three arguments are each integer values between -1 and 1 that
+respectively specify the red, green, and blue color components for that
+palette register.  The meanings of the color components are:
+
+     -1 = color bit and intensity bit are set
+      0 = color bit is reset
+      1 = color bit is set
+
+Since there is only one intensity bit in mode 9 color values, specifying -1
+for any of the RGB color components produces an intense color.  For example,
+the color light cyan is color number 11 in the standard color set, and it is
+produced by combining green and blue and setting the intensity bit.  This
+means any of these four statements
+
+                            fg_palette(1,11);
+                            fg_setrgb(1,0,-1,1);
+                            fg_setrgb(1,0,1,-1);
+                            fg_setrgb(1,0,-1,-1);
+
+could be used to define palette register 1 as light cyan in mode 9.
+
+     Example 5-3 demonstrates the use of the fg_palette and fg_setcolor
+routines in mode 9.  After establishing the video mode, the program defines
+palette 0 to be blue (1) and palette 1 to be yellow (14).  Note that defining
+palette 0 changes the background color.  It then makes color 1 the current
+74   Fastgraph User's Guide
+
+color and displays the word "Hello".  After waiting for a keystroke, the
+program changes the color of "Hello" by changing palette 1 to white (15).
+Finally, it restores the original video mode and screen attributes before
+returning to DOS.
+
+                                 Example 5-3.
+
+                           #include <fastgraf.h>
+                           void main(void);
+
+                           void main()
+                           {
+                              int mode;
+
+                              mode = fg_getmode();
+                              fg_setmode(9);
+
+                              fg_palette(0,1);
+                              fg_palette(1,14);
+
+                              fg_setcolor(1);
+                              fg_text("Hello",5);
+                              fg_waitkey();
+
+                              fg_palette(1,15);
+                              fg_waitkey();
+
+                              fg_setmode(mode);
+                              fg_reset();
+                           }
+
+
+Hercules Mode
+
+     The Hercules graphics mode (mode 11) has a fixed background color (color
+value 0) and a fixed foreground color (color value 1).  The background color
+is always black, and the foreground color is dependent on the monochrome
+display being used (typically it is green, amber, or white).
+
+     The fg_setcolor routine defines the current color value by referencing
+one of the two color values.  The fg_palette routine has no effect in mode
+11.
+
+     Example 5-4 demonstrates the use of the fg_setcolor routine in mode 11.
+After establishing the video mode, the program makes color 1 the current
+color and displays the word "Hello".  It then restores the original video
+mode and screen attributes before returning to DOS.
+
+                                 Example 5-4.
+
+                           #include <fastgraf.h>
+                           void main(void);
+
+                           void main()
+                           {
+                              int mode;
+
+                                             Chapter 5:  The Use of Color   75
+
+
+                              mode = fg_getmode();
+                              fg_setmode(11);
+
+                              fg_setcolor(1);
+                              fg_text("Hello",5);
+                              fg_waitkey();
+
+                              fg_setmode(mode);
+                              fg_reset();
+                           }
+
+
+
+Hercules Low-Resolution Mode
+
+     The Hercules low-resolution graphics mode (mode 12) has four color
+values, numbered 0 to 3.  The background color is always black, colors 1 and
+2 are half intensity, and color 3 is full intensity.  Colors 1 and 2 both
+produce normal intensity colors, but they do so with different pixel
+patterns -- color 1 turns on the odd-numbered physical pixels, while color 2
+turns on the even-numbered physical pixels.  The appearance of colors 1 to 3
+is dependent on the monochrome display being used (typically it is green,
+amber, or white).
+
+     The fg_setcolor routine defines the current color value by referencing
+one of the four color values.  The fg_palette routine has no effect in mode
+12.
+
+     Example 5-5 demonstrates the use of the fg_setcolor routine in mode 12.
+After establishing the video mode, the program makes color 3 the current
+color and displays the word "Hello".  It then restores the original video
+mode and screen attributes before returning to DOS.
+
+                                 Example 5-5.
+
+                           #include <fastgraf.h>
+                           void main(void);
+
+                           void main()
+                           {
+                              int mode;
+
+                              mode = fg_getmode();
+                              fg_setmode(12);
+
+                              fg_setcolor(3);
+                              fg_text("Hello",5);
+                              fg_waitkey();
+
+                              fg_setmode(mode);
+                              fg_reset();
+                           }
+
+76   Fastgraph User's Guide
+
+
+EGA 200-Line Modes
+
+     The 200-line EGA graphics modes (modes 13 and 14) have 16 color values,
+numbered 0 to 15.  Each color value references one of 16 user-definable
+palette registers, often simply called palettes, also numbered 0 to 15.  The
+values assigned to the palette registers determine the colors in which pixels
+are displayed.  For example, if you assign palette register 2 the value for
+red, then pixels whose color value is 2 will be red.
+
+     Each palette can assume one of the 16 colors in the standard color set.
+By default, the values assigned to the 16 palettes correspond to the
+identically numbered colors in the standard color set.  In other words,
+palette 0 is assigned the value for black, palette 1 is assigned the value
+for blue, and so forth.
+
+     In modes 13 and 14, the fg_setcolor routine defines the current color by
+referencing one of 16 available palette registers.  The fg_palette routine
+defines the actual color assigned to a specific palette register.  The first
+argument of the fg_palette routine is an integer between 0 and 15 that
+specifies the palette number.  The second argument is an integer that defines
+the palette value (the color assigned to the palette).  Although the actual
+colors are taken from the standard color set, the binary structure of a
+palette value is different from the IRGB format used in the standard color
+set.  In modes 13 and 14, the binary structure of a palette value is IxRGB;
+bit 3 is ignored.  The mode 13 and mode 14 palette values that correspond to
+the standard color set are thus:
+
+                         value   color     value     color
+
+                           0     black       16    dark gray
+                           1     blue        17   light blue
+                           2     green       18   light green
+                           3     cyan        19   light cyan
+                           4      red        20    light red
+                           5    magenta      21  light magenta
+                           6     brown       22     yellow
+                           7     gray        23      white
+
+     You also can use the Fastgraph routine fg_setrgb to define the color
+assigned to a specific palette register.  Whereas the fg_palette routine does
+this using a color number from the standard color set, fg_setrgb defines a
+palette register using red, green, and blue color components, plus an
+intensity component.  The first argument of the fg_setrgb routine is an
+integer between 0 and 15 that specifies the palette register number.  The
+remaining three arguments are each integer values between -1 and 1 that
+respectively specify the red, green, and blue color components for that
+palette register.  The meanings of the color components are:
+
+     -1 = color bit and intensity bit are set
+      0 = color bit is reset
+      1 = color bit is set
+
+Since there is only one intensity bit in mode 13 and 14 color values,
+specifying -1 for any of the RGB color components produces an intense color.
+For example, the color light cyan is represented by the color value 19, and
+                                             Chapter 5:  The Use of Color   77
+
+it is produced by combining green and blue and setting the intensity bit.
+This means any of these four statements
+
+
+                            fg_palette(1,19);
+                            fg_setrgb(1,0,-1,1);
+                            fg_setrgb(1,0,1,-1);
+                            fg_setrgb(1,0,-1,-1);
+
+
+could be used to define palette register 1 as light cyan in modes 13 and 14.
+
+     The Fastgraph routine fg_setcolor defines the color value (that is, the
+palette number) in which subsequent graphics operations are performed.  The
+fg_setcolor routine takes a single integer argument that specifies this
+color.  When fg_setmode is called, it sets the color value to 0.  The
+Fastgraph routine fg_getcolor returns the current color value, as defined in
+the most recent call to fg_setcolor.  The fg_getcolor routine has no
+arguments and returns the current color as the function value.
+
+     Example 5-6 demonstrates the use of the fg_palette and fg_setcolor
+routines in mode 13.  After establishing the video mode, the program defines
+palette 0 to be blue (1) and palette 1 to be yellow (22).  Note that defining
+palette 0 changes the background color.  It then makes color 1 the current
+color and displays the word "Hello".  After waiting for a keystroke, the
+program changes the color of "Hello" by changing palette 1 to white (23).
+Finally, it restores the original video mode and screen attributes before
+returning to DOS.
+
+                                 Example 5-6.
+
+                           #include <fastgraf.h>
+                           void main(void);
+
+                           void main()
+                           {
+                              int mode;
+
+                              mode = fg_getmode();
+                              fg_setmode(13);
+
+                              fg_palette(0,1);
+                              fg_palette(1,22);
+
+                              fg_setcolor(1);
+                              fg_text("Hello",5);
+                              fg_waitkey();
+
+                              fg_palette(1,23);
+                              fg_waitkey();
+
+                              fg_setmode(mode);
+                              fg_reset();
+                           }
+
+78   Fastgraph User's Guide
+
+EGA Monochrome Mode
+
+     The EGA monochrome graphics mode (mode 15) assigns display attributes to
+its four color values, numbered 0 to 3.  Each color value references one of
+four user-definable palette registers, often simply called palettes, numbered
+0, 1, 4, and 5.  This strange numbering results from the disabling of two of
+the four video memory bit planes in mode 15.  The values assigned to the
+palette registers determine the pixel display attribute.  For example, if you
+assign palette register 1 the value for bold, then pixels whose value is 1
+will be bold.
+
+     In mode 15, the fg_setcolor routine defines the current color (actually,
+a display attribute) by referencing one of the four palette registers.  The
+fg_palette routine defines the actual display attribute assigned to a
+specific palette register.  The first argument of the fg_palette routine is
+an integer that specifies the palette number.  The second argument is an
+integer that defines the palette value (the display attribute assigned to the
+palette).  For each palette register, the following table shows the default
+palette value and its associated display attribute.
+
+                      palette   palette   display
+                      number     value   attribute
+
+                         0         0     invisible
+                         1         8      normal
+                         4        24       bold
+                         5        24       bold
+
+     Example 5-7 demonstrates the use of the fg_palette and fg_setcolor
+routines in mode 15.  After establishing the video mode, the program makes
+color 4 (actually, palette 4, which is bold by default) the current color and
+displays the word "Hello".  After waiting for a keystroke, the program
+changes the display attribute of "Hello" by changing palette 4 to normal
+intensity (palette value 8).  Finally, it restores the original video mode
+and screen attributes before returning to DOS.
+
+                                 Example 5-7.
+
+                           #include <fastgraf.h>
+                           void main(void);
+
+                           void main()
+                           {
+                              int mode;
+
+                              mode = fg_getmode();
+                              fg_setmode(15);
+
+                              fg_setcolor(4);
+                              fg_text("Hello",5);
+                              fg_waitkey();
+
+                              fg_palette(4,8);
+                              fg_waitkey();
+
+                              fg_setmode(mode);
+                                             Chapter 5:  The Use of Color   79
+
+                              fg_reset();
+                           }
+
+
+EGA Enhanced Mode
+
+     The EGA enhanced graphics mode (mode 16) has 16 color values, numbered 0
+to 15.  Each color value references one of 16 user-definable palette
+registers, often simply called palettes, also numbered 0 to 15.  The values
+assigned to the palette registers determine the colors in which pixels are
+displayed.  For example, if you assign palette register 2 the value for red,
+then pixels whose color value is 2 will be red.
+
+     Each palette can assume one of 64 available colors.  By default, the
+values assigned to the 16 palettes correspond to the identically numbered
+colors in the standard color set.  In other words, palette 0 is assigned the
+value for black, palette 1 is assigned the value for blue, and so forth.
+There are a few EGA-compatible adapters that do not properly assign the
+default colors to the 16 palette registers, so it is a good practice to do
+this explicitly in mode 16.
+
+     In mode 16, the fg_setcolor routine defines the current color value by
+referencing one of the 16 palette registers.  The fg_palette routine defines
+the actual color assigned to a specific palette register.  The first argument
+of the fg_palette routine is an integer between 0 and 15 that specifies the
+palette number.  The second argument is an integer that defines the palette
+value (the color assigned to the palette).  The binary structure of a palette
+value is different from the IRGB format used in the standard color set.  In
+mode 16, the binary structure of a palette value is a 6-bit quantity of the
+form rgbRGB, where the lower case letters represent the low intensity (1/3
+intensity) color components, and the upper case letters represent the normal
+intensity (2/3 intensity) color components.  The mode 16 palette values that
+correspond to the standard color set are:
+
+                         value   color     value     color
+
+                           0     black       56    dark gray
+                           1     blue        57   light blue
+                           2     green       58   light green
+                           3     cyan        59   light cyan
+                           4      red        60    light red
+                           5    magenta      61  light magenta
+                           20    brown       62     yellow
+                           7     gray        63      white
+
+     The normal intensity components in mode 16 produce the same normal
+intensity colors as in other 16-color graphics modes.  Similarly, combining
+the low and normal intensities in mode 16 produces the high intensity colors
+of the other modes.  The only exception to this is for the default brown,
+formed from the bit pattern 010100 (20 decimal).  This value produces a more
+true brown than the value 6 decimal, which is really an olive green.
+
+     The palette values used in mode 16 are 6-bit quantities, which means
+there are 64 different colors available in mode 16.  This group of 64 colors
+consists of the 16 colors in the standard color set plus 48 additional colors
+that are not available in any of the other EGA modes.  However, because the
+80   Fastgraph User's Guide
+
+EGA palette registers hold 4-bit quantities, only 16 of these colors can be
+displayed at the same time.  In other words, the EGA enhanced mode provides
+the capability of displaying 16 simultaneous colors from a group of 64.
+
+     You also can use the Fastgraph routine fg_setrgb to define the color
+assigned to a specific palette register.  Whereas the fg_palette routine does
+this using a value between 0 and 63, fg_setrgb defines a palette register
+using red, green, and blue color components.  The first argument of the
+fg_setrgb routine is an integer between 0 and 15 that specifies the palette
+register number.  The remaining three arguments are each integer values
+between 0 and 3 that respectively specify the intensities in thirds of the
+red, green, and blue color components for that palette register.  For
+example, the color cyan is represented by the value 3 in the above table, and
+it is produced by combining normal intensity (2/3 intensity) green and blue.
+This means either of the statements
+
+                             fg_palette(1,3);
+                             fg_setrgb(1,0,2,2);
+
+could be used to define palette register 1 as cyan.
+
+     Example 5-8 demonstrates the use of the fg_palette and fg_setcolor
+routines in mode 16.  It uses the Fastgraph routine fg_rect (discussed in the
+next chapter) to draw rectangles of a specified size.  After establishing the
+video mode, the program uses a for loop to draw 16 equal-size rectangles, one
+in each of the 16 color values.  In the same loop, the program uses the
+fg_palette routine to change each palette to black.  The while loop that
+follows performs four iterations.  The first iteration changes palette 0 to
+0, palette 1 to 1, and so forth.  Hence, the 16 rectangles appear in the
+palette values 0 to 15.  The rectangles remain in these colors until is key
+is pressed to begin the next iteration.  The second iteration changes palette
+0 to 16, palette 1 to 17, and so forth.  This makes the 16 rectangles appear
+in the palette values 16 to 31.  Iterations three and four are similar, so
+the overall effect of the program is to display all 64 colors, 16 at a time.
+Finally, the program restores the original video mode and screen attributes
+before returning to DOS.
+
+                                 Example 5-8.
+
+                #include <fastgraf.h>
+                void main(void);
+
+                #define COLORS 16
+                #define WIDTH  40
+
+                void main()
+                {
+                   int base;
+                   int color;
+                   int minx, maxx;
+                   int mode;
+
+                   mode = fg_getmode();
+                   fg_setmode(16);
+
+                                             Chapter 5:  The Use of Color   81
+
+                   base = 0;
+                   minx = 0;
+                   maxx = WIDTH - 1;
+
+                   for (color = 0; color < COLORS; color++) {
+                      fg_palette(color,0);
+                      fg_setcolor(color);
+                      fg_rect(minx,maxx,0,349);
+                      minx = maxx + 1;
+                      maxx = maxx + WIDTH;
+                      }
+
+                   while (base < COLORS*4) {
+                      for (color = 0; color < COLORS; color++)
+                         fg_palette(color,base+color);
+                      base += COLORS;
+                      fg_waitkey();
+                      }
+
+                   fg_setmode(mode);
+                   fg_reset();
+                }
+
+
+
+VGA and MCGA Two-Color Mode
+
+     The VGA and MCGA two-color mode (mode 17) has a background color (color
+value 0) and a foreground color (color value 1).  Each color value references
+one of two user-definable palette registers, often simply called palettes,
+also numbered 0 and 1.  Each palette register in turn references one of 16
+user-definable 18-bit video DAC registers, numbered 0 to 15.  The values
+assigned to the palette registers and video DAC registers determine the
+colors in which pixels are displayed.  For example, if palette register 1
+contains the value 3, and video DAC register 3 contains the color value for
+red, then pixels whose color value is 1 (that is, the foreground pixels) will
+be red.
+
+     By default, palette register 0 references video DAC register 0, and
+palette register 1 references video DAC register 1.  In addition, video DAC
+register 0 initially contains the color value for black, while the other 15
+video DAC registers (1 through 15) contain the color value for white.  This
+means background pixels (color value 0) are black by default, while
+foreground pixels (color value 1) are white.
+
+     The 18-bit video DAC values consist of three 6-bit red, green, and blue
+color components.  Hence, each color component is an integer between 0 and
+63; increasing values produce more intense colors.  The default color
+components for DAC register 0 are red=0, blue=0, and green=0, which produces
+black.  The default values for the other DAC registers are red=63, blue=63,
+and green=63, which produces white.  Because the video DAC registers are 18
+bits long, each DAC can specify one of 262,144 (218) colors.  However,
+because the palette registers hold 1-bit quantities, only two of these colors
+can be displayed at the same time.  In other words, mode 17 provides the
+capability of displaying two simultaneous colors from a group of 262,144.
+82   Fastgraph User's Guide
+
+     In mode 17, the fg_setcolor routine defines the current color by
+referencing one of the two palette registers.  The fg_palette routine defines
+the value of a palette register by referencing one of the 16 video DAC
+registers.  That is, the fg_palette routine specifies the video DAC register
+that a palette register references.  The first argument of the fg_palette
+routine is either 0 or 1 and specifies the palette number.  The second
+argument is an integer between 0 and 15 that specifies the video DAC register
+for that palette.
+
+     The Fastgraph routine fg_setrgb defines the value of a video DAC
+register in mode 17.  The first argument of the fg_setrgb routine is an
+integer between 0 and 15 that specifies the DAC register number.  The
+remaining three arguments are each integer values between 0 and 63 that
+respectively specify the red, green, and blue color components for that DAC
+register.
+
+     Example 5-9 demonstrates the use of the fg_palette, fg_setrgb, and
+fg_setcolor routines in mode 17.  After establishing the video mode, the
+program defines DAC register 0 to be blue (red=0, green=0, blue=42) and DAC
+register 1 to be yellow (red=63, green=63, blue=21).  Note that defining DAC
+register 0 changes the background color because palette 0 references DAC
+register 0.  The program then makes color 1 the current color (palette 1
+still references DAC register 1) and displays the word "Hello" in yellow.
+After waiting for a keystroke, the program changes the color of "Hello" by
+making palette 1 reference DAC register 15 (which still contains its default
+value, white).  Finally, it restores the original video mode and screen
+attributes before returning to DOS.
+
+                                 Example 5-9.
+
+                          #include <fastgraf.h>
+                          void main(void);
+
+                          void main()
+                          {
+                             int mode;
+
+                             mode = fg_getmode();
+                             fg_setmode(17);
+
+                             fg_setrgb(0,0,0,42);
+                             fg_setrgb(1,63,63,21);
+
+                             fg_setcolor(1);
+                             fg_text("Hello",5);
+                             fg_waitkey();
+
+                             fg_palette(1,15);
+                             fg_waitkey();
+
+                             fg_setmode(mode);
+                             fg_reset();
+                          }
+
+                                             Chapter 5:  The Use of Color   83
+
+
+VGA/SVGA 16-Color Modes
+
+     The VGA and SVGA 16-color modes (modes 18, 28, and 29) have 16 color
+values, numbered 0 to 15.  Each color value references one of 16 user-
+definable palette registers, often simply called palettes, also numbered 0 to
+15.  Each palette register in turn references one of 16 user-definable 18-bit
+video DAC registers, also numbered 0 to 15.  The values assigned to the
+palette registers and video DAC registers determine the colors in which
+pixels are displayed.  For example, if palette register 1 contains the value
+3, and video DAC register 3 contains the color value for red, then pixels
+whose color value is 1 will be red.
+
+     By default, each of the 16 palette registers references the video DAC
+register of the same number.  In addition, the 16 video DAC registers
+respectively contain the color values for the 16 colors in the standard color
+set.
+
+     The 18-bit video DAC values consist of three 6-bit red, green, and blue
+color components.  Hence, each color component is an integer between 0 and
+63; increasing values produce more intense colors.  The default RGB color
+components for the 16 video DAC registers are:
+
+     DAC  R  G  B   color     DAC  R  G  B   color
+
+      0   0  0  0   black      8  21 21 21   dark gray
+      1   0  0 42   blue       9  21 21 63   light blue
+      2   0 42  0   green     10  21 63 21   light green
+      3   0 42 42   cyan      11  21 63 63   light cyan
+      4  42  0  0   red       12  63 21 21   light red
+      5  42  0 42   magenta   13  63 21 63   light magenta
+      6  42 21  0   brown     14  63 63 21   yellow
+      7  42 42 42   gray      15  63 63 63   white
+
+Because the video DAC registers are 18 bits long, each DAC can specify one of
+262,144 (218) colors.  However, because the palette registers hold 4-bit
+quantities, only 16 of these colors can be displayed at the same time.  In
+other words, mode 18 provides the capability of displaying 16 simultaneous
+colors from a group of 262,144.
+
+     In the 16-color VGA and SVGA modes, the fg_setcolor, fg_palette, and
+fg_setrgb routines function exactly as in mode 17 with one exception:  there
+are 16 palette registers instead of just two.  Example 5-9 demonstrates the
+use of these routines in mode 17, but it also would work in mode 18, 28, or
+29 if the call to fg_setmode were changed accordingly.
+
+
+256-Color Modes
+
+     The 256-color modes (modes 19 through 27) have 256 color values,
+numbered 0 to 255.  Each color value directly references one of 256 user-
+definable 18-bit video DAC registers, also numbered 0 to 255.  The values
+assigned to the video DAC registers determine the colors in which pixels are
+displayed.  For example, if video DAC register 3 contains the color value for
+red, then pixels whose color value is 3 will be red.
+84   Fastgraph User's Guide
+
+     By default, the first 16 video DAC registers (0 to 15) contain the color
+values for the standard color set.  The next 16 DAC registers (16 to 31)
+contain the color values for a gray scale of gradually increasing intensity.
+The next 216 DAC registers (32 to 247) contain three groups of 72 colors
+each, with the first group (32 to 103) at high intensity, the second group
+(104 to 175) at moderate intensity, and the third group (176 to 247) at low
+intensity.  Each group consists of three ranges of decreasing saturation
+(increasing whiteness), with each range varying in hue from blue to red to
+green.  Finally, the last 8 DAC registers (248 to 255) alternate between
+black and white.  This information is summarized in the following table.
+
+          DACs        default color values
+
+          0 to 15     standard color set
+          16 to 31    gray scale of gradually increasing intensity
+          32 to 55    high saturation, high intensity colors
+          56 to 79    moderate saturation, high intensity colors
+          80 to 103   low saturation, high intensity colors
+          104 to 127  high saturation, moderate intensity colors
+          128 to 151  moderate saturation, moderate intensity colors
+          152 to 175  low saturation, moderate intensity colors
+          176 to 199  high saturation, low intensity colors
+          200 to 223  moderate saturation, low intensity colors
+          224 to 247  low saturation, low intensity colors
+          248 to 255  alternate between black and white
+
+     The 18-bit video DAC values consist of three 6-bit red, green, and blue
+color components.  Hence, each color component is an integer between 0 and
+63; increasing values produce more intense colors.  Because the video DAC
+registers are 18 bits long, each DAC can specify one of 262,144 (218) colors.
+However, because the color values are 8-bit quantities, only 256 of these
+colors can be displayed at the same time.  In other words, modes 19 through
+27 provide the capability of displaying 256 simultaneous colors from a group
+of 262,144.
+
+     In the 256-color graphics modes, the fg_setcolor routine defines the
+current color by referencing on of the 256 video DAC registers.  The
+fg_setrgb routine defines the actual color of a video DAC register.  The
+first argument of the fg_setrgb routine is an integer between 0 and 255 that
+specifies the DAC register number.  The remaining three arguments are each
+integer values between 0 and 63 that respectively specify the red, green, and
+blue color components for that DAC register.  Another Fastgraph routine,
+fg_getrgb, returns the color components for a specified DAC register.  Its
+arguments are the same as for fg_setrgb, except the last three arguments (the
+return values) are passed by reference rather than by value.
+
+     You also can use the Fastgraph routine fg_palette to define the value of
+a video DAC register in modes 19 through 27.  The first argument of the
+fg_palette routine is an integer between 0 and 255 that specifies the DAC
+register number.  The second argument is an integer between 0 and 63 that
+specifies the color value for that video DAC register, using the same 64
+values as in the EGA enhanced mode (mode 16).
+
+     Example 5-10 demonstrates the use of the fg_setcolor routine in mode 19.
+The program uses the Fastgraph routine fg_rect to draw vertical lines.  After
+establishing the video mode, the program uses a for loop to draw 256 vertical
+                                             Chapter 5:  The Use of Color   85
+
+lines, one in each of the 256 colors (using the default DAC values).
+Finally, the program restores the original video mode and screen attributes
+before returning to DOS.
+
+                                Example 5-10.
+
+                #include <fastgraf.h>
+                void main(void);
+
+                #define COLORS 256
+
+                void main()
+                {
+                   int base;
+                   int color;
+                   int mode;
+                   int x;
+
+                   mode = fg_getmode();
+                   fg_setmode(19);
+
+                   x = 0;
+
+                   for (color = 0; color < COLORS; color++) {
+                      fg_setcolor(color);
+                      fg_rect(x,x,0,199);
+                      x++;
+                      }
+                   fg_waitkey();
+
+                   fg_setmode(mode);
+                   fg_reset();
+                }
+
+     Example 5-11 shows an interesting effect available in video modes that
+support DAC registers.  The program uses the Fastgraph routine fg_waitfor
+(discussed in Chapter 16) to delay the program's execution.  After
+establishing the video mode, the program displays the word "Hello" in color
+103, which by default is a pastel blue.  It then uses routine fg_getrgb to
+retrieve the color components for this color.  The while loop gradually
+decreases the color components until all three components are zero, which
+makes the word "Hello" smoothly fade to black.  Finally, the program restores
+the original video mode and screen attributes before returning to DOS.
+
+                                Example 5-11.
+
+                     #include <fastgraf.h>
+                     void main(void);
+
+                     void main()
+                     {
+                        int old_mode;
+                        int red, green, blue;
+
+                        old_mode = fg_getmode();
+                        fg_setmode(19);
+86   Fastgraph User's Guide
+
+                        fg_setcolor(103);
+                        fg_text("Hello",5);
+                        fg_waitfor(18);
+
+                        fg_getrgb(103,&red,&green,&blue);
+
+                        while (red+green+blue > 0) {
+                           if (red > 0) red--;
+                           if (green > 0) green--;
+                           if (blue > 0) blue--;
+                           fg_setrgb(103,red,green,blue);
+                           fg_waitfor(1);
+                           }
+
+                        fg_setmode(old_mode);
+                        fg_reset();
+                     }
+
+     The fg_setrgb and fg_getrgb routines work with individual DAC registers.
+If you want to define or retrieve a block of consecutive DAC registers, using
+the fg_setdacs and fg_getdacs routines is more efficient.  The fg_setdacs
+routine defines the values of a block of contiguous DAC registers.  Its first
+argument is the index of the first DAC register to define (between 0 and
+255), and its second argument is the number of DAC registers to define
+(between 1 and 256).  The third argument is a byte array containing the RGB
+color components for the DAC registers being defined.  The array's first
+three bytes contain the red, green, and blue components for the first DAC,
+the next three for the second DAC, and so forth.  The size of this array must
+be at least three times the value of the second argument.  The fg_getdacs
+arguments are the same as those for fg_setdacs, but the RGB array instead
+receives the current values of the specified DAC registers.  Both routines
+treat the DAC register numbers in a circular fashion (for example, defining
+four DACs starting with number 254 will define DACs 254, 255, 0, and 1).
+
+     Example 5-12 is similar to example 5-11, but it fades many colors
+simultaneously.  The program displays seven asterisks, one each in colors 9
+through 15.  It uses fg_getdacs to obtain the current settings of the
+corresponding DAC registers; these values are stored in the array RGBvalues.
+The while loop gradually fades the RGB components to zero, using fg_setdacs
+to update their values, similar to the method of example 5-11.  This
+illustrates an attractive way of turning an image into a blank screen.
+
+                                Example 5-12.
+
+                       #include <fastgraf.h>
+                       void main(void);
+
+                       void main()
+                       {
+                          int decreasing;
+                          int i;
+                          int old_mode;
+                          char RGBvalues[21];
+
+                          old_mode = fg_getmode();
+                          fg_setmode(19);
+                                             Chapter 5:  The Use of Color   87
+
+
+                          for (i = 9; i <= 15; i++) {
+                             fg_setcolor(i);
+                             fg_text("*",1);
+                             }
+
+                          fg_getdacs(9,7,RGBvalues);
+                          fg_waitfor(18);
+
+                          do {
+                             decreasing = 0;
+                             for (i = 0; i < 21; i++)
+                                if (RGBvalues[i] > 0) {
+                                   RGBvalues[i]--;
+                                   decreasing = 1;
+                                   }
+                             fg_setdacs(9,7,RGBvalues);
+                             fg_waitfor(1);
+                             }
+                          while (decreasing);
+
+                          fg_setmode(old_mode);
+                          fg_reset();
+                       }
+
+Note that examples 5-11 and 5-12 also would work in 16-color VGA and SVGA
+video modes as long as you just use the first 16 video DAC registers.
+
+
+Using Video DAC Registers in EGA Modes
+
+     The fg_getdacs and fg_setdacs routines also work in modes 13, 14, and 16
+when used on a VGA or SVGA system.  This lets you choose 16 colors from a
+palette of 262,144 colors, just as in mode 18.  If you attempt to use these
+routines on an EGA system, the results are unpredictable.  Applications that
+use these routines should therefore first verify they are running on a VGA or
+SVGA system by checking if fg_testmode(18,0) returns a nonzero value.
+
+     Before attempting to use fg_getdacs and fg_setdacs in modes 13, 14, and
+16, you should first be aware of the relationship between VGA palettes and
+DAC registers.  On the EGA, palette values directly determine the color
+displayed.  On the VGA and SVGA, however, there is an added level of
+indirection.  VGA and SVGA palette registers can be thought of as pointers to
+video DAC registers whose RGB components determine the displayed color.
+
+     Each palette register in the VGA 640 by 480 16-color graphics mode (mode
+18) initially points to the DAC register of the same number.  We can thus
+pretend the indirection does not exist because changing DAC register n
+affects those pixels whose color value is n (unless, of course, we've changed
+the value of palette register n).  In modes 13, 14, and 16, we can't ignore
+the indirection because the palette registers contain different values.  In
+mode 13, for instance, palette register 8 contains the value 16 by default,
+not the value 8 as in mode 18.
+
+     The easiest way around this inconsistency is to explicitly set the
+palette and DAC registers so they correspond to the default values of mode
+88   Fastgraph User's Guide
+
+18.  There are two cases to consider -- one for modes 13 and 14, and the
+other for mode 16.
+
+     In modes 13 and 14, palettes 0 to 7 contain the values 0 to 7, but
+palettes 8 to 15 contain the values 16 to 23.  Hence, if you want to use
+fg_getdacs and fg_setdacs in these modes, you should include the following
+code after calling fg_setmode.
+
+
+                       char RGBvalues[3];
+                       int i;
+
+                       for (i = 8; i < 16; i++) {
+                          fg_getdacs(i+8,1,RGBvalues);
+                          fg_setdacs(i,1,RGBvalues);
+                          fg_palette(i,i);
+                       }
+
+
+This code will set the values of DACs 8 to 15 to the values of DACs 16 to 23.
+It also sets palettes 8 to 15 to point to DACs 8 to 15.  You can then ignore
+the palette-DAC indirection because setting DAC register n affects pixels of
+color n.
+
+     In mode 16, palette 6 is initially assigned the value 20, and palettes 8
+to 15 are assigned the values 56 to 63.  All other palettes point to the DAC
+of the same number.  Hence, if you want to use fg_getdacs and fg_setdacs in
+mode 16, you should include the following code after calling fg_setmode.
+
+
+                       char RGBvalues[3];
+                       int i;
+
+                       fg_getdacs(20,1,RGBvalues);
+                       fg_setdacs(6,1,RGBvalues);
+                       fg_palette(6,6);
+
+                       for (i = 8; i < 16; i++) {
+                          fg_getdacs(i+48,1,RGBvalues);
+                          fg_setdacs(i,1,RGBvalues);
+                          fg_palette(i,i);
+                       }
+
+
+This code will set the values of DAC 6 to the values of DAC 20, and also DACs
+8 to 15 to the values of DACs 56 to 63.  It also sets palettes 6 and 8-15 to
+point to the identically-numbered DACs.  You can then ignore the palette-DAC
+indirection because setting DAC register n affects pixels of color n.
+
+     While this might all seem complicated at first, it really isn't once you
+understand the relationship between palettes and DACs.  The ability to select
+colors from a palette of 256K colors instead of 16 or 64 is usually well
+worth the extra effort.
+                                             Chapter 5:  The Use of Color   89
+
+
+RGB Color Mapping
+
+     If you're developing an application that runs in 256-color and 16-color
+graphics modes, you've probably noticed the inherent differences in defining
+color values.  In fact, the palette register values even use different
+structures within the various 16-color modes.  The Fastgraph routine
+fg_maprgb helps simplify these differences.  It maps three RGB color
+components (each between 0 and 63) into a 16-color palette value suitable for
+the current video mode.  Of course, the range of available colors is much
+more restricted in the 16-color modes than in the 256-color modes, so
+fg_maprgb must map the RGB components into the closest available color.
+
+     Example 5-13 runs in any 16-color or 256-color graphics mode and
+demonstrates the use of the fg_maprgb routine.  In 256-color modes, the
+program simply uses fg_setrgb to define DAC register 1 to a pastel blue
+(red=45, green=49, blue=63).  In 16-color modes, however, the program calls
+fg_maprgb to convert the color components into a palette value in IRGB,
+IxRGB, or rgbRGB format (depending on the current video mode).  The fg_maprgb
+return value is passed to fg_palette to set palette register 1 to the closest
+available color defined by the specified RGB components.
+
+                                Example 5-13.
+
+          #include <fastgraf.h>
+          #include <stdio.h>
+          #include <stdlib.h>
+          void main(void);
+
+          void main()
+          {
+             int new_mode, old_mode;
+
+             new_mode = fg_bestmode(320,200,1);
+             if (new_mode < 0 || new_mode == 4 || new_mode == 12) {
+                printf("This program requires a 320 x 200 ");
+                printf("16-color or 256-color graphics mode.\n");
+                exit(1);
+                }
+             old_mode = fg_getmode();
+             fg_setmode(new_mode);
+
+             fg_setcolor(1);
+             if (new_mode <= 16)
+                fg_palette(1,fg_maprgb(45,49,63));
+             else
+                fg_setrgb(1,45,49,63);
+             fg_text("Hello",5);
+             fg_waitkey();
+
+             fg_setmode(old_mode);
+             fg_reset();
+          }
+
+90   Fastgraph User's Guide
+
+
+Defining All Palette Registers
+
+     Fastgraph includes a routine fg_palettes that defines all 16 palette
+registers in 16-color graphics modes.  You also can use the fg_palettes
+routine to define the first 16 video DAC registers in 256-color modes.  It
+has no effect in other video modes.
+
+     Using fg_palettes is much faster than calling the fg_palette routine 16
+times.  The argument to the fg_palettes routine is a 16-element integer array
+that contains the color values assigned respectively to palette registers (or
+video DAC registers) 0 to 15.  Example 5-14 demonstrates how to zero the
+palette registers (that is, change them all to black) in mode 13.
+
+                                Example 5-14.
+
+              #include <fastgraf.h>
+              void main(void);
+
+              int zeroes[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+
+              void main()
+              {
+                 int mode;
+
+                 mode = fg_getmode();
+                 fg_setmode(13);
+
+                 fg_palettes(zeroes);
+
+                 fg_setmode(mode);
+                 fg_reset();
+              }
+
+Of course, as this example is written, it appears to do nothing more than
+blank the screen.  Its purpose is to show an example of the fg_palettes
+routine.
+
+
+Virtual Colors
+
+     By this time it should be clear the use of color is rather specific to
+each graphics video mode.  One of the most obvious differences is the number
+of available colors in each mode; it ranges from 2 to 256.  By available
+colors, we mean the number of colors that can be displayed simultaneously.
+
+     To simplify programming in graphics modes, Fastgraph provides 256
+virtual colors.  The virtual colors are used in the graphics video modes
+having fewer than 256 available colors.  Virtual colors allow you to use 256
+color indices in all graphics modes, even if a particular mode does not have
+256 available colors.
+
+     When you establish a video mode with the fg_setmode routine, Fastgraph
+initializes all the virtual color indices.  It does this by replicating the
+video mode's color values through the 256 virtual color indices.  For
+example, the CGA color modes (4 and 5) have four color values, numbered 0
+                                             Chapter 5:  The Use of Color   91
+
+through 3.  In these modes, the fg_setmode routine initializes color indices
+0, 4, 8, ... , 252 to 0; color indices 1, 5, 9, ... , 253 to 1; color indices
+2, 6, 10, ... , 254 to 2; and color indices 3, 7, 11, ... , 255 to 3.
+Similarly, in 16-color graphics modes the color indices 0, 16, 32, ... , 240
+are set to 0, and so forth.  In the monochrome EGA graphics video mode (mode
+15), the color values are numbered 0, 1, 4, and 5, so fg_setmode replicates
+the color indices in groups of eight, even though there are only four
+available colors.  An analysis of the color value sequences reveals an often
+useful feature:  by default, virtual color 0 is black and virtual colors 15
+and 255 are white in all graphics video modes.
+
+     It is thus possible to write a multiple-mode program using the same
+color indices for each graphics mode.  For example, a program that contains
+the statement fg_setcolor(5) would produce subsequent graphics in color 5
+(magenta by default) when running in a 16-color graphics mode.  It would
+produce subsequent graphics in color 1 (light cyan by default) when running
+in a CGA color mode.  This is because 1 is the default value assigned to
+virtual color index 5 in the CGA color modes.
+
+     The fg_setmode routine establishes default values for the 256 virtual
+color indices, but it might be desirable to assign other available colors to
+them.  Going back to the discussion in the previous paragraph, color number 2
+is light magenta in the default CGA mode 4 palette.  It might make more sense
+if the color value 2 were assigned to virtual color index 5, as this would
+make the graphics drawn in color 5 the same color in mode 4 as in other color
+modes.  The Fastgraph routine fg_defcolor is provided for this purpose.
+
+     The fg_defcolor routine assigns a color value to a virtual color index.
+It has two arguments:  the first specifies the virtual color index (between 0
+and 255), and the second specifies the color value (between 0 and one less
+than the number of available colors in the current video mode).  For example,
+the statement
+
+                              fg_defcolor(5,2);
+
+would assign the color value 2 to the color index 5.  Another Fastgraph
+routine, fg_getindex, returns the current value assigned to a specified color
+index.  After executing the above call to fg_defcolor, the statement
+
+                           color = fg_getindex(5);
+
+would store the value 2 (the current value of color index 5) in the integer
+variable color.
+
+     It is important to understand the difference between virtual colors and
+palette registers.  Modifying the value of a palette register changes the
+color of all pixels already drawn using that palette.  Modifying a virtual
+color index does not do this; it only specifies any graphics drawn in that
+color from this point on will appear in the new color.
+
+     Example 5-15 demonstrates virtual colors in mode 4.  After establishing
+the video mode, the program uses fg_defcolor to define virtual color indices
+0 and 255 to be 1, which by default is light cyan in mode 4.  It then draws
+characters using color indices 0, 1, and 255, and in each case the characters
+appear in light cyan.  Finally, the program restores the original video mode
+and screen attributes before returning to DOS.
+92   Fastgraph User's Guide
+
+                                Example 5-15.
+
+                           #include <fastgraf.h>
+                           void main(void);
+
+                           void main()
+                           {
+                              int mode;
+
+                              mode = fg_getmode();
+                              fg_setmode(4);
+
+                              fg_defcolor(0,1);
+                              fg_defcolor(255,1);
+
+                              fg_setcolor(0);
+                              fg_text("0",1);
+                              fg_setcolor(1);
+                              fg_text(" 1",2);
+                              fg_setcolor(255);
+                              fg_text(" 255",4);
+                              fg_waitkey();
+
+                              fg_setmode(mode);
+                              fg_reset();
+                           }
+
+
+A Multiple-Mode Example
+
+     Even though the color capabilities differ between the supported video
+modes, Fastgraph makes it easy to write a program that runs in many video
+modes.  This section will present an example of such a program.
+
+     Example 5-16 illustrates a program that will run in any of Fastgraph's
+supported video modes.  The program first asks for the video mode number,
+checks if the mode number is valid, and then checks if the requested mode is
+available on the user's system.  After doing this, the program establishes
+the video mode and performs its mode-specific code.  It then displays a brief
+message that includes the video mode number in which the program is running.
+This information remains on the screen until a key is pressed, at which time
+the program restores the original video mode and screen attributes before
+returning to DOS.
+
+                                Example 5-16.
+
+       #include <fastgraf.h>
+       #include <stdio.h>
+       #include <stdlib.h>
+       void main(void);
+
+       void main()
+       {
+          int mode, old_mode;
+          char string[5];
+
+                                             Chapter 5:  The Use of Color   93
+       /* Ask for the video mode number */
+          printf("Which video mode? ");
+          scanf("%d",&mode);
+
+       /* Make sure the entered value is valid */
+          if (mode < 0 || mode > 29) {
+             printf("%d is not a valid video mode number.\n",mode);
+             exit(1);
+             }
+
+       /* Make sure the requested video mode is available */
+          if (fg_testmode(mode,1) == 0) {
+             printf("Mode %d is not available on this system.\n",mode);
+             exit(1);
+             }
+
+       /* Establish the video mode */
+          old_mode = fg_getmode();
+          fg_setmode(mode);
+
+       /* Perform mode-specific initializations */
+          if (mode <= 3 || mode == 7)   /* text modes */
+             fg_cursor(0);
+
+          else if (mode == 4 || mode == 5) { /* CGA color modes */
+             fg_palette(0,0);
+             fg_defcolor(14,3);
+             }
+
+          else if (mode == 6) {         /* CGA two-color mode */
+             fg_palette(0,14);
+             fg_defcolor(14,1);
+             }
+
+          else if (mode == 11)          /* Hercules mode */
+             fg_defcolor(14,1);
+
+          else if (mode == 12)          /* Hercules low-res mode */
+             fg_defcolor(14,3);
+
+          else if (mode == 17) {        /* VGA two-color mode */
+             fg_palette(1,14);
+             fg_setrgb(14,63,63,21);
+             fg_defcolor(14,1);
+             }
+
+       /* Display a message that includes the video mode number */
+          fg_setcolor(14);
+          fg_text("I'm running in mode ",20);
+          sprintf(string,"%d. ",mode);
+          fg_text(string,3);
+
+       /* Wait for a keystroke */
+          fg_waitkey();
+
+       /* Restore the original video mode and screen attributes */
+          fg_setmode(old_mode);
+94   Fastgraph User's Guide
+
+          fg_reset();
+       }
+
+
+     Example 5-16 displays its message in yellow for those video modes that
+offer color.  In monochrome video modes, it displays the message in normal
+intensity.  The program uses virtual color 14, which by default is yellow in
+many video modes; the mode-specific code in example 5-16 makes color 14
+yellow in other video modes.  In text video modes (modes 0 to 3 and 7), the
+program uses the fg_cursor routine to make the cursor invisible.  In CGA
+color modes (modes 4 and 5), the program uses the fg_palette routine to
+select a CGA palette that contains yellow as color 3 and then uses
+fg_defcolor to assign color 3 to virtual color 14.  In CGA two-color mode
+(mode 6), the program uses the fg_palette routine to make color 1 yellow and
+then uses fg_defcolor to assign color 1 to virtual color 14.  In the Hercules
+modes (modes 11 and 12), the program uses the fg_defcolor routine to assign
+the value for normal intensity pixels to color 14.  In VGA two-color mode
+(mode 17), the program uses the fg_palette routine to assign video DAC
+register 14 to palette register 1.  It then defines video DAC register 14 to
+be yellow with the fg_setrgb routine and finally uses fg_defcolor to assign
+color 1 (that is, palette register 1) to virtual color 14.  In all other
+video modes, color 14 is yellow by default.
+
+
+Summary of Color-Related Routines
+
+     This section summarizes the functional descriptions of the Fastgraph
+routines presented in this chapter.  More detailed information about these
+routines, including their arguments and return values, may be found in the
+Fastgraph Reference Manual.
+
+     FG_DEFCOLOR assigns a color value to a virtual color index.  This
+routine is only meaningful in the graphics video modes that have fewer than
+256 available colors.
+
+     FG_GETCOLOR returns the current text attribute (in text modes) or color
+index (in graphics modes), as specified in the most recent call to fg_setattr
+or fg_setcolor.
+
+     FG_GETDACS retrieves the red, green, and blue color components for a
+block of consecutively numbered video DAC registers.  This routine is only
+meaningful modes that use DAC registers.
+
+     FG_GETINDEX returns the color value assigned to a specified virtual
+color index.  In text modes and in graphics modes that have 256 available
+colors, this routine returns the value passed to it.
+
+     FG_GETRGB returns the red, green, and blue color components for a
+specified video DAC register.  This routine is only meaningful in modes that
+use DAC registers.
+
+      FG_MAPRGB maps six-bit red, green, and blue color components into a
+suitable palette value for the current video mode.  You can then pass this
+value to the fg_palette routine.  This routine is meaningful only in 16-color
+graphics video modes.
+                                             Chapter 5:  The Use of Color   95
+
+     FG_PALETTE has different functions depending on the current graphics
+video mode.  For the CGA four-color modes, it establishes the current palette
+(of six available) and defines the background color for that palette.  In the
+CGA two-color mode, it defines the foreground color.  For the Tandy/PCjr,
+EGA, and VGA graphics modes, it defines the value of a single palette
+register.  For 256-color graphics modes, it defines the value of a single
+video DAC register.  The fg_palette routine has no effect in text modes or
+Hercules graphics modes.
+
+     FG_PALETTES defines all 16 palette registers (in 16-color graphics
+modes), or the first 16 video DAC registers (in 256-color graphics modes).
+The fg_palettes routine has no effect in text modes, CGA graphics modes, or
+Hercules graphics modes.
+
+     FG_SETATTR establishes the current text attribute in text video modes.
+This routine has no effect in graphics modes.
+
+     FG_SETCOLOR establishes the current color index (which may be a virtual
+color index in graphics modes).  In text modes, the fg_setcolor routine
+provides an alternate method of establishing the current text attribute.
+
+     FG_SETDACS defines the values of a block of consecutively numbered video
+DAC registers by specifying their red, green, and blue color components.
+This routine is only meaningful in modes that use DAC registers.
+
+     FG_SETRGB defines the value of a single palette register (in Tandy/PCjr
+and EGA graphics modes) or video DAC register (in VGA, MCGA, and SVGA modes)
+by specifying its red, green, and blue color components.  The fg_setrgb
+routine has no effect in text modes, CGA graphics modes, or Hercules graphics
+modes.
+96   Fastgraph User's Guide

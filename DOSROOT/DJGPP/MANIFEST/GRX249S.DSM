@@ -1,0 +1,58 @@
+#
+# DSM for GRX 2.4.9 sources.
+# Written by Maurice Lombardi <Maurice.Lombardi@ujf-grenoble.fr> 2012-07-10
+#
+
+dsm-file-version: 1.1
+dsm-name: grx249s
+dsm-version: 0.5.0
+
+type: sources
+
+dsm-author: Maurice Lombardi
+dsm-author-email: Maurice.Lombardi@ujf-grenoble.fr
+
+name: GRX
+version: 2.4.9
+manifest: grx249s
+binaries-dsm: grx249b
+documentation-dsm: grx249d
+short-description: Sources for GRX version 2.4.9
+long-description: GRX is a 2D graphics library \n
+first written by Csaba Biegl for DJGPP, then ported \n
+to other systems and maintained \n
+by various authors (see doc/credits.doc)
+
+license: GNU LGPL (Library General Public License)\n
+with restrictions given in copying.grx
+
+# For reporting bugs
+mailing-list: grx@gnu.de
+# The home page of GRX.
+web-site: http://www.gnu.de/software/GRX/
+# For discussing DJGPP- and DOS/Windows-specific aspects
+mailing-list: djgpp@delorie.com
+newsgroup: comp.os.msdos.djgpp
+
+porter: Maurice Lombardi
+porter-email: Maurice.Lombardi@ujf-grenoble.fr
+
+simtelnet-path: v2tk/
+zip: grx249s.zip
+
+changelog: contrib/grx249/doc/changes
+
+post-install-readme: contrib/grx249/readme
+
+replaces: GRX < 2.4.9
+
+requires:   djdev >= 2.03p2
+requires:   gcc
+requires:   binutils
+requires:   make
+depends on: bash
+depends on: gpc
+depends on: fileutils
+depends on: sh-utils
+depends on: info-reader
+

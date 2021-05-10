@@ -1,0 +1,22 @@
+#
+# DSM for web2c 7.2 documentation
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: webc72d
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: web2c
+version: 7.2
+type: documentation
+manifest: webc72d
+
+short-description: Documentation for web2c, dvips, kpathsea
+license: Mixed - GNU General Public License, Version 2 & Knuth's TeX license.
+
+simtelnet-path: v2apps/tex
+zip: webc72d.zip

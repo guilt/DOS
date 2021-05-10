@@ -1,0 +1,647 @@
+Chapter 15
+
+
+
+
+
+Sound Effects
+286   Fastgraph User's Guide
+
+
+Overview
+
+     In the realm of the IBM PC and PS/2 family of systems, a sound is
+defined by its frequency, duration, and volume.  The frequency of a sound is
+measured in units called Hertz.  While the PC and PS/2 can produce sounds
+ranging from 18 to more than one million Hertz, the average human can hear
+sounds between 20 and about 20,000 Hertz.  The length of a sound, called its
+duration, is expressed in clock ticks; there are either 18.2 of 72.8 clock
+ticks per second, depending on the method used to produce the sound.
+Finally, the volume determines the loudness of the sound.  As we'll see in
+this chapter, we can control a sound's volume only on the PCjr and Tandy 1000
+systems.
+
+     Fastgraph contains several different methods for producing sound
+effects.  These include single tones, a series of tones expressed
+numerically, or a series of tones expressed as musical notes.  The sound
+effects may be discrete, continuous, or performed at the same time as other
+activity.  The sound-related routines are independent of the other parts of
+Fastgraph and do not require any initialization routines be called.
+
+
+Sound Sources
+
+     All members of the PC and PS/2 families can produce sounds using the
+8253-5 programmable timer chip and the internal speaker.  This method is
+limited to producing single sounds of given frequencies and durations,
+although we can combine these sounds to create interesting audio effects or
+play music.  When we use this technique, we have no control over the sound
+volume.  In fact, sound volumes often vary slightly on different systems
+because the physical properties of the speaker and its housing are not always
+the same.
+
+     The PCjr and Tandy 1000 systems have an additional, more powerful chip
+for producing sounds.  This is the Texas Instruments SN76496A sound chip,
+called the TI sound chip for short.  The TI sound chip has three independent
+voice channels for producing pure tones, and a fourth channel for generating
+periodic or white noise.  Each voice channel has a separate volume control
+that allows us to control the loudness of the sound it emits.
+
+
+Synchronous Sound
+
+     A sound effect is said to be synchronous if it is produced while no
+other activity is being performed.  In other words, a program makes a
+synchronous sound by starting the sound, waiting for a specified duration,
+and then stopping the sound.  The program must wait for the sound to complete
+before doing anything else.  As long as the duration is relatively short, the
+fact that the sound is synchronous has little or no effect on the program's
+execution speed.  Fastgraph includes routines for producing synchronous sound
+using either the 8253-5 programmable timer or the TI sound chip.
+
+     The fg_sound routine uses the programmable timer to produce a sound of a
+given frequency and duration.  The frequency, defined by the first argument,
+is expressed in Hertz and must be an integer value between 18 and 32,767.
+The second argument defines the duration and is expressed in clock ticks;
+                                              Chapter 15:  Sound Effects   287
+
+there are 18.2 clock ticks per second.  If the duration is zero or negative,
+the sound will continue until it is stopped with the fg_quiet routine.
+
+     Example 15-1 uses the fg_sound routine to create different sound
+effects, pausing for one second between each.  It first produces three
+distinct sounds of 20, 100, and 1,000 Hertz.  Each of these sounds lasts for
+approximately 1/6 of a second (three clock ticks).  The program then makes a
+warbling noise by quickly alternating sounds of similar frequencies.
+Finally, the program creates a sliding tone of increasing frequencies between
+100 and 500 Hertz.  Each tone in this sequence lasts for two clock ticks, so
+it takes about 4.5 seconds to play the entire sequence.  In all cases,
+example 15-1 displays an identifying message just before each sound.
+
+                                Example 15-1.
+
+              #include <fastgraf.h>
+              #include <stdio.h>
+              void main(void);
+
+              void main()
+              {
+                 int freq;
+
+                 printf("20 Hz tone...\n");
+                 fg_sound(20,3);
+                 fg_waitfor(18);
+
+                 printf("100 Hz tone...\n");
+                 fg_sound(100,3);
+                 fg_waitfor(18);
+
+                 printf("1000 Hz tone...\n");
+                 fg_sound(1000,3);
+                 fg_waitfor(18);
+
+                 printf("warble...\n");
+                 fg_sound(400,1);
+                 fg_sound(410,1);
+                 fg_sound(400,1);
+                 fg_sound(410,1);
+                 fg_waitfor(18);
+
+                 printf("sliding tone from 100 to 500 Hz...\n");
+                 for (freq = 100; freq <= 500; freq+=10)
+                    fg_sound(freq,2);
+              }
+
+
+     The fg_voice routine is analogous to the fg_sound routine, but it uses
+the TI sound chip rather than the programmable timer to create sound.  For
+this reason, the fg_voice routine can only be used on the PCjr or Tandy 1000
+systems.  The TI sound chip allows us to control the volume of a sound, and
+it also offers four distinct voice channels.  Thus, fg_voice requires two
+additional arguments besides frequency and duration to define the voice
+channel and sound volume.
+288   Fastgraph User's Guide
+     The first argument to fg_voice defines the voice channel, as shown
+below.
+
+                  value  meaning
+
+                    1    voice channel #1
+                    2    voice channel #2
+                    3    voice channel #3
+                    4    voice channel #4, periodic noise
+                    5    voice channel #4, white noise
+
+If we use voice channels 1, 2, or 3, the second argument defines the sound
+frequency in Hertz, between 18 and 32,767.  If we use voice channel 4,
+however, the second argument instead is a value that represents a specific
+frequency, as shown in this table.
+
+                       value   frequency
+
+                         0     512 Hertz
+                         1    1024 Hertz
+                         2    2048 Hertz
+
+The third argument defines the sound volume.  It must be between 0 and 15,
+where 0 is silent and 15 is loudest.  The fourth argument defines the sound
+duration in clock ticks.  As with the fg_sound routine, there are 18.2 clock
+ticks per second, and if the duration is zero or negative, the sound will
+continue until stopped with the fg_quiet routine.
+
+     Example 15-2 uses the fg_voice routine to create different sound effects
+using the TI sound chip.  As in example 15-1, there is a pause of one second
+between each.  The program first calls the fg_testmode routine to be sure it
+is running on a PCjr or Tandy 1000 system (video mode 9 is only available on
+these systems).  If so, the program uses voice channel #4 to produce a 2,048
+Hertz periodic noise, followed by white noise of the same frequency.  Both
+sounds are emitted at the maximum volume level (15) and last for about 1/6 of
+a second each (three clock ticks).  After these noises, example 15-2 produces
+a 500 Hertz tone of increasing volume.  In all cases, the program displays an
+identifying message just before each sound.
+
+                                Example 15-2.
+
+             #include <fastgraf.h>
+             #include <stdio.h>
+             #include <stdlib.h>
+             void main(void);
+
+             void main()
+             {
+                int volume;
+
+                if (fg_testmode(9,0) == 0) {
+                   printf("This program requires a PCjr or ");
+                   printf("a Tandy 1000 system.\n");
+                   exit(1);
+                   }
+
+                printf("2048 Hz periodic noise...\n");
+                                              Chapter 15:  Sound Effects   289
+
+                fg_voice(4,2,15,3);
+                fg_waitfor(18);
+
+                printf("2048 Hz white noise...\n");
+                fg_voice(5,2,15,3);
+                fg_waitfor(18);
+
+                printf("500 Hz tone of increasing volume...\n");
+                for (volume = 1; volume <= 15; volume++) {
+                   fg_voice(1,500,volume,0);
+                   fg_waitfor(4);
+                   }
+
+                fg_quiet();
+             }
+
+
+     Note how example 15-2 uses a duration of zero (continuous sound) and the
+fg_waitfor routine to specify the duration for each volume level the 500
+Hertz tone sequence.  This causes the transition between changes in volume to
+blend better with each other.  The fg_quiet routine, which stops continuous
+sound started with the fg_sound or fg_voice routines, ends the sound after
+the final volume level.
+
+     The fg_sound and fg_voice routines each produce a single sound.  We've
+seen how to combine sounds to produce sound effects, but still the individual
+sounds are defined numerically -- that is, by a certain frequency and
+duration.  It is often easier to create sounds from musical notes, and for
+this reason Fastgraph includes a routine fg_music that produces such sounds.
+The fg_music routine uses the programmable timer to produce synchronous
+sound; it does not support the TI sound chip.
+
+     The fg_music routine has a single argument called the music string,
+passed by reference as a byte array or character string.  The music string is
+simply a variable-length sequence of music commands, followed by a dollar-
+sign ($) terminator.  Music commands are summarized in the following table.
+
+command   meaning
+
+A thru G  Play the specified note in the current octave.
+
+#         May be appended to a note character (A through G) to make that note
+          sharp.
+
+.         May be appended to a note character (A through G) or a sharp (#) to
+          extend that note by half its normal length.  Multiple dots may be
+          used, and each will again extend the note by half as much as the
+          previous extension.
+
+Ln        Set the length of subsequent notes and pauses.  The value of n is
+          an integer between 1 and 64, where 1 indicates a whole note, 2 a
+          half note, 4 a quarter note, and so forth.  If no L command is
+          present, L4 is assumed.
+
+On        Set the octave for subsequent notes.  The value of n may be an
+          integer between 0 and 6 to set a specific octave.  It also can be a
+290   Fastgraph User's Guide
+
+          plus (+) or minus (-) character to increment or decrement the
+          current octave number.  Octave 4 contains middle C, and if no O
+          command is present, O4 is assumed.
+
+P         Pause (rest) for the duration specified by the most recent L
+          command.
+
+Sn        Set the amount of silence between notes.  The value of n is an
+          integer between 0 and 2.  If n is 0, each note plays for the full
+          period set by the L command (music legato).  If n is 1, each note
+          plays for 7/8 the period set by the L command (music normal).  If n
+          is 2, each note plays for 3/4 the period set by the L command
+          (music staccato).  If no S command is present, S1 is assumed.
+
+Tn        Set the tempo of the music (the number of quarter notes per
+          minute).  The value of n is an integer between 32 and 255.  If no T
+          command is present, T120 is assumed.
+
+The fg_music routine ignores any other characters in the music string.  It
+also ignores command values outside the allowable range, such as T20 or O8.
+
+     Example 15-3 illustrates some uses of the fg_music routine.  The program
+plays the first few bars of "Mary Had a Little Lamb", followed by the musical
+scale (including sharps) in two octaves, and finally the introduction to
+Beethoven's Fifth Symphony.  There is a pause of one second between each
+piece of music, and the program displays the titles before playing the music.
+Blank characters appear in the music strings to help make them more readable.
+
+                                Example 15-3.
+
+    #include <fastgraf.h>
+    #include <stdio.h>
+    void main(void);
+
+    void main()
+    {
+       printf("Mary Had a Little Lamb...\n");
+       fg_music("T150 L8 EDCDEEE P DDD P EGG P EDCDEEE L16 P L8 EDDEDC$");
+       fg_waitfor(18);
+
+       printf("up the scale in two octaves...\n");
+       fg_music("L16 CC#DD#EFF#GG#AA#B O+ CC#DD#EFF#GG#AA#B$");
+       fg_waitfor(18);
+
+       printf("Beethoven's Fifth Symphony...\n");
+       fg_music("T180 O2 L2 P L8 P GGG L2 D# L24 P L8 P FFF L2 D$");
+    }
+
+
+Asynchronous Sound
+
+     Sounds made concurrently with other activity in a program are said to be
+asynchronous.  Fastgraph's routines that produce asynchronous sound just
+start the sound and then immediately return control to the calling program.
+The sounds will automatically stop when the end of the sequence is reached,
+and you also can suspend or stop it on demand before that time.  None of
+                                              Chapter 15:  Sound Effects   291
+
+Fastgraph's asynchronous sound routines have any effect if there is already
+asynchronous sound in progress.  In addition, the asynchronous sound routines
+temporarily disable the synchronous sound routines (fg_sound, fg_voice, and
+fg_music) while asynchronous sound is in progress.
+
+     To expand the range of sound effects and to play fast-tempo music,
+Fastgraph temporarily quadruples the clock tick interrupt rate from 18.2 to
+72.8 ticks per second while producing asynchronous sound.  Because many disk
+controllers rely on the 18.2 tick per second clock rate to synchronize disk
+accesses, your programs should not perform any disk operations when
+asynchronous sound is in progress.
+
+     The fg_sounds routine is the asynchronous version of the fg_sound
+routine.  It uses the programmable timer to play a sequence of tones
+simultaneous to other operations.  This routine expects as its first argument
+a variable-length integer array, passed by reference, containing pairs of
+frequency and duration values.  As with the fg_sound routine, each frequency
+is expressed in Hertz and must be between 18 and 32,767.  The durations are
+also measured in clock ticks, but because the interrupt rate is quadrupled,
+there are 72.8 instead of 18.2 ticks per second.
+
+     The format of the frequency and duration array passed to fg_sounds is
+shown below.
+
+                          [0]    frequency of sound 1
+
+                          [1]    duration  of sound 1
+
+                          [2]    frequency of sound 2
+
+                          [3]    duration  of sound 2
+                                          .
+                                          .
+                                          .
+                                          .
+                                          .
+                       [2n-2]    frequency of sound n
+
+                       [2n-1]    duration  of sound n
+
+                         [2n]       terminator (0)
+
+Note that a null character (that is, a zero byte) terminates the array.  The
+second argument passed to fg_sounds is an integer value indicating the number
+of times to cycle through the frequency and duration array.  If this value is
+negative, the sounds will continue until stopped with the fg_hush or
+fg_hushnext routines.
+
+     Example 15-4 uses the fg_sounds routine to play the 100 to 500 Hertz
+sliding tone sequence of example 15-1.  To prove the sounds are being made
+concurrently with other operations, messages are displayed while the sequence
+is playing.  This is controlled by the Fastgraph routine fg_playing, which
+returns a value of 1 if asynchronous sounds are in progress, and 0 if not.
+Note how the duration must be specified as 8 clock ticks (instead of 2 as in
+example 15-1) to compensate for the quadrupled clock tick interrupt rate.
+292   Fastgraph User's Guide
+
+                                Example 15-4.
+
+                 #include <fastgraf.h>
+                 #include <stdio.h>
+                 void main(void);
+
+                 void main()
+                 {
+                    int i;
+                    int freq;
+                    int sound_array[83];
+
+                    i = 0;
+
+                    for (freq = 100; freq <= 500; freq+=10) {
+                       sound_array[i++] = freq;
+                       sound_array[i++] = 8;
+                       }
+                    sound_array[i] = 0;
+
+                    fg_sounds(sound_array,1);
+
+                    while(fg_playing())
+                       printf("Still playing...\n");
+                 }
+
+
+     Just as the fg_sounds routine is analogous to the fg_sound routine,
+there is a Fastgraph routine fg_voices that is similar to the fg_voice
+routine.  That is, fg_voices uses the TI sound chip to play an asynchronous
+sequence of tones.  Its arguments are the same as those of the fg_sounds
+routine, but the structure of the sound array is different.  Its structure
+is:
+
+                          [0]    channel # of sound 1
+
+                          [1]    frequency of sound 1
+
+                          [2]    volume    of sound 1
+
+                          [3]    duration  of sound 1
+                                          .
+                                          .
+                                          .
+                                          .
+                                          .
+                       [4n-4]    channel # of sound n
+
+                       [4n-3]    frequency of sound n
+
+                       [4n-2]    volume    of sound n
+
+                       [4n-1]    duration  of sound n
+
+                         [4n]       terminator (0)
+
+                                              Chapter 15:  Sound Effects   293
+
+The channel numbers, frequencies, volumes, and durations must be in the same
+ranges as discussed in the description of the fg_voice routine, except the
+durations are quadrupled because of the accelerated clock tick interrupt
+rate.  Again, note that a null character (that is, a zero byte) terminates
+the array.
+
+     Example 15-5 uses the fg_voices routine to play the 500 Hertz tone
+sequence of increasing volume introduced in example 15-2.  As in example
+15-4, the program displays messages while the tone sequence is playing to
+demonstrate the sounds are being made concurrently with other operations.
+Note how the duration is now 16 clock ticks (instead of 4 as in example 15-2)
+because of the quadrupled clock tick interrupt rate.
+
+                                Example 15-5.
+
+           #include <fastgraf.h>
+           #include <stdio.h>
+           void main(void);
+
+           void main()
+           {
+              int voice_array[61];
+              int i;
+              int volume;
+
+              if (fg_testmode(9,0) == 0) {
+                 printf("This program requires a PCjr or ");
+                 printf("a Tandy 1000 system.\n");
+                 exit(1);
+                 }
+
+              i = 0;
+
+              for (volume = 1; volume <= 15; volume++) {
+                 voice_array[i++] = 1;      /* use channel 1 */
+                 voice_array[i++] = 500;    /* 500 Hz frequency */
+                 voice_array[i++] = volume; /* variable volume */
+                 voice_array[i++] = 16;     /* duration */
+                 }
+              voice_array[i] = 0;
+
+              fg_voices(voice_array,1);
+
+              while(fg_playing())
+                 printf("Still playing...\n");
+           }
+
+
+     There is also an asynchronous version of the fg_music routine.  It is
+called fg_musicb, and it uses the same format music string as the fg_music
+routine does.  However, the fg_musicb routine has a second argument that
+specifies the number of times to cycle through the music string.  If this
+value is negative, the music will play repetitively until you stop it with
+the fg_hush or fg_hushnext routine.
+294   Fastgraph User's Guide
+     Example 15-6 plays the same three pieces of music as example 15-3, but
+it does so concurrently with other operations.  As the music plays, the
+program continuously displays the title of each piece.  Note how we can take
+advantage of the repetition in the music string for the "up the scale"
+sequence by playing the sequence twice.
+
+                                Example 15-6.
+
+  #include <fastgraf.h>
+  #include <stdio.h>
+  void main(void);
+
+  void main()
+  {
+     fg_musicb("T150 L8 EDCDEEE P DDD P EGG P EDCDEEE L16 P L8 EDDEDC$",1);
+     while (fg_playing())
+        printf("Mary Had a Little Lamb...\n");
+     fg_waitfor(18);
+
+     fg_musicb("L16 CC#DD#EFF#GG#AA#B O+$",2);
+     while (fg_playing())
+        printf("up the scale in two octaves...\n");
+     fg_waitfor(18);
+
+     fg_musicb("T180 O2 L2 P L8 P GGG L2 D# L24 P L8 P FFF L2 D$",1);
+     while (fg_playing())
+        printf("Beethoven's Fifth Symphony...\n");
+  }
+
+     The next example demonstrates the effects of the Fastgraph routines
+fg_hush and fg_hushnext, which stop sounds started with the fg_sounds,
+fg_voices, or fg_musicb routines.  The fg_hush routine immediately stops
+asynchronous sound, whereas the fg_hushnext routine does so when the current
+cycle finishes.  Neither routine has any arguments, and neither routine has
+any effect if no asynchronous sound is in progress.  Furthermore, note that
+fg_hushnext has no effect unless the asynchronous sound is continuous.
+
+     Example 15-7 runs in any text or graphics video mode.  It displays
+rectangles in up to 16 colors while playing continuous asynchronous music.
+The program periodically checks for keystrokes with the fg_intkey routine,
+and it continues to play the music while there is no keyboard activity.  If
+you press the Escape key, the program uses fg_hush to stop the music
+immediately; this causes an exit from the while loop.  If you press any other
+key, the program uses fg_hushnext to stop the music as soon as the current
+repetition finishes.  Once it does, the program exits the while loop because
+fg_playing will return a value of zero.
+
+                                Example 15-7.
+
+      #include <fastgraf.h>
+      void main(void);
+
+      #define ESC 27
+
+      void main()
+      {
+
+                                              Chapter 15:  Sound Effects   295
+         int color;
+         int old_mode;
+         unsigned char key, aux;
+
+         old_mode = fg_getmode();
+         fg_setmode(fg_automode());
+         color = 0;
+
+         fg_musicb("O4 L16 CC#DD#EFF#GG#AA#B O+ CC#DD#EFF#GG#AA#B$",-1);
+
+         while (fg_playing())
+         {
+            color = (color + 1) & 15;
+            fg_setcolor(color);
+            fg_rect(0,fg_getmaxx(),0,fg_getmaxy());
+
+            fg_waitfor(4);
+            fg_intkey(&key,&aux);
+            if (key == ESC)
+               fg_hush();
+            else if (key+aux != 0)
+               fg_hushnext();
+         }
+
+         fg_setmode(old_mode);
+         fg_reset();
+      }
+
+     Example 15-7 also demonstrates an important side-effect of the fg_musicb
+routine when playing continuous music.  Any length, octave, silence, or tempo
+values changed within the string are not reset to their original values at
+the beginning of each repetition.  If we did not include the O4 command at
+the beginning of the string, the later O+ command would cause the music to
+play in octaves 4 and 5 during the first repetition, 5 and 6 during the
+second repetition, and octave 6 for all subsequent repetitions (because you
+cannot increase the octave number above 6).
+
+     The final two routines relating to asynchronous sound are fg_resume and
+fg_suspend.  The fg_suspend routine suspends music previously started by
+fg_musicb, while fg_resume restarts the music from the point where it was
+suspended.  Example 15-8 plays the first few bars of "Mary Had a Little
+Lamb".  If you press any key while the song is playing, it stops.  Then,
+after another keystroke, the music resumes and continues until finished.
+
+                                Example 15-8.
+
+  #include <fastgraf.h>
+  #include <stdio.h>
+  void main(void);
+
+  void main()
+  {
+     fg_musicb("T150 L8 EDCDEEE P DDD P EGG P EDCDEEE L16 P L8 EDDEDC$",1);
+     fg_waitkey();
+
+     fg_suspend();
+
+296   Fastgraph User's Guide
+
+     printf("Music suspended.  Press any key to resume.\n");
+     fg_waitkey();
+
+     fg_resume();
+     printf("Music resumed.\n");
+     while (fg_playing());
+     printf("Music finished.\n");
+  }
+
+
+The fg_suspend routine has no effect if there is no asynchronous music in
+progress.  Similarly, fg_resume has no effect if there is no suspended music.
+If you call fg_suspend and then need to cancel the music or exit to DOS
+instead of restarting the music, call fg_hush instead of fg_resume.
+
+
+Summary of Sound Routines
+
+     This section summarizes the functional descriptions of the Fastgraph
+routines presented in this chapter.  More detailed information about these
+routines, including their arguments and return values, may be found in the
+Fastgraph Reference Manual.
+
+     FG_HUSH immediately stops asynchronous sound started with the fg_sounds,
+fg_voices, or fg_musicb routines.
+
+     FG_HUSHNEXT is similar to fg_hush, but it does not stop the asynchronous
+sound until the current repetition finishes.
+
+     FG_MUSIC uses the programmable timer to play a sequence of musical
+tones.
+
+     FG_MUSICB is the asynchronous version of the fg_music routine.  It uses
+the programmable timer to play a sequence of musical tones, concurrent with
+other activity.
+
+     FG_PLAYING determines whether or not there is any asynchronous sound in
+progress.
+
+     FG_QUIET stops continuous synchronous sound started with the fg_sound or
+fg_voice routines.
+
+     FG_RESUME restarts asynchronous music previously suspended by
+fg_suspend.
+
+     FG_SOUND produces a tone of a specified frequency and duration using the
+programmable timer.
+
+     FG_SOUNDS is the asynchronous version of the fg_sound routine.  It can
+play a series of tones of specified frequencies and durations, concurrent
+with other activity.
+
+     FG_SUSPEND suspends asynchronous music previously started by fg_musicb.
+
+     FG_VOICE produces a tone of a specified frequency, duration, and volume
+using one of the TI sound chip's four voice channels.
+                                              Chapter 15:  Sound Effects   297
+
+     FG_VOICES is the asynchronous version of the fg_voice routine.  It can
+play a series of tones of specified frequencies, durations, and volumes,
+concurrent with other activity.
+298   Fastgraph User's Guide

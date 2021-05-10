@@ -1,0 +1,2184 @@
+This is pakke.info, produced by makeinfo version 4.2 from pakke.txi.
+
+INFO-DIR-SECTION DJGPP Package Management
+START-INFO-DIR-ENTRY
+* pakke: (pakke).             pakke, a command-line package manager
+END-INFO-DIR-ENTRY
+
+
+File: pakke.info,  Node: Top,  Next: Introduction,  Prev: (dir),  Up: (dir)
+
+
+
+pakke 0.2.3 Manual Copyright (C) 2000-2003 by Richard Dawe
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License" (*note GNU Free Documentation License::).
+
+* Menu:
+
+* Introduction::
+* Installation::
+* Getting started::
+* Package operations::
+* Configuration::
+* How-tos::
+* Invoking pakke::
+
+Getting started:
+* Dependencies::
+* The package database::
+* The package operations::
+* DSMs for DJGPP packages::
+* Automatic downloading of packages::
+* Getting started with pakke::
+
+Package operations:
+* Initialising the package database::
+* Synchronising the package database::
+* Package specifiers::
+* Querying packages::
+* Installing packages::
+* Uninstalling packages::
+* Upgrading packages::
+* Backups::
+* Non-interactive mode::
+* Checking the integrity of installed packages::
+
+Configuration:
+* pakkerc::
+* simtelrc::
+
+How-tos:
+* How to install DJGPP using pakke::
+* How to upgrade pakke using pakke::
+* How to report bugs in pakke::
+
+Licences:
+* GNU Free Documentation License::
+
+Indices:
+* Concept Index::
+
+
+File: pakke.info,  Node: Introduction,  Next: Installation,  Prev: Top,  Up: (dir)
+
+Introduction
+************
+
+What is pakke?
+==============
+
+pakke is a package manager for DJGPP, loosely modelled on RPM, a package
+manager for Linux and other Unices.  A "package" is a collection of
+programs or files, e.g. the base DJGPP distribution `djdev' or gcc.
+
+pakke has been designed with the following goals:
+
+   * Ability to install DJGPP and associated packages from scratch,
+     i.e. without requiring any other packages;
+
+   * RPM-like command-line syntax;
+
+   * Ability to download packages using HTTP (web) or FTP;
+
+Please note that there is nothing in pakke's design that ties it to
+DJGPP.  It could be used for any type of package. It has been designed
+with the DJGPP community in mind, but could be configured easily as a
+general package management tool.
+
+pakke has a home page
+`http://www.phekda.freeserve.co.uk/richdawe/pakke/' and a mailing list
+<pakke-workers@yahoogroups.com>.  Please ask any questions about pakke
+on the mailing list.
+
+
+File: pakke.info,  Node: Installation,  Next: Getting started,  Prev: Introduction,  Up: Top
+
+Installation
+************
+
+Installing the Binary Distribution
+==================================
+
+Filename: `pakk023b.zip'
+
+If you want to install DJGPP from scratch, please see the How-To (*note
+How to install DJGPP using pakke::).
+
+Installing the binary distribution (ready-to-run) of pakke is relatively
+straightforward.  Extract the ZIP file into the DJGPP directory (e.g.
+c:\djgpp), preserving directory names - e.g. use PKUNZIP's '-d' option.
+
+The binary distribution includes documentation in info and text formats.
+For additional formats please see the section below on the documentation
+distribution.
+
+To install the info files properly, you will need GNU texinfo 4.0
+(available from the DJGPP archive as `v2gnu/txi40b.zip').  Run the
+following commands:
+
+     install-info --info-file=/dev/env/DJDIR/info/pakke.inf \
+                  --info-dir=/dev/env/DJDIR/info
+     
+     install-info --info-file=/dev/env/DJDIR/info/dsmcheck.inf \
+                  --info-dir=/dev/env/DJDIR/info
+     
+     install-info --info-file=/dev/env/DJDIR/info/dsm.inf \
+                  --info-dir=/dev/env/DJDIR/info
+
+Please note that some lines have been split with the `\' character -
+these should be typed as one line.
+
+pakke should now be installed correctly and ready to use - please read
+how to get started with pakke (*note Getting started::).
+
+Installing the Documentation Distribution
+=========================================
+
+Filename: `pakk023d.zip'
+
+Installing the documentation distribution of pakke is relatively
+straightforward.  Extract the ZIP file into the DJGPP directory (e.g.
+c:\djgpp), preserving directory names - e.g. use PKUNZIP's '-d' option.
+
+The documentation is provided in DVI, PostScript and HTML formats.
+
+Building from the Source Distribution
+=====================================
+
+Filename: `pakk023s.zip'
+
+Required and Optional Packages
+------------------------------
+
+To build pakke the following packages are required:
+
+   * GNU C compiler - versions 2.8.0, 2.8.1, 2.95.2, 2.95.3 have been
+     used.
+
+   * GNU binutils - versions 2.8.1, 2.9.5.1 beta, 2.10 have been used.
+
+   * GNU make
+
+   * GNU autoconf 2.13
+
+   * GNU m4 1.4 (or later) (required by GNU autoconf)
+
+   * GNU awk (required by GNU autoconf)
+
+   * GNU grep (required by GNU autoconf)
+
+   * GNU sed
+
+   * GNU bash
+
+   * GNU fileutils
+
+   * GNU findutils
+
+   * GNU shellutils
+
+   * GNU textutils 2.0 (or later)
+
+   * GNU texinfo 4.0 (or later)
+
+   * GNU flex
+
+   * GNU bison
+
+   * zlib (available from the DJGPP archive in `v2tk/')
+
+   * popt (available from the DJGPP archive in `v2tk/')
+
+Optional packages are as follows:
+
+   * The Memory Supervision System (MSS) can provide memory allocation
+     debugging.  MSS is available from the DJGPP archive in `v2tk/'.
+
+   * PMODE/DJ can be used to build executables that have a built-in DOS
+     extender (i.e. CWSDPMI not required), so that pakke can be used to
+     install DJGPP "from nothing".  PMODE/DJ is available from the
+     DJGPP archive in `v2misc/'.
+
+These packages should be detected and used automatically during the
+configure process.
+
+Configuration and Compilation
+-----------------------------
+
+In the following instructions, I have assumed that bash is the shell.
+If not, type 'bash' and then follow the instructions.
+
+  1. Run `./configure' to autodetect any needed libraries.  The
+     following command-line options can be passed to `configure':
+
+    `--enable-debug'
+          Enable debugging information.
+
+    `--enable-email=xxx'
+          Set the e-mail address to be displayed with pakke's `-V'
+          command-line option.
+
+    `--with-bzip2'
+          Enable support for bzip2-compressed packages (*note
+          bzip2.info: Top.).
+
+    `--with-mss'
+          Enable memory allocation tracking with MSS - if MSS isn't
+          installed, then this will be ignored.
+
+    `--with-pmode-stub'
+          Enable building with the PMODE/DJ protected mode stub.  When
+          built with this stub, pakke and dsmcheck can be used on any
+          computer without needing a DPMI server to be installed.  This
+          is useful for installing DJGPP from scratch under DOS, where
+          no DPMI server is available by default.
+
+          Note: The versions built with the PMODE/DJ stub _may_ be less
+          stable than those built without.  Problems have been reported
+          with programs built with PMODE/DJ.
+
+     If you are going to distribute your binaries of pakke, please use
+     the `--enable-email' switch and supply your e-mail address.
+
+     Below is an example invocation of `configure' with all the options;
+     you may not need all these options.
+
+          ./configure --enable-debug --with-mss \
+                      --enable-email=barney.rubble@bedrock.az.us
+
+     The `--prefix' option is used to specify the prefix used when
+     installing the built package.  This should probably be the DJGPP
+     directory, but you can install it elsewhere if you want.  If you
+     have a recent enough DJGPP toolchain, you can use the
+     `/dev/env/DJDIR' syntax for the prefix, e.g.:
+
+          ./configure --prefix=/dev/env/DJDIR
+
+  2. Run `make' to compile.
+
+  3. (_Optional_, but recommended) Run `make check' to check that the
+     programs have been built correctly.
+
+  4. (_Optional_) Run `make -C doc all' to build documentation in
+     formats other than the defaults of info and HTML.
+
+  5. (_Optional_) Run `make install' to install pakke.  If you want to
+     see what would be installed, use `make -n install' instead.
+
+  6. (_Optional_) Run `make install-lib' if you are going to use
+     libpakke in your own programs.  It installs library header files
+     and the library itself.
+
+pakke should now be built, installed correctly and ready to use -
+please read how to get started with pakke (*note Getting started::).
+
+
+File: pakke.info,  Node: Getting started,  Next: Dependencies,  Prev: Installation,  Up: Top
+
+Getting started
+***************
+
+Before getting started with pakke, some concepts need to be explained.
+
+* Menu:
+
+* Dependencies::
+* The package database::
+* The package operations::
+* DSMs for DJGPP packages::
+* Automatic downloading of packages::
+* Getting started with pakke::
+
+
+File: pakke.info,  Node: Dependencies,  Next: The package database,  Prev: Getting started,  Up: Getting started
+
+Dependencies
+============
+
+Dependencies are the interactions between different packages.  For
+instance, if one has some C source code, it is only useful, if there is
+a C compiler to compile it with.  The source code depends on the C
+compiler.
+
+The DSM specification (*note dsm.inf: Top.) actually has two kinds of
+dependencies - `requires' and `depends-on'.  These are "hard
+dependencies" and "soft dependencies" respectively.  A hard dependency
+must be satisfied.  A package with a hard dependency will not work, if
+this dependency is not satisfied.  A soft dependency may not be
+satisfied, but the package will still work with some of its
+functionality impaired.
+
+It is also possible to have "virtual dependencies", which specify
+capabilities.  These capabilities may be provided by multiple packages.
+A capability is something like the ability to read web pages or provide
+certain system calls, e.g. DPMI, that packages require.
+
+
+File: pakke.info,  Node: The package database,  Next: The package operations,  Prev: Dependencies,  Up: Getting started
+
+The package database
+====================
+
+pakke has a package database, to keep track of what has been
+installed/uninstalled/upgraded.  This information allows pakke to
+install/uninstall/upgrade packages safely.  It contains the following
+information:
+
+   * descriptions of the packages (DSMs);
+
+   * manifest files for the packages (`.mft' files);
+
+   * MD5 hashes of each file in the packages, to detect when they have
+     changed.
+
+When the package database is created by pakke (*note Initialising the
+package database::), some information is automatically added:
+
+   * a DSM for the operating system/platform that pakke is running on.
+
+Why would you want to install a DSM for the platform that pakke is
+running on?  These "platform DSMs" list what capabilities the operating
+system provides.
+
+An important capability for DJGPP programs is DPMI, since all DJGPP
+programs require a DPMI server to be running.  Please note that some
+DJGPP programs appear not to need a DPMI server.  They do, but the DPMI
+server has been linked into them.  Windows provides a DPMI 0.9 server,
+so there is a capability in the Windows DSMs for DPMI.
+
+The package database is stored in `share/pakke' in the DJGPP directory
+(or whatever directory is the pakke root).  In this directory there are:
+
+`pakkerc'
+     pakke's configuration file;
+
+`simtelrc'
+     a list of URLs for mirror sites for the DJGPP archive;
+
+`db/'
+     a directory containing installed package database;
+
+`db-avail/'
+     a directory containing available package database;
+
+`win32/'
+     a directory (if present) containing helper programs for running
+     under 32-bit versions of Windows, i.e.: any version later than
+     Windows 3.x.
+
+If the configuration and package database has not been created, you may
+see the following error:
+
+     Error: Unable to read configuration file!
+
+Please see the later section "Getting started with pakke" (*note
+Getting started with pakke: Getting started.).
+
+
+File: pakke.info,  Node: The package operations,  Next: DSMs for DJGPP packages,  Prev: The package database,  Up: Getting started
+
+The package operations
+======================
+
+pakke has different modes of operation, depending on the packages
+involved:
+
+   * The package database can be initialised.
+
+   * The package database can be synchronised with updated DSMs, when
+     they become available.
+
+   * Installed packages can be queried, uninstalled, upgraded or
+     verified.
+
+   * Available packages can be queried or installed.
+
+These operations are described in the chapter "Package operations"
+(*note Package operations::).
+
+The method of selecting packages depends on the operation.  See the
+section of package specifiers for more details (*note Package
+specifiers::).
+
+Verification of a package is called an "integrity check".  This will
+show which files in the package have changed or are missing, if any.
+
+
+File: pakke.info,  Node: DSMs for DJGPP packages,  Next: Automatic downloading of packages,  Prev: The package operations,  Up: Getting started
+
+DSMs for DJGPP packages
+=======================
+
+Newer DJGPP packages are provided with DSMs.  These DSMs are also
+available in the package "djgpp-dsms", which is available from the
+`v2/' directory of the DJGPP archive as the file `dsXXXXXX.zip', where
+`XXXXXX' is the package's date, e.g. `010822'.  This can be installed,
+upgraded and uninstalled like any other DJGPP package.
+
+If one plans to install or upgrade a lot of packages to the latest from
+the DJGPP archive, it may be more convenient to download all the
+packages, install "djgpp-dsms" and then upgrade by package name.
+Typing in a large number of filenames can become tedious.
+
+In fact the `--syncdb' operation can download the latest "djgpp-dsms"
+package for you (*note Synchronising the package database::).
+
+
+File: pakke.info,  Node: Automatic downloading of packages,  Next: Getting started with pakke,  Prev: DSMs for DJGPP packages,  Up: Getting started
+
+Automatic downloading of packages
+=================================
+
+pakke can download packages automatically, if they are not found.  The
+following operations can download packages:
+
+   * synchronising the package database (*note Synchronising the
+     package database::);
+
+   * installing packages (*note Installing packages::);
+
+   * upgrading packages (*note Upgrading packages::).
+
+pakke will ask you whether you want to download packages.  If pakke is
+running in non-interactive mode (*note Non-interactive mode::), it will
+not download packages.
+
+You should configure pakke (*note pakkerc::), so that it uses the
+nearest and fastest server on the Internet to you, when downloading
+packages.
+
+You can specify the Simtel.NET mirror to use on the command-line using
+the `--mirror' command-line option:
+
+     pakke --mirror ftp://ftp.simtel.net/pub/simtelnet/gnu/djgpp/
+
+If you use the same mirror each time, you may wish to configure pakkerc
+(*note pakkerc::) to use it by default.
+
+pakke uses GNU wget, to download packages.  See the wget home page at
+`http://wget.sunsite.dk/' or `http://www.gnu.org/software/wget/' for
+more details.
+
+
+File: pakke.info,  Node: Getting started with pakke,  Next: Invoking pakke,  Prev: Automatic downloading of packages,  Up: Getting started
+
+Getting started with pakke
+==========================
+
+This section assumes that you already have a DJGPP installation.  For
+instructions on installing DJGPP from scratch with pakke, please see
+the How-To (*note How to install DJGPP using pakke::).
+
+Using pakke with an existing DJGPP installation is straightforward.
+Firstly, extract the pakke binaries into the DJGPP directory.  You now
+need to initialise and synchronise the package database, so that pakke
+knows about all the packages you have.  I have assumed that you are
+using the bash shell - if not, type `bash' to run it.  Then change into
+the DJGPP directory (e.g. `c:/djgpp') and then execute the following
+commands:
+
+     ./bin/pakke -v --initdb
+     ./bin/pakke -v --syncdb
+
+These commands will create the configuration files `pakkerc' and
+`simtelrc' for you (*note pakkerc::, *note simtelrc::).
+
+You should now be able to use pakke.  To check this, list all installed
+packages:
+
+     pakke -v -qa
+
+To read the pakke manual, you can use the info program:
+
+     info pakke
+
+Please read the manual, particularly the sections on querying (*note
+Querying packages::) and installing packages (*note Installing
+packages::).
+
+
+File: pakke.info,  Node: Invoking pakke,  Next: Package operations,  Prev: Getting started with pakke,  Up: Top
+
+Invoking pakke
+**************
+
+Help options
+------------
+
+     -h --help -V --version -L --license
+
+`-h' only displays help, if an operation has not been specified on the
+command-line.  If an operation has been specified, then `-h' will make
+pakke show its progress (see `-h', `--hash' and `--show-progress'
+below).
+
+Global options
+--------------
+
+*Note Non-interactive mode::.
+
+     --rcfile --root --prefix -v --verbose -Q --quiet --non-interactive
+     -h --hash --show-progress
+
+Download options
+----------------
+
+*Note Automatic downloading of packages::.
+
+     --mirror
+
+Query options
+-------------
+
+*Note Querying packages::.
+
+     -q --query -p -a --installed -A --available
+     -i --longinfo --long-info --short --short-info -l -f
+     -R --requires --depends-on --conflicts-with --replaces --provides
+     --install-before --install-after --all-deps --all-dependencies
+     --changelog --pre-install-readme --post-install-readme
+     --pre-uninstall-readme --post-uninstall-readme --install-warning
+
+Install options
+---------------
+
+*Note Installing packages::.
+
+     -i --install -A --available -n --test
+
+Uninstall options
+-----------------
+
+*Note Uninstalling packages::.
+
+     -e --uninstall -n --test
+
+Upgrade options
+---------------
+
+*Note Upgrading packages::.
+
+     -U --upgrade -A --available -n --test
+
+Database initialisation options
+-------------------------------
+
+*Note Initialising the package database::.
+
+     --initdb --with-platform --with-pakke
+
+Database synchronisation options
+--------------------------------
+
+*Note Synchronising the package database::.
+
+     --syncdb
+
+Integrity checking options
+--------------------------
+
+*Note Checking the integrity of installed packages::.
+
+     --check-integrity
+
+
+File: pakke.info,  Node: Package operations,  Next: Initialising the package database,  Prev: Invoking pakke,  Up: Top
+
+Package operations
+******************
+
+* Menu:
+
+* Initialising the package database::
+* Synchronising the package database::
+* Package specifiers::
+* Querying packages::
+* Installing packages::
+* Uninstalling packages::
+* Upgrading packages::
+* Backups::
+* Non-interactive mode::
+* Checking the integrity of installed packages::
+
+
+File: pakke.info,  Node: Initialising the package database,  Next: Synchronising the package database,  Prev: Package operations,  Up: Package operations
+
+Initialising the package database
+*********************************
+
+Initialisation command-line
+===========================
+
+     --initdb [--with-platform[=<Plaform>[,<Platform>...]] [--with-pakke]
+
+Here `<Platform>' is the abbreviated name of a platform.  Currently the
+following names are recognised:
+
+`msdos'
+     MS-DOS and all variants;
+
+`win95'
+     Windows '95, all versions;
+
+`win98'
+     Windows '98, all versions;
+
+`winme'
+     Windows ME, all versions;
+
+`winnt4'
+     Windows NT 4, all Service Pack levels;
+
+`win2k'
+     Windows 2000, all Service Pack levels;
+
+`winxp'
+     Windows XP, all Service Pack levels;
+
+`dosemu'
+     dosemu, the DOS emulator for Linux.
+
+Initialising the database
+=========================
+
+For pakke to function correctly, the package database must exist.  In
+the simplest case, you can run pakke like so:
+
+     pakke --initdb
+
+You may also want to run in verbose mode, using the `-v' or `--verbose'
+option.
+
+pakke will create the root directory that will be used to install
+packages, unless it already exists.  It will then create the package
+database off this root directory.
+
+After creating the package database, pakke will try to detect the
+platform that it is running on.  It will install a DSM for the platform
+into the package database - a "platform DSM".  If you use the same DJGPP
+installation on multiple platforms, you should install multiple
+platform DSMs using the `--with-platform' option.  For example, here's
+how to install a platform DSM for Windows NT 4:
+
+     pakke -v --initdb --with-platform=winnt4
+
+It is also possible for pakke to install a copy of itself in the package
+root directory, using the `--with-pakke' option.  This is most useful
+when you are installing DJGPP from scratch using pakke.  For example:
+
+     pakke -v --root c:/djgpp --initdb --with-pakke
+
+
+File: pakke.info,  Node: Synchronising the package database,  Next: Package specifiers,  Prev: Initialising the package database,  Up: Package operations
+
+Synchronising the package database
+**********************************
+
+Synchronisation command-line
+============================
+
+     --syncdb
+
+Synchronising the database
+==========================
+
+The package database may require synchronising periodically.  If you
+install any packages without using pakke, pakke needs to update its
+database with information about these packages, if it can.  Namely it
+creates MD5 hashes and copies the package's DSM to the database.  Note
+that it can only do this for packages that have a DSM available.
+
+It is important to create MD5 hashes for a package, so that uninstall
+can detect whether any of them have been modified.  If there are no MD5
+hashes for a package, then data loss may results, since uninstall will
+just remove the package's files (*note Uninstalling packages::).
+
+`--syncdb' can also download and install or upgrade to the latest DSMs
+for DJGPP packages (*note DSMs for DJGPP packages::).  pakke will ask
+if it can download them (*note Automatic downloading of packages::).
+
+It is usually best to run pakke in verbose mode (the `-v' or
+`--verbose' options), when synchronsing, to see what it is doing:
+
+     pakke -v --syncdb
+
+Synchronisation sources
+=======================
+
+DSMs are synchronised from the following places:
+
+   * the `manifest' directories, e.g. `c:/djgpp/manifest';
+
+   * the available DSM directories, e.g.
+     `c:/djgpp/share/pakke/db-avail'.
+
+These paths are controlled by pakke's configuration (*note pakkerc::).
+
+
+File: pakke.info,  Node: Package specifiers,  Next: Querying packages,  Prev: Synchronising the package database,  Up: Package operations
+
+Package specifiers
+******************
+
+Package specifiers are very important in pakke's operation.  The format
+of a package specifier is:
+
+     <Name> [<Version>] [(<Type>)]
+
+Here are some examples:
+
+     fileutils
+     gcc 2.95.2
+     binutils 2.10 (sources)
+     zlib (binaries)
+
+"Wildcards" are allowed in package specifiers.  Shell-style wildcards
+are allowed in the name.  Any part of the version can be replaced with
+a `?'. For example, to match all versions of gcc 2.95.x (2.95.1,
+2.95.2, 2.95.3), you could use:
+
+     gcc 2.95.?
+
+You can match any remaining parts of the version with a `*'.  For
+example, to match all versions of gcc 3.x (e.g.: 3.0.3, 3.1), you could
+use:
+
+     gcc 3.*
+
+You could match all binary packages ending in `zip', but with any first
+letter:
+
+     ?zip (binaries)
+
+You can also match the type with a wildcard. For example, you can find
+all packages beginning with `e':
+
+     e* (?)
+
+NB: If you don't specify the type, then all types will be matched.
+
+NB: Make sure you quote spaces and wildcards, when passing arguments to
+pakke.  Otherwise your shell may interpret these characters and do
+something you don't expect. Consider this example:
+
+     pakke -q 'gcc 2.95.*' --long-info
+
+Versions
+========
+
+The version is specified as follows:
+
+     <Major>[.<Minor>[.<Subminor>[.<Subsubminor>]]]
+     [  (alpha <Alpha number>)
+      | (beta <Beta number>)
+      | (pre <Pre-release number>)]
+     [revision <Revision number>] [patchlevel <Patchlevel number>]
+     [release <Release number>]
+     [snapshot <ISO 8061 hyphenless date>] [platform <Platform specifier>]
+
+Versions are explained in detail in the DSM specification (*note
+Formats: (dsm)Descriptive Directives.).
+
+Types
+=====
+
+The following types can be used in a package specifier:
+
+   * binaries
+
+   * sources
+
+   * documentation
+
+   * virtual
+
+The types of package are explained in more detail in the DSM
+specification (*note Information Directives: (dsm)Descriptive
+Directives.).
+
+
+File: pakke.info,  Node: Querying packages,  Next: Installing packages,  Prev: Package specifiers,  Up: Package operations
+
+Querying packages
+*****************
+
+Packages can be queried in several different ways:
+
+   * by the package's file name (for a package that is not installed);
+
+   * by the package's name and version (*note Package specifiers::);
+
+   * by matching a file owned by one or more packages.
+
+There may be multiple matched packages.  For example, if one has
+installed the binaries and sources for a package, both may be matched.
+If multiple versions of a package are installed, then they may all be
+matched.
+
+Different types of query give different information - one can query the
+following information about one or more packages:
+
+   * the package's name and version;
+
+   * a summary description, for a brief overview;
+
+   * a detailed description;
+
+   * other packages required by the package to function;
+
+   * other packages that the package can optionally use;
+
+   * other packages that the package conflicts with;
+
+   * other packages that the package replaces;
+
+   * capabilities provided by the package;
+
+   * packages that the package should be installed before or after;
+
+   * change history (a changelog) for the package;
+
+   * documentation to be read before or after installing or
+     uninstalling;
+
+   * the warning that will be printed on installing the package.
+
+Querying a non-installed package
+================================
+
+To query a non-installed package file, one must use the `-p' option
+with the file name of the package, e.g.
+
+     pakke -q -p package.zip
+
+To query a non-installed package that is in pakke's package database,
+one must use the `-A' option with the name of the package, e.g.:
+
+     pakke -q -A bison
+
+If there are multiple matches, a more specific query including the
+version may be used (*note Package specifiers::), e.g.
+
+     pakke -q -A 'bison 1.28 (binaries)'
+
+Querying an installed package
+=============================
+
+To query an installed package, one can just use the package's name.  If
+there are multiple matches, a more specific query including the version
+should be used (*note Package specifiers::).
+
+Here are some examples:
+
+     pakke -q fileutils
+     pakke -q 'gcc 2.95.2'
+     pakke -q 'binutils 2.10 (sources)'
+
+Querying a package's description
+================================
+
+A package can be described in short or long form, e.g.
+
+     pakke -q fileutils --short-info
+     pakke -q -p gmp311b.zip --long-info
+
+`-i' is an abbreviation for the short form.
+
+Querying dependencies
+=====================
+
+Dependencies can be queried using the following options - only one can
+be used at a time:
+
+   * `-R' or `--requires'
+
+   * `--depends-on'
+
+   * `--conflicts-with'
+
+   * `--replaces'
+
+   * `--provides'
+
+   * `--install-before'
+
+   * `--install-after'
+
+Instead of using one of the above options, `--all-deps' or
+`--all-dependencies' can be used to list all the dependency information
+for a package.
+
+Querying files owned by a package
+=================================
+
+File queries can match on a fully-qualified path or just the filename.
+For example:
+
+     pakke -q -p package.zip -f ls.exe
+     pakke -qa -f c:/djgpp/ls.exe
+
+Wildcards and relative paths are not matched.  Support will be added for
+matching on these in a later version of pakke.
+
+Querying read-me documentation
+==============================
+
+These are generally good documents to read before installing a package.
+For example:
+
+     pakke -q -p package.zip --pre-install-readme
+
+Similarly, before uninstalling a package, one may want to read the
+uninstall document (if available):
+
+     pakke -q -p package.zip --pre-uninstall-readme
+
+If there's no pre-uninstall document, one may want to read the
+pre-install documentation again.  There may also be post-install or
+post-uninstall documents to read.
+
+A list of available documents can be found querying the long
+description:
+
+     pakke -q -p gmp311b.zip --long-info
+
+
+File: pakke.info,  Node: Installing packages,  Next: Uninstalling packages,  Prev: Querying packages,  Up: Package operations
+
+Installing packages
+*******************
+
+Install command-line
+====================
+
+     (-i | --install) <Package file> [(-n | --test)]
+     (-i | --install) (-A | --available) <Package name> [(-n | --test)]
+
+Here `<Package file>' is the full filename of an archive (e.g.
+`c:/zips/gmp311b.zip' or a DSM file (e.g. `c:/zips/gmp311b.dsm').  If
+given an archive to install, pakke will try to locate the DSM file
+within the archive (*note DJGPP Software Manifest: (dsm)Introduction.).
+
+Here `<Package name>' is the name of an available package.  This is a
+package that is in pakke's available database, so pakke knows how to
+install it.
+
+Installing a package
+====================
+
+Before installing a package, you should read the package's readme files
+(*note Querying read-me documentation: Querying packages.).
+
+When installing a package with pakke, the following checks are
+performed:
+
+   * the package is of binary, source, documentation or virtual type;
+
+   * all the archives are available (*note Locating archives:
+     Installing packages.);
+
+   * the dependencies are satisfied - that is, all the packages needed
+     by the new package are present or not present, as required;
+
+If these checks fail, then the package cannot be installed.
+
+If pakke cannot find all the archives, it will ask if it can download
+them (*note Automatic downloading of packages::).
+
+When installing a package, pakke may display a warning.  This warning is
+provided by the package and may contain important instructions or
+information for the package.  pakke will ask if you wish to continue
+with the installation, so you can abort the install after reading the
+warning.
+
+Once the checks have been performed and the warning message displayed
+and acknowledged, pakke will create directories and extract files from
+the archive - this may take some time.  Once that is complete, the
+package database is updated (*note The package database: Getting
+started.) - MD5 hashes are generated for all the files and the
+package's DSM is copied into the package database.  Then pakke will
+create entries in the info directory for any info files contained in
+the package.
+
+*WARNING:* It is important to install packages with pakke, if you want
+to uninstall them with pakke later.  If you do install a package
+without using pakke, you should synchronise pakke's package database as
+soon as possible, to create MD5 hashes and DSMs in the package database
+(*note Synchronising the package database::).
+
+It is usually best to run pakke in verbose mode (the `-v' or
+`--verbose' options), when installing, to see what it is doing.
+
+Here are some examples:
+
+     pakke --install package.zip
+     pakke -v -i package.zip
+     pakke -v -i -A 'package (binaries)'
+
+Installs and duplicates
+=======================
+
+When installing a package with pakke, it is possible that a file will be
+installed that has the same name as an existing file.  pakke will ask
+you what to do - there are four choices:
+
+   * replace the file;
+
+   * back up the file (*note Backups::);
+
+   * skip extracting the new file, leaving the current file;
+
+   * abort the uninstallation.
+
+Aborting the installation of package may cause problems, because the
+package may be left in a half-installed state.
+
+Here is an example:
+
+     'c:/djgpp/copying' already exists
+     [r]eplace, [b]ackup, [s]kip or [a]bort?
+
+Testing installs
+================
+
+You can test whether a package can be installed or not by installing in
+test mode.  pakke does the checks listed above, displays the warning
+(if any) and then aborts.  Test mode is most useful for checking
+dependencies. For example:
+
+     pakke -v --install gmp311b.zip -n
+     pakke -v -i fil40b.zip --test
+     pakke -v -i -A 'bison (binaries)' --test
+
+DSMs provided with pakke
+========================
+
+Not all DJGPP packages have DSMs.  pakke includes DSMs for many of the
+popular packages that do not include a DSM.  Hopefully these packages
+will include a DSM in later releases.  In the meantime, you need to
+point pakke at these DSMs, to install these packages. For example, when
+installing textutils 2.0 you need to use a command-line like:
+
+     pakke -v --install --available 'textutils 2.0 (binaries)'
+
+You may wish to download and install the latest DSMs for DJGPP packages,
+to allow you to install by package name (*note DSMs for DJGPP
+packages::).
+
+Locating archives
+=================
+
+pakke searches for package archives in the directories listed in its
+configuration file `pakkerc' (*note pakkerc::).  It looks in the
+directories listed and then in the following sub-directories of them:
+
+   * `v2/', `v2/alphas/', `v2/beta/',
+
+   * `v2apps/', `v2apps/alphas/', `v2apps/beta/',
+
+   * `v2gnu/', `v2gnu/alphas', `v2gnu/beta/',
+
+   * `v2misc/', `v2misc/alphas/', `v2misc/beta/',
+
+   * `v2tk/', `v2tk/alphas/', `v2tk/beta/'
+
+This supports storage of DJGPP packages in a flat directory structure
+or in a directory structure like that of the DJGPP archive.
+
+So if one has a download directory, e.g. `c:/zips/djgpp', where all
+DJGPP packages are downloaded, then it should be added to the list of
+places to search in `pakkerc' (*note pakkerc::), like so:
+
+     zips from .,c:/zips/djgpp,@PAKKE-DOWNLOAD@
+
+An example of pakke locating archives
+-------------------------------------
+
+Consider installing Fileutils 4.0 using the DSM from the "djgpp-dsms"
+package.  Assume that the "djgpp-dsm" package has been installed.  Then
+you can install Fileutils using the `-A' option:
+
+     pakke -v --install -A 'fileutils 4.0 (binaries)'
+
+Assume that `c:/zips/djgpp' contains a mirror of the DJGPP archive from
+Simtel.NET.  Then the Fileutils 4.0 binary package will be
+`c:/zips/djgpp/v2gnu/fil40b.zip'.  Also assume that the pakke
+configuration has the `zips from ...' line shown above.
+
+When the install command is run, pakke will look in these directories
+in this order for `fil40b.zip':
+
+     .
+     ./v2
+     ./v2apps
+     ./v2gnu
+     ./v2misc
+     ./v2tk
+     c:/zips/djgpp
+     c:/zips/djgpp/v2
+     c:/zips/djgpp/v2apps
+     c:/zips/djgpp/v2gnu
+     c:/zips/djgpp/v2misc
+     c:/zips/djgpp/v2tk
+     ...
+
+Hence it will find the file `c:/zips/djgpp/v2gnu/fil40b.zip' and
+install it.
+
+
+File: pakke.info,  Node: Uninstalling packages,  Next: Upgrading packages,  Prev: Installing packages,  Up: Package operations
+
+Uninstalling packages
+*********************
+
+Uninstall command-line
+======================
+
+     (-e | --uninstall) <Package> [(-n | --test)]
+
+Here `<Package>' is a package specifier (*note Package specifiers::),
+for example `'fileutils 4.0 (binaries)''.  If more than one package is
+matched by the given package specifier, pakke will abort.  Only one
+package can be uninstalled at a time.  If there are multiple matches, a
+more precise package specifier is needed.
+
+Uninstalling a package
+======================
+
+Before uninstalling a package, you should read the package's readme
+files (*note Querying read-me documentation: Querying packages.).
+
+When uninstalling a package with pakke, it checks that no hard
+dependencies will be broken by removing the package.  If this check
+fails, then the package cannot be uninstalled.
+
+Once the checks have been performed, pakke removes any entries in the
+info directory for any info files contained in the package.  Then pakke
+removes all files belonging to the package - this may take some time.
+Once that is complete, the package database is updated (*note The
+package database: Getting started.) - MD5 hashes are removed and the
+package's DSM is removed from the package database.
+
+*WARNING:* Packages that do not have MD5 hashes will be removed without
+prompting the user.  pakke cannot tell what files have been changed and
+will just remove them.
+
+It is usually best to run pakke in verbose mode (the `-v' or
+`--verbose' options), when uninstalling, to see what it is doing.
+
+Here are some examples:
+
+     pakke --uninstall 'gmp 3.1.1 (binaries)'
+     pakke -v -e fileutils
+
+Uninstalls and modified files
+=============================
+
+When uninstalling a package that was installed with pakke, it will ask
+you what to do with modified files.  There are four choices:
+
+   * remove the file;
+
+   * back up the file (*note Backups::);
+
+   * keep the file;
+
+   * abort the uninstallation.
+
+Aborting the uninstallation of package may cause problems, because the
+package may be left in a half-installed state.
+
+Here is an example:
+
+     Warning: MD5 hash for file 'c:/djgpp/djgpp.env' has changed
+     'c:/djgpp/djgpp.env' has changed
+     [r]emove, [b]ackup, [k]eep or [a]bort?
+
+Testing uninstalls
+==================
+
+You can test whether a package can be uninstalled or not by
+uninstalling in test mode.  pakke does the checks listed above, lists
+changed files and then aborts.  Test mode is most useful for checking
+dependencies.  For example:
+
+     pakke -v --uninstall 'gmp 3.1.1 (binaries)'
+     pakke -v -e fileutils
+
+
+File: pakke.info,  Node: Upgrading packages,  Next: Backups,  Prev: Uninstalling packages,  Up: Package operations
+
+Upgrading packages
+******************
+
+Upgrade command-line
+====================
+
+*WARNING:* pakke's upgrade feature is experimental.  It may not handle
+dependencies properly in all cases, which could cause data loss.  You
+are strongly advised to use upgrade in test mode, before actually
+upgrading.  Having said this, the author has used the upgrade feature
+many times, without data loss.
+
+     (-U | --upgrade) <Package file> [(-n | --test)]
+     (-U | --upgrade) (-A | --available) <Package name> [(-n | --test)]
+
+Here `<Package file>' is the full filename of an archive (e.g.
+`c:/zips/gmp311b.zip' or a DSM file (e.g. `c:/zips/gmp311b.dsm').  If
+given an archive to upgrade, pakke will try to locate the DSM file
+within the archive (*note DJGPP Software Manifest: (dsm)Introduction.).
+
+Here `<Package name>' is the name of an available package.  This is a
+package that is in pakke's available database, so pakke knows how to
+install it.
+
+Upgrading a package
+===================
+
+Before upgrading a package, you should read the old and new packages'
+readme files (*note Querying read-me documentation: Querying packages.).
+Because upgrading to a new package may upgrade more than one package,
+this may not be straightforward.
+
+When upgrading a package with pakke, it checks that all hard
+dependencies satisfied by the old package(s) will be satisfied by the
+new package.  It is possible that not all hard dependencies are
+satisfied in normal usage - for instance, if a user installs a DJGPP
+package without using pakke.  If this check fails, then the package
+cannot be uninstalled.
+
+Upgrading is basically an uninstall operation (*note Uninstalling
+packages::) followed by an install operation (*note Installing
+packages::).
+
+It is described in the section on install operations, how package
+archives are found (*note Locating archives: Installing packages.).
+
+     pakke -v --upgrade fil40b.zip
+     pakke -v --upgrade -A 'bison 1.35 (binaries)'
+
+Upgrades, modified files and duplicates
+=======================================
+
+Please see the uninstall and install sections (*note Uninstalling
+packages::), *note Installing packages::) for information on duplicates
+and modified files.  Upgrading treats files in the same manner as
+uninstall and install operations.
+
+Testing upgrades
+================
+
+You can test whether a package can be upgraded or not by upgrading in
+test mode.  pakke does the checks listed above, lists changed files and
+then aborts.  Test mode is most useful for checking dependencies.  For
+example:
+
+     pakke -v --upgrade fil40b.zip --test
+
+
+File: pakke.info,  Node: Backups,  Next: Non-interactive mode,  Prev: Upgrading packages,  Up: Package operations
+
+Backups
+*******
+
+When backing up a file, pakke places the files in the `backup/'
+directory off the pakke root, e.g. `c:/djgpp/backup'.  The files are
+stored in a directory named after the package.  They are stored with
+the same relative paths that they had under the pakke root, e.g. `bin/'.
+
+As an example, consider a package 'fred' version 1.2 binaries.  The
+package file name could be `fred12b.zip' with a DSM called
+`fred12b.dsm'.  Say it was stored under `c:/djgpp', but is now being
+uninstalled.  A user modified its configuration file
+`c:/djgpp/share/fred/fred.ini'.  When the package is uninstalled, the
+user chooses to back up `fred.ini'. It is backed up to:
+
+     c:/djgpp/backup/fred12b.old/share/fred/fred.ini
+
+By storing the modified files under a directory named after the package,
+you should be able to find the backup easily.
+
+
+File: pakke.info,  Node: Non-interactive mode,  Next: Checking the integrity of installed packages,  Prev: Backups,  Up: Package operations
+
+Non-interactive mode
+********************
+
+When pakke is run in non-interactive mode, it automatically answers any
+questions that it would have asked the user.  It answers the questions
+in cautious manner.  For example:
+
+Synchronise database
+     Packages will not be downloaded.
+
+Install
+     Installs will be aborted if the package has a warning message that
+     the user must read.  Installs will not automatically download
+     packages.  Files will be backed up automatically, if they will be
+     overwritten.
+
+     Packages will not be downloaded.
+
+Upgrade
+     Installs will be aborted if the package has a warning message that
+     the user must read.  Packages will not be automatically
+     downloaded.  Files will be backed up automatically, if they will
+     be overwritten or have changed.
+
+     Packages will not be downloaded.
+
+Uninstall
+     Files will be backed up automatically, if they have changed.
+
+
+File: pakke.info,  Node: Checking the integrity of installed packages,  Next: Configuration,  Prev: Non-interactive mode,  Up: Package operations
+
+Checking the integrity of installed packages
+********************************************
+
+Check integrity command-line
+============================
+
+     --check-integrity <Package>
+
+Here `<Package>' is a package specifier (*note Package specifiers::),
+for example `'fileutils 4.0 (binaries)''.  Multiple packages can be
+checked.
+
+Checking the integrity of a package
+===================================
+
+Checking the integrity of a package checks that:
+
+   * whether any of its files have been changed;
+
+   * none of its files have been deleted.
+
+For any files that have been changed/deleted, pakke will output a
+message.
+
+Here's an example:
+
+     pakke -v -check-integrity djdev
+
+To check the integrity of all packages, use:
+
+     pakke -v --check-integrity '*'
+
+This may take some time, if you have a lot of packages installed.
+
+
+File: pakke.info,  Node: Configuration,  Next: pakkerc,  Prev: Checking the integrity of installed packages,  Up: Top
+
+Configuration
+*************
+
+* Menu:
+
+* pakkerc::
+* simtelrc::
+
+
+File: pakke.info,  Node: pakkerc,  Next: simtelrc,  Prev: Configuration,  Up: Configuration
+
+pakkerc
+=======
+
+`pakkerc' controls where pakke looks for its files - namely:
+
+   * manifest files (`.mft') for installed packages, e.g.
+     `c:/djgpp/manifest';
+
+   * DSM files for installed packages, e.g. `c:/djgpp/share/pakke/db';
+
+   * DSM files for available packages, e.g.
+     `c:/djgpp/share/pakke/db-avail';
+
+   * ZIP file packages;
+
+   * gzip'd tar file packages;
+
+   * bzip2'd tar file packages.
+
+`pakkerc' also controls how and where pakke downloads packages using
+the protocols HTTP and FTP:
+
+   * what HTTP and/or FTP proxies to use, if any;
+
+   * what HTTP or FTP server to use,
+
+   * or what country the computer is in, if pakke should choose an HTTP
+     or FTP server.
+
+pakkerc's syntax
+================
+
+     installed mft from <paths>
+     installed dsm from <paths>
+     available dsm from <paths>
+     zip from <paths and/or urls>
+     tar-gzip from <paths and/or urls>
+     tar-bzip2 from <paths and/or urls>
+     
+     proxy http using <url>
+     proxy ftp using <url>
+     
+     ftp from <url>
+     http from <url>
+     
+     location is <country code>
+
+where:
+
+<paths> is a list of paths separated by commas or the word `or'
+surrounded by whitespace, e.g.:
+
+     c:/some-dir,c:/some-other-dir or c:/yet-another-dir
+
+If the a path has spaces in its name, enclose its name in double quotes.
+
+<url> is a URL formatted like so:
+
+     http://somehost/
+
+<paths or urls> is a list of paths and/or URLs formatted in the same
+way as <paths>, e.g.
+
+     c:/some-dir or ftp://server/remote-dir/
+
+URLs must specify the path to the root of a DJGPP archive directory,
+i.e.: the one containing all archives (*note Locating archives:
+Installing packages.).
+
+Configuring downloading of packages
+===================================
+
+pakke can download packages from HTTP or FTP web servers.  The server
+is chosen according to these rules:
+
+   * If an archive path list (e.g.: `zip', `tar-gzip' or `tar-bzip2')
+     contains a URL, then that URL is used.
+
+   * If `http from' is specified, its URL is used.
+
+   * If `ftp from' is specified, its URL is used.
+
+   * If `location' is specified, then a URL is chosen from the list of
+     Simtel.NET mirrors in `simtelrc' (*note simtelrc::).
+
+   * Otherwise the main Simtel.NET site is used.
+
+Please specify a `location', to reduce load on the main Simtel.NET site.
+
+Locations
+---------
+
+A `location' is the country code used in URLs on the Internet, e.g.:
+`uk', `de', `au'.  Users in the US should use one of the generic
+top-level domain names, e.g.: `com', `net' or `org'.
+
+Substitutions in pakkerc
+------------------------
+
+`pakkerc' allows substitutions to be made from the environment.  Other
+special substitutions can be made.  The syntax is:
+
+     @<substitution-name>@
+
+where <substitution-name> is the name of the substitution to be
+performed.  If the named substitution cannot be made, then it is
+replaced by empty text.
+
+Substitutions from the environment
+----------------------------------
+
+Examples of configuration commands using substitutions from the
+environment:
+
+     proxy http using @http_proxy@
+     proxy ftp using @ftp_proxy@
+
+If `http_proxy' is not set in the environment, then no HTTP proxy will
+be used.
+
+Special substitutions
+---------------------
+
+The following are special substitutions:
+
+`PAKKE-ROOT'
+     This is replaced with the pakke root directory, which is typically
+     the DJGPP directory, as given by the environment variable `DJDIR',
+     e.g. `c:/djgpp'.  This should be used instead of `@DJDIR@'.
+
+`PAKKE-DOWNLOAD'
+     This is replaced with the directory that pakke places archives,
+     when it downloads them via HTTP or FTP.  `PAKKE-DOWNLOAD' is
+     expanded to `@PAKKE-ROOT@/share/pakke/packages', which may be, for
+     example, `c:/djgpp/share/pakke/packages'.
+
+     You should have `@PAKKE-DOWNLOAD@' in your `zip', `tar-gzip' and
+     `tar-bzip2' paths.  Otherwise pakke will not be able to find the
+     archives it has downloaded.
+
+Example pakkerc
+===============
+
+This example pakkerc is for a standard install of DJGPP.  If pakke
+cannot find any package files, it will download them from an HTTP or
+FTP mirror site in the UK.
+
+     installed mft from @PAKKE-ROOT@manifest
+     installed dsm from @PAKKE-ROOT@share/pakke/db
+     available dsm from .,@PAKKE-ROOT@share/pakke/db-avail
+     
+     zip from .,@PAKKE-DOWNLOAD@
+     tar-gzip from .,@PAKKE-DOWNLOAD@
+     tar-bzip2 from .,@PAKKE-DOWNLOAD@
+     
+     proxy http using @http_proxy@
+     proxy ftp using @ftp_proxy@
+     
+     location is uk
+
+You may wish to add the directory you keep ZIP packages in, e.g.:
+
+     zip from .,c:/djgpp-zips,@PAKKE-DOWNLOAD@
+
+The `pakkerc' file that is supplied with pakke is well commented.
+Hopefully this will also help you to understand how to configure pakke.
+
+
+File: pakke.info,  Node: simtelrc,  Next: How-tos,  Prev: pakkerc,  Up: Configuration
+
+simtelrc
+========
+
+simtelrc's syntax
+=================
+
+`simtelrc' contains a list of URLs for Simtel.NET mirror sites, which
+contain a mirror of the DJGPP archive.  `simtelrc' has one URL per
+line.  E.g.:
+
+     ftp://ftp.demon.co.uk/pub/simtelnet
+     ftp://ftp.nic.surfnet.nl/mirror/simtel
+
+You should not need to edit `simtelrc', since each release of pakke
+should come with an up-to-date list of Simtel.NET mirrors.  If you find
+that the list is out-of-date, please send a mail to
+<pakke-workers@yahoogroups.com>.
+
+
+File: pakke.info,  Node: How-tos,  Next: How to install DJGPP using pakke,  Prev: simtelrc,  Up: Top
+
+How-tos
+*******
+
+* Menu:
+
+* How to install DJGPP using pakke::
+* How to upgrade pakke using pakke::
+* How to report bugs in pakke::
+
+
+File: pakke.info,  Node: How to install DJGPP using pakke,  Next: How to upgrade pakke using pakke,  Prev: How-tos,  Up: How-tos
+
+How to install DJGPP using pakke
+================================
+
+  1. Create a directory to contain your DJGPP installation, e.g.
+     `c:/djgpp'.  Please replace `c:/djgpp' with the appropriate path in
+     the following steps.
+
+  2. Extract the pakke binary distribution into the DJGPP directory.
+
+  3. Add the `bin' sub-directory of the DJGPP directory to your path,
+     e.g. add the following to your `autoexec.bat':
+
+          PATH=c:\djgpp\bin;%PATH%
+
+     Also execute this command from the DOS command-line.
+
+  4. Add a line for `djgpp.env' to your `autoexec.bat', e.g.:
+
+          set DJGPP=c:\djgpp\djgpp.env
+
+     Also execute this command from the DOS command-line.
+
+  5. Initialise the package database in the DJGPP directory, e.g.:
+
+          pakke --root c:/djgpp -v --initdb
+
+  6. Modify the pakke configuration file (*note pakkerc::) to point to
+     the directory that you store your DJGPP packages in. For example,
+     if you store your packages in `c:/zips/gnu/djgpp', add a line like:
+
+          zip from c:/zips/gnu/djgpp
+
+  7. Install the DJGPP development environment.  E.g.:
+
+          pakke --root c:/djgpp -v --install c:/zips/gnu/djgpp/djdev203.zip
+
+  8. Now that you have the base DJGPP environment installed, read the
+     DJGPP installation instructions for any other actions that may be
+     needed, to use it.  At this point you may want to reboot, to pick
+     up the changes to `autoexec.bat'.
+
+
+
+File: pakke.info,  Node: How to upgrade pakke using pakke,  Next: How to report bugs in pakke,  Prev: How to install DJGPP using pakke,  Up: How-tos
+
+How to upgrade pakke using pakke
+================================
+
+The problem with upgrading pakke on DOS or Windows is that you cannot
+overwrite the pakke program, while it is running.  To get round this
+problem, create a temporary copy of the current pakke program and use
+the copy to upgrade the main pakke program.  E.g.: to upgrade to pakke
+0.1.6:
+
+     mkdir -p /temp/upgrade
+     cp $DJDIR/bin/pakke.exe /temp/upgrade/pakke.exe
+     /temp/upgrade/pakke.exe -Uv /path/to/zipo016b.zip
+     rm /temp/upgrade/pakke.exe
+
+
+File: pakke.info,  Node: How to report bugs in pakke,  Next: GNU Free Documentation License,  Prev: How to upgrade pakke using pakke,  Up: How-tos
+
+How to report bugs in pakke
+===========================
+
+When trying to fix bugs, some information is required: the version of
+pakke (see below) and how pakke failed.  For instance, did pakke crash?
+Or did it exit with a strange error?
+
+If pakke crashed, please send details of its crash dump.  Analysis of
+crash dumps is explained in detail in the DJGPP FAQ (*note Crash dump:
+(djgppfaq)Crash dump.).  Please note that this only applies to the
+DJGPP version of pakke.  If you are using pakke on other platforms
+(e.g. Linux), there are other methods for analysing crashes (e.g.
+coredumps).
+
+Please send details of the bug to <pakke-workers@yahoogroups.com>.
+
+Finding the version of pakke
+----------------------------
+
+The version of pakke can be found using the `--version' command-line
+option for pakke.  The `--verbose' option will display warnings about
+problems with or assumptions made in parsing the package database.
+
+     pakke --verbose --version
+
+Please send a copy of the output of this command to the person who built
+the version of pakke you are using.  Below is an example of the output,
+for comparison.
+
+     . DJGPP path 'c:/djgpp/'
+     . Installation prefix 'c:/djgpp/'
+     . Backup prefix 'c:/djgpp/backup/'
+     . Download prefix 'c:/djgpp/share/pakke/packages/'
+     . Reading configuration from 'c:/djgpp/share/pakke/pakkerc'
+     . Installed DSM path [1]: 'c:/djgpp/share/pakke/db'
+     . Installed manifest path [1]: 'c:/djgpp/manifest'
+     . Available DSM path [1]: '.'
+     . Available DSM path [2]: 'c:/djgpp/share/pakke/db-avail'
+     . Available zip path [1]: '.'
+     . Available zip path [2]: 'c:/djgpp/share/pakke/packages/'
+     . Available gzip'd tar path [1]: '.'
+     . Available gzip'd tar path [2]: 'c:/djgpp/share/pakke/packages/'
+     . Available bzip2'd tar path [1]: '.'
+     . Available bzip2'd tar path [2]: 'c:/djgpp/share/pakke/packages/'
+     . HTTP mirror [1]: 'http://iolanthe/djgpp/'
+     . Location [1]: 'uk'
+     . Simtel.NET mirror: 'http://iolanthe/djgpp/'
+     pakke 0.2.1 - DJGPP Package Manager
+     Copyright (C) 1999-2002 by Richard Dawe <rich@phekda.freeserve.co.uk>
+     Distributed under terms of the GNU GPL ('pakke -L' to view)
+     
+     Compilation information:
+     . Built on 'ATHENA' by rich <rich@phekda.freeserve.co.uk>
+     . Built on Jun 30 2002 13:14:54
+     . libpakke 0.2.1
+     . DJGPP 2.03
+     . gcc version 3.1
+     . binutils 2.12.1
+     . zlib 1.1.4 Copyright (C) 1995-1998 Jean-loup Gailly and Mark Adler
+     . unzip 0.15 Copyright 1998 Gilles Vollant
+     
+     DSM built-ins:
+     . DSM version:   0.6.0
+     . Platform:      i386-pc-msdosdjgpp
+     . Root:          c:/djgpp/ (NB: overridden by DJDIR from environment)
+     . Platform DSMs: dosemu msdos win2k win3 win95 win98 winme winnt4 winxp
+     
+     Helpers:
+     . HTTP/FTP: wget: c:/djgpp/share/pakke/win32/wget/wget.exe
+     
+     DJGPP prefixes: v2/, v2/alphas/, v2/beta/, v2apps/, v2apps/alphas/,
+     v2apps/beta/, v2gnu/, v2gnu/alphas/, v2gnu/beta/, v2misc/,
+     v2misc/alphas/, v2misc/beta/, v2tk/, v2tk/alphas/, v2tk/beta/,
+     v2tk/allegro/
+
+
+File: pakke.info,  Node: GNU Free Documentation License,  Next: Concept Index,  Prev: How to report bugs in pakke,  Up: Top
+
+GNU Free Documentation License
+******************************
+
+                        Version 1.1, March 2000
+     Copyright (C) 2000 Free Software Foundation, Inc.
+     59 Temple Place, Suite 330, Boston, MA  02111-1307, USA
+     
+     Everyone is permitted to copy and distribute verbatim copies
+     of this license document, but changing it is not allowed.
+
+  0. PREAMBLE
+
+     The purpose of this License is to make a manual, textbook, or other
+     written document "free" in the sense of freedom: to assure everyone
+     the effective freedom to copy and redistribute it, with or without
+     modifying it, either commercially or noncommercially.  Secondarily,
+     this License preserves for the author and publisher a way to get
+     credit for their work, while not being considered responsible for
+     modifications made by others.
+
+     This License is a kind of "copyleft", which means that derivative
+     works of the document must themselves be free in the same sense.
+     It complements the GNU General Public License, which is a copyleft
+     license designed for free software.
+
+     We have designed this License in order to use it for manuals for
+     free software, because free software needs free documentation: a
+     free program should come with manuals providing the same freedoms
+     that the software does.  But this License is not limited to
+     software manuals; it can be used for any textual work, regardless
+     of subject matter or whether it is published as a printed book.
+     We recommend this License principally for works whose purpose is
+     instruction or reference.
+
+  1. APPLICABILITY AND DEFINITIONS
+
+     This License applies to any manual or other work that contains a
+     notice placed by the copyright holder saying it can be distributed
+     under the terms of this License.  The "Document", below, refers to
+     any such manual or work.  Any member of the public is a licensee,
+     and is addressed as "you".
+
+     A "Modified Version" of the Document means any work containing the
+     Document or a portion of it, either copied verbatim, or with
+     modifications and/or translated into another language.
+
+     A "Secondary Section" is a named appendix or a front-matter
+     section of the Document that deals exclusively with the
+     relationship of the publishers or authors of the Document to the
+     Document's overall subject (or to related matters) and contains
+     nothing that could fall directly within that overall subject.
+     (For example, if the Document is in part a textbook of
+     mathematics, a Secondary Section may not explain any mathematics.)
+     The relationship could be a matter of historical connection with
+     the subject or with related matters, or of legal, commercial,
+     philosophical, ethical or political position regarding them.
+
+     The "Invariant Sections" are certain Secondary Sections whose
+     titles are designated, as being those of Invariant Sections, in
+     the notice that says that the Document is released under this
+     License.
+
+     The "Cover Texts" are certain short passages of text that are
+     listed, as Front-Cover Texts or Back-Cover Texts, in the notice
+     that says that the Document is released under this License.
+
+     A "Transparent" copy of the Document means a machine-readable copy,
+     represented in a format whose specification is available to the
+     general public, whose contents can be viewed and edited directly
+     and straightforwardly with generic text editors or (for images
+     composed of pixels) generic paint programs or (for drawings) some
+     widely available drawing editor, and that is suitable for input to
+     text formatters or for automatic translation to a variety of
+     formats suitable for input to text formatters.  A copy made in an
+     otherwise Transparent file format whose markup has been designed
+     to thwart or discourage subsequent modification by readers is not
+     Transparent.  A copy that is not "Transparent" is called "Opaque".
+
+     Examples of suitable formats for Transparent copies include plain
+     ASCII without markup, Texinfo input format, LaTeX input format,
+     SGML or XML using a publicly available DTD, and
+     standard-conforming simple HTML designed for human modification.
+     Opaque formats include PostScript, PDF, proprietary formats that
+     can be read and edited only by proprietary word processors, SGML
+     or XML for which the DTD and/or processing tools are not generally
+     available, and the machine-generated HTML produced by some word
+     processors for output purposes only.
+
+     The "Title Page" means, for a printed book, the title page itself,
+     plus such following pages as are needed to hold, legibly, the
+     material this License requires to appear in the title page.  For
+     works in formats which do not have any title page as such, "Title
+     Page" means the text near the most prominent appearance of the
+     work's title, preceding the beginning of the body of the text.
+
+  2. VERBATIM COPYING
+
+     You may copy and distribute the Document in any medium, either
+     commercially or noncommercially, provided that this License, the
+     copyright notices, and the license notice saying this License
+     applies to the Document are reproduced in all copies, and that you
+     add no other conditions whatsoever to those of this License.  You
+     may not use technical measures to obstruct or control the reading
+     or further copying of the copies you make or distribute.  However,
+     you may accept compensation in exchange for copies.  If you
+     distribute a large enough number of copies you must also follow
+     the conditions in section 3.
+
+     You may also lend copies, under the same conditions stated above,
+     and you may publicly display copies.
+
+  3. COPYING IN QUANTITY
+
+     If you publish printed copies of the Document numbering more than
+     100, and the Document's license notice requires Cover Texts, you
+     must enclose the copies in covers that carry, clearly and legibly,
+     all these Cover Texts: Front-Cover Texts on the front cover, and
+     Back-Cover Texts on the back cover.  Both covers must also clearly
+     and legibly identify you as the publisher of these copies.  The
+     front cover must present the full title with all words of the
+     title equally prominent and visible.  You may add other material
+     on the covers in addition.  Copying with changes limited to the
+     covers, as long as they preserve the title of the Document and
+     satisfy these conditions, can be treated as verbatim copying in
+     other respects.
+
+     If the required texts for either cover are too voluminous to fit
+     legibly, you should put the first ones listed (as many as fit
+     reasonably) on the actual cover, and continue the rest onto
+     adjacent pages.
+
+     If you publish or distribute Opaque copies of the Document
+     numbering more than 100, you must either include a
+     machine-readable Transparent copy along with each Opaque copy, or
+     state in or with each Opaque copy a publicly-accessible
+     computer-network location containing a complete Transparent copy
+     of the Document, free of added material, which the general
+     network-using public has access to download anonymously at no
+     charge using public-standard network protocols.  If you use the
+     latter option, you must take reasonably prudent steps, when you
+     begin distribution of Opaque copies in quantity, to ensure that
+     this Transparent copy will remain thus accessible at the stated
+     location until at least one year after the last time you
+     distribute an Opaque copy (directly or through your agents or
+     retailers) of that edition to the public.
+
+     It is requested, but not required, that you contact the authors of
+     the Document well before redistributing any large number of
+     copies, to give them a chance to provide you with an updated
+     version of the Document.
+
+  4. MODIFICATIONS
+
+     You may copy and distribute a Modified Version of the Document
+     under the conditions of sections 2 and 3 above, provided that you
+     release the Modified Version under precisely this License, with
+     the Modified Version filling the role of the Document, thus
+     licensing distribution and modification of the Modified Version to
+     whoever possesses a copy of it.  In addition, you must do these
+     things in the Modified Version:
+
+       A. Use in the Title Page (and on the covers, if any) a title
+          distinct from that of the Document, and from those of
+          previous versions (which should, if there were any, be listed
+          in the History section of the Document).  You may use the
+          same title as a previous version if the original publisher of
+          that version gives permission.
+
+       B. List on the Title Page, as authors, one or more persons or
+          entities responsible for authorship of the modifications in
+          the Modified Version, together with at least five of the
+          principal authors of the Document (all of its principal
+          authors, if it has less than five).
+
+       C. State on the Title page the name of the publisher of the
+          Modified Version, as the publisher.
+
+       D. Preserve all the copyright notices of the Document.
+
+       E. Add an appropriate copyright notice for your modifications
+          adjacent to the other copyright notices.
+
+       F. Include, immediately after the copyright notices, a license
+          notice giving the public permission to use the Modified
+          Version under the terms of this License, in the form shown in
+          the Addendum below.
+
+       G. Preserve in that license notice the full lists of Invariant
+          Sections and required Cover Texts given in the Document's
+          license notice.
+
+       H. Include an unaltered copy of this License.
+
+       I. Preserve the section entitled "History", and its title, and
+          add to it an item stating at least the title, year, new
+          authors, and publisher of the Modified Version as given on
+          the Title Page.  If there is no section entitled "History" in
+          the Document, create one stating the title, year, authors,
+          and publisher of the Document as given on its Title Page,
+          then add an item describing the Modified Version as stated in
+          the previous sentence.
+
+       J. Preserve the network location, if any, given in the Document
+          for public access to a Transparent copy of the Document, and
+          likewise the network locations given in the Document for
+          previous versions it was based on.  These may be placed in
+          the "History" section.  You may omit a network location for a
+          work that was published at least four years before the
+          Document itself, or if the original publisher of the version
+          it refers to gives permission.
+
+       K. In any section entitled "Acknowledgments" or "Dedications",
+          preserve the section's title, and preserve in the section all
+          the substance and tone of each of the contributor
+          acknowledgments and/or dedications given therein.
+
+       L. Preserve all the Invariant Sections of the Document,
+          unaltered in their text and in their titles.  Section numbers
+          or the equivalent are not considered part of the section
+          titles.
+
+       M. Delete any section entitled "Endorsements".  Such a section
+          may not be included in the Modified Version.
+
+       N. Do not retitle any existing section as "Endorsements" or to
+          conflict in title with any Invariant Section.
+
+     If the Modified Version includes new front-matter sections or
+     appendices that qualify as Secondary Sections and contain no
+     material copied from the Document, you may at your option
+     designate some or all of these sections as invariant.  To do this,
+     add their titles to the list of Invariant Sections in the Modified
+     Version's license notice.  These titles must be distinct from any
+     other section titles.
+
+     You may add a section entitled "Endorsements", provided it contains
+     nothing but endorsements of your Modified Version by various
+     parties--for example, statements of peer review or that the text
+     has been approved by an organization as the authoritative
+     definition of a standard.
+
+     You may add a passage of up to five words as a Front-Cover Text,
+     and a passage of up to 25 words as a Back-Cover Text, to the end
+     of the list of Cover Texts in the Modified Version.  Only one
+     passage of Front-Cover Text and one of Back-Cover Text may be
+     added by (or through arrangements made by) any one entity.  If the
+     Document already includes a cover text for the same cover,
+     previously added by you or by arrangement made by the same entity
+     you are acting on behalf of, you may not add another; but you may
+     replace the old one, on explicit permission from the previous
+     publisher that added the old one.
+
+     The author(s) and publisher(s) of the Document do not by this
+     License give permission to use their names for publicity for or to
+     assert or imply endorsement of any Modified Version.
+
+  5. COMBINING DOCUMENTS
+
+     You may combine the Document with other documents released under
+     this License, under the terms defined in section 4 above for
+     modified versions, provided that you include in the combination
+     all of the Invariant Sections of all of the original documents,
+     unmodified, and list them all as Invariant Sections of your
+     combined work in its license notice.
+
+     The combined work need only contain one copy of this License, and
+     multiple identical Invariant Sections may be replaced with a single
+     copy.  If there are multiple Invariant Sections with the same name
+     but different contents, make the title of each such section unique
+     by adding at the end of it, in parentheses, the name of the
+     original author or publisher of that section if known, or else a
+     unique number.  Make the same adjustment to the section titles in
+     the list of Invariant Sections in the license notice of the
+     combined work.
+
+     In the combination, you must combine any sections entitled
+     "History" in the various original documents, forming one section
+     entitled "History"; likewise combine any sections entitled
+     "Acknowledgments", and any sections entitled "Dedications".  You
+     must delete all sections entitled "Endorsements."
+
+  6. COLLECTIONS OF DOCUMENTS
+
+     You may make a collection consisting of the Document and other
+     documents released under this License, and replace the individual
+     copies of this License in the various documents with a single copy
+     that is included in the collection, provided that you follow the
+     rules of this License for verbatim copying of each of the
+     documents in all other respects.
+
+     You may extract a single document from such a collection, and
+     distribute it individually under this License, provided you insert
+     a copy of this License into the extracted document, and follow
+     this License in all other respects regarding verbatim copying of
+     that document.
+
+  7. AGGREGATION WITH INDEPENDENT WORKS
+
+     A compilation of the Document or its derivatives with other
+     separate and independent documents or works, in or on a volume of
+     a storage or distribution medium, does not as a whole count as a
+     Modified Version of the Document, provided no compilation
+     copyright is claimed for the compilation.  Such a compilation is
+     called an "aggregate", and this License does not apply to the
+     other self-contained works thus compiled with the Document, on
+     account of their being thus compiled, if they are not themselves
+     derivative works of the Document.
+
+     If the Cover Text requirement of section 3 is applicable to these
+     copies of the Document, then if the Document is less than one
+     quarter of the entire aggregate, the Document's Cover Texts may be
+     placed on covers that surround only the Document within the
+     aggregate.  Otherwise they must appear on covers around the whole
+     aggregate.
+
+  8. TRANSLATION
+
+     Translation is considered a kind of modification, so you may
+     distribute translations of the Document under the terms of section
+     4.  Replacing Invariant Sections with translations requires special
+     permission from their copyright holders, but you may include
+     translations of some or all Invariant Sections in addition to the
+     original versions of these Invariant Sections.  You may include a
+     translation of this License provided that you also include the
+     original English version of this License.  In case of a
+     disagreement between the translation and the original English
+     version of this License, the original English version will prevail.
+
+  9. TERMINATION
+
+     You may not copy, modify, sublicense, or distribute the Document
+     except as expressly provided for under this License.  Any other
+     attempt to copy, modify, sublicense or distribute the Document is
+     void, and will automatically terminate your rights under this
+     License.  However, parties who have received copies, or rights,
+     from you under this License will not have their licenses
+     terminated so long as such parties remain in full compliance.
+
+ 10. FUTURE REVISIONS OF THIS LICENSE
+
+     The Free Software Foundation may publish new, revised versions of
+     the GNU Free Documentation License from time to time.  Such new
+     versions will be similar in spirit to the present version, but may
+     differ in detail to address new problems or concerns.  See
+     `http://www.gnu.org/copyleft/'.
+
+     Each version of the License is given a distinguishing version
+     number.  If the Document specifies that a particular numbered
+     version of this License "or any later version" applies to it, you
+     have the option of following the terms and conditions either of
+     that specified version or of any later version that has been
+     published (not as a draft) by the Free Software Foundation.  If
+     the Document does not specify a version number of this License,
+     you may choose any version ever published (not as a draft) by the
+     Free Software Foundation.
+
+ADDENDUM: How to use this License for your documents
+----------------------------------------------------
+
+To use this License in a document you have written, include a copy of
+the License in the document and put the following copyright and license
+notices just after the title page:
+
+       Copyright (C)  YEAR  YOUR NAME.
+       Permission is granted to copy, distribute and/or modify this document
+       under the terms of the GNU Free Documentation License, Version 1.1
+       or any later version published by the Free Software Foundation;
+       with the Invariant Sections being LIST THEIR TITLES, with the
+       Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.
+       A copy of the license is included in the section entitled ``GNU
+       Free Documentation License''.
+
+If you have no Invariant Sections, write "with no Invariant Sections"
+instead of saying which ones are invariant.  If you have no Front-Cover
+Texts, write "no Front-Cover Texts" instead of "Front-Cover Texts being
+LIST"; likewise for Back-Cover Texts.
+
+If your document contains nontrivial examples of program code, we
+recommend releasing these examples in parallel under your choice of
+free software license, such as the GNU General Public License, to
+permit their use in free software.
+
+
+File: pakke.info,  Node: Concept Index,  Prev: GNU Free Documentation License,  Up: Top
+
+Concept Index
+*************
+
+* Menu:
+
+* capabilities:                          Dependencies.
+* dependencies:                          Dependencies.
+* dependency:                            Dependencies.
+* depends-on:                            Dependencies.
+* djgpp-dsms package:                    DSMs for DJGPP packages.
+* FDL, GNU Free Documentation License:   GNU Free Documentation License.
+* hard dependency:                       Dependencies.
+* install:                               Installing packages.
+* installing:                            Installing packages.
+* integrity check:                       The package operations.
+* package specifiers:                    Package specifiers.
+* platform DSM:                          The package database.
+* platform DSMs:                         The package database.
+* queries:                               Querying packages.
+* query:                                 Querying packages.
+* query types:                           Querying packages.
+* requires:                              Dependencies.
+* soft dependency:                       Dependencies.
+* testing installs:                      Installing packages.
+* testing uninstalls:                    Uninstalling packages.
+* testing upgrades:                      Upgrading packages.
+* uninstall:                             Uninstalling packages.
+* uninstalling:                          Uninstalling packages.
+* version wildcards:                     Package specifiers.
+* virtual dependencies:                  Dependencies.
+
+
+
+Tag Table:
+Node: Top221
+Node: Introduction1636
+Node: Installation2683
+Node: Getting started8605
+Node: Dependencies8982
+Node: The package database10031
+Node: The package operations12106
+Node: DSMs for DJGPP packages13028
+Node: Automatic downloading of packages13949
+Node: Getting started with pakke15243
+Node: Invoking pakke16568
+Node: Package operations18421
+Node: Initialising the package database18873
+Node: Synchronising the package database20857
+Node: Package specifiers22511
+Node: Querying packages24625
+Node: Installing packages28602
+Node: Uninstalling packages34898
+Node: Upgrading packages37596
+Node: Backups40286
+Node: Non-interactive mode41246
+Node: Checking the integrity of installed packages42311
+Node: Configuration43292
+Node: pakkerc43477
+Node: simtelrc48336
+Node: How-tos48944
+Node: How to install DJGPP using pakke49181
+Node: How to upgrade pakke using pakke50748
+Node: How to report bugs in pakke51424
+Node: GNU Free Documentation License54674
+Node: Concept Index74572
+
+End Tag Table

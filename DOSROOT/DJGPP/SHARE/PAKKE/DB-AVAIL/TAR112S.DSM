@@ -1,0 +1,38 @@
+#
+# DSM for tar 1.12 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.3
+dsm-name: tar112s
+dsm-version: 0.4.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: tar
+version: 1.12
+manifest: tar112s
+binaries-dsm: tar112b
+documentation-dsm: tar112d
+short-description: GNU tar
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: tar112s.zip
+
+requires: gcc
+requires: djdev
+requires: make >= 3.75
+requires: bash
+requires: sed
+requires: fileutils
+# For testsuite:
+depends-on: sh-utils
+depends-on: textutils
+depends-on: diffutils
+	

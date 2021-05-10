@@ -1,0 +1,37 @@
+#
+# gnutools.dsm
+# Written by Laurynas Biveinis <lauras@softhome.net>
+#
+# This is an example DSM for a "GNU development tools" package.
+#
+
+dsm-file-version: 1.2
+dsm-version: 0.4.0
+dsm-name: gnu-tools
+dsm-type: group
+
+dsm-author: Laurynas Biveinis
+dsm-author-email: lauras@softhome.net
+
+name: GNU development tools
+version: 1
+short-description: C development system with a lot of GNU tools
+
+# This has no packages of its own - it just requires other ones.
+requires: djdev >= 2.00
+requires: gcc >= 2.7.2
+requires: make >= 3.74
+requires: autoconf
+requires: automake
+requires: bash
+requires: fileutils
+requires: textutils
+requires: bison
+requires: flex
+requires: diffutils
+requires: grep
+requires: m4
+requires: gawk
+requires: sed
+requires: sh-utils
+requires: texinfo

@@ -1,0 +1,31 @@
+#
+# DSM for flex 2.5.4 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.2
+dsm-name: flx254b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: flex
+version: 2.5.4
+manifest: flx254b
+sources-dsm: flx254s
+documentation-dsm: flx254d
+short-description: GNU flex
+license: Slightly modified BSD license
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: flx254b.zip
+
+replaces: flex < 2.5.4
+requires: DPMI
+# For reading docs
+depends-on: info-reader

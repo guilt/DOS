@@ -1,0 +1,35 @@
+#
+# DSM for bash 2.03 sources
+# Written by Richard Dawe <richdawe@bigfoot.com> 2000-04-02
+#
+
+dsm-file-version: 1.2
+dsm-name: bsh203s
+dsm-version: 0.4.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: bash
+version: 2.03
+manifest: bsh203s
+binaries-dsm: bsh203b
+documentation-dsm: bsh203d
+short-description: GNU Bourne-Again SHell
+license: GNU General Public License, Version 2
+
+porter: Mark E.
+porter-email: snowball3@bigfoot.com
+porting-web-site: http://snowball.frogspace.net/djgpp/
+
+simtelnet-path: v2gnu/
+zip: bsh203s.zip
+
+replaces: bash < 2.03
+requires: gcc
+requires: djdev >= 2.03
+requires: bash
+requires: fileutils
+requires: sed
+requires: diffutils

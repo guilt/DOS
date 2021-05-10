@@ -1,0 +1,57 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.parameters%b	s-parame.adb		86dbf443 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.parameters%s	s-parame.ads		6fae3a89 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20190108125404 27426ea2 system%s
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-parame.adb		20190108125404 ce37a068 system.parameters%b
+X 1 system.ads
+37K9*System 148e11 2|51r9 113r25 198r5 3|36r14 82r5
+67M9*Address 2|113r32
+X 2 s-parame.ads
+51K16*Parameters 1|37k9 2|198l12 198e22 3|36b21 82l12 82t22
+58I9*Size_Type<integer> 67r32 67r45 70r39 73r39 76r41 76r59 85r38 95r46 3|42r41
+. 42r59 57r39 64r17 72r39
+67i4*Unspecified_Size{58I9} 3|44r17
+70V13*Default_Stack_Size{58I9} 3|45s17 57b13 66l8 66t26
+73V13*Minimum_Stack_Size{58I9} 3|46s20 47s17 72b13 80l8 80t26
+76V13*Adjust_Storage_Size{58I9} 76>34 3|42b13 51l8 51t27
+76i34 Size{58I9} 3|42b34 44r10 46r13 49r17
+85i4*Default_Env_Stack_Size{58I9}
+90b4*Stack_Grows_Down{boolean}
+95i4*Runtime_Default_Sec_Stack_Size{58I9}
+99b4*Sec_Stack_Dynamic{boolean}
+107N4*long_bits
+112N4*ptr_bits
+113M12*C_Address{1|67M9}
+116a4*C_Malloc_Linkname{string}
+139b4*Garbage_Collected{boolean}
+154b4*Single_Lock{boolean}
+167b4*No_Abort{boolean}
+180N4*Max_Attribute_Count
+187N4*Max_Task_Image_Length
+194N4*Default_Exception_Msg_Max_Length
+X 3 s-parame.adb
+58i7*Default_Stack_Size{integer} 59m25 59r25 61r10 64r28
+

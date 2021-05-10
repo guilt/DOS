@@ -1,0 +1,60 @@
+Header File Hierarchy :
+
+SVGA.H=>VGA.H   GRAPHICS.H
+	     \ /
+	     MATH3D.H=>MATHD.H    SVGA256.H
+			      \  /
+			      DEFS.H
+			       / \
+			   BMP.H  TEX.H=>ZBUF.H=>TRIL.H=>MATHTD.H
+-----------------------------------------------------------------------------
+Extended Header File Hierarchy :
+
+DEFS.H=>24PIX.H=>FONTS.H=>IMAGE.H
+IMAWRI.H
+-----------------------------------------------------------------------------
+    SVGA.H    : Deals with Lowest Level Of Graphics ,Initialisation etc .
+     VGA.H    : Deals with Some Basic Functions such as putpixel() .
+  MATH3D.H    : Contains the Basic Data Structures and the Code to Deal with
+		their rotation etc .Here is Where Splitting between BGI
+		and 3DLIB takes Place .use #define IBGI before your Program
+		to use BGI .
+   MATHD.H    : Contains Some Algorithms to draw 3D Lines and Points and
+		Meshed Objects etc .Here ,you can alter the Basic Rendering
+		Engine !
+ SVGA256.H    : Contains Hi-Res SVGA Drivers .
+    DEFS.H    : Used for Graphics Initialisation .Overall Coverage of 3D
+		Functions .
+     BMP.H    : For Differentiation .Surface Programming is highly Encouraged .
+     TEX.H    : Here ,care is taken to be checked that BMP.H has not been
+		included .
+    ZBUF.H    : Contains the Important Z-Buffering Algorithm .
+    TRIL.H    : Basic Triangle Rendering Program .Adapted From the 3D
+		    Black Hole .
+  MATHTD.H    : Contains Routines To Draw Textured Objects .Some Routines
+		must be Changed .
+   24PIX.H    : Rather ,a 18PIX.H File .Allows one to Run-Time 
+                Reduce a Huge Palette (24-Bit) into a 8-Bit one ,
+                and is pretty useful for getting lots of Graphic Effects .
+   FONTS.H    : A sample 8x8 System Font Draw able Bitmap .
+   IMAGE.H    : Used to draw the easy Images themselves .Use for  
+                Side-Scrollers .
+  IMAWRI.H    : Used for converting 8-Bpp BMPs into easy Images .
+
+Use these Macros to change the way things are drawn :
+
+ISVGA         : Use the Hi-Res Full Library; Requires BGI
+IBGI          : Use The Full Functionality of the BGI
+
+I24BIT        : Use the Palette Reduction technology for the Extended Hierarchy .
+                Requires non BGI graphics;
+
+IISO          : Use a Isometric Engine for Rendering
+IZCLIP        : Use Z-Clipping 
+IHSR          : Include Hidden Surface Removal
+IZBUF         : Use Z-Buffer ;Requires HSR ,non BGI graphics
+ 
+Before including the any of Header Files ,define these Macros by using the #define
+pre-processor to use them .
+
+-----------------------------------------------------------------------------          

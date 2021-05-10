@@ -1,0 +1,132 @@
+
+
+
+CSPLIT(1)                      FSF                      CSPLIT(1)
+
+
+NNAAMMEE
+       csplit  - split a file into sections determined by context
+       lines
+
+SSYYNNOOPPSSIISS
+       ccsspplliitt [_O_P_T_I_O_N]... _F_I_L_E _P_A_T_T_E_R_N...
+
+DDEESSCCRRIIPPTTIIOONN
+       Output pieces of FILE separated  by  PATTERN(s)  to  files
+       `xx01',  `xx02', ..., and output byte counts of each piece
+       to standard output.
+
+              --bb,  ----ssuuffffiixx--ffoorrmmaatt=_F_O_R_M_A_T  use   sprintf   FORMAT
+              instead of %d --ff, ----pprreeffiixx=_P_R_E_F_I_X        use PREFIX
+              instead of `xx' --kk, ----kkeeeepp--ffiilleess            do  not
+              remove  output  files on errors --nn, ----ddiiggiittss=_D_I_G_I_T_S
+              use specified number of digits  instead  of  2  --ss,
+              ----qquuiieett,  ----ssiilleenntt      do not print counts of out-
+              put file sizes  --zz,  ----eelliiddee--eemmppttyy--ffiilleess     remove
+              empty output files
+
+       ----hheellpp display this help and exit
+
+       ----vveerrssiioonn
+              output version information and exit
+
+       Read standard input if FILE is -.  Each PATTERN may be:
+
+       INTEGER
+              copy up to but not including specified line number
+
+       /REGEXP/[OFFSET]
+              copy up to but not including a matching line
+
+       %REGEXP%[OFFSET]
+              skip to, but not including a matching line
+
+       {INTEGER}
+              repeat  the  previous  pattern  specified number of
+              times
+
+       {*}    repeat the previous pattern as many times as possi-
+              ble
+
+       A line OFFSET is a required `+' or `-' followed by a posi-
+       tive integer.
+
+RREEPPOORRTTIINNGG BBUUGGSS
+       Report bugs to <bug-textutils@gnu.org>.
+
+SSEEEE AALLSSOO
+       The full documentation for ccsspplliitt is maintained as a  Tex-
+       info manual.  If the iinnffoo and ccsspplliitt programs are properly
+       installed at your site, the command
+
+
+
+GNU textutils 2.0          August 1999                          1
+
+
+
+
+
+CSPLIT(1)                      FSF                      CSPLIT(1)
+
+
+              iinnffoo ccsspplliitt
+
+       should give you access to the complete manual.
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (C) 1999 Free Software Foundation, Inc.
+       This is free software; see the source for  copying  condi-
+       tions.  There is NO warranty; not even for MERCHANTABILITY
+       or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GNU textutils 2.0          August 1999                          2
+
+

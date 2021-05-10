@@ -1,0 +1,127 @@
+DJGPP port of GNU Pth
+~~~~~~~~~~~~~~~~~~~~~
+
+Introduction
+------------
+
+This is the Readme file for the DJGPP port of GNU Pth; this release
+is against version 2.0.7. Please see the file 'NEWS' for a full list
+of user-visible changes from the previous versions. Please see
+'changelog.dos' for a list of bugs fixed in each release of the port.
+
+But what is GNU Pth? From its README:
+
+"Pth is a very portable POSIX/ANSI-C based library for Unix platforms
+which provides non-preemptive priority-based scheduling for multiple
+threads of execution (aka `multithreading') inside event-driven
+applications. All threads run in the same address space of the server
+application, but each thread has its own individual program-counter,
+run-time stack, signal mask and errno variable."
+
+To use Pth in you own programs, you only need to download
+the binary distribution. If you wish to examine or rebuild
+the Pth sources, you need to download the source distribution.
+
+Installing the Binary Distribution of Pth
+-----------------------------------------
+
+Unzip the distribution into the top-level directory of your DJGPP
+installation.  Depending on how you build your program, you may also
+need a socket library installed - either Watt-32 or libsocket.  The
+location of both of these libraries may be found on the DJGPP FAQ
+(http://www.delorie.com/djgpp/v2faq/faq22_4.html).
+
+You will only need a socket library if you do one of the following:
+. Define PTH_SYSCALL_SOFT when you build your program
+. Explicitly call one of the POSIX replacement functions in
+  pth_high.c.
+
+The binary code was configured with:
+./djconfig.sh --enable-optimize
+
+If this code seems too slow to you, please read the note in the next
+section about --with-pipe!
+
+Rebuilding Pth using the Source Distribution
+--------------------------------------------
+
+To build the DJGPP port of Pth from sources, I used the following
+packages:
+
+. DJGPP development environment 2.04 beta;
+. GNU C compiler 4.1.0;
+. GNU binutils 2.16.1;
+. GNU make 3.80;
+. GNU bash 2.05b;
+. GNU sed 4.1.5;
+. GNU awk 3.1.5;
+. GNU grep 2.5.1;
+. GNU fileutils 4.1;
+. GNU sh-utils 2.0.11;
+. GNU textutils 2.0;
+. Watt-32 2.2r10.
+
+You MUST have a socket library installed to compile Pth, but you may
+not need to link against it when you build your application.  The
+same rules as above apply - but additionally it will be required if
+you pass either of the --enable-syscall-xxxx flags OR the
+--enable-pthread flag to configure.
+
+There is one additional configure flag that will be of particular
+interest to DJGPP users: the --with-pipe=type flag.  The Pth code
+uses pipe() for its internal handling of signals between threads.
+In v2.03 of DJGPP, pipe() is completely unimplemented, and in
+v2.04 of DJGPP pipe() is implemented using tempfiles (which needless
+to say is horrendously slow).  So there is a simulated pipe which
+is enabled by default in DJGPP (or using --with-pipe=simulate
+otherwise, should you want to).
+
+These simulated pipes are still somewhat slow, so if you require
+more speed and don't need signals, you can pass --with-pipe=disable
+to configure and this code will be disabled completely.
+
+Known Issues
+------------
+
+. I have discovered that linking against Watt-32 causes nearly a 100x
+  drop in the performance of thread switches.  I have not yet started
+  trying to figure out what causes this, nor do I know if similar
+  behaviour occurs with other socket libraries.  On my Pentium 4 test
+  system, I got ~900K switches/sec without Watt-32, and ~18K with it.
+
+. DJGPP's setjmp/longjmp don't save the floating-point state. Pth uses
+  setgmp/longjmp to save/restore the processor state for switching
+  threads. So floating-point operations will not be thread-safe.
+  You will need to explicitly save the floating-point state,
+  before allowing thread switches. Maybe this will be fixed
+  in a later version.
+
+. I have not checked to see whether this package builds
+  with short filenames. Maybe this will be fixed in a later version.
+
+Expected test suite results
+---------------------------
+
+All the tests should pass.  If you configured with --with-pipe=disable
+then the signaling tests will not be built.
+
+Finally
+-------
+
+[Gordon Schumacher:] Thanks to Richard Dawe for the original DJGPP
+port; I could not possibly have done that portion of it!
+
+[Richard Dawe:] Thanks to Ben Decker for his testing of this port and
+convincing me to make packages of it. ;)
+
+Please direct any further discussions about this port
+to comp.os.msdos.djgpp newsgroup (or write to its e-mail gateway
+djgpp@delorie.com). I try to read the DJGPP newsgroup on a regular basis,
+but also please feel free to contact me by e-mail (address below).  Make
+sure that your subject line is something obvious - mention Pth - so that
+it doesn't get spamtrapped...
+
+Regards,
+
+Richard Dawe <rich@phekda.freeserve.co.uk> 2003-07-19
+Gordon Schumacher <whiplash@pobox.com> 2007-02-16

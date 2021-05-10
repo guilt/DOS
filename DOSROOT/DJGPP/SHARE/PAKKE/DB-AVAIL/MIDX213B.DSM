@@ -1,0 +1,32 @@
+#
+# DSM for makeindex 2.13 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: midx213b
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: makeindex
+version: 2.13
+type: binaries
+manifest: midx213b
+sources-dsm: midx213s
+
+short-description: \
+Makeindex, a general purpose, formatter-independent index processor
+license: Free without warranty
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: midx213b.zip
+
+changelog: gnu/web2c-7.2/makeindexk/NEWS
+pre-install-readme: gnu/web2c-7.2/djgpp/README
+
+requires: texmflib

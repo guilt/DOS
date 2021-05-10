@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<packages>
+<package name="rexx">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+  <os name="os2"/>
+  <os name="emx"/>
+ </oses>
+ <filename>rexx.zip</filename>
+ <author></author>
+ <license></license>
+ <email></email>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

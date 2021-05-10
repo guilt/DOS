@@ -1,0 +1,67 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_FLOATING_POINT
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U ada.numerics.aux%s	a-numaux.ads		0061ad16 NE OL PU PK
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+L "-lm"
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-numeri.ads		20170908181218 bb51c45a ada.numerics%s
+D a-numaux.ads		20190108125404 bb30694c ada.numerics.aux%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+X 1 ada.ads
+16K9*Ada 20e8 3|49r9 112r5
+X 2 a-numeri.ads
+16K13*Numerics 1|16k9 2|32e17 3|49r13 112r9
+X 3 a-numaux.ads
+49K22*Aux 2|16k13 3|112l18 112e21
+54F9*Double<long_float> 60r22 60r37 64r22 64r37 68r22 68r37 72r22 72r37 76r23
+. 76r38 80r22 80r37 84r23 84r38 88r23 88r38 92r23 92r38 96r23 96r38 100r23
+. 100r38 104r23 104r38 108r25 108r40
+60V13*Sin{54F9} 60>18 61b<c,sin>22 62r26
+60f18 X{54F9}
+64V13*Cos{54F9} 64>18 65b<c,cos>22 66r26
+64f18 X{54F9}
+68V13*Tan{54F9} 68>18 69b<c,tan>22 70r26
+68f18 X{54F9}
+72V13*Exp{54F9} 72>18 73b<c,exp>22 74r26
+72f18 X{54F9}
+76V13*Sqrt{54F9} 76>19 77b<c,sqrt>22 78r26
+76f19 X{54F9}
+80V13*Log{54F9} 80>18 81b<c,log>22 82r26
+80f18 X{54F9}
+84V13*Acos{54F9} 84>19 85b<c,acos>22 86r26
+84f19 X{54F9}
+88V13*Asin{54F9} 88>19 89b<c,asin>22 90r26
+88f19 X{54F9}
+92V13*Atan{54F9} 92>19 93b<c,atan>22 94r26
+92f19 X{54F9}
+96V13*Sinh{54F9} 96>19 97b<c,sinh>22 98r26
+96f19 X{54F9}
+100V13*Cosh{54F9} 100>19 101b<c,cosh>22 102r26
+100f19 X{54F9}
+104V13*Tanh{54F9} 104>19 105b<c,tanh>22 106r26
+104f19 X{54F9}
+108V13*Pow{54F9} 108>18 108>21 109b<c,pow>22 110r26
+108f18 X{54F9}
+108f21 Y{54F9}
+

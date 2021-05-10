@@ -1,0 +1,234 @@
+
+
+ 1. About Deb32f
+
+ Deb32f is a debugger for DOS real-mode and 32-bit DPMI applications.
+ Among its features are:
+
+ - can debug any DPMI compliant 32bit dos extended app. No special
+   file format is required.
+ - may trace mode switches from protected to real mode and vice versa.
+ - can debug applications with mixed (16/32-bit) code segments
+ - dissassembler knows full pentium instruction set
+   including MMX, SSE and SSE2.
+ - it is no problem for Deb32f to trace through the DOS kernel code
+ - a second video adapter is supported. As well, the debugger
+   may be controled by COM port communication.
+ - graphics applications may be debugged locally
+ - automatically uses debug registers if it cannot write
+   a breakpoint, so stepping through ROM is no problem.
+
+ Disadvantages of Deb32f are:
+ 
+ - has a simple line-oriented user interface
+ - is unable to debug at source code level
+
+ Deb32f can debug 32bit DPMI clients only. For 16bit clients there exist
+ 2 other versions:
+ 
+ - deb16f: debugger for 16bit DPMI clients.
+ - deb16fw: debugger for 16bit windows apps.
+
+
+ 2. How to start the Debugger
+
+ In some environments it may be necessary to set environment variable 
+ DPMILDR=16 before starting the debugger. This will prevent the PE loader
+ from write-protecting readonly sections. It is required for Bochs, Qemu and 
+ DosBox, since these environments don't support using the 80386 hardware
+ debug registers. And some 32bit dos extended apps in PE format may cause
+ problems as well, since they don't expect sections to be protected at all.
+
+ After that just enter "deb32f" on the command line.
+
+ 
+ 3. How to use Deb32f
+
+ Deb32f has an integrated help function which describes most
+ of its features. To start with it type
+
+ - "?" for a list of available commands.
+ - "? ?" to display help index. Each topic displayed here may
+   be displayed in detail by entering "? <topic>"
+ - "? keys" displays some help about keyboard usage inside Deb32f
+ - "? cmdline" displays format of command line accepted by Deb32f
+
+ A debuggee is loaded by "Load" command. Type "? L" to display
+ format of this command. After a debuggee is loaded you may single-
+ step through it by pressing F8 or just enter "G breakpoint"
+ to execute debuggee in real-time until breakpoint is reached.
+
+
+ 4. Debugging apps written with other dos extenders
+ 
+ 4.1  Force debuggee to run as DPMI client in plain DOS
+
+ Deb32f is a DPMI client and to be able to debug another protected mode
+ program it requires the debuggee to run as DPMI client in the very same
+ host. This sometimes is a problem because many DOS extenders implement
+ their own DPMI host when they found the cpu in real mode. Or, if cpu is
+ in v86 mode, they prefer to run as VCPI client. Although some DOS extenders
+ are designed to optionally change this behaviour and always use the current
+ DPMI host (for example CauseWay or PMode/W), others lack this feature. Then 
+ one may do:
+ 
+   - load a memory manager on startup which supports VCPI and
+     will put the cpu in v86-mode (EMM386.EXE for example).
+   - start Deb32f and enter ".vcpi 0", which tries to disable
+     VCPI support.
+     
+ Now load the debuggee, which has no option as to run as DPMI client now.
+        
+
+ 4.2  Skip the Real-mode Startup Code
+ 
+ One might be able to skip the real-mode portion of a DOS extender's
+ initialization phase by entering "G PMENTRY". 'PMENTRY' is the debugger's
+ name for the DPMI host's initial entry to protected-mode.
+ 
+ 
+ 4.3. Debugging 32bit dos extended apps in LE/LX format
+ 
+  Many 32bit dos extended apps are in LE/LX file format. This is due
+ to the success of the DOS4/GW DOS extender. Deb32f supports this
+ extender's API to some extend. A macro has been defined:
+ 
+  LOAD4G <full name of executable>
+  
+ With this macro the debugger will not only stop at the stub's
+ real-mode entry but also if an INT 21h, AH=FF, DX=0078 is executed
+ in protected-mode. This is done by newer versions of DOS4/GW after
+ the executable is loaded and CS is 32bit.
+ 
+ Some other extenders support the LE/LX format as well, but don't 
+ understand the DOS4/GW API. To stop the debuggee in protected mode
+ for these clones - like PModeW, CauseWay, ... - a macro has been
+ defined in Deb32f:
+
+   LOADLE <full name of executable>
+ 
+ Please note that this macro isn't foolproved. It will stop if 
+ base of CS is 0, assuming debuggee has switched to a flat,
+ zero-based code segment. For this the macro uses a watchpoint,
+ which in fact forces the debuggee to execute in single-step mode.
+ So it may take a while until the debugger prompt will reappear.
+
+
+ 4.4. Debugging 32bit dos extended apps in PE format
+
+  Since the debugger uses PE file loader DPMILD32, there is native
+ support to load and execute apps in PE format. This is done in the
+ current DPMI client, which has some implications:
+
+   - the stub supplied with the executable will NOT be executed
+   - memory is not freed automatically by the dpmi server when the 
+     debuggee terminates. As well no protected mode interrupt
+     vectors will be restored by the server.
+
+ Although this should work ok in most cases, it sometimes may be 
+ necessary to run the app as a new dpmi client. This is done by
+ disabling the PE loader from inside the debugger by command
+ ".LDR 0". Now when loading a program the debugger should stop
+ at the stub's real-mode start address.
+ 
+ DPMILD32 has a command line switch -g to load Win32 console apps
+ as if they are GUI applications. This switch makes DPMILD32
+ to load HXGUIHLP.DLL before control is given to the application.
+ To emulate this behaviour with the debugger do:
+ 
+   - load the Win32 Console application. The debugger will regain
+     control and stop at the debuggee's entry point.
+   - now type ".LOAD32 hxguihlp.dll". This will load HXGUIHLP.DLL and
+     put the screen into graphics mode.
+  
+  
+ 4.5. Gaining control on fatal errors (Exceptions)
+  
+ In many cases a dos extender will trap fatal errors, display a
+ message and terminate the app. Sometimes it would be nice to stop
+ the debuggee at the faulting address and examine the error with a
+ debuggger. This can be achieved for Deb32f by adding a line in
+ DEBXXF.INI:
+ 
+ FirstExc=704b	;704b ==> bits 0, 1, 3, 6, 0Ch, 0Dh, 0Eh = 1
+ 
+ This will let the debugger gain control at first chance for exceptions
+ 00h, 01h, 03h, 06h, 0Ch, 0Dh, 0Eh. As default only exceptions 01 and 03
+ will be "first chance", because other exceptions may preferably be
+ handled by the debuggee first.
+ 
+ 
+ 4.6. Debugging apps with Graphics and Sound
+ 
+  To debug apps using graphics there exist some issues one should be aware
+  of:
+  
+   - screen swapping has to be enabled. This is done by setting debugger
+     variable SCREENSwap=1.
+   - to force screen swapping for every instruction while single-stepping
+     thru the code bit 4 in variable TRACEFlags should be set. Without this
+     flag screen swapping will be done "smart", that is only for CALL and
+     INT instructions.
+   - if the debugger is running in a fullscreen DOS-box don't switch to
+     another application while debuggee is in graphics mode. This may cause
+     various effects from destroying video content to a system crash. 
+     
+  The functions to save and restore the debuggee's graphic screen are
+ extracted to a helper dll DEBFVESA.DLL, for which source code is supplied,
+ in case it has to be modified. If this dll doesn't work correctly one
+ may try DEBFVGA.DLL, which should work with any VGA compatible adapter.
+ To change the graphics helper dll, add a line in debxxf.ini:
+
+ GraphHlp=DEBFVGA.DLL
+ 
+  For apps using sound set variable IRQ=0. This will disable (virtual)
+ interrupts while debugger code is executed. If this doesn't work
+ (some DPMI hosts have problems), one may try to set bit 5 of variable
+ MPICOFF (=20). This will disable IRQ 5 while debugger code is executed.
+
+
+ 5. Known Problems
+ 
+ - on NT platforms exception 0Eh is not reported to the DPMI client.
+   Since v2.9.6, the DEBXXVDD.DLL binary is used to test if a memory
+   address can be read from/written to.
+ - on NT platforms hardware breaks cannot be cleared
+ - on win9x platforms exception 01h is often not reported to the
+   DPMI client. As a workaround let the debugger modify IDT vector 1
+   directly with TIDT(1,1) or use macro HARD.
+   
+   
+ 6. Files Overview
+
+ - deb32f.exe:   a simple executable to load the debugger core
+ - deb32f.dll:   the debugger itself
+ - rmdbghlp.bin: code which will be loaded into conventional dos 
+                 memory to provide support for real/v86 mode debugging.
+ - debxxvdd.dll: a VDD to support the debugger when running in NTVDM.
+ - debxxf.hlp:   a text file which will be loaded by the debugger
+                 at startup. contains help topics and error messages.
+                 If you edit this file without knowing what you are
+                 doing you may in fact disable the debuggers help
+                 functionality.
+ - debxxf.mac:   contains macros for the debugger. May be changed.
+ - debxxf.ini:   A parameter file in windows profile file format.
+                 Some persistent values are saved here, for example
+                 the vectors the debugger should trap. Be cautious
+                 when changing any of these values.
+ - dpmild32.exe  PE loader.                 
+ - showfile.dll: a 16-bit NE dll which is a fullscreen hex editor
+                 and used by Deb32f for its "type" command
+ - symbhdld.dll: a 16-bit NE dll to find names of exports 
+ - debfvesa.dll: a 32-bit NE dll to save/restore screen if debuggee is
+                 in graphics mode. Knows VESA and is loaded as default.
+ - debfvga.dll:  another dll to save/restore screen if debuggee is in
+                 graphics mode. Knows/uses VGA only (read 4.5 for more).
+ - debfvesa.zip: source code + makefile to create debfvesa.dll.
+ - deb32f.txt:   this file.
+
+ 
+ 7. Copyright
+
+ Deb32f is freeware. Copyright 1993-2008 Japheth.
+
+ Japheth

@@ -1,0 +1,132 @@
+
+
+
+JOIN(1)                        FSF                        JOIN(1)
+
+
+NNAAMMEE
+       join - join lines of two files on a common field
+
+SSYYNNOOPPSSIISS
+       jjooiinn [_O_P_T_I_O_N]... _F_I_L_E_1 _F_I_L_E_2
+
+DDEESSCCRRIIPPTTIIOONN
+       For  each  pair of input lines with identical join fields,
+       write a line to standard output.  The default  join  field
+       is  the  first,  delimited  by  whitespace.  When FILE1 or
+       FILE2 (not both) is -, read standard input.
+
+       --aa SIDE
+              print unpairable lines coming from file SIDE
+
+       --ee EMPTY
+              replace missing input fields with EMPTY
+
+              --ii, ----iiggnnoorree--ccaassee ignore differences in  case  when
+              comparing  fields  --jj  FIELD          (obsolescent)
+              equivalent  to  `-1  FIELD  --22  FIELD'  --jj11   FIELD
+              (obsolescent)  equivalent  to  `-1 FIELD' --jj22 FIELD
+              (obsolescent) equivalent to `-2  FIELD'  --oo  FORMAT
+              obey  FORMAT while constructing output line --tt CHAR
+              use CHAR as input and  output  field  separator  --vv
+              SIDE            like  --aa  SIDE, but suppress joined
+              output lines --11 FIELD          join on  this  FIELD
+              of  file  1 --22 FIELD          join on this FIELD of
+              file 2
+
+       ----hheellpp display this help and exit
+
+       ----vveerrssiioonn
+              output version information and exit
+
+       Unless --tt CHAR is given, leading  blanks  separate  fields
+       and  are  ignored, else fields are separated by CHAR.  Any
+       FIELD is a field number counted from 1.  FORMAT is one  or
+       more  comma  or blank separated specifications, each being
+       `SIDE.FIELD' or `0'.   Default  FORMAT  outputs  the  join
+       field,  the  remaining  fields  from  FILE1, the remaining
+       fields from FILE2, all separated by CHAR.
+
+RREEPPOORRTTIINNGG BBUUGGSS
+       Report bugs to <bug-textutils@gnu.org>.
+
+SSEEEE AALLSSOO
+       The full documentation for jjooiinn is maintained as a Texinfo
+       manual.   If  the  iinnffoo  and  jjooiinn  programs  are properly
+       installed at your site, the command
+
+              iinnffoo jjooiinn
+
+       should give you access to the complete manual.
+
+
+
+GNU textutils 2.0          August 1999                          1
+
+
+
+
+
+JOIN(1)                        FSF                        JOIN(1)
+
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (C) 1999 Free Software Foundation, Inc.
+       This is free software; see the source for  copying  condi-
+       tions.  There is NO warranty; not even for MERCHANTABILITY
+       or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GNU textutils 2.0          August 1999                          2
+
+

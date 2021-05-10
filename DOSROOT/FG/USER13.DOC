@@ -1,0 +1,519 @@
+Chapter 13
+
+
+
+
+
+Special Effects
+250   Fastgraph User's Guide
+
+
+Overview
+
+     This chapter will discuss the Fastgraph routines that help produce
+special visual effects.  These include the ability to dissolve the screen
+contents in small increments, scroll areas of the screen, and change the
+physical origin of the screen.  The accompanying example programs illustrate
+how to use these routines to produce some interesting effects.
+
+
+Screen Dissolving
+
+     Screen dissolving is the process of replacing the entire screen contents
+in random small increments instead of all at once.  Fastgraph includes two
+routines, fg_fadeout and fg_fadein, for this purpose.  The fg_fadeout routine
+incrementally replaces the visual page contents with pixels of the current
+color, while fg_fadein incrementally replaces the visual page contents with
+the hidden page contents (that is, the page defined in the most recent call
+to fg_sethpage).  Both routines accept an integer argument that defines the
+delay between each incremental replacement.  A value of zero means to perform
+the replacement as quickly as possible, while 1 is slightly slower, 2 is
+slower yet, and so forth.  The fg_fadeout and fg_fadein routines have no
+effect in text video modes.
+
+     Example 13-1 shows how to use the fg_fadeout routine.  The program,
+which runs in any graphics video mode, first fills the screen with a
+rectangle of color 2.  After waiting for a keystroke, the program
+incrementally replaces the screen contents with pixels of color 15 (the
+current color index when fg_fadeout is called).  After another keystroke, the
+program exits gracefully.
+
+                                Example 13-1.
+
+                  #include <fastgraf.h>
+                  void main(void);
+
+                  void main()
+                  {
+                     int old_mode;
+
+                     old_mode = fg_getmode();
+                     fg_setmode(fg_automode());
+
+                     fg_setcolor(2);
+                     fg_rect(0,fg_getmaxx(),0,fg_getmaxy());
+                     fg_waitkey();
+
+                     fg_setcolor(15);
+                     fg_fadeout(0);
+                     fg_waitkey();
+
+                     fg_setmode(old_mode);
+                     fg_reset();
+                  }
+
+                                            Chapter 13:  Special Effects   251
+
+     Example 13-2 shows how to use the fg_fadein routine in any 320 by 200
+color graphics video mode.  The program first fills the screen with a
+rectangle of color 2 and then fills video page 1 with a rectangle of color 1.
+After waiting for a keystroke, the program incrementally transfers the
+contents of page 1 to the visual page.  After the call to fg_fadein, both
+page 0 (the visual page) and page 1 (the hidden page) will contain rectangles
+of color 1 that fill the entire video page.  Finally, the program waits for
+another keystroke before returning to DOS.
+
+                                Example 13-2.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                void main()
+                {
+                   int new_mode, old_mode;
+
+                   new_mode = fg_bestmode(320,200,2);
+                   if (new_mode < 0 || new_mode == 12) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 color graphics mode.\n");
+                      exit(1);
+                      }
+                   old_mode = fg_getmode();
+                   fg_setmode(new_mode);
+                   fg_allocate(1);
+                   fg_sethpage(1);
+
+                   fg_setcolor(2);
+                   fg_rect(0,319,0,199);
+                   fg_setpage(1);
+                   fg_setcolor(1);
+                   fg_rect(0,319,0,199);
+                   fg_waitkey();
+
+                   fg_fadein(0);
+                   fg_waitkey();
+
+                   fg_freepage(1);
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+
+     You also can produce some appealing visual effects by replacing the
+screen contents in a non-random fashion using the fg_restore or fg_transfer
+routines.  For example, you could copy the hidden page contents to the visual
+page through a series of concentric rectangular areas, each slightly larger
+than the previous, until the entire screen is copied.  Another interesting
+effect is to start around the screen perimeter and proceed toward the screen
+center, thus producing a "snake-like" effect.  Experimenting with such
+techniques may reveal other effects that suit your application.
+252   Fastgraph User's Guide
+
+Scrolling
+
+     Another useful effect is scrolling, and Fastgraph provides a routine
+that performs vertical scrolling within a given region of the active video
+page.  The fg_scroll routine scrolls a region defined in screen space or
+character space.  It can scroll up or down and offers two types of scrolling:
+circular and end-off.  In circular scrolling, rows that scroll off one edge
+of the defined region appear at its opposite edge.  In end-off scrolling,
+such rows are simply wind up above or below the scrolling area.  The
+following diagrams illustrate the two types of scrolling.
+
+                end-off scrolling            circular scrolling
+
+              before         after          before         after
+
+                               C                             B
+                 A                             A
+
+                               A                             A
+                 B                             B
+
+
+     In these diagrams, the area bounded by the double lines is the scrolling
+region, as specified in the call to fg_scroll.  Also, the scrolling direction
+is assumed to be down (that is, toward the bottom of the screen), and the
+number of rows to scroll is the height of the area designated B.  The number
+of rows to scroll is often called the scrolling increment.
+
+     For the end-off scrolling example, the scrolling operation transfers
+region A downward so part of it is copied into area B.  The area C (which is
+the same size as area B) at the top of the scrolling region is filled with
+pixels of the current color index (as defined in the most recent call to
+fg_setcolor), and the original contents of area B are lost.  The circular
+scrolling example also copies region A downward into the original area B.
+Unlike end-off scrolling, however, circular scrolling preserves the area B by
+copying it to the opposite edge of the scrolling region.
+
+     The fg_scroll routine takes six arguments.  The first four define the
+scrolling region in the order minimum x coordinate, maximum x coordinate,
+minimum y coordinate, and maximum y coordinate.  In graphics video modes, the
+x coordinates are extended by byte boundaries if needed.  The fifth argument
+is the scrolling increment.  It specifies the number of rows to scroll.  If
+it is positive, the scrolling direction is toward the bottom of the screen;
+if it is negative, the scrolling direction is toward the top of the screen.
+The sixth and final argument specifies the scroll type.  If this value is
+zero, the scroll will be circular; if it is any other value, the scroll will
+be end-off.  If the scroll type is circular, Fastgraph will use the hidden
+page (as defined in the most recent call to fg_sethpage) as a workspace (more
+specifically, the area bounded by the scrolling region extremes on the hidden
+page will be used).  We'll now present three example programs that use the
+fg_scroll routine.
+
+     Example 13-3 runs in any 320 by 200 graphics video mode.  The program
+displays two lines of text ("line one" and "line two") in the upper left
+corner of the screen against a white background.  It then uses the fg_scroll
+routine to move the second line down four pixel rows using an end-off scroll.
+                                            Chapter 13:  Special Effects   253
+After waiting for a keystroke, the program again uses fg_scroll to move the
+text back to its original position.  Note especially how the fg_setcolor
+routine appears before the first call to fg_scroll to replace the "scrolled
+off" rows with pixels of color 15, thus preserving the white background.
+
+                                Example 13-3.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                void main()
+                {
+                   int new_mode, old_mode;
+
+                   new_mode = fg_bestmode(320,200,1);
+                   if (new_mode < 0 || new_mode == 12) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 color graphics mode.\n");
+                      exit(1);
+                      }
+                   old_mode = fg_getmode();
+                   fg_setmode(new_mode);
+
+                   fg_setcolor(15);
+                   fg_rect(0,319,0,199);
+                   fg_setcolor(10);
+                   fg_text("line one",8);
+                   fg_locate(1,0);
+                   fg_text("line two",8);
+                   fg_waitkey();
+
+                   fg_setcolor(15);
+                   fg_scroll(0,63,8,15,4,1);
+                   fg_waitkey();
+                   fg_scroll(0,63,12,19,-4,1);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+     Example 13-4 is similar to example 13-3, but it runs in the 80-column
+color text mode (mode 3).  In text modes, we cannot scroll half a character
+row (four pixels) as in example 13-3, so the program scrolls the minimum one
+row instead.
+
+                                Example 13-4.
+
+                         #include <fastgraf.h>
+                         void main(void);
+
+                         void main()
+                         {
+                            int old_mode;
+
+254   Fastgraph User's Guide
+
+                            old_mode = fg_getmode();
+                            fg_setmode(3);
+                            fg_cursor(0);
+
+                            fg_setcolor(7);
+                            fg_rect(0,79,0,24);
+                            fg_setattr(10,7,0);
+                            fg_text("line one",8);
+                            fg_locate(1,0);
+                            fg_text("line two",8);
+                            fg_waitkey();
+
+                            fg_setcolor(7);
+                            fg_scroll(0,7,1,1,1,1);
+                            fg_waitkey();
+                            fg_scroll(0,7,2,2,-1,1);
+                            fg_waitkey();
+
+                            fg_setmode(old_mode);
+                            fg_reset();
+                         }
+
+     Example 13-5, the final scrolling example, demonstrates a circular
+scroll.  The program runs in any 320 by 200 color graphics video mode; note
+the use of video page 1 for the workspace required when the fg_scroll routine
+performs a circular scroll.  The program first fills the screen with a light
+blue rectangle (cyan in CGA), displays a smaller white rectangle in the
+center of the screen, and then uses fg_move, fg_draw, and fg_paint to display
+a light green star (magenta in CGA) within the white rectangle.  The program
+executes a while loop to scroll the star upward in four pixel increments.
+Because the scroll is circular, rows of the star that "scroll off" the top
+edge of the white rectangle (whose height is the same as the scrolling
+region) reappear at its bottom edge.  The use of fg_waitfor within the loop
+simply slows down the scroll.  The scrolling continues until any key is
+pressed.
+
+                                Example 13-5.
+
+                #include <conio.h>
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                void main()
+                {
+                   int new_mode, old_mode;
+
+                   new_mode = fg_bestmode(320,200,2);
+                   if (new_mode < 0 || new_mode == 12) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 color graphics mode.\n");
+                      exit(1);
+                      }
+                   old_mode = fg_getmode();
+
+                                            Chapter 13:  Special Effects   255
+
+                   fg_setmode(new_mode);
+                   fg_allocate(1);
+                   fg_sethpage(1);
+
+                   fg_setcolor(9);
+                   fg_rect(0,319,0,199);
+                   fg_setcolor(15);
+                   fg_rect(132,188,50,150);
+
+                   fg_setcolor(10);
+                   fg_move(160,67);
+                   fg_draw(175,107);
+                   fg_draw(140,82);
+                   fg_draw(180,82);
+                   fg_draw(145,107);
+                   fg_draw(160,67);
+                   fg_paint(160,77);
+                   fg_paint(150,87);
+                   fg_paint(160,87);
+                   fg_paint(170,87);
+                   fg_paint(155,97);
+                   fg_paint(165,97);
+
+                   while (kbhit() == 0) {
+                      fg_waitfor(1);
+                      fg_scroll(136,184,50,150,-4,0);
+                      }
+                   fg_waitkey();
+
+                   fg_freepage(1);
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+
+Changing the Screen Origin
+
+     Fastgraph includes two routines for changing the screen origin.  By
+changing the screen origin, we simply mean defining the (x,y) coordinate of
+the upper left corner of the display area.  The fg_pan routine performs this
+function in screen space, while the fg_panw routine does in world space.
+Neither routine changes the graphics cursor position.
+
+     Each of these routines has two arguments that specify the x and y
+coordinates of the screen origin.  For the fg_pan routine, the arguments are
+integer quantities.  For the fg_panw routine, they are floating point
+quantities.
+
+     In the EGA, VGA, MCGA, XVGA, and SVGA graphics modes (modes 13 to 29),
+you can set the screen origin to any (x,y) coordinate position (that is, to
+any pixel).  In the other graphics modes, certain restrictions exist, as
+imposed by specific video hardware.  These constraints limit the coordinate
+positions that can be used as the screen origin.  Fastgraph compensates for
+these restrictions by reducing the specified x and y coordinates to values
+that are acceptable to the current video mode, as shown in the following
+table.
+256   Fastgraph User's Guide
+
+                           x will be reduced   y will be reduced
+          video mode       to a multiple of:   to a multiple of:
+
+              4-5                  8                   2
+               6                  16                   2
+               9                   4                   4
+              11                   8                   4
+              12                   4                2 or 3
+
+In modes 4 and 5, for instance, the x coordinate will be reduced to a
+multiple of 8 pixels, and the y coordinate will be reduced to a multiple of 2
+pixels.  In the Hercules low resolution mode (mode 12), the y coordinate
+reduction depends on whether or not the specified pixel row is scan doubled.
+
+     Example 13-6 shows a useful effect that can be made with the fg_pan or
+fg_panw routines.  This program uses the fg_automode routine to select a
+video mode and then draws an unfilled white rectangle.  The top and bottom
+sides of the rectangle are intentionally drawn just smaller than the physical
+screen size.  After waiting for a keystroke, the program uses a for loop to
+make the rectangle jiggle up and down.  The rectangle moves because the
+fg_pan routine is called inside the loop to switch the screen origin between
+the rectangle's upper left corner and the original origin.  Note also the use
+of the fg_waitfor routine to cause slight delays after each call to fg_pan.
+If we didn't use fg_waitfor, the changing of the origin would occur so
+rapidly we wouldn't notice the effect.  Finally, the program restores the
+original video mode and screen attributes before returning to DOS.
+
+                                Example 13-6.
+
+                 #include <fastgraf.h>
+                 #include <stdio.h>
+                 #include <stdlib.h>
+                 void main(void);
+
+                 #define DELAY 2
+                 #define JUMP  4
+
+                 void main()
+                 {
+                    int i;
+                    int old_mode;
+
+                    old_mode = fg_getmode();
+                    fg_setmode(fg_automode());
+
+                    fg_setcolor(15);
+                    fg_move(0,JUMP);
+                    fg_draw(fg_getmaxx(),JUMP);
+                    fg_draw(fg_getmaxx(),fg_getmaxy()-JUMP);
+                    fg_draw(0,fg_getmaxy()-JUMP);
+                    fg_draw(0,JUMP);
+                    fg_waitkey();
+
+                    for (i = 0; i < 6; i++) {
+                       fg_pan(0,JUMP);
+                       fg_waitfor(DELAY);
+                                            Chapter 13:  Special Effects   257
+
+                       fg_pan(0,0);
+                       fg_waitfor(DELAY);
+                       }
+
+                    fg_setmode(old_mode);
+                    fg_reset();
+                 }
+
+
+     The real power of the fg_pan routine becomes clear when it is used with
+the fg_resize routine to perform smooth panning.  Recall from Chapter 8 that
+fg_resize changes the video page dimensions in native EGA and VGA graphics
+modes (modes 13 to 18), the extended VGA graphics modes (20 to 23), and the
+SVGA graphics modes (24 to 29).  We'll now present an example that shows how
+to use these two routines to perform panning in the low-resolution EGA
+graphics mode (mode 13).  The method it uses also would work in any mode that
+supports video page resizing.
+
+     Example 13-7 begins by establishing the video mode and then immediately
+calls fg_resize to increase the video page size to 640 by 400 pixels.  Thus,
+the video page is now four times its original size.  Following this, the
+program fills the page (the entire page, not just what is displayed) with a
+bright green rectangle with a white border around it.  It then displays the
+message "Press arrow keys to pan" as close as possible to the center of the
+page.
+
+     The main part of the program is a loop that accepts keystrokes and then
+calls fg_pan to perform the panning one pixel at a time.  When you press any
+of the four arrow keys, the program adjusts the x and y coordinates for the
+screen origin as directed.  For example, pressing the up arrow key scrolls
+the screen upward one pixel.  Note that when we reach the edge of the video
+page, the program prevents further scrolling in that direction.  This process
+continues until you press the Esc key, at which time the program restores the
+original video mode and screen attributes before exiting.
+
+                                Example 13-7.
+
+                  #include <fastgraf.h>
+                  void main(void);
+
+                  void main()
+                  {
+                     unsigned char key, aux;
+                     int old_mode;
+                     int x, y;
+
+                     old_mode = fg_getmode();
+                     fg_setmode(13);
+                     fg_resize(640,400);
+
+                     fg_setcolor(2);
+                     fg_rect(0,fg_getmaxx(),0,fg_getmaxy());
+                     fg_setcolor(15);
+                     fg_box(0,fg_getmaxx(),0,fg_getmaxy());
+                     fg_locate(24,28);
+                     fg_text("Press arrow keys to pan.",24);
+258   Fastgraph User's Guide
+
+                     x = 0;
+                     y = 0;
+
+                     do {
+                        fg_getkey(&key,&aux);
+                        if (aux == 72 && y < 200)
+                           y++;
+                        else if (aux == 75 && x < 320)
+                           x++;
+                        else if (aux == 77 && x > 0)
+                           x--;
+                        else if (aux == 80 && y > 0)
+                           y--;
+                        fg_pan(x,y);
+                     } while (key != 27);
+
+                     fg_setmode(old_mode);
+                     fg_reset();
+                  }
+
+
+
+Summary of Special Effects Routines
+
+     This section summarizes the functional descriptions of the Fastgraph
+routines presented in this chapter.  More detailed information about these
+routines, including their arguments and return values, may be found in the
+Fastgraph Reference Manual.
+
+     FG_FADEIN incrementally replaces the visual page contents with the
+hidden page contents.  This routine has no effect in text video modes.
+
+     FG_FADEOUT incrementally replaces the visual page contents with pixels
+of the current color.  This routine has no effect in text video modes.
+
+     FG_PAN changes the screen origin (the upper left corner of the screen)
+to the specified screen space coordinates.  This routine has no effect in
+text video modes.
+
+     FG_PANW is the world space version of the fg_pan routine.
+
+     FG_RESIZE changes the dimensions of a video page in EGA and VGA graphics
+modes.
+
+     FG_SCROLL vertically scrolls a region of the active video page.  The
+scrolling may be done either up or down, using either an end-off or circular
+method.  Circular scrolling uses part of the hidden page as a temporary
+workspace.

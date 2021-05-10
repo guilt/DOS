@@ -1,0 +1,45 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_STANDARD_STORAGE_POOLS
+RV SPARK_05
+
+U system.elaboration_allocators%b  s-elaall.adb	426d6514 NE OL PK
+Z ada.exceptions%s	a-except.adb		a-except.ali
+W system%s		system.ads		system.ali
+
+U system.elaboration_allocators%s  s-elaall.ads	7e4d5d34 NE OL PR PK
+W system%s		system.ads		system.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-except.ads		20190108125404 291912d5 ada.exceptions%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-elaall.ads		20190108125404 590f3396 system.elaboration_allocators%s
+D s-elaall.adb		20190108125404 1b625682 system.elaboration_allocators%b
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-traent.ads		20190108125404 005bf670 system.traceback_entries%s
+X 4 system.ads
+37K9*System 148e11 5|36r9 57r5 6|32r14 72r5
+X 5 s-elaall.ads
+36K16*Elaboration_Allocators 4|37k9 5|57l12 57e34 6|32b21 72l12 72t34
+39U14*Mark_Start_Of_Elaboration 6|67b14 70l8 70t33
+46U14*Mark_End_Of_Elaboration 6|58b14 61l8 61t31
+51U14*Check_Standard_Allocator 6|45b14 52l8 52t32
+X 6 s-elaall.adb
+34b4 Elaboration_In_Progress{boolean} 35r19 47r14 60m7 69m7
+

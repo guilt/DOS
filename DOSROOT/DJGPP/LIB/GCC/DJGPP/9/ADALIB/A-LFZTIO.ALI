@@ -1,0 +1,77 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_FLOATING_POINT
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV SPARK_05
+
+U ada.long_float_wide_wide_text_io%b  a-lfztio.ads  3e8a48a2 NE OL PK
+W ada%s			ada.ads			ada.ali
+Z ada.exceptions%s	a-except.adb		a-except.ali
+Z ada.tags%s		a-tags.adb		a-tags.ali
+W ada.wide_wide_text_io%s  a-ztexio.adb		a-ztexio.ali
+Z ada.wide_wide_text_io.float_aux%s  a-ztflau.adb  a-ztflau.ali
+Z ada.wide_wide_text_io.float_io%s
+W system%s		system.ads		system.ali
+Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+Z system.wch_con%s	s-wchcon.adb		s-wchcon.ali
+Z system.wch_wts%s	s-wchwts.adb		s-wchwts.ali
+
+U ada.long_float_wide_wide_text_io%s  a-lfztio.ads  8678108a EB NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.wide_wide_text_io%s  a-ztexio.adb		a-ztexio.ali
+Z ada.wide_wide_text_io.float_io%s
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-except.ads		20190108125404 291912d5 ada.exceptions%s
+D a-ioexce.ads		20170908181218 e4a01f64 ada.io_exceptions%s
+D a-lfztio.ads		20170908181218 3e8a48a2 ada.long_float_wide_wide_text_io%s
+D a-lfztio.ads		20170908181218 3e8a48a2 ada.long_float_wide_wide_text_io%b
+D a-stream.ads		20190108125404 119b8fb3 ada.streams%s
+D a-tags.ads		20190108125404 491b781d ada.tags%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D a-ztexio.ads		20190108125404 ce8ac589 ada.wide_wide_text_io%s
+D a-ztflau.ads		20190108125404 b8205362 ada.wide_wide_text_io.float_aux%s
+D a-ztflio.ads		20170908181218 5f75a467 ada.wide_wide_text_io.float_io%s
+D a-ztflio.adb		20190108125404 63059829 ada.wide_wide_text_io.float_io%b
+D interfac.ads		20190108125404 5ab55268 interfaces%s
+D i-cstrea.ads		20190108125404 e53d8b8e interfaces.c_streams%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-crtl.ads		20190108125404 0ebbdb71 system.crtl%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-ficobl.ads		20190108125404 078245e4 system.file_control_block%s
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-secsta.ads		20190108125404 20bbe636 system.secondary_stack%s
+D s-soflin.ads		20190108125404 a7318a92 system.soft_links%s
+D s-stache.ads		20190108125404 a37c21ec system.stack_checking%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-stoele.ads		20190108125404 2dc34a04 system.storage_elements%s
+D s-traent.ads		20190108125404 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20190108125404 34867c83 system.unsigned_types%s
+D s-wchcon.ads		20190108125404 1b7d22d2 system.wch_con%s
+D s-wchwts.ads		20190108125404 b3692fb2 system.wch_wts%s
+X 1 ada.ads
+16K9*Ada 20e8 5|16r6 18r9 19r7
+X 5 a-lfztio.ads
+18K13*Long_Float_Wide_Wide_Text_IO[11|25] 1|16k9
+X 9 a-ztexio.ads
+52K13*Wide_Wide_Text_IO 5|16w10 19r11 9|497e26
+X 11 a-ztflio.ads
+25k31*Float_IO 5|19r29 11|64e35
+

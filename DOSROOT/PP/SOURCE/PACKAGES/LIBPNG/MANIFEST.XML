@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<packages>
+<package name="libpng">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+  <os name="linux"/>
+  <os name="win32"/>
+  <os name="os2"/>
+  <os name="freebsd"/>
+  <os name="beos"/>
+  <os name="netbsd"/>
+  <os name="solaris"/>
+  <os name="openbsd"/>
+  <os name="darwin"/>
+  <os name="emx"/>
+  <os name="haiku"/>
+  <os name="iphonesim"/>
+  <os name="aix"/>
+  <os name="android"/>
+  <os name="dragonfly"/>
+ </oses>
+ <filename>lpng.zip</filename>
+ <author></author>
+ <license></license>
+ <email></email>
+ <description>Interface unit for libpng - working with PNG image format.</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+  <dependency>
+   <package packagename="zlib"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

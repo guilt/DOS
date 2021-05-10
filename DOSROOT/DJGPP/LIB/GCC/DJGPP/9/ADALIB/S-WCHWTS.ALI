@@ -1,0 +1,80 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P SS ZX
+
+RN
+RV NO_EXCEPTIONS
+RV NO_SECONDARY_STACK
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV SPARK_05
+
+U system.wch_wts%b	s-wchwts.adb		1593dca4 NE OL PK
+Z interfaces%s		interfac.ads		interfac.ali
+W system%s		system.ads		system.ali
+Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.wch_cnv%s	s-wchcnv.adb		s-wchcnv.ali
+W system.wch_con%s	s-wchcon.adb		s-wchcon.ali
+
+U system.wch_wts%s	s-wchwts.ads		8f5663c2 NE OL PU PK
+W system%s		system.ads		system.ali
+W system.wch_con%s	s-wchcon.adb		s-wchcon.ali
+
+D interfac.ads		20190108125404 5ab55268 interfaces%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-secsta.ads		20190108125404 20bbe636 system.secondary_stack%s
+D s-stoele.ads		20190108125404 2dc34a04 system.storage_elements%s
+D s-wchcnv.ads		20190108125404 0fb7baf3 system.wch_cnv%s
+D s-wchcnv.adb		20190108125404 72f42cd5 system.wch_cnv%b
+D s-wchcon.ads		20190108125404 1b7d22d2 system.wch_con%s
+D s-wchjis.ads		20190108125404 94ba8100 system.wch_jis%s
+D s-wchwts.ads		20190108125404 b3692fb2 system.wch_wts%s
+D s-wchwts.adb		20190108125404 b2306b37 system.wch_wts%b
+X 2 system.ads
+37K9*System 148e11 10|37r6 39r9 44r12 60r12 63r5 11|32r6 32r26 33r6 33r26
+. 35r14 135r5
+X 6 s-wchcnv.ads
+50K16*WCh_Cnv 116e19 11|33w13 33r33
+53I9*UTF_32_Code<integer> 11|42r12 56r12
+108u14*UTF_32_To_Char_Sequence 11|65r36
+X 8 s-wchcon.ads
+41K16*WCh_Con 220e19 10|37w13 44r19 60r19 11|32w13 32r33
+94I9*WC_Encoding_Method<short_short_integer> 10|44r27 60r27 11|45r12 59r12
+. 87r12 114r12
+193a4*WC_Longest_Sequences(natural) 11|89r39 116r39
+X 10 s-wchwts.ads
+39K16*WCh_WtS 2|37k9 10|63l12 63e19 11|35b21 135l12 135t19
+42V13*Wide_String_To_String{string} 43>7 44>7 11|85b13 106l8 106t29
+43a7 S{wide_string} 11|86b7 91r28 91r39 91r61 97r20 99r39
+44i7 EM{8|94I9} 11|87b7 89r61 102r19
+58V13*Wide_Wide_String_To_String{string} 59>7 60>7 11|112b13 133l8 133t34
+59a7 S{wide_wide_string} 11|113b7 118r28 118r39 118r61 124r20 126r44
+60i7 EM{8|94I9} 11|114b7 116r61 129r19
+X 11 s-wchwts.adb
+41U14 Store_UTF_32_Character 42>7 43<7 44=7 45>7 55b14 79l8 79t30 98s10 125s10
+42i7 U{6|53I9} 56b7 78r20 99r13 126r13
+43a7 S{string} 57b7 74m10 100r13 127r13
+44i7 P{integer} 58b7 73m10 73r15 74r13 101r13 128r13
+45i7 EM{8|94I9} 59b7 78r23 102r13 129r13
+61U17 Out_Char 61>27 62r22 65r61 71b17 75l11 75t19
+61e27 C{character} 71b27 74r19
+65U17 Store_Chars[6|108] 7|274b14 11|78s7
+89i7 Max_Chars{natural} 91r49
+91a7 Result{string} 95r21 100m19 105r14 105r22
+92i7 Result_Idx{natural} 95m7 101m19 101r19 105r38
+97i11 S_Idx{integer} 99r42
+116i7 Max_Chars{natural} 118r49
+118a7 Result{string} 122r21 127m19 132r14 132r22
+119i7 Result_Idx{natural} 122m7 128m19 128r19 132r38
+124i11 S_Idx{integer} 126r47
+

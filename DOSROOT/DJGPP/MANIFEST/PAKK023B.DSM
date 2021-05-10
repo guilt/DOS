@@ -1,0 +1,45 @@
+# $Id: pakk023b.dsm,v 1.2 2003/03/14 18:29:10 richdawe Exp $
+#
+# DSM for pakke 0.2.3 binaries
+# Written by Richard Dawe <rich@phekda.freeserve.co.uk>
+# Copyright (C) 2002, 2003 by Richard Dawe
+#
+
+dsm-file-version: 1.0
+dsm-version: 0.6.0
+dsm-name: pakk023b
+
+dsm-author: Richard Dawe
+dsm-author-email: rich@phekda.freeserve.co.uk
+
+name: pakke
+version: 0.2.3 release 1
+type: binaries
+manifest: pakk023b
+sources-dsm: pakk023s
+documentation-dsm: pakk023d
+
+short-description: DJGPP command-line package manager, in the style of RPM
+license: GNU General Public License and Lesser General Public License
+author: Richard Dawe
+author-email: rich@phekda.freeserve.co.uk
+web-site: http://www.phekda.freeserve.co.uk/richdawe/pakke/
+
+simtelnet-path: v2/
+zip: pakk023b.zip
+
+changelog: contrib/pakke023/NEWS
+pre-install-readme: contrib/pakke023/install.txt
+
+replaces: pakke < 0.2.3 release 1
+
+# Optional dependencies
+
+# DSMs for DJGPP packages on Simtel.NET
+depends-on: djgpp-dsms
+
+# pakke should be built with PMODE/DJ, so DPMI is optional.
+depends-on: DPMI
+
+# For viewing docs
+depends-on: info-reader

@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<packages>
+<package name="fv">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+  <os name="linux"/>
+  <os name="go32v2"/>
+  <os name="win32"/>
+  <os name="os2"/>
+  <os name="freebsd"/>
+  <os name="beos"/>
+  <os name="netbsd"/>
+  <os name="amiga"/>
+  <os name="solaris"/>
+  <os name="netware"/>
+  <os name="openbsd"/>
+  <os name="darwin"/>
+  <os name="emx"/>
+  <os name="morphos"/>
+  <os name="netwlibc"/>
+  <os name="win64"/>
+  <os name="haiku"/>
+  <os name="iphonesim"/>
+  <os name="aix"/>
+  <os name="aros"/>
+  <os name="dragonfly"/>
+ </oses>
+ <filename>fv.zip</filename>
+ <author>Leon De Boer and Pierre Mueller</author>
+ <license>LGPL with modification, </license>
+ <homepageurl>www.freepascal.org</homepageurl>
+ <email></email>
+ <description>Free Vision, a portable Turbo Vision clone.</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+  <dependency>
+   <package packagename="rtl-console"/>
+  </dependency>
+  <dependency>
+   <package packagename="rtl-extra"/>
+  </dependency>
+  <dependency>
+   <package packagename="morphunits"/>
+   <oses>
+    <os name="morphos"/>
+   </oses>
+  </dependency>
+  <dependency>
+   <package packagename="arosunits"/>
+   <oses>
+    <os name="aros"/>
+   </oses>
+  </dependency>
+  <dependency>
+   <package packagename="amunits"/>
+   <oses>
+    <os name="amiga"/>
+   </oses>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

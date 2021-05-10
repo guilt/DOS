@@ -1,0 +1,12 @@
+
+body { background-color:#F0F0F0; color:#000040;}
+table { background-color: #F0F0F0 }
+th { background-color: #A0A0A0 }
+td { background-color: #D0D0D0 }
+
+a:link { color:#0000C0; text-decoration:underline; }
+a:visited { color:#000080; text-decoration:underline; }
+a:active { color:#0000FF; text-decoration:none; }
+
+
+

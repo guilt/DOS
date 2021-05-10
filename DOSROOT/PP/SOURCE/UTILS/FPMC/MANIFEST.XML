@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<packages>
+<package name="utils-fpmc">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+  <os name="win32"/>
+  <os name="os2"/>
+  <os name="emx"/>
+  <os name="win64"/>
+ </oses>
+ <filename>fpmc.zip</filename>
+ <author>&lt;various&gt;</author>
+ <license>LGPL with modification</license>
+ <homepageurl>www.freepascal.org</homepageurl>
+ <email></email>
+ <description>Free Pascal Message Compiler.</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+  <dependency>
+   <package packagename="fcl-base"/>
+  </dependency>
+  <dependency>
+   <package packagename="fpgtk"/>
+   <oses>
+    <os name="linux"/>
+   </oses>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

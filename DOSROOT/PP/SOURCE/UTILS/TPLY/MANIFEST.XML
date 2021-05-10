@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<packages>
+<package name="utils-lexyacc">
+ <version major="3" minor="0" micro="0"/>
+ <filename>tply.zip</filename>
+ <author>&lt;various&gt;</author>
+ <license>LGPL with modification</license>
+ <homepageurl>www.freepascal.org</homepageurl>
+ <email></email>
+ <description>A compiler generator for Turbo Pascal and compatibles.</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

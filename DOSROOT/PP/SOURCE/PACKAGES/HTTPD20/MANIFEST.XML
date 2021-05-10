@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<packages>
+<package name="httpd20">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+ </oses>
+ <filename>hd20.zip</filename>
+ <author>Library: Apache Foundation, header: Felipe Monteiro de Carvalho</author>
+ <license>Library: Apache License 2, header: LGPL with modification, </license>
+ <homepageurl>www.freepascal.org</homepageurl>
+ <email></email>
+ <description>Headers for the Apache 2.0(.58) www server</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+  <dependency>
+   <package packagename="rtl-extra"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

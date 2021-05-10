@@ -1,0 +1,38 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.task_info%b	s-tasinf.adb		e0fce7f8 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.task_info%s	s-tasinf.ads		a758d3a3 EB NE OL PR PK
+W system%s		system.ads		system.ali
+
+D system.ads		20190108125404 27426ea2 system%s
+D s-tasinf.ads		20190108125404 801abd01 system.task_info%s
+D s-tasinf.adb		20190108125404 60e65af9 system.task_info%b
+X 1 system.ads
+37K9*System 148e11 2|42r9 93r5 3|40r14 41r5
+X 2 s-tasinf.ads
+42K16*Task_Info 1|37k9 2|43r24 93l12 93e21 3|40b21 41l12 41t21
+75E9*Scope_Type 82e21 84r31
+76n7*Process_Scope{75E9}
+79n7*System_Scope{75E9}
+82n7*Default_Scope{75E9} 90r55
+84E9*Task_Info_Type<75E9> 90r37
+90e4*Unspecified_Task_Info{84E9}
+

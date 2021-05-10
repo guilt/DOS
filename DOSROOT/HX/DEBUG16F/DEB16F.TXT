@@ -1,0 +1,103 @@
+
+
+ 1. About Deb16f
+
+ Deb16f is a debugger for DOS real-mode and 16-bit DPMI applications. Its
+ advantages/disadvantages are:
+
+ + may trace mode switches
+ + should be able to debug applications with mixed (16/32-bit)
+   code segments
+ + dissassembler knows full pentium instruction set
+   including MMX and ISSE.
+ + although looking a bit like "debug.exe" it is no problem
+   for the debugger to trace through the DOS kernel code
+ + a second video adapter is supported. As well, the debugger
+   may be controled by COM port communication.
+ + graphics applications may be debugged locally
+ + automatically uses debug registers if it cannot write
+   a breakpoint, so stepping through ROM is no problem.
+ - has a simple line-oriented user interface.
+ - is unable to debug at source code level
+
+
+ 2. How to start the Debugger
+
+ Just enter "deb16f" on the command line.
+
+
+ 3. How to use Deb16f
+
+ Deb16f has an integrated help function which describes most
+ of its features. To start with it type
+
+ - "?" for a list of available commands.
+ - "? ?" to display help index. Each topic displayed here may
+   be displayed in detail by entering "? <topic>"
+ - "? keys" displays some help about keyboard usage inside Deb16f
+ - "? cmdline" displays format of command line accepted by Deb16f
+
+ A debuggee is loaded by "Load" command. Type "? L" to display
+ format of this command. After a debuggee is loaded you may single-
+ step through it by pressing F8 or just enter "G breakpoint"
+ to execute debuggee in real-time until breakpoint is reached.
+
+ Under some circumstances it may be necessary to disable the
+ NE file loader from inside the debugger before loading a
+ debuggee. This is the case if the debuggee is in NE format,
+ but requires its own loader/stub to be executed. Use command
+ ".LDR 0" to disable the loader. The debuggee will then be executed
+ as a new DPMI client.
+
+ Please note that this version can only debug 16-bit DPMI clients.
+ All commands related to PE files are unknown by Deb16f.
+ For 32-bit clients there exists another version called Deb32f.
+
+
+ 4. How to debug Apps using Graphics
+ 
+ To debug apps which use graphics (like windows 3.x for example)
+ it would be best to use a secondary display adapter of course. 
+ If this isn't available screen swapping must be turned on by setting 
+ debugger variable SCREENSwap=1. To force the debugger in single-step
+ mode to switch screens in any case set bit 4 (=10h) of variable TRACEFlags.
+
+  There a 2 dlls provided for graphics screen switching, DEBFVESA.DLL
+ - which is loaded as default - and DEBFVGA.DLL. DEBFVESA may be modified,
+ since source code is included. DEBFVGA doesn't require VESA and should
+ work with any VGA adapter. It may be used instead of DEBFVESA if the
+ latter fails to work. To tell the debugger to load DEBFVGA add a line
+ in debxxf.ini:
+ 
+ GraphHlp=DEBFVGA.DLL
+
+
+ 5. Files Overview
+
+ - deb16f.exe:   a simple executable to load the debugger core
+ - deb16f.ovl:   the debugger itself
+ - rmdbghlp.bin: helper code which will be loaded into
+                 conventional dos memory to provide support for
+                 real/v86 mode debugging.
+ - debxxvdd.dll: a VDD to support the debugger when running in NTVDM.
+ - debxxf.hlp:   a text file which will be loaded by the debugger
+                 at startup. contains help topics and error messages.
+ - debxxf.mac:   contains macros for the debugger
+ - debxxf.ini:   profile file for the debugger
+ - dpmild16.exe: HX's NE file loader, required to load deb16f.exe.
+ - showfile.dll: a 16-bit NE dll which is a fullscreen hex editor
+                 and used by the debugger for its "type" command
+ - symbhdld.dll: a 16-bit NE dll to find names of exports
+ - debfvesa.dll: a 32-bit NE dll to save/restore screen if debuggee is
+                 in graphics mode. Knows VESA and is loaded as default.
+ - debfvga.dll:  another dll to save/restore screen if debuggee is in
+                 graphics mode. Knows/uses VGA only.
+ - debfvesa.zip: source code + makefile to create debfvesa.dll.
+ - deb16f.txt    the file you are reading just now.
+
+
+ 6. Copyright
+
+ Deb16f is freeware. Copyright 1993-2008 Japheth.
+
+ Japheth

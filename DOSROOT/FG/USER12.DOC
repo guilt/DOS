@@ -1,0 +1,629 @@
+Chapter 12
+
+
+
+
+
+Animation Techniques
+238   Fastgraph User's Guide
+
+Overview
+
+     Unlike other microcomputers, the IBM PC and PS/2 family of systems do
+not have any special graphics hardware or firmware to help in performing
+animation.  This means that any animation done on these systems must be
+implemented entirely through software.  This chapter will show how to do this
+using Fastgraph's video page management, image display, and block transfer
+routines.  The methods described in this chapter are not intended to be all
+inclusive, for that would itself fill a separate volume at least as large as
+this manual.  However, the animation techniques presented here should provide
+a basis that you can readily extend to develop more sophisticated uses of
+animation.  The examples in this chapter are restricted to graphics video
+modes.
+
+
+Simple Animation
+
+     The first type of animation we'll examine is called simple animation.
+In simple animation, we display an object, erase it, and then display it in a
+new position.  When we perform this "erase and redisplay" sequence
+repetitively, the object moves.  This method, however, has two drawbacks.
+First, unless the object is rather small, it will flicker because the erasing
+and display of the object does not coincide with the refresh rate of the
+video display.  Second, and perhaps more importantly, anything underneath the
+object is not saved as the object moves across it.  Despite these
+limitations, simple animation is sometimes useful, and it is a good place to
+begin our discussion of animation techniques.
+
+     Example 12-1 moves a small bright green rectangle (magenta in CGA) from
+left to right across the screen in any 320 by 200 color graphics mode.  The
+program moves the rectangle, 20 pixels wide and 10 pixels high, using a for
+loop.  This loop first uses the fg_clprect routine to display the rectangle,
+then uses the fg_waitfor routine to leave the object on the screen
+momentarily, and finally uses fg_clprect again to erase the rectangle by
+redisplaying it in the original background color (the fg_waitfor routine is
+described in Chapter 16).  We use fg_clprect rather than fg_rect because the
+first few and last few loop iterations result in at least part of the
+rectangle being off the screen.  Each successive loop iteration displays the
+rectangle five pixels to the right of its previous position.
+
+                                Example 12-1.
+
+          #include <fastgraf.h>
+          #include <stdio.h>
+          #include <stdlib.h>
+          void main(void);
+
+          void main()
+          {
+             int new_mode, old_mode;
+             int x;
+
+             /* initialize the video environment */
+
+             new_mode = fg_bestmode(320,200,1);
+             if (new_mode < 0 || new_mode == 12) {
+                                       Chapter 12:  Animation Techniques   239
+
+                printf("This program requires a 320 ");
+                printf("x 200 color graphics mode.\n");
+                exit(1);
+                }
+             old_mode = fg_getmode();
+             fg_setmode(new_mode);
+
+             /* move the object across the screen */
+
+             for (x = -20; x < 320; x+=5) {
+                fg_setcolor(10);
+                fg_clprect(x,x+19,95,104);
+                fg_waitfor(1);
+                fg_setcolor(0);
+                fg_clprect(x,x+19,95,104);
+                }
+
+             /* restore the original video mode and return to DOS */
+
+             fg_setmode(old_mode);
+             fg_reset();
+          }
+
+     Example 12-2 is the same as example 12-1, but it shows what happens when
+we move the rectangle across an existing background (in this case, the
+background is solid white).  If you run this program, you'll see that the
+rectangle leaves a trail of color 0 behind it.  While this might be
+occasionally useful, it demonstrates that simple animation is destructive
+because it does not preserve the background.  In this example, if we changed
+the second call to fg_setcolor within the for loop to revert to color 15
+instead of color 0, the background would be restored.  In general, though, it
+may not be this easy to replace the background, so we must rely on some other
+method for preserving it.
+
+                                Example 12-2.
+
+          #include <fastgraf.h>
+          #include <stdio.h>
+          #include <stdlib.h>
+          void main(void);
+
+          void main()
+          {
+             int new_mode, old_mode;
+             int x;
+
+             /* initialize the video environment */
+
+             new_mode = fg_bestmode(320,200,1);
+             if (new_mode < 0 || new_mode == 12) {
+                printf("This program requires a 320 ");
+                printf("x 200 color graphics mode.\n");
+                exit(1);
+                }
+             old_mode = fg_getmode();
+             fg_setmode(new_mode);
+240   Fastgraph User's Guide
+
+
+             /* draw some type of background */
+
+             fg_setcolor(15);
+             fg_rect(0,319,0,199);
+
+             /* move the object across the screen */
+
+             for (x = -20; x < 320; x+=5) {
+                fg_setcolor(10);
+                fg_clprect(x,x+19,95,104);
+                fg_waitfor(1);
+                fg_setcolor(0);
+                fg_clprect(x,x+19,95,104);
+                }
+
+             /* restore the original video mode and return to DOS */
+
+             fg_setmode(old_mode);
+             fg_reset();
+          }
+
+     To summarize, we see that simple animation is easy to implement, but it
+is destructive and typically causes the animated object to flicker.  For
+these reasons, it is not used too frequently.
+
+
+XOR Animation
+
+     "Exclusive or" animation, or XOR animation for short, is an interesting
+extension of simple animation and is most useful when animating a single-
+color object against a single-color background.  Like simple animation, it
+uses the "erase and redisplay" technique to move an object, but it does this
+differently.  Instead of erasing the object by displaying it in the
+background color, XOR animation does so by displaying it in the same color
+using an exclusive or, or XOR, operation.  This method relies on a specific
+property of the exclusive or operator:
+
+               (object XOR background) XOR object = background
+
+In other words, if you XOR something twice in the same position, the result
+is the same as the original image in that position.
+
+     Example 12-3 demonstrates XOR animation.  This program is similar to
+example 12-2, but it only runs in the 320 by 200 EGA graphics mode (mode 13).
+After establishing the video mode, it uses the Fastgraph routine fg_setfunc
+to select XOR mode.  This causes any subsequent graphics output to be XORed
+with the contents of video memory instead of just replacing it.  The
+fg_setfunc routine is described further in Chapter 17.
+
+     The other differences between examples 12-3 and 12-2 are that the call
+to fg_setcolor has been moved outside the for loop, and that fg_setcolor
+takes a different value.  Since the existing background is bright white
+(color 15), we can't just use color 10 if we want to display a bright green
+object.  The desired value is that which when XORed with color 15 produces
+color 10; the easiest way to obtain this value is to XOR these two numbers.
+                                       Chapter 12:  Animation Techniques   241
+
+The call to fg_setcolor can be moved outside the loop because we display the
+object using the same color index throughout.
+
+                                Example 12-3.
+
+          #include <fastgraf.h>
+          #include <stdio.h>
+          #include <stdlib.h>
+          void main(void);
+
+          void main()
+          {
+             int old_mode;
+             int x;
+
+             /* initialize the video environment */
+
+             if (fg_testmode(13,1) == 0) {
+                printf("This program requires EGA.\n");
+                exit(1);
+                }
+             old_mode = fg_getmode();
+             fg_setmode(13);
+             fg_setfunc(3);
+
+             /* draw some type of background */
+
+             fg_setcolor(15);
+             fg_rect(0,319,0,199);
+
+             /* move the object across the screen */
+
+             fg_setcolor(10^15);
+             for (x = -20; x < 320; x+=5) {
+                fg_clprect(x,x+19,95,104);
+                fg_waitfor(1);
+                fg_clprect(x,x+19,95,104);
+                }
+
+             /* restore the original video mode and return to DOS */
+
+             fg_setmode(old_mode);
+             fg_reset();
+          }
+
+
+     Fastgraph only supports the XOR pixel operation in the native EGA and
+VGA graphics video modes (modes 13 through 18).  Thus, you cannot use XOR
+animation in CGA, Tandy/PCjr, Hercules, or MCGA graphics modes.
+
+     While XOR animation is non-destructive (that is, it restores the
+original background), it still suffers from the flickering encountered in
+simple animation.  In spite of this, it may be useful when animating a
+single-color object against a single-color background.
+242   Fastgraph User's Guide
+
+
+Static Frame Animation
+
+     Static frame animation uses a different strategy than simple animation
+or XOR animation.  The general scheme of this method is to create the entire
+animation sequence off-screen and then successively display each item, or
+frame, in this sequence on one position of the visual video page.  This
+results in a visually appealing animation that is non-destructive and does
+not include the flickering associated with simple animation and XOR
+animation.  Static frame animation requires the visual video page and one or
+more additional pages to implement.  The number of pages needed depends on
+the number of frames and the size of each frame.
+
+     Example 12-4 runs in any 320 by 200 color graphics video mode and
+illustrates a simple use of static frame animation.  The program displays an
+animation sequence containing 12 frames; it displays this sequence three
+times.  The animation sequence consists of a bright green rectangle (magenta
+in CGA) moving from left to right across the center of the frame.  Each frame
+is 96 pixels wide and 50 pixels high.  The 12 frames are set up on an off-
+screen video page as shown below.
+
+                         0       95 96     191 192    287
+
+                      0
+                          frame 1    frame 2    frame 3
+                     49
+
+                     50
+                          frame 4    frame 5    frame 6
+                     99
+
+                    100
+                          frame 7    frame 8    frame 9
+                    149
+
+                    150
+                          frame 10   frame 11   frame 12
+                    199
+
+
+     Example 12-4 first establishes the video mode and allocates the
+additional video page (needed if using a video mode in which page 1 is a
+virtual video page).  The program then generates the background for frame 1;
+the background is a blue rectangle (cyan in CGA) with a white ellipse
+centered on it.  After the call to fg_ellipse, the first frame is ready.
+
+     The next step is to create the remaining 11 frames.  In frame 2, the
+right half of the 20-pixel wide rectangle will enter the left edge of the
+frame.  In frame 3, the rectangle will be ten pixels farther right, or
+aligned against the left edge of the frame.  In frames 4 through 12, the
+rectangle will be ten pixels farther right in each frame, so by frame 12 only
+the left half of the rectangle appears on the right edge of the frame.  The
+first for loop in the program builds frames 2 through 12 by copying the
+background from frame 1 and then displaying the rectangle (that is, the
+animated object) in the proper position for that frame.
+                                       Chapter 12:  Animation Techniques   243
+     The second for loop performs the animation sequence.  To display the 12-
+frame sequence three times, it must perform 36 iterations.  The loop simply
+copies each frame from the proper position on video page 1 to the middle of
+the visual video page.  Note how the fg_waitfor routine is used to pause
+momentarily between each frame.
+
+                                Example 12-4.
+
+       #include <fastgraf.h>
+       #include <stdio.h>
+       #include <stdlib.h>
+       void main(void);
+
+       #define VISUAL 0
+       #define HIDDEN 1
+
+       int xmin[] = {  0, 96,192,  0, 96,192,  0, 96,192,  0, 96,192};
+       int ymax[] = { 49, 49, 49, 99, 99, 99,149,149,149,199,199,199};
+
+       void main()
+       {
+          int new_mode, old_mode;
+          int frame, offset;
+          int i, x, y;
+
+          /* initialize the video environment */
+
+          new_mode = fg_bestmode(320,200,2);
+          if (new_mode < 0 || new_mode == 12) {
+             printf("This program requires a 320 ");
+             printf("x 200 color graphics mode.\n");
+             exit(1);
+             }
+          old_mode = fg_getmode();
+          fg_setmode(new_mode);
+          fg_allocate(HIDDEN);
+
+          /* draw the background in the upper left corner */
+
+          fg_setpage(HIDDEN);
+          fg_setcolor(1);
+          fg_rect(0,95,0,49);
+          fg_setcolor(15);
+          fg_move(48,25);
+          fg_ellipse(20,20);
+
+          /* display the animated object against each background */
+
+          fg_setcolor(10);
+          offset = -10;
+          for (i = 1; i < 12; i++) {
+             x = xmin[i];
+             y = ymax[i];
+             fg_transfer(0,95,0,49,x,y,HIDDEN,HIDDEN);
+             fg_setclip(x,x+95,0,199);
+             fg_clprect(x+offset,x+offset+19,y-29,y-20);
+             offset += 10;
+244   Fastgraph User's Guide
+
+             }
+
+          /* slide the object across the background three times */
+
+          for (i = 0; i < 36; i++) {
+             frame = i % 12;
+             x = xmin[frame];
+             y = ymax[frame];
+             fg_transfer(x,x+95,y-49,y,112,124,HIDDEN,VISUAL);
+             fg_waitfor(2);
+             }
+
+          /* restore the original video mode and return to DOS */
+
+          fg_freepage(HIDDEN);
+          fg_setmode(old_mode);
+          fg_reset();
+       }
+
+
+Dynamic Frame Animation
+
+     Dynamic frame animation is similar to static frame animation, but all
+the animation frames are built as needed during the animation sequence
+instead of in advance.  When using this method, you must first store a copy
+of the background on an off-screen video page.  Then, to build a frame,
+create another copy (called the workspace) of the background elsewhere on the
+off-screen page (or even to a different off-screen page) and display the
+object on that copy.  Finally, transfer the workspace to the visual page.
+Like static frame animation, this method produces a non-destructive, flicker-
+free animation sequence.
+
+     Example 12-5 is functionally identical to example 12-4, but it uses
+dynamic rather than static frame animation.  As before, the program builds
+the background in the upper left corner of video page 1, but it then uses
+fg_transfer to copy it to the center of the visual video page.  The for loop
+builds each frame as it is needed and also copies it to the center of the
+visual page.  Again, fg_waitfor creates the necessary pause between frames.
+
+                                Example 12-5.
+
+         #include <fastgraf.h>
+         #include <stdio.h>
+         #include <stdlib.h>
+         void main(void);
+
+         #define VISUAL 0
+         #define HIDDEN 1
+
+         void main()
+         {
+            int new_mode, old_mode;
+            int frame, offset;
+            int i;
+
+                                       Chapter 12:  Animation Techniques   245
+
+            /* initialize the video environment */
+
+            new_mode = fg_bestmode(320,200,2);
+            if (new_mode < 0 || new_mode == 12) {
+               printf("This program requires a 320 ");
+               printf("x 200 color graphics mode.\n");
+               exit(1);
+               }
+            old_mode = fg_getmode();
+            fg_setmode(new_mode);
+            fg_allocate(HIDDEN);
+
+            /* draw the background in the upper left corner */
+
+            fg_setpage(HIDDEN);
+            fg_setcolor(1);
+            fg_rect(0,95,0,49);
+            fg_setcolor(15);
+            fg_move(48,25);
+            fg_ellipse(20,20);
+
+            /* copy it to the center of the visual page */
+
+            fg_transfer(0,95,0,49,112,124,HIDDEN,VISUAL);
+
+            /* slide the object across the background three times */
+
+            fg_setcolor(10);
+            for (i = 0; i < 36; i++) {
+               frame  = i % 12;
+               offset = 10 * frame - 10;
+               fg_transfer(0,95,20,29,112,105,HIDDEN,HIDDEN);
+               fg_rect(112+offset,131+offset,96,105);
+               fg_transfer(112,207,96,105,112,105,HIDDEN,VISUAL);
+               fg_waitfor(2);
+               }
+
+            /* restore the original video mode and return to DOS */
+
+            fg_freepage(HIDDEN);
+            fg_setmode(old_mode);
+            fg_reset();
+         }
+
+     Two items in example 12-5 merit further discussion.  First, we have
+chosen our workspace on page 1 so it uses the same screen space coordinates
+as the image area on the visual page.  This is not necessary unless you are
+using the fg_restore routine instead of fg_transfer.  Second, the program can
+use the faster fg_rect routine in place of fg_clprect.  It can do this
+because even though the object will extend beyond the workspace limits, we
+only transfer the workspace itself.  However, for this to function properly,
+the workspace's horizontal limits must fall on byte boundaries.
+
+     Note too that we do not need to transfer the entire frame during the
+animation sequence.  In example 12-5, we know the vertical extremes of the
+moving image are y=96 and y=105, so we only transfer 10 rows instead of the
+246   Fastgraph User's Guide
+
+entire frame.  We could similarly compute the x extremes for each frame and
+only transfer the necessary portion.  Recall, however, that fg_transfer
+extends the horizontal coordinates to byte boundaries, so we may copy a few
+extra pixels as well.  This may or may not affect the animation sequence.
+Again, the problem is eliminated if you align your workspace on byte
+boundaries.
+
+     When we use dynamic frame animation, it is easy to change the number of
+frames in the animation sequence.  Suppose we wish to produce a smoother
+animation by increasing the number of frames from 12 to 24.  This means the
+object will move in increments of five pixels instead of ten.  The only
+changes needed are to double the number of loop iterations, modify the
+calculations for the frame number and offset values as shown below, and
+reduce the fg_waitfor pause from 2 to 1.
+
+                           frame  = i % 24;
+                           offset = 5 * frame - 10;
+
+Compare this to all the changes that would be necessary if we were using
+static frame animation.
+
+
+Page Flipping
+
+     Page flipping is a variation of frame animation in which you construct
+images on off-screen video pages and then repetitively make those pages the
+visual page.  We can further divide the page flipping technique into static
+and dynamic variants, as we did with frame animation.
+
+     In static page flipping, we construct the entire animation sequence in
+advance, with one frame per video page.  Once this is done, we can display
+each frame by using the fg_setvpage routine to switch instantly from one
+video page to another.  Although this produces a smooth, flicker-free
+animation, we cannot carry the sequence very far before running out of video
+pages (and hence animation frames).
+
+     In dynamic page flipping, we construct each animation frame when it is
+needed.  As in static page flipping, we construct each frame on a separate
+video page.  However, as example 12-6 demonstrates, we only need three video
+pages to produce the animation sequence, regardless of the number of frames
+in the sequence.  Two of the three video pages will alternate as the visual
+page, while the remaining video page keeps a copy of the background.
+
+     Example 12-6, which performs an animation sequence similar to examples
+12-4 and 12-5, illustrates dynamic frame animation in the 320 by 200 EGA
+graphics video mode (mode 13).  The program begins by displaying the
+background on video page 2.  Video pages 0 and 1 will alternate as the visual
+page; the page that is not the visual page is called the hidden page.  We
+start with page 0 as the visual page, and hence page 1 as the hidden page.
+To build each frame, the program uses fg_transfer to copy the background from
+page 2 to the hidden page and then uses fg_clprect to display the animated
+object at the correct position on the hidden page.  After this, it displays
+the next frame by using fg_setvpage to make the hidden page the visual page.
+Before beginning the next iteration, the program toggles the hidden page
+number in preparation for the next frame.
+                                       Chapter 12:  Animation Techniques   247
+
+                                Example 12-6.
+
+          #include <fastgraf.h>
+          #include <stdio.h>
+          #include <stdlib.h>
+          void main(void);
+
+          void main()
+          {
+             int old_mode;
+             int hidden;
+             int x;
+
+             /* initialize the video environment */
+
+             if (testmode(fg_13,3) == 0) {
+                printf("This program requires EGA.\n");
+                exit(1);
+                }
+             old_mode = fg_getmode();
+             fg_setmode(13);
+
+             /* draw the background on page two */
+
+             fg_setpage(2);
+             fg_setcolor(1);
+             fg_rect(0,319,0,199);
+             fg_setcolor(15);
+             fg_move(160,100);
+             fg_ellipse(20,20);
+
+             /* slide the object across the screen */
+
+             hidden = 1;
+             setcolor(10);
+             for (x = -10; x < 320; x+=4) {
+                fg_setpage(hidden);
+                fg_transfer(0,319,0,199,0,199,2,hidden);
+                fg_clprect(x,x+19,96,105);
+                fg_setvpage(hidden);
+                hidden = 1 - hidden;
+                fg_waitfor(1);
+                }
+
+             /* restore the original video mode and return to DOS */
+
+             fg_setmode(old_mode);
+             fg_reset();
+          }
+
+     A problem with either page flipping technique arises if we use virtual
+video pages.  Page flipping relies on the fact that changing the visual page
+number occurs instantly, which is exactly what happens when we use physical
+video pages.  However, such is not the case with virtual or logical pages
+because Fastgraph must copy the entire page contents into video memory.
+248   Fastgraph User's Guide
+
+While this occurs quite rapidly, it is not instantaneous, and its effects are
+immediately apparent on the animation.
+
+
+An Animation Example:  The Fastgraph Fish Tank
+
+     If you installed the example programs when you installed Fastgraph, the
+EXAMPLES subdirectory will include a fully-commented program called the fish
+tank that illustrates dynamic frame animation.  The fish tank is an excellent
+example of multi-object non-destructive animation in which several types of
+tropical fish swim back and forth against a coral reef background.  As a
+picture is worth 1,024 words, we suggest studying the fish tank source code
+for some useful techniques in developing a complete animation program.  The
+source code for the fish tank program is in FISHTANK.C, FISHTANK.BAS,
+FISHTANK.FOR, or FISHTANK.PAS, depending on what language support you've
+installed with Fastgraph.
+
+
+Summary of Animation Techniques
+
+     This chapter has presented five animation techniques:  simple animation,
+XOR animation, static frame animation, dynamic frame animation, and page
+flipping.  The following table summarizes their behavior.
+
+               technique     destructive?        flicker-free?
+
+               simple             yes                 no
+               XOR                no                  no
+               static frame       no                  yes
+               dynamic frame      no                  yes
+               page flipping      no                  yes
+
+Simple animation and XOR animation are elementary techniques that are seldom
+used once you master frame animation and page flipping.
+
+     As stated at the beginning of this chapter, the simple examples
+presented here serve as the basis for understanding the mechanics of the
+animation techniques we have discussed.  In "real world" programs, you'll
+typically want to display an image using the fg_drwimage or fg_drawmap family
+of routines instead using rudimentary images such as the rectangles in our
+examples.  A helpful rule is to use PCX, GIF, or pixel run files for both
+backgrounds and moving objects, and then use fg_getimage or fg_getmap to
+retrieve the moving objects as bit-mapped images for later display.  Of
+course, it's desirable to do this "behind the scenes" work on video pages
+other than the visual page.  This is precisely the technique used in the
+Fastgraph fish tank.

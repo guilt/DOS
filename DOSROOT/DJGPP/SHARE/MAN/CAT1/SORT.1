@@ -1,0 +1,132 @@
+
+
+
+SORT(1)                        FSF                        SORT(1)
+
+
+NNAAMMEE
+       sort - sort lines of text files
+
+SSYYNNOOPPSSIISS
+       ssoorrtt [_O_P_T_I_O_N]... [_F_I_L_E]...
+
+DDEESSCCRRIIPPTTIIOONN
+       Write sorted concatenation of all FILE(s) to standard out-
+       put.
+
+       +POS1 [-POS2]
+              start a key at POS1, end it *before* POS2 (obsoles-
+              cent)
+
+              field  numbers  and  character offsets are numbered
+              starting with zero (contrast with the --kk option)
+
+       --bb     ignore leading blanks in sort fields or keys
+
+       --cc     check if given files already sorted, do not sort
+
+       --dd     consider only [a-zA-Z0-9 ] characters in keys
+
+       --ff     fold lower case to upper case characters in keys
+
+       --gg     compare according to general numerical value, imply
+              --bb
+
+       --ii     consider only [ 40- 176] characters in keys
+
+       --kk POS1[,POS2]
+              start a key at POS1, end it *at* POS2
+
+              field  numbers  and  character offsets are numbered
+              starting with one (contrast  with  zero-based  +POS
+              form)
+
+       --mm     merge already sorted files, do not sort
+
+       --MM     compare (unknown) < `JAN' < ... < `DEC', imply --bb
+
+       --nn     compare  according to string numerical value, imply
+              --bb
+
+       --oo FILE
+              write result on FILE instead of standard output
+
+       --rr     reverse the result of comparisons
+
+       --ss     stabilize sort by disabling last resort comparison
+
+       --tt SEP use SEParator instead of non- to whitespace transi-
+              tion
+
+
+
+
+GNU textutils 2.0          August 1999                          1
+
+
+
+
+
+SORT(1)                        FSF                        SORT(1)
+
+
+       --TT DIRECTORY
+              use  DIRECTORY  for temporary files, not $TMPDIR or
+              /tmp
+
+       --uu     with --cc, check for strict ordering; with  --mm,  only
+              output the first of an equal sequence
+
+       --zz     end  lines  with  0  byte,  not  newline,  for find
+              --pprriinntt00
+
+       ----hheellpp display this help and exit
+
+       ----vveerrssiioonn
+              output version information and exit
+
+       POS is F[.C][OPTS], where F is the field number and C  the
+       character  position  in  the  field, both counted from one
+       with --kk, from zero with the  obsolescent  form.   OPTS  is
+       made  up  of one or more of Mbdfinr; this effectively dis-
+       ables global --MMbbddffiinnrr settings for that key.  If no key is
+       given,  use  the entire line as the key.  With no FILE, or
+       when FILE is -, read standard input.
+
+RREEPPOORRTTIINNGG BBUUGGSS
+       Report bugs to <bug-textutils@gnu.org>.
+
+SSEEEE AALLSSOO
+       The full documentation for ssoorrtt is maintained as a Texinfo
+       manual.   If  the  iinnffoo  and  ssoorrtt  programs  are properly
+       installed at your site, the command
+
+              iinnffoo ssoorrtt
+
+       should give you access to the complete manual.
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (C) 1999 Free Software Foundation, Inc.
+       This is free software; see the source for  copying  condi-
+       tions.  There is NO warranty; not even for MERCHANTABILITY
+       or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GNU textutils 2.0          August 1999                          2
+
+

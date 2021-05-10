@@ -1,0 +1,31 @@
+#
+# DSM for dvidj 0.9 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: dvdj09s
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: dvidj
+version: 0.9
+type: sources
+manifest: dvdj09s
+binaries-dsm: dvdj09b
+
+short-description: DVI driver for DeskJet printers
+license: GNU General Public License
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: dvdj09s.zip
+
+pre-install-readme: gnu/web2c-7.2/djgpp/README
+
+depends-on: texmflib
+depends-on: kpathsea

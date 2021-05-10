@@ -1,0 +1,375 @@
+READELF(1)                   GNU Development Tools                  READELF(1)
+
+
+
+NNAAMMEE
+       readelf - Displays information about ELF files.
+
+SSYYNNOOPPSSIISS
+       readelf [--aa|----aallll]
+               [--hh|----ffiillee--hheeaaddeerr]
+               [--ll|----pprrooggrraamm--hheeaaddeerrss|----sseeggmmeennttss]
+               [--SS|----sseeccttiioonn--hheeaaddeerrss|----sseeccttiioonnss]
+               [--gg|----sseeccttiioonn--ggrroouuppss]
+               [--tt|----sseeccttiioonn--ddeettaaiillss]
+               [--ee|----hheeaaddeerrss]
+               [--ss|----ssyymmss|----ssyymmbboollss]
+               [----ddyynn--ssyymmss]
+               [--nn|----nnootteess]
+               [--rr|----rreellooccss]
+               [--uu|----uunnwwiinndd]
+               [--dd|----ddyynnaammiicc]
+               [--VV|----vveerrssiioonn--iinnffoo]
+               [--AA|----aarrcchh--ssppeecciiffiicc]
+               [--DD|----uussee--ddyynnaammiicc]
+               [--xx <number or name>|----hheexx--dduummpp==<number or name>]
+               [--pp <number or name>|----ssttrriinngg--dduummpp==<number or name>]
+               [--RR <number or name>|----rreellooccaatteedd--dduummpp==<number or name>]
+               [--zz|----ddeeccoommpprreessss]
+               [--cc|----aarrcchhiivvee--iinnddeexx]
+               [--ww[[llLLiiaapprrmmffFFssooRRttUUuuTTggAAcckkKK]]|
+                ----ddeebbuugg--dduummpp[=rawline,=decodedline,=info,=abbrev,=pubnames,=aranges,=macro,=frames,=frames-interp,=str,=loc,=Ranges,=pubtypes,=trace_info,=trace_abbrev,=trace_aranges,=gdb_index,=addr,=cu_index,=links,=follow-links]]
+               [----ddwwaarrff--ddeepptthh==_n]
+               [----ddwwaarrff--ssttaarrtt==_n]
+               [--II|----hhiissttooggrraamm]
+               [--vv|----vveerrssiioonn]
+               [--WW|----wwiiddee]
+               [--HH|----hheellpp]
+               _e_l_f_f_i_l_e...
+
+DDEESSCCRRIIPPTTIIOONN
+       rreeaaddeellff displays information about one or more ELF format object files.
+       The options control what particular information to display.
+
+       _e_l_f_f_i_l_e... are the object files to be examined.  32-bit and 64-bit ELF
+       files are supported, as are archives containing ELF files.
+
+       This program performs a similar function to oobbjjdduummpp but it goes into
+       more detail and it exists independently of the BFD library, so if there
+       is a bug in BFD then readelf will not be affected.
+
+OOPPTTIIOONNSS
+       The long and short forms of options, shown here as alternatives, are
+       equivalent.  At least one option besides --vv or --HH must be given.
+
+       --aa
+       ----aallll
+           Equivalent to specifying ----ffiillee--hheeaaddeerr, ----pprrooggrraamm--hheeaaddeerrss,
+           ----sseeccttiioonnss, ----ssyymmbboollss, ----rreellooccss, ----ddyynnaammiicc, ----nnootteess,
+           ----vveerrssiioonn--iinnffoo, ----aarrcchh--ssppeecciiffiicc, ----uunnwwiinndd, ----sseeccttiioonn--ggrroouuppss and
+           ----hhiissttooggrraamm.
+
+           Note - this option does not enable ----uussee--ddyynnaammiicc itself, so if that
+           option is not present on the command line then dynamic symbols and
+           dynamic relocs will not be displayed.
+
+       --hh
+       ----ffiillee--hheeaaddeerr
+           Displays the information contained in the ELF header at the start
+           of the file.
+
+       --ll
+       ----pprrooggrraamm--hheeaaddeerrss
+       ----sseeggmmeennttss
+           Displays the information contained in the file's segment headers,
+           if it has any.
+
+       --SS
+       ----sseeccttiioonnss
+       ----sseeccttiioonn--hheeaaddeerrss
+           Displays the information contained in the file's section headers,
+           if it has any.
+
+       --gg
+       ----sseeccttiioonn--ggrroouuppss
+           Displays the information contained in the file's section groups, if
+           it has any.
+
+       --tt
+       ----sseeccttiioonn--ddeettaaiillss
+           Displays the detailed section information. Implies --SS.
+
+       --ss
+       ----ssyymmbboollss
+       ----ssyymmss
+           Displays the entries in symbol table section of the file, if it has
+           one.  If a symbol has version information associated with it then
+           this is displayed as well.  The version string is displayed as a
+           suffix to the symbol name, preceeded by an @ character.  For
+           example ffoooo@@VVEERR__11.  If the version is the default version to be
+           used when resolving unversioned references to the symbol then it is
+           displayed as a suffix preceeded by two @ characters.  For example
+           ffoooo@@@@VVEERR__22.
+
+       ----ddyynn--ssyymmss
+           Displays the entries in dynamic symbol table section of the file,
+           if it has one.  The output format is the same as the format used by
+           the ----ssyymmss option.
+
+       --ee
+       ----hheeaaddeerrss
+           Display all the headers in the file.  Equivalent to --hh --ll --SS.
+
+       --nn
+       ----nnootteess
+           Displays the contents of the NOTE segments and/or sections, if any.
+
+       --rr
+       ----rreellooccss
+           Displays the contents of the file's relocation section, if it has
+           one.
+
+       --uu
+       ----uunnwwiinndd
+           Displays the contents of the file's unwind section, if it has one.
+           Only the unwind sections for IA64 ELF files, as well as ARM unwind
+           tables (".ARM.exidx" / ".ARM.extab") are currently supported.  If
+           support is not yet implemented for your architecture you could try
+           dumping the contents of the _._e_h___f_r_a_m_e_s section using the
+           ----ddeebbuugg--dduummpp==ffrraammeess or ----ddeebbuugg--dduummpp==ffrraammeess--iinntteerrpp options.
+
+       --dd
+       ----ddyynnaammiicc
+           Displays the contents of the file's dynamic section, if it has one.
+
+       --VV
+       ----vveerrssiioonn--iinnffoo
+           Displays the contents of the version sections in the file, it they
+           exist.
+
+       --AA
+       ----aarrcchh--ssppeecciiffiicc
+           Displays architecture-specific information in the file, if there is
+           any.
+
+       --DD
+       ----uussee--ddyynnaammiicc
+           When displaying symbols, this option makes rreeaaddeellff use the symbol
+           hash tables in the file's dynamic section, rather than the symbol
+           table sections.
+
+           When displaying relocations, this option makes rreeaaddeellff display the
+           dynamic relocations rather than the static relocations.
+
+       --xx <<nnuummbbeerr oorr nnaammee>>
+       ----hheexx--dduummpp==<<nnuummbbeerr oorr nnaammee>>
+           Displays the contents of the indicated section as a hexadecimal
+           bytes.  A number identifies a particular section by index in the
+           section table; any other string identifies all sections with that
+           name in the object file.
+
+       --RR <<nnuummbbeerr oorr nnaammee>>
+       ----rreellooccaatteedd--dduummpp==<<nnuummbbeerr oorr nnaammee>>
+           Displays the contents of the indicated section as a hexadecimal
+           bytes.  A number identifies a particular section by index in the
+           section table; any other string identifies all sections with that
+           name in the object file.  The contents of the section will be
+           relocated before they are displayed.
+
+       --pp <<nnuummbbeerr oorr nnaammee>>
+       ----ssttrriinngg--dduummpp==<<nnuummbbeerr oorr nnaammee>>
+           Displays the contents of the indicated section as printable
+           strings.  A number identifies a particular section by index in the
+           section table; any other string identifies all sections with that
+           name in the object file.
+
+       --zz
+       ----ddeeccoommpprreessss
+           Requests that the section(s) being dumped by xx, RR or pp options are
+           decompressed before being displayed.  If the section(s) are not
+           compressed then they are displayed as is.
+
+       --cc
+       ----aarrcchhiivvee--iinnddeexx
+           Displays the file symbol index information contained in the header
+           part of binary archives.  Performs the same function as the tt
+           command to aarr, but without using the BFD library.
+
+       --ww[[llLLiiaapprrmmffFFssooRRttUUuuTTggAAcckkKK]]
+       ----ddeebbuugg--dduummpp[[==rraawwlliinnee,,==ddeeccooddeeddlliinnee,,==iinnffoo,,==aabbbbrreevv,,==ppuubbnnaammeess,,==aarraannggeess,,==mmaaccrroo,,==ffrraammeess,,==ffrraammeess--iinntteerrpp,,==ssttrr,,==lloocc,,==RRaannggeess,,==ppuubbttyyppeess,,==ttrraaccee__iinnffoo,,==ttrraaccee__aabbbbrreevv,,==ttrraaccee__aarraannggeess,,==ggddbb__iinnddeexx,,==aaddddrr,,==ccuu__iinnddeexx,,==lliinnkkss,,==ffoollllooww--lliinnkkss]]
+           Displays the contents of the DWARF debug sections in the file, if
+           any are present.  Compressed debug sections are automatically
+           decompressed (temporarily) before they are displayed.  If one or
+           more of the optional letters or words follows the switch then only
+           those type(s) of data will be dumped.  The letters and words refer
+           to the following information:
+
+           "a"
+           "=abbrev"
+               Displays the contents of the ..ddeebbuugg__aabbbbrreevv section.
+
+           "A"
+           "=addr"
+               Displays the contents of the ..ddeebbuugg__aaddddrr section.
+
+           "c"
+           "=cu_index"
+               Displays the contents of the ..ddeebbuugg__ccuu__iinnddeexx and/or
+               ..ddeebbuugg__ttuu__iinnddeexx sections.
+
+           "f"
+           "=frames"
+               Display the raw contents of a ..ddeebbuugg__ffrraammee section.
+
+           "F"
+           "=frame-interp"
+               Display the interpreted contents of a ..ddeebbuugg__ffrraammee section.
+
+           "g"
+           "=gdb_index"
+               Displays the contents of the ..ggddbb__iinnddeexx and/or ..ddeebbuugg__nnaammeess
+               sections.
+
+           "i"
+           "=info"
+               Displays the contents of the ..ddeebbuugg__iinnffoo section.  Note: the
+               output from this option can also be restricted by the use of
+               the ----ddwwaarrff--ddeepptthh and ----ddwwaarrff--ssttaarrtt options.
+
+           "k"
+           "=links"
+               Displays the contents of the ..ggnnuu__ddeebbuugglliinnkk and/or
+               ..ggnnuu__ddeebbuuggaallttlliinnkk sections.  Also displays the link to a
+               separate dwarf object file (dwo), if one is specified by the
+               DW_AT_GNU_dwo_name or DW_AT_dwo_name attributes in the
+               ..ddeebbuugg__iinnffoo section.
+
+           "K"
+           "=follow-links"
+               Display the contents of any selected debug sections that are
+               found in a linked, separate debug info file.  This can result
+               in multiple versions of the same debug section being displayed
+               if both the main file and the separate debug info file contain
+               sections with the same name.
+
+               In addition, when displaying DWARF attributes, if a form is
+               found that references the separate debug info file, then the
+               referenced contents will also be displayed.
+
+           "l"
+           "=rawline"
+               Displays the contents of the ..ddeebbuugg__lliinnee section in a raw
+               format.
+
+           "L"
+           "=decodedline"
+               Displays the interpreted contents of the ..ddeebbuugg__lliinnee section.
+
+           "m"
+           "=macro"
+               Displays the contents of the ..ddeebbuugg__mmaaccrroo and/or ..ddeebbuugg__mmaacciinnffoo
+               sections.
+
+           "o"
+           "=loc"
+               Displays the contents of the ..ddeebbuugg__lloocc and/or ..ddeebbuugg__lloocclliissttss
+               sections.
+
+           "p"
+           "=pubnames"
+               Displays the contents of the ..ddeebbuugg__ppuubbnnaammeess and/or
+               ..ddeebbuugg__ggnnuu__ppuubbnnaammeess sections.
+
+           "r"
+           "=aranges"
+               Displays the contents of the ..ddeebbuugg__aarraannggeess section.
+
+           "R"
+           "=Ranges"
+               Displays the contents of the ..ddeebbuugg__rraannggeess and/or
+               ..ddeebbuugg__rrnngglliissttss sections.
+
+           "s"
+           "=str"
+               Displays the contents of the ..ddeebbuugg__ssttrr, ..ddeebbuugg__lliinnee__ssttrr and/or
+               ..ddeebbuugg__ssttrr__ooffffsseettss sections.
+
+           "t"
+           "=pubtype"
+               Displays the contents of the ..ddeebbuugg__ppuubbttyyppeess and/or
+               ..ddeebbuugg__ggnnuu__ppuubbttyyppeess sections.
+
+           "T"
+           "=trace_aranges"
+               Displays the contents of the ..ttrraaccee__aarraannggeess section.
+
+           "u"
+           "=trace_abbrev"
+               Displays the contents of the ..ttrraaccee__aabbbbrreevv section.
+
+           "U"
+           "=trace_info"
+               Displays the contents of the ..ttrraaccee__iinnffoo section.
+
+           Note: displaying the contents of ..ddeebbuugg__ssttaattiicc__ffuunnccss,
+           ..ddeebbuugg__ssttaattiicc__vvaarrss and ddeebbuugg__wweeaakknnaammeess sections is not currently
+           supported.
+
+       ----ddwwaarrff--ddeepptthh==_n
+           Limit the dump of the ".debug_info" section to _n children.  This is
+           only useful with ----ddeebbuugg--dduummpp==iinnffoo.  The default is to print all
+           DIEs; the special value 0 for _n will also have this effect.
+
+           With a non-zero value for _n, DIEs at or deeper than _n levels will
+           not be printed.  The range for _n is zero-based.
+
+       ----ddwwaarrff--ssttaarrtt==_n
+           Print only DIEs beginning with the DIE numbered _n.  This is only
+           useful with ----ddeebbuugg--dduummpp==iinnffoo.
+
+           If specified, this option will suppress printing of any header
+           information and all DIEs before the DIE numbered _n.  Only siblings
+           and children of the specified DIE will be printed.
+
+           This can be used in conjunction with ----ddwwaarrff--ddeepptthh.
+
+       --II
+       ----hhiissttooggrraamm
+           Display a histogram of bucket list lengths when displaying the
+           contents of the symbol tables.
+
+       --vv
+       ----vveerrssiioonn
+           Display the version number of readelf.
+
+       --WW
+       ----wwiiddee
+           Don't break output lines to fit into 80 columns. By default rreeaaddeellff
+           breaks section header and segment listing lines for 64-bit ELF
+           files, so that they fit into 80 columns. This option causes rreeaaddeellff
+           to print each section header resp. each segment one a single line,
+           which is far more readable on terminals wider than 80 columns.
+
+       --HH
+       ----hheellpp
+           Display the command-line options understood by rreeaaddeellff.
+
+       @@_f_i_l_e
+           Read command-line options from _f_i_l_e.  The options read are inserted
+           in place of the original @_f_i_l_e option.  If _f_i_l_e does not exist, or
+           cannot be read, then the option will be treated literally, and not
+           removed.
+
+           Options in _f_i_l_e are separated by whitespace.  A whitespace
+           character may be included in an option by surrounding the entire
+           option in either single or double quotes.  Any character (including
+           a backslash) may be included by prefixing the character to be
+           included with a backslash.  The _f_i_l_e may itself contain additional
+           @_f_i_l_e options; any such options will be processed recursively.
+
+SSEEEE AALLSSOO
+       oobbjjdduummpp(1), and the Info entries for _b_i_n_u_t_i_l_s.
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (c) 1991-2019 Free Software Foundation, Inc.
+
+       Permission is granted to copy, distribute and/or modify this document
+       under the terms of the GNU Free Documentation License, Version 1.3 or
+       any later version published by the Free Software Foundation; with no
+       Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+       Texts.  A copy of the license is included in the section entitled "GNU
+       Free Documentation License".
+
+
+
+binutils-2.31.90                  2019-01-19                        READELF(1)

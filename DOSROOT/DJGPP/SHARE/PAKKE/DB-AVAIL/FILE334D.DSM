@@ -1,0 +1,37 @@
+#
+# DSM for file 3.34 documentation
+# Written by Richard Dawe <richdawe@bigfoot.com> 2001-03-24
+#
+
+dsm-file-version: 1.0
+dsm-name: file334d
+dsm-version: 0.5.0
+dsm-type: documentation
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: file
+version: 3.34
+manifest: file334d
+binaries-dsm: file334b
+sources-dsm: file334s
+short-description: 'file' can determine the file type of files.
+
+license: Copyright, but distributable
+
+author: Ian F. Darwin
+author-email: ian@darwinsys.com
+
+porter: Kees Zeelenberg
+porter-email: c.zeelenberg@hccnet.nl
+
+ftp-site: ftp://ftp.astron.com/pub/file/
+
+simtelnet-path: v2apps/
+zip: file334d.zip
+
+replaces: file < 3.34
+
+# For reading man pages
+depends-on: man

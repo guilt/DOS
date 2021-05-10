@@ -1,0 +1,25 @@
+#
+# DSM for texmflib 7.5 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: tmflib75
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: texmflib
+version: 7.5
+type: binaries
+manifest: tmflib75
+
+short-description: Texmflib 7.5 for Web2c
+license: Unspecified
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: tmflib75.zip

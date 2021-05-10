@@ -1,0 +1,29 @@
+pakke Credits
+=============
+
+$Id: THANKS,v 1.2 2003/03/15 12:22:04 richdawe Exp $
+
+- Laurynas Biveinis for his code, many suggestions and many bug reports ;) He
+  also gave me a reason to make pakke more than just a 'what have I got
+  installed' program.
+
+- Kalum Somaratna (aka Grendel) for his code, many suggestions & enthusiasm.
+
+- Eli Zaretskii, DJ Delorie and the other djgpp-workers who provided
+  comments, suggestions and other help.
+
+- Salvador Eduardo Tropea (SET) for pointing out strcasecmp()'s existence.
+
+- Krogg for generously designing the pakke graphics.
+
+- Tim van Holder for his discussions on and suggestions for pakke.
+
+- Thanks to Waldemar Schultz, Peter J. Farley III, Manuel Collado
+  and Jeremy W. Murphy for their feedback on using pakke
+  and their bug reports.
+
+- The authors of GNU wget for saving me a lot of work. ;)
+
+- DJ for hosting pakke's CVS.
+
+Richard Dawe <rich@phekda.freeserve.co.uk>

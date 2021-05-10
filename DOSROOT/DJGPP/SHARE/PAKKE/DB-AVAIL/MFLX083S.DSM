@@ -1,0 +1,31 @@
+#
+# DSM for musixflx 0.83 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: mflx083s
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: musixflx
+version: 0.83
+type: sources
+manifest: mflx083s
+binaries-dsm: mflx083b
+
+short-description: Musixflx, a line breaking program for MusiXTeX
+license: Unspecified
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: mflx083s.zip
+
+pre-install-readme: gnu/web2c-7.2/djgpp/README
+
+depends-on: texmflib
+depends-on: kpathsea

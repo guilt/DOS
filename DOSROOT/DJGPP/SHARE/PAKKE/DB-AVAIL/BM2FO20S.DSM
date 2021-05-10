@@ -1,0 +1,32 @@
+#
+# DSM for bm2font 2.0 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.0
+dsm-name: bm2fo20s
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: bm2font
+version: 2.0
+type: sources
+manifest: bm2fo20s
+binaries-dsm: bm2fo20b
+documentation-dsm: bm2fo20d
+
+short-description: bm2font, a utility to convert pictures into TeX fonts, in C
+license: GNU GPL, version 1
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: bm2fo20s.zip
+
+pre-install-readme: contrib/bm2fon20/README
+
+depends-on: texmflib
+depends-on: kpathsea

@@ -1,0 +1,8 @@
+
+  About PATCHOGL
+
+  Since HX v2.12 PATCHOGL.EXE is obsolete and has been removed. Previously
+  patched versions of OPENGL32.DLL should be deleted and replaced by the 
+  original file.
+  
+  Japheth

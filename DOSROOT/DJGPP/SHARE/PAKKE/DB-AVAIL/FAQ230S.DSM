@@ -1,0 +1,27 @@
+#
+# DSM for faq 2.30 sources
+# Written by Richard Dawe <richdawe@bigfoot.com> 2000-04-02
+#
+
+dsm-file-version: 1.1
+dsm-name: faq230s
+dsm-version: 0.4.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: faq
+version: 2.30
+manifest: faq230s
+binaries-dsm: faq230b
+short-description: DJGPP Frequently Asked Questions (FAQ)
+license: Freely distributable, as long as the copyright messages are intact
+
+author: Eli Zaretskii
+author-email: eliz@is.elta.co.il
+
+simtelnet-path: v2/
+zip: faq230s.zip
+
+replaces: faq < 2.30

@@ -1,0 +1,938 @@
+    CCCCCCC     MM         MM          A         TTTTTTTTTT    HH      HH
+  CC            MMM       MMM         AAA            TT        HH      HH
+ CCC            MMMM     MMMM        AA AA           TT        HH      HH
+ CCC            MM MM   MM MM       AA   AA          TT        HHHHHHHHHH
+ CCC            MM  MM MM  MM      AAAAAAAAA         TT        HH      HH
+  CC            MM   MMM   MM     AA       AA        TT        HH      HH
+    CCCCCCC     MM    M    MM    AA         AA       TT        HH      HH
+
+
+                           CMATH 2
+
+                    OptiCode - Dr. Martin Sander Software Development
+                    Steinachstr. 9A
+                    D-69198 Schriesheim
+                    Germany
+                    e-mail: support@optivec.com  or  sales@optivec.com
+                    http://www.optivec.com
+
+For the commercial version, please order by e-mail or through our web-site!
+See chapter 1.3 for details.
+
+*****************************************************************************
+
+!!     This is an ASCII text file!  It is best viewed with a simple        !!
+!!     DOS editor.                                                         !!
+!!     If you load this file into a word processor under Windows, you      !!
+!!     must use the filter "DOS text".                                     !!
+!!     Alternatively, you may use FCONVERT (shipped with Borland C++) to   !!
+!!     convert from ASCII (OEM) into the ANSI character set.               !!
+!!     preferably use the lettertype CourierNew 10 pt.                     !!
+
+                 **************************************
+   German-speaking users:
+       Um die Kosten fÅr das Herunterladen der Shareware-Version
+       Åber das Internet fÅr alle so gering wie mîglich zu halten,
+       enthÑlt diese nur die englische Dokumentation. Sie finden
+       die deutsche Beschreibung separat unter
+               http://www.optivec.com/download/CMDOCD.ZIP
+                 **************************************
+
+OptiCode (TM) and OptiVec (TM) are trademarks of Dr. Martin Sander
+Software Dev.  Other brand and product names mentioned in this handbook
+for identification purposes are trademarks or registered trademarks of
+their respective holders.
+
+
+****************************************************************************
+*                                                                          *
+*******                           Contents                           *******
+*                                                                          *
+****************************************************************************
+
+1. Introduction
+   1.1 What is CMATH ?
+   1.2 Licence Terms for the Shareware Version
+   1.3 Registered Versions
+
+2. Getting Started
+   2.1 Installation
+   2.2 De-Installation
+
+3. Overview over the Functions of CMATH
+   3.1 Initialization of Complex Numbers
+   3.2 Data-Type Interconversions
+   3.3 Basic Complex Operations
+   3.4 Arithmetic Operations
+   3.5 Mathematical Functions
+
+4. Error Handling
+   4.1 General Error Handling of Complex Functions
+   4.2 Advanced Error Handling: Writing Messages into a File
+
+5. Syntax Reference
+   5.1 C++ Version
+   5.2 Plain-C Version
+
+****************************************************************************
+*                                                                          *
+*******                       1. Introduction                        *******
+*                                                                          *
+*****************************************************************************
+
+
+1.1 What is CMATH ?
+-------------------
+
+CMATH is a comprehensive library for complex-number arithmetis and
+mathematics. It is primarily intended as a high-quality replacement for
+the C++ complex class libraries presently available. In addition,
+all functions may be called from C, without the necessity to use C++.
+Superior speed, accuracy and safety are achieved through the 
+implementation in Assembly language (as opposed to the compiled or 
+inline C++ code of the complex class libraries).
+Only for the most simple tasks, alternative inline C++ functions are used.
+
+The implementation was guided by the following rules:
+
+   1. Without any compromise, top priority is always given to the mathema-
+      tically correct result, with the accuracy demanded for the respective
+      data type. Especially for complex functions, this necessitates a
+      very thorough treatment of many different situations. To this end,
+      the various cases have to be distinguished with pedantic care.
+   2. Mathematical functions must be "safe" under all circumstances.
+      They may for no reason simply crash, but have to perform a decent
+      error treatment. This is true even - and perhaps especially - for
+      seemingly nonsense arguments, with the single exception of the
+      non-numbers INF and NAN, which occur themselves only as a result
+      of serious errors in other functions.
+   3. By all possible means, greatest execution speed must be attained.
+      (After all, you did not buy your fast computer for nothing!)
+   4. The program code has to be as compact as possible. However, in case
+      of conflicts, faster execution speed is always given priority
+      over smaller code size.
+
+Having a look into the complex class libraries shipped with popular compilers,
+you will immediately discover the differences between our approach and theirs.
+Often the mathematical functions are implemented by simply writing down the
+textbook formula. This yields relatively compact source code. But, due to
+round-off error of intermediate results, the final results returned by these
+functions are sometimes very inaccurate or even completely wrong. Moreover,
+they may lead to unhandled floating-point errors (this means: program crash!).
+Unnecessary to mention that the code thus generated is rather slow.
+
+For programmers who prefer classis C-style functions over C++, CMATH
+provides all complex-number operations and functions also for the language C.
+This is accomplished through an additional set of alternative declarations
+of the complex types as structs in place of classes.
+
+CMATH versions for Pascal and Delphi are also available. As far as possible,
+all functions have the same names in the Pascal/Delphi version as in the
+C version.
+The C++ classes and the C structs are binary compatible with each other.
+This point may become important for large projects with mixed C and C++
+modules.
+
+Existing Borland C++ code which uses the complex class library contained in
+<complex.h> can be left unchanged, because the CMATH functions and data
+types are also binary compatible with those of <complex.h>.
+Here is a detailed description of how to switch from the complex classes of
+Borland C++ to the new implementation given by CMATH:
+
+*  In C++ modules, replace the statement
+       #include <complex.h>
+   by the statement
+       #include <newcplx.h>
+   Then, the following three complex classes are defined:
+   class complex<float>,  class complex<double>,
+   and  class complex<extended>.
+
+   The data types fComplex, dComplex, and eComplex are defined as
+   synonyms for these classes.
+   In order to avoid the letter "L" (which is already over-used by
+   "long int" and "unsigned long" in the language C), the type
+   "extended" is used here as a synonym for "long double".
+   Consequently, the complex data type consisting of long doubles
+   is named "eComplex".
+   Thereby, the way is held open for a future inclusion of whole-
+   number complex types into CMATH. Then,"liComplex" and "ulComplex"
+   will denote the complex types consisting of "long int" or
+   "unsigned long" parts, respectively.
+
+*  If you prefer to have the "classic" class complex of older releases
+   of Borland C++, you have to declare
+       #define CMATH_CLASSIC_COMPLEX
+   before (!) including <newcplx.h>.
+   In this case, only the class complex will be defined and gets the synonym
+   dComplex. Here you will have no access to the complex-number functions of
+   float and of extended precision.
+
+*  For C modules, you cannot include <nexcplx.h>. Rather, please declare
+      #include <cmath.h>
+   If you are using only one level of floating-point precision, you may
+   wish to include only one of the type-specific include-files:
+   <cfmath.h>,  <cdmath.h>, or <cemath.h>, respectively.
+   The plain-C implementation of CMATH is based upon the following
+   definitions of the three complex data types:
+      typedef  struct { float     Re, Im; }  fComplex;
+      typedef  struct { double    Re, Im; }  dComplex;
+      typedef  struct { extended  Re, Im; }  eComplex;
+
+   As described above, the data type "extended" is used as a synonym for
+   "long double".
+
+*  In the C++ classes, the real and imaginary parts are declared as public
+   (in contrast to Borland C++ !) and named "Re" and "Im", respectively.
+   This allows to access them as "z.Re" and "z.Im"  in C++ modules as well
+   as in C modules.
+
+*  For time-critical applications, we recommend to use the C rather than
+   the C++ version of CMATH, as C/C++ compilers handle structs slightly
+   more efficiently than classes. To use the C version with your C++ modules,
+   please note the following points:
+   - include <cmath.h> instead of <newcplx.h>
+   - for initialization, assign the real and imaginary parts directly
+     (e.g., z.Re = 3; z.Im = 5; ) or use the functions fcplx, dcplx, ecplx;
+     the constructors complex(), fComplex(), etc. are not available.
+   - you can call CMATH functions either by their type-specific names
+     (like cf_sin, cd_exp) or by their overloaded C++ names (e.g., sin, exp);
+     on some occasions, you might be forced to use the type-specific names
+     in order to resolve ambiguities.
+
+This documentation describes the OptiVec implementations for
+
+- Borland C++ (Version 3.0 or higher, incl. Borland C++ Builder)
+  for DOS and Microsoft Windows 3.0 or later (or Win-OS sessions under
+  IBM OS/2 2.0 or later; in the following, we will simply speak
+  of "Windows"). The library for the memory model FLAT for Windows95/98 and
+  WindowsNT requires Borland C++, version 4.0 or higher.
+
+- Microsoft Visual C++ (Version 5.0 or higher)
+  for Windows95/98/NT on PC platforms.
+
+- Powersoft Optima++ (Version 1.5 or higher)
+  for Windows95/98/NT on PC platforms.
+
+Please note that only the documentation is valid for these different
+compilers. The libraries themselves are compiler-specific; each library
+can be used only with one compiler and, in the case of Borland C++,
+with one memory model.
+
+Borland C++ only:
+-----------------
+   Depending on your choice when ordering or downloading the Shareware
+   version,
+   you have got either of the following three library versions:
+   memory model FLAT for Windows95/NT,
+                LARGE for DOS, or
+                LARGE for Windows 3.x.
+   All of them require, at least, a 386 computer equipped with a 387
+   coprocessor. This means: no emulation, no 486SX, but preferably 486DX,
+   Pentium or higher.
+
+   The full (registered) version contains libraries for all memory models of
+   DOS, 16-bit Windows and 32-bit Windows. These libraries, in turn, are
+   shipped in three versions:
+   one for 486DX and Pentium computers, the second for 386 with 387,
+   the third for 286 with or without coprocessor, i.e. with emulation.
+
+Microsoft Visual C++ only:
+--------------------------
+   The Shareware version is for "single-thread debug" and for
+   "multi-thread debug". The full (registered) version for Microsoft
+   Visual C++ contains additional libraries for "multi-thread DLL",
+   single-thread and multi-thread release.
+
+
+Versions for other C compilers are in preparation.
+
+
+1.2 Licence Terms
+-----------------
+
+This is the English Shareware version of CMATH ("SOFTWARE").
+It may be used under the following licence terms:
+
+1. You may test the SOFTWARE free of charge for a period of up to 90 days
+   on one computer. This testing phase ends when you permanently integrate
+   functions of this SOFTWARE into any of your applications (programs,
+   program parts...).
+2. Applications, created with the Shareware version of this SOFTWARE, will
+   run only on the same computer on which this SOFTWARE has been installed.
+   They cannot and may not be distributed to others.
+3. If you want to continue using this SOFTWARE after testing, and/or
+   if you wish to distribute programs containing functions of this SOFTWARE,
+   you have to purchase the registered version (see chapter 1.3).
+4. This SOFTWARE is provided on an "as is" basis. Any explicit or implicit
+   warranties for the SOFTWARE are excluded.
+   Despite thorough testing of the SOFTWARE, errors and bugs cannot
+   be excluded with certainty. No claims as to merchantability or fitness
+   for a particular purpose are made.
+   You may not use the SOFTWARE in any environment or situation where
+   personal injury or excessive damage to anyone's property (including
+   your own) could arise from malfunctioning of the SOFTWARE.
+
+Copyright for the SOFTWARE and its documentation (C) 1996-2000 Martin Sander
+
+All rights reserved, including those of translation into foreign languages.
+
+Address of the author:
+              Dr. Martin Sander Software Development
+              Steinachstr. 9A
+              D-69198 Schriesheim
+              Germany
+              e-mail: MartinSander@optivec.com
+
+
+
+1.3 Registered Versions
+-----------------------
+
+In order to make this product affordable also for those who will not
+themselves make money using it, we offer an "educational edition" at a
+strongly reduced rate, in addition to the full "commercial edition".
+The contents of these two editions is identical. The only difference lies
+in the restrictions of use: The "educational edition" may not be used for
+commercial / business / government purposes, but is restricted to private
+and educational use.
+Purchasing the full (registered) version gives you the right to use it on
+as many computers at a time as the number of units you bought.
+The right to distribute applications employing functions of CMATH
+is included in the commercial-version licence. No run-time licence needed! 
+Corporate site and world-wide licences are available upon request.
+
+The full version (both the commercial and the educational editions)
+of CMATH for Borland C++ and of CMATH for Microsoft Visual C++
+
+-  support all memory models of Windows95/98, NT, 3.x, and DOS
+   (Borland C++)
+   or "single-thread", "multi-thread", "multi-thread DLL", both
+   debug and release  (Microsoft Visual C++)
+
+-  (Borland C++ only: )
+   have individually optimized libraries for each degree of processor
+   backward-compatibility:
+      486DX/Pentium+ (optimized for Pentium/PentiumPro)
+      386+ (387 coprocessor required)
+      286+ (no coprocessor required).
+
+-  come with printed documentation.
+
+-  entitle you to two years of free updates
+   (by downloading from our web site)
+
+-  can be ordered at the following conditions:
+
+   a) if you can pay in German Marks (or in Euro)
+      and order directly from the author, the price is
+      DM  59,- for  1 unit of the educational edition
+      DM  99,- for  1 unit of the commercial edition,
+      DM 350,- for  5 units,
+      DM 600,- for 10 units    (incl. 16% VAT, plus DM 10,- handling charge).
+      Please order by sending an e-mail to  sales@optivec.com
+      or use a print-out of the file ORDER.TXT.
+      Payment options:
+          - pre-paid by DM Eurocheque
+          - C.O.D. (Cash-On-Delivery)
+          - upon invoice (only within Germany, net 14 days)
+
+      If you have a European VAT ID, or if you order from outside the
+      European Union, you are exempt from the German VAT, but you may
+      have to pay your local VAT and/or import duties according to
+      local laws.
+
+   b) International credit card or US-$ cheque payment is possible by
+      ordering through the following web-sites:
+
+      Atlantic Coast's SoftShop:
+      http://www.swreg.org/soft_shop/47/
+
+      (this is the SoftShop sales page for all our products)
+
+          $  39 for  1 unit of the educational edition
+          $  60 for  1 unit of the commercial edition,
+          $ 200 for  5 units,
+          $ 350 for 10 units
+          Add $5 for shipping&handling and applicable VAT.
+
+
+      ShareIt:
+      CMATH for Borland C++:
+          http://www.shareit.com/programs/101353.htm
+      CMATH for Microsoft Visual C++:
+          http://www.shareit.com/programs/103422.htm
+
+          $ 44 per unit of the educational edition (including S&H)
+          $ 65 per unit of the commercial edition (including S&H).
+               Add applicable VAT.
+
+      You may also order by e-mail to register@shareit.com.
+      US customers can also call 1-800-903-4152 (only for orders, please).
+      US check and cash orders can be sent to ShareIt!'s US office at
+           ShareIt! Inc.
+           P.O. Box 97841 
+           Pittsburgh, PA 15227-0241
+           USA
+      * When ordering by e-mail, phone, or postal mail through ShareIt,  *
+      * please have the program number ready:                            *
+      * CMATH for Borland C++:    No. 101353                             *
+      *     dto., educational:    No. 102655                             *
+      * CMATH for MSVC:           No. 103422                             *
+      *     dto., educational:    No. 103441                             *
+
+1.3.1 Licence Terms for the Registered Version
+----------------------------------------------
+The following licence terms apply for the Registered version of either
+CMATH for Borland C++ or CMATH for Microsoft Visual C++:
+
+This is a single copy license for CMATH for C/C++ ("SOFTWARE")
+granted by Dr. Martin Sander Software Development.
+The SOFTWARE in this package is licensed to you as the user. It is not sold.
+Once you have paid the required license fee, you may use the SOFTWARE for as
+long as you like, provided you do not violate the copyright and if you
+observe the following rules:
+1. You may use the SOFTWARE on any computer for which it is designed as long
+   as not more than one person uses it at any time.
+2. You may make backup copies of the SOFTWARE for your personal use. You may
+   only transfer the SOFTWARE to somebody else if you transfer the original
+   and all copies, retaining no copies for yourself. You may not lease or
+   rent the SOFTWARE to others.
+3. You may not decompile, disassemble, or otherwise reverse engineer the
+   SOFTWARE into a machine-readable form. You may, however, inspect the
+   functions contained in this SOFTWARE by means of debuggers like those
+   included in Borland Pascal/Delphi.
+4. If you payed the reduced licence fee for the "educational version" rather
+   than the full rate for the "commercial version", the use of this SOFTWARE
+   is restricted to private and educational purposes. In this case, you may
+   not use the SOFTWARE for commercial purposes or for government purposes
+   other than education.
+   Applications using functions of this SOFTWARE may be freely distributed
+   (i.e. without any run-time licence) only if created with the
+   "commercial edition".
+5. You may not use the SOFTWARE in any environment or situation where
+   personal injury or excessive damage to anyone's property (including your
+   own) could arise from malfunctioning of the SOFTWARE.
+6. Martin Sander's liability is limited by the enclosed Limited Warranty.
+   In no case shall Martin Sander's liability exceed the license paid for
+   the right to use the SOFTWARE.
+
+
+Limited Warranty for the Registered version
+-------------------------------------------
+1. Martin Sander warrants that the magnetic or optic media on which the
+   SOFTWARE is recorded are free from defects in materials and workmanship
+   under normal use. The SOFTWARE itself will perform substantially in
+   accordance with the specifications set forth in the documentation.
+2. The above express warranties are made for a period of six months from
+   the date the SOFTWARE is delivered to you as the first user.
+3. Any magnetic/optic or printed media from this package proving defective
+   in materials or workmanship will be replaced on an exchange basis.
+4. Great care has been taken to ensure that the SOFTWARE operates in
+   accordance with the specifications as described in the documentation.
+   However, it is not guaranteed that this SOFTWARE will operate completely
+   free of errors or that the documentation is free of errors.
+5. Any implied warranties including any warranties of merchantability or of
+   fitness for a particular purpose are limited to the terms of the above
+   express warranties.
+7. Martin Sander shall not in any case be liable for special, incidental,
+   consequential, indirect or other damages arising from any breach of these
+   warranties or of the license conditions, even if he has been notified of
+   the possibility of such damages.
+
+Copyright for the SOFTWARE and its documentation (C) 1996-2000 Martin Sander
+
+
+
+****************************************************************************
+*                                                                          *
+*******                 2. Getting Started                           *******
+*                                                                          *
+****************************************************************************
+
+2.1 Installation
+----------------
+If you got CMATH as a part of OptiVec (a comprehensive library of
+vectorized functions by the same author), CMATH is automatically installed
+when you install OptiVec itself. In this case, installation of CMATH is
+already included and you should skip this chapter to continue with chapter 3.
+
+Otherwise, please note the following points:
+
+1.  In order to use CMATH, you need an already installed copy of your
+    C/C++ compiler. Install CMATH by executing INSTALL.EXE on the
+    installation disk.
+
+2.  Add the installation directory (which you chose during installation) to
+    the library search path and to the include-file search path of the IDE
+    and of the configuration file TURBOC.CFG, in case you are using the
+    command-line compiler of Borland C++.
+
+3.  Borland C++:
+      Choose the desired platform (DOS, Windows3.x, or Win32).
+      If you chose DOS or Windows3.x, select the memory model LARGE.
+      For Win32, it is automatically FLAT. Choose static linking.
+      You should also choose, at least, 386 code generation and real
+      coprocessor commands (i.e., no emulation).
+
+    Microsoft Visual C++:
+      Choose "single-thread debug" or "multi-thread debug".
+
+4.  Add the desired CMATH library to your project list.
+    Borland C++:
+        For DOS programs, this is the library CMATHL3.LIB,
+        for Windows3.x you need CMATHL3W.LIB,
+        for Win32, CMATHF3W.LIB.
+    Microsoft Visual C++:
+       The library needed is CMVCSD.LIB for single-thread debug,
+       or CMVCMTD.LIB for multi-thread debug.
+
+5.  In your C++ programs, declare 
+         #include <newcplx.h>
+    For C modules, declare:
+         #include <cmath.h>
+    If you are using ObjectWindows or MFC, <newcplx.h> or <cmath.h>
+    must be included after(!) the include files for OWL or MFC.
+
+6. Borland C++, 16-bit programs only:
+    *   If the linker option "process extended dictionaries" is available
+        in your version of Borland C++, you must switch it on.
+        Otherwise, you might get a "Table limit exceeded" linker error.
+
+    *   CMATH works with Borland (Turbo) C++, version 3.0 or higher. Since,
+        from version 4.0 on, Borland changed the name of the error handling
+        routine matherr (without underbar) into _matherr (with a leading
+        underbar), any 16-bit program using CMATH has to call a macro,
+        NEWMATHERR, which takes  care of redirecting calls to _matherr,
+        if necessary. You should place the call to NEWMATHERR into the
+        module containing  main() or OwlMain():
+
+             #include .....
+             #include <nexcplx.h>   /* or: #include <cmath.h> */
+             NEWMATHERR
+
+             int main( void )
+             {    ..........   }
+
+        If you forget to call NEWMATHERR, you will get a linker error
+        "Unresolved external _matherr" in the Borland C versions from 4.0 on.
+
+        Inclusion of the macro NEWMATHERR is not needed for 32-bit programs.
+
+After these preparations, all CMATH functions are available for your programs.
+
+
+2.2 De-Installation
+-------------------
+
+Should you wish to remove CMATH from your computer after testing, please
+run UNINSTAL.EXE, or simply delete the directory CMATH with its
+subdirectories.
+
+
+
+****************************************************************************
+*                                                                          *
+*******       3. Overview over the Functions of CMATH                *******
+*                                                                          *
+****************************************************************************
+
+For C++, all functions of CMATH are declared in <nexcplx.h>.
+For C, there are the following three include-files:
+<cfmath.h> declares all functions for single precision (data type fComplex),
+<cdmath.h> contains all double-precision functions (data type dComplex), and
+<cemath.h> lists all functions for extended precision (data type eComplex).
+The include-file <cmath.h> unites the three include-files just mentioned.
+
+In the following, it is often only the fComplex-version of a function that
+is explicitly mentioned. The versions for dComplex and eComplex are always
+exactly analogous.
+
+All functions for the language C have a prefix denoting the data type on
+which the function works:
+"cf_" stands for single precision (arguments and return values of the data
+      type fComplex, sometimes together with float),
+"cd_" stands for double precision (dComplex and double), whereas
+"ce_" denotes extended-precision functions.
+
+In C++, synonyms are defined for all these functions. The synonyms do not
+have a prefix, since the data type information is implicitly handled by the
+C++ compiler. The C++ function names are always identical to those found
+in the complex class libraries (if the respective function exists there).
+Of course, if you wish to use the C function names in your C++ modules,
+you can do so by including <cmath.h> instead of <newcplx.h>.
+
+
+3.1 Initialization of Complex Numbers
+-------------------------------------
+
+For C++ modules, there are several overloaded constructors:
+          fComplex fComplex( float RePart, float ImPart );
+          fComplex fComplex( float RePart );  // imaginary part always 0
+          fComplex fComplex( dComplex );
+          fComplex fComplex( eComplex );
+
+          The interconversion between the complex types of different
+          level of accuracy may, in the course of down-conversions,
+          lead to OVERFLOW errors. These are are caught and treated
+          via _matherr.
+          Similarly to the constructor fComplex(), also dComplex() and
+          eComplex() exist in overloaded versions performing the same
+          tasks for the classes dComplex and eComplex, respectively.
+
+Additionally, both in C++ and in plain-C modules, complex numbers may
+be initialized by separately assigning a value to the imaginary and
+real parts, e.g.:
+        z.Re = 3.0;   z.Im = 5.7;
+
+Alternatively, in plain-C modules, the same initialization can be
+accomplished by the function fcplx:
+	z = fcplx( 3.0, 5.7 );
+
+For double-precision complex numbers, use dcplx, for extended-precision
+complex numbers, use ecplx.
+
+Since overloading of functions and constructors is specific to C++ and
+not available in plain C, the interconversions between the various
+complex types are performed via the functions
+cftocd,  cdtocf,  cftoce,  cetocf,  cdtoce,  and cetocd.
+As described above, OVERFLOW errors in the course of down-conversions
+are caught and treated via _matherr.
+
+3.2 Basic Complex Operations
+----------------------------
+
+The following basic complex operations are defined in CMATH:
+
+C function  C++ synonym
+cf_conj     conj          complex-conjugate form,
+cf_neg      neg  (or -)   negation,
+cf_real     real          extraction of the real part,
+cf_imag     imag          extraction of the imaginary part,
+cf_polar    polar         conversion of polar coordinates into the "normal",
+                          Cartesian complex format
+cf_abs      abs           absolute value (magnitude of the pointer in the
+                          complex plane; this is treated as a math function
+                          with error handling),
+cf_arg      arg           argument (angle of the pointer in the complex
+                          plane),
+cf_norm     norm          norm (defined here as the square of the absolute
+                          value)
+
+(The cd_ and ce_ versions are exactly analogous to the cf_ version)
+
+
+3.3 Arithmetic Operations
+-------------------------
+
+Only C++: The following set of operators is available for all of
+          the three complex classes:
+          +  -  *  /  +=  -=  *=  /=   ==   !=
+          These operators exist also for "mixed" arguments,
+          where one argument is complex, the other real and
+          where the arguments are of different floating-point
+          accuracies.
+
+Since it is only the language C++, but not C, which allows to overload
+the arithmetic operators, all arithmetic operations of complex
+numbers are implemented in a different way for C modules. Here, we
+have the functions
+
+cf_add        addition of two complex numbers
+cf_addRe      addition of a complex number and a real number
+cf_sub        subtraction of two complex numbers (first operand
+              minus the second operand)
+cf_subRe      subtraction of a real number from a complex number
+cf_subrRe     subtraction of a complex number from a real number
+cf_mul        multiplication of two complex numbers
+cf_mulRe      multiplication of a complex number and a real number
+cf_div        division of two complex numbers (first operand
+              divided by the second operand)
+cf_divRe      division of a complex number by a real number
+cf_divrRe     division of a real number by a complex number
+
+(similarly the cd_ and ce_ versions)
+
+The equality operator "=" is the only operator defined also in C for
+complex numbers.
+
+
+3.4 Mathematical Functions
+--------------------------
+
+CMATH contains all mathematical functions you would find in the complex
+class libraries, along with several additional ones:
+
+C function   C++ synonym
+cf_abs       abs            ry = | zx |          absolute value
+cf_acos      acos           zy = acos( zx )      arcus cosine function
+cf_asin      asin           zy = asin( zx )      arcus sine function
+cf_atan      atan           zy = atan( zx )      arcus tangent function
+cf_cos       cos            zy = cos( zx )       cosine
+cf_cosh      cosh           zy = cosh( zx )      hyperbolic cosine
+cf_cubic     cubic          zy = zx**3           third power
+cf_exp       exp            zy = exp( zx )       exponential function
+cf_inv       inv            zy = 1.0 / zx        inverse
+cf_ipow      ipow           zy = zx**n           integer power
+cf_ln        ln             zy = ln( zx )        natural logarithm
+cf_log       log            zy = ln( zx )        identical to cf_ln, ln
+cf_log2      log2           zy = lb( zx )        binary logarithm
+cf_log10     log10          zy = lg( zx )        decadic logarithm
+cf_pow       pow            zy = zx**zexp        arbitrary power
+cf_powReBase pow, powReBase zy = r**zx           real base to complex power
+cf_powReExpo pow, powReExpo zy = zx**r           real power of complex base
+cf_quartic   quartic        zy = zx**4           fourth power
+cf_sin       sin            zy = sin( zx )       sine
+cf_sinh      sinh           zy = sinh( zx )      hyperbolic sine
+cf_square    square         zy = zx˝             square
+cf_sqrt      sqrt           zy = sqrt( zx )      square root
+cf_tan       tan            zy = tan( zx )       tangent
+cf_tanh      tanh           zy = tanh( zx )      hyperbolic tangent
+
+(similarly the cd_ and ce_ versions)
+
+
+****************************************************************************
+*                                                                          *
+*******                      4. Error Handling                       *******
+*                                                                          *
+*****************************************************************************
+
+4.1 General Error Handling of Complex Functions
+-----------------------------------------------
+
+The error handling of complex functions follows the rules employed also
+for real-number functions and operations. For all arithmetic operations,
+the design of the algorithms eliminates the danger of failure due to
+irregular intermediate results. Overflowing or otherwise irregular
+final results, however, will lead to a hardware interrupt being generated
+and, as a consequence, to a program abort.
+
+In contrast to the arithmetic operations, all mathematical functions and
+all data-type interconversions perform a tight error checking and treat
+any detected error conditions via _matherr (for fComplex and dComplex
+functions) and _matherrl (for eComplex functions). All error messages
+eventually generated use the C name (and not the C++ synonym) of the
+failing function.
+
+16-bit programs only:
+   As mentioned already in chapter 2, Borland has changed the name of the
+   error-handling function "matherr" (without leading underbar), used in
+   the versions 3.x, into "_matherr" (with a leading underbar), from
+   version 4.0 on.
+   In order to make CMATH compatible with both the older and the later
+   versions of Borland C++, the following way of error handling was adopted:
+   In case of an error, all CMATH functions call primarily matherr (as in the
+   older versions of Borland C++). A macro NEWMATHERR provides for the
+   necessary redirection of these calls to _matherr, if a later version of
+   Borland C++ is used. Therefore, NEWMATHERR must be called once (!) in any
+   program using CMATH, after the inclusion of <cmath.h>. The best place
+   is the module containing the main(), WinMain(), or OWLMain() function:
+
+       #include <cmath.h>
+       #include ...
+       NEWMATHERR
+         ......
+       main()
+       { ... }
+
+
+If you use CMATH as a part of OptiVec, consult also chapter 5 of
+HANDBOOK.TXT for further information on floating-point error handling.
+If you use CMATH separately from OptiVec, you should at least know
+about some advanced error handling features, borrowed from VectorLib and
+described in the following chapter.
+
+
+4.2 Advanced Error Handling: Writing Messages into a File
+---------------------------------------------------------
+
+ANSI C provides the user-definable function perror to print error messages.
+However, several compilers, including Borland C++, do not use perror for
+this purpose. This means that the way error messages are printed is not
+controllable by the programmer. While this is fine in most instances, there
+may be situations in which you might, for example, wish the error messages
+not to be printed to the screen, but rather into a file, so that you could
+check later what has gone wrong. If you use Borland C++ for Windows, an
+additional motivation could come from the fact that, for any error, a
+message box is displayed and program execution interrupted until you
+acknowledge having taken notice of the error.
+
+You might wish to circumvent this. To this end, CMATH borrows from OptiVec
+the function  V_setErrorEventFile. This function needs as arguments the
+desired name of your event file and a switch named ScreenAndFile which
+decides if the error message is printed only into the file, or additionally
+to the screen as well.
+Example:     V_setErrorEventFile( "MyErrors.LOG", 1 );
+
+Note that this redirection of error messages is valid only for errors
+occurring in CMATH (and, of course, VectorLib) routines. If you care to
+do so, however, there is a way to extend the redirection also to
+"non-CMATH/VectorLib" functions:  you may modify  _matherr and _matherrl
+so that the statement
+    return 0;
+(which signals an unresolved error)  is replaced by the sequence
+    V_noteError( e->name, e->type ); return 1;
+
+Thereby the task of printing the error message for unresolved errors is
+passed to V_noteError. Keep in mind that it is the return value of _matherr
+which decides if an error message is printed by the default error handler
+of Borland C/C++. Thus, after the call to V_noteError, the printing of the
+default error messages is by-passed by returning "1". (Also, do not forget
+that it is your(!) _matherr routine which determines which errors you accept
+and which not.)
+
+For example, your _matherr function (matherr - without the leading underbar
+- for Borland C++ 3.0 and 3.1) might look like the following one:
+
+    #include <math.h>
+    int  _matherr( struct exception *e)
+    {
+        if( (e->type == UNDERFLOW) ≥≥ (e->type == TLOSS) )  /* ignore */ ;
+        else   /* all other errors deserve at least notice */
+        {
+              V_noteError( e->name, e->type );
+              if (e->type == DOMAIN) exit(1); /* really fatal */
+        }
+        return 1;
+    }
+
+(Of course, if you decide to change _matherr, do not forget to change
+_matherrl in the same way!).
+
+The default printing of error messages on the screen alone is restored by
+V_closeErrorEventFile().
+
+
+****************************************************************************
+*                                                                          *
+*******               5. Syntax Reference                            *******
+*                                                                          *
+****************************************************************************
+
+In the following, the syntax of all CMATH functions of float / fComplex
+accuracy is given. The syntax of the functions for double and extended
+precisions is exactly analogous.
+If you chose the "classic" class complex, this is also similar.
+Just replace "float" by "double" and "fComplex" by "complex".
+(Of course, the type-casting operators and the interconversion functions
+do not exist if there is only one type.)
+
+5.1 C++ Version
+---------------
+At this place, the syntax is given in a simplified form (just what you need
+to know in order to use these functions). For details of the declaration,
+see the class complex<float> in <nexcplx.h>.
+The arithmetic operators are not listed; their use is identical to the use
+of the real-number operators; suffice it to say they are all available.
+
+    float     abs( fComplex _z );
+    fComplex  acos( fComplex _z );
+    float     arg( fComplex _z );
+    fComplex  asin( fComplex _z );
+    fComplex  atan( fComplex _z );
+    fComplex  cdtocf( dComplex cd );
+    fComplex  cetocf( eComplex ce );
+    fComplex  conj( fComplex _z );
+    fComplex  cos( fComplex _z );
+    fComplex  cosh( fComplex _z );
+    fComplex  cubic( fComplex _z ); 
+    fComplex  exp( fComplex _z );
+    fComplex  fComplex( float Re_part, float Im_part );
+    fComplex  fComplex( float Re_part );  // constructors
+    fComplex  fComplex( dComplex cd );
+    fComplex  fComplex( eComplex ce );   // type-casting constructors
+    float     imag();   // to be used as   zim = z.imag();
+    float     imag( fComplex _z );
+    fComplex  inv( fComplex _z );   
+    fComplex  ipow( fComplex __base, int __expon ); 
+    fComplex  ln( fComplex _z );
+    fComplex  log( fComplex _z ); 
+    fComplex  log2( fComplex _z );
+    fComplex  log10( fComplex _z );
+    fComplex  neg( fComplex _z );
+    float     norm( fComplex _z );
+    fComplex  polar( float _mag, float _angle=0 );
+    fComplex  pow( fComplex __base, float __expon );
+    fComplex  powReExpo( fComplex __base, float __expon );
+    fComplex  pow( float __base, fComplex __expon);
+    fComplex  powReBase( float __base, fComplex __expon );
+    fComplex  pow( fComplex __base, fComplex __expon);
+    fComplex  quartic( fComplex _z ); 
+    float     z.real();     // to be used as    zre = z.real();
+    float     real( fComplex _z );
+    fComplex  sin( fComplex _z );
+    fComplex  sinh( fComplex _z );
+    fComplex  sqrt( fComplex _z );
+    fComplex  square( fComplex _z );
+    fComplex  tan( fComplex _z );
+    fComplex  tanh( fComplex _z );
+    
+
+5.2 Syntax Reference for the Plain-C Version.
+Again, the syntax is given in a simplified form here. For details of
+the declaration, see <cfmath.h>.
+The prefix cf_ denotes the accuracy level "float / fComplex".
+For the functions of double/dComplex and extended/eComplex precisions,
+the prefixes are cd_ and ce_, respectively.
+Since overloaded operators are specific to C++, only the operator "="
+exists for plain C.
+
+    float     cf_abs(  fComplex __z );
+    fComplex  cf_acos( fComplex __z );
+    fComplex  cf_add(   fComplex __x, fComplex __y );
+    fComplex  cf_addRe( fComplex __x, float __yRe );
+    float     cf_arg(  fComplex __z );
+    fComplex  cf_asin( fComplex __z );
+    fComplex  cf_atan( fComplex __z );
+    fComplex     cdtocf( dComplex __zd );
+    fComplex     cetocf( eComplex __ze );
+    fComplex  cf_conj( fComplex __z );
+    fComplex  cf_cos(  fComplex __z );
+    fComplex  cf_cosh( fComplex __z );
+    fComplex  cf_cubic( fComplex __z );
+    fComplex  cf_div(   fComplex __x, fComplex __y );
+    fComplex  cf_divRe( fComplex __x, float __yRe );   /*  x / yRe  */
+    fComplex  cf_divrRe( fComplex __x, float __yRe );  /*  yRe / x  */
+    fComplex  cf_exp(  fComplex __z );
+    fComplex  fcplx( float __ReVal, float __ImVal);
+    float     cf_imag( fComplex z );
+    fComplex  cf_inv(  fComplex __z );    /*   1.0 / z   */
+    fComplex  cf_ipow( fComplex __z, int __exponent );
+    fComplex  cf_ln(    fComplex __z );
+    fComplex  cf_log(   fComplex __z ); 
+    fComplex  cf_log2(  fComplex __z );
+    fComplex  cf_log10( fComplex __z );
+    fComplex  cf_mul(   fComplex __x, fComplex __y );
+    fComplex  cf_mulRe( fComplex __x, float __yRe );
+    fComplex  cf_neg(  fComplex __z );
+    float     cf_norm( fComplex __z );
+    fComplex  cf_polar( float __mag, float __angle );
+    fComplex  cf_pow( fComplex __base, fComplex __exponent );
+    fComplex  cf_powReBase( float __base, fComplex __exponent ); 
+    fComplex  cf_powReExpo( fComplex __base, float __exponent );
+    fComplex  cf_quartic( fComplex __z );  
+    float     cf_real( fComplex z );
+    fComplex  cf_sin(  fComplex __z );
+    fComplex  cf_sinh( fComplex __z );
+    fComplex  cf_square( fComplex __z );
+    fComplex  cf_sqrt( fComplex __z );
+    fComplex  cf_sub(   fComplex __x, fComplex __y );
+    fComplex  cf_subRe( fComplex __x, float __yRe );  /* x - yRe */
+    fComplex  cf_subrRe( fComplex __x, float __yRe ); /* yRe - x */
+    fComplex  cf_tan(  fComplex __z );
+    fComplex  cf_tanh( fComplex __z );
+
+
+*****************************************************************************
+
+Although CMATH underwent thorough testing, there is always a possibility
+that a problem might have escaped our attention. Should you feel you dis-
+covered a "bug", please kindly try to specify the conditions under which
+you observed the problem as exactly as possible. Please let the author
+know what you have found!
+e-mail:  MartinSander@optivec.com
+
+Copyright (C) Martin Sander 1996-2000
+
+*****************************************************************************
+

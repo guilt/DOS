@@ -1,0 +1,31 @@
+#
+#  Table to map libraries long file name to short file names.
+#  The entry is:
+#    LFN   SFN
+#  The library name is the name stripped from its directory name,
+#  stripped from its "lib" prefix and its ".a" suffix.
+#
+#
+#  E.g.: for the library
+#
+#    /dev/env/DJDIR/lib/foobar-1.2.3/libverylongname-1.2.3.a
+#
+#  the mapping entry will look like this:
+#
+#    verylongname-1.2.3   vln123
+#
+
+
+#  LFN           SFN
+
+#  Map for GNU gettext libraries.
+gettextlib     gtxtlib
+gettextpo      gtxtpo
+gettextsrc     gtxtsrc
+
+
+#  Map for perl compatible regular expressions libraries with API 2 (aka PCRE2).
+pcre2-8        pcr28
+pcre2-16       pcr216
+pcre2-32       pcr232
+pcre2-posix    pcr2posix

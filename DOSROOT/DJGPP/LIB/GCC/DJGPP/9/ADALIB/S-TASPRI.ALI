@@ -1,0 +1,42 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.task_primitives%s  s-taspri.ads	4ed7a2e0 NE OL PR PK
+W system%s		system.ads		system.ali
+
+D system.ads		20190108125404 27426ea2 system%s
+D s-taspri.ads		20190108125404 6995cc42 system.task_primitives%s
+X 1 system.ads
+37K9*System 148e11 2|38r9 55r28 62r5
+67M9*Address 2|55r35
+X 2 s-taspri.ads
+38K16*Task_Primitives 1|37k9 2|62l12 62e27
+41I9*Lock<integer>
+43I9*RTS_Lock<integer> 52r24
+45I9*Suspension_Object<integer>
+47P9*Task_Body_Access
+49R9*Private_Data 53e14
+50i7*Thread{integer}
+51i7*CV{integer}
+52i7*L{43I9}
+55M12*Task_Address{1|67M9}
+56N4*Task_Address_Size
+59N4*Alternate_Stack_Size
+

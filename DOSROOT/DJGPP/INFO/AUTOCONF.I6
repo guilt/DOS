@@ -1,0 +1,254 @@
+This is Info file autoconf.info, produced by Makeinfo version 1.68 from
+the input file autoconf.tex.
+
+START-INFO-DIR-ENTRY
+* Autoconf: (autoconf).         Create source code configuration scripts.
+END-INFO-DIR-ENTRY
+
+   Autoconf: Creating Automatic Configuration Scripts, by David
+MacKenzie.
+
+   This file documents the GNU Autoconf package for creating scripts to
+configure source code packages using templates and an `m4' macro
+package.
+
+   Copyright (C) 1992, 1993, 1994, 1995, 1996, 1998 Free Software
+Foundation, Inc.
+
+   Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+   Permission is granted to copy and distribute modified versions of
+this manual under the conditions for verbatim copying, provided that
+the entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
+
+   Permission is granted to copy and distribute translations of this
+manual into another language, under the above conditions for modified
+versions, except that this permission notice may be stated in a
+translation approved by the Foundation.
+
+
+File: autoconf.info,  Node: Macro Index,  Prev: Preprocessor Symbol Index,  Up: Top
+
+Macro Index
+***********
+
+   This is an alphabetical list of the Autoconf macros.  To make the
+list easier to use, the macros are listed without their preceding `AC_'.
+
+* Menu:
+
+* AIX:                                   UNIX Variants.
+* ALLOCA:                                Old Macro Names.
+* ARG_ARRAY:                             Old Macro Names.
+* ARG_ENABLE:                            Package Options.
+* ARG_PROGRAM:                           Transforming Names.
+* ARG_WITH:                              External Software.
+* BEFORE:                                Suggested Ordering.
+* C_BIGENDIAN:                           C Compiler Characteristics.
+* C_CHAR_UNSIGNED:                       C Compiler Characteristics.
+* C_CONST:                               C Compiler Characteristics.
+* C_CROSS:                               Test Programs.
+* C_INLINE:                              C Compiler Characteristics.
+* C_LONG_DOUBLE:                         C Compiler Characteristics.
+* C_STRINGIZE:                           C Compiler Characteristics.
+* CACHE_CHECK:                           Caching Results.
+* CACHE_LOAD:                            Caching Results.
+* CACHE_SAVE:                            Caching Results.
+* CACHE_VAL:                             Caching Results.
+* CANONICAL_HOST:                        Canonicalizing.
+* CANONICAL_SYSTEM:                      Canonicalizing.
+* CHAR_UNSIGNED:                         Old Macro Names.
+* CHECK_FILE:                            Generic Programs.
+* CHECK_FILES:                           Generic Programs.
+* CHECK_FUNC:                            Generic Functions.
+* CHECK_FUNCS:                           Generic Functions.
+* CHECK_HEADER:                          Generic Headers.
+* CHECK_HEADERS:                         Generic Headers.
+* CHECK_LIB:                             Libraries.
+* CHECK_PROG:                            Generic Programs.
+* CHECK_PROGS:                           Generic Programs.
+* CHECK_SIZEOF:                          C Compiler Characteristics.
+* CHECK_TOOL:                            Generic Programs.
+* CHECK_TYPE:                            Generic Typedefs.
+* CHECKING:                              Printing Messages.
+* COMPILE_CHECK:                         Examining Libraries.
+* CONFIG_AUX_DIR:                        Input.
+* CONFIG_HEADER:                         Configuration Headers.
+* CONFIG_SUBDIRS:                        Subdirectories.
+* CONST:                                 Old Macro Names.
+* CROSS_CHECK:                           Old Macro Names.
+* CYGWIN:                                System Services.
+* DECL_SYS_SIGLIST:                      Particular Headers.
+* DECL_YYTEXT:                           Particular Programs.
+* DEFINE:                                Defining Symbols.
+* DEFINE_UNQUOTED:                       Defining Symbols.
+* DEFUN:                                 Macro Definitions.
+* DIR_HEADER:                            Particular Headers.
+* DYNIX_SEQ:                             UNIX Variants.
+* EGREP_CPP:                             Examining Declarations.
+* EGREP_HEADER:                          Examining Declarations.
+* ENABLE:                                Package Options.
+* ERROR:                                 Old Macro Names.
+* EXEEXT:                                System Services.
+* F77_LIBRARY_LDFLAGS:                   Fortran 77 Compiler Characteristics.
+* FIND_X:                                Old Macro Names.
+* FIND_XTRA:                             Old Macro Names.
+* FUNC_ALLOCA:                           Particular Functions.
+* FUNC_CHECK:                            Old Macro Names.
+* FUNC_CLOSEDIR_VOID:                    Particular Functions.
+* FUNC_FNMATCH:                          Particular Functions.
+* FUNC_GETLOADAVG:                       Particular Functions.
+* FUNC_GETMNTENT:                        Particular Functions.
+* FUNC_GETPGRP:                          Particular Functions.
+* FUNC_MEMCMP:                           Particular Functions.
+* FUNC_MMAP:                             Particular Functions.
+* FUNC_SELECT_ARGTYPES:                  Particular Functions.
+* FUNC_SETPGRP:                          Particular Functions.
+* FUNC_SETVBUF_REVERSED:                 Particular Functions.
+* FUNC_STRCOLL:                          Particular Functions.
+* FUNC_STRFTIME:                         Particular Functions.
+* FUNC_UTIME_NULL:                       Particular Functions.
+* FUNC_VFORK:                            Particular Functions.
+* FUNC_VPRINTF:                          Particular Functions.
+* FUNC_WAIT3:                            Particular Functions.
+* GCC_TRADITIONAL:                       Old Macro Names.
+* GETGROUPS_T:                           Old Macro Names.
+* GETLOADAVG:                            Old Macro Names.
+* HAVE_FUNCS:                            Old Macro Names.
+* HAVE_HEADERS:                          Old Macro Names.
+* HAVE_LIBRARY:                          Libraries.
+* HAVE_POUNDBANG:                        Old Macro Names.
+* HEADER_CHECK:                          Old Macro Names.
+* HEADER_DIRENT:                         Particular Headers.
+* HEADER_EGREP:                          Old Macro Names.
+* HEADER_MAJOR:                          Particular Headers.
+* HEADER_STAT:                           Structures.
+* HEADER_STDC:                           Particular Headers.
+* HEADER_SYS_WAIT:                       Particular Headers.
+* HEADER_TIME:                           Structures.
+* INIT:                                  Input.
+* INLINE:                                Old Macro Names.
+* INT_16_BITS:                           C Compiler Characteristics.
+* IRIX_SUN:                              UNIX Variants.
+* ISC_POSIX:                             UNIX Variants.
+* LANG_C:                                Language Choice.
+* LANG_CPLUSPLUS:                        Language Choice.
+* LANG_FORTRAN77:                        Language Choice.
+* LANG_RESTORE:                          Language Choice.
+* LANG_SAVE:                             Language Choice.
+* LINK_FILES:                            Using System Type.
+* LN_S:                                  Old Macro Names.
+* LONG_64_BITS:                          C Compiler Characteristics.
+* LONG_DOUBLE:                           Old Macro Names.
+* LONG_FILE_NAMES:                       Old Macro Names.
+* MAJOR_HEADER:                          Old Macro Names.
+* MEMORY_H:                              Particular Headers.
+* MINGW32:                               System Services.
+* MINIX:                                 UNIX Variants.
+* MINUS_C_MINUS_O:                       Old Macro Names.
+* MMAP:                                  Old Macro Names.
+* MODE_T:                                Old Macro Names.
+* MSG_CHECKING:                          Printing Messages.
+* MSG_ERROR:                             Printing Messages.
+* MSG_RESULT:                            Printing Messages.
+* MSG_WARN:                              Printing Messages.
+* OBJEXT:                                System Services.
+* OBSOLETE:                              Obsolete Macros.
+* OFF_T:                                 Old Macro Names.
+* OUTPUT:                                Output.
+* PATH_PROG:                             Generic Programs.
+* PATH_PROGS:                            Generic Programs.
+* PATH_X:                                System Services.
+* PATH_XTRA:                             System Services.
+* PID_T:                                 Old Macro Names.
+* PREFIX:                                Old Macro Names.
+* PREFIX_PROGRAM:                        Default Prefix.
+* PREREQ:                                Versions.
+* PROG_AWK:                              Particular Programs.
+* PROG_CC:                               Particular Programs.
+* PROG_CC_C_O:                           Particular Programs.
+* PROG_CPP:                              Particular Programs.
+* PROG_CXX:                              Particular Programs.
+* PROG_CXXCPP:                           Particular Programs.
+* PROG_F77_C_O:                          Particular Programs.
+* PROG_FORTRAN:                          Particular Programs.
+* PROG_GCC_TRADITIONAL:                  Particular Programs.
+* PROG_INSTALL:                          Particular Programs.
+* PROG_LEX:                              Particular Programs.
+* PROG_LN_S:                             Particular Programs.
+* PROG_MAKE_SET:                         Output.
+* PROG_RANLIB:                           Particular Programs.
+* PROG_YACC:                             Particular Programs.
+* PROGRAM_CHECK:                         Old Macro Names.
+* PROGRAM_EGREP:                         Old Macro Names.
+* PROGRAM_PATH:                          Old Macro Names.
+* PROGRAMS_CHECK:                        Old Macro Names.
+* PROGRAMS_PATH:                         Old Macro Names.
+* PROVIDE:                               Prerequisite Macros.
+* REMOTE_TAPE:                           Old Macro Names.
+* REPLACE_FUNCS:                         Generic Functions.
+* REQUIRE:                               Prerequisite Macros.
+* REQUIRE_CPP:                           Language Choice.
+* RESTARTABLE_SYSCALLS:                  Old Macro Names.
+* RETSIGTYPE:                            Old Macro Names.
+* REVISION:                              Versions.
+* RSH:                                   Old Macro Names.
+* SCO_INTL:                              UNIX Variants.
+* SEARCH_LIBS:                           Libraries.
+* SET_MAKE:                              Old Macro Names.
+* SETVBUF_REVERSED:                      Old Macro Names.
+* SIZE_T:                                Old Macro Names.
+* SIZEOF_TYPE:                           Old Macro Names.
+* ST_BLKSIZE:                            Old Macro Names.
+* ST_BLOCKS:                             Old Macro Names.
+* ST_RDEV:                               Old Macro Names.
+* STAT_MACROS_BROKEN <1>:                Structures.
+* STAT_MACROS_BROKEN:                    Old Macro Names.
+* STDC_HEADERS:                          Old Macro Names.
+* STRCOLL:                               Old Macro Names.
+* STRUCT_ST_BLKSIZE:                     Structures.
+* STRUCT_ST_BLOCKS:                      Structures.
+* STRUCT_ST_RDEV:                        Structures.
+* STRUCT_TIMEZONE:                       Structures.
+* STRUCT_TM:                             Structures.
+* SUBST:                                 Setting Output Variables.
+* SUBST_FILE:                            Setting Output Variables.
+* SYS_INTERPRETER:                       System Services.
+* SYS_LONG_FILE_NAMES:                   System Services.
+* SYS_RESTARTABLE_SYSCALLS:              System Services.
+* SYS_SIGLIST_DECLARED:                  Old Macro Names.
+* TEST_CPP:                              Old Macro Names.
+* TEST_PROGRAM:                          Old Macro Names.
+* TIME_WITH_SYS_TIME:                    Old Macro Names.
+* TIMEZONE:                              Old Macro Names.
+* TRY_COMPILE:                           Examining Syntax.
+* TRY_CPP:                               Examining Declarations.
+* TRY_LINK:                              Examining Libraries.
+* TRY_LINK_FUNC:                         Examining Libraries.
+* TRY_RUN:                               Test Programs.
+* TYPE_GETGROUPS:                        Particular Typedefs.
+* TYPE_MODE_T:                           Particular Typedefs.
+* TYPE_OFF_T:                            Particular Typedefs.
+* TYPE_PID_T:                            Particular Typedefs.
+* TYPE_SIGNAL:                           Particular Typedefs.
+* TYPE_SIZE_T:                           Particular Typedefs.
+* TYPE_UID_T:                            Particular Typedefs.
+* UID_T:                                 Old Macro Names.
+* UNISTD_H:                              Particular Headers.
+* USG:                                   Particular Headers.
+* UTIME_NULL:                            Old Macro Names.
+* VALIDATE_CACHED_SYSTEM_TUPLE:          Canonicalizing.
+* VERBOSE:                               Printing Messages.
+* VFORK:                                 Old Macro Names.
+* VPRINTF:                               Old Macro Names.
+* WAIT3:                                 Old Macro Names.
+* WARN:                                  Old Macro Names.
+* WITH:                                  External Software.
+* WORDS_BIGENDIAN:                       Old Macro Names.
+* XENIX_DIR:                             UNIX Variants.
+* YYTEXT_POINTER:                        Old Macro Names.
+
+

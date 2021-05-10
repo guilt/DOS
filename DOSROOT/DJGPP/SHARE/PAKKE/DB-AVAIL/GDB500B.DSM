@@ -1,0 +1,62 @@
+#
+# DSM for GDB 5.0 binaries
+# Written by Eli Zaretskii <eliz@is.elta.co.il> 2000-11-10
+# Some updates by Richard Dawe <rich@phekda.freeserve.co.uk>
+#
+
+dsm-file-version: 1.4
+dsm-name: gdb500b
+dsm-version: 0.5.1
+dsm-type: binaries
+
+dsm-author: Eli Zaretskii
+dsm-author-email: eliz@is.elta.co.il
+
+name: GDB
+version: 5.0
+manifest: gdb500b
+sources-dsm: gdb500s
+short-description: GNU debugger version 5.0
+long-description: GDB is a source-level debugger for DJGPP programs
+license: GNU GPL
+author: Richard Stallman
+# This is the current maintainer.
+maintainer: Andrew Cagney
+maintainer-email: ac131313@cygnus.com
+# For reporting bugs
+mailing-list: bug-gdb@gnu.org
+# For getting help in using GDB
+mailing-list: gdb@sourceware.cygnus.com
+# For discussing DJGPP- and DOS/Windows-specific aspects
+mailing-list: djgpp@delorie.com
+newsgroup: comp.os.msdos.djgpp
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: gdb500b.zip
+changelog: gnu/gdb-5.0/gdb/NEWS
+
+pre-install-readme: gnu/gdb-5.0/gdb/config/djgpp/README
+
+requires: DPMI
+replaces: GDB < 5.0
+# On systems without an FPU, GDB needs an emulator
+depends-on: djdev
+# For reading docs
+depends-on: info-reader
+
+# This updates the info/DIR main menu
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/info/gdb.info
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/info/bfd.info
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/info/gdbint.info
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/info/stabs.info
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/info/mmalloc.info
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/info/standards.info

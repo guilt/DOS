@@ -1,0 +1,198 @@
+
+
+
+OD(1)                          FSF                          OD(1)
+
+
+NNAAMMEE
+       od - dump files in octal and other formats
+
+SSYYNNOOPPSSIISS
+       oodd [_O_P_T_I_O_N]... [_F_I_L_E]...
+       oodd _-_-_t_r_a_d_i_t_i_o_n_a_l [_F_I_L_E] [[_+]_O_F_F_S_E_T [[_+]_L_A_B_E_L]]
+
+DDEESSCCRRIIPPTTIIOONN
+       Write   an  unambiguous  representation,  octal  bytes  by
+       default, of FILE to standard output.   With  no  FILE,  or
+       when FILE is -, read standard input.
+
+       --AA, ----aaddddrreessss--rraaddiixx=_R_A_D_I_X
+              decide how file offsets are printed
+
+       --jj, ----sskkiipp--bbyytteess=_B_Y_T_E_S
+              skip BYTES input bytes first on each file
+
+       --NN, ----rreeaadd--bbyytteess=_B_Y_T_E_S
+              limit dump to BYTES input bytes per file
+
+       --ss, ----ssttrriinnggss[=_B_Y_T_E_S]
+              output strings of at least BYTES graphic chars
+
+       --tt, ----ffoorrmmaatt=_T_Y_P_E
+              select output format or formats
+
+       --vv, ----oouuttppuutt--dduupplliiccaatteess
+              do not use * to mark line suppression
+
+       --ww, ----wwiiddtthh[=_B_Y_T_E_S]
+              output BYTES bytes per output line
+
+       ----ttrraaddiittiioonnaall
+              accept arguments in pre-POSIX form
+
+       ----hheellpp display this help and exit
+
+       ----vveerrssiioonn
+              output version information and exit
+
+   PPrree--PPOOSSIIXX  ffoorrmmaatt ssppeecciiffiiccaattiioonnss mmaayy bbee iinntteerrmmiixxeedd,, tthheeyy aaccccuu--
+       mmuullaattee::
+       --aa     same as --tt a,  select named characters
+
+       --bb     same as --tt oC, select octal bytes
+
+       --cc     same as --tt c,  select ASCII characters or backslash
+              escapes
+
+       --dd     same as --tt u2, select unsigned decimal shorts
+
+       --ff     same as --tt fF, select floats
+
+
+
+
+GNU textutils 2.0          August 1999                          1
+
+
+
+
+
+OD(1)                          FSF                          OD(1)
+
+
+       --hh     same as --tt x2, select hexadecimal shorts
+
+       --ii     same as --tt d2, select decimal shorts
+
+       --ll     same as --tt d4, select decimal longs
+
+       --oo     same as --tt o2, select octal shorts
+
+       --xx     same as --tt x2, select hexadecimal shorts
+
+       For  older  syntax  (second  call format), OFFSET means --jj
+       OFFSET.   LABEL  is  the  pseudo-address  at  first   byte
+       printed, incremented when dump is progressing.  For OFFSET
+       and LABEL, a 0x or 0X prefix indicates  hexadecimal,  suf-
+       fixes maybe . for octal and b multiply by 512.
+
+       TYPE is made up of one or more of these specifications:
+
+       a      named character
+
+       c      ASCII character or backslash escape
+
+       d[SIZE]
+              signed decimal, SIZE bytes per integer
+
+       f[SIZE]
+              floating point, SIZE bytes per integer
+
+       o[SIZE]
+              octal, SIZE bytes per integer
+
+       u[SIZE]
+              unsigned decimal, SIZE bytes per integer
+
+       x[SIZE]
+              hexadecimal, SIZE bytes per integer
+
+       SIZE  is  a  number.  For TYPE in doux, SIZE may also be C
+       for sizeof(char), S for sizeof(short), I  for  sizeof(int)
+       or  L  for sizeof(long).  If TYPE is f, SIZE may also be F
+       for  sizeof(float),  D  for  sizeof(double)   or   L   for
+       sizeof(long double).
+
+       RADIX  is d for decimal, o for octal, x for hexadecimal or
+       n for none.  BYTES is hexadecimal with 0x or 0X prefix, it
+       is  multiplied by 512 with b suffix, by 1024 with k and by
+       1048576 with m.  Adding a z suffix to any type adds a dis-
+       play  of  printable  characters to the end of each line of
+       output.  --ss without a number implies 3.  --ww without a num-
+       ber implies 32.  By default, od uses --AA o --tt d2 --ww 16.
+
+RREEPPOORRTTIINNGG BBUUGGSS
+       Report bugs to <bug-textutils@gnu.org>.
+
+
+
+
+GNU textutils 2.0          August 1999                          2
+
+
+
+
+
+OD(1)                          FSF                          OD(1)
+
+
+SSEEEE AALLSSOO
+       The  full  documentation for oodd is maintained as a Texinfo
+       manual.   If  the  iinnffoo  and  oodd  programs  are   properly
+       installed at your site, the command
+
+              iinnffoo oodd
+
+       should give you access to the complete manual.
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (C) 1999 Free Software Foundation, Inc.
+       This  is  free software; see the source for copying condi-
+       tions.  There is NO warranty; not even for MERCHANTABILITY
+       or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GNU textutils 2.0          August 1999                          3
+
+

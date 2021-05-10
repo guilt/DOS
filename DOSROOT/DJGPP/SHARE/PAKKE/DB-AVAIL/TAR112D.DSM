@@ -1,0 +1,26 @@
+#
+# DSM for tar 1.12 documentation
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: tar112d
+dsm-version: 0.4.0
+dsm-type: documentation
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: tar
+version: 1.12
+manifest: tar112d
+binaries-dsm: tar112b
+sources-dsm: tar112s
+short-description: GNU tar
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: tar112d.zip

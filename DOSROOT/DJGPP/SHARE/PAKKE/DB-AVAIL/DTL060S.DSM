@@ -1,0 +1,34 @@
+#
+# DSM for dtl 0.60 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: dtl060s
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: dtl
+version: 0.60
+type: sources
+manifest: dtl060s
+binaries-dsm: dtl060b
+
+short-description: DVI <-> DTL convertors
+long-description: DTL is an editable text version of DVI.\
+There are DVI <-> DTL convertors in this package.
+license: Unspecified
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: dtl060s.zip
+
+changelog: gnu/web2c-7.2/dtl/ChangeLog
+pre-install-readme: gnu/web2c-7.2/djgpp/README
+
+depends-on: texmflib
+depends-on: kpathsea

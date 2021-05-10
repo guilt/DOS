@@ -1,0 +1,2317 @@
+       OOOOOO                            VV        VV
+      OO    OO   PPPPPPP   TTTTTTTT  II   VV      VV  EEEEEE   CCCCCC
+      OO    OO   PP    PP     TT     II    VV    VV   EE       CC
+      OO    OO   PPPPPPP      TT     II     VV   VV   EEEEEE   CC
+      OO    OO   PP           TT     II       VVV     EE       CC
+       OOOOOO    PP           TT     II        V      EEEEEE   CCCCCC
+
+
+                       OptiVec  Version 2
+
+
+                      OptiCode - Dr. Martin Sander Software Development
+                      Steinachstr. 9A
+                      D-69198 Schriesheim
+                      Germany
+                      e-mail: support@optivec.com  or  sales@optivec.com
+                      http://www.optivec.com
+
+
+For the full version, please order by e-mail or through our web-site!
+See chapter 1.3 for details.
+
+
+*****************************************************************************
+
+F i r s t  P a r t :   File  HANDBOOK.TXT
+
+!!     This is an ASCII text file!  It is best viewed with a simple        !!
+!!     DOS editor.                                                         !!
+!!     If you load this file into a word processor under Windows, you      !!
+!!     must use the filter "DOS text".                                     !!
+!!     Alternatively, you may use FCONVERT (shipped with Borland C++) to   !!
+!!     convert from ASCII (OEM) into the ANSI character set.               !!
+!!     preferably use the lettertype CourierNew 10 pt.                     !!
+
+OptiCode (TM) and OptiVec (TM) are trademarks of Dr. Martin Sander
+Software Dev.  Other brand and product names mentioned in this handbook
+for identification purposes are trademarks or registered trademarks of
+their respective holders.
+
+                 **************************************
+   German-speaking users:
+       Um die Kosten fÅr das Herunterladen der Shareware-Version
+       Åber das Internet fÅr alle so gering wie mîglich zu halten,
+       enthÑlt diese nur die englische Dokumentation. Sie finden
+       die deutsche Beschreibung separat unter
+             http://www.gwdg.de/~msander/Download/BC/OVDOCD.ZIP
+                 **************************************
+
+
+****************************************************************************
+*                                                                          *
+*******                           Contents                           *******
+*                                                                          *
+****************************************************************************
+
+F i r s t  P a r t :   File  HANDBOOK.TXT
+
+This HANDBOOK describes the main part of the OptiVec package, which
+is VectorLib. The other parts, CMATH and MatrixLib, have their own
+descriptions in separate files.
+MatrixLib: see Matrix.TXT.
+CMATH:     see CMATH.TXT.
+
+1. Introduction
+    1.1 What is VectorLib and Why are the VectorLib Functions so Fast?
+    1.2 Licence Terms
+    1.3 Registered Versions
+    1.4 Getting Started
+
+2. The Elements of VectorLib Routines
+    2.1 The Data Types ui,  quad,  and extended
+    2.2 Complex Numbers: The Data Types fComplex,  dComplex,  eComplex
+    2.3 Vectors and Arrays: The Data Types fVector, dVector, eVector,
+        cfVector,  cdVector,  ceVector,   siVector, iVector, liVector,
+        usVector,  uVector,  ulVector,  qiVector,  and  uiVector
+    2.4 Real-number Functions: The Prefixes VF_,  VD_,  and VE_
+    2.5 Complex-number Functions: The Prefixes VCF_, VCD_, and VCE_
+    2.6 Functions of the Integer Data Types: The Prefixes VI_, VSI_,
+        VLI_, VQI_, VU_, VUS_, VUL_, and VUI_
+    2.7 Common Functions of Several Data Types: The Prefix V_
+
+3. The Environment
+    3.1 The Different Library Versions: Selecting Language, Memory Model,
+        and Processor
+
+4. VectorLib Functions and Routines: A Short Overview
+    4.1 Generation, Initialization and De-Allocation of Vectors
+    4.2 Index-oriented Manipulations
+    4.3 Data-Type Interconversions
+    4.4 More about Integer Arithmetics
+    4.5 Basic Functions of Complex Vectors
+    4.6 Mathematical Functions
+        4.6.1 Rounding
+        4.6.2 Comparisons
+        4.6.3 Direct Bit-Manipulation
+        4.6.4 Basic Arithmetics, Accumulations
+        4.6.5 Powers
+        4.6.6 Exponentials and Hyperbolic Functions
+        4.6.7 Logarithms
+        4.6.8 Trigonometric Functions
+    4.7 Analysis
+    4.8 Signal Processing:Fourier Transforms and Related Topics
+    4.9 Statistical Functions and Building Blocks
+    4.10 Input and Output
+    4.11 Graphics
+
+5. Error Handling
+    5.1 General Remarks
+    5.2 Integer Errors
+    5.3 Floating-Point Errors
+        5.3.1 Differences between Borland C++ 4.0 and earlier versions
+    5.4 The Treatment of Denormal Numbers
+    5.5 Advanced Error Handling: Writing Messages into a File
+
+6. Trouble-Shooting
+    6.1 General Problems
+    6.2 Problems with Windows 3.x?
+    6.3 Problems with Borland's 16-bit Linker?
+
+7. The include-files of VectorLib
+
+
+S e c o n d  P a r t :  File  FUNCREF.TXT
+
+ 8.  Alphabetical Reference
+
+ 9.  Non-vectorized Functions
+
+10. VectorLib Error Messages
+
+
+
+****************************************************************************
+*                                                                          *
+*******                       1. Introduction                        *******
+*                                                                          *
+****************************************************************************
+
+
+1.1 What is VectorLib and Why are the VectorLib Functions so Fast?
+------------------------------------------------------------------
+
+VectorLib offers a powerful library of routines for numerically demanding
+applications, making the philosophy of vectorized programming available for
+C/C++, Pascal, and Fortran languages. VectorLib serves to overcome the
+limitations of loop management of conventional compilers - which proved to
+be one of the largest obstacles in the programmer's way towards efficient
+coding for scientific and data analysis applications.
+
+Conventionally, a vector, i.e. a one-dimensional array of data of the same
+type, would be processed by "dissolving" it into a loop over its elements,
+leaving it to the compiler to produce efficient code. Compiled code, however,
+is always far from perfect. This means that your computer is occupied with
+slow and often inaccurate calculations. Now, with VectorLib, things become
+easier: vectors are processed as a whole; they need no longer be dissolved
+into loops. A large set of strictly typed functions is defined and realized
+in a tight Assembler-written implementation.
+
+In comparison to the old vector language APL, VectorLib has the advantage of
+being incorporated into the modern and versatile languages C/C++, Pascal, and
+Fortran. Recent versions of C++ and Fortran do already offer some sort of
+vector processing, by virtue of iterator classes using templates (C++) and
+field functions (Fortran90). Both of these, however, are basically a con-
+venient means of letting the compiler write the loop for you and then compile
+it to the usual inefficient code. The same is true for most implementations
+of the popular BLAS (Basic Linear Algebra Subroutine) libraries for Fortran.
+In comparison to these approaches, VectorLib is superior mainly with respect
+to execution speed - on the average by a factor of 2-3, in some cases even
+up to 8. The performance is no longer limited by the quality of your compiler,
+but rather by the real speed of the processor!
+
+Moreover, the input and output vectors of VectorLib routines may be of
+variable size and it is possible to process only a part (e.g., the first 100
+elements, or every 10th element) of a vector, which is another important
+advantage of the VectorLib functions over other approaches, where only whole
+arrays are processed.
+
+Using VectorLib routines instead of loops can make your source code much more
+compact and far better readable.
+
+Besides this increased efficiency and ease of programming, the wide range of
+routines and functions covered by VectorLib makes this package the preferrable
+programming tool for scientific and data analysis applications, competing with
+many high-priced integrated systems, but imbedded into your favourite
+programming language:
+
+*   All operators and mathematical functions of C/C++ are implemented in
+    vectorized form; additionally many more mathematical functions are
+    included which normally would have to be calculated by more or less
+    complicated combinations of existing functions. Not only the execution
+    speed, but also the accuracy of the results is greatly improved.
+
+*   Building blocks for statistical data analysis are supplied.
+
+*   Derivatives, integrals, interpolation schemes are included.
+
+*   Fast Fourier Transform techniques allow for efficient convolutions,
+    correlation analyses, spectral filtering, and so on.
+
+*   Graphical representation of data offers a convenient way of monitoring
+    the results of vectorized calculations.
+
+*   Each function exists for every data type for which this is reasonable.
+    The data type is signalled by the prefix of the function name. No
+    implicit name mangling or other specific C++ features are used, which
+    makes VectorLib usable in C as well as in specific C++ programs.
+    Moreover, the names and the syntax of nearly all functions are the same
+    in C/C++, Pascal and Fortran languages.
+
+*   Besides the vectorized complex functions, CMATH is included. This is a
+    library of complex operations and functions designed to be a faster,
+    safer and more complete replacement to the complex class libraries
+    shipped with C++ compilers. Moreover, CMATH does not require C++, but
+    may be used with simple C.
+
+*   A large set of matrix operations is provided by MatrixLib, included
+    in the OptiVec package.
+
+
+As noted above, all functions, except some of the graphics and I/O routines,
+are written in Assembly language. This made optimizations possible which are
+not available in code produced by a compiler. You need not know any of the
+technical details described in the following lines and you may skip them,
+but perhaps these explanations will give you an idea of which performance
+to expect from VectorLib.
+
+* Preload of floating-point constants
+  Floating-point constants, employed in the evaluation of mathematical
+  functions, are loaded onto the floating-point number stack outside of
+  the actual loop and stay as long as they are needed.
+  This saves a large amount of loading/unloading operations which are
+  necessary if a mathematical function is called for each element of a
+  vector separately.
+
+* Full FPU stack usage
+  Where necessary, all eight coprocessor registers are employed. (For 
+  present compilers, it is already an excellent achievement to master 
+  the bookkeeping for only four coprocessor registers.)
+
+* Superscalar scheduling
+  By careful  "pairing" of commands whose results do not depend upon each
+  other, the two integer pipes and the two fadd/fmul units of the
+  Pentium/Pentium Pro are used as efficiently as possible.
+  In most instances, computers equipped with 386/387 or 486DX CPUs just
+  will not care about these optimizations which they cannot profit from.
+  In those cases, however, where the performance on these older CPUs suffers
+  significantly from the Pentium-optimized scheduling, it is applied only in
+  the "4" version of OptiVec (back-compatible to 486DX), but not in the "3"
+  version (back-compatible to 386/387).
+
+* Loop-unrolling
+  Where optimum pairing of commands cannot be achieved for single elements, 
+  vectors are often processed in chunks of two, four, or even more elements.
+  This allows to fully exploit the parallel-processing capabilities of the
+  Pentium and its successors.  Moreover, the relative amount of time spent
+  for loop management is significantly reduced.
+
+* Simplified addressing
+  The addressing of vector elements is still a major source of inefficiency
+  with present compilers. Switching forth and back between input and output
+  vectors, a large number of redundant addressing operations is performed.
+  The strict (and easy!) definitions of all OptiVec functions allow to
+  reduce these operations to a minimum.
+
+* Replacement of floating-point by integer commands
+  For any operations with floating-point numbers that can also be performed
+  using integer commands (like copying, swapping, or comparing to preset
+  values), the faster method is consistently employed.
+
+* Strict precision control
+  C compilers convert a float into a double (Pascal: even into an extended),
+  before passing it to a mathematical function. This approach was useful at
+  times when disk memory was too great a problem to include separate
+  functions for each data type in the .LIB files, but it is simply
+  inefficient on modern PCs. Consequently, no such implicit conversions are
+  present in OptiVec routines. Here, a function of a float is calculated to
+  float (i.e. single) precision, wasting no time for the calculation of more
+  digits than necessary - which would be discarded anyway.
+
+* All-inline coding
+  All external function calls are eliminated from the inner loops of the
+  vector processing. This saves the execution time necessary for the
+  call / ret  pairs and for passing the parameters forth and back.
+
+* Cache-line matching of local variables
+  The Level-1 cache of the Pentium and its presently available successors
+  is organized in "lines" of 32 bytes each. Present compilers align the
+  stack on 4-byte boundaries, which means there is a 1-in-4 chance that
+  the 8 bytes of a double or the 10 bytes of an extended, stored on the
+  stack, will cross a 32-byte boundary. This, in turn, would lead to a
+  cache line-break penalty, deteriorating the performance. To avoid it,
+  OptiVec functions use special procedures to properly align their local
+  variables on 8 or 16-byte boundaries.
+
+* Unprotected and reduced-range functions
+  For some mathematical functions, you have the choice between the fully
+  protected variant with error handling and another, extra-fast variant
+  without. Similarly, there are reduced-range versions of the sine and
+  cosine functions for those cases in which the user can guarantee all
+  input vector elements to lie in the range  -2 Pi <= x <= +2 Pi.
+  In these cases, the execution time may be reduced by up to 40% compared
+  to the full-range or fully protected version.
+
+* Multithread support
+  With very few exceptions (namely the plotting functions, which have to
+  use global variables to store the current window and coordinate system
+  settings), all other OptiVec functions may run in parallel in different
+  threads. On multi-CPU configurations, this means the performance will
+  scale with the number of CPUs. OptiVec functions do not initiate threads
+  themselves, though, as the overhead involved in multi-threading would
+  significantly affect the performance on single-CPU machines. If you
+  have a multi-CPU computer, you have to explicitly launch the threads
+  you wish to run in parallel. For example, one thread might take the
+  lower half of the vector(s) you wish to process, while a second thread
+  takes the upper half - until a point is reached, where both must be
+  combined.
+
+This documentation describes the OptiVec implementations for
+
+- Borland C++ (Version 3.0 or higher, incl. Borland C++ Builder)
+  for DOS and Microsoft Windows 3.0 or later (or Win-OS sessions under
+  IBM OS/2 2.0 or later; in the following, we will simply speak
+  of "Windows"). The library for the memory model FLAT for Windows95/98 and
+  WindowsNT requires Borland C++, version 4.0 or higher.
+
+- Microsoft Visual C++ (Version 5.0 or higher)
+  for Windows95/98/NT on PC platforms.
+
+- Powersoft Optima++ (Version 1.5 or higher)
+  for Windows95/98/NT on PC platforms.
+
+Please note that only the documentation is valid for these different
+compilers. The libraries themselves are compiler-specific; each library
+can be used only with one compiler and, in the case of Borland C++,
+with one memory model.
+
+Borland C++ only:
+-----------------
+   Depending on your choice when ordering or downloading the Shareware
+   version,
+   you have got either of the following three library versions:
+   memory model FLAT for Windows95/NT, statically linked runtime library
+                LARGE for DOS, or
+                LARGE for Windows 3.x.
+   All of them require, at least, a 386 computer equipped with a 387
+   coprocessor. This means: no emulation, no 486SX, but preferably 486DX,
+   Pentium or higher.
+
+   The full (registered) version contains libraries for all memory models of
+   DOS, 16-bit Windows and 32-bit Windows. These libraries, in turn, are
+   shipped in three versions:
+   one for 486DX and Pentium computers, the second for 386 with 387,
+   the third for 286 with or without coprocessor, i.e. with emulation.
+
+Microsoft Visual C++ only:
+--------------------------
+   The Shareware version has libraries for "single-thread debug" and
+   "multi-thread debug". The full (registered) version for Microsoft
+   Visual C++ contains additional libraries for "multi-thread DLL debug"
+   and the three corresponding release libraries.
+   There is no actual debug information enclosed in the OptiVec "debug"
+   libraries, but they have to be used with the debug libraries of
+   Visual C++.
+
+
+Versions for other C compilers and for Pascal, Delphi, and Fortran are in
+preparation. Please check our web-site for actual availability.
+
+For two-dimensional arrays, MatrixLib is included with OptiVec,
+offering optimized matrix operations like matrix arithmetics, algebra,
+decompositions, data fitting, etc. See MATRIX.TXT.
+TensorLib is planned as a future extension of these concepts for general
+multidimensional arrays.
+
+
+1.2 Licence Terms for the Shareware Version
+-------------------------------------------
+
+The following licence terms apply to the Shareware version of OptiVec.
+If you got this file with the Registered version, please see paragraph 1.3
+or the book "VectorLib" for your valid licence.
+
+This is the English Shareware version of OptiVec ("SOFTWARE").
+It may be used under the following licence terms:
+
+1. You may test the SOFTWARE free of charge for a period of up to 90 days
+   on one computer. This testing phase ends when you permanently integrate
+   functions of this SOFTWARE into any of your applications (programs,
+   program parts...).
+2. Applications, created with the Shareware version of this SOFTWARE, will
+   run only on the same computer on which this SOFTWARE has been installed.
+   They cannot and may not be distributed to others.
+3. If you want to continue using this SOFTWARE after testing, and/or
+   if you wish to distribute programs containing functions of this SOFTWARE,
+   you have to purchase the registered version (see chapter 1.3).
+4. This SOFTWARE is provided on an "as is" basis. Any explicit or implicit
+   warranties for the SOFTWARE are excluded.
+   Despite thorough testing of the SOFTWARE, errors and bugs cannot
+   be excluded with certainty. No claims as to merchantability or fitness
+   for a particular purpose are made.
+   You may not use the SOFTWARE in any environment or situation where
+   personal injury or excessive damage to anyone's property (including
+   your own) could arise from malfunctioning of the SOFTWARE.
+
+
+Copyright for the SOFTWARE and its documentation (C) 1996-2000 Martin Sander
+
+All rights reserved, including those of translation into foreign languages.
+
+Address of the author:
+              Dr. Martin Sander Software Development
+              Steinachstr. 9A
+              D-69198 Schriesheim
+              Germany
+              e-mail: MartinSander@optivec.com
+
+
+
+1.3 Registered Versions
+-----------------------
+
+In order to make this product affordable also for those who will not
+themselves make money using it, we offer an "educational edition" at a
+strongly reduced rate, in addition to the full "commercial edition".
+The contents of these two editions is identical. The only difference lies
+in the restrictions of use: The "educational edition" may not be used for
+commercial / business / government purposes, but is restricted to private
+and educational use.
+
+Purchasing the full (registered) version gives you the right to use it on
+as many computers at a time as the number of units you bought.
+The right to distribute applications employing functions of OptiVec
+is included in the commercial-version licence. No run-time licence needed! 
+Corporate site and world-wide licences are available upon request.
+
+The full version (both the commercial and the educational editions)
+of OptiVec for Borland C++ and of OptiVec for Microsoft Visual C++
+
+-  support all memory models of Windows95/98, NT, 3.x, and DOS
+   (Borland C++)
+   or single-thread, multi-thread, multi-thread DLL debug and release
+   (Microsoft Visual C++)
+
+-  (Borland C++ only: )
+   have individually optimized libraries for each degree of processor
+   backward-compatibility:
+      486DX/Pentium+ (optimized for Pentium/PentiumPro)
+      386+ (387 coprocessor required)
+      286+ (no coprocessor required).
+
+-  come with printed documentation.
+
+-  entitle you to two years of free updates
+   (by downloading from our web site)
+
+-  can be ordered at the following conditions:
+
+   a) if you can pay in German Marks or Euro
+      and order directly from the author, the price is
+      DM  159,- /  EUR 81,50 for the educational edition,
+
+      DM  299,- /  EUR 153,30 for  1 unit of the commercial edition
+      DM  999,- /  EUR 512,30 for  5 units,
+      DM 1799,- /  EUR 922,60 for 10 units
+         (incl. 16% VAT, plus DM 10,- / EUR 5,- handling charge).
+      Please order by sending an e-mail to sales@optivec.com
+      or use a print-out of the file ORDER.TXT.
+      Payment options:
+          - pre-paid by DM Eurocheque
+          - C.O.D. (Cash-On-Delivery)
+          - upon invoice (only within Germany, net 14 days)
+
+      If you have a European VAT ID, or if you order from outside the
+      European Union, you are exempt from the German VAT, but you may
+      have to pay your local VAT and/or import duties according to
+      local laws.
+
+   b) International credit card or USD cheque payment is possible by
+      ordering through ours or the following web-sites
+
+      Atlantic Coast's SoftShop:
+      http://www.swreg.org/soft_shop/47/
+
+      (this is the SoftShop sales page for all our products)
+
+      $   89 for the educational edition,
+      $  199 for  1 unit of the commercial edition,
+      $  649 for  5 units,
+      $ 1199 for 10 units
+      Add $5 for S&H and applicable VAT.
+
+      ShareIt:
+      OptiVec for Borland C++:
+         http://www.shareit.com/programs/101557.htm         (English handbook)
+         http://www.shareit.com/deutsch/programs/101556.htm (German handbook)
+      OptiVec for MSVC:
+         http://www.shareit.com/programs/103421.htm
+               (educational version of OptiVec for MSVC not available here;
+                please use SoftShop, see above)
+
+      $  94 for the educational edition (including S&H),
+      $ 204 for the commercial edition (including S&H).
+            Add applicable VAT.
+
+      You may also order by e-mail to register@shareit.com.
+      US customers can also call 1-800-903-4152 (only for orders, please).
+      US check and cash orders can be sent to ShareIt!'s US office at
+           ShareIt! Inc.
+           P.O. Box 97841
+           Pittsburgh, PA 15227-0241
+           USA
+      * When ordering by e-mail, phone, or postal mail through ShareIt,  *
+      * please note the program number:                                  *
+      * OptiVec for Borland C++:    No. 101557                           *
+      *     dto., educational:      No. 102654                           *
+      * OptiVec for MSVC:           No. 103421                           *
+
+
+The following licence terms apply for the Registered version:
+
+This is a single copy license for OptiVec ("SOFTWARE"),
+granted by Dr. Martin Sander Software Development.
+
+The SOFTWARE in this package is licensed to you as the user. It is not sold.
+Once you have paid the required license fee, you may use the SOFTWARE for as
+long as you like, provided you do not violate the copyright and if you
+observe the following rules:
+
+1. You may use the SOFTWARE on any computer for which it is designed as long
+   as not more than one person uses it at any time.
+2. You may make backup copies of the SOFTWARE for your personal use. You may
+   only transfer the SOFTWARE to somebody else if you transfer the original
+   and all copies, retaining no copies for yourself. You may not lease or
+   rent the SOFTWARE to others.
+3. You may not decompile, disassemble, or otherwise reverse engineer the
+   SOFTWARE into a machine-readable form. You may, however, inspect the
+   functions contained in this SOFTWARE by means of debuggers like those
+   included in Borland C++ and Visual C++.
+4. If you payed the reduced licence fee for the "educational version" rather
+   than the full rate for the "commercial version", the use of this SOFTWARE
+   is restricted to private and educational purposes. In this case, you may
+   not use the SOFTWARE for commercial purposes or for government purposes
+   other than education. 
+   Applications using functions of this SOFTWARE may be freely distributed
+   (i.e. without any run-time licence) only if created with the
+   "commercial edition".
+5. You may not use the SOFTWARE in any environment or situation where
+   personal injury or excessive damage to anyone's property (including your
+   own) could arise from malfunctioning of the SOFTWARE.
+6. Martin Sander's liability is limited by the enclosed Limited Warranty.
+   In no case shall Martin Sander's liability exceed the license paid for
+   the right to use the SOFTWARE.
+
+Limited Warranty for the Registered version
+-------------------------------------------
+1. Martin Sander warrants that the magnetic or optic media on which the
+   SOFTWARE is recorded are free from defects in materials and workmanship
+   under normal use. The SOFTWARE itself will perform substantially in
+   accordance with the specifications set forth in the documentation.
+2. The above express warranties are made for a period of six months from
+   the date the SOFTWARE is delivered to you as the first user.
+3. Any magnetic/optic or printed media from this package proving defective
+   in materials or workmanship will be replaced on an exchange basis.
+4. Great care has been taken to ensure that the SOFTWARE operates in
+   accordance with the specifications as described in the documentation.
+   However, it is not guaranteed that this SOFTWARE will operate completely
+   free of errors or that the documentation is free of errors.
+5. Any implied warranties including any warranties of merchantability or of
+   fitness for a particular purpose are limited to the terms of the above
+   express warranties.
+7. Martin Sander shall not in any case be liable for special, incidental,
+   consequential, indirect or other damages arising from any breach of these
+   warranties or of the license conditions, even if he has been notified of
+   the possibility of such damages.
+
+Copyright for the SOFTWARE and its documentation (C) 1996-2000 Martin Sander
+
+
+1.4 Getting Started
+-------------------
+
+To install OptiVec, please follow these steps:
+
+1.  In order to use OptiVec, you need an already installed copy of your
+    C/C++ compiler. Install OptiVec by executing INSTALL.EXE from the root
+    directory of the installation disk or CD-ROM. Normally, OptiVec will be
+    installed into a directory named "OPTIVEC".
+
+2.  Add the OptiVec include and lib subdirectories to the library search
+    path and to the include-file search path, respectively.
+    For example, assuming your OptiVec directory is C:\OTCIVEC,  add
+       C:\OPTIVEC\LIB       to the library search path  and
+       C:\OPTIVEC\INCLUDE   to the include-file search path of the IDE
+                  (and of the configuration file TURBOC.CFG and BCC32.CFG
+                   in case you are using Borland's command-line compilers).
+
+3. a) Borland C++:
+      Choose the desired platform (DOS, Windows3.x, or Win32) and
+      memory model. Select the required library from the following
+      table (add the suffix .LIB) and add it to your project.  
+      The Shareware versions contain only libraries for either DOS-LARGE,
+      Windows-LARGE, or Win32.
+   Borland C++ 16-bit models only:
+      If you wish to use MatrixLib functions, you must additionally
+      include another library in your project list, whose name is
+      derived from the names in the table by replacing the leading "V"
+      by "M". For example, for DOS-LARGE, 386, you would need VCL3.LIB
+      and MCL3.LIB.
+      Likewise, if you wish to use CMATH functions, you have to add
+      the CMATH library, whereby the letter "V" is replaced by "CMATH".
+      For the above example, this would be CMATHL3.LIB.
+
+    ⁄ƒƒƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒø
+    ≥  Platform  ≥  Memory Model ≥             required processor           ≥
+    ≥            ≥               ≥    286     ≥  386+387   ≥ 486DX/Pentium  ≥
+    √ƒƒƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¥
+    ≥  DOS       ≥    TINY       ≥  VCS2      ≥  VCS3      ≥  VCS4          ≥
+    ≥  DOS       ≥    SMALL      ≥  VCS2      ≥  VCS3      ≥  VCS4          ≥
+    ≥  DOS       ≥    MEDIUM     ≥  VCM2      ≥  VCM3      ≥  VCM4          ≥
+    ≥  DOS       ≥    COMPACT    ≥  VCC2      ≥  VCC3      ≥  VCC4          ≥
+    ≥  DOS       ≥    LARGE      ≥  VCL2      ≥  VCL3      ≥  VCL4          ≥
+    ≥  DOS       ≥    HUGE       ≥  VCH2      ≥  VCH3      ≥  VCH4          ≥
+    ≥  Windows   ≥    SMALL      ≥  VCS2W     ≥  VCS3W     ≥  VCS4W         ≥
+    ≥  Windows   ≥    MEDIUM     ≥  VCM2W     ≥  VCM3W     ≥  VCM4W         ≥
+    ≥  Windows   ≥    COMPACT    ≥  VCC2W     ≥  VCC3W     ≥  VCC4W         ≥
+    ≥  Windows   ≥    LARGE      ≥  VCL2W     ≥  VCL3W     ≥  VCL4W         ≥
+    ≥  Win32 or  ≥    (FLAT)     ≥            ≥            ≥                ≥
+    ≥  Windows95 ≥GUI or Console ≥            ≥            ≥                ≥
+    ≥  static runtime library    ≥  -------   ≥  VCF3W     ≥  VCF4W         ≥
+    ≥  dynamic runtime library   ≥  -------   ≥  VCF3WD    ≥  VCF4WD        ≥
+    ¿ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ
+
+3. b) Visual C++: Choose the target and configuration and add the
+      corresponding CMATH library to your project, according to the following
+      table (add the suffix .LIB).  
+      The Shareware version contains only libraries for single-thread debug
+      and multi-thread debug.
+
+      ⁄ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¬ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒø
+      ≥  Target            ≥  Configuration ≥  required library    ≥
+      √ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ≈ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¥
+      ≥  single-thread     ≥    debug       ≥  OVVCSD.LIB          ≥
+      ≥  single-thread     ≥    release     ≥  OVVCSR.LIB          ≥
+      ≥  multi-thread      ≥    debug       ≥  OVVCMTD.LIB         ≥
+      ≥  multi-thread      ≥    release     ≥  OVVCMTR.LIB         ≥
+      ≥  multi-thread DLL  ≥    debug       ≥  OVVCMDD.LIB         ≥
+      ≥  multi-thread DLL  ≥    release     ≥  OVVCMDR.LIB         ≥
+      ¿ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ¡ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒŸ
+
+4.  Use #include directives to declare VectorLib and CMATH functions by
+    including the header files described in chapter 7.
+    To get everything at once, declare
+        #include <VecAll.h>
+        #include <MatAll.h>.
+    If you are writing MFC or Borland C++ ObjectWindows applications, any
+    OptiVec header files should be included after the MFC or OWL header files.
+
+5. Borland C/C++ 16-bit programs only:
+    *   If the linker option "process extended dictionaries" is available
+        in your version of Borland C++, you must switch it on.
+        Otherwise, you might get a "Table limit exceeded" linker error.
+
+    *   OptiVec works with Borland (Turbo) C++, version 3.0 or higher.
+        Since, from version 4.0 on, Borland changed the name of the error
+        handling routine matherr (without underbar) into _matherr (with a
+        leading underbar), any 16-bit program using CMATH has to call a macro,
+        NEWMATHERR, which takes  care of redirecting calls to _matherr,
+        if necessary. You should place the call to NEWMATHERR into the
+        module containing  main() or OwlMain():
+
+             #include .....
+             #include <VecAll.h>
+             NEWMATHERR
+
+             int main( void )
+             {    ..........   }
+
+        If you forget to call NEWMATHERR, you will get a linker error
+        "Unresolved external _matherr" in the Borland C versions from 4.0 on.
+
+        Inclusion of the macro NEWMATHERR is not needed for 32-bit programs.
+
+6. Have a look into the sample programs
+
+After these preparations, all OptiVec functions are available for your
+programs.
+
+Should you wish to remove OptiVec from your computer, please run
+UNINSTAL.EXE.
+
+
+
+****************************************************************************
+*                                                                          *
+*******               2. Elements of VectorLib Routines              *******
+*                                                                          *
+****************************************************************************
+
+2.1 The Data Types ui,  quad,  and extended
+-------------------------------------------
+
+To increase the versatility and completeness of VectorLib, three additional
+data types are defined in <VecLib.h>:
+
+The data type ui (short for "unsigned index") is used for the indexing of
+vectors and is defined as "unsigned int". However, in the HUGE model (sup-
+ported only in the registered version of VectorLib for Borland C++), ui is
+defined as "unsigned long", in order to correctly address huge arrays
+(greater than 64 kBytes, but with 16-bit addressing).
+
+Starting already with the 8086/8087 processor pair, the Intel processors
+are able to process integer numbers of up to 64 bits (8 bytes). We call the
+64-bit type "quad" (for "quadword integer"). It is not fully supported by
+Borland C++. Therefore, floating-point numbers (preferably long doubles
+with their 64-bit mantissa) have to be used as intermediates. The necessary
+interface functions, setquad, quadtod and _quadtold, are described in
+chapter 9.
+The type quad is always signed. There is not anything like an "unsigned quad".
+
+The data type extended, which is familiar to Turbo Pascal users, is defined
+as a synonym for "long double" in OptiVec for Borland C++. As neither
+Visual C++ nor Optima++ support 80-bit reals, we define "extended" as
+"double" in the OptiVec versions for these compilers.
+The reason for the choice of the name "extended" is that all OptiVec
+routines shall have identical names in C/C++, Pascal and Fortran languages.
+Since the function prefixes are derived from the data types of the processed
+vectors (see below), this necessitates the definition of alias names for some
+data types denoted differently in the various languages. While the letter
+"L" (which could possibly stand for "long double") is already overcrowded by
+the data types long int and unsigned long, the letter "E" is unique to the
+data type extended and therefore used in the prefixes for vectors and
+functions of long double precision. This way, the letters defining the real-
+number data types are in alphabetical proximity: "D" for double, "E" for
+extended, and "F" for float. Maybe the future will bring high-precision
+128-bit and 256-bit real numbers which could find their place in this series
+as "G" for "great" and "H" for "hyper".
+
+
+
+2.2 Complex Numbers:
+The Data Types fComplex,  dComplex,  eComplex
+---------------------------------------------
+
+Complex numbers are treated in C/C++ in quite a confusing way. ANSI C offers
+only a struct complex, Borland's C/C++ compiler additionally a struct
+_complexl for complex numbers of double and long double precision, resp.
+The real and imaginary parts are denoted as x and y.
+C++ offers a class complex which is of double precision; the real and
+imaginary parts are accessible via the functions real and imag. There is
+also a number of mathematical functions available for this class.
+Finally, the new Standard C++ library, included from Borland C++ 5 on (but not
+in Visual C++), offers the classes complex<float>, complex<double>, and
+complex<long double>, equipped with basic functionality and the same range
+of mathematical functions as offered by the class complex.
+
+Most compilers implement these functions very inefficiently and inaccurately.
+(Just writing down the textbook formula for a complex function, like it is
+usually done, works fine only for a very limited range of arguments!)
+
+Our aims are
+*   to make the use of complex numbers of all three data types
+    possible in C as well as in C++,
+*   to allow for the most efficient implementation of all complex operations,
+    using assembler code instead of C++ templates,
+*   and to introduce an easy, compact and consistent nomenclature.
+
+To this end, the new complex math library CMATH was created and is included
+in OptiVec. CMATH is described in greater detail in the file CMATH.TXT.
+If you use any of the non-vectorized functions contained in CMATH,
+you should include <newcplx.h> (for C++ modules) or <cmath.h> (for plain-C
+modules) before (!) any of the VectorLib include files.
+
+VectorLib itself contains the necessary initialization functions of complex
+numbers and all vectorized forms of complex math functions. If you are using
+only these, you need not explicitly include CMATH. In this case, the
+following complex data types are defined in <VecLib.h>:
+typedef  struct { float     Re,  Im; }  fComplex;
+typedef  struct { double    Re,  Im; }  dComplex;
+typedef  struct { extended  Re,  Im; }  eComplex;
+
+(the data type extended is used as a synonym for long double, see above.)
+
+If, for example, a complex number z is declared as  "fComplex  z;", the real
+and imaginary parts of z are available as z.Re and z.Im, resp. Complex numbers
+are initialized either by setting the real and imaginary parts separately to
+the desired value, e.g.,
+	z.Re = 3.0;   z.Im = 5.7;
+
+or, alternatively, the same initialization can be accomplished by the
+function fcplx:
+	z = fcplx( 3.0, 5.7 );
+
+For double-precision complex numbers, use dcplx, for extended-precision
+complex numbers, use ecplx.
+
+Pointers to arrays or vectors of complex numbers are declared using the data
+types cfVector, cdVector, and ceVector  described below.
+
+
+
+2.3 Vectors and Arrays:
+The Data Types  fVector,  dVector,  eVector,  cfVector,  cdVector,  ceVector,
+                siVector, iVector,  liVector,  qiVector,
+                usVector, uVector,  ulVector,  and  uiVector
+-----------------------------------------------------------------------------
+
+We define, as usual, a "vector" as a one-dimensional array of data containing,
+at least, one element, with all elements being of the same data type. Using a
+more mathematical definition, a vector is a rank-one tensor. A two-dimensional
+array (i.e. a rank-two tensor) is denoted as a "matrix", and higher
+dimensions are always referred to as "tensors".
+
+In contrast to other approaches, VectorLib does not allow zero-size vectors!
+
+The basis of all VectorLib routines is formed by the various vector data
+types given below and declared in <VecLib.h>. In your programs, you may mix
+these vector types with the static arrays of classic C style.
+For example:
+float   a[100];           /* classic static array */
+fVector b=VF_vector(100); /* VectorLib vector */
+VF_equ1( a, 100 );      /* set the first 100 elements of a equal to 1.0   */
+VF_equC( b, 100, 3.7 ); /* set the first 100 elements of b equal to 3.7  */
+
+In contrast to the fixed-size static arrays, the VectorLib types use dynamic
+memory allocation and allow for varying sizes. Because of this increased
+flexibility, we recommend that you predominantly use the latter.
+Here they are:
+typedef     float *            fVector;
+typedef     double *           dVector;
+typedef     long double *      eVector;
+typedef     fComplex *         cfVector;
+typedef     dComplex *         cdVector;
+typedef     eComplex *         ceVector;
+typedef     short *            siVector;
+typedef     int  *             iVector;
+typedef     long *             liVector;
+typedef     quad *             qiVector;
+typedef     unsigned short *   usVector;
+typedef     unsigned *         uVector;
+typedef     unsigned long *    ulVector;
+typedef     ui *               uiVector;
+
+Vector elements can be accessed either with the [] operator, like
+    VA[375] = 1.234;
+or by the type-specific functions VF_element (returns the value of the
+desired vector element, but cannot be used to overwrite the element) and
+VF_Pelement (returns the pointer to a vector element).
+Especially for some older Borland C versions (which have a bug in the
+pointer-arithmetics), VF_Pelement has to be used instead of the syntax
+X+n.
+
+Thus, internally, a data type like fVector means "pointer to float", but
+you may think of a variable declared as fVector rather in terms of a
+"vector of floats". The data types ui, quad, fComplex, dComplex and eComplex
+themselves are described above.
+
+Note: in connection with Windows programs, often the letter "l" or "L" is
+used to denote "long int" variables. In order to prevent confusion, however,
+the data type "long int" is signalled by "li" or "LI", and the data type
+"unsigned long" is signalled by "ul" or "UL".  Conflicts with prefixes for
+"long double" vectors are avoided by deriving these from the alias name
+"extended" and using "e", "ce", "E", and "CE", as described above and in the
+following.
+
+
+
+2.4 Real-number Functions:
+    The Prefixes VF_,  VD_,  and VE_
+------------------------------------
+
+The VectorLib package supports the three floating-point data types that are
+used by the coprocessors of the 80x87 family and the FPU units integrated
+into the 486DX and Pentium processors and their successors:  float,  double,
+and extended (i.e., long double).  BCD numbers are not supported.
+
+Any of the algebraic and mathematical functions included in this library
+exists in one variant for each floating-point format. The data type of all
+floating-point vector elements, parameters, and of the return value is always
+the same within one function. The data type is signalled by the second letter
+of the prefix: VF_ denotes the variant of a function that uses exclusively
+the data type float, VD_ stands for the data type double, and VE_ for the
+data type extended, i.e., long double. (The first letter, "V", stands for
+"Vector function", of course.)  VF_ functions thus work on arrays declared as
+fVector, use parameters of the type float, and, if there is any floating-point
+return value, this will also be of the type float. There are no mixed-type
+functions (that would, e.g., work on vectors of type fVector, use parameters
+of type double and return a value of type long double).
+
+One partial exception from this rule comes from the fact that floating-point
+return values of OptiVec functions are returned as long doubles on the number
+stack. Therefore, you may assign the return value of a function to a
+variable of another data type. For example, the product of all elements of a
+vector may easily overflow, and it is a good idea to define   eProd  as an
+extended (i.e., as a long double), before writing the line
+   eProd = VF_prod( X, size );  .
+
+Borland C++ only: To use this possibility, you must switch the option
+"Fast floating point" on (in the IDE in the menu "Options/Compiler/Advanced
+Code Generation",  or the command-line compiler option "-ff"),
+
+For the description of the functions in the Alphabetical Reference
+(chapter 8), generally only the VF_ version is described and its syntax
+explicitly given. The versions for the data types double and long double
+are exactly analogous to the VF_ variant. You have only to replace the
+prefix  "VF_" by  "VD_" (or  "VE_") and to use  "dVector" and "double"
+(or "eVector" and "extended", resp.) wherever you find "fVector" and "float"
+in the VF_ version.
+
+
+
+2.5 Complex-number Functions:
+    The Prefixes VCF_, VCD_, and VCE_
+--------------------------------------
+
+Any prefix with its second letter being "C" denotes a function of complex
+numbers. By analogy with the nomenclature used for real-number functions, the
+prefix VCF_ signals the exclusive use of single-precision vectors, parameters
+and return values (fComplex, cfVector and float). Similarly, VCD_ is used for
+double-precision calculations, and VCE_ for extended precision. Wherever
+"fComplex", "cfVector", and "float" appear in the description of a function in
+the VCF_ version, the VCD_ and VCE_ versions are obtained by substituting with
+"dComplex",  "cdVector" and "double"  or "eComplex", "ceVector", and "extended"
+(or "long double"), resp.
+
+Note: Return values of the data types fComplex, dComplex, and eComplex are
+not possible in Pascal/Delphi. Therefore, the syntax of those functions
+returning a complex number is different in C/C++ and Pascal/Delphi.
+
+In contrast to the carelessness with which complex mathematical functions are
+often treated (see above), the complex functions of VectorLib are written
+such as to achieve full accuracy over the complete range of input/output
+values possible with the respective data type.
+
+In order to perform non-vectorized complex operations with the same level
+of speed and reliability as the vectorized ones, use CMATH as a replacment
+of the complex class libraries. See the file CMATH.TXT for details.
+
+
+
+2.6 Functions of the Integer Data Types:
+    The Prefixes VI_, VBI_, VSI_, VLI_, VQI_, VU_, VUB_, VUS_, VUL_, and VUI_
+-----------------------------------------------------------------------------
+
+The nomenclature for the integer data types is designed in a similar way as
+for the floating-point data types: VI_ indicates the use of the data type
+int, VBI_ stands for byte-sized int, VSI_ for short int, VLI_ for long int
+and VQI_ for quad integers. VU_ denotes operations with unsigned integers,
+VUB_ with unsigned byte, VUS_ with unsigned short and VUL_ is the prefix for
+functions of unsigned long arguments. For operations on index-arrays,
+functions with the prefix VUI_ allow to perform calculations using arguments
+of the data type ui defined above. The VUI_ versions are always defined as
+macros, and the compiler automatically substitutes either the VU_ or the VUL_
+version, whichever is appropriate for the memory model actually used.
+
+Don't be afraid of so many data types. It is one of the advantages of C
+language to have them, and it is one of the disadvantages, at the same time,
+that a programming style is supported which mixes all the data types until
+it is no longer clear "who is who".  In all normal cases, the VI_, VLI_,
+VU_, and VUI_ functions should be sufficient; but keep in mind that there
+are more available in case you need them.
+
+If present, the vectorized integer functions are always described together
+with their floating-point analogues. To obtain, for example, the VI_
+version, vectors of type iVector have to be substituted for those of type
+fVector which are demanded by the VF_ version. In the same way, the other
+versions are obtained by changing "float" and "fVector" into the desired
+data type.
+
+Like the function names themselves, also the include-files in which the
+functions are declared are named according to the data type they belong to.
+Thus, the declarations for the functions of the data type int are to be
+found in <VIstd.h> and <VImath.h>, those of the data type unsigned long in
+<VULstd.h> and <VULmath.h>, and so on.
+
+
+
+2.7 Common Functions of Several Data Types:  The Prefix V_
+----------------------------------------------------------
+
+Several functions exist that are either used independently of any data type
+or that are used to interconvert the data types. Functions like V_initPlot
+and V_free belong to the first case (you have to initialize the plotting
+routines regardless of the data type of the vectors you are going to plot,
+and the initialization is not specific for any data type).
+A function like V_ULtoD  belongs to the second case; here, a  ulVector
+(a vector whose elements are of the data type unsigned long) is transformed
+into a dVector (a vector whose elements are doubles).
+The type-independent functions are declared in <VecLib.h> and <Vgraph.h>.
+The data-type interconversion functions are declared in the include-files
+belonging to the destination type (i.e. the type into which the numbers are
+converted).
+
+
+****************************************************************************
+*                                                                          *
+*******                      3. The Environment                      *******
+*                                                                          *
+****************************************************************************
+
+3.1 The Different Library Versions: Selecting Language, Memory Model,
+    and Processor
+---------------------------------------------------------------------
+
+The OptiVec routines may be used both in C and in C++ programs.
+As described above in the chapter on Installation, every compiler and every
+of its memory models or targets needs its own OptiVec library to be linked
+into a program using OptiVec. It is not possible to use the libraries
+with other compilers or other memory models than they are specifically
+designed for.
+
+
+
+****************************************************************************
+*                                                                          *
+*******           4. VectorLib Functions and Routines:               *******
+*******              A Short Overview                                *******
+*                                                                          *
+****************************************************************************
+
+
+4.1 Generation, Initialization and De-Allocation of Vectors
+-----------------------------------------------------------
+
+With VectorLib, you may use static arrays (like, for example, float a[100];)
+as well as dynamically allocated ones (see chapter 2.3). We recommend,
+however, that you use the more flexible vector types defined by VectorLib,
+using dynamic allocation. This is described in the following sections.
+After a vector has been declared (e.g., as  fVector X; ), memory has to be
+allocated. When the vector is no longer needed, the memory it occupies has
+to be de-allocated again. For the allocation of memory, one specific function
+exists for each data type:  VF_vector,   VD_vector,  VI_vector,  and so on.
+If, together with the allocation, all elements shall be initialized with 0,
+VF_vector0,  VD_vector0,  VI_vector0,   etc. may be called.  To de-allocate
+memory, one and the same function is used for all data types:  V_free. In
+order to de-allocate several vectors with only one call, use V_nfree.
+V_freeAll frees all vectors at once.
+
+Internally, the allocated vectors are written into a table to keep track
+of the allocated memory. If you try to free a vector that has never been
+or is no longer allocated, you get a warning message, and nothing is freed.
+
+You might wonder why we add still more memory allocation functions to the
+already rich omnium gatherum of C and C++. The reason is that, for every
+environment and every memory model, the most appropriate memory management
+functions shall be selected automatically. This means that you, the user,
+need not deal yourself with the various methods, but can leave this task
+to VectorLib. Moreover, this makes your programs more easily portable.
+(Of course, the operator "new" offers similar benefits, but it is available
+only in C++. Since VectorLib shall be useable both in C and C++, it has
+to include its own functions for this purpose.)
+
+The following functions are used to initialize or re-initialize vectors that
+have already been created:
+VF_equ0   sets all elements of a vector equal to 0;
+VF_equ1   sets them equal to 1;
+VF_equm1  sets them equal to -1;
+VF_equC   sets them equal to a constant.
+VF_equV   makes one vector a copy of another,
+VFx_equV  (the "expanded" version of the equality operation) relates each
+          element of a vector to the corresponding element of another
+          according to the formula  Yi = a * Xi + b.
+
+VF_ramp   fills a vector with a "ramp" according to the formula  Xi = a*i + b.
+VF_random fills a vector with high-quality random numbers,
+VF_noise  with white noise, and
+VF_comb   with a "comb" function which, at equidistant points, equals a
+          constant C and is zero elsewhere.
+
+VF_Hanning,  VF_Parzen, and VF_Welch are special functions creating so-called
+windows for use in spectral analysis (see VF_spectrum).
+
+Complex vectors may be initialized by assigning the real and imaginary parts
+separately:  VF_ReImtoC,  VF_RetoC, and VF_ImtoC. Alternatively, they may be
+formed out of polar coordinates: VF_PolartoC.
+
+
+
+4.2 Index-oriented Manipulations
+--------------------------------
+
+VF_rev       is used to reverse the ordering of the elements of a vector.
+VF_reflect   sets the upper half of a vector equal to the reversed lower half.
+VF_rotate    is used to rotate the ordering of the elements.
+VF_insert    and
+VF_delete    insert or delete an element of a vector.
+
+VF_sort      is used for fast sorting of the elements into ascending or
+             descending order. If only an index-array, but not the elements
+             themselves are to be rearranged,
+VF_sortind   does the job.
+VF_subvector extracts a subvector from a (normally larger) vector, using a
+             constant sampling interval.
+VF_indpick   fills a vector with elements "picked" from another vector
+             according to their indices.
+VF_indput    is the complement of VF_indpick and distributes the elements of
+             one vector to the sites of another vector specified by their
+             indices.
+
+Operations performed only on a sampled sub-set of elements of a vector are
+provided by the   VF_subvector_...  family, where the omission mark stands
+for a suffix denoting the desired operation.
+
+VF_searchC   searches for the element of a vector that is closest to a
+             pre-set value (with a parameter "mode" deciding if the closest,
+             the closest larger-or-equal, or the closest smaller-or-equal
+             value is chosen).
+VF_searchV   does the same for a whole array of pre-set values.
+
+Polynomial, rational, and cubic-spline interpolations are performed by
+VF_polyinterpol,  VF_ratinterpol, and VF_splineinterpol, resp.
+
+
+
+4.3 Data-Type Interconversions
+------------------------------
+
+The first thing that has to be said about the floating-point data-type
+interconversions is: do not use them too extensively. Decide which accuracy
+is appropriate for your application, and then use consistently either the
+VF_, or the VD_, or the VE_ version of the functions you need. Nevertheless,
+every data type can be converted into every other, in case it is necessary.
+
+The functions used for the interconversion of the real-value floating-point
+data types are: V_FtoD,  V_DtoF,  V_FtoE,  V_EtoF,  V_DtoE,  and V_EtoD.
+Similarly, the following functions are offered for the complex floating-
+point data types: V_CFtoCD,  V_CDtoCF,  V_CFtoCE,  V_CEtoCF,  V_CDtoCE,  and
+V_CEtoCD.
+
+Corresponding to the large number of integer data types, there is an even
+larger number of functions interconverting them. Switching between "normal",
+byte, short, long and "quadruple" integers is performed by
+V_ItoBI,  V_ItoSI,  V_ItoLI,  V_ItoQI,
+V_BItoI,  V_BItoSI, V_BItoLI, V_BItoQI,
+V_SItoI,  V_SItoBI, V_SItoLI, V_SItoQI,
+V_LItoI,  V_LItoBI, V_LItoSI, V_LItoQI,
+V_QItoI,  V_QItoBI, V_QItoSI,  and V_QItoLI.
+
+Similarly, the available types of unsigned numbers are interconverted by
+V_UtoUB,  V_UtoUS,  V_UtoUL,  V_UtoUI,
+V_UBtoU,  V_UBtoUS, V_UBtoUL, V_UBtoUI,
+V_UStoU,  V_UStoUB, V_UStoUL, V_UStoUI,
+V_ULtoU,  V_ULtoUB, V_ULtoUS, V_ULtoUI,
+V_UItoU,  V_UItoUB, V_UItoUS,  and V_UItoUL.
+
+Interconversions between signed and unsigned types can only be performed on
+the same level of accuracy, namely by the functions
+V_ItoU,   V_UtoI,
+V_BItoUB, V_UBtoBI,
+V_SItoUS, V_UStoSI,
+V_LItoUL,  and  V_ULtoLI.
+That means that functions like V_UStoLI do  n o t  exist!
+
+The conversion of integers into floating-point types is accomplished by
+V_ItoF,      V_ItoD,      V_ItoE,
+V_BItoF,     V_BItoD,     V_BItoE,
+V_SItoF,     V_SItoD,     V_SItoE,
+V_LItoF,     V_LItoD,     V_LItoE,
+V_QItoF,     V_QItoD,     V_QItoE,
+V_UtoF,      V_UtoD,      V_UtoE,
+V_UBtoF,     V_UBtoD,     V_UBtoE,
+V_UStoF,     V_UStoD,     V_UStoE,
+V_ULtoF,     V_ULtoD,     V_ULtoE,
+V_UItoF,     V_UItoD, and V_UItoE.
+Again, do not be confused by the large number of these functions, but keep
+in mind that for every interconversion there is one available.
+
+The reverse process, the conversion of floating-point numbers into integers,
+is more complicated: although every integer (except for extremely large
+ones) has an exact representation in the floating-point types, this is not
+true the other way round: floating-point numbers may by definition contain
+fractional, i.e. "non-integer" parts. By choosing the appropriate rounding
+function, the user has to decide how to treat these fractional parts:
+Neglect them ("chop" or "trunc"), round to the nearest whole number ("round"),
+round to the next greater-or-equal integer ("ceil") or to the next smaller-or-
+equal integer ("floor"). These options are treated as mathematical functions
+and are described in chapter 4.6.1.
+
+
+
+4.4 More about Integer Arithmetics
+----------------------------------
+
+Although the rules of integer arithmetics are quite straightforward, it
+appears appropriate to recall that all integer operations are implicitly
+performed modulo 2**n, where n is the number of bits the numbers are
+represented with. This means that any result, falling outside the range of
+the respective data type, is made to fall inside the range by loosing the
+highest bits. The effect is the same as if as many times 2**n had been added
+to (or subtracted from) the "correct" result as necessary to reach the legal
+range.
+For example, in the data type short, the result of the multiplication 5 *
+20000 is  -31072. The reason for this seemingly wrong negative result is
+that the "correct" result, 100000, falls outside the range of short numbers
+which is -32768 <= x <= +32767.  short integers are 16-bit numbers, so n = 16,
+and 2**n = 65536. In order to make the result fall into the specified range,
+the processor "subtracts" 2 * 65536 = 131072 from 100000, yielding -31072.
+
+Note that overflowing intermediate results cannot be "cured" by any following
+operation. For example, (5 * 20000) / 4 is not (as one might hope) 25000,
+but rather -7768.
+
+Note furthermore that the 64-bit data type quad does not employ this implicit
+modulo 2**n-arithmetics. Overflow conditions lead to undefined results.
+
+
+
+4.5 Basic Functions of Complex Vectors
+--------------------------------------
+
+The following functions are available for the basic treatment of complex
+vectors.
+VF_ReImtoC      forming a complex vector out of its real and imaginary parts,
+VF_RetoC        overwriting the real part,
+VF_ImtoC        overwriting the imaginary part,
+VF_CtoReIm      extracting the real and imaginary parts,
+VF_CtoRe        extracting the real part,
+VF_CtoIm        extracting the imaginary part,
+VF_PolartoC     forming a complex vector out of polar coordinates,
+VF_CtoPolar     transforming a complex vector into polar coordinates,
+VF_CtoAbs       calculating the absolute value (the magnitude of the pointer
+                in the complex plane),
+VF_CtoArg       calculating the argument (the angle of the pointer in the
+                complex plane),  and
+VF_CtoNorm      calculating the norm (which is defined here as the square of
+                the absolute value).
+
+
+
+4.6 Mathematical Functions
+--------------------------
+
+Lacking a more well-founded definition, we denote as "mathematical" all
+those functions which calculate each single element of a vector from the
+corresponding element of another vector by a more or less simple
+mathematical formula:  Yi = f( Xi ).   Except for the "basic arithmetics"
+functions, they are defined only for the floating-point data types. Most of
+these mathematical functions are vectorized versions of ANSI C functions or
+derived from them. Errors are handled by _matherr and _matherrl.  In
+addition to this error handling "by element", the return values of the
+VectorLib math functions show if all elements have been processed
+successfully. If so, the return value is 0, otherwise it is any non-zero
+int number.  (We do not yet use the newly introduced data type bool for
+this return value, in order to make VectorLib compatible also with older
+versions of C.)
+
+
+4.6.1 Rounding
+--------------
+
+As noted in connection with data-type interconversions, the conversion of
+floating-point numbers to integer data types may be accomplished by four
+different ways: Fractional parts may be neglected (VF_chop, VF_trunc), or
+the numbers may be rounded to the nearest integer (VF_round),  to the next
+greater-or-equal integer (VF_ceil), or to the next smaller-or-equal integer
+(VF_floor).
+
+The result of the rounding operation thus specified may either be left in
+the original floating-point format, e.g., in VF_round, or it may be converted
+into one of the integer types, as in VF_roundtoI,  VD_ceiltoLI, VF_choptoSI,
+or VE_floortoQI. As long as the input numbers are positive, they can also be
+rounded to the unsigned integer types,  as in VF_floortoU, VF_ceiltoUS,
+VD_choptoUL, or VE_trunctoUI.
+
+
+
+4.6.2 Comparisons
+-----------------
+
+Functions performing comparisons are generally named VF_cmp... (where
+further letters and/or numbers specify the type of comparison desired).
+Every element of a vector can be compared either to 0, or to a constant C,
+or to the corresponding element of another vector. There are two
+possibilities: either the comparison is performed with the three possible
+answers "greater than", "equal to" or "less than". In this case, the results
+are stored as floating-point numbers (0.0,  1.0,  or -1.0). Examples are
+VF_cmp0,  VD_cmpC,  and VE_cmpV.
+
+The other possibility is to test if one of the following conditions is
+fulfilled: "greater than", "greater than or equal to", "equal to", "not
+equal to", "less than", or "less than or equal to". Here, the answers will
+be "TRUE" or "FALSE" (1.0 or 0.0). Examples are VF_cmp_eq0,  VD_cmp_gtC, and
+VE_cmp_leV.
+
+Alternatively, the indices of the elements for which the answer was "TRUE"
+may be stored in an index-array, as in VF_cmp_neCind, VD_cmp_lt0ind,  and
+VE_cmp_geVind.
+
+While the basic comparison functions check against one boundary, there is
+a number of functions checking if a vector elements falls into a certain
+range.
+VF_cmp_inclrange0C   TRUE for 0 <= x <= C  (C positive),
+                              0 >= x >= C  (C negative).
+VF_cmp_exclrange0C   TRUE for 0 <  x <  C  (C positive),
+                              0 >  x >  C  (C negative).
+VF_cmp_inclrangeCC   TRUE for CLo <= x <= CHi,
+VF_cmp_exclrangeCC   TRUE for CLo <  x <  CHi.
+
+The variants of these functions that store the indices of elements yielding
+"TRUE" are VF_cmp_inclrange0Cind, VF_cmp_exclrange0Cind,
+VF_cmp_inclrangeCCind, and VF_cmp_exclrangeCCind.
+
+To test if (at least) one element of a table is equal to a preset value, the
+function VF_iselementC may be used. In order to test for each element of a
+vector, if it has an identical entry in a table, VF_iselementV should be
+used.
+
+
+
+4.6.3 Direct Bit-Manipulation
+-----------------------------
+
+For the integer data types, a number of bit-wise operations is available:
+VI_shl and VI_shr shift the bits to the left or to the right, resp., which
+is used for the fast multiplication and division by integer powers of 2.
+The principal use of VI_and is the fast modulo division of positive or
+unsigned numbers, while VI_or,  VI_xor, and VI_not  will find use only in
+special applications.
+
+
+
+4.6.4 Basic Arithmetics, Accumulations
+--------------------------------------
+
+In the following list, only the VF_ function is explicitly named, but the
+VD_ and VE_ functions exist as well; if it makes sense, the same is true for
+the complex and for the integer-type versions:
+
+VF_neg        Yi = - Xi;
+VF_abs        Yi = ≥ Xi ≥;
+VCF_conj      Yi.Re = Xi.Re; Yi.Im = -(Xi.Re).
+VF_inv        Yi = 1.0 / Xi;
+VF_equC       Xi = c;                VF_equV     Yi = Xi;
+VF_addC       Yi = Xi + c;           VF_addV     Zi = Xi + Yi;
+VF_subC       Yi = Xi - c;           VF_subV     Zi = Xi - Yi;
+VF_subrC      Yi = c - Xi;           VF_subrV    Zi = Yi - Xi;
+VF_mulC       Yi = Xi * c;           VF_mulV     Zi = Xi * Yi;
+VF_divC       Yi = Xi / c;           VF_divV     Zi = Xi / Yi;
+VF_divrC      Yi = c / Xi;           VF_divrV    Zi = Yi / Xi;
+VF_modC       Yi = Xi mod c;         VF_modV     Zi = Xi mod Yi.
+
+Besides these basic operations, several frequently-used combinations of
+addition and division have been included, not to forget the Pythagoras
+formula:
+
+VF_hypC    Yi = Xi / (Xi + c);        VF_hypV    Zi =  Xi / (Xi + Yi);
+VF_redC    Yi = (Xi * c) / (Xi + c);  VF_redV    Zi =  (Xi * Yi) / (Xi + Yi);
+VF_visC    Yi = (Xi - c) / (Xi + c);  VF_visV    Zi =  (Xi - Yi) / (Xi + Yi);
+VF_hypotC  Yi = sqrt( Xi˝ + c˝ );     VF_hypotV	 Zi =   sqrt( Xi˝ + Yi˝).
+
+All functions in the right column of the above two sections also exist in an
+expanded form (with the prefix VFx_...) in which the function is not
+evaluated for Xi itself, but for the expression (a * Xi + b),  e.g.,
+VFx_addV:   Zi  =  (a * Xi + b) + Yi.
+
+The simple algebraic functions exist also in yet another special form,
+with the result being scaled by some arbitraty factor. This scaled
+form gets the prefix VFs_.
+VFs_addV     Zi = C * (Xi + Yi);
+VFs_subV     Zi = C * (Xi - Yi);
+VFs_mulV     Zi = C * (Xi * Yi);
+VFs_divV     Zi = C * (Xi / Yi);
+
+VF_maxC     sets Yi equal to Xi or C, whichever is greater;
+VF_minC     chooses the smaller of Xi and C;
+VF_maxV     (and  VF_minV) set Zi equal to Xi or Yi, whichever is greater
+            (or smaller, resp.).
+VF_limit    limits the range of values, while
+VF_flush0   sets all values to zero which are below a preset threshold.
+VF_intfrac  splits the numbers into their integer and fractional parts;
+VF_mantexp  splits the numbers into their mantissa and exponent parts.
+
+In its geometrical interpretation, a vector is a pointer, with its elements
+representing the coordinates of a point in n-dimensional space. There are a
+few functions for geometrical vector arithmetics, namely
+VF_scalprod,  which calculates the scalar product of two vectors,
+VF_xprod,     which calculates the cross-product (or vector product) of two
+              vectors, and
+VF_Euclid,    calculating the Euclidean norm of a vector.
+
+While, in general, all OptiVec functions are for input and output vectors
+of the same type, there exists one family of functions for the accumulation
+of data in either the same type or in higher-precision data types.
+These functions correspond to the operation Y += X.
+The same-type variant is called VF_accV;  examples for the mixed-type
+forms are VD_accVF, VF_accVI, and VQI_accVLI.
+
+
+4.6.5 Powers
+------------
+
+VF_square,  VF_cubic, and VF_quartic, along with their expanded versions
+VFx_square,  VFx_cubic,  and VFx_quartic, are used to calculate the second,
+third and fourth power of the elements of the input vector. Arbitrary
+integer powers are available by VF_ipow; fractional powers are calculated by
+VF_pow. Polynomials are evaluated by VF_poly.
+
+In situations where you can be absolutely sure that all input elements
+yield valid results, you may employ the "unprotected" versions of the
+integer power functions: VFu_square, VFu_cubic, VFu_quartic, VFu_ipow,
+VFu_poly, with their expanded counterparts denoted by the prefix VFux_ .
+Due to the much more efficient vectorization permitted by the absence of
+error checks, the unprotected functions are up to 1.8 times as fast as the
+protected versions. (This is true from the Pentium CPU on; on older computers,
+almost nothing is gained.) Be, however, aware of the price you have to
+pay for this increase in speed: in case of an overflow error, the program
+will crash without any warning.
+
+All these functions raise arbitrary numbers to specified powers, whereas the
+following group of functions is used to raise specified numbers to arbitrary
+powers: VF_pow10, VF_ipow10,  VF_pow2,  and VF_ipow2  raise 10 or 2, resp.,
+to the (fractional or integer) powers specified in the input vector.
+The exponential function, VF_exp, raises Euler's constant e to the powers
+specified in the input vector. Finally, VF_expArbBase calculates the
+exponential function of an arbitrary base.
+
+The square-root, which corresponds to a power of 0.5,  is available with
+VF_sqrt.
+
+The corresponding functions for complex numbers are VCF_square,  VCF_cubic,
+VCF_quartic,  VCF_ipow,  VCF_pow,  VCF_exp,  VCF_expArbBase, and VCF_sqrt.
+
+
+
+4.6.6 Exponentials and Hyperbolic Functions
+-------------------------------------------
+
+A variety of functions are derived from the exponential function VF_exp (which
+itself has already been mentioned in the last section).
+VF_expc   calculates the complementary exponential function Yi = 1 - exp[Xi].
+VF_expmx2 calculates the exponential function of the negative square of the
+          argument,  Yi = exp[ - Xi˝ ]. This is a bell-shaped function similar
+          to the Gaussian distribution function which itself is available as
+VF_Gauss.
+
+Related to VF_Gauss and to VF_exp, the error function and the complementary
+error function are calculated by VF_erf and VF_erfc, respectively.
+
+The vectorized hyperbolic sine, cosine, tangent, cotangent, secant, and
+cosecant functions are available as VF_sinh, VF_cosh, VF_tanh, VF_coth,
+VF_sech, and VF_cosech. Because of its importance in physics, the squared
+hyperbolic secant is also available as VF_sech2.
+
+For complex numbers,  VCF_sinh,  VCF_cosh,  and VCF_tanh are available.
+
+
+
+4.6.7 Logarithms
+----------------
+
+           The decadic logarithm (i.e., the logarithm to the basis 10) is
+           available as
+VF_log10,  the natural logarithm (i.e., to the basis e) is obtained by
+VF_log,    and the binary logarithm (i.e., to the basis 2) is implemented as
+VF_log2.   Similarly, for complex numbers,
+VCF_log,  VCF_log10, and VCF_log2  (as always with their VCD_ and VCE_
+           counterparts) are included.
+
+As a special form of the decadic logarithm, the Optical Density,
+OD = log10( X0/X ), is calculated by  VF_OD  (for floating-point input
+vectors) and VUS_ODtoF, VUB_ODtoF etc. (for unsigned-integer input vectors).
+VF_ODwDark, VUS_ODtoDwDark, etc. allow to calculate the OD with a correction
+for dark currents.
+
+
+4.6.8 Trigonometric Functions
+-----------------------------
+
+The vectorized sine, cosine, tangent, cotangent, secant, and cosecant
+functions are available as
+VF_sin,       VF_cos,
+VF_sincos     (sine and cosine at once!),
+VF_tan,       VF_cot,
+VF_sec,       and VF_cosec.
+
+The squares of the trigonometric functions are available by
+VF_sin2,      VF_cos2,
+VF_sincos2    (again both the sin˝ and the cos˝ at once),
+VF_tan2,      VF_cot2,
+VF_sec2,      and VF_cosec2.
+
+In cases where one knows beforehand that all input elements are witin a
+range -Pi/2 <= x <= +Pi/2,  one can spare quite considerable execution
+time in the calculation of the sine and cosine functions by employing
+the "reduced-range" functions
+VFr_sin,   VFr_cos,   VFr_sincos,
+VFr_sin2,  VFr_cos2,  VFr_sincos2,
+along with their expanded counterparts, denoted by the prefix VFrx_ .
+Please note that especially the implementation chosen for the 32-bit
+model FLAT will crash without warning in the case of any input number
+outside the range specified above.
+As all other trigonometric functions need error checking and handling,
+even for arguments within this range, no reduced-range versions of the
+trigonometric functions, aside from the sine and the cosine, have been
+included.
+
+A very efficient way to calculate the trigonometric functions for arguments
+representable as rational multiples of Pi is supplied by the trigonometric
+functions with the suffix "rpi" (meaning "rational multiple of pi"):
+VF_sinrpi, VF_cosrpi, VF_sincosrpi, VF_tanrpi, VF_cotrpi, VF_secrpi, and
+VF_cosecrpi.
+More specialized versions use tables to obtain frequently-used values;
+these versions are denoted by the suffixes "rpi2" (multiples of Pi divided
+by an integer power of 2) and "rpi3" (multiples of Pi over an integer
+multiple of 3). Examples are VF_sinrpi2 and VF_tanrpi3.
+
+The sinc function (quotient of the sine of an argument and the argument
+itself) is available as the VF_sinc.
+
+The Kepler function (angular position of a planet with time, given its
+round-trip time and eccentricity, according to Kepler's Second Law) is
+implemented as VF_Kepler.
+
+Vectorized inverse trigonometric functions are available as VF_asin,
+VF_acos, VF_atan, and VF_atan2.
+
+Complex trigonometric and inverse trigonometric functions are implemented as
+VCF_sin,  VCF_cos,  VCF_tan,  VCF_asin,  VCF_acos,  and VCF_atan.
+
+
+
+4.7 Analysis
+------------
+
+Global maxima and minima of real functions are detected by VF_max and
+VF_min, resp. The same extrema, along with the index of their first
+occurrence, are detected by VF_maxind and VF_minind, resp. To find the
+maxima and minima in terms of absolute values, the functions VF_absmax and
+VF_absmin are included along with the versions additionally yielding the
+index, VF_absmaxind and VF_absminind. The "running" maximum and minimum
+(where each element is set to the largest/smallest value occurring up to its
+own index) are calculated by VF_runmax and VF_runmin, resp.
+
+For complex numbers, the maximum real and imaginary parts may be found
+separately by VCF_maxReIm, with the analogous function for the minima being
+VCF_minReIm. For the separately-found maxima and minima of the real and
+imaginary parts in absolute terms, use VCF_absmaxReIm and VCF_absminReIm.
+Note that, for these four functions, the real and imaginary parts of
+the result generally stem from different elements of the vector.
+
+The largest absolute value (magnitude) occurring in a set of complex data is
+found by VCF_absmax, the smallest one by VCF_absmin. To find the index of
+the element with the largest/smallest magnitude along with that magnitude,
+use VCF_absmaxind and VCF_absminind, resp.
+
+The sum of all elements of a real or complex vector is available by VF_sum
+and its higher-accuracy or complex analogues, the product by VF_prod and the
+sum-of-squares by VF_ssq.  A summation over absolute values is performed
+by VF_sumabs. VF_rms determines the r.m.s. of all elements of a vector.
+Similarly to the "running" maximum, the running sum and product are available
+by VF_runsum and VF_runprod, resp.
+
+The derivative of a Y-array with respect to an X-array is calculated by
+VF_derivV. If the intervals between the X-values are constant, the values
+themselves are not needed for taking the derivative, but only the spacing is
+required; VF_derivC should be employed in this case.
+The integral of a Y-array over an X-array is calculated by the two functions
+VF_integralV and VF_runintegralV, of which the first one determines only the
+area under the curve defined by the input array, whereas the second one
+calculates the point-by-point integral array. As for the derivative, also for
+the integral the X-values themselves are not needed if they are equally-
+spaced; in this case, VF_integralC and VF_runintegralC should be used.
+
+VF_ismomoton   tests if an array is monotonously rising or falling.
+VF_smooth      (which removes high-frequency noise),
+VF_iselementC  (which tests, if a given value occurs within a vector), and
+VF_searchC     (which searches an ordered table for the entry whose value
+               comes closest to a preset value C) have to be mentioned as
+               functions sometimes needed in connection with analysis.
+
+
+
+4.8 Signal Processing:
+    Fourier Transforms and Related Topics
+-----------------------------------------
+
+The forward and the backward Fast Fourier Transform (FFT) are calculated by
+VF_FFT or, for complex vectors, by VCF_FFT.
+
+Based on FFT, convolution and deconvolution are available by
+VF_convolve and VF_deconvolve.
+Spectral filtering is achieved by VF_filter,
+spectral analysis by VF_spectrum.
+The autocorrelation function of a data array is obtained by VF_autocorr,
+and the cross-correlation function of two arrays by VF_xcorr.
+
+The FFT algorithm chosen for this PC implementation is a radix-2
+Cooley-Tukey routine. Only for this radix-2 algorithm, the restricted
+number of eight coprocessor registers still allows to hold all inter-
+mediate results of the inner transform loop in coprocessor registers.
+Although featuring savings in the number of multiplications, radix-4 and
+radix-8 routines are rendered less efficient than the routine chosen by
+the need of storing intermediate results in memory.
+
+There are two different versions of all FFT-based functions. Depending
+on the memory model, either of the two is automatically chosen. You
+may, however, explicitly specify the one you wish to employ.
+The first one uses the already-mentioned table of sine values (see
+chapter 4.6.8. and the function VF_sinrpi2) as a look-up table for the
+Fourier coefficients needed. This table needs up to 10 kBytes.
+By default, this very fast variant is used in the memory models COMPACT
+and LARGE. To explicitly specify it in the other memory models, please use
+the prefixes VFl_, VDl_, VEl_ (with the letter "l" for the "larger" amount
+of memory needed). 
+
+The second variant, which is automatically chosen in all memory models
+except for COMPACT and LARGE, employs trigonometric recursions to obtain the
+sine and cosine values with still satisfactory speed, though this procedure
+is not as fast as simply reading them from a table. You may explicitly
+specifiy this variant by adding the letter "s" (for the "smaller" amount of
+memory needed) in the function prefix. Examples are VFs_FFT, VDs_convolve,
+VEs_spectrum.
+If you decide to use this variant in order to economize memory in the models
+COMPACT and LARGE, use the prefix VFs_ for all(!) routines employing FFT.
+Otherwise, you will not only load the look-up table, but also a second FFT
+routine into your already overcrowded memory.
+
+Although it does not use Fourier transform methods, VF_smooth should be
+remembered here as a crude form of frequency filtering which removes high-
+frequency noise.
+
+
+
+4.9 Statistical Functions and Building Blocks
+---------------------------------------------
+
+The mean (or average) of all the elements of a vector is obtained by
+VF_mean; if different weights are to be attributed to the individual
+elements, VF_meanwW ("mean with weights") may be used. The variance of a
+distribution with respect to a preset constant value is calculated by
+VF_varianceC (with weights by VF_varianceCwW), the variance with respect to
+another array by VF_varianceV and VF_varianceVwW. To obtain the mean and the
+variance of a distribution simultaneously, VF_meanvar and VF_meanvarwW are
+used.
+VF_meanabs calculates the mean of the absolute values.
+If outlier points are to be excluded from the calculation of the mean,
+VF_selected_mean allows to average only those vector elements which fall
+into a specified range.
+
+The median of a distribution is found by VF_median.
+
+The linear correlation coefficient of two distributions is available by
+VF_corrcoeff.
+
+VF_sumdevC   sums up the deviations from a preset constant, sum( ≥Xi - C≥ ).
+VF_sumdevV   sums up the deviations from another vector, sum( ≥Xi - Yi≥ ).
+VF_avdevC    gives the "average deviation from a preset constant",
+                     1/N * sum( ≥Xi - C≥ ), and
+VF_avdevV    gives the "average deviation from another vector",
+                     1 / N * sum( ≥Xi - Yi≥ ).
+VF_ssqdevC   yields the "sum of the squares of the deviations from a preset
+             constant",  sum( (Xi - C)˝ ),
+VF_ssqdevV   the "sum of the squares of the deviations from another vector",
+             sum( (Xi - Yi)˝ ).
+VF_chi2      calculates the chi-square merit function, while
+VF_chiabs    calculates a more "robust" merit function, summing up absolute
+             instead of squared deviations.
+
+
+A linear regression is performed on X-Y data by VF_linregress or, if the
+individual data points are to be weighted, by VF_linregresswW.
+
+Fitting of data sets to arbitrary functions is available in MatrixLib,
+which contains the functions VF_polyfit, VF_linfit, VF_nonlinfit,
+VF_multiLinfit, and VF_multiNonlinfit (see MATRIX.TXT).
+
+VF_distribution bins data into a discrete one-dimensional distribution
+function.
+
+In connection with statistics, the functions VF_sum, VF_prod, VF_ssq,
+VF_rms, and VF_iselementC should be remembered.
+
+
+
+4.10 Input and Output
+---------------------
+
+There are several ways of printing the elements of a vector:
+VF_cprint   prints them to the screen (or "console" - hence the "c" in the
+            name) into the current text window, automatically detecting its
+            height and width. After printing one page, the user is prompted
+            to continue.
+VF_print    is similar to VF_cprint in that the output is directed to the
+            screen, but there is no automatic detection of the screen data;
+            a default linewidth of 80 characters is assumed, and no division
+            into pages is made.
+            Both VF_print and VF_cprint should not be used within TurboVision.
+            VF_cprint is not available under Windows. VF_print is available
+            for DOS and EasyWin applications, but not for genuine (i.e., OWL)
+            Windows programs.
+VF_fprint   prints a vector to a stream. This may be a file, a printer, or
+            again the screen. Nothing will prevent you from mis-using this
+            function for printing to the screen in TurboVision or Windows,
+            but you should not!
+            VF_fprint is available in any environment (DOS, EasyWin and OWL).
+
+VF_write   writes data in ASCII format in a stream
+VF_read    reads a vector from an ASCII file.
+VF_nwrite  writes n vectors of the same data type as the columns of a table
+           into a stream.
+VF_nread   reads the columns of a table into n vectors of the same type.
+
+VF_setWriteFormat, VF_setWriteSeparate and VF_setNWriteSeparate allow
+to modify the standard settings of VF_write and VF_nwrite.
+For the whole-number variants of the ..read functions, a radix different
+from the standard of 10 may be defined using V_setRadix.
+V_setRadix does, however, not act on VQI_read.
+
+VF_store and VF_recall are employed to store and retrieve data in binary
+format (which is much faster and occupies fewer bytes of disk space than
+ASCII format).
+
+
+
+4.11 Graphics
+-------------
+
+VectorLib includes a range of data-plotting routines.
+Before any of them may be used, VectorLib graphics has to be initialized.
+
+For Windows programs, VectorLib graphics has to be initialized by V_initPlot.
+No shut-down is needed at the end, since the Windows graphics functions
+always remain accessible.
+
+For DOS programs, this is done by V_initGraph. By calling V_initGraph, the
+BGI functions (on which VectorLib's graphics functions rely) are
+automatically initialized, too. Do not call initgraph after V_initGraph.
+If you have already called initgraph, do not use V_initGraph, but V_initPlot
+instead of it. At the end of the graphics session, the Borland C function
+closegraph has to be used to leave the graphics mode and to release graphics
+buffer memory.
+
+Windows and DOS:
+V_initPlot automatically reserves a part of the screen for plotting
+operations. This part comprises about 2/3 of the screen on the right side.
+Above, one line is left for a heading. Below, a few lines are left empty.
+To change this default plotting region, call V_setPlotRegion after V_initPlot.
+
+Only under Windows, all VectorLib plotting functions may directly be
+used for printing on a printer. If this is desired, you have to call
+V_initPrint instead of V_initPlot. By default, one whole page is reserved
+for plotting. In order to change this, call V_setPlotRegion after V_initPrint.
+
+VectorLib distinguishes between two sorts of plotting functions,
+AutoPlot  and  DataPlot.
+
+All AutoPlot functions (e.g., VF_xyAutoPlot) execute the following steps:
+*   define a viewport within the plotting region (which is either the
+    default region or the one defined by calling V_setPlotRegion)
+*   clear the viewport
+*   generate a Cartesian coordinate system with suitably scaled and labeled
+    axes
+*   plot the data according to the parameters passed to the function
+
+All DataPlot functions (e.g. VE_yDataPlot) execute only the last of these
+steps. They assume that a coordinate system already exists from a previous
+call to one of the AutoPlot functions. The new plot is added to the existing
+one. All settings of this coordinate system have to be valid. The viewport
+must still be the active one and the scaling of the axes has to fit also for
+the new data plot.
+
+To add text and lables, a new viewport must be defined.
+Use setviewport (DOS), SetViewportOrg (Windows with OWL 1.0), or
+SetViewportOrgEx (Windows with OWL 2.0 or higher).
+
+To switch back into text mode in DOS, use restorecrtmode.
+After that, calling V_initPlot brings you back into graphics mode.
+
+VF_xyAutoPlot   displays an automatically-scaled plot of an X-Y vector pair.
+VF_yAutoPlot    plots a single Y-vector, using the index as X-axis.
+VF_xy2AutoPlot  and
+VF_y2AutoPlot   plot two X-Y pairs or two Y-vectors at once, doing the
+                necessary scaling so that both fit into the same coordinate
+                system.
+                To plot additional arrays into an already existing coordinate
+                system,
+VF_xyDataPlot   and
+VF_yDataPlot    should be used, as has already been mentioned.
+
+Complex arrays are printed into the complex plane (the imaginary parts
+versus the real parts), using
+VCF_autoPlot,  VCF_2AutoPlot,  and  VCF_dataPlot.
+
+The different plot styles, regarding symbols, lines, and colors, are
+described in connection with VF_xyAutoPlot in the Function Reference
+(file FUNCREF.TXT, chapter 8).
+
+It is possible to draw more than one coordinate systems into a given
+window on the screen. The position of each coordinate system must be
+specified by the above-mentioned function V_setPlotRegion. "Hopping"
+between the different coordinate systems and adding new DataPlots
+after defining new viewports (e.g., for text output) is made possible
+by the following functions:
+V_continuePlot    go back to the viewport of the last plot and restore
+                  its scalings
+V_getCoordSystem  get a copy of the scalings and position of the current
+                  coordinate system
+V_setCoordSystem  restore the scalings and position of a coordinate system;
+                  these must have been stored previously, using
+                  V_getCoordSystem
+
+DOS only:
+When using multiple coordinate systems on the same screen, the default font
+used for axis labeling might be too large, so that neighbouring labels
+overlap each other. In these cases, use the BGI function settextstyle to
+switch to another font befor calling a VectorLib AutoPlot function.
+
+
+****************************************************************************
+*                                                                          *
+*******                     5. Error Handling                        *******
+*                                                                          *
+*****************************************************************************
+
+5.1 General Remarks
+-------------------
+
+There are generally two types of error handling: by the hardware, or by the
+software. In order to prevent uncontrolled program crash, it is highly
+desirable that conditions, leading to hardware errors, be recognized before
+the errors actually occur. All high-level computer languages support this
+software error-handling to various degrees of perfection. Within the
+tightly-defined functions and routines of this VectorLib package, often an
+even more efficient error handling by the program itself is possible than
+provided by the compilers for user-written code.
+
+However, it should be noted that no absolute overflow protection is possible
+for the long double versions. They do not have a "safety margin" left as in
+the float and double versions, where internally all calculations are performed
+in extended precision. Especially the VEx_ and VCEx_versions may fail if
+constant parameters are very large, or if the X vector elements themselves are
+already near the overflow limit. To be on the safe side, constant parameters
+should not exceed about 1.E32 for float, 1.E150 for double, and 1.E2000 for
+extended parameters.
+
+In the "expanded" versions of all functions with extended accuracy (those
+with the prefixes VEx_  and VCEx_;  for example VEx_exp), there is generally
+no overflow protection for the calculation of A*Xi+B, but only for the core
+of the function itself and for the final multiplication by C.
+
+A series of identical errors occurring within one and the same VectorLib
+function leads to one error message only. Subsequent identical messages are
+suppressed.
+
+There is a fundamental difference between floating-point and integer numbers
+with respect to OVERFLOW and DOMAIN errors: for floating-point numbers,
+these are always serious errors, whereas for integer numbers, by virtue of
+the implicit modulo-2**n arithmetics, this is not necessarily the case. In the
+following two paragraphs, details are given on the error handling of integer
+and floating-point numbers, respectively.
+
+
+
+5.2 Integer Errors
+------------------
+
+The only genuine integer errors are ZERODIVIDE errors (if a division by 0 is
+attempted). Other integer errors are neglected due to the implicit definition
+of integer operations to be done modulo the respective power of 2 (see
+chapter 4.4). For those situations in which implicit modulo 2**n arithmetics
+is not appropriate, VectorLib offers the possibility to trap these errors and
+print an error message and/or abort the program. All functions where
+INTEGER OVERFLOW (e.g., in VI_ramp, VI_mulV, etc.) or INTEGER DOMAIN errors
+(e.g., in V_ItoU for negative X-values) may occur, exist in two versions:
+the "normal" version employs modulo 2**n arithmetics and interchanges signed
+and unsigned data types according to their bit pattern.
+
+For the 16-bit and 32-bit integer types (but not for 8-bit and 64-bit),
+there is a second version which also employs modulo 2**n arithmetics, but
+detects the errors. To choose this version, the symbolic constant
+V_trapIntError must be defined before(!) <VecLib.h> appears in the program
+header.
+
+The action taken in case of INTEGER OVERFLOW errors is then defined by a call
+to the function  V_setIntErrorHandling  with one of three possibilities as
+the argument (defined as enum V_ihand in <VecLib.h>):
+
+ierrNote      print an error message
+ierrAbort     print an error message and exit the program
+ierrIgnore    ignore the problem. With this last option, the error handling
+              can be switched off intermediately.
+
+Example:
+    #define V_trapIntError 1
+    #include <VIstd.h>
+    #include <VImath.h>
+    .....
+    main()    /*   or WinMain(),  or OwlMain()   */
+    {
+        iVector  I1, I2;
+        I1 = VI_vector( 1000 );  I2 = VI_vector( 1000 );
+        V_setIntErrorHandling( ierrNote );
+        VI_ramp( I1, 1000, 0, 50 );   /* an overflow will occur here! */
+        V_setIntErrorHandling( ierrIgnore );
+        VI_mulC( I2, I1, 1000, 5 );
+            /* here, even a whole series of overflows will occur; they are
+               all ignored. */
+         ....
+    }
+
+
+
+5.3 Floating-Point Errors
+-------------------------
+
+In order to understand the details of the floating-point error handling
+outlined in the following sections, you may wish to refer to the description
+of the functions _matherr and signal in the documentation of your C++
+compiler.
+(Borland C++ only: prior to the version 4.0, instead of _matherr() the
+function matherr() - without the leading underbar - was used, see below).
+Keep in mind that _matherr and _matherrl are the user-definable focal points
+for the handling of all software-detected errors, whereas signal is used to
+install a handler for hardware-detected errors (which should better be
+avoided in the first place). Within the VectorLib functions, _matherr is
+used for the error handling in the VF_, VCF_, VD_, and VCD_ versions. 
+_matherrl is used in the VE_ and VCE_ versions (Borland C++ only, as
+neither Visual C++ nor Optima++ support 80-bit real numbers).
+
+Below, the possible types of errors are described. Here, we denote by
+"HUGE_VAL" the largest number possible in the respective data type,
+i.e. MAX_FLT, MAX_DBL, or MAX_LDBL. Similarly, "TINY_VAL" is the smallest
+denormal number representable in the respective data type. This is not the
+same as MIN_VAL, which is the smallest full-accuracy number of the respective
+data type.
+
+If the function in which an error occurs has one real-valued argument, only
+the parameter e->x is defined in calling _matherr and e->y  is left undefined.
+Only if there are two arguments (like in VF_atan2  or in VF_cotrpi),
+both e->x  and e->y are needed to hold these arguments. For complex arguments,
+the real part is stored in e->x  and the imaginary part in e->y.
+
+For each function of the VectorLib package, the types of errors that are
+detected and handled are described in the "Alphabetical Reference" (chapter 8).
+All functions derived from ANSI C functions of the mathematical libraries
+(those whose declarations are to be found in <math.h>)  contain a fully-
+fledged mathematical error handling. In addition to the error handling
+"by element", their return value shows if all elements have been processed
+error-free (return value 0) or if an error occurred and was handled (return
+value different from 0).
+
+DOMAIN errors most often lead to the result NAN ("not-a-number"). Even if
+    nothing happens within the function itself that detects a DOMAIN error,
+    an uncontrolled program crash may result if subsequent operations are
+    performed on the vector element set to NAN. We therefore recommend to
+    modify _matherr and _matherrl in such a way that the program is aborted
+    if a DOMAIN error occurs (for an example, see below; alternatively, the
+    UNIX style may be adopted; see the file MATHERR.C supplied with the
+    your C/C++ compiler). Changing the return value of _matherr is another
+    possiblity, but the better way very clearly is to avoid any DOMAIN errors
+    by performing appropriate checks before calling functions like VF_sqrt,
+    VF_log, VF_atan2 etc.
+       Note:  the pseudo-numbers INF and NAN are not allowed as input for any
+       functions of the VectorLib library. They are not tested for; their
+       presence will normally result in a hardware interrupt.
+
+SING errors are treated like an extreme case of OVERFLOW (see below). In
+    most cases, they arise from an implicit division by zero or from taking
+    the logarithm of zero. The proposed result is never NAN, but always a
+    "number", in most cases ÒHUGE_VAL. Although it is recommended also in the
+    case of SING errors to abort the program and take the necessary measures
+    to avoid them, you may choose to continue program execution.
+
+OVERFLOW errors are the most abundant form of floating-point errors. They
+    are always handled by proposing +HUGE_VAL or -HUGE_VAL as the result.
+    Within many user algorithms, OVERFLOW  errors may occur for intermediate
+    results; if subsequent steps perform operations like taking the inverse,
+    the final result may be acceptable despite the error. Therefore, we
+    recommend to accept the return-value proposal and not to abort the
+    program.
+
+In principle, you may decide not to accept the return-value proposal of
+_matherr, but to substitute another one. However, for several reasons
+you are discouraged from doing that: the correct sign of the result is
+set by the calling ("complaining") function in many cases only after
+returning from _matherr;  the x-value passed to _matherr (which should
+be inspected before the return value is modified) may either be X[i]
+or (as in some of the expanded complex math functions of the VCEx_...
+family) the intermediate result x' = Ax + B.  Note, furthermore, that
+all x-values are passed to _matherr as double-precision floating-point
+numbers, also in the case of integer input numbers (like in VF_tanrpi,
+where P[i] and q are passed as x and y to _matherr).
+
+TLOSS  ("total loss of precision") errors are handled by  _matherr only if a
+    more serious error might occur in the respective function. For example,
+    the sine function takes on values between -1 and +1 for all arguments.
+    So, in case of an argument too big for the sine function to be evaluated
+    with any accuracy, the result may nevertheless be "tacitly" set to 0.0
+    and no call to _matherr is generated (whereas Borland C++ chooses NAN,
+    "not a number", as the result, which is certainly even less correct than
+    arbitrarily choosing 0.0).
+    On the other hand, the cosecant, i.e. the inverse of the sine, is not
+    defined for arguments of integer multiples of Pi. Therefore, a more
+    serious error (in this case a SING or an OVERFLOW error) might be hidden
+    under the TLOSS for very big arguments. This possibility is taken into
+    account by calling _matherr, although the proposed result is again set
+    to 0.0 (which is the mean of the two extremes +HUGE_VAL and -HUGE_VAL).
+    Generally, the default result in the case of a TLOSS error is the mean of
+    the results for arguments of +0.0 and -0.0.
+
+UNDERFLOW errors are never detected; underflowing results are always
+    "tacitly" set to denormal numbers or finally to 0.0 by the floating-point
+    processor itself. Indeed, you may very rarely wish to do something else
+    in this case.
+
+As in all non-vectorized math functions of Borland C++, PLOSS ("partial loss
+of precision") errors are never detected and precision problems simply
+ignored.
+
+
+5.3.1 Borland C++ only:
+      Differences between Borland C++ 4.0 and earlier versions
+--------------------------------------------------------------
+
+Borland C++ uses the function _matherr in the way described above only
+from version 4.0 on. Earlier versions employ the function matherr
+(without the leading underbar in the function name). In order to be
+usable both with the new and the old versions, VectorLib primarily
+calls matherr as for the older versions. The include-file <VecLib.h>
+provides a macro NEWMATHERR for the redirection of these calls to the
+new _matherr(). This macro should appear somewhere in the module
+containing the main() or WinMain() procedure, after the header:
+    #include <VecLib.h>
+    #include ...
+    NEWMATHERR
+      ......
+    main()
+    { ... }
+
+
+
+5.4 The Treatment of Denormal Numbers
+-------------------------------------
+
+"Denormal" are very small numbers between zero and the smallest full-
+accuracy number available in the respective data type.  You may
+understand the underlying principle from a simplified example:
+1.175494E-38 is the smallest "normal" float, with 7-digit accuracy.
+What about 1/1024 of this value? This can only be represented as
+0.001145E-38, which is accurate to only four digits, since the first
+three digits are needed to hold zeros. Thus, denormal numbers provide a
+smooth transition between the smallest representable normal numbers and
+zero.
+
+In general, they may be treated just as ordinary numbers. In some instances,
+however, like taking the inverse, overflow errors may occur. In these cases,
+the somewhat academic distinction between SING and OVERFLOW errors is dropped
+and a SING error signalled (as if it was a division by exactly 0).
+
+On the other hand, for functions like the logarithms, very small input numbers
+may give perfectly reasonable results, although the exact number 0.0 is an
+illegal argument, leading to a SING error. Here, the possible loss of
+precision is neglected and denormals are considered valid arguments.
+(This treatment is quite different from that chosen for the math functions of
+Borland C/C++, where denormal arguments lead to SING errors also in these
+cases, which seems less appropriate to us.)
+
+
+
+5.5 Advanced Error Handling: Writing Messages into a File
+---------------------------------------------------------
+
+ANSI C provides the user-definable function perror to print error messages.
+However, most compilers do not use perror for this purpose. This means that
+the way error messages are printed is not controllable by the programmer.
+While this is fine in most instances, there may be situations in which you
+might, for example, wish the error messages not to be printed to the screen,
+but rather into a file, so that you could check later what has gone wrong.
+An additional motivation could come from the fact that, for any error
+occurring in a Windows program, a message box is displayed and program
+execution interrupted until you acknowledge having taken notice of the error.
+
+You might wish to circumvent this. To this end, VectorLib provides the
+function  V_setErrorEventFile. This function needs as arguments the desired
+name of your event file and a switch named ScreenAndFile which decides if the
+error message is printed only into the file, or additionally to the screen
+as well.
+
+Note that this redirection of error messages is valid only for errors
+occurring in VectorLib routines. If you wish to do so, however, there is a
+way to extend the redirection also to the "non-VectorLib" functions:  you
+may modify  _matherr and _matherrl such that the statement
+    return 0;
+(which signals an unresolved error)  is replaced by the sequence
+    V_noteError( e->name, e->type ); return 1;
+Thereby the task of printing the error message for unresolved errors is
+passed to the VectorLib function V_noteError. Keep in mind that it is the
+return value of _matherr which decides if an error message is printed by the
+default error handler of your compiler. Thus, after the call to V_noteError,
+the printing of the default error messages is by-passed by returning "1".
+(Also, do not forget that VectorLib uses your _matherr routine to determine
+which errors you accept and which not!)
+
+For example, your _matherr function (matherr - without the leading underbar
+- for Borland C++ 3.0 and 3.1) might look like the following one:
+
+    #include <math.h>
+    int  _matherr( struct exception *e)
+    {
+        if( (e->type == UNDERFLOW) ≥≥ (e->type == TLOSS) ) ;    /* ignore */
+        else   /* all other errors deserve at least notice */
+        {
+              V_noteError( e->name, e->type );
+              if (e->type == DOMAIN) exit(1); /* really fatal */
+        }
+        return 1;
+    }
+
+(Of course, if you decide to change _matherr, do not forget to change
+_matherrl in the same way!).
+
+The default printing of error messages on the screen alone is restored by
+V_closeErrorEventFile.
+
+A way to keep track also of those errors which do not lead to messages is
+opened by the return values of mathematical VectorLib functions. Any of the
+"silent" TLOSS along with the more serious DOMAIN, SING and OVERFLOW errors
+will lead to a non-zero return value. You may wish to check for a clean
+result after a group of functions, like in the following example:
+
+   unsigned ErrFlag;
+   ...
+         /*   part Trig1  */
+   ErrFlag=0;   /* reset the flag */
+   ErrFlag |= VF_sin( Y1, X1, sz );
+   ErrFlag |= VF_cos( Y2, X1, sz );
+   ErrFlag |= VF_atan2( Z1, Y1, Y2, sz );
+   if( ErrFlag ) printf( "Errors occurred in part Trig1 ! ");
+   ...
+
+As indicated in the example, it is better to use the   |=  operator instead
+of  +=  (since,  in rare cases, all return values might add up to 65536,
+which is stored as 0 due to an overflow of the integer variable). Even if
+you chose addition of the individual return values, the number of occurred
+errors would not be obtainable from the result; in case of an error, any
+non-specified non-zero number is returned.
+
+
+
+****************************************************************************
+*                                                                          *
+*******                    6. Trouble-Shooting                       *******
+*                                                                          *
+****************************************************************************
+
+
+6.1 General Problems
+--------------------
+
+In case of problems, please check first if VectorLib is correctly installed
+(see chapter 1.4). If this is the case, carefully check the following points
+whose violation would inevitably lead to failure.
+
+*   The choice of the OptiVec library must match your selection of memory
+    model, processor, and environment. With Borland C++, you are not going
+    to have much fun with the library VCL3.LIB under Windows3.x (where you
+    need VCL3W.LIB), and the libraries designed for Borland C++ will not
+    work with Visual C++ or any other compiler. Similarly, OVVCSD.LIB,
+    designed for single-thread debug in Visual C++, will not work in any
+    multi-thread or any "release" link.
+
+*   You must not use vectors with a size of 0. All functions tacitly assume
+    that the vectors have at least one element and do not waste your computer
+    time testing for that.
+
+*   You must not use vectors that are only declared, but have no allocated
+    memory (see the description of VF_vector). If you did not switch off
+    warnings, you may be warned also by the compiler not to do that
+    ("possible use of xxx before definition").
+
+*   Constant parameters should not exceed 1.E32 for floats, 1.E150 for
+    doubles,  or 1.E2000 for long doubles. Normally, these ranges should
+    suffice for any application...
+
+*   16-bit Borland C++ only: Do not forget to write the line
+        NEWMATHERR
+    after the header into the module containing main(),  WinMain(),  or
+    OwlMain(), in order to maintain compatibility both with older and later
+    versions of Borland C++  (see chapter 5.3.1).
+
+Although OptiVec has been tested very thoroughly, there is, of course,
+always the possibility that a problem might have escaped our attention.
+Should you feel you discovered a "bug" in OptiVec, please try to specify
+the situation causing the problem as exactly as possible and let the author
+know!
+
+
+
+6.2 Problems with Windows3.x?
+-----------------------------
+
+Programming for 16-bit Windows is much more involved than programming for
+either DOS or 32-bit Windows. While DOS gives the programmer almost complete
+control over both the main processor and the coprocessor, Windows demands
+much of this control for itself. This introduces problems you should be
+aware of. They are not at all specific to VectorLib. However, since they
+seem not to be very widely known, here is a collection of some of them.
+Up to now, these problems have not been observed with the memory model FLAT
+used with Win32 (Microsoft's 32-bit extension of Windows 3.1), Windows NT
+or Windows95/98.
+
+*   The background routines controlling intermediate results do not only work
+    at the expense of your time, they may also at some point decide to load a
+    NULL selector into the segment registers FS and GS. If you happen to use
+    these registers (somehow, they were meant by Intel to be used!), Windows'
+    answer on your next operation will be the familiar "General Protection
+    Fault (Error 13)". Therefore, the Windows versions of VectorLib do not
+    use FS and GS at all.
+
+*   If a floating-point multiplication or division happens to result in a
+    so-called "denormal number" (see chapter 5.4), Windows at first accepts
+    this result. The next time you use this denormal result, however, Windows
+    decides that it had better been zero. Checking for zero by a comparison
+    like
+          if(x != 0.0)...
+    yields the correct answer that x it is not zero, but, after (!) this
+    check, Windows makes x exactly zero, if it is loaded onto the number
+    stack. This leads to hard-to-find errors. If you inspect VectorLib
+    routines with the debugger, you may at some points encounter strange,
+    seemingly ineffecient code being used for comparisons. This is a fix for
+    the described problem which costs time, but saves you from Windows-
+    induced DIVIDE ERROR crashes.
+
+*   Related to the last problem is another feature of Windows3.x: after the
+    comparison of two floats or two doubles, one of which is denormal, -NAN
+    ("minus not-a-number")  may appear on the number stack. Some time later,
+    this leads to a "Floating-point invalid" or a "Stack Overflow" error -
+    another means of killing your application. If you encounter -NAN on the
+    number stack when debugging your programs (with or without VectorLib
+    used), you should find out which comparison(s) caused the problem and add
+    the line
+           asm  ffree ST(0);
+    after this or these comparisons.
+
+
+
+6.3 Problems with Borland's 16-bit Linker?
+------------------------------------------
+
+When working with large programs and libraries, older versions of TLINK
+sometimes run into problems. You may get error messages like "Linker stack
+overflow", "Out of memory", "Table limit exceeded", "Extended dictionaries
+ignored", or "Unresolved external xxx referenced from module yyy".
+
+Try to give the linker as much memory as possible by closing applications,
+removing drivers etc. If that does not help, re-arrange your project list.
+Curiously enough, that solves the problem sometimes.
+
+In the case of "Unresolved external" linker errors, there is only one way
+(if the error is not caused by wrong spelling). First you have to use TLIB
+in order to get a listing of the respective library (see the description of
+TLIB !). Screening the .LST file thus obtained with a text editor, you find
+the module containing the symbol which the linker was unable to locate.
+Using again TLIB, you have to extract this module from the library and add
+the resulting .OBJ file to your project list.
+
+
+7. The include-files of VectorLib
+---------------------------------
+
+The prototypes for the VectorLib routines are to be found in the include-
+files described below. If you are using MFC (Microsoft Foundation Classes)
+or Borland's OWL (ObjectWindows Library), the MFC or OWL include-files have
+to be included before (!) the VectorLib include-files.
+
+<VecLib.h> contains the basic definitions of the data types along with the
+prototypes of the functions common to all data types (prefix V_) except for
+the graphics initialization functions. The trigonometric tables (see chapter
+4.6.8) and the few non-vectorized math functions needed internally by
+VectorLib  (see chapter 9), are made publically accessible and are declared
+in <xmath.h>.
+
+<newcplx.h> is the complex class library CMATH replacing your compiler's
+<complex.h> for C++ modules.
+<cmath.h> and its "children" <cfmath.h>, <cdmath.h> and <cemath.h>
+are the CMATH include files for plain-C modules.
+
+<VIstd.h>, <VBIstd.h>,  <VSIstd.h>, <VLIstd.h>, <VQIstd.h>,
+<VUstd.h>, <VUBstd.h>,  <VUSstd.h>, <VULstd.h>, <VUIstd.h>,
+<VFstd.h>,  <VDstd.h>,  <VEstd.h>,
+<VCFstd.h>, <VCDstd.h>,  and <VCEstd.h>
+contain the prototypes of the functions used for the generation and
+initialization of vectors, for index-oriented manipulations, data-type
+interconversions, and I/O operations. For the floating-point data types,
+they also contain the prototypes of routines for statistics, analysis,
+geometrical vector arithmetics, and Fourier-Transform related functions. In
+<VFstd.h>, the real-number functions for the data type float (prefix VF_)
+are to be found, in <VDstd.h> those for the data type double, and so on.
+
+The algebraic and mathematical functions are declared in the <V..math.h>
+header files:
+<VImath.h>,  <VBImath.h>,  <VSImath.h>,  <VLImath.h>,  <VQImath.h>,
+<VUmath.h>,  <VUBmath.h>,  <VUSmath.h>,  <VULmath.h>,  <VUImath.h>,
+<VFmath.h>,  <VDmath.h>,   <VEmath.h>,
+<VCFmath.h>, <VCDmath.h>,  and  <VCEmath.h>.
+
+<Vgraph.h> contains the prototypes of the graphics and plotting routines for
+all data types.
+
+
+*****************************************************************************
+
+
+For detailed information on each single function of VectorLib, see the
+
+S e c o n d  P a r t :  File  FUNCREF.TXT
+
+ 8.  Alphabetical Reference
+
+ 9.  Non-vectorized Functions
+
+10.  VectorLib Error Messages
+
+
+*****************************************************************************
+
+Copyright (C) Martin Sander 1996-2000

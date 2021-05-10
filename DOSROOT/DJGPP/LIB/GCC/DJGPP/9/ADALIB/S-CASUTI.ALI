@@ -1,0 +1,64 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P SS ZX
+
+RN
+RV NO_SECONDARY_STACK
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.case_util%b	s-casuti.adb		ec4d5631 NE OL PK
+W system%s		system.ads		system.ali
+Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U system.case_util%s	s-casuti.ads		1897d8f6 NE OL PU PK
+W system%s		system.ads		system.ali
+
+D system.ads		20190108125404 27426ea2 system%s
+D s-casuti.ads		20190108125404 3fd5b654 system.case_util%s
+D s-casuti.adb		20190108125404 d398e065 system.case_util%b
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-secsta.ads		20190108125404 20bbe636 system.secondary_stack%s
+D s-stoele.ads		20190108125404 2dc34a04 system.storage_elements%s
+X 1 system.ads
+37K9*System 148e11 2|42r9 69r5 3|34r14 126r5
+X 2 s-casuti.ads
+42K16*Case_Util 1|37k9 2|69l12 69e21 3|34b21 126l12 126t21
+47V13*To_Upper{character} 47>23 3|78s22 98b13 110l8 110t16 115s19
+47e23 A{character} 3|98b23 99r50 102r10 108r17
+51U14*To_Upper 51=24 3|112b14 117l8 117t16 122s7
+51a24 A{string} 3|112b24 114r16 115m10 115r29
+52V13*To_Upper{string} 52>23 3|119b13 124l8 124t16
+52a23 A{string} 3|119b23 120r26
+55V13*To_Lower{character} 55>23 3|40b13 52l8 52t16 57s19 80s22
+55e23 A{character} 3|40b23 41r50 44r10 50r17
+59U14*To_Lower 59=24 3|54b14 59l8 59t16 64s7
+59a24 A{string} 3|54b24 56r16 57m10 57r29
+60V13*To_Lower{string} 60>23 3|61b13 66l8 66t16
+60a23 A{string} 3|61b23 62r26
+63U14*To_Mixed 63=24 3|72b14 85l8 85t16 90s7
+63a24 A{string} 3|72b24 76r16 78m13 78r32 80m13 80r32 83r19
+64V13*To_Mixed{string} 64>23 3|87b13 92l8 92t16
+64a23 A{string} 3|87b23 88r26
+X 3 s-casuti.adb
+41i7 A_Val{natural} 45r17 46r17 48r32
+56i11 J{integer} 57r13 57r32
+62a7 Result{string} 64m17 64r17 65r14
+73b7 Ucase{boolean} 77r13 83m10
+76i11 J{integer} 78r16 78r35 80r16 80r35 83r22
+88a7 Result{string} 90m17 90r17 91r14
+99i7 A_Val{natural} 103r17 104r17 106r32
+114i11 J{integer} 115r13 115r32
+120a7 Result{string} 122m17 122r17 123r14
+

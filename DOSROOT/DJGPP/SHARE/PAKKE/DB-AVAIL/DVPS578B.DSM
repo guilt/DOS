@@ -1,0 +1,31 @@
+#
+# DSM for dvips 5.78 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: dvps578b
+dsm-version: 0.5.1
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: dvips
+version: 5.78
+type: binaries
+manifest: dvps578b
+sources-dsm: dvps578s
+documentation-dsm: webc72d
+
+short-description: DVI driver for PostScript printers
+license: GNU General Public License
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2apps/tex
+zip: dvps578b.zip
+
+pre-install-readme: gnu/web2c-7.2/djgpp/README
+
+requires: texmflib

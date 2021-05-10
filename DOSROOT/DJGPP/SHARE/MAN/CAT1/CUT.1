@@ -1,0 +1,132 @@
+
+
+
+CUT(1)                         FSF                         CUT(1)
+
+
+NNAAMMEE
+       cut - remove sections from each line of files
+
+SSYYNNOOPPSSIISS
+       ccuutt [_O_P_T_I_O_N]... [_F_I_L_E]...
+
+DDEESSCCRRIIPPTTIIOONN
+       Print  selected  parts of lines from each FILE to standard
+       output.
+
+       --bb, ----bbyytteess=_L_I_S_T
+              output only these bytes
+
+       --cc, ----cchhaarraacctteerrss=_L_I_S_T
+              output only these characters
+
+       --dd, ----ddeelliimmiitteerr=_D_E_L_I_M
+              use DELIM instead of TAB for field delimiter
+
+       --ff, ----ffiieellddss=_L_I_S_T
+              output only these fields
+
+       --nn     (ignored)
+
+       --ss, ----oonnllyy--ddeelliimmiitteedd
+              do not print lines not containing delimiters
+
+       ----oouuttppuutt--ddeelliimmiitteerr=_S_T_R_I_N_G
+              use STRING as the output delimiter
+
+              the default is to use the input delimiter
+
+       ----hheellpp display this help and exit
+
+       ----vveerrssiioonn
+              output version information and exit
+
+       Use one, and only one of --bb, --cc or --ff.  Each LIST is  made
+       up of one range, or many ranges separated by commas.  Each
+       range is one of:
+
+       N      N'th byte, character or field, counted from 1
+
+       N-     from N'th byte, character or field, to end of line
+
+       N-M    from N'th to M'th  (included)  byte,  character  or
+              field
+
+       --MM     from  first  to  M'th (included) byte, character or
+              field
+
+       With no FILE, or when FILE is -, read standard input.
+
+
+
+
+
+GNU textutils 2.0          August 1999                          1
+
+
+
+
+
+CUT(1)                         FSF                         CUT(1)
+
+
+RREEPPOORRTTIINNGG BBUUGGSS
+       Report bugs to <bug-textutils@gnu.org>.
+
+SSEEEE AALLSSOO
+       The full documentation for ccuutt is maintained as a  Texinfo
+       manual.   If  the  iinnffoo  and  ccuutt  programs  are  properly
+       installed at your site, the command
+
+              iinnffoo ccuutt
+
+       should give you access to the complete manual.
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (C) 1999 Free Software Foundation, Inc.
+       This is free software; see the source for  copying  condi-
+       tions.  There is NO warranty; not even for MERCHANTABILITY
+       or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GNU textutils 2.0          August 1999                          2
+
+

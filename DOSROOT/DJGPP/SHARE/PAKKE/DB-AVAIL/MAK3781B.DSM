@@ -1,0 +1,30 @@
+#
+# DSM for make 3.78.1 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com> 2000-04-02
+#
+
+dsm-file-version: 1.2
+dsm-name: mak3781b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: make
+version: 3.78.1
+manifest: mak3781b
+sources-dsm: mak3781s
+short-description: GNU make
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: mak3781b.zip
+
+requires: DPMI
+replaces: make < 3.78.1
+# For reading docs
+depends-on: info-reader

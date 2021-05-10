@@ -1,0 +1,32 @@
+#
+# DSM for pmode12b
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+# DSM information
+dsm-file-version: 1.3
+dsm-version: 0.5.0
+dsm-name: pmode12b
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+# Package information
+name: PMODE/DJ
+version: 1.2
+manifest: pmode12b
+sources-dsm: pmode12s
+
+short-description: DPMI 0.9 server stub & TSR
+license: Free without warranty (but see the sources)
+
+porter: Matthias Grimrath
+porter-email: m.grimrath@tu-bs.de
+
+simtelnet-path: v2misc/
+zip: pmode12b.zip
+
+# Dependencies
+replaces: PMODE/DJ < 1.2
+provides: DPMI 0.9

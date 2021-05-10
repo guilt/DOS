@@ -1,0 +1,198 @@
+Chapter 16
+
+
+
+
+
+Program Timing
+300   Fastgraph User's Guide
+
+
+Overview
+
+     It is occasionally necessary to delay a program's execution for a brief
+period, or to determine how long it takes to execute specific sections of a
+program.  Fastgraph includes routines to accomplish these tasks.  Some of
+these routines are said to be real-time, which means they are independent of
+a system's processor speed, while the speed of others is processor-specific.
+This chapter describes both classes of timing routines, all of which are
+independent of the other parts of Fastgraph.
+
+
+Real-Time Routines
+
+     Real-time operations center around the BIOS time-of-day clock, which is
+nothing more than a counter that the system automatically increments 18.2
+times per second.  This number is often called the clock tick interrupt rate
+because an interrupt routine performs the incrementing.  In addition, each
+increment is usually called a clock tick.
+
+     The Fastgraph routine fg_waitfor delays a program's execution by the
+number of clock ticks specified as its argument.  Because fg_waitfor uses
+clock ticks, the actual length of the delay is the same, regardless of the
+system's processor speed.  Even when Fastgraph's asynchronous sound routines
+quadruple the clock tick interrupt rate, Fastgraph compensates for this
+internally so fg_waitfor always works as though the actual rate were still
+18.2 times per second.
+
+     Example 16-1 displays a message every five seconds that states how long
+the program has been running.  The fg_waitfor routine produces the five-
+second delay by pausing 91 (18.2 times 5) clock ticks before the program
+displays each message.  The program returns to DOS when you press any key.
+
+                                Example 16-1.
+
+             #include <fastgraf.h>
+             #include <stdio.h>
+             void main(void);
+
+             void main()
+             {
+                unsigned int seconds;
+                unsigned char key, aux;
+
+                seconds = 0;
+
+                do {
+                   fg_waitfor(91);
+                   seconds += 5;
+                   printf("%u seconds have elapsed.\n",seconds);
+                   fg_intkey(&key,&aux);
+                }
+                while (key+aux == 0);
+             }
+
+                                             Chapter 16:  Program Timing   301
+
+     Another common application of the fg_waitfor routine is to slow down a
+loop that uses the fg_intkey routine to check for keystrokes.  In loops that
+do little else, we may call fg_intkey too rapidly without this delay, and it
+is then possible that the BIOS may not be able to store characters in its
+keyboard buffer fast enough.  A small delay, even one clock tick, often helps
+such "tight" loops.
+
+     The fg_getclock routine provides an efficient way to measure time,
+especially differences in time.  This routine has no arguments and returns a
+32-bit unsigned integer (as its function value) representing the number of
+clock ticks since midnight.  Example 16-2 demonstrates the fg_getclock
+routine.  In response to any keystroke (except Escape, which returns control
+to DOS), the program displays the number of clock ticks since midnight, and
+the number of ticks since the program started.
+
+                                Example 16-2.
+
+      #include <fastgraf.h>
+      #include <stdio.h>
+      void main(void);
+
+      #define ESC 27
+
+      void main()
+      {
+         unsigned long start, ticks;
+         unsigned char key, aux;
+
+         start = fg_getclock();
+
+         do {
+            ticks = fg_getclock();
+            printf("%lu ticks since midnight.\n",ticks);
+            printf("%lu ticks since start of program.\n\n",ticks-start);
+            fg_getkey(&key,&aux);
+         }
+         while (key != ESC);
+      }
+
+
+
+Routines Dependent on the System Speed
+
+     The fg_waitfor routine described in the previous section is independent
+of the system's processor speed.  This means the actual length of its delay
+is the same on any system.  Another routine, fg_stall, is similar to
+fg_waitfor, but its delay is proportional to the processor speed.  Like
+fg_waitfor, fg_stall has a single integer argument that specifies the length
+of the delay.  However, instead of being expressed in clock ticks, fg_stall
+measures the delay in delay units.  The fg_stall routine treats the length as
+an unsigned quantity, so the maximum number of delay units we can specify is
+65,535.  The following table lists the approximate number of delay units per
+clock tick on three typical systems.
+302   Fastgraph User's Guide
+                      system       delay units
+                       type      per clock tick
+
+                   Tandy 1000 HX       280
+                   25 MHz 80386       3,400
+                   40 MHz 80386       7,100
+
+     Fastgraph includes a routine that determines the number of delay units
+per clock tick for the processor being used.  This is the fg_measure routine,
+which has no arguments and returns the number of delay units per clock tick
+as its function value.  Once we determine this value, we can use fg_stall to
+delay a program's execution in real time.  This provides a much more refined
+delay than the clock tick unit used by fg_waitfor.
+
+     Example 16-3 is functionally identical to example 16-1, but it uses the
+fg_stall routine instead of fg_waitfor to delay the program execution.  The
+program first calls the fg_measure routine to determine number of delay units
+equivalent to one clock tick.  It then passes this value to fg_stall, called
+91 times inside the for loop to create the five-second delay (because 91
+clock ticks equals five seconds).  The program returns to DOS when you press
+any key.
+
+                                Example 16-3.
+
+             #include <fastgraf.h>
+             #include <stdio.h>
+             void main(void);
+
+             void main()
+             {
+                int i;
+                int units_per_tick;
+                unsigned int seconds;
+                unsigned char key, aux;
+
+                seconds = 0;
+
+                printf("Benchmarking system speed...\n");
+                units_per_tick = fg_measure();
+                printf("Benchmark completed.\n\n");
+
+                do {
+                   for (i = 0; i < 91; i++)
+                      fg_stall(units_per_tick);
+                   seconds += 5;
+                   printf("%u seconds have elapsed.\n",seconds);
+                   fg_intkey(&key,&aux);
+                }
+                while (key+aux == 0);
+             }
+
+
+     One final point:  the fg_measure routine takes a few seconds to
+benchmark the system speed accurately.  For this reason, you should only call
+fg_measure once (typically at the beginning of the program) and use its
+return value instead of calling fg_measure throughout the program.
+                                            Chapter 16:  Program Timing   302A
+
+
+Summary of Timing Routines
+
+     This section summarizes the functional descriptions of the Fastgraph
+routines presented in this chapter.  More detailed information about these
+routines, including their arguments and return values, may be found in the
+Fastgraph Reference Manual.
+
+     FG_GETCLOCK returns the number of clock ticks since midnight as its
+function value.  This quantity is a 32-bit unsigned integer.
+
+     FG_MEASURE returns the approximate number of delay units per clock tickas its function value.  This quantity is proportional to the system's
+processor speed.
+
+     FG_STALL delays a program's execution for a given number of processor-
+specific delay units.
+
+     FG_WAITFOR delays a program's execution for a given number of clock
+ticks.  There are 18.2 clock ticks per second, regardless of the system's
+processor speed.

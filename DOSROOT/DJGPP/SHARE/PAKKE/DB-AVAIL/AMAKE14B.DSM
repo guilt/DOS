@@ -1,0 +1,36 @@
+#
+# DSM for automake 1.4
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.2
+dsm-name: amake14b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: automake
+version: 1.4
+manifest: amake14b
+sources-dsm: amake14s
+short-description: Makefile generator
+license: GNU General Public License, Version 2
+
+organisation: Free Software Foundation
+web-site: http://www.cygnus.com/~tromey/automake/
+mailing-list: automake@gnu.org
+mailing-list-request: automake-request@gnu.org
+porter: Andris Pavenis
+porter-email: pavenis@lanet.lv
+
+simtelnet-path: v2gnu/
+zip: amake14b.zip
+
+replaces: automake < 1.4
+requires: perl
+requires: m4
+depends-on: autoconf
+# For reading docs
+depends-on: info-reader

@@ -1,0 +1,39 @@
+#
+# DSM for g++ 2.95.3
+# Written by Richard Dawe <richdawe@bigfoot.com> 2001-03-31
+#
+
+dsm-file-version: 1.0
+dsm-name: gpp2953b
+dsm-version: 0.5.0
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: g++
+version: 2.95.3
+manifest: gpp2953b
+type: binaries
+short-description: GNU Compiler Collection, C++ compiler
+organisation: Free Software Foundation
+license: GNU General Public License
+web-site: http://gcc.gnu.org/gcc-2.95/gcc-2.95.3.html
+
+porter: Andris Pavenis
+porter-email: pavenis@lanet.lv
+
+simtelnet-path: v2gnu/
+zip: gpp2953b.zip
+
+#
+# Dependencies
+#
+
+replaces: g++ < 2.95.3
+
+requires: DPMI
+requires: gcc == 2.95.3
+conflicts-with: g++ < 2.8.0
+
+# For reading docs
+depends-on: info-reader

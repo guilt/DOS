@@ -1,0 +1,46 @@
+#
+# DSM for file 3.34 sources
+# Written by Richard Dawe <richdawe@bigfoot.com> 2001-03-24
+#
+
+dsm-file-version: 1.0
+dsm-name: file334s
+dsm-version: 0.5.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: file
+version: 3.34
+manifest: file334s
+binaries-dsm: file334b
+documentation-dsm: file334d
+short-description: 'file' can determine the file type of files.
+
+license: Copyright, but distributable
+
+author: Ian F. Darwin
+author-email: ian@darwinsys.com
+
+porter: Kees Zeelenberg
+porter-email: c.zeelenberg@hccnet.nl
+
+ftp-site: ftp://ftp.astron.com/pub/file/
+
+simtelnet-path: v2apps/
+zip: file334s.zip
+
+pre-install-readme: contrib/file/3.34/readme
+
+requires: gcc
+requires: binutils
+requires: make
+requires: bash
+requires: sed
+requires: fileutils
+requires: shellutils
+requires: textutils
+
+# If you want to test file, after you've built it.
+depends-on: diffutils

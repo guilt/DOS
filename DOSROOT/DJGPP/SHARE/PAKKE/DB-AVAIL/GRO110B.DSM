@@ -1,0 +1,25 @@
+#
+# DSM for groff 1.10 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.1
+dsm-name: gro110b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: groff
+version: 1.10
+manifest: gro110b
+sources-dsm: gro110s
+short-description: GNU groff
+license: GNU General Public License, Version 2
+
+simtelnet-path: v2gnu/
+zip: gro110b.zip
+
+replaces: groff < 1.10
+requires: DPMI

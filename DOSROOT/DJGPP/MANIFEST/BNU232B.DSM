@@ -1,0 +1,85 @@
+#
+# DSM for GNU Binutils 2.32 binaries.
+# Written by Juan Manuel Guerrero <juan.guerrero@gmx.de> 2019-05-19
+# Product compiled using gcc346b, bnu232b and djdev206.
+#
+
+dsm-file-version: 1.0
+dsm-name: bnu232b
+dsm-version: 0.6.1
+
+type: binaries
+
+dsm-author: Juan Manuel Guerrero
+dsm-author-email: juan.guerrero@gmx.de
+
+name: binutils
+version: 2.32 release 1
+manifest: bnu232b
+libraries-dsm: bnu232a
+documentation-dsm: bnu232d
+sources-dsm: bnu232s
+short-description: Binaries for GNU Binutils version 2.32.
+long-description: GNU Binary Utililities for DJGPP includes the assembler,\n\
+linker, and other utilties needed for DJGPP development.
+
+license: GNU GPL
+# author.
+author: 
+author-email: 
+# maintainer of the DJGPP port.
+maintainer: 
+maintainer-email: 
+# For reporting bugs.
+mailing-list: bug-binutils@gnu.org
+# The home page of GNU Binutils.
+web-site: http://www.gnu.org/software/binutils/
+# The ftp site of GNU Binutils.
+ftp-site: ftp://ftp.gnu.org/software/binutils/
+# For discussing DJGPP- and DOS/Windows-specific aspects.
+mailing-list: djgpp@delorie.com
+newsgroup: comp.os.msdos.djgpp
+
+porter: Juan Manuel Guerrero
+porter-email: juan.guerrero@gmx.de
+
+simtelnet-path: v2gnu/
+zip: bnu232b.zip
+
+changelog: gnu/binutils-2.32/ChangeLog
+
+pre-install-readme: gnu/binutils-2.32/NEWS
+pre-install-readme: gnu/binutils-2.32/README
+
+requires: DPMI 0.9
+requires: bash >= 2.05b release 3
+
+replaces: binutils < 2.32 release 1
+
+# For reading the docs.
+depends-on: info-reader
+depends-on: man
+depends-on: less
+
+# This updates the info/DIR main menu
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/share/info/binutils.info
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/share/info/as.info
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/share/info/ld.info
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/share/info/gprof.info
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/share/info/standards.info
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info /dev/env/DJDIR/share/info/configure.info
+
+# For NLS support.
+# If gettext and/or libiconv has been compiled
+# as DXE3 module then it is mandatory to install
+# the .dxe libraries.
+# For generating the .gmo files:
+requires: gettext >= 0.19.8.1 release 1
+# For recoding the .gmo files from unix to dos charset:
+requires: libiconv >= 1.15 release 1

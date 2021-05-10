@@ -1,0 +1,974 @@
+This is Info file autoconf.info, produced by Makeinfo version 1.68 from
+the input file autoconf.tex.
+
+START-INFO-DIR-ENTRY
+* Autoconf: (autoconf).         Create source code configuration scripts.
+END-INFO-DIR-ENTRY
+
+   Autoconf: Creating Automatic Configuration Scripts, by David
+MacKenzie.
+
+   This file documents the GNU Autoconf package for creating scripts to
+configure source code packages using templates and an `m4' macro
+package.
+
+   Copyright (C) 1992, 1993, 1994, 1995, 1996, 1998 Free Software
+Foundation, Inc.
+
+   Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+
+   Permission is granted to copy and distribute modified versions of
+this manual under the conditions for verbatim copying, provided that
+the entire resulting derived work is distributed under the terms of a
+permission notice identical to this one.
+
+   Permission is granted to copy and distribute translations of this
+manual into another language, under the above conditions for modified
+versions, except that this permission notice may be stated in a
+translation approved by the Foundation.
+
+
+File: autoconf.info,  Node: Why Not Imake,  Prev: Bootstrapping,  Up: Questions
+
+Why Not Imake?
+==============
+
+     Why not use Imake instead of `configure' scripts?
+
+   Several people have written addressing this question, so I include
+adaptations of their explanations here.
+
+   The following answer is based on one written by Richard Pixley:
+
+   Autoconf generated scripts frequently work on machines which it has
+never been set up to handle before.  That is, it does a good job of
+inferring a configuration for a new system.  Imake cannot do this.
+
+   Imake uses a common database of host specific data.  For X11, this
+makes sense because the distribution is made as a collection of tools,
+by one central authority who has control over the database.
+
+   GNU tools are not released this way.  Each GNU tool has a maintainer;
+these maintainers are scattered across the world.  Using a common
+database would be a maintenance nightmare.  Autoconf may appear to be
+this kind of database, but in fact it is not.  Instead of listing host
+dependencies, it lists program requirements.
+
+   If you view the GNU suite as a collection of native tools, then the
+problems are similar.  But the GNU development tools can be configured
+as cross tools in almost any host+target permutation.  All of these
+configurations can be installed concurrently.  They can even be
+configured to share host independent files across hosts.  Imake doesn't
+address these issues.
+
+   Imake templates are a form of standardization.  The GNU coding
+standards address the same issues without necessarily imposing the same
+restrictions.
+
+   Here is some further explanation, written by Per Bothner:
+
+   One of the advantages of Imake is that it easy to generate large
+Makefiles using `cpp''s `#include' and macro mechanisms.  However,
+`cpp' is not programmable: it has limited conditional facilities, and
+no looping.  And `cpp' cannot inspect its environment.
+
+   All of these problems are solved by using `sh' instead of `cpp'.
+The shell is fully programmable, has macro substitution, can execute
+(or source) other shell scripts, and can inspect its environment.
+
+   Paul Eggert elaborates more:
+
+   With Autoconf, installers need not assume that Imake itself is
+already installed and working well.  This may not seem like much of an
+advantage to people who are accustomed to Imake.  But on many hosts
+Imake is not installed or the default installation is not working well,
+and requiring Imake to install a package hinders the acceptance of that
+package on those hosts.  For example, the Imake template and
+configuration files might not be installed properly on a host, or the
+Imake build procedure might wrongly assume that all source files are in
+one big directory tree, or the Imake configuration might assume one
+compiler whereas the package or the installer needs to use another, or
+there might be a version mismatch between the Imake expected by the
+package and the Imake supported by the host.  These problems are much
+rarer with Autoconf, where each package comes with its own independent
+configuration processor.
+
+   Also, Imake often suffers from unexpected interactions between
+`make' and the installer's C preprocessor.  The fundamental problem
+here is that the C preprocessor was designed to preprocess C programs,
+not `Makefile's.  This is much less of a problem with Autoconf, which
+uses the general-purpose preprocessor `m4', and where the package's
+author (rather than the installer) does the preprocessing in a standard
+way.
+
+   Finally, Mark Eichin notes:
+
+   Imake isn't all that extensible, either.  In order to add new
+features to Imake, you need to provide your own project template, and
+duplicate most of the features of the existing one.  This means that
+for a sophisticated project, using the vendor-provided Imake templates
+fails to provide any leverage--since they don't cover anything that
+your own project needs (unless it is an X11 program).
+
+   On the other side, though:
+
+   The one advantage that Imake has over `configure': `Imakefile's tend
+to be much shorter (likewise, less redundant) than `Makefile.in's.
+There is a fix to this, however--at least for the Kerberos V5 tree,
+we've modified things to call in common `post.in' and `pre.in'
+`Makefile' fragments for the entire tree.  This means that a lot of
+common things don't have to be duplicated, even though they normally
+are in `configure' setups.
+
+
+File: autoconf.info,  Node: Upgrading,  Next: History,  Prev: Questions,  Up: Top
+
+Upgrading From Version 1
+************************
+
+   Autoconf version 2 is mostly backward compatible with version 1.
+However, it introduces better ways to do some things, and doesn't
+support some of the ugly things in version 1.  So, depending on how
+sophisticated your `configure.in' files are, you might have to do some
+manual work in order to upgrade to version 2.  This chapter points out
+some problems to watch for when upgrading.  Also, perhaps your
+`configure' scripts could benefit from some of the new features in
+version 2; the changes are summarized in the file `NEWS' in the
+Autoconf distribution.
+
+   First, make sure you have GNU `m4' version 1.1 or higher installed,
+preferably 1.3 or higher.  Versions before 1.1 have bugs that prevent
+them from working with Autoconf version 2.  Versions 1.3 and later are
+much faster than earlier versions, because as of version 1.3, GNU `m4'
+has a more efficient implementation of diversions and can freeze its
+internal state in a file that it can read back quickly.
+
+* Menu:
+
+* Changed File Names::          Files you might rename.
+* Changed Makefiles::           New things to put in `Makefile.in'.
+* Changed Macros::              Macro calls you might replace.
+* Invoking autoupdate::         Replacing old macro names in `configure.in'.
+* Changed Results::             Changes in how to check test results.
+* Changed Macro Writing::       Better ways to write your own macros.
+
+
+File: autoconf.info,  Node: Changed File Names,  Next: Changed Makefiles,  Prev: Upgrading,  Up: Upgrading
+
+Changed File Names
+==================
+
+   If you have an `aclocal.m4' installed with Autoconf (as opposed to
+in a particular package's source directory), you must rename it to
+`acsite.m4'.  *Note Invoking autoconf::.
+
+   If you distribute `install.sh' with your package, rename it to
+`install-sh' so `make' builtin rules won't inadvertently create a file
+called `install' from it.  `AC_PROG_INSTALL' looks for the script under
+both names, but it is best to use the new name.
+
+   If you were using `config.h.top' or `config.h.bot', you still can,
+but you will have less clutter if you merge them into `acconfig.h'.
+*Note Invoking autoheader::.
+
+
+File: autoconf.info,  Node: Changed Makefiles,  Next: Changed Macros,  Prev: Changed File Names,  Up: Upgrading
+
+Changed Makefiles
+=================
+
+   Add `@CFLAGS@', `@CPPFLAGS@', and `@LDFLAGS@' in your `Makefile.in'
+files, so they can take advantage of the values of those variables in
+the environment when `configure' is run.  Doing this isn't necessary,
+but it's a convenience for users.
+
+   Also add `@configure_input@' in a comment to each non-`Makefile'
+input file for `AC_OUTPUT', so that the output files will contain a
+comment saying they were produced by `configure'.  Automatically
+selecting the right comment syntax for all the kinds of files that
+people call `AC_OUTPUT' on became too much work.
+
+   Add `config.log' and `config.cache' to the list of files you remove
+in `distclean' targets.
+
+   If you have the following in `Makefile.in':
+
+     prefix = /usr/local
+     exec_prefix = ${prefix}
+
+you must change it to:
+
+     prefix = @prefix@
+     exec_prefix = @exec_prefix@
+
+The old behavior of replacing those variables without `@' characters
+around them has been removed.
+
+
+File: autoconf.info,  Node: Changed Macros,  Next: Invoking autoupdate,  Prev: Changed Makefiles,  Up: Upgrading
+
+Changed Macros
+==============
+
+   Many of the macros were renamed in Autoconf version 2.  You can still
+use the old names, but the new ones are clearer, and it's easier to find
+the documentation for them.  *Note Old Macro Names::, for a table
+showing the new names for the old macros.  Use the `autoupdate' program
+to convert your `configure.in' to using the new macro names.  *Note
+Invoking autoupdate::.
+
+   Some macros have been superseded by similar ones that do the job
+better, but are not call-compatible.  If you get warnings about calling
+obsolete macros while running `autoconf', you may safely ignore them,
+but your `configure' script will generally work better if you follow
+the advice it prints about what to replace the obsolete macros with.  In
+particular, the mechanism for reporting the results of tests has
+changed.  If you were using `echo' or `AC_VERBOSE' (perhaps via
+`AC_COMPILE_CHECK'), your `configure' script's output will look better
+if you switch to `AC_MSG_CHECKING' and `AC_MSG_RESULT'.  *Note Printing
+Messages::.  Those macros work best in conjunction with cache
+variables.  *Note Caching Results::.
+
+
+File: autoconf.info,  Node: Invoking autoupdate,  Next: Changed Results,  Prev: Changed Macros,  Up: Upgrading
+
+Using `autoupdate' to Modernize `configure'
+===========================================
+
+   The `autoupdate' program updates a `configure.in' file that calls
+Autoconf macros by their old names to use the current macro names.  In
+version 2 of Autoconf, most of the macros were renamed to use a more
+uniform and descriptive naming scheme.  *Note Macro Names::, for a
+description of the new scheme.  Although the old names still work
+(*note Old Macro Names::., for a list of the old macro names and the
+corresponding new names), you can make your `configure.in' files more
+readable and make it easier to use the current Autoconf documentation
+if you update them to use the new macro names.
+
+   If given no arguments, `autoupdate' updates `configure.in', backing
+up the original version with the suffix `~' (or the value of the
+environment variable `SIMPLE_BACKUP_SUFFIX', if that is set).  If you
+give `autoupdate' an argument, it reads that file instead of
+`configure.in' and writes the updated file to the standard output.
+
+`autoupdate' accepts the following options:
+
+`--help'
+`-h'
+     Print a summary of the command line options and exit.
+
+`--macrodir=DIR'
+`-m DIR'
+     Look for the Autoconf macro files in directory DIR instead of the
+     default installation directory.  You can also set the `AC_MACRODIR'
+     environment variable to a directory; this option overrides the
+     environment variable.
+
+`--version'
+     Print the version number of `autoupdate' and exit.
+
+
+File: autoconf.info,  Node: Changed Results,  Next: Changed Macro Writing,  Prev: Invoking autoupdate,  Up: Upgrading
+
+Changed Results
+===============
+
+   If you were checking the results of previous tests by examining the
+shell variable `DEFS', you need to switch to checking the values of the
+cache variables for those tests.  `DEFS' no longer exists while
+`configure' is running; it is only created when generating output
+files.  This difference from version 1 is because properly quoting the
+contents of that variable turned out to be too cumbersome and
+inefficient to do every time `AC_DEFINE' is called.  *Note Cache
+Variable Names::.
+
+   For example, here is a `configure.in' fragment written for Autoconf
+version 1:
+
+     AC_HAVE_FUNCS(syslog)
+     case "$DEFS" in
+     *-DHAVE_SYSLOG*) ;;
+     *) # syslog is not in the default libraries.  See if it's in some other.
+       saved_LIBS="$LIBS"
+       for lib in bsd socket inet; do
+         AC_CHECKING(for syslog in -l$lib)
+         LIBS="$saved_LIBS -l$lib"
+         AC_HAVE_FUNCS(syslog)
+         case "$DEFS" in
+         *-DHAVE_SYSLOG*) break ;;
+         *) ;;
+         esac
+         LIBS="$saved_LIBS"
+       done ;;
+     esac
+
+   Here is a way to write it for version 2:
+
+     AC_CHECK_FUNCS(syslog)
+     if test $ac_cv_func_syslog = no; then
+       # syslog is not in the default libraries.  See if it's in some other.
+       for lib in bsd socket inet; do
+         AC_CHECK_LIB($lib, syslog, [AC_DEFINE(HAVE_SYSLOG)
+           LIBS="$LIBS $lib"; break])
+       done
+     fi
+
+   If you were working around bugs in `AC_DEFINE_UNQUOTED' by adding
+backslashes before quotes, you need to remove them.  It now works
+predictably, and does not treat quotes (except backquotes) specially.
+*Note Setting Output Variables::.
+
+   All of the boolean shell variables set by Autoconf macros now use
+`yes' for the true value.  Most of them use `no' for false, though for
+backward compatibility some use the empty string instead.  If you were
+relying on a shell variable being set to something like 1 or `t' for
+true, you need to change your tests.
+
+
+File: autoconf.info,  Node: Changed Macro Writing,  Prev: Changed Results,  Up: Upgrading
+
+Changed Macro Writing
+=====================
+
+   When defining your own macros, you should now use `AC_DEFUN' instead
+of `define'.  `AC_DEFUN' automatically calls `AC_PROVIDE' and ensures
+that macros called via `AC_REQUIRE' do not interrupt other macros, to
+prevent nested `checking...'  messages on the screen.  There's no
+actual harm in continuing to use the older way, but it's less
+convenient and attractive.  *Note Macro Definitions::.
+
+   You probably looked at the macros that came with Autoconf as a guide
+for how to do things.  It would be a good idea to take a look at the new
+versions of them, as the style is somewhat improved and they take
+advantage of some new features.
+
+   If you were doing tricky things with undocumented Autoconf internals
+(macros, variables, diversions), check whether you need to change
+anything to account for changes that have been made.  Perhaps you can
+even use an officially supported technique in version 2 instead of
+kludging.  Or perhaps not.
+
+   To speed up your locally written feature tests, add caching to them.
+See whether any of your tests are of general enough usefulness to
+encapsulate into macros that you can share.
+
+
+File: autoconf.info,  Node: History,  Next: Old Macro Names,  Prev: Upgrading,  Up: Top
+
+History of Autoconf
+*******************
+
+   You may be wondering, Why was Autoconf originally written?  How did
+it get into its present form?  (Why does it look like gorilla spit?)  If
+you're not wondering, then this chapter contains no information useful
+to you, and you might as well skip it.  If you *are* wondering, then
+let there be light...
+
+* Menu:
+
+* Genesis::                     Prehistory and naming of `configure'.
+* Exodus::                      The plagues of `m4' and Perl.
+* Leviticus::                   The priestly code of portability arrives.
+* Numbers::                     Growth and contributors.
+* Deuteronomy::                 Approaching the promises of easy configuration.
+
+
+File: autoconf.info,  Node: Genesis,  Next: Exodus,  Prev: History,  Up: History
+
+Genesis
+=======
+
+   In June 1991 I was maintaining many of the GNU utilities for the Free
+Software Foundation.  As they were ported to more platforms and more
+programs were added, the number of `-D' options that users had to
+select in the `Makefile' (around 20) became burdensome.  Especially for
+me--I had to test each new release on a bunch of different systems.  So
+I wrote a little shell script to guess some of the correct settings for
+the fileutils package, and released it as part of fileutils 2.0.  That
+`configure' script worked well enough that the next month I adapted it
+(by hand) to create similar `configure' scripts for several other GNU
+utilities packages.  Brian Berliner also adapted one of my scripts for
+his CVS revision control system.
+
+   Later that summer, I learned that Richard Stallman and Richard Pixley
+were developing similar scripts to use in the GNU compiler tools; so I
+adapted my `configure' scripts to support their evolving interface:
+using the file name `Makefile.in' as the templates; adding `+srcdir',
+the first option (of many); and creating `config.status' files.
+
+
+File: autoconf.info,  Node: Exodus,  Next: Leviticus,  Prev: Genesis,  Up: History
+
+Exodus
+======
+
+   As I got feedback from users, I incorporated many improvements, using
+Emacs to search and replace, cut and paste, similar changes in each of
+the scripts.  As I adapted more GNU utilities packages to use
+`configure' scripts, updating them all by hand became impractical.
+Rich Murphey, the maintainer of the GNU graphics utilities, sent me mail
+saying that the `configure' scripts were great, and asking if I had a
+tool for generating them that I could send him.  No, I thought, but I
+should!  So I started to work out how to generate them.  And the
+journey from the slavery of hand-written `configure' scripts to the
+abundance and ease of Autoconf began.
+
+   Cygnus `configure', which was being developed at around that time,
+is table driven; it is meant to deal mainly with a discrete number of
+system types with a small number of mainly unguessable features (such as
+details of the object file format).  The automatic configuration system
+that Brian Fox had developed for Bash takes a similar approach.  For
+general use, it seems to me a hopeless cause to try to maintain an
+up-to-date database of which features each variant of each operating
+system has.  It's easier and more reliable to check for most features on
+the fly--especially on hybrid systems that people have hacked on
+locally or that have patches from vendors installed.
+
+   I considered using an architecture similar to that of Cygnus
+`configure', where there is a single `configure' script that reads
+pieces of `configure.in' when run.  But I didn't want to have to
+distribute all of the feature tests with every package, so I settled on
+having a different `configure' made from each `configure.in' by a
+preprocessor.  That approach also offered more control and flexibility.
+
+   I looked briefly into using the Metaconfig package, by Larry Wall,
+Harlan Stenn, and Raphael Manfredi, but I decided not to for several
+reasons.  The `Configure' scripts it produces are interactive, which I
+find quite inconvenient; I didn't like the ways it checked for some
+features (such as library functions); I didn't know that it was still
+being maintained, and the `Configure' scripts I had seen didn't work on
+many modern systems (such as System V R4 and NeXT); it wasn't very
+flexible in what it could do in response to a feature's presence or
+absence; I found it confusing to learn; and it was too big and complex
+for my needs (I didn't realize then how much Autoconf would eventually
+have to grow).
+
+   I considered using Perl to generate my style of `configure' scripts,
+but decided that `m4' was better suited to the job of simple textual
+substitutions: it gets in the way less, because output is implicit.
+Plus, everyone already has it.  (Initially I didn't rely on the GNU
+extensions to `m4'.)  Also, some of my friends at the University of
+Maryland had recently been putting `m4' front ends on several programs,
+including `tvtwm', and I was interested in trying out a new language.
+
+
+File: autoconf.info,  Node: Leviticus,  Next: Numbers,  Prev: Exodus,  Up: History
+
+Leviticus
+=========
+
+   Since my `configure' scripts determine the system's capabilities
+automatically, with no interactive user intervention, I decided to call
+the program that generates them Autoconfig.  But with a version number
+tacked on, that name would be too long for old UNIX file systems, so I
+shortened it to Autoconf.
+
+   In the fall of 1991 I called together a group of fellow questers
+after the Holy Grail of portability (er, that is, alpha testers) to
+give me feedback as I encapsulated pieces of my handwritten scripts in
+`m4' macros and continued to add features and improve the techniques
+used in the checks.  Prominent among the testers were Franc,ois Pinard,
+who came up with the idea of making an `autoconf' shell script to run
+`m4' and check for unresolved macro calls; Richard Pixley, who
+suggested running the compiler instead of searching the file system to
+find include files and symbols, for more accurate results; Karl Berry,
+who got Autoconf to configure TeX and added the macro index to the
+documentation; and Ian Taylor, who added support for creating a C
+header file as an alternative to putting `-D' options in a `Makefile',
+so he could use Autoconf for his UUCP package.  The alpha testers
+cheerfully adjusted their files again and again as the names and
+calling conventions of the Autoconf macros changed from release to
+release.  They all contributed many specific checks, great ideas, and
+bug fixes.
+
+
+File: autoconf.info,  Node: Numbers,  Next: Deuteronomy,  Prev: Leviticus,  Up: History
+
+Numbers
+=======
+
+   In July 1992, after months of alpha testing, I released Autoconf 1.0,
+and converted many GNU packages to use it.  I was surprised by how
+positive the reaction to it was.  More people started using it than I
+could keep track of, including people working on software that wasn't
+part of the GNU Project (such as TCL, FSP, and Kerberos V5).  Autoconf
+continued to improve rapidly, as many people using the `configure'
+scripts reported problems they encountered.
+
+   Autoconf turned out to be a good torture test for `m4'
+implementations.  UNIX `m4' started to dump core because of the length
+of the macros that Autoconf defined, and several bugs showed up in GNU
+`m4' as well.  Eventually, we realized that we needed to use some
+features that only GNU `m4' has.  4.3BSD `m4', in particular, has an
+impoverished set of builtin macros; the System V version is better, but
+still doesn't provide everything we need.
+
+   More development occurred as people put Autoconf under more stresses
+(and to uses I hadn't anticipated).  Karl Berry added checks for X11.
+david zuhn contributed C++ support.  Franc,ois Pinard made it diagnose
+invalid arguments.  Jim Blandy bravely coerced it into configuring GNU
+Emacs, laying the groundwork for several later improvements.  Roland
+McGrath got it to configure the GNU C Library, wrote the `autoheader'
+script to automate the creation of C header file templates, and added a
+`--verbose' option to `configure'.  Noah Friedman added the
+`--macrodir' option and `AC_MACRODIR' environment variable.  (He also
+coined the term "autoconfiscate" to mean "adapt a software package to
+use Autoconf".)  Roland and Noah improved the quoting protection in
+`AC_DEFINE' and fixed many bugs, especially when I got sick of dealing
+with portability problems from February through June, 1993.
+
+
+File: autoconf.info,  Node: Deuteronomy,  Prev: Numbers,  Up: History
+
+Deuteronomy
+===========
+
+   A long wish list for major features had accumulated, and the effect
+of several years of patching by various people had left some residual
+cruft.  In April 1994, while working for Cygnus Support, I began a major
+revision of Autoconf.  I added most of the features of the Cygnus
+`configure' that Autoconf had lacked, largely by adapting the relevant
+parts of Cygnus `configure' with the help of david zuhn and Ken
+Raeburn.  These features include support for using `config.sub',
+`config.guess', `--host', and `--target'; making links to files; and
+running `configure' scripts in subdirectories.  Adding these features
+enabled Ken to convert GNU `as', and Rob Savoye to convert DejaGNU, to
+using Autoconf.
+
+   I added more features in response to other peoples' requests.  Many
+people had asked for `configure' scripts to share the results of the
+checks between runs, because (particularly when configuring a large
+source tree, like Cygnus does) they were frustratingly slow.  Mike
+Haertel suggested adding site-specific initialization scripts.  People
+distributing software that had to unpack on MS-DOS asked for a way to
+override the `.in' extension on the file names, which produced file
+names like `config.h.in' containing two dots.  Jim Avera did an
+extensive examination of the problems with quoting in `AC_DEFINE' and
+`AC_SUBST'; his insights led to significant improvements.  Richard
+Stallman asked that compiler output be sent to `config.log' instead of
+`/dev/null', to help people debug the Emacs `configure' script.
+
+   I made some other changes because of my dissatisfaction with the
+quality of the program.  I made the messages showing results of the
+checks less ambiguous, always printing a result.  I regularized the
+names of the macros and cleaned up coding style inconsistencies.  I
+added some auxiliary utilities that I had developed to help convert
+source code packages to use Autoconf.  With the help of Franc,ois
+Pinard, I made the macros not interrupt each others' messages.  (That
+feature revealed some performance bottlenecks in GNU `m4', which he
+hastily corrected!)  I reorganized the documentation around problems
+people want to solve.  And I began a testsuite, because experience had
+shown that Autoconf has a pronounced tendency to regress when we change
+it.
+
+   Again, several alpha testers gave invaluable feedback, especially
+Franc,ois Pinard, Jim Meyering, Karl Berry, Rob Savoye, Ken Raeburn,
+and Mark Eichin.
+
+   Finally, version 2.0 was ready.  And there was much rejoicing.  (And
+I have free time again.  I think.  Yeah, right.)
+
+
+File: autoconf.info,  Node: Old Macro Names,  Next: Environment Variable Index,  Prev: History,  Up: Top
+
+Old Macro Names
+***************
+
+   In version 2 of Autoconf, most of the macros were renamed to use a
+more uniform and descriptive naming scheme.  Here are the old names of
+the macros that were renamed, followed by the current names of those
+macros.  Although the old names are still accepted by the `autoconf'
+program for backward compatibility, the old names are considered
+obsolete.  *Note Macro Names::, for a description of the new naming
+scheme.
+
+`AC_ALLOCA'
+     `AC_FUNC_ALLOCA'
+
+`AC_ARG_ARRAY'
+     removed because of limited usefulness
+
+`AC_CHAR_UNSIGNED'
+     `AC_C_CHAR_UNSIGNED'
+
+`AC_CONST'
+     `AC_C_CONST'
+
+`AC_CROSS_CHECK'
+     `AC_C_CROSS'
+
+`AC_ERROR'
+     `AC_MSG_ERROR'
+
+`AC_FIND_X'
+     `AC_PATH_X'
+
+`AC_FIND_XTRA'
+     `AC_PATH_XTRA'
+
+`AC_FUNC_CHECK'
+     `AC_CHECK_FUNC'
+
+`AC_GCC_TRADITIONAL'
+     `AC_PROG_GCC_TRADITIONAL'
+
+`AC_GETGROUPS_T'
+     `AC_TYPE_GETGROUPS'
+
+`AC_GETLOADAVG'
+     `AC_FUNC_GETLOADAVG'
+
+`AC_HAVE_FUNCS'
+     `AC_CHECK_FUNCS'
+
+`AC_HAVE_HEADERS'
+     `AC_CHECK_HEADERS'
+
+`AC_HAVE_POUNDBANG'
+     `AC_SYS_INTERPRETER' (different calling convention)
+
+`AC_HEADER_CHECK'
+     `AC_CHECK_HEADER'
+
+`AC_HEADER_EGREP'
+     `AC_EGREP_HEADER'
+
+`AC_INLINE'
+     `AC_C_INLINE'
+
+`AC_LN_S'
+     `AC_PROG_LN_S'
+
+`AC_LONG_DOUBLE'
+     `AC_C_LONG_DOUBLE'
+
+`AC_LONG_FILE_NAMES'
+     `AC_SYS_LONG_FILE_NAMES'
+
+`AC_MAJOR_HEADER'
+     `AC_HEADER_MAJOR'
+
+`AC_MINUS_C_MINUS_O'
+     `AC_PROG_CC_C_O'
+
+`AC_MMAP'
+     `AC_FUNC_MMAP'
+
+`AC_MODE_T'
+     `AC_TYPE_MODE_T'
+
+`AC_OFF_T'
+     `AC_TYPE_OFF_T'
+
+`AC_PID_T'
+     `AC_TYPE_PID_T'
+
+`AC_PREFIX'
+     `AC_PREFIX_PROGRAM'
+
+`AC_PROGRAMS_CHECK'
+     `AC_CHECK_PROGS'
+
+`AC_PROGRAMS_PATH'
+     `AC_PATH_PROGS'
+
+`AC_PROGRAM_CHECK'
+     `AC_CHECK_PROG'
+
+`AC_PROGRAM_EGREP'
+     `AC_EGREP_CPP'
+
+`AC_PROGRAM_PATH'
+     `AC_PATH_PROG'
+
+`AC_REMOTE_TAPE'
+     removed because of limited usefulness
+
+`AC_RESTARTABLE_SYSCALLS'
+     `AC_SYS_RESTARTABLE_SYSCALLS'
+
+`AC_RETSIGTYPE'
+     `AC_TYPE_SIGNAL'
+
+`AC_RSH'
+     removed because of limited usefulness
+
+`AC_SETVBUF_REVERSED'
+     `AC_FUNC_SETVBUF_REVERSED'
+
+`AC_SET_MAKE'
+     `AC_PROG_MAKE_SET'
+
+`AC_SIZEOF_TYPE'
+     `AC_CHECK_SIZEOF'
+
+`AC_SIZE_T'
+     `AC_TYPE_SIZE_T'
+
+`AC_STAT_MACROS_BROKEN'
+     `AC_HEADER_STAT'
+
+`AC_STDC_HEADERS'
+     `AC_HEADER_STDC'
+
+`AC_STRCOLL'
+     `AC_FUNC_STRCOLL'
+
+`AC_ST_BLKSIZE'
+     `AC_STRUCT_ST_BLKSIZE'
+
+`AC_ST_BLOCKS'
+     `AC_STRUCT_ST_BLOCKS'
+
+`AC_ST_RDEV'
+     `AC_STRUCT_ST_RDEV'
+
+`AC_SYS_SIGLIST_DECLARED'
+     `AC_DECL_SYS_SIGLIST'
+
+`AC_TEST_CPP'
+     `AC_TRY_CPP'
+
+`AC_TEST_PROGRAM'
+     `AC_TRY_RUN'
+
+`AC_TIMEZONE'
+     `AC_STRUCT_TIMEZONE'
+
+`AC_TIME_WITH_SYS_TIME'
+     `AC_HEADER_TIME'
+
+`AC_UID_T'
+     `AC_TYPE_UID_T'
+
+`AC_UTIME_NULL'
+     `AC_FUNC_UTIME_NULL'
+
+`AC_VFORK'
+     `AC_FUNC_VFORK'
+
+`AC_VPRINTF'
+     `AC_FUNC_VPRINTF'
+
+`AC_WAIT3'
+     `AC_FUNC_WAIT3'
+
+`AC_WARN'
+     `AC_MSG_WARN'
+
+`AC_WORDS_BIGENDIAN'
+     `AC_C_BIGENDIAN'
+
+`AC_YYTEXT_POINTER'
+     `AC_DECL_YYTEXT'
+
+
+File: autoconf.info,  Node: Environment Variable Index,  Next: Output Variable Index,  Prev: Old Macro Names,  Up: Top
+
+Environment Variable Index
+**************************
+
+   This is an alphabetical list of the environment variables that
+Autoconf checks.
+
+* Menu:
+
+* AC_MACRODIR <1>:                       Invoking autoupdate.
+* AC_MACRODIR <2>:                       Invoking autoscan.
+* AC_MACRODIR <3>:                       Invoking autoreconf.
+* AC_MACRODIR <4>:                       Invoking ifnames.
+* AC_MACRODIR <5>:                       Invoking autoheader.
+* AC_MACRODIR:                           Invoking autoconf.
+* CONFIG_FILES:                          Invoking config.status.
+* CONFIG_HEADERS:                        Invoking config.status.
+* CONFIG_SHELL:                          Invoking config.status.
+* CONFIG_SITE:                           Site Defaults.
+* CONFIG_STATUS:                         Invoking config.status.
+* SIMPLE_BACKUP_SUFFIX:                  Invoking autoupdate.
+
+
+File: autoconf.info,  Node: Output Variable Index,  Next: Preprocessor Symbol Index,  Prev: Environment Variable Index,  Up: Top
+
+Output Variable Index
+*********************
+
+   This is an alphabetical list of the variables that Autoconf can
+substitute into files that it creates, typically one or more
+`Makefile's.  *Note Setting Output Variables::, for more information on
+how this is done.
+
+* Menu:
+
+* ALLOCA:                                Particular Functions.
+* AWK:                                   Particular Programs.
+* bindir:                                Preset Output Variables.
+* build:                                 System Type Variables.
+* build_alias:                           System Type Variables.
+* build_cpu:                             System Type Variables.
+* build_os:                              System Type Variables.
+* build_vendor:                          System Type Variables.
+* CC <1>:                                Particular Programs.
+* CC <2>:                                UNIX Variants.
+* CC:                                    Particular Programs.
+* CFLAGS <1>:                            Particular Programs.
+* CFLAGS:                                Preset Output Variables.
+* configure_input:                       Preset Output Variables.
+* CPP:                                   Particular Programs.
+* CPPFLAGS:                              Preset Output Variables.
+* CXX:                                   Particular Programs.
+* CXXCPP:                                Particular Programs.
+* CXXFLAGS <1>:                          Preset Output Variables.
+* CXXFLAGS:                              Particular Programs.
+* datadir:                               Preset Output Variables.
+* DEFS:                                  Preset Output Variables.
+* exec_prefix:                           Preset Output Variables.
+* EXEEXT:                                System Services.
+* F77:                                   Particular Programs.
+* FFLAGS <1>:                            Particular Programs.
+* FFLAGS:                                Preset Output Variables.
+* FLIBS:                                 Fortran 77 Compiler Characteristics.
+* host:                                  System Type Variables.
+* host_alias:                            System Type Variables.
+* host_cpu:                              System Type Variables.
+* host_os:                               System Type Variables.
+* host_vendor:                           System Type Variables.
+* includedir:                            Preset Output Variables.
+* infodir:                               Preset Output Variables.
+* INSTALL:                               Particular Programs.
+* INSTALL_DATA:                          Particular Programs.
+* INSTALL_PROGRAM:                       Particular Programs.
+* INSTALL_SCRIPT:                        Particular Programs.
+* KMEM_GROUP:                            Particular Functions.
+* LDFLAGS:                               Preset Output Variables.
+* LEX:                                   Particular Programs.
+* LEX_OUTPUT_ROOT:                       Particular Programs.
+* LEXLIB:                                Particular Programs.
+* libdir:                                Preset Output Variables.
+* libexecdir:                            Preset Output Variables.
+* LIBOBJS <1>:                           Particular Functions.
+* LIBOBJS <2>:                           Generic Functions.
+* LIBOBJS:                               Structures.
+* LIBS <1>:                              Preset Output Variables.
+* LIBS:                                  UNIX Variants.
+* LN_S:                                  Particular Programs.
+* localstatedir:                         Preset Output Variables.
+* mandir:                                Preset Output Variables.
+* NEED_SETGID:                           Particular Functions.
+* OBJEXT:                                System Services.
+* oldincludedir:                         Preset Output Variables.
+* prefix:                                Preset Output Variables.
+* program_transform_name:                Transforming Names.
+* RANLIB:                                Particular Programs.
+* sbindir:                               Preset Output Variables.
+* SET_MAKE:                              Output.
+* sharedstatedir:                        Preset Output Variables.
+* srcdir:                                Preset Output Variables.
+* subdirs:                               Subdirectories.
+* sysconfdir:                            Preset Output Variables.
+* target:                                System Type Variables.
+* target_alias:                          System Type Variables.
+* target_cpu:                            System Type Variables.
+* target_os:                             System Type Variables.
+* target_vendor:                         System Type Variables.
+* top_srcdir:                            Preset Output Variables.
+* X_CFLAGS:                              System Services.
+* X_EXTRA_LIBS:                          System Services.
+* X_LIBS:                                System Services.
+* X_PRE_LIBS:                            System Services.
+* YACC:                                  Particular Programs.
+
+
+File: autoconf.info,  Node: Preprocessor Symbol Index,  Next: Macro Index,  Prev: Output Variable Index,  Up: Top
+
+Preprocessor Symbol Index
+*************************
+
+   This is an alphabetical list of the C preprocessor symbols that the
+Autoconf macros define.  To work with Autoconf, C source code needs to
+use these names in `#if' directives.
+
+* Menu:
+
+* __CHAR_UNSIGNED__:                     C Compiler Characteristics.
+* _ALL_SOURCE:                           UNIX Variants.
+* _MINIX:                                UNIX Variants.
+* _POSIX_1_SOURCE:                       UNIX Variants.
+* _POSIX_SOURCE:                         UNIX Variants.
+* _POSIX_VERSION:                        Particular Headers.
+* C_ALLOCA:                              Particular Functions.
+* CLOSEDIR_VOID:                         Particular Functions.
+* const:                                 C Compiler Characteristics.
+* DGUX:                                  Particular Functions.
+* DIRENT:                                Particular Headers.
+* F77_NO_MINUS_C_MINUS_O:                Particular Programs.
+* GETGROUPS_T:                           Particular Typedefs.
+* GETLODAVG_PRIVILEGED:                  Particular Functions.
+* GETPGRP_VOID:                          Particular Functions.
+* gid_t:                                 Particular Typedefs.
+* HAVE_ALLOCA_H:                         Particular Functions.
+* HAVE_CONFIG_H:                         Configuration Headers.
+* HAVE_DIRENT_H:                         Particular Headers.
+* HAVE_DOPRNT:                           Particular Functions.
+* HAVE_FUNCTION:                         Generic Functions.
+* HAVE_GETMNTENT:                        Particular Functions.
+* HAVE_HEADER:                           Generic Headers.
+* HAVE_LONG_DOUBLE:                      C Compiler Characteristics.
+* HAVE_LONG_FILE_NAMES:                  System Services.
+* HAVE_MMAP:                             Particular Functions.
+* HAVE_NDIR_H:                           Particular Headers.
+* HAVE_RESTARTABLE_SYSCALLS:             System Services.
+* HAVE_ST_BLKSIZE:                       Structures.
+* HAVE_ST_BLOCKS:                        Structures.
+* HAVE_ST_RDEV:                          Structures.
+* HAVE_STRCOLL:                          Particular Functions.
+* HAVE_STRFTIME:                         Particular Functions.
+* HAVE_STRINGIZE:                        C Compiler Characteristics.
+* HAVE_SYS_DIR_H:                        Particular Headers.
+* HAVE_SYS_NDIR_H:                       Particular Headers.
+* HAVE_SYS_WAIT_H:                       Particular Headers.
+* HAVE_TM_ZONE:                          Structures.
+* HAVE_TZNAME:                           Structures.
+* HAVE_UNISTD_H:                         Particular Headers.
+* HAVE_UTIME_NULL:                       Particular Functions.
+* HAVE_VFORK_H:                          Particular Functions.
+* HAVE_VPRINTF:                          Particular Functions.
+* HAVE_WAIT3:                            Particular Functions.
+* inline:                                C Compiler Characteristics.
+* INT_16_BITS:                           C Compiler Characteristics.
+* LONG_64_BITS:                          C Compiler Characteristics.
+* MAJOR_IN_MKDEV:                        Particular Headers.
+* MAJOR_IN_SYSMACROS:                    Particular Headers.
+* mode_t:                                Particular Typedefs.
+* NDIR:                                  Particular Headers.
+* NEED_MEMORY_H:                         Particular Headers.
+* NEED_SETGID:                           Particular Functions.
+* NLIST_NAME_UNION:                      Particular Functions.
+* NLIST_STRUCT:                          Particular Functions.
+* NO_MINUS_C_MINUS_O:                    Particular Programs.
+* off_t:                                 Particular Typedefs.
+* pid_t:                                 Particular Typedefs.
+* RETSIGTYPE:                            Particular Typedefs.
+* SELECT_TYPE_ARG1:                      Particular Functions.
+* SELECT_TYPE_ARG234:                    Particular Functions.
+* SELECT_TYPE_ARG5:                      Particular Functions.
+* SETPGRP_VOID:                          Particular Functions.
+* SETVBUF_REVERSED:                      Particular Functions.
+* size_t:                                Particular Typedefs.
+* STDC_HEADERS:                          Particular Headers.
+* SVR4:                                  Particular Functions.
+* SYS_SIGLIST_DECLARED:                  Particular Headers.
+* SYSDIR:                                Particular Headers.
+* SYSNDIR:                               Particular Headers.
+* TIME_WITH_SYS_TIME:                    Structures.
+* TM_IN_SYS_TIME:                        Structures.
+* uid_t:                                 Particular Typedefs.
+* UMAX:                                  Particular Functions.
+* UMAX4_3:                               Particular Functions.
+* USG:                                   Particular Headers.
+* vfork:                                 Particular Functions.
+* VOID_CLOSEDIR:                         Particular Headers.
+* WORDS_BIGENDIAN:                       C Compiler Characteristics.
+* YYTEXT_POINTER:                        Particular Programs.
+

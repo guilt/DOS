@@ -1,0 +1,30 @@
+#
+# grep20s.dsm
+# Constructed by Richard Dawe <richdawe@bigfoot.com> 1999-05-17
+#
+
+dsm-file-version: 1.1
+dsm-version: 0.4.0
+dsm-name: grep20s
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: grep
+version: 2.0
+manifest: grep20s
+binaries-dsm: grep20b
+documentation-dsm: grep20d
+short-description: GNU grep
+long-description: A handy text searching tool
+license: GNU General Public License, Version 2
+
+organisation: GNU Project
+web-site: http://www.gnu.org/
+ftp-site: ftp://ftp.gnu.org/
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: grep20s.zip

@@ -1,0 +1,309 @@
+Chapter 4
+
+
+
+
+
+Coordinate Systems
+60   Fastgraph User's Guide
+
+
+Overview
+
+     Fastgraph uses three coordinate systems to perform text and graphics
+output.  These coordinate systems are character space, screen space, and
+world space.  The world space coordinate system is not available with
+Fastgraph/Light.
+
+
+Character Space
+
+     The coordinate system used for displaying characters is called character
+space.  Fastgraph uses character space for displaying characters in both text
+and graphics video modes.  It can be thought of as a grid of rows and
+columns, with each cell in the grid holding one character.  Each cell is
+identified by its unique (row,column) integer coordinates.  The rows and
+columns are numbered starting at zero; the origin is always the upper left
+corner of the screen.  For example, in the 80-column by 25-row text modes (2,
+3, and 7), the default (row,column) coordinates of the screen corners are
+shown in the following diagram.
+
+                            (0,0)           (0,79)
+
+
+                            (24,0)         (24,79)
+
+The number of rows and columns depends on the video mode, as shown in the
+following table.  For graphics modes, the table also includes the width and
+height in pixels of a character cell.
+
+                           Mode                 Char. Char.
+                          Number  Columns Rows  Width Height
+
+                             0      40     25
+                             1      40     25
+                             2      80     25
+                             3      80     25
+                             4      40     25     8     8
+                             5      40     25     8     8
+                             6      80     25     8     8
+                             7      80     25
+                             9      40     25     8     8
+                            11      80     25     9    14
+                            12      40     25     8     8
+                            13      40     25     8     8
+                            14      80     25     8     8
+                            15      80     25     8    14
+                            16      80     25     8    14
+                            17      80     30     8    16
+                            18      80     30     8    16
+                            19      40     25     8     8
+                            20      40     25     8     8
+                            21      40     50     8     8
+                            22      40     30     8     8
+
+                                           Chapter 4:  Coordinate Systems   61
+
+                            23      40     60     8     8
+                            24      80     25     8    16
+                            25      80     30     8    16
+                            26      100    37     8    16
+                            27      128    48     8    16
+                            28      100    37     8    16
+                            29      128    48     8    16
+
+     Fastgraph includes two routines, fg_getmaxx and fg_getmaxy, that
+respectively return the maximum column and row numbers in text modes.
+Example 4-1 demonstrates these two routines in a text mode.  The program uses
+fg_getmaxx and fg_getmaxy to obtain the maximum column and row numbers in
+mode 3.  It then displays these values (79 and 24).
+
+                                 Example 4-1.
+
+                    #include <fastgraf.h>
+                    #include <stdio.h>
+                    void main(void);
+
+                    void main()
+                    {
+                       int max_col;
+                       int max_row;
+                       int mode;
+
+                       mode = fg_getmode();
+                       fg_setmode(3);
+
+                       max_col = fg_getmaxx();
+                       max_row = fg_getmaxy();
+
+                       fg_setmode(mode);
+                       fg_reset();
+
+                       printf("Last col = %d\n",max_col);
+                       printf("Last row = %d\n",max_row);
+                    }
+
+
+
+Screen Space
+
+     Screen space is one of two available coordinate systems in graphics
+modes.  It uses the physical device coordinates.  Screen space can be thought
+of as a grid of rows and columns, with each unit in the grid holding one
+pixel.  Each pixel is identified by its unique (x,y) integer coordinates.
+The pixel rows and columns are numbered starting at zero; the origin is
+always the upper left corner of the screen.  For example, in the 320 by 200
+graphics modes, the (x,y) coordinates of the screen corners are shown in the
+following diagram.
+
+                            (0,0)          (319,0)
+
+                            (0,199)      (319,199)
+
+62   Fastgraph User's Guide
+
+
+
+     The Fastgraph routines fg_getmaxx and fg_getmaxy return the maximum x
+and y screen coordinates when used in graphics modes, as shown in example
+4-2.  The program uses fg_getmaxx and fg_getmaxy to obtain the maximum x and
+y coordinates in the standard CGA four-color graphics mode (mode 4).  It then
+displays these values (319 and 199).
+
+                                 Example 4-2.
+
+                      #include <fastgraf.h>
+                      #include <stdio.h>
+                      void main(void);
+
+                      void main()
+                      {
+                         int maxx;
+                         int maxy;
+                         int mode;
+
+                         mode = fg_getmode();
+                         fg_setmode(4);
+
+                         maxx = fg_getmaxx();
+                         maxy = fg_getmaxy();
+
+                         fg_setmode(mode);
+                         fg_reset();
+
+                         printf("(%d,%d)\n",maxx,maxy);
+                      }
+
+
+
+World Space
+
+     World space is the other available coordinate system in graphics modes.
+It utilizes user-defined floating point coordinates.  Fastgraph translates
+world space coordinates into physical device coordinates (screen space), and
+because of this it is somewhat slower than using screen space.  World space
+can be thought of as a standard cartesian plane extending from the lower left
+corner of the screen.
+
+     Any program that uses world space coordinates must first initialize
+Fastgraph's internal world space parameters.  The Fastgraph routine fg_initw
+is provided for this purpose.  The fg_initw routine has no arguments and must
+be called before any other routine that uses world space coordinates.
+
+     The next step in using world space is to use the Fastgraph routine
+fg_setworld to define the world space coordinates of the screen edges.  The
+fg_setworld routine has four floating-point arguments -- the minimum x
+coordinate (left edge), the maximum x coordinate (right edge), the minimum y
+coordinate (bottom edge), and the maximum y coordinate (top edge).  For
+example, if you define the world space coordinates with the statement
+
+                       fg_setworld(-10.0,10.0,0.0,2.5);
+                                           Chapter 4:  Coordinate Systems   63
+
+
+the (x,y) coordinates of the screen corners would be defined as shown in the
+following diagram.
+
+                            (-10.0,2.5) (10.0,2.5)
+
+
+                            (-10.0,0.0) (10.0,0.0)
+
+Fastgraph includes a routine fg_getworld that returns the world space
+extremes as defined in the most recent call to fg_setworld.
+
+     Example 4-3 uses fg_setworld and fg_getworld to illustrate an
+interesting application of world space.  This program calls another routine
+named redraw (not shown) that erases the screen and draws a certain image
+using world space coordinates.  The program draws the image, waits for a
+keystroke, reduces the world space by a factor of two in each direction, and
+then draws the image again.  This produces a zoom effect in which the image
+appears twice as large as it was originally.
+
+                                 Example 4-3.
+
+              #include <fastgraf.h>
+              #include <stdio.h>
+              #include <stdlib.h>
+              void main(void);
+              void redraw(void);
+
+              void main()
+              {
+                 int new_mode, old_mode;
+                 double xmin, xmax, ymin, ymax;
+
+                 old_mode = fg_getmode();
+                 new_mode = fg_automode();
+
+                 if (new_mode == 0) {
+                    printf("This program requires graphics.\n");
+                    exit(1);
+                    }
+
+                 fg_setmode(new_mode);
+                 fg_initw();
+
+                 fg_setworld(0.0,40.0,0.0,30.0);
+                 redraw();
+                 fg_waitkey();
+
+                 fg_getworld(&xmin,&xmax,&ymin,&ymax);
+                 fg_setworld(0.0,xmax*0.5,0.0,ymax*0.5);
+                 redraw();
+                 fg_waitkey();
+
+                 fg_setmode(old_mode);
+
+64   Fastgraph User's Guide
+
+                 fg_reset();
+              }
+
+
+Conversion Routines
+
+     Sometimes it's necessary to convert coordinates between character space,
+screen space, and world space.  Fastgraph includes eight conversion routines,
+four for x coordinates and four for y coordinates, to perform such
+conversions.  These routines return the translated coordinate as their
+function value.
+
+     The fg_xalpha and fg_yalpha routines convert screen space coordinates to
+character space.  The fg_xalpha routine converts a screen space x coordinate
+to the character space column that contains the coordinate.  Similarly, the
+fg_yalpha routine converts a screen space y coordinate to the character space
+row that contains the coordinate.
+
+     The fg_xconvert and fg_yconvert routines convert character space
+coordinates to screen space.  The fg_xconvert routine converts a character
+space column to the screen space coordinate of its leftmost pixel.
+Similarly, the fg_yconvert routine converts a character space row to the
+screen space coordinate of its top (lowest-numbered) pixel.
+
+     The fg_xscreen and fg_yscreen routines convert world space coordinates
+to screen space.  The fg_xscreen routine translates x coordinates, while the
+fg_yscreen routine translates y coordinates.  Conversely, the fg_xworld and
+fg_yworld routines convert screen space coordinates to world space.  The
+fg_xworld routine translates x coordinates, while the fg_yworld routine
+translates y coordinates.
+
+
+Summary of Coordinate Routines
+
+     This section summarizes the functional descriptions of the Fastgraph
+routines presented in this chapter.  More detailed information about these
+routines, including their arguments and return values, may be found in the
+Fastgraph Reference Manual.
+
+     FG_GETMAXX returns the maximum x coordinate in screen space when used in
+a graphics mode.  It returns the maximum column number in character space
+when used in a text mode.
+
+     FG_GETMAXY returns the maximum y coordinate in screen space when used in
+a graphics mode.  It returns the maximum row number in character space when
+used in a text mode.
+
+     FG_GETWORLD returns the current world space limits, as defined in the
+most recent call to fg_setworld.
+
+     FG_INITW initializes Fastgraph's internal parameters for world space.
+This routine must be called once, before any other routine that uses world
+coordinates.
+
+     FG_SETWORLD defines the world space coordinates that correspond to the
+physical edges of the screen.
+                                           Chapter 4:  Coordinate Systems   65
+
+
+     FG_XALPHA and FG_YALPHA convert screen space coordinates to character
+space.
+
+     FG_XCONVERT and FG_YCONVERT convert character space coordinates to
+screen space.
+
+     FG_XSCREEN and FG_YSCREEN convert world space coordinates to screen
+space.
+
+     FG_XWORLD and FG_YWORLD convert screen space coordinates to world space.
+66   Fastgraph User's Guide

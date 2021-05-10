@@ -1,0 +1,33 @@
+#
+# DSM for Emacs Lisp sources 20.5
+# Written by Richard Dawe <rich@phekda.freeserve.co.uk> 2001-06-24
+#
+
+dsm-file-version: 1.1
+dsm-name: em2005li
+dsm-version: 0.5.0
+
+dsm-author: Richard Dawe
+dsm-author-email: rich@phekda.freeserve.co.uk
+
+name: emacs-lisp
+version: 20.5
+type: sources
+manifest: em2005li
+short-description: GNU Emacs Lisp sources
+license: GNU General Public License, Version 2
+
+organisation: Free Software Foundation
+web-site: http://www.fsf.org/
+newsgroup: gnu.emacs.*
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: em2005li.zip
+
+#
+# Will this work with other versions too?
+#
+replaces: emacs-lisp < 20.5
+requires: emacs 20.5

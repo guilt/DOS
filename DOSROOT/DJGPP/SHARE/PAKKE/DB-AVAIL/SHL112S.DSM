@@ -1,0 +1,35 @@
+#
+# DSM for sh-utils 1.12 sources
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.3
+dsm-name: shl112s
+dsm-version: 0.4.0
+dsm-type: sources
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: sh-utils
+version: 1.12
+manifest: shl112s
+binaries-dsm: shl112b
+documentation-dsm: shl112d
+short-description: GNU shell utilities
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: shl112s.zip
+
+requires: gcc
+requires: djdev
+requires: make
+requires: fileutils
+# For 'make install'
+depends-on: bash
+# For changing *.y files:
+depends-on: bison

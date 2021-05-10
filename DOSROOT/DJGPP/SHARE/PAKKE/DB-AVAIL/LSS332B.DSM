@@ -1,0 +1,29 @@
+#
+# DSM for less 332 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.3
+dsm-name: lss332b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: less
+version: 332
+manifest: lss332b
+sources-dsm: lss332s
+short-description: A paginator similar to "more" or "pg"
+license: GNU General Public License, Version 2
+
+author: Mark N
+author-email: markn@fog.net
+web-site: http://www.fog.net/markn/less
+
+simtelnet-path: v2gnu/
+zip: lss332b.zip
+
+replaces: less < 332
+requires: DPMI

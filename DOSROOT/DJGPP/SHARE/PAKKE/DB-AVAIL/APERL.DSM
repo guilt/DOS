@@ -1,0 +1,22 @@
+#
+# DSM for ActivePerl
+# Written by Richard Dawe <richdawe@bigfoot.com> 2000-05-04
+#
+
+dsm-file-version: 1.0
+dsm-name: aperl
+dsm-version: 0.4.2
+dsm-type: virtual
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: ActivePerl
+version: 5
+short-description: ActivePerl is a port of Perl to Win32
+
+web-site: http://www.activestate.com/
+ftp-site: http://www.activestate.com/
+
+# This provides Perl's features - need this to satisfy dependencies.
+provides: perl

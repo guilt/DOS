@@ -1,0 +1,34 @@
+#
+# DSM for zlib 1.1.2 sources
+# Written by Richard Dawe <rich@phekda.freeserve.co.uk> 2001-06-13
+#
+
+dsm-file-version: 1.1
+dsm-name: zlib112s
+dsm-version: 0.5.0
+
+dsm-author: Richard Dawe
+dsm-author-email: rich@phekda.freeserve.co.uk
+
+name: zlib
+version: 1.1.2
+type: sources
+manifest: zlib112s
+binaries-dsm: zlib112b
+short-description: General purpose data compression library
+license: Free without warranty
+
+author: Jean-loup Gailly and Mark Adler
+web-site: http://www.cdrom.com/pub/infozip/zlib/
+ftp-site: ftp://ftp.cdrom.com/pub/infozip/zlib/
+
+simtelnet-path: v2tk/
+zip: zlib112s.zip
+
+replaces: zlib < 1.1.2
+
+# To build zlib, you need a bunch of tools.
+requires: djdev
+requires: gcc
+requires: binutils
+requires: make

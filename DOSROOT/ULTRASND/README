@@ -1,0 +1,83 @@
+
+                                           A d v a n c e d
+                   ‹‹‹‹  ‹‹‹‹‹    ‹‹‹‹  ‹‹    ‹‹ ‹  ‹‹‹‹‹
+                  ﬁ  ‹‹  ﬁ    ›  ﬁ€  €› ﬁ€    €› € ﬁ‹‹‹‹‹
+                  ﬁ    › ﬁﬂﬂ€ﬂ  ﬁ€    €› ﬁ€  €›  €       ›
+                   ﬂﬂﬂﬂ  ﬂ   ﬂ  ﬂ      ﬂ  ﬂﬂﬂﬂ   ﬂ  ﬂﬂﬂﬂﬂ
+                  Advanced Gravis Computer Technology Ltd.
+
+      Fax (604) 431-5155                   BBS  (604) 431-5927 V32bis
+                                                (604) 431-7553 V.Fast
+      Compuserve: GO PCVENB (71333,350)    InterNET EMail: tech@gravis.com
+      FidoNET: 1:153/978                   AOL: Adv Gravis
+
+  Copyright (C) 1993,1994,1995 by Advanced Gravis Computer Technology Ltd.
+                           All Rights Reserved
+
+=============================================================================
+
+
+1.0.0 Installation Notes
+------------------------
+
+1.1.0 Installing Over Existing UltraSound Software
+--------------------------------------------------
+If you experience problems after installing this new set of software,
+simply delete your UltraSound directory and re-install.
+
+1.1.1 Users with 16-Bit Recording Option (Daughter Board)
+---------------------------------------------------------
+The install will not auto-detect the presence of a 16-bit recording
+board.  To configure the 16-bit recording card for Windows, double click 
+on the UltraSound Configuration icon in the Gravis Program Group in 
+Windows. Under "card type," select "16-bit recording card."  If you do 
+not do this,  you may not hear anything under Windows.
+
+1.1.2 Important Note on Choosing the Base Address
+-------------------------------------------------
+If your CD-ROM drive uses address 3x0 Hex, DO NOT choose 2x0 Hex for
+your UltraSound base address, or your computer may crash.  'X' denotes a 
+port address. (For example, if your CD-ROM address is 320 Hex, do not 
+choose 220Hex for your UltraSound base address.)
+
+1.1.3 Temporary Directories
+---------------------------
+After installation a temporary directory, ADMALTOI or ISFYZQVO.TWJ,
+may be left undeleted on some systems. These directories can be safely deleted.
+  
+2.0.0 Setting up for Windows
+----------------------------
+The UltraSound uses buffers to store sound information when playing and
+recording digital data.  The size of these buffers can affect the 
+performance of the UltraSound in certain applications.  The buffer size 
+can be changed in Windows by choosing the UltraSound Configuration icon 
+for the Gravis program group under Windows.  You can then type in a new 
+value for "buf size" in the sections for DMA Channel A and DMA Channel 
+B.  The default buffer size of 4096 bytes generally gives the best 
+results when recording and playing back data.  The largest buffer size 
+is 8192 bytes.  Applications such as voice recognition can work better 
+with a smaller buffer.  If such an application is not working as 
+expected, try using a smaller buffer size.  The minimum size is 512.   
+
+
+3.0.0 Memory upgrades
+---------------------
+The following is a list of DRAM suitable for upgrading your UltraSound MAX or
+UltraSound ACE:
+
+            OKI            #MSM514260A-70JS
+            NEC            #uPD42S4260LE-70  (NOTE 2)
+            NEC            #uPD424260LE-70   (NOTE 2)
+            NEC            #uPD424260LE-60R  (NOTE 3)
+            NEC            #uPD42S4260LE-60R (NOTE 3)
+            TI             #TM545160DZ-80
+
+Note 1: Memory upgrade kits are available from Gravis.
+Note 2: The DRAM indicated above are 60nsec. thru 70nsec. parts.  If
+        available, the 80nsec. DRAM may also be used.
+Note 3: The "60R" part signifies that the part does not quite meet the
+        60nsec. spec.  Basically, it may be considered as a "faster than
+        70nsec. but not quite 60nsec." part.
+
+
+                             <END OF FILE>

@@ -1,0 +1,198 @@
+
+
+
+PR(1)                          FSF                          PR(1)
+
+
+NNAAMMEE
+       pr - convert text files for printing
+
+SSYYNNOOPPSSIISS
+       pprr [_O_P_T_I_O_N]... [_F_I_L_E]...
+
+DDEESSCCRRIIPPTTIIOONN
+       Paginate or columnate FILE(s) for printing.
+
+              +FIRST_PAGE[:LAST_PAGE],
+              ----ppaaggeess=_F_I_R_S_T___P_A_G_E_[:LAST_PAGE]
+
+              begin [stop] printing with page FIRST_[LAST_]PAGE
+
+              --CCOOLLUUMMNN, ----ccoolluummnnss=_C_O_L_U_M_N
+
+              produce  COLUMN-column  output  and  print  columns
+              down, unless --aa is used. Balance number of lines in
+              the columns on each page.
+
+       --aa, ----aaccrroossss
+              print  columns  across  rather  than   down,   used
+              together with --CCOOLLUUMMNN
+
+              --cc, ----sshhooww--ccoonnttrrooll--cchhaarrss
+
+              use hat notation (^G) and octal backslash notation
+
+              --dd, ----ddoouubbllee--ssppaaccee
+
+              double space the output
+
+              --ee[[CCHHAARR[[WWIIDDTTHH]]]], ----eexxppaanndd--ttaabbss[=_C_H_A_R_[_W_I_D_T_H_]]
+
+              expand input CHARs (TABs) to tab WIDTH (8)
+
+              --FF, --ff, ----ffoorrmm--ffeeeedd
+
+              use  form  feeds  instead  of  newlines to separate
+              pages (by a 3-line page header with --FF or a  5-line
+              header and trailer without --FF)
+
+              --hh HEADER, ----hheeaaddeerr=_H_E_A_D_E_R
+
+              use  a  centered HEADER instead of filename in page
+              header, with long headers left-hand-side truncation
+              may  occur,  --hh  ""  prints a blank line, don't use
+              --hh""
+
+              --ii[[CCHHAARR[[WWIIDDTTHH]]]], ----oouuttppuutt--ttaabbss[=_C_H_A_R_[_W_I_D_T_H_]]
+
+              replace spaces with CHARs (TABs) to tab WIDTH (8)
+
+
+
+
+
+GNU textutils 2.0          August 1999                          1
+
+
+
+
+
+PR(1)                          FSF                          PR(1)
+
+
+       --JJ, ----jjooiinn--lliinneess
+              merge full lines, turns off --WW line truncation,  no
+              column alignment, --SS[[SSTTRRIINNGG]] sets separators
+
+              --ll PAGE_LENGTH, ----lleennggtthh=_P_A_G_E___L_E_N_G_T_H
+
+              set  the  page  length  to  PAGE_LENGTH  (66) lines
+              (default number of lines of text 56,  and  with  --FF
+              63)
+
+       --mm, ----mmeerrggee
+              print  all  files  in parallel, one in each column,
+              truncate lines, but join lines of full length  with
+              --JJ
+
+              --nn[[SSEEPP[[DDIIGGIITTSS]]]], ----nnuummbbeerr--lliinneess[=_S_E_P_[_D_I_G_I_T_S_]]
+
+              number  lines,  use  DIGITS  (5)  digits,  then SEP
+              (TAB), default counting starts  with  1st  line  of
+              input file
+
+              --NN NUMBER, ----ffiirrsstt--lliinnee--nnuummbbeerr=_N_U_M_B_E_R
+
+              start  counting  with  NUMBER  at 1st line of first
+              page printed (see +FIRST_PAGE)
+
+              --oo MARGIN, ----iinnddeenntt=_M_A_R_G_I_N
+
+              offset each line with MARGIN (zero) spaces, do  not
+              affect --ww or --WW, MARGIN will be added to PAGE_WIDTH
+
+              --rr, ----nnoo--ffiillee--wwaarrnniinnggss
+
+              omit warning when a file cannot be opened
+
+              --ss[[CCHHAARR]],--separator[=CHAR]
+
+              separate columns by a single character, default for
+              CHAR  is  the  <TAB>  character  without --ww and 'no
+              char' with --ww --ss[[CCHHAARR]] turns off line truncation of
+              all 3 column options (-COLUMN|-a --CCOOLLUUMMNN|-m) except
+              --ww is set
+
+              --SS[[SSTTRRIINNGG]], ----sseepp--ssttrriinngg[=_S_T_R_I_N_G]
+
+              separate columns by an optional STRING,  don't  use
+              --SS  "STRING",  --SS  only: No separator used (same as
+              --SS""), without --SS: Default separator <TAB> with  --JJ
+              and <space> otherwise (same as --SS" "), no effect on
+              column options
+
+              --tt, ----oommiitt--hheeaaddeerr omit page  headers  and  trailers
+              --TT, ----oommiitt--ppaaggiinnaattiioonn
+
+
+
+
+GNU textutils 2.0          August 1999                          2
+
+
+
+
+
+PR(1)                          FSF                          PR(1)
+
+
+              omit page headers and trailers, eliminate any pagi-
+              nation by form feeds set in input files
+
+              --vv, ----sshhooww--nnoonnpprriinnttiinngg
+
+              use octal backslash notation
+
+              --ww PAGE_WIDTH, ----wwiiddtthh=_P_A_G_E___W_I_D_T_H
+
+              set page width to PAGE_WIDTH  (72)  characters  for
+              multiple  text-column  output  only, --ss[[cchhaarr]] turns
+              off (72)
+
+              --WW PAGE_WIDTH, ----ppaaggee--wwiiddtthh=_P_A_G_E___W_I_D_T_H
+
+              set  page  width  to  PAGE_WIDTH  (72)   characters
+              always, truncate lines, except --JJ option is set, no
+              interference with --SS or --ss
+
+       ----hheellpp display this help and exit
+
+       ----vveerrssiioonn
+              output version information and exit
+
+       --TT implied by --ll nn when nn <= 10 or <= 3 with --FF. With no
+       FILE, or when FILE is -, read standard input.
+
+RREEPPOORRTTIINNGG BBUUGGSS
+       Report bugs to <bug-textutils@gnu.org>.
+
+SSEEEE AALLSSOO
+       The  full  documentation for pprr is maintained as a Texinfo
+       manual.   If  the  iinnffoo  and  pprr  programs  are   properly
+       installed at your site, the command
+
+              iinnffoo pprr
+
+       should give you access to the complete manual.
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (C) 1999 Free Software Foundation, Inc.
+       This  is  free software; see the source for copying condi-
+       tions.  There is NO warranty; not even for MERCHANTABILITY
+       or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+GNU textutils 2.0          August 1999                          3
+
+

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<packages>
+<package name="utils-fprcp">
+ <version major="3" minor="0" micro="0"/>
+ <filename>fprcp.zip</filename>
+ <author>&lt;various&gt;</author>
+ <license>LGPL with modification</license>
+ <homepageurl>www.freepascal.org</homepageurl>
+ <email></email>
+ <description>fprcp.exe extracts from C header and Pascal files included into resource scripts numerical constants and replaces these constants to its values in resource script.</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

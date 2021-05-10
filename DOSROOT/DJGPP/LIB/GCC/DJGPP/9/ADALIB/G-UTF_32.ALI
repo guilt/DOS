@@ -1,0 +1,38 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+
+U gnat.utf_32%s		g-utf_32.ads		325428de NE OL PU
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.utf_32%s	s-utf_32.adb		s-utf_32.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D gnat.ads		20190108125404 b5988c27 gnat%s
+D g-utf_32.ads		20190108125404 19454d35 gnat.utf_32%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-utf_32.ads		20190108125404 9e89e9cc system.utf_32%s
+X 3 gnat.ads
+34K9*GNAT 57e9 4|47r9
+X 4 g-utf_32.ads
+47K14*UTF_32=47:36
+X 5 system.ads
+37K9*System 4|45r6 47r29 5|148e11
+X 8 s-utf_32.ads
+46K16*UTF_32 4|45w13 47r36 8|212e18
+

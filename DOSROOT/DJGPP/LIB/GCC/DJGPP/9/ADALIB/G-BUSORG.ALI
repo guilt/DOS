@@ -1,0 +1,47 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV SPARK_05
+
+U gnat.bubble_sort_g%b	g-busorg.adb		7ccea63c NE OL PK GE
+W gnat%s		gnat.ads		gnat.ali
+
+U gnat.bubble_sort_g%s	g-busorg.ads		46277d35 BN NE OL PU PK GE
+W gnat%s		gnat.ads		gnat.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D gnat.ads		20190108125404 b5988c27 gnat%s
+D g-busorg.ads		20190108125404 f3bff112 gnat.bubble_sort_g%s
+D g-busorg.adb		20190108125404 8f71572e gnat.bubble_sort_g%b
+D system.ads		20190108125404 27426ea2 system%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+X 3 gnat.ads
+34K9*GNAT 57e9 4|62r9 72r5 5|32r14 58r5
+X 4 g-busorg.ads
+51U19 Move 51>25 51>41 5|47s16 48s16 49s16
+51i25 From{natural}
+51i41 To{natural}
+57V18 Lt{boolean} 57>22 57>27 5|46s16
+57i22 Op1{natural}
+57i27 Op2{natural}
+62k14*Bubble_Sort_G 3|34k9 4|51z19 57z18 72l10 72e23 5|32b19 58l10 58t23
+65U14*Sort 65>20 5|38b14 56l8 56t12
+65i20 N{natural} 5|38b20 45r24
+X 5 g-busorg.adb
+39b7 Switched{boolean} 43m10 50m16 54r24
+45i14 J{integer} 46r20 46r27 47r22 48r22 48r29 49r25
+

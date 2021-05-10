@@ -1,0 +1,1184 @@
+Chapter 8
+
+
+
+
+
+Video Page Management
+150   Fastgraph User's Guide
+
+Overview
+
+     The amount of memory required to store one full screen of information is
+called a video page.  This chapter will discuss video pages in detail, along
+with the Fastgraph routines you can use to manage video pages.
+
+
+Physical Pages and Virtual Pages
+
+     Pages that use the memory that resides on the video adapter are called
+physical pages or true pages.  The number of physical pages available depends
+on the video mode and the amount of memory resident on the user's video
+adapter.  All video modes have at least one physical page.  In certain video
+modes, Fastgraph can allocate available random-access memory (RAM) and treat
+this memory as a video page.  Pages that use standard RAM in this sense are
+called virtual pages.  From a programmer's perspective, virtual pages are
+essentially identical to physical pages.
+
+     The following table shows the number of physical pages in each video
+mode.  It also indicates whether or not specific video modes support virtual
+pages.
+
+      Mode                                   Page Size Physical  Virtual
+     Number    Description                   in Bytes  Pages     Pages
+
+        0      40 column color text            2,000        8    no
+        1      40 column color text            2,000        8    no
+        2      80 column color text            4,000        4    no
+        3      80 column color text            4,000        4    no
+        4      320x200x4 CGA graphics         16,000        1    yes
+        5      320x200x4 CGA graphics         16,000        1    yes
+        6      640x200x2 CGA graphics         16,000        1    yes
+        7      80 column monochrome text       4,000        1    yes
+        9      320x200x16 Tandy graphics      32,000        1    yes
+       11      720x348 Hercules graphics      31,320        2    yes
+       12      320x200 Hercules graphics      31,320        2    yes
+       13      320x200x16 EGA graphics        32,000        8    no
+       14      640x200x16 EGA graphics        64,000        4    no
+       15      640x350 EGA mono graphics      56,000        2    no
+       16      640x350x16 EGA graphics       112,000        2    no
+       17      640x480x2 MCGA/VGA graphics    38,400        1+   no
+       18      640x480x16 VGA graphics       153,600        1+   no
+       19      320x200x256 MCGA graphics      64,000        1    yes
+       20      320x200x256 XVGA graphics      64,000        4    no
+       21      320x400x256 XVGA graphics     128,000        2    no
+       22      320x240x256 XVGA graphics      76,800        3+   no
+       23      320x480x256 XVGA graphics     153,600        1+   no
+       24      640x400x256 SVGA graphics     256,000        4    no
+       25      640x480x256 SVGA graphics     307,200        2    no
+       26      800x600x256 SVGA graphics     480,000        2    no
+       27      1024x768x256 SVGA graphics    786,432        1+   no
+       28      800x600x16 SVGA graphics      240,000        4    no
+       29      1024x768x16 SVGA graphics     393,216        2    no
+
+This table assumes the video adapter has 256K of video memory installed for
+EGA and VGA modes, and 1MB of video memory for SVGA modes.  For adapters with
+                                       Chapter 8:  Video Page Management   151
+
+less video memory, the number of physical pages is reduced proportionately.
+In other words, a 64K EGA has two video pages available instead of eight in
+mode 13.  Similarly, a 512K SVGA has one page instead of two in modes 25 and
+26, and wouldn't support mode 27.  The next table summarizes the number of
+video pages available in SVGA graphics modes for video cards with 256K, 512K,
+768K, and 1MB of video memory installed.
+
+                Mode                    Number of pages with...
+               Number    Resolution     256K 512K  768K 1MB
+
+                 24      640x400x256     1+   2     3    4
+                 25      640x480x256     0    1+    1+   2
+                 26      800x600x256     0    1+    1+   2
+                 27      1024x768x256    0    0     1    1+
+                 28      800x600x16      1+   2     3    4
+                 29      1024x768x16     0    1+    1+   2
+
+     In the preceding two tables, note that the number of physical pages in
+some video modes is followed by a plus symbol.  In these modes, there is an
+additional partial video page available.  For modes 17, 18, and 23, there is
+one full page (page 0) plus one partial page of 320 pixel rows (page 1).  For
+mode 22, there are three full physical pages (numbered 0 to 2) plus one
+partial page of 80 pixel rows (page 3).  For mode 27, there is one full page
+(page 0) plus one partial page of 256 pixel rows (page 1) on a 1MB SVGA card.
+You can safely use the partial pages as long as you don't reference pixel
+rows beyond its last available row.  However, you cannot make a partial video
+page the visual page.
+
+     In SVGA graphics modes (modes 24 to 29), video pages must begin on 256K
+boundaries to maintain compatibility between different SVGA chipsets.  This
+results in unused video memory at the end of a page.  For example, pages in
+mode 26 require 480,000 bytes of video memory.  On a 1MB SVGA card, the two
+pages will begin at 0 and 524,288 (512K). Thus there are 44,288 (524,288
+minus 480,000) unused video memory bytes at the end of each page.  With 800
+pixels (and hence 800 bytes) per screen row, this means each page has an
+extra 55 pixel rows per page.  The actual page size is therefore 800 by 654,
+with the first 600 rows being displayed.
+
+     Physical pages are numbered starting at zero.  For example, there are
+four physical video pages available in mode 3, and they are numbered 0 to 3.
+Virtual pages are numbered n to 63, where n is the number of physical pages
+in that mode.  For example, there are two physical pages (numbered 0 and 1)
+and 62 virtual pages (numbered 2 to 63) in mode 11.  Note only modes 4
+through 12 and mode 19 offer virtual pages, and the amount of conventional
+memory in the user's system usually limits the number of virtual pages
+available (this is especially true in mode 19 because of the large page
+size).
+
+
+Pages With Special Meanings
+
+     There are three video pages that have special meanings to Fastgraph.
+The visual page, as one might guess, is the video page currently visible on
+the user's display.  The active page is the video page to which Fastgraph
+writes text or graphics information.  The hidden page is meaningful only to a
+few Fastgraph routines and will be discussed specifically within the context
+152   Fastgraph User's Guide
+
+of those routines.  The fg_setmode routine sets all three of these pages to
+page 0, and it does not matter if these pages are physical or virtual.
+
+     One of the most useful features of multiple video pages (either physical
+or virtual) is the ability to build a text or graphics image off screen (that
+is, on some video page besides the visual page).  Then, once the image is
+ready, we can either transfer it to the visual page, or make the page on
+which the image resides the visual page.  This feature is especially useful
+in animation, for it displays an image instantaneously instead of visibly
+updating the screen while producing the image.
+
+
+Some Simple Examples
+
+     In this section, we will present six variations of a simple program that
+uses four video pages.  The program fills each video page with a rectangle
+and then displays text containing the video page number in the center of each
+page.  The first two examples run in a specific text or graphics video mode
+and only use physical pages.  The next two examples also run in a specific
+text or graphics video mode, but they also use virtual pages.  The final two
+examples are more general and run in several video modes.  You could of
+course write a program that essentially does the same thing as the examples
+in this section without using multiple video pages.  However, to use
+Fastgraph's image display and animation routines effectively, you must first
+understand the concept of video pages.
+
+     Before proceeding, we must introduce the Fastgraph routines fg_setpage
+and fg_setvpage.  The fg_setpage routine defines the active video page, which
+causes Fastgraph to put subsequent text and graphics output on that page.
+The fg_setvpage routine defines the visual video page displayed on the
+screen.  Both routines take a single integer argument between 0 and 63 that
+specifies the video page number.  It does not matter if the referenced video
+page is a physical page or a virtual page.  As mentioned earlier, fg_setmode
+makes page 0 the active and visual video page.
+
+     Example 8-1 uses four video pages (numbered 0 to 3) in the 40-column
+color text mode (mode 1).  The program first calls fg_testmode to check the
+availability of the requested video mode when used with four video pages.  If
+it is available, the program calls fg_setmode to establish that video mode.
+The first for loop fills each of the four pages with different color
+rectangles and then displays black text containing the video page number in
+the center of each page.  It does this by calling fg_setpage to define the
+active video page, fg_setcolor and fg_rect to draw the colored rectangles,
+and finally fg_setattr, fg_locate, and fg_text to display the text.  The
+program must call fg_locate inside the loop because each video page has its
+own text cursor position.  The second for loop successively makes each video
+page the visual page; the page remains displayed until you press a key.
+After displaying all four video pages, the program restores the original
+video mode and screen attributes before returning to DOS.
+
+                                 Example 8-1.
+
+               #include <fastgraf.h>
+               #include <stdio.h>
+               #include <stdlib.h>
+               void main(void);
+                                       Chapter 8:  Video Page Management   153
+
+               #define PAGES 4
+
+               void main()
+               {
+                  int color;
+                  int old_mode;
+                  int page;
+                  char string[8];
+
+                  if (fg_testmode(1,PAGES) == 0) {
+                     printf("This program requires color.\n");
+                     exit(1);
+                     }
+
+                  old_mode = fg_getmode();
+                  fg_setmode(1);
+
+                  for (page = 0; page < PAGES; page++) {
+                     fg_setpage(page);
+                     color = page + 1;
+                     fg_setcolor(color);
+                     fg_rect(0,fg_getmaxx(),0,fg_getmaxy());
+                     fg_setattr(0,color,0);
+                     fg_locate(12,17);
+                     sprintf(string,"page %d",page);
+                     fg_text(string,6);
+                     }
+
+                  for (page = 0; page < PAGES; page++) {
+                     fg_setvpage(page);
+                     fg_waitkey();
+                     }
+
+                  fg_setmode(old_mode);
+                  fg_reset();
+               }
+
+     Example 8-2 is similar to example 8-1, but it uses the 320 by 200 EGA
+graphics mode (mode 13) instead of a text mode.  Note the only real
+difference between this program and the text mode version is the use of
+fg_setcolor instead of fg_setattr to make the text appear in black.
+
+                                 Example 8-2.
+
+               #include <fastgraf.h>
+               #include <stdio.h>
+               #include <stdlib.h>
+               void main(void);
+
+               #define PAGES 4
+
+               void main()
+               {
+                  int color;
+                  int old_mode;
+                  int page;
+154   Fastgraph User's Guide
+
+                  char string[8];
+
+                  if (fg_testmode(13,PAGES) == 0) {
+                     printf("This program requires a ");
+                     printf("320 x 200 EGA graphics mode.\n");
+                     exit(1);
+                     }
+
+                  old_mode = fg_getmode();
+                  fg_setmode(13);
+
+                  for (page = 0; page < PAGES; page++) {
+                     fg_setpage(page);
+                     color = page + 1;
+                     fg_setcolor(color);
+                     fg_rect(0,fg_getmaxx(),0,fg_getmaxy());
+                     fg_setcolor(0);
+                     fg_locate(12,17);
+                     sprintf(string,"page %d",page);
+                     fg_text(string,6);
+                     }
+
+                  for (page = 0; page < PAGES; page++) {
+                     fg_setvpage(page);
+                     fg_waitkey();
+                     }
+
+                  fg_setmode(old_mode);
+                  fg_reset();
+               }
+
+
+     Virtual video pages are created with Fastgraph's fg_allocate routine.
+The fg_allocate routine reserves conventional random-access memory (RAM)
+which Fastgraph then treats as a video page.  The amount of memory required
+depends on the current video mode.  The fg_allocate routine takes a single
+integer argument that specifies the page number by which the virtual page
+will be referenced.  This value must be between 0 and 63.
+
+     If you try to create a virtual page with a page number already assigned
+to a physical page, fg_allocate does nothing.  For example, in the Hercules
+graphics modes (modes 11 and 12) there are two physical pages numbered 0 and
+1.  Virtual pages in the Hercules graphics modes must thus have page numbers
+between 2 and 63.  If you tell fg_allocate to create a Hercules virtual page
+numbered 0 or 1, it does nothing because those video pages are physical
+pages.  Similarly, if you use the fg_allocate routine in a video mode that
+does not support virtual video pages, it simply returns without doing
+anything.
+
+     A possible problem with fg_allocate can occur when there is not enough
+memory available for creating a virtual page in the current video mode.  The
+fg_allocate routine returns as its function value a status code indicating
+whether or not it was successful.  The possible values of the status code
+are:
+
+        value  meaning
+                                       Chapter 8:  Video Page Management   155
+          0    virtual page created
+          1    specified page number is a physical page
+          7    virtual page created, but memory control blocks were destroyed
+          8    insufficient memory to create the virtual page
+
+If you use the fg_testmode or fg_bestmode routines to check if the required
+number of video pages are available when using the requested video mode, you
+should not need to monitor the status code returned by the fg_allocate
+routine.
+
+     The fg_freepage routine releases the memory for a virtual page created
+with fg_allocate.  It requires a single integer argument that identifies the
+virtual page number to release.  This value must be between 0 and 63.  If you
+try to release a physical video page, or release a virtual page that was
+never created, fg_freepage does nothing.  It is a good idea to use
+fg_freepage to release all virtual video pages before a program returns
+control to DOS, or just before a program selects a new video mode.
+
+     Example 8-3 is also similar to example 8-1, but it uses the monochrome
+text mode (mode 7).  Because the monochrome text mode only has one physical
+video page, we must use virtual video pages for page numbers 1, 2, and 3.
+Note how the fg_allocate and fg_freepage routines are used to create and
+release the virtual video pages in this example.
+
+                                 Example 8-3.
+
+             #include <fastgraf.h>
+             #include <stdio.h>
+             #include <stdlib.h>
+             void main(void);
+
+             #define PAGES 4
+
+             void main()
+             {
+                int old_mode;
+                int page;
+                char string[8];
+
+                if (fg_testmode(7,PAGES) == 0) {
+                   printf("This program requires monochrome.\n");
+                   exit(1);
+                   }
+
+                old_mode = fg_getmode();
+                fg_setmode(7);
+                fg_cursor(0);
+
+                for (page = 0; page < PAGES; page++) {
+                   fg_allocate(page);
+                   fg_setpage(page);
+                   fg_setcolor(7);
+                   fg_rect(0,fg_getmaxx(),0,fg_getmaxy());
+                   fg_setattr(0,7,0);
+                   fg_locate(12,37);
+                   sprintf(string,"page %d",page);
+                   fg_text(string,6);
+156   Fastgraph User's Guide
+
+                   }
+
+                for (page = 0; page < PAGES; page++) {
+                   fg_setvpage(page);
+                   fg_waitkey();
+                   fg_freepage(page);
+                   }
+
+                fg_setmode(old_mode);
+                fg_reset();
+             }
+
+     Example 8-4 is similar to example 8-3, but it uses the standard Hercules
+graphics mode (mode 11) instead of the monochrome text mode.  Because the
+Hercules graphics modes have two physical video pages, we must use virtual
+video pages for page numbers 2 and 3.  Note the only real difference between
+this program and the text mode version is the use of fg_setcolor instead of
+fg_setattr to make the text appear in black.
+
+                                 Example 8-4.
+
+               #include <fastgraf.h>
+               #include <stdio.h>
+               #include <stdlib.h>
+               void main(void);
+
+               #define PAGES 4
+
+               void main()
+               {
+                  int old_mode;
+                  int page;
+                  char string[8];
+
+                  if (fg_testmode(11,PAGES) == 0) {
+                     printf("This program requires Hercules ");
+                     printf("monochrome graphics.\n");
+                     exit(1);
+                     }
+
+                  old_mode = fg_getmode();
+                  fg_setmode(11);
+
+                  for (page = 0; page < PAGES; page++) {
+                     fg_allocate(page);
+                     fg_setpage(page);
+                     fg_setcolor(7);
+                     fg_rect(0,fg_getmaxx(),0,fg_getmaxy());
+                     fg_setcolor(0);
+                     fg_locate(12,37);
+                     sprintf(string,"page %d",page);
+                     fg_text(string,6);
+                     }
+
+                  for (page = 0; page < PAGES; page++) {
+                     fg_setvpage(page);
+                                       Chapter 8:  Video Page Management   157
+
+                     fg_waitkey();
+                     fg_freepage(page);
+                     }
+
+                  fg_setmode(old_mode);
+                  fg_reset();
+               }
+
+     Example 8-5 is a generalized version of examples 8-1 and 8-3 that runs
+in any 80-column text video mode.  To simplify the program, each video page
+is filled with rectangles of the same color.  Note that fg_allocate and
+fg_freepage are used to manage the virtual video pages in case fg_bestmode
+selects the monochrome text mode (mode 7).  If fg_bestmode selects one of the
+80-column color text modes (which have four physical video pages),
+fg_allocate and fg_freepage will simply return without doing anything.
+
+                                 Example 8-5.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                #define PAGES 4
+
+                void main()
+                {
+                   int old_mode, new_mode;
+                   int page;
+                   char string[8];
+
+                   new_mode = fg_bestmode(80,25,PAGES);
+                   if (new_mode < 0) {
+                      printf("This program requires ");
+                      printf("an 80-column display.\n");
+                      exit(1);
+                      }
+
+                   old_mode = fg_getmode();
+                   fg_setmode(new_mode);
+                   fg_cursor(0);
+
+                   for (page = 0; page < PAGES; page++) {
+                      fg_allocate(page);
+                      fg_setpage(page);
+                      fg_setcolor(7);
+                      fg_rect(0,fg_getmaxx(),0,fg_getmaxy());
+                      fg_setattr(0,7,0);
+                      fg_locate(12,37);
+                      sprintf(string,"page %d",page);
+                      fg_text(string,6);
+                      }
+
+                   for (page = 0; page < PAGES; page++) {
+                      fg_setvpage(page);
+                      fg_waitkey();
+158   Fastgraph User's Guide
+
+                      fg_freepage(page);
+                      }
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+     Example 8-6 is a generalized version of examples 8-2 and 8-4 that runs
+in any 320 by 200 graphics video mode.  To simplify the program, each video
+page is filled with rectangles of the same color.  As in example 8-5,
+fg_allocate and fg_freepage are used to manage the virtual video pages in
+case fg_bestmode selects a video mode with fewer than four physical video
+pages.  Note the only real difference between this program and the text mode
+version is the use of fg_setcolor instead of fg_setattr to make the text
+appear in black.
+
+                                 Example 8-6.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                #define PAGES 4
+
+                void main()
+                {
+                   int old_mode, new_mode;
+                   int page;
+                   char string[8];
+
+                   new_mode = fg_bestmode(320,200,PAGES);
+                   if (new_mode < 0) {
+                      printf("This program requires a ");
+                      printf("320 x 200 graphics mode.\n");
+                      exit(1);
+                      }
+
+                   old_mode = fg_getmode();
+                   fg_setmode(new_mode);
+
+                   for (page = 0; page < PAGES; page++) {
+                      fg_allocate(page);
+                      fg_setpage(page);
+                      fg_setcolor(15);
+                      fg_rect(0,fg_getmaxx(),0,fg_getmaxy());
+                      fg_setcolor(0);
+                      fg_locate(12,17);
+                      sprintf(string,"page %d",page);
+                      fg_text(string,6);
+                      }
+
+                   for (page = 0; page < PAGES; page++) {
+                      fg_setvpage(page);
+                      fg_waitkey();
+                      fg_freepage(page);
+                                       Chapter 8:  Video Page Management   159
+
+                      }
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+
+Text Cursors
+
+     As mentioned in the previous chapter, Fastgraph draws hardware
+characters at the position defined by the text cursor.  Like the graphics
+cursor, the text cursor is not a cursor in the true sense, but is simply a
+pair of character space (row,column) coordinates with a special meaning.  The
+first 8 video pages (that is, pages 0 through 7) each have their own text
+cursor.  Each subsequent group of 8 video pages (pages 8 through 15, pages 16
+to 23, and so forth) respectively share the same text cursor positions as the
+first 8 pages.  This means the fg_locate routine will update one of 8
+different text cursors depending on the active video page.  Similarly, the
+fg_where routine returns the text cursor position for the active page.  The
+fg_setmode routine sets all 8 text cursor positions to the character space
+coordinates (0,0).
+
+     Example 8-7 demonstrates the use of different text cursors in an 80-
+column color text mode (mode 3).  The program first displays the text "Page "
+on video page 0 (the visible page) and waits for a keystroke.  It then makes
+page 1 the active video page, changes the text cursor location for that page,
+and displays the text "Page 1" on video page 1.  Next, it appends the
+character "0" to the text originally displayed on page 0.  Note it is not
+necessary to restore the text cursor position for page 0 because it is
+unaffected by changing the text cursor for page 1.  After waiting for another
+keystroke, the program makes video page 1 the visual page and then waits for
+yet another keystroke before returning to DOS.
+
+                                 Example 8-7.
+
+                         #include <fastgraf.h>
+                         void main(void);
+
+                         void main()
+                         {
+                            int old_mode;
+
+                            old_mode = fg_getmode();
+                            fg_setmode(3);
+                            fg_cursor(0);
+                            fg_setattr(10,0,0);
+
+                            fg_locate(1,0);
+                            fg_text("Page ",5);
+                            fg_waitkey();
+
+                            fg_setpage(1);
+                            fg_locate(23,0);
+                            fg_text("Page 1",6);
+
+                            fg_setpage(0);
+160   Fastgraph User's Guide
+
+                            fg_text("0",1);
+                            fg_waitkey();
+
+                            fg_setvpage(1);
+                            fg_waitkey();
+
+                            fg_setmode(old_mode);
+                            fg_reset();
+                         }
+
+
+Obtaining Video Page Information
+
+     Fastgraph includes two routines, fg_getpage and fg_getvpage, that
+respectively return the current active or visual video page number.  Each
+routine returns the video page number as its function value, and neither
+routine requires any arguments.
+
+     The fg_getaddr routine is sometimes useful when using virtual pages.  It
+returns as its function value the segment address for the start of the active
+video page.  It does not require any arguments.  Although fg_getaddr is more
+useful when using virtual video pages, it works equally well when using
+physical video pages.
+
+     Example 8-8 illustrates the use of the fg_getpage, fg_getvpage, and
+fg_getaddr routines in the standard CGA color graphics mode (mode 4).  This
+video mode offers only one physical page, so the program uses fg_allocate to
+create a virtual video page (page 1).  After creating the virtual page, the
+program makes it the active video page; page 0 remains the visual video page.
+The fg_getpage routine then returns the active page number (1), followed by a
+call to fg_getvpage to return the visual page number (0).  Next, the program
+uses fg_getaddr to return the segment address for video pages 0 and 1.
+Finally, it restores the original video mode and screen attributes, displays
+the returned values, and returns to DOS.
+
+                                 Example 8-8.
+
+                 #include <fastgraf.h>
+                 #include <stdio.h>
+                 void main(void);
+
+                 void main()
+                 {
+                    int old_mode;
+                    int active, visual;
+                    int page0, page1;
+
+                    old_mode = fg_getmode();
+                    fg_setmode(4);
+                    fg_allocate(1);
+                    fg_setpage(1);
+
+                    active = fg_getpage();
+                    visual = fg_getvpage();
+
+                    fg_setpage(0);
+                                       Chapter 8:  Video Page Management   161
+
+                    page0 = fg_getaddr();
+                    fg_setpage(1);
+                    page1 = fg_getaddr();
+
+                    fg_freepage(1);
+                    fg_setmode(old_mode);
+                    fg_reset();
+
+                    printf("Active page is %d.\n",active);
+                    printf("Visual page is %d.\n",visual);
+                    printf("Page 0 address is %4X\n",page0);
+                    printf("Page 1 address is %4X\n",page1);
+                 }
+
+
+Considerations for Virtual Pages
+
+     If you're using Power C, QuickBASIC, Visual Basic, Borland Pascal, or
+Turbo Pascal and need to create virtual pages, you must reduce the size of
+the far heap.  Normally, these compilers allocate all remaining memory for
+the heap, which means fg_allocate will not be able to allocate memory for the
+virtual page.
+     In QuickBASIC and Visual Basic programs, the SETMEM function reduces the
+size of the far heap.  The BASIC versions of the Fastgraph example programs
+include the statement
+
+                          SetMemStatus& = SETMEM(-n)
+
+before calling FGallocate.  This reduces the size of the far heap by n bytes.
+For a given video mode, the actual reduction needed is the number of virtual
+pages multiplied by the page size in that mode.  Page sizes are listed at the
+beginning of this chapter, or you can use fg_pagesize to determine the page
+size for the current video mode.
+
+     In Borland Pascal and Turbo Pascal, the $M compiler directive defines
+the maximum heap size in bytes.  The Pascal versions of the Fastgraph example
+programs include the statement
+
+                              {$M 16384,0,16384}
+
+at the beginning of the examples that call fg_allocate.  The third value in
+this list defines the maximum heap size at 16K bytes.  This is suitable for
+most applications, but if your program uses the New or GetMem procedures to
+create dynamic variables that require more heap space, you'll need to
+increase the size beyond 16K.
+
+     The far heap size for Power C programs is defined at link time.  You
+must override the default heap size by including the option [,,16K] on the
+PCL command when you link a Power C program that uses fg_allocate.  The value
+16K is suitable for most applications, but if your program calls the
+farcalloc or farmalloc functions (or the calloc or malloc functions when
+using the large memory model), you may need to increase the far heap size
+beyond 16K.
+
+     When you are using virtual pages, you should avoid using the fg_setvpage
+routine in sections of the program that require fast screen updates or
+162   Fastgraph User's Guide
+animation sequences.  This is because the PC and PS/2 video BIOS are only
+capable of displaying physical pages.  To compensate for this restriction,
+Fastgraph exchanges the contents of a physical page with the requested
+virtual page.  In other words, if page 1 is a virtual page and you make it
+the visual page, Fastgraph will exchange the contents of page 1 with whatever
+page was previously the visual page.  This does not mean Fastgraph's page
+numbers change because Fastgraph also maintains an internal table containing
+video page addresses and exchanges the two corresponding table entries.  As
+before, you would make page 1 the active video page if you wanted to write
+something to the visual page.
+
+     About the only other potential problem when using virtual pages is what
+happens when you try to write to a non-existent video page (for example, if
+you write to virtual video page 1 before creating it with fg_allocate).  In
+this case, Fastgraph simply redirects the video output to the visual page.
+
+
+Logical Pages
+
+     In addition to physical and virtual video pages, Fastgraph offers
+another class of video pages, called logical pages.  You can create logical
+pages in any video mode.  They can exist in conventional memory, expanded
+memory (EMS), or extended memory (XMS).  However, they are not as versatile
+as physical or virtual pages because the only operations you can perform with
+logical pages are:
+
+       Copy an entire physical or virtual page to a logical page
+       Copy an entire logical page to a physical or virtual page
+       Copy an entire logical page to another logical page
+
+Three Fastgraph routines -- fg_alloccms, fg_allocems, and fg_allocxms --
+create logical pages in conventional memory, expanded memory, and extended
+memory, respectively.  All three routines have a single integer argument that
+specifies the page number by which the logical page will be referenced.  The
+page number must be between 1 and 63 and must not reference a physical or
+virtual page.  Their return value is 0 if the logical page is created, and
+negative otherwise (refer to the descriptions of these routines in the
+Fastgraph Reference Manual for a complete list of return values).  As with
+virtual pages, use the fg_freepage function to release a logical page.
+
+     Before you can create logical pages in expanded or extended memory, you
+must initialize these resources for use with Fastgraph.  The fg_initems
+routine initializes expanded memory.  To use expanded memory, you must have
+an Expanded Memory Manager (EMM) that conforms to the Lotus/Intel/Microsoft
+Expanded Memory Specification (LIM-EMS) version 3.2 or later.  On 80386 and
+80486 systems, the EMM386.EXE device driver supplied with DOS 5.0 can be used
+to treat some or all of extended memory as expanded memory.  The fg_initxms
+routine initializes extended memory for use with Fastgraph.  To use extended
+memory, you must have an XMS driver that conforms to the
+Lotus/Intel/Microsoft/AST eXtended Memory Specification version 2.0 or later,
+such as HIMEM.SYS.  XMS drivers require an 80286, 80386, or 80486 system.
+The fg_initems and fg_initxms routines have no arguments.  Their return value
+is 0 if successful, and -1 if the required driver and resources are not
+present.
+
+     Example 8-9 illustrates the use of logical pages in a 320 by 200 color
+graphics mode.  The program first tries to create a logical page in extended
+                                       Chapter 8:  Video Page Management   163
+memory by calling fg_initxms and fg_allocxms.  If the initialization or page
+creation fails, it then tries to create the page in expanded memory with
+fg_initems and fg_allocems.  Should that fail, the program calls fg_alloccms
+to try to create the page in conventional memory.  If it can't create the
+logical page at all, the program displays an error message and exits.
+
+     Once the logical page is created, example 8-9 displays the word "test"
+in the middle of the visual page (page 0) and then uses fg_copypage to
+transfer the visual page contents to the logical page (page 8).  Because this
+program runs in one of several different graphics modes, we must use a
+logical page number greater than any possible physical page number.  We chose
+page 8 because mode 13 has physical pages numbered 0 through 7, and no mode
+has higher-numbered physical pages.  After waiting for a keystroke, the
+program erases the visual page, waits for another keystroke, and copies the
+logical page contents back to the visual page.  It then releases the logical
+page and exits.
+
+                                 Example 8-9.
+
+              #include <fastgraf.h>
+              #include <stdio.h>
+              #include <stdlib.h>
+              void main(void);
+
+              void main()
+              {
+                 int new_mode, old_mode;
+                 int status;
+
+                 new_mode = fg_bestmode(320,200,1);
+                 if (new_mode < 0 || new_mode == 12) {
+                    printf("This program requires a 320 ");
+                    printf("x 200 color graphics mode.\n");
+                    exit(1);
+                    }
+                 old_mode = fg_getmode();
+                 fg_setmode(new_mode);
+
+                 status = fg_initxms();
+                 if (status == 0) status = fg_allocxms(8);
+                 if (status < 0) {
+                    status = fg_initems();
+                    if (status == 0) status = fg_allocems(8);
+                    }
+                 if (status < 0) status = fg_alloccms(8);
+
+                 if (status < 0) {
+                    fg_setmode(old_mode);
+                    fg_reset();
+                    printf("Unable to create logical page.\n");
+                    exit(1);
+                    }
+
+                 fg_setcolor(7);
+                 fg_rect(0,319,0,199);
+                 fg_setcolor(9);
+                 fg_locate(12,18);
+164   Fastgraph User's Guide
+
+                 fg_text("test",4);
+                 fg_waitkey();
+
+                 fg_copypage(0,8);
+                 fg_erase();
+                 fg_waitkey();
+
+                 fg_copypage(8,0);
+                 fg_waitkey();
+
+                 fg_freepage(8);
+                 fg_setmode(old_mode);
+                 fg_reset();
+              }
+
+     As mentioned before, the only function you can perform with logical
+pages is copying one video page to another.  The fg_copypage routine provides
+the only way to do this for logical pages.  See Chapter 11 for more
+information about fg_copypage.
+
+
+Video Page Resizing
+
+     Resizing is the process of changing the dimensions of a video page.  It
+is available only in the native EGA graphics modes (modes 13 to 16), native
+VGA graphics modes (17 and 18), extended VGA modes (20 to 23), and SVGA modes
+(24 to 29).  Resizing does not change the screen resolution, but instead
+increases the video page size so that only part of the page is visible.  For
+now, we'll just introduce resizing with a simple example, but in Chapter 13
+we'll see its real power when we perform smooth panning.
+
+     The Fastgraph routine fg_resize changes the dimensions of a video page.
+Its two integer arguments define the page width and page height, both in
+pixels.  Example 8-10 runs in the 320 by 200 EGA graphics mode (mode 13).
+After establishing the video mode, it displays the word "resize" starting in
+column 38 of row 0.  Because the characters extend beyond the last column of
+the row, they wrap to the next row.  The program continues displaying this
+until you press a key.  Then, it clears the screen and calls fg_resize to
+make the page size 640 by 200 pixels.  Again the program displays the word
+"resize" starting in column 38 of row 0, but this time it does not wrap to
+the next row.  This is because the resizing doubled the page width, which
+increased the number of character cells per row from 40 to 80.  The
+characters that formerly wrapped to the next row now continue on an off-
+screen portion of the same row.
+
+                                Example 8-10.
+
+                #include <fastgraf.h>
+                #include <stdio.h>
+                #include <stdlib.h>
+                void main(void);
+
+                void main()
+                {
+                   int old_mode;
+
+                                       Chapter 8:  Video Page Management   165
+
+                   if (fg_testmode(13,1) == 0) {
+                      printf("This program requires a 320 ");
+                      printf("x 200 EGA graphics mode.\n");
+                      exit(1);
+                      }
+
+                   old_mode = fg_getmode();
+                   fg_setmode(13);
+
+                   fg_setcolor(9);
+                   fg_locate(0,38);
+                   fg_text("resize",6);
+                   fg_waitkey();
+
+                   fg_erase();
+                   fg_resize(640,200);
+                   fg_setcolor(10);
+                   fg_locate(0,38);
+                   fg_text("resize",6);
+                   fg_waitkey();
+
+                   fg_setmode(old_mode);
+                   fg_reset();
+                }
+
+
+     The size of a video page is constrained only by the amount of video
+memory available.  Increasing the video page size reduces the number of
+physical pages available proportionally.  In mode 13, for example, increasing
+the page size from 320 by 200 to 640 by 400 reduces the number of video pages
+from 8 to 2.  When you call fg_resize, the visual page must be page 0.  If
+you have created any logical video pages, you must release them with
+fg_freepage before calling fg_resize, and then create them again afterward.
+If you have initialized the mouse (with fg_mouseini), joysticks (with
+fg_initjoy), expanded memory (with fg_initems), or extended memory (with
+fg_initxms), you should re-initialize these resources after calling
+fg_resize.  Most mouse drivers expect a fixed video page width, so the mouse
+cursor may become distorted after resizing video pages.  When you call
+fg_resize, Fastgraph sets the clipping region to the new page limits.  The
+fg_setmode routine re-establishes the dimensions of a video page to the
+default screen resolution for the selected video mode.
+
+      Depending on the dimensions passed to fg_resize, you may end up with a
+partial video page.  Again, suppose we're using mode 13 and have changed the
+page size to 960 by 400 (this is six times the default page size).  The
+original pages 0 to 5 now comprise page 0, and original pages 6 and 7 now
+comprise page 1.  However, there is not enough video memory left on page 1
+for a full 960 by 400 page.  In this case, the number of pixel rows available
+on page 1 would be one-third the full page size, or 133 rows.  This is
+because the total storage required by original pages 6 and 7 is one-third the
+total required for original pages 0 through 5.
+166   Fastgraph User's Guide
+
+
+Preserving Video Page Contents Across Mode Switches
+
+     Sometimes a graphics program may temporarily need to switch to another
+video mode.  An example of this might be a graphical user interface (GUI)
+menuing system that includes "shell to DOS" as one of its options.  When the
+user selects this option, the program must revert to a text video mode so the
+user will see the familiar DOS prompt when the shell executes.  On leaving
+the DOS shell, the program returns to a graphics mode and should ideally
+restore the screen to what it was originally.
+
+     When you establish a video mode with fg_setmode, Fastgraph clears all
+physical video pages and initializes its internal page tables as if no
+virtual or logical pages have been created.  While it's not possible to
+preserve physical page contents across video mode switches, you can use
+Fastgraph's fg_getentry and fg_setentry routines to save virtual or logical
+page contents.  The trick, so to speak, is using fg_getentry to save the
+virtual or logical page address and type before switching video modes.  Then,
+when you return to the same video mode, you can use fg_setentry to restore
+the internal page tables to their previous state.  This effectively makes the
+virtual or logical page accessible again.
+
+     Example 8-11 illustrates this process.  This program runs in video mode
+18, the 640 by 480 16-color VGA graphics mode.  After establishing this video
+mode, the program calls fg_alloccms to create a logical page in conventional
+memory (we chose page 2 because this is the first page number available for
+logical pages in mode 18).  Next, it calls fg_getentry to save the address
+and type of the logical page just created.  The first argument to fg_getentry
+specifies the page number; the next two arguments receive the page address
+and type.  Page type codes used by fg_getentry and fg_setentry are as
+follows:
+
+     0 = unallocated page
+     1 = physical page
+     2 = virtual page
+     3 = logical page in expanded memory (EMS)
+     4 = logical page in extended memory (XMS)
+     5 = logical page in conventional memory
+
+     After this setup work, example 8-11 fills the screen with light blue
+pixels, draws a white box around the edge, and then waits for a keystroke.
+Before switching back to the original video mode (assumed to be mode 3), the
+program uses fg_copypage to copy the visual page contents to the logical
+page.  This is necessary because we can only save virtual or logical page
+contents across video mode changes, not physical pages.  In mode 3, the
+program prompts for a keystroke before returning to mode 18.
+
+     Now we're ready to restore the previous contents of the visual page.
+Because the example program did not release the logical page, the memory is
+still allocated; Fastgraph just cannot access it.  To solve this, the program
+calls fg_setentry to restore Fastgraph's internal page table entries for page
+2 to what they were previously.  Note how we use the same page address and
+type values in the call to fg_setentry that were returned earlier by
+fg_getentry.  Now that the logical page (page 2) is once again accessible,
+the program can use fg_copypage to copy its contents back to the visual page.
+With that explanation behind us, here is example 8-11.
+                                       Chapter 8:  Video Page Management   167
+
+                                Example 8-11.
+
+                   #include <fastgraf.h>
+                   void main(void);
+
+                   void main()
+                   {
+                      int old_mode;
+                      int page_addr, page_type;
+
+                      old_mode = fg_getmode();
+                      fg_setmode(18);
+                      fg_alloccms(2);
+                      fg_getentry(2,&page_addr,&page_type);
+
+                      fg_setcolor(9);
+                      fg_fillpage();
+                      fg_setcolor(15);
+                      fg_box(0,639,0,479);
+                      fg_waitkey();
+
+                      fg_copypage(0,2);
+                      fg_setmode(old_mode);
+                      fg_cursor(0);
+                      fg_setcolor(15);
+                      fg_text("Press any key.",14);
+                      fg_waitkey();
+
+                      fg_setmode(18);
+                      fg_setentry(2,page_addr,page_type);
+                      fg_copypage(2,0);
+                      fg_waitkey();
+
+                      fg_freepage(2);
+                      fg_setmode(old_mode);
+                      fg_reset();
+                   }
+
+
+     To keep the example as simple as possible, it does not test for
+availability of video modes, nor does it check if the logical page creation
+was successful.  In a real application, of course, omitting these checks is
+not recommended.
+
+
+Controlling Page Allocation
+
+     When Fastgraph creates virtual or logical pages in conventional memory
+with fg_allocate or fg_alloccms, it uses the DOS allocate memory service
+(function 48 hex of interrupt 21 hex).  Some compilers allocate all or part
+of available conventional memory to a data structure called the heap or far
+heap.  Memory allocation functions such as malloc handle their requests
+through an associated heap manager instead of through DOS services.  If the
+heap manager controls all available memory, the DOS allocate memory service
+is essentially disabled because there will be no memory available to satisfy
+allocation requests.  If the heap manager controls some but not all available
+168   Fastgraph User's Guide
+memory, a conflict may arise between the heap manager and the DOS allocate
+memory service.
+
+     To solve this problem, you can use the compiler's allocate far memory
+function to reserve memory for the virtual or logical page and then make the
+page known to Fastgraph with fg_setentry.  The easiest way to determine the
+amount of memory to allocate is through the fg_pagesize function, which
+returns the page size in bytes (as a long integer) for the current video
+mode.  To release the page, use fg_setentry with a page type of zero to mark
+the page as unallocated before actually freeing the memory.  Pages created
+this way are not initially cleared because the allocated memory block
+contents are undefined.  We recommend using fg_erase to set the page contents
+to the background color.
+
+     Example 8-12 shows how to create a virtual page using these techniques
+instead of fg_allocate.  It uses the farmalloc and farfree functions from the
+C run-time library for Borland compilers (the analogous Microsoft functions
+are _fmalloc and _ffree).  Example 8-12 uses fg_pagesize and the Borland run-
+time library function farmalloc to create a virtual page in the 320 by 200
+VGA/MCGA 256-color graphics mode.  After allocating the memory, the program
+calls fg_setentry, passing it the page number (1), the segment portion of the
+memory block address (using the FP_SEG macro from the run-time library), and
+the code for a virtual page (2).  Once the virtual page is set up, the
+program writes some text on the virtual page and then uses fg_copypage to
+display the virtual page contents on the visual page.  Finally, it releases
+the page by calling fg_setentry (so Fastgraph knows the virtual page is gone)
+and the farfree run-time library function (to actually free the memory).  The
+call to fg_setentry is not really needed in this instance because no further
+references are made to page 1.
+
+                                Example 8-12.
+
+           #include <fastgraf.h>
+           #include <dos.h>
+           #ifdef __TURBOC__
+           #include <alloc.h>
+           #else
+           #include <malloc.h>
+           #define  farfree(p)   _ffree(p)
+           #define  farmalloc(n) _fmalloc(n)
+           #endif
+           void main(void);
+
+           void main()
+           {
+              int old_mode;
+              unsigned page_addr;
+              char far *buffer;
+
+              old_mode = fg_getmode();
+              fg_setmode(19);
+              buffer = farmalloc(fg_pagesize()+16);
+              page_addr = FP_SEG(buffer) + (FP_OFF(buffer)+15)/16;
+              fg_setentry(1,page_addr,2);
+
+              fg_setpage(1);
+              fg_erase();
+                                       Chapter 8:  Video Page Management   169
+
+              fg_setcolor(9);
+              fg_text("This is page 1.",15);
+              fg_waitkey();
+
+              fg_copypage(1,0);
+              fg_setentry(1,0,0);
+              fg_waitkey();
+
+              farfree(buffer);
+              fg_setmode(old_mode);
+              fg_reset();
+           }
+
+
+
+Summary of Video Page Management Routines
+
+     This section summarizes the functional descriptions of the Fastgraph
+routines presented in this chapter.  More detailed information about these
+routines, including their arguments and return values, may be found in the
+Fastgraph Reference Manual.
+
+     FG_ALLOCATE creates a virtual video page.  The amount of memory required
+depends on the current video mode.  This routine has no effect if it
+references a physical or logical video page.
+
+     FG_ALLOCEMS creates a logical page in expanded memory (EMS).  The amount
+of memory required depends on the current video mode and video buffer
+dimensions.  This routine has no effect if it references a physical or
+virtual video page.
+
+     FG_ALLOCXMS creates a logical page in extended memory (XMS).  The amount
+of memory required depends on the current video mode and video buffer
+dimensions.  This routine has no effect if it references a physical or
+virtual video page.
+
+     FG_COPYPAGE transfers the contents of one video page to another.  The
+pages may be physical, virtual, or logical video pages.  If both pages are
+logical pages, they must exist in the same type of memory.
+
+     FG_FREEPAGE releases a virtual or logical video page created with the
+fg_allocate, fg_alloccms, fg_allocems, or fg_allocxms routines.  This routine
+has no effect if it references a physical video page, or a virtual page that
+was never created.
+
+     FG_GETADDR returns the segment address of the active video page.
+
+     FG_GETENTRY retrieves the type and address of a physical, virtual, or
+logical video page.  This routine is useful for saving virtual or logical
+page contents across video mode changes.
+
+     FG_GETPAGE returns the active video page number.
+
+     FG_GETVPAGE returns the visual video page number.
+
+     FG_INITEMS initializes expanded memory for use with Fastgraph.
+170   Fastgraph User's Guide
+
+     FG_INITXMS initializes extended memory for use with Fastgraph.
+
+     FG_PAGESIZE returns the video page size in bytes for the current video
+mode.
+
+     FG_RESIZE changes the dimensions of a video page in EGA and VGA graphics
+modes.
+
+     FG_SETENTRY specifies the type and address of a physical, virtual, or
+logical video page.  For logical pages, it further specifies if the page
+resides in conventional, expanded, or extended memory.  This routine is
+useful for saving virtual or logical page contents across video mode changes,
+or for manual creation of virtual and logical pages.
+
+     FG_SETPAGE establishes the active video page.  It may be a physical or
+virtual page.
+
+     FG_SETVPAGE establishes the visual video page.  It may be a physical or
+virtual page.
+

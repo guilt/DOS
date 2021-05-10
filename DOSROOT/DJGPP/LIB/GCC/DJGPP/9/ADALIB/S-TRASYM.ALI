@@ -1,0 +1,91 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P SS ZX
+
+RN
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_OBSOLESCENT_FEATURES
+RV SPARK_05
+
+U system.traceback.symbolic%b  s-trasym.adb	bb296fbb NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.exceptions.traceback%s  a-exctra.adb	a-exctra.ali
+W system%s		system.ads		system.ali
+W system.address_image%s  s-addima.adb		s-addima.ali
+Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+W system.traceback%s	s-traceb.adb		s-traceb.ali
+
+U system.traceback.symbolic%s  s-trasym.ads	c84061d1 EB NE OL PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W system.traceback%s	s-traceb.adb		s-traceb.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-except.ads		20190108125404 291912d5 ada.exceptions%s
+D a-exctra.ads		20190108125404 0966bad0 ada.exceptions.traceback%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-addima.ads		20190108125404 a1ec9d3a system.address_image%s
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-secsta.ads		20190108125404 20bbe636 system.secondary_stack%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-stoele.ads		20190108125404 2dc34a04 system.storage_elements%s
+D s-traceb.ads		20190108125404 5e7928b4 system.traceback%s
+D s-trasym.ads		20190108125404 bf205bb0 system.traceback.symbolic%s
+D s-trasym.adb		20190108125404 ac8313e1 system.traceback.symbolic%b
+D s-traent.ads		20190108125404 005bf670 system.traceback_entries%s
+X 1 ada.ads
+16K9*Ada 20e8 12|78r6 93r11 95r11 13|40r6 40r36 91r11 94r34 98r11
+X 2 a-except.ads
+54K13*Exceptions 349e19 12|78w10 93r15 95r15 13|40r10 40r40 91r15 94r38 98r15
+63R9*Exception_Occurrence 317e14 12|93r26 95r26 13|91r26 98r26
+X 3 a-exctra.ads
+40K24*Traceback 63e29 13|40w21 40r51 94r49
+50V13*Tracebacks{47A12} 13|94s59
+X 5 system.ads
+37K9*System 148e11 12|80r9 84r19 86r19 111r5 13|41r6 43r14 52r19 60r29 67r23
+. 85r19 112r5
+67M9*Address
+81V14*"="{boolean} 13|55r27
+X 6 s-addima.ads
+39V17*Address_Image{string} 13|41w13 60s36 67s30
+X 11 s-traceb.ads
+44K16*Traceback 5|37k9 11|87e21 12|80r16 111r12 13|43r21 112r12
+81V13*C_Call_Chain{natural} 84i<c,system__traceback__c_call_chain>22
+X 12 s-trasym.ads
+80K26*Symbolic 11|44k16 12|111l22 111e30 13|43b31 112l22 112t30
+83V13*Symbolic_Traceback{string} 84>7 13|51b13 79l8 79t26 87s14 94s14
+84a7 Traceback{14|56A9} 13|52b7 55r10 60r51 60r62 62r54 66r22 67r45
+85V13*Symbolic_Traceback_No_Hex{string} 86>7 13|84b13 88l8 88t33
+86a7 Traceback{14|56A9} 13|85b7 87r34
+92V13*Symbolic_Traceback{string} 93>7 13|90b13 95l8 95t26 100s14
+93r7 E{2|63R9} 13|91b7 94r71
+94V13*Symbolic_Traceback_No_Hex{string} 95>7 13|97b13 101l8 101t33
+95r7 E{2|63R9} 13|98b7 100r34
+102U14*Enable_Cache 102>28 13|107b14 110l8 110t20
+102b28 Include_Modules{boolean} 13|107b28
+X 13 s-trasym.adb
+60a13 Img{string} 62r36 67r16 70r43 70r58 71r65
+62a13 Result{string} 68m16 70m16 72m16 75m13 76r20
+63i13 Last{natural} 68r24 68r36 69m16 69r58 70r24 70r36 71m16 71r58 72r24
+. 75r21 76r33
+66i17 J{integer} 67r56
+X 14 s-traent.ads
+47K16*Traceback_Entries 12|84r26 86r26 13|52r26 85r26 14|67e29
+50M12*Traceback_Entry{5|67M9}
+56A9*Tracebacks_Array(50M12)<integer> 12|84r44 86r44 13|52r44 85r44
+

@@ -1,0 +1,29 @@
+#
+# DSM for indent 1.9.1 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.3
+dsm-name: ind191b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: indent
+version: 1.9.1
+manifest: ind191b
+sources-dsm: ind191s
+documentation-dsm: ind191d
+short-description: GNU indent, source re-formatter
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: ind191b.zip
+
+replaces: indent < 1.9.1
+requires: DPMI

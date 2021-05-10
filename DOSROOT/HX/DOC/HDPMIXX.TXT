@@ -1,0 +1,22 @@
+
+ Special HDPMI versions
+
+ The versions of HDPMI found in this directory may contain functions
+ not included in the standard versions. This may be required to run
+ some programs, but usually the standard versions are tested more
+ intensively and therefore may be more stable.
+ 
+ - HDPMI32.EXE: this is an instance of HDPMI32 which has DOS API 
+   translation for LFN functions enabled. For LFN to work on plain DOS
+   DOSLFN must be installed (see LFN.TXT for details).
+
+   View Doc\compat.txt for details about which app may require this
+   server version. 
+   
+ - HDPMI16.EXE: a version of HDPMI16 with the following features enabled:
+   + LFN support
+   + tells windows kernel that windows enhanced mode is running.
+   + support for some VxD APIs
+
+ Japheth
+ 

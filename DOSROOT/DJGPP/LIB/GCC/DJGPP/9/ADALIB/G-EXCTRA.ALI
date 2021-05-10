@@ -1,0 +1,39 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+
+U gnat.exception_traces%s  g-exctra.ads		a55269e4 NE OL
+W gnat%s		gnat.ads		gnat.ali
+W system%s		system.ads		system.ali
+W system.exception_traces%s  s-exctra.adb	s-exctra.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D gnat.ads		20190108125404 b5988c27 gnat%s
+D g-exctra.ads		20190108125404 344e3329 gnat.exception_traces%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-exctra.ads		20190108125404 2484d6ea system.exception_traces%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-traent.ads		20190108125404 005bf670 system.traceback_entries%s
+X 3 gnat.ads
+34K9*GNAT 57e9 4|39r9
+X 4 g-exctra.ads
+39K14*Exception_Traces=39:46
+X 5 system.ads
+37K9*System 4|38r6 39r39 5|148e11
+X 7 s-exctra.ads
+57K16*Exception_Traces 4|38w13 39r46 7|107e28
+

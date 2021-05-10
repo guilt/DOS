@@ -1,0 +1,29 @@
+#
+# DSM for sed 3.02 binaries
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+
+dsm-file-version: 1.3
+dsm-name: sed302b
+dsm-version: 0.4.0
+dsm-type: binaries
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: sed
+version: 3.02
+manifest: sed302b
+sources-dsm: sed302s
+short-description: GNU sed
+license: GNU General Public License, Version 2
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: sed302b.zip
+
+replaces: sed < 3.02
+requires: DPMI
+depends-on: info-reader

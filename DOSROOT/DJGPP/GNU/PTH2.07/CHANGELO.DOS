@@ -1,0 +1,25 @@
+Changelog for the DJGPP port of GNU Pth
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Changes in release 2, Pth 2.0.7 - 2007-02-16
+
+* Autoconf now checks for correct location of sigset_t for DJGPP.
+* Autoconf now checks for feature.h.
+* Autoconf looks in Watt-32's wtime.h for "struct timespec".
+* Autoconf checks for a definition of SIGCHLD.
+* Added simulated pipe() facility via a auto-sizing ring buffer for use
+  in v2.03 which lacks a working pipe().  This is probably good to use
+  for v2.04 as well, since v2.04 uses temporary disk files which is
+  *very* slow.  See --with-pipe= in configure script.
+* Also added the ability to disable usage of pipes altogether.  This
+  has the unfortunate side-effect of disabling threaded signaling,
+  but increases thread performance on DJGPP by more than 10x.
+* Put the proper ifdef's around "faked" functions in pth_high.c, to
+  avoid unnecessary code bloat in final executables.
+
+Changes in release 1, Pth 1.3.7 - 2003-07-19
+--------------------------------------------
+
+* Initial release.
+
+Richard Dawe <rich@phekda.freeserve.co.uk> 2003-07-19

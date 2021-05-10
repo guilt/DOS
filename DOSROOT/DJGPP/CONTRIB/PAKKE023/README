@@ -1,0 +1,58 @@
+pakke 0.2.3 release 1 readme
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+$Id: README,v 1.2 2003/03/14 18:23:24 richdawe Exp $
+
+Introduction
+------------
+
+pakke is a package manager for DJGPP with an RPM-like syntax. It uses files
+called DJGPP Software Manifests (DSMs) to handle software packages. The DSM
+specification is included in the documentation.
+
+Where to get pakke
+------------------
+
+pakke has a home page:
+
+    http://www.phekda.freeserve.co.uk/richdawe/pakke/
+
+How to install and use pakke
+----------------------------
+
+Installation is described in the file 'install.txt' that comes in
+the binary and source distributions. They are also included in
+the pakke manual.
+
+The pakke manual is provided in info and HTML formats in the binary
+distribution. Use 'info pakke' to read the info manual. You can read
+the HTML manual by pointing your web browser at the file
+'contrib/pakke023/doc/pakke.htm' off your DJGPP directory. Alternatively,
+you can read the pakke manual here:
+
+    http://www.phekda.freeserve.co.uk/richdawe/pakke/pakke.htm
+
+The dsmcheck manual and DSM specification can also be read from here:
+
+    http://www.phekda.freeserve.co.uk/richdawe/pakke/dsmcheck.htm
+    http://www.phekda.freeserve.co.uk/richdawe/pakke/dsm.htm
+
+How to contribute
+-----------------
+
+For pakke to improve, we need help. We need to people to help test, code,
+document and generally break pakke. To help with this, there is a pakke
+development mailing list:
+
+    http://www.onelist.com/community/pakke-workers
+
+Please subscribe to this mailing list if you're interested. Alternatively,
+just drop me a mail at my address (see below).
+
+Finally
+-------
+
+If you have any questions, suggestions, bugfixes, etc., please e-mail me.
+Bye,
+
+Richard Dawe <rich@phekda.freeserve.co.uk>

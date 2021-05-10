@@ -1,0 +1,50 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_FLOATING_POINT
+RV NO_IMPLEMENTATION_PRAGMAS
+RV SPARK_05
+
+U system.dim.long_mks.other_prefixes%s  s-dlmopr.ads  d5e7f29b NE OL PK
+W system%s		system.ads		system.ali
+W system.dim%s		s-dim.ads		s-dim.ali
+W system.dim.generic_mks%s
+W system.dim.generic_mks.generic_other_prefixes%s
+W system.dim.long_mks%s	s-dilomk.ads		s-dilomk.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-numeri.ads		20170908181218 bb51c45a ada.numerics%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-dim.ads		20190108125404 ec3077cc system.dim%s
+D s-digemk.ads		20190108125404 d6ab2b3c system.dim.generic_mks%s
+D s-dgmgop.ads		20190108125404 74398739 system.dim.generic_mks.generic_other_prefixes%s
+D s-dilomk.ads		20190108125404 b6355d1b system.dim.long_mks%s
+D s-dlmopr.ads		20190108125404 17eb28b9 system.dim.long_mks.other_prefixes%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+X 4 system.ads
+37K9*System 148e11 9|32r6 34r9 35r7
+X 5 s-dim.ads
+65K16*Dim 4|37k9 5|68e15 9|32r13 34r16 35r14
+X 6 s-digemk.ads
+45k20*Generic_Mks 396e27 9|32r17
+X 7 s-dgmgop.ads
+39k32 Generic_Other_Prefixes 174e50 9|32w29
+X 8 s-dilomk.ads
+34K20*Long_Mks[6|45] 5|65k16 9|34r20 35r18
+X 9 s-dlmopr.ads
+34K29*Other_Prefixes[7|39] 8|34k20
+

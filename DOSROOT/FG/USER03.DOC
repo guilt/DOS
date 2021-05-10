@@ -1,0 +1,805 @@
+Chapter 3
+
+
+
+
+
+Initializing the
+Video Environment
+44   Fastgraph User's Guide
+
+
+Overview
+
+     Before Fastgraph can perform any text or graphics video operations, you
+must select a video mode in which your program will run.  An important part
+of this selection depends on whether your program will run in a text mode, a
+graphics mode, or both.  The first two sections in this chapter discuss the
+necessary video initialization for standard text and graphics modes, while
+the last section addresses the additional setup needed for SuperVGA (SVGA)
+graphics modes.
+
+
+Establishing a Text Mode
+
+     When you write a program that only uses text modes, you must determine
+if the program will run on monochrome systems, color systems, or both.  In
+general, there is no reason to exclude one type of system, because the
+additional programming required to support both is rather trivial.
+
+     The Fastgraph routine fg_setmode establishes a video mode and
+initializes Fastgraph's internal parameters for that mode.  This routine has
+a single integer argument whose value is a video mode number between 0 and
+29.  Its value can also be -1, which tells Fastgraph to use the current video
+mode.  Specifying an fg_setmode argument of -1 is often useful in programs
+that only use text video modes.
+
+     When you establish a text video mode, the ROM BIOS text cursor is made
+visible, and this is often undesirable.  The Fastgraph routine fg_cursor
+controls the visibility of the text cursor.  The fg_cursor routine has a
+single integer argument that specifies the cursor visibility.  If its value
+is 0, the cursor is made invisible; if its value is 1, the cursor is made
+visible.
+
+     At this point, an example may help to clarify things.  The following
+program shows how to initialize Fastgraph for the 80-column color text mode
+(mode 3) and turn off the text mode cursor.  It uses two Fastgraph routines
+that we have not yet discussed, fg_setcolor and fg_text.  These routines will
+be discussed in later sections of this document.  For now, it should suffice
+to know the call to fg_setcolor makes subsequent text appear in white, and
+the call to fg_text displays the characters passed to it.
+
+                                 Example 3-1.
+
+                       #include <fastgraf.h>
+                       void main(void);
+
+                       void main()
+                       {
+                          fg_setmode(3);
+                          fg_cursor(0);
+
+                          fg_setcolor(15);
+                          fg_text("Hello, world.",13);
+                       }
+
+                           Chapter 3:  Initializing the Video Environment   45
+
+     If you run example 3-1, notice the text displayed by the program appears
+in the upper left corner of the screen.  On the line below this, the DOS
+prompt appears, waiting for your next DOS command.  Furthermore, if your
+system uses the ANSI.SYS driver to set screen attributes (such as with
+Norton's SA program), you should also notice only the DOS prompt appears in
+the colors defined by the screen attributes -- the rest of the screen is
+blank.
+
+     A more graceful return to DOS is needed.  In example 3-2, we'll use the
+Fastgraph routine fg_reset.  This routine erases the screen, and if the
+ANSI.SYS driver is loaded, fg_reset also restores any previously set screen
+attributes.  We've also included a call to the Fastgraph routine fg_waitkey
+to wait for a keystroke before exiting.  If we didn't do this, we would never
+see the program's output.
+
+                                 Example 3-2.
+
+                       #include <fastgraf.h>
+                       void main(void);
+
+                       void main()
+                       {
+                          fg_setmode(3);
+                          fg_cursor(0);
+
+                          fg_setcolor(15);
+                          fg_text("Hello, world.",13);
+                          fg_waitkey();
+
+                          fg_reset();
+                       }
+
+     Since examples 3-1 and 3-2 specifically used video mode 3, they would
+not work on a monochrome system.  Ideally, we'd like to use fg_setmode(3) for
+color systems and fg_setmode(7) for monochrome systems.  To do this, we need
+a way to determine whether the program is being run on a color system or on a
+monochrome system.  The next example illustrates an easy way to do this.
+
+     Example 3-3 uses the Fastgraph routine fg_testmode to determine if the
+user's system will support the video mode number specified as its first
+argument (the second argument is the number of video pages required, which
+will be 1 for all examples in this section).  The fg_testmode routine returns
+a value of 1 (as its function value) if the requested video mode can be used,
+and it returns 0 if not.  The program first sees if an 80-column color text
+mode is available (mode 3), and if so, it selects that mode.  If the color
+mode is not available, it checks if the monochrome text mode is available
+(mode 7), and if so, it chooses the monochrome mode.  If neither mode is
+available, then the program assumes the user's system has a 40-column
+display, issues a message indicating the program requires an 80-column
+display, and then exits.
+
+                                 Example 3-3.
+
+                   #include <fastgraf.h>
+                   #include <stdio.h>
+                   #include <stdlib.h>
+46   Fastgraph User's Guide
+
+                   void main(void);
+
+                   void main()
+                   {
+                      int old_mode;
+
+                      old_mode = fg_getmode();
+
+                      if (fg_testmode(3,1))
+                         fg_setmode(3);
+                      else if (fg_testmode(7,1))
+                         fg_setmode(7);
+                      else {
+                         printf("This program requires\n");
+                         printf("an 80-column display.\n");
+                         exit(1);
+                         }
+
+                      fg_cursor(0);
+
+                      fg_setcolor(15);
+                      fg_text("Hello, world.",13);
+                      fg_waitkey();
+
+                      fg_setmode(old_mode);
+                      fg_reset();
+                   }
+
+     Example 3-3 also illustrates another useful procedure.  It is
+recommended, especially in graphics modes, to restore the original video mode
+and screen attributes before a program returns to DOS.  We've already seen
+how the fg_reset routine restores the screen attributes, but how do we
+restore the original video mode?  The Fastgraph routine fg_getmode returns
+the current video mode as its function value.  If we call fg_getmode before
+calling fg_setmode, we can use the return value from fg_getmode and again
+call fg_setmode before the program exits.
+
+     You also can use another Fastgraph routine, fg_bestmode, to determine if
+a video mode with a specific resolution is available on the user's system.
+The fg_bestmode routine requires three integer arguments:  a horizontal
+resolution, a vertical resolution, and the number of video pages required.
+As its function value, fg_bestmode returns the video mode number that offers
+the most capabilities for the resolution and number of pages requested.  It
+returns a value of -1 if no available video mode offers the requested
+criteria.
+
+     For example, if we require an 80 by 25 text mode, we can use the
+function call fg_bestmode(80,25,1) to pick the "best" video mode available
+that offers this capability.  In text modes, the term best means to give
+preference to a color text mode over a monochrome text mode.  Example 3-4
+performs the same function as example 3-3, but it uses fg_bestmode rather
+than fg_testmode.
+
+                                 Example 3-4.
+
+                   #include <fastgraf.h>
+                           Chapter 3:  Initializing the Video Environment   47
+
+                   #include <stdio.h>
+                   #include <stdlib.h>
+                   void main(void);
+
+                   void main()
+                   {
+                      int old_mode;
+                      int new_mode;
+
+                      old_mode = fg_getmode();
+                      new_mode = fg_bestmode(80,25,1);
+
+                      if (new_mode < 0) {
+                         printf("This program requires\n");
+                         printf("an 80-column display.\n");
+                         exit(1);
+                         }
+
+                      fg_setmode(new_mode);
+                      fg_cursor(0);
+
+                      fg_setcolor(15);
+                      fg_text("Hello, world.",13);
+                      fg_waitkey();
+
+                      fg_setmode(old_mode);
+                      fg_reset();
+                   }
+
+
+43-line and 50-line Text Modes
+
+     When using an 80-column text mode on a system equipped with an EGA, VGA,
+MCGA, or SVGA video display and adapter, you can extend the screen size from
+25 lines to 43 or 50 lines.  While all systems offer 25-line text modes, EGA
+systems also offer 43-line modes, MCGA systems also offer 50-line modes, and
+VGA and SVGA systems offer both 43-line and 50-line modes.  The 43-line mode
+is not available on EGA systems equipped with an RGB display.  If you extend
+the screen size to 43 or 50 lines, the physical character size is reduced
+proportionally so all lines appear on the screen.
+
+     The fg_setlines routine defines the number of text rows per screen.  It
+has a single integer argument whose value must be 25, 43, or 50.  If you pass
+any other value to fg_setlines, or pass a value not supported by the host
+system's video configuration, fg_setlines does nothing.  In addition, calling
+fg_setlines makes the text cursor visible.  Another Fastgraph routine,
+fg_getlines, returns as its function value the number of text rows currently
+in effect.  You also can use fg_getlines in graphics video modes.
+
+     Example 3-5 illustrates the use of the fg_setlines and fg_getlines
+routines.  The program first establishes the 80-column color text mode (this
+sets the screen size to its 25-line default) and makes the text cursor
+invisible.  It then displays the words "first line" in the upper left corner
+of the screen.  Next, the program checks if an EGA with enhanced display is
+available, and if so, changes the screen to 43 lines (video mode 16 is only
+available on EGA systems equipped with an enhanced display).  Next, the
+48   Fastgraph User's Guide
+
+program checks if a VGA, MCGA, or SVGA is available, and if so changes the
+screen to 50 lines (video mode 17 is only available on these systems).
+Finally, the program restores the original video mode, restores the number of
+lines per screen to its original setting, and restores the original screen
+attributes before exiting.
+
+                                 Example 3-5.
+
+                        #include <fastgraf.h>
+                        void main(void);
+
+                        void main()
+                        {
+                           int lines;
+                           int old_lines;
+                           int old_mode;
+
+                           old_lines = fg_getlines();
+                           old_mode = fg_getmode();
+                           fg_setmode(3);
+                           fg_cursor(0);
+
+                           fg_setcolor(15);
+                           fg_text("first line",10);
+                           fg_waitkey();
+
+                           if (fg_testmode(16,0)) {
+                              fg_setlines(43);
+                              fg_cursor(0);
+                              fg_waitkey();
+                              }
+
+                           if (fg_testmode(17,0)) {
+                              fg_setlines(50);
+                              fg_cursor(0);
+                              fg_waitkey();
+                              }
+
+                           fg_setmode(old_mode);
+                           fg_setlines(old_lines);
+                           fg_reset();
+                        }
+
+
+
+Establishing a Graphics Mode
+
+     The steps for establishing a graphics mode are similar to establishing a
+text mode.  However, there are more restrictions since some systems may not
+support all the graphics video modes.  For example, a program could not run
+in mode 13 on a CGA system, nor could a program run in mode 9 on anything
+except a Tandy 1000 or PCjr system.
+
+     For graphics programs, it may suffice to write a program to run in a
+specific video mode, but it is often more desirable to write a program that
+will run in any of several video modes.  This is especially true for
+                           Chapter 3:  Initializing the Video Environment   49
+
+commercial products, since they should ideally run on as many different video
+configurations as possible.
+
+     Fastgraph includes a routine named fg_automode that determines the
+graphics video mode that offers the most functionality for the user's video
+hardware configuration.  For example, the Tandy 1000 series computers support
+all three CGA modes (4, 5, and 6) and the 320 by 200 16-color Tandy 1000 mode
+(9).  Of these modes, mode 9 offers the most features from a graphics
+standpoint, so fg_automode will return a value of 9 when run on a Tandy 1000
+computer.  The following table summarizes the video mode numbers returned by
+fg_automode for given adapter-display combinations.
+
+                                         display
+                       adapter   mono   RGB   ECD   VGA
+
+                          MDA       7     0     7     7
+                          HGC      11     0     0    11
+                          CGA       0     4     0     0
+                          EGA      15    13    16     0
+                          VGA      17    17    17    18
+                         MCGA      17    17    17    19
+                        Tandy       7     9     0     0
+                         PCjr       7     9     0     0
+
+     Example 3-6 shows how to use fg_automode to determine the "best"
+graphics mode for the user's video hardware.  In graphics modes, the term
+best means the highest resolution, followed by the number of available
+colors.  To maintain compatibility with earlier versions of Fastgraph,
+fg_automode does not consider the extended VGA graphics modes (modes 20 to
+23) or SVGA graphics modes (modes 24 to 29) when selecting a video mode.  The
+program displays a message that includes the selected video mode number.
+
+                                 Example 3-6.
+
+                    #include <fastgraf.h>
+                    #include <stdio.h>
+                    void main(void);
+
+                    void main()
+                    {
+                       int old_mode;
+                       int new_mode;
+                       char string[4];
+
+                       old_mode = fg_getmode();
+                       new_mode = fg_automode();
+                       fg_setmode(new_mode);
+
+                       fg_setcolor(15);
+                       fg_text("I'm running in mode ",20);
+                       sprintf(string,"%d.",new_mode);
+                       fg_text(string,3);
+                       fg_waitkey();
+
+                       fg_setmode(old_mode);
+
+50   Fastgraph User's Guide
+
+                       fg_reset();
+                    }
+
+
+     For simple programs such as example 3-6, different screen resolutions
+may not be an issue.  However, in more complex graphics programs it is often
+desirable to write a program for a fixed screen resolution.  A common
+practice is to develop graphics programs to run in modes 4 (for CGA), 9
+(Tandy 1000 or PCjr), 12 (Hercules), 13 (EGA, VGA, or SVGA), and 19 or 20
+(MCGA, VGA, or SVGA).  The reason for selecting these five modes is they all
+use the same 320 by 200 resolution and will run on any IBM PC or PS/2 with
+graphics capabilities.
+
+     Example 3-7 performs the same function as example 3-6, but it uses
+fg_bestmode instead of fg_automode to restrict the program to 320 by 200
+graphics modes.  For this resolution, the fg_bestmode routine will first
+check the availability of mode 20, followed by modes 19, 13, 9, 4, and 12.
+If fg_bestmode determines no 320 by 200 graphics mode is available (indicated
+by a return value of -1), the program prints an informational message and
+exits.  Otherwise it selects the video mode fg_bestmode proposes and
+continues.
+
+                                 Example 3-7.
+
+     #include <fastgraf.h>
+     #include <stdio.h>
+     #include <stdlib.h>
+     void main(void);
+
+     void main()
+     {
+        int old_mode;
+        int new_mode;
+        char string[4];
+
+        old_mode = fg_getmode();
+        new_mode = fg_bestmode(320,200,1);
+
+        if (new_mode < 0) {
+           printf("This program requires a 320 by 200 graphics mode.\n");
+           exit(1);
+           }
+
+        fg_setmode(new_mode);
+
+        fg_setcolor(15);
+        fg_text("I'm running in mode ",20);
+        sprintf(string,"%d.",new_mode);
+        fg_text(string,3);
+        fg_waitkey();
+
+        fg_setmode(old_mode);
+        fg_reset();
+     }
+
+                           Chapter 3:  Initializing the Video Environment   51
+
+     If a program will run in specific video modes, you may want to consider
+using the fg_testmode routine instead of fg_bestmode to check for
+availability of these video modes.  You also may want to use fg_testmode to
+change the video mode precedence used by fg_bestmode.  For example, mode 13
+(EGA) is faster than mode 19 (MCGA), so you may want to consider giving EGA
+precedence over MCGA, especially if your program does not use more than 16
+colors.
+
+     Example 3-8 is similar to example 3-7, but it will only run in the 320
+by 200 EGA, MCGA, and CGA graphics modes (video modes 13, 19, and 4,
+respectively).  The program uses fg_testmode to select its video mode.  Note
+the order of calls to fg_testmode gives EGA precedence over MCGA, and MCGA
+precedence over CGA.
+
+                                 Example 3-8.
+
+        #include <fastgraf.h>
+        #include <stdio.h>
+        #include <stdlib.h>
+        void main(void);
+
+        void main()
+        {
+           int old_mode;
+           char string[4];
+
+           old_mode = fg_getmode();
+
+           if (fg_testmode(13,1))
+              fg_setmode(13);
+           else if (fg_testmode(19,1))
+              fg_setmode(19);
+           else if (fg_testmode(4,1))
+              fg_setmode(4);
+           else {
+              printf("This program requires an EGA, MCGA, or CGA.\n");
+              exit(1);
+              }
+
+           fg_setcolor(15);
+           fg_text("I'm running in mode ",20);
+           sprintf(string,"%d.",getmode());
+           fg_text(string,3);
+           fg_waitkey();
+
+           fg_setmode(old_mode);
+           fg_reset();
+        }
+
+
+SuperVGA Graphics Modes
+
+     Unlike previous generations of graphics cards, there was no video
+standard in place when different companies began developing SVGA cards.  As
+a result, they implemented enhanced SVGA features according to their own
+specifications based upon different video controller chips.  Each such
+52   Fastgraph User's Guide
+implementation is called a chipset.  While each chipset generally offers the
+same video memory organization and common screen resolutions, the SVGA-
+specific features such as mode initialization, bank switching, and setting
+the display start address differ radically between chipsets.  In other words,
+code written for one specific SVGA chipset will not run on another chipset,
+even at the same resolution.  This is why many software vendors provide
+different SVGA drivers for their products.
+
+     Fastgraph's integrated SVGA kernel makes these obscure differences
+between SVGA chipsets transparent, without the need for external drivers.
+This means, for instance, if you write an application for the 1024 by 768
+256-color SVGA graphics mode, it will run without changes on any supported
+SVGA chipset which offers that resolution.  The SVGA kernel supports the
+chipsets listed in the table below.  A "Y" entry means the chipset supports
+the video mode, and an "N" means it doesn't.  The last two rows of the table
+show the amount of video memory required to support each mode and Fastgraph's
+corresponding video mode numbers.
+
+                    ----------- 256 colors -----------  -- 16 colors ---
+SVGA chipset        640x400  640x480  800x600 1024x768  800x600 1024x768
+
+Ahead "A" type         Y        Y        Y        N        Y        Y
+Ahead "B" type         Y        Y        Y        Y        Y        Y
+ATI 18800              Y        Y        Y        N        Y        N
+ATI 18800-1            Y        Y        Y        N        Y        Y
+ATI 28800              Y        Y        Y        Y        Y        Y
+Chips&Tech 82c451      Y        N        N        N        Y        N
+Chips&Tech 82c452      Y        Y        N        N        Y        Y
+Chips&Tech 82c453      Y        Y        Y        Y        Y        Y
+Cirrus Logic 54xx      N        Y        Y        Y        Y        Y
+Genoa 6000 series      Y        Y        Y        N        Y        Y
+Oak OTI-067            N        Y        Y        N        Y        Y
+Paradise PVGA1a        Y        Y        N        N        Y        N
+Paradise WD90C00/10    Y        Y        N        N        Y        Y
+Paradise WD90C11/30/31 Y        Y        Y        Y        Y        Y
+S3                     N        Y        Y        Y        Y        Y
+Trident 8800           Y        Y        N        N        Y        Y
+Trident 8900/9000      Y        Y        Y        Y        Y        Y
+Tseng ET3000           N        Y        Y        N        Y        Y
+Tseng ET4000           Y        Y        Y        Y        Y        Y
+Video7                 Y        Y        Y        Y        Y        Y
+
+minimum video RAM     256K     512K     512K     1MB      256K     512K
+Fastgraph mode number  24       25       26       27       28       29
+
+The SVGA kernel maps Fastgraph's video mode numbers (24 to 29) to the
+chipset-specific mode numbers.  For example, the 640 by 480 256-color SVGA
+mode is 62 hex on an ATI card, 5D hex on a Trident card, and 2E hex on a
+Tseng card, but it's always mode 25 from Fastgraph's perspective.
+
+     The Video Electronics Standards Association (VESA) has assumed the
+complex task of improving software compatibility of SVGA cards from different
+companies.  Most SVGA cards sold today include VESA compatibility, either
+directly in ROM or through loadable software drivers supplied with the card.
+Besides supporting specific chipsets, Fastgraph's SVGA kernel supports any
+SVGA card with VESA compatibility.  Note that VESA is not a chipset, but a
+BIOS-level interface between an application (the SVGA kernel in this case)
+                           Chapter 3:  Initializing the Video Environment   53
+and chipset-specific functions.  While the current VESA standard covers all
+six SVGA graphics modes that Fastgraph supports, these modes are only
+available if the underlying chipset also supports them.
+
+     When using VESA compatibility, the VESA BIOS handles all chipset-
+specific functions such as bank switching.  The overhead imposed by the BIOS
+usually makes the VESA modes slightly slower than using chipset-specific
+functions directly.  For this reason, you can specify if you want to give
+precedence to the chipset-specific code or to the VESA BIOS.  Chipset-
+specific precedence means the SVGA kernel will only use the VESA BIOS if no
+supported SVGA chipset is found.  Conversely, VESA precedence means the
+kernel will only use the chipset-specific functions if no VESA BIOS is found.
+
+     Before you use any SVGA graphics mode, you must use the fg_svgainit
+routine to initialize the SVGA kernel (fg_svgainit must be called before
+fg_setmode, fg_bestmode, or fg_testmode).  There are three ways to initialize
+the SVGA kernel with fg_svgainit:
+
+        - autodetect the user's SVGA chipset, giving precedence to
+          chipset-specific code
+        - autodetect the user's SVGA chipset, giving precedence to
+          the VESA BIOS
+        - use a designated SVGA chipset
+
+The fg_svgainit routine's argument is an integer value between 0 and 19 that
+specifies which initialization method to use.  Passing 0 to fg_svgainit uses
+the first method, in which the SVGA kernel searches for all supported
+chipsets before checking if a VESA BIOS is present.  This means the SVGA
+kernel will only use VESA functions if fg_svgainit doesn't find one of the
+supported chipsets.  Passing 1 to fg_svgainit also performs a chipset
+autodetect, but in this case the SVGA kernel first searches for a VESA BIOS,
+then through the list of supported chipsets.  This means chipset-specific
+code will be used only when no VESA BIOS is found.  You can also initialize
+the SVGA kernel for a specific chipset by passing a value between 2 and 19 to
+fg_svgainit.  The following table summarizes the fg_svgainit initialization
+codes.
+
+                  code   chipset
+
+                    0    autodetect (with chipset-specific precedence)
+                    1    autodetect (with VESA precedence)
+                    2    Ahead "A" type
+                    3    Ahead "B" type
+                    4    ATI 18800
+                    5    ATI 18800-1
+                    6    ATI 28800
+                    7    Chips & Technologies 82c451/455/456
+                    8    Chips & Technologies 82c452
+                    9    Chips & Technologies 82c453
+                   10    Genoa 6000 series
+                   11    Oak OTI-067
+                   12    Paradise PVGA1a
+                   13    Paradise WD90C00/WD90C10
+                   14    Paradise WD90C11/WD90C30/WD90C31
+                   15    Trident 8800
+                   16    Trident 8900
+                   17    Tseng ET3000
+54   Fastgraph User's Guide
+                   18    Tseng ET4000
+                   19    Video7
+                   20    Cirrus Logic 5400 series
+                   21    S3
+                   22    Trident 8900B/8900C/9000
+
+     For autodetect requests, fg_svgainit returns a value between 1 and 19
+corresponding to the SVGA chipset found.  If the return value is 1, it means
+a VESA BIOS will be used.  A value between 2 and 22 means a specific SVGA
+chipset (as listed in the preceding table) will be used.  If no VESA BIOS or
+supported SVGA chipset is found, fg_svgainit returns zero.  In this case,
+Fastgraph's SVGA graphics modes are not available.
+
+     When you request initialization for a specific chipset, fg_svgainit
+always returns the value passed to it.  It does not check if that chipset is
+actually present, so this feature should be used judiciously.
+
+     Example 3-9 is a simple program that checks if an SVGA card is present,
+and if so, displays the name of the SVGA chipset.  It also displays how much
+video memory is present on the SVGA card and the version number of
+Fastgraph's SVGA kernel.
+
+                                 Example 3-9.
+
+           #include <fastgraf.h>
+           #include <stdio.h>
+           void main(void);
+
+           char *description[] =
+           {
+              "cannot be determined",
+              "VESA",
+              "Ahead A",
+              "Ahead B",
+              "ATI 18800",
+              "ATI 18800-1",
+              "ATI 28800",
+              "Chips & Technologies 82c451/455/456",
+              "Chips & Technologies 82c452",
+              "Chips & Technologies 82c453",
+              "Genoa 6000 series",
+              "Oak OTI-067",
+              "Paradise PVGA1a",
+              "Paradise WD90C00/WD90C10",
+              "Paradise WD90C11/WD90C30/WD90C31",
+              "Trident 8800",
+              "Trident 8900",
+              "Tseng ET3000",
+              "Tseng ET4000",
+              "Video7",
+              " ",
+              "S3",
+              "Trident 8900B/8900C/9000"
+           };
+
+           void main()
+           {
+                           Chapter 3:  Initializing the Video Environment   55
+              int id, major, minor;
+
+              id = fg_svgainit(0);
+              printf("SVGA chipset:  %s\n",description[id]);
+              printf("video memory:  %d kilobytes\n",fg_memory());
+              fg_svgaver(&major,&minor);
+              printf("SVGA version:  %d.%2.2d\n",major,minor);
+           }
+
+This example uses fg_svgainit to automatically detect the user's SVGA
+chipset.  It initializes the SVGA kernel so that chipset-specific code is
+given precedence over VESA (passing 1 instead of 0 to fg_svgainit would give
+VESA precedence).  Note that the program does not establish an SVGA graphics
+mode -- it just uses the fg_svgainit return value to identify which chipset
+is present.
+
+     Example 3-9 also includes two other Fastgraph routines relevant to the
+SVGA kernel.  The fg_memory function returns the amount of video memory (in
+kilobytes) resident on the user's video card.  For example, the fg_memory
+return value is 1,024 for a 1MB SVGA card.  Another routine, fg_svgaver,
+returns the major and minor numbers for the SVGA kernel, similar to the
+fg_version routine mentioned in Chapter 1.  Note that the SVGA kernel version
+number is not the same as the Fastgraph version number.
+
+     Our next example, 3-10, is an SVGA version of example 3-8.  This program
+initializes the SVGA kernel so that VESA will have precedence over chipset-
+specific code.  It then calls fg_testmode to find a supported 256-color SVGA
+graphics mode, first trying mode 27 (1024 by 768), then mode 26 (800 by 600),
+and finally mode 25 (640 by 480).  Checking the modes in this sequence
+insures the program will use the highest resolution available, given the
+user's SVGA chipset (not all chipsets support all resolutions) and the amount
+of video memory present (mode 27 requires 1MB video RAM; modes 26 and 25 need
+512K).
+
+     If all three fg_testmode calls fail in example 3-10, the program
+displays an appropriate message and exits.  This would happen if the program
+were run on a non-SVGA system, run on an unsupported SVGA chipset without
+VESA compatibility, or if the SVGA card does not have at least 512K video
+memory (modes 25, 26, and 27 all require at least 512K).  In the first two
+cases, the fg_svgainit function wouldn't be able to initialize the SVGA
+kernel, so fg_testmode would fail when checking the availability of any SVGA
+graphics mode.  That's why it's not necessary to check the fg_svgainit return
+value in this case.
+
+                                Example 3-10.
+
+             #include <fastgraf.h>
+             #include <stdio.h>
+             #include <stdlib.h>
+             void main(void);
+
+             void main()
+             {
+                int old_mode;
+                char string[4];
+
+                old_mode = fg_getmode();
+56   Fastgraph User's Guide
+
+                fg_svgainit(1);
+
+                if (fg_testmode(27,1))
+                   fg_setmode(27);
+                else if (fg_testmode(26,1))
+                   fg_setmode(26);
+                else if (fg_testmode(25,1))
+                   fg_setmode(25);
+                else {
+                   printf("This program requires an SVGA\n");
+                   printf("with at least 512K video memory.\n");
+                   exit(1);
+                   }
+
+                fg_setcolor(15);
+                fg_text("I'm running in mode ",20);
+                sprintf(string,"%d.",fg_getmode());
+                fg_text(string,3);
+                fg_waitkey();
+
+                fg_setmode(old_mode);
+                fg_reset();
+             }
+
+     Some third party SVGA cards based on Fastgraph's supported chipsets do
+not completely follow the chipset manufacturer's recommended video mode
+numbers and register definitions.  While the SVGA kernel tries to compensate
+for these problems when known, it's just not possible to support every
+problematic SVGA card.  For this reason, we recommend SVGA applications that
+give precedence to chipset-specific code also provide a way to select VESA
+compatibility, such as through a command line switch or configuration file.
+The VESA driver supplied with a problem card should work around these
+incompatibilities.  If it doesn't, you can be assured that most (if not all)
+SVGA applications will fail on that card, whether or not they were written
+with Fastgraph.
+
+     Another important point to consider when writing SVGA applications is
+the compatibility between the video card and monitor.  Virtually all SVGA
+monitors made today have no problems supporting the bandwidth required by any
+of Fastgraph's SVGA graphics modes.  However, some monitors (most notably
+older multisync monitors) cannot support the higher resolution modes such as
+800 by 600 and 1024 by 768.  The SVGA kernel checks if the SVGA card supports
+the requested resolution, but it does not check if the card/monitor
+combination does.
+
+
+Summary of Video Initialization Routines
+
+     This section summarizes the functional descriptions of the Fastgraph
+routines presented in this chapter.  More detailed information about these
+routines, including their arguments and return values, may be found in the
+Fastgraph Reference Manual.
+
+     FG_AUTOMODE determines the graphics video mode that offers the most
+features for the user's display and adapter configuration.  The value it
+returns helps determine a suitable value to pass to the fg_setmode routine.
+                           Chapter 3:  Initializing the Video Environment   57
+
+
+     FG_BESTMODE is similar to fg_automode, but it excludes video modes that
+do not offer the specified resolution and video page requirements.
+
+     FG_CURSOR makes the text mode cursor visible or invisible.  This routine
+has no effect when used in a graphics mode.
+
+     FG_GETLINES returns the number of text rows per screen for the current
+video mode.
+
+     FG_GETMODE returns the current video mode.  It is typically one of the
+first Fastgraph routines called in a program.  The value returned by
+fg_getmode can be retained to restore the original video mode when a program
+transfers control back to DOS.
+
+     FG_MEMORY returns the amount of video memory present (in kilobytes) on
+the user's SVGA card.  This routine is meaningful only after successfully
+initializing the SVGA kernel with fg_svgainit.
+
+     FG_RESET is generally the last Fastgraph routine called in a program.
+It only functions in text video modes.  When the ANSI.SYS driver is not
+loaded, fg_reset merely erases the screen.  When ANSI.SYS is loaded, fg_reset
+also restores any previously set screen attributes.
+
+     FG_SETLINES extends an 80-column text mode to 25, 43, or 50 lines per
+screen.  This routine is only meaningful when running in 80-column text modes
+on EGA, VGA, or MCGA systems (in other cases it does nothing).
+
+     FG_SETMODE establishes a video mode and initializes Fastgraph's internal
+parameters for that video mode.  It must be called before any Fastgraph
+routine that performs video output.  A program can call fg_setmode as many
+times as needed to switch between different video modes.
+
+     FG_SVGAINIT initializes Fastgraph's SVGA kernel and performs chipset-
+specific SVGA initialization.  This routine must be called before
+establishing an SVGA graphics mode with fg_setmode.
+
+     FG_SVGAVER returns the Fastgraph SVGA kernel major and minor version
+numbers.
+
+     FG_TESTMODE determines whether or not a specified video mode (with a
+given number of video pages) is available on the user's system.
+58   Fastgraph User's Guide

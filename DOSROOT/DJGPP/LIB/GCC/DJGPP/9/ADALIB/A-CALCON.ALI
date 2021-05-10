@@ -1,0 +1,134 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_FIXED_POINT
+RV NO_STANDARD_STORAGE_POOLS
+RV SPARK_05
+
+U ada.calendar.conversions%b  a-calcon.adb	a354881a NE OL PK
+W ada.calendar%s	a-calend.adb		a-calend.ali
+Z ada.exceptions%s	a-except.adb		a-except.ali
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c%s	i-c.adb			i-c.ali
+W interfaces.c.extensions%s  i-cexten.ads	i-cexten.ali
+
+U ada.calendar.conversions%s  a-calcon.ads	69ebc27d NE OL PK
+W ada.calendar%s	a-calend.adb		a-calend.ali
+W interfaces%s		interfac.ads		interfac.ali
+W interfaces.c%s	i-c.adb			i-c.ali
+W interfaces.c.extensions%s  i-cexten.ads	i-cexten.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-calend.ads		20190108125404 b288ede8 ada.calendar%s
+D a-calcon.ads		20190108125404 b795df18 ada.calendar.conversions%s
+D a-calcon.adb		20190108125404 7837a78f ada.calendar.conversions%b
+D a-except.ads		20190108125404 291912d5 ada.exceptions%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20190108125404 5ab55268 interfaces%s
+D i-c.ads		20170908181218 5421119b interfaces.c%s
+D i-cexten.ads		20190407133420 38d7e116 interfaces.c.extensions%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-traent.ads		20190108125404 005bf670 system.traceback_entries%s
+X 1 ada.ads
+16K9*Ada 20e8 3|38r9 121r5 4|35r14 165r5
+X 2 a-calend.ads
+36K13*Calendar 1|16k9 2|410e17 3|38r13 121r9 4|35r18 165r9
+42I9*Time<223I9> 3|40r64 53r43 88r17 108r38 115r18 4|41r51 58r30 111r17 142r38
+. 153r43
+126X4*Time_Error 4|162r16
+223I9 Time_Rep<long_long_integer> 4|155r26 155r38
+236V13 Epoch_Offset{223I9} 4|158s35
+288K12 Conversion_Operations 327e29 4|44r14 69r9 84r14 100r7 127r7 144r15
+290V16*To_Ada_Time{42I9} 4|44s36
+293V16*To_Ada_Time{42I9} 4|69s31
+303V16*To_Duration{duration} 4|84s36
+308U17*To_Struct_Timespec 4|100s29
+314U17*To_Struct_Tm 4|127s29
+324V16*To_Unix_Time{long_integer} 4|144s37
+X 3 a-calcon.ads
+38K22*Conversions 2|36k13 3|121l18 121e29 4|35b27 165l18 165t29
+40V13*To_Ada_Time{2|42I9} 40>26 4|41b13 45l8 45t19
+40i26 Unix_Time{8|37I9} 4|41b26 42r52
+46V13*To_Ada_Time{2|42I9} 47>7 48>7 49>7 50>7 51>7 52>7 53>7 4|51b13 71l8
+. 71t19
+47i7 tm_year{8|35I9} 4|52b7 60r45
+48i7 tm_mon{8|35I9} 4|53b7 61r45
+49i7 tm_day{8|35I9} 4|54b7 62r45
+50i7 tm_hour{8|35I9} 4|55b7 63r45
+51i7 tm_min{8|35I9} 4|56b7 64r45
+52i7 tm_sec{8|35I9} 4|57b7 65r45
+53i7 tm_isdst{8|35I9} 4|58b7 66r45
+71V13*To_Duration{duration} 72>7 73>7 4|77b13 85l8 85t19
+72i7 tv_sec{8|37I9} 4|78b7 81r58
+73i7 tv_nsec{8|37I9} 4|79b7 82r58
+80U14*To_Struct_Timespec 81>7 82<7 83<7 4|91b14 104l8 104t26
+81o7 D{duration} 4|92b7 100r49
+82i7 tv_sec{8|37I9} 4|93b7 102m7
+83i7 tv_nsec{8|37I9} 4|94b7 103m7
+87U14*To_Struct_Tm 88>7 89<7 90<7 91<7 92<7 93<7 94<7 4|110b14 136l8 136t20
+88i7 T{2|42I9} 4|111b7 128r10
+89i7 tm_year{8|35I9} 4|112b7 130m7
+90i7 tm_mon{8|35I9} 4|113b7 131m7
+91i7 tm_day{8|35I9} 4|114b7 132m7
+92i7 tm_hour{8|35I9} 4|115b7 133m7
+93i7 tm_min{8|35I9} 4|116b7 134m7
+94i7 tm_sec{8|35I9} 4|117b7 135m7
+108V13*To_Unix_Time{8|37I9} 108>27 4|142b13 147l8 147t20
+108i27 Ada_Time{2|42I9} 4|142b27 144r51
+114V13*To_Unix_Nano_Time{9|64I12} 115>7 4|153b13 163l8 163t25
+115i7 Ada_Time{2|42I9} 4|153b32 155r48
+X 4 a-calcon.adb
+42i7 Val{long_integer} 44r49
+60i7 Year{integer} 70r12
+61i7 Month{integer} 70r18
+62i7 Day{integer} 70r25
+63i7 Hour{integer} 70r30
+64i7 Minute{integer} 70r36
+65i7 Second{integer} 70r44
+66i7 DST{integer} 70r52
+81i7 Secs{long_integer} 84r49
+82i7 Nano_Secs{long_integer} 84r55
+96i7 Secs{long_integer} 100m52 102r24
+97i7 Nano_Secs{long_integer} 100m58 103r24
+119i7 Year{integer} 128m13 130r23
+120i7 Month{integer} 128m19 131r23
+121i7 Day{integer} 128m26 132r23
+122i7 Hour{integer} 128m31 133r23
+123i7 Minute{integer} 128m37 134r23
+124i7 Second{integer} 128m45 135r23
+143i7 Val{long_integer} 146r20
+155i7 Ada_Rep{2|223I9} 158r25
+X 7 interfac.ads
+38K9*Interfaces 3|35r6 36r6 40r38 47r18 48r18 49r18 50r18 51r18 52r18 53r18
+. 72r17 73r17 82r21 83r21 89r21 90r21 91r21 92r21 93r21 94r21 108r51 115r31
+. 4|32r6 32r35 33r6 33r35 7|184e15
+X 8 i-c.ads
+18K20*C 3|35w17 36r17 40r49 47r29 48r29 49r29 50r29 51r29 52r29 53r29 72r28
+. 73r28 82r32 83r32 89r32 90r32 91r32 92r32 93r32 94r32 108r62 115r42 4|32w17
+. 32r46 33r17 33r46 8|230e17
+35I9*int<integer> 3|47r31 48r31 49r31 50r31 51r31 52r31 53r31 89r34 90r34
+. 91r34 92r34 93r34 94r34 4|52r18 53r18 54r18 55r18 56r18 57r18 58r18 112r21
+. 113r21 114r21 115r21 116r21 117r21 130r18 131r18 132r18 133r18 134r18 135r18
+37I9*long<integer> 3|40r51 72r30 73r30 82r34 83r34 108r64 4|41r38 78r17 79r17
+. 93r21 94r21 102r18 103r18 142r51 146r14
+X 9 i-cexten.ads
+37K22*Extensions 3|36w19 115r44 4|33w19 33r48 9|476e28
+64I12*long_long{long_long_integer} 3|115r55 4|153r56 158r14
+

@@ -1,0 +1,13 @@
+
+   About WSOCK32.DLL
+   
+   The version of WSOCK32.DLL found here is the one containing just
+   dummy exports. It may be useful
+   
+   þ if there is no packet driver for the NIC available 
+   þ if internet access is not wished/required
+   þ if HX's default WSOCK32 causes troubles
+
+   Japheth
+   
+

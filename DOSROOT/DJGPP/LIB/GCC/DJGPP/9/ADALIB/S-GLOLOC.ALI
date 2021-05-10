@@ -1,0 +1,104 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_ALLOCATORS
+RV NO_DELAY
+RV NO_EXCEPTIONS
+RV NO_FIXED_POINT
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_LOCAL_ALLOCATORS
+RV NO_RELATIVE_DELAY
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DEFAULT_INITIALIZATION
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_IMPLICIT_LOOPS
+RV NO_ELABORATION_CODE
+RV NO_OBSOLESCENT_FEATURES
+RV SPARK_05
+
+U system.global_locks%b	s-gloloc.adb		84c7c444 OL PK
+Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
+Z ada.exceptions%s	a-except.adb		a-except.ali
+W system%s		system.ads		system.ali
+W system.soft_links%s	s-soflin.adb		s-soflin.ali
+
+U system.global_locks%s	s-gloloc.ads		8cf17154 EE OL PK
+W system%s		system.ads		system.ali
+Z system.exception_table%s  s-exctab.adb	s-exctab.ali
+Z system.standard_library%s  s-stalib.adb	s-stalib.ali
+
+D ada.ads		20170911114842 76789da1 ada%s
+D a-calend.ads		20190108125404 b288ede8 ada.calendar%s
+D a-caldel.ads		20190108125404 9f20b83d ada.calendar.delays%s
+D a-except.ads		20190108125404 291912d5 ada.exceptions%s
+D a-unccon.ads		20170908181218 0e9b276f ada.unchecked_conversion%s
+D system.ads		20190108125404 27426ea2 system%s
+D s-exctab.ads		20190108125404 54135002 system.exception_table%s
+D s-gloloc.ads		20190108125404 abb31ff6 system.global_locks%s
+D s-gloloc.adb		20190108125404 88455120 system.global_locks%b
+D s-parame.ads		20190108125404 48ec542b system.parameters%s
+D s-secsta.ads		20190108125404 20bbe636 system.secondary_stack%s
+D s-soflin.ads		20190108125404 a7318a92 system.soft_links%s
+D s-stache.ads		20190108125404 a37c21ec system.stack_checking%s
+D s-stalib.ads		20190108125404 09bd3940 system.standard_library%s
+D s-stoele.ads		20190108125404 2dc34a04 system.storage_elements%s
+D s-traent.ads		20190108125404 005bf670 system.traceback_entries%s
+X 6 system.ads
+37K9*System 148e11 8|35r9 63r5 9|32r6 34r14 79r7 82r7 117r38 142r29 149r5
+67M9*Address 9|117r45 142r36
+X 8 s-gloloc.ads
+35K16*Global_Locks 6|37k9 8|59E9 63l12 63e24 9|34b21 149l12 149t24
+37X4*Lock_Error 9|85r16 130r13
+40I9*Lock_Type<integer> 44r25 47r38 51r42 55r42 59c9 61r25 9|46r17 47r24
+. 64r42 75r38 76r11 137r42
+44i4*Null_Lock{40I9} 61c4 9|46r30
+47U14*Create_Lock 47<27 47>49 9|75b14 102l8 102t19
+47i27 Lock{40I9} 9|75b27 101m7
+47a49 Name{string} 9|75b49 88r24 89r13 90r47 90r53 91r48 91r63 98r45
+51U14*Acquire_Lock 51=28 9|64b14 69l8 69t20
+51i28 Lock{40I9} 9|64b28 67r22 68r22
+55U14*Release_Lock 55=28 9|137b14 147l8 147t20
+55i28 Lock{40I9} 9|137b28 139r25 140r25
+X 9 s-gloloc.adb
+36P9 String_Access(string) 42r14 43r14
+38e4 Dir_Separator{character} 39m22 39r22 89r24 139r41
+41R9 Lock_File_Entry 44e14 47r52
+42p7*Dir{36P9} 67r28 90m28 96r25 97m25 139r31
+43p7*File{36P9} 68r28 91m28 98m25 140r31
+46i4 Last_Lock{8|40I9} 80m7 80r20 81r12
+47a4 Lock_Table(41R9) 67r10 68r10 84r14 90m13 91m13 96r10 97m10 98m10 139r13
+. 140r13
+49U14 Lock_File 50>7 51>7 52>7 53>7 66s7 108b14 131l8 131t17
+50a7 Dir{string} 109b7 114r34
+51a7 File{string} 110b7 115r34
+52o7 Wait{duration} 111b7 127r16
+53i7 Retries{natural} 112b7 121r21 126r24
+76i7 L{8|40I9} 81m7 84r10 90r25 91r25 96r22 97r22 98r22 101r15
+88i11 J{integer} 89r19 90r67 91r54
+114a7 C_Dir{string} 122m23 122r23
+115a7 C_File{string} 122m38 122r38
+117V16*Try_Lock{integer} 117>26 117>31 118b<c,__gnat_try_lock>25 122s13
+117m26 Dir{6|67M9}
+117m31 File{6|67M9}
+121i11 I{integer} 126r20
+138a7 S{string} 146m15 146r15
+142U17*unlink 142>25 143b<c,unlink>25 146s7
+142m25 A{6|67M9}
+X 12 s-soflin.ads
+47K16*Soft_Links 9|32w13 79r14 82r14 12|415e22
+64P9*No_Param_Proc
+189p4*Lock_Task{64P9} 9|79r25
+199p4*Unlock_Task{64P9} 9|82r25
+

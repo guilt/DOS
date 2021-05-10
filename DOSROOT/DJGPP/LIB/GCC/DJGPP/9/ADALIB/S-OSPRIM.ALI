@@ -1,0 +1,65 @@
+V "GNAT Lib v9"
+A -gnatwa
+A -nostdinc
+A -O2
+A -Wextra
+A -Wall
+A -fchecking=1
+A -g
+A -gnatp
+A -gnatg
+A -mtune=pentium
+A -march=pentium
+P ZX
+
+RN
+RV NO_FIXED_POINT
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_UNCHECKED_ACCESS
+RV SPARK_05
+
+U system.os_primitives%b  s-osprim.adb		3923d083 NE OL PK
+W system%s		system.ads		system.ali
+
+U system.os_primitives%s  s-osprim.ads		20bf0b54 BN NE OL PR PK
+W system%s		system.ads		system.ali
+
+D system.ads		20190108125404 27426ea2 system%s
+D s-osprim.ads		20190108125404 07fd65f6 system.os_primitives%s
+D s-osprim.adb		20190108125404 3edeb575 system.os_primitives%b
+X 1 system.ads
+37K9*System 148e11 2|40r9 89r5 3|35r14 126r5
+67M9*Address 3|50r12 57r19
+69m4*Null_Address{67M9} 3|50r23 57r30
+X 2 s-osprim.ads
+40K16*OS_Primitives 1|37k9 2|89l12 89e25 3|35b21 126l12 126t25
+43o4*Max_Sensible_Delay{duration} 55r44
+55o4*Max_System_Delay{duration}
+59U14*Initialize 3|121b14 124l8 124t18
+64V13*Clock{duration} 65r19 3|65b13 71l8 71t13 83s41 108s27
+70N4*Relative 3|88r17
+71N4*Absolute_Calendar
+72N4*Absolute_RT
+77U14*Timed_Delay 77>27 77>44 3|77b14 115l8 115t19
+77o27 Time{duration} 3|78b7 89r22 90r22 92r22 93r22
+77i44 Mode{integer} 3|79b7 88r10
+X 3 s-osprim.adb
+42R9 struct_timeval 45e14 46r26 49r28 58r35 66r20 85r28
+43i7*tv_sec{integer} 70r27 98m21 100r34 101m24 101r42 105r54
+44i7*tv_usec{integer} 70r50 104m21
+48U14 gettimeofday 49^7 50>7 51b<c,gettimeofday>22 69s7
+49p7 tv(42R9)
+50m7 tz{1|67M9}
+53U14 C_select 54>7 55>7 56>7 57>7 58^7 59b<c,select>22 107s13
+54i7 n{integer}
+55m7 readfds{1|67M9}
+56m7 writefds{1|67M9}
+57m7 exceptfds{1|67M9}
+58p7 timeout(42R9) 107r23
+66r7 TV{42R9} 69m21 69r21 70r24 70r47
+81o7 Rel_Time{duration} 89m10 92m10 96r10 98r40 100r44 105r25 112m13
+82o7 Abs_Time{duration} 90m10 93m10 110r23 112r25
+83o7 Base_Time{duration} 84r32 110r67
+84o7 Check_Time{duration} 90r29 92r29 108m13 110r35 110r54 112r36
+85r7 timeval{42R9} 98m13 100r26 101m16 101r34 104m13 105r46 107m34 107r34
+

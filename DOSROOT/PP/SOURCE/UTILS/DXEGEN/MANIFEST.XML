@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<packages>
+<package name="utils-dxegen">
+ <version major="3" minor="0" micro="0"/>
+ <oses>
+  <os name="go32v2"/>
+ </oses>
+ <filename>dxeg.zip</filename>
+ <author>Charles Sandmann and others</author>
+ <license>LGPL with modification</license>
+ <homepageurl>www.freepascal.org</homepageurl>
+ <email>sandmann@clio.rice.edu</email>
+ <description>DXEGEN converts COFF object files to .DXE files that can be loaded and relocated runtime.</description>
+ <dependencies>
+  <dependency>
+   <package packagename="rtl"/>
+  </dependency>
+ </dependencies>
+</package>
+</packages>

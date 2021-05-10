@@ -1,0 +1,33 @@
+#
+# DSM for bzip2 0.9.5d documentation
+# Written by Richard Dawe <richdawe@bigfoot.com> 2001-03-18
+#
+
+dsm-file-version: 1.0
+dsm-name: bz2095db
+dsm-version: 0.5.0
+dsm-type: documentation
+
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+
+name: bzip2
+version: 0.9.5
+manifest: bz2095dd
+binaries-dsm: bz2095db
+sources-dsm: bz2095ds
+
+short-description: bzip2, a block-sorting file compressor
+long-description: \
+bzip2 is a block-sorting file compressor which typically compresses better\n\
+than gzip.
+
+porter: Juan Manuel Guerrero
+porter-email: st001906@hrz1.tu-darmstadt.de
+
+web-site: http://sourceware.cygnus.com/bzip2/
+
+license: BSD-style
+
+simtelnet-path: v2apps/
+zip: bz2095dd.zip

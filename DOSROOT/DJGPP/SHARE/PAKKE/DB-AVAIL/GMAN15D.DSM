@@ -1,0 +1,28 @@
+#
+# DSM for gnumaniak 1.5
+# Written by Richard Dawe <richdawe@bigfoot.com>
+#
+dsm-file-version: 1.2
+dsm-author: Richard Dawe
+dsm-author-email: richdawe@bigfoot.com
+#
+dsm-name: gman15d
+dsm-version: 0.4.0
+dsm-type: documentation
+#
+name: gnumaniak
+version: 1.5
+manifest: gman15d
+short-description: Man pages for GNU tools
+license: LDP General Public License, Version 1a
+author: Ragnar Hojland Espinosa
+web-site: http://personal.redestb.es/ragnar/
+ftp-site: ftp://metalab.unc.edu/pub/Linux/docs/linux-doc-project/man-pages
+porter: Richard Dawe
+porter-email: richdawe@bigfoot.com
+porting-web-site: http://www.bigfoot.com/~richdawe/
+#
+simtelnet-path: v2gnu
+zip: gman15d.zip
+#
+requires: man

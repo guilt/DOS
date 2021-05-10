@@ -1,0 +1,27 @@
+#
+# borland.dsm
+# Written by Laurynas Biveinis <lauras@softhome.net>
+#
+# This is a DSM for a "C development for former Borland developers" package.
+#
+
+dsm-file-version: 1.0
+dsm-version: 0.4.0
+dsm-name: cdev
+dsm-type: group
+
+dsm-author: Laurynas Biveinis
+dsm-author-email: lauras@softhome.net
+
+name: C development for Borland users
+version: 1
+short-description: C development with nice Borland-like IDE
+long-description: Contains nice IDE as well as basic development system.\
+                  Ideal for beginners and former Borland users.
+
+# This has no packages of its own - it just requires other ones.
+requires: djdev >= 2.00
+requires: gcc >= 2.7.2
+requires: make >= 3.74
+requires: rhide
+requires: faq

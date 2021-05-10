@@ -1,0 +1,201 @@
+NOTE: If Hedge Row does not run, see "troubleshooting" below.
+
+
+                              Hedge Row
+
+                     Copyright 1993 Diana Gruber
+
+This game is one of many I have on my hard disk that I never quite finished.
+I am releasing it now, with source code, in the hope that some other game
+programmers will find it useful. Feel free to dissect and re-use this code,
+and write "real" games based on it.
+
+Hedge Row has several features that make it interesting. It was my first
+attempt at an SVGA game. It runs in an 800x600x256 video mode, and uses two
+physical pages (video memory) and one logical page (EMS or XMS). In this
+sense, it is a resource-intensive program. Yet the EXE size is tiny and the
+program uses less than 100k of conventional RAM.
+
+Another interesting feature is the recursive maze solution. This is one of
+those problems they love to give you in computer science classes. Students
+who want to turn in my code to satisfy their homework assignments have my
+permission to do so.
+
+The mouse motion is also interesting. The mouse is constrained to the maze
+paths; it will not go off the path into illegal areas. This was hard code to
+write. Looking at it, it doesn't look that difficult, but I remember I had a
+real hard time writing it.
+
+Running Hedgerow
+----------------
+Just type "Hedge". Follow the simple instructions on the screen. If you get
+stuck, press 'F1' for help.
+
+Cheat mode
+----------
+Maze tile paths are drawn in two colors. The true path is drawn in palette 7,
+and the other paths are drawn in palette 5. Both palettes are set to white,
+but you can change the color of the true path by using the "cheat mode".
+
+Press 'c' to activate the cheat mode. This will change the color of the true
+path from white to light blue. Pressing 'c' again will change it back. The
+cheat mode makes it easy to traverse the maze path, but it is not nearly as
+interesting as the recursive maze solution.
+
+Recursive maze solution
+-----------------------
+Press 'r' to see an honest-to-goodness recursive maze solution. I wrote this,
+but don't ask me how it works. I haven't the foggiest. It works great though,
+doesn't it?
+
+Next maze
+---------
+Press 'n' to abandon the current maze and start a new one. There are seven
+mazes distributed with this version of the Hedge Row program. Will there ever
+be more? I don't know!
+
+Exit
+----
+Press 'ESC' to exit the program. Isn't that easy?
+
+Troubleshooting
+---------------
+Hedge Row requires a mouse, SVGA card and monitor, and approximately 512k of
+extended or expanded memory to run. If any of these are missing, Hedge Row
+will not work.
+
+If you have EMS or XMS memory and Hedge Row reports that you do not, check
+that other programs are not using that memory. On my system, I noticed
+Smartdrive was eating up all my extended memory. Turn your Smartdrive off, or
+configure it to use less memory, so that Hedge Row can have some.
+
+If you recompile and link this code with Fastgraph/Light and the program
+does not run properly, it may be because of a bug in Fastgraph/Light. This
+is an obscure bug in fg_tcxfer that surfaced when we were preparing this
+program for distribution. It only occurs in the "Light" (shareware) version
+of Fastgraph, not the professional version. We fixed it immediately, of
+course, as we do with all bugs. You can download the latest version of
+Fastgraph/Light from our BBS or from the Gamer's forum on CompuServe, or
+call us and we will send it to you. Hedge Row should work with all versions 
+of Fastgraph and Fastgraph/Light 3.03a and above, or any version of 
+fgdriver.exe with a time stamp of 10/10/93 or later.
+
+SVGA cards
+----------
+Hedge Row should work on most currently popular SVGA cards. It uses Fastgraph
+to do an autodetect on the chipset and then does direct chipset support. If
+it does not find a chipset it knows, it will support Super VGA through the
+VESA driver.
+
+Please report any SVGA problems to Ted Gruber Software. If you have video
+hardware that Fastgraph does not support, we want to know about it.
+
+Files in the distribution
+-------------------------
+ HEDGE.EXE   the program
+ HEDGE.DOC   this file
+
+ HEDGE.C     source code for the game
+ HEDGE.H     function declarations
+ COMMON.C    source code for "often used" functions
+ COMMON.H    function declarations
+ DEFS.H      defines, includes and
+
+ DUBDINER.PCX  pcx file containing picture of dub diner
+ HEDGE.PCX     pcx file containing maze tiles
+ HEDGE.ATT     attributes of maze tiles (open on left, right, top, etc.)
+
+ MAZE001.LEV  \
+ MAZE002.LEV   \
+ MAZE003.LEV    \
+ MAZE004.LEV      maze data for 7 different mazes
+ MAZE005.LEV    /
+ MAZE006.LEV   /
+ MAZE007.LEV  /
+
+ GAME.DAT     data file for the Fastgraph Game Editor (FGE.EXE)
+
+Compiling and linking
+---------------------
+Hedge Row requires Fastgraph 3.00 or above, or Fastgraph/Light 3.03 or above
+to link. You can download Fastgraph/Light from our BBS at (702) 796-7134, or
+look on CompuServe in the Gamers forum.
+
+I used the medium model to compile. The following commands show the
+compilation and linking sequences for each supported compiler:
+
+   Borland C++     BCC -mm HEDGE.C COMMON.C FGM.LIB
+
+   Microsoft C     CL /AM HEDGE.C COMMON.C /link FGM.LIB /STACK:6144 /E
+
+   QuickC          QCL /AM HEDGE.C COMMON.C /link FGM.LIB /STACK:6144 /E
+
+   Turbo C/C++     TCC -mm HEDGE.C COMMON.C FGM.LIB
+
+   Zortech C++     ZTC -mm HEDGE.C COMMON.C FGM.LIB
+
+If you are linking with Fastgraph/Light, replace FGM.LIB with FGLM.LIB. When
+using Fastgraph/Light, the FGDRIVER.EXE video driver must be version 3.03A or
+later.
+
+Stack considerations
+--------------------
+The recursive solution requires an increased stack size. The more vertices in
+the maze, the bigger stack you need. I increased the stack size by adding
+this to the Microsoft link command: /STACK:6144. This stack is big enough for
+most standard mazes. A really complicated maze would need a bigger stack.
+
+Maze #7 has the most vertices.
+
+How maze tiles work
+-------------------
+The tiles are 16x16 pixel rectangles, stored in the file HEDGE.PCX. Each
+tile represents a possible maze path: up and down, left to right, branch in 2
+or 3 directions, etc. They are numbered starting at 0 in the upper left
+corner, through 239 in the lower right. Not all the tiles are needed in the
+maze game, there are a bunch of "blank" tiles.
+
+The layout array is defined like this:
+
+   unsigned char layout[50][38];
+
+It is a two dimensional array corresponding to the positions of the tiles on
+the SVGA screen. 50 tiles x 16 pixels = 800 pixels total, which is the
+horizontal resolution of the screen. Similarly, the vertical resolution is
+600 pixels, or 38 tiles x 16 pixels.
+
+Tiles are stored on the hidden page and transferred to the visual page using
+fg_tcxfer. Color 0 is the transparent color, so the tiles can be superimposed
+on the DUBDINER.PCX picture without completely covering it.
+
+Meanwhile, a clean copy of the dubdiner picture is stored offscreen on a
+logical page in EMS or XMS memory. When a new maze is drawn, the picture is
+copied to the visual page and a new sequence of tiles is drawn over it.
+
+Creating new maze levels
+------------------------
+You can use the level editor in the Fastgraph Game Editor (FGE.EXE) to
+create new mazes. The mazes are stored in the files ending with the LEV
+extension -- MAZE001.LEV, MAZE002.LEV and so on. The GAME.DAT file
+has the first 7 mazes organized, you can easily add more.
+
+About dub diner
+---------------
+The background picture, DUBDINER.PCX, was done by those great guys over at
+dub Media. Dub Media is dedicated to providing quality computer graphics to
+meet your needs and budget. Whether your reuqirements are VGA-resolution
+still images or broadcast-quality animation, dub Media can offer a creative
+alternative.
+
+Dub Media sent me the diner file in a GIF format, but I converted it to a PCX
+file so my users can recompile and relink the source code with
+Fastgraph/Light. I also reorganized the palette colors a little so my maze
+path would be red and white. For an original of the dubdiner GIF, and
+information about other art, you can contact Alfred Woo and Mike Wall at:
+
+  dub Media
+  75 Trapelo Road
+  Waltham, MA 02154
+  (617) 647-1101
+
+

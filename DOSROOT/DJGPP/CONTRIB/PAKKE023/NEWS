@@ -1,0 +1,881 @@
+pakke Changelog
+~~~~~~~~~~~~~~~
+
+$Id: NEWS,v 1.5 2003/03/15 13:07:47 richdawe Exp $
+
+0.2.3 2003-??-??
+----------------
+
+- DSM specification version 0.6.1:
+
+  * Added the 'porter-web-site' and 'porter-ftp-site' directives.
+
+  * Added the version wildcards '?' and '*', for easier package matching
+    in dependencies.
+
+- DSM parser changes - these affect pakke, dsmcheck and programs
+  using libpakke:
+
+  * Support the changes to the DSM specification.
+
+  * It now only recommends that binary, documentation and source DSMs
+    should contain a 'license' directive. Other package types
+    are not "real" packages. Group packages refer to other packages,
+    which should have their own licensing information.
+
+  * Warn about packages with only a major version.
+
+  * Warn when 'dsm-name' is not the same as 'manifest'. This usually
+    indicates a typographical error.
+
+- pakke:
+
+  * Accept the '-h' and '--hash' options for compatibility with RPM.
+    Support for displaying progress will be added to a later version
+    of pakke.
+
+  * Allow the HTTP or FTP mirror to be specified on the command-line
+    using the '--mirror' option.
+
+  * Flush the input buffer, before getting the user's response
+    to questions. pakke should now handle the user's response
+    identically on all platforms. Previously it did not use unbuffered
+    input on non-DJGPP platforms.
+
+  * When installing/upgrading/uninstalling, allow the user to specify
+    an action for all files. E.g. for uninstalling:
+
+    [r]emove, [R]emove all, [b]ackup, [B]ackup all, [k]eep, [K]eep all
+    or [a]bort?
+
+  * --syncdb should not fail, if there are no DSMs available.
+    It now keeps on going, when no manifests or available DSMs are found
+    and warns if a package is unmatched. E.g.: a warning is issued
+    when a package has a manifest, but no DSM can be found for it
+    in the installed or available databases.
+
+  * When --upgrade detects that the package is already installed,
+    it will now print less confusing messages. It should also only fail
+    if the archives were corrupt.
+
+  * --install and --upgrade should now work correctly, when
+    installing packages where the path to a package is given.
+    Previously it could fail, when the path was drive-letter relative,
+    e.g. z:foo.zip.
+
+- libpakke:
+
+  * Add is_ftp_url() and is_http_url().
+
+  * autoconf 2.5x may define PACKAGE_* in config.h. Undefine them
+    in <libpakke/package.h>, to avoid a clash with PACKAGE_VERSION
+    and use our definitions in preference.
+
+  * find_archive() now copes with files in directories that are specified
+    by a drive letter only, e.g.: z:foo.zip.
+
+- autoconf 2.57 and automake 1.7.3 are now required, if you wish
+  to change the configure script or Makefiles.
+
+  To ease maintainence, all version numbers are now defined
+  in the autoconf script. Files containing these version numbers
+  are substituted by configure. This affects doc/version.txi,
+  src/version.h, include/libpakke/version.h and the new file
+  include/libpakke/dsm/version.h.
+
+- scripts/dsmgen.sh:
+
+  * Only load $HOME/dsmgenrc if it exists.
+  * Improved the help message to describe $HOME/dsmgenrc.
+  * Generate a 'replaces' directive for binary packages.
+
+- scripts/dsm2ver.sh:
+
+  * Don't display spurious commas, if no description was found in the DSM.
+
+0.2.2 2002-10-16
+----------------
+
+- The DSM parser now supports non-fatal errors. This allows the DSM parser
+  to warn about minor DSM syntax errors that it can cope with.
+
+  Note that pakke only reports non-fatal errors, when run in verbose mode.
+
+  The DSM parser now also:
+
+  * recommends that every DSM should contain a 'license' directive.
+
+- Fixed a bug in the reporting of errors in DSMs which were loaded in bulk.
+  Previously only the first error was reported for each file. Please note
+  that this bug did not affect DSMs loaded individually, e.g.: by dsmcheck.
+
+- Fixed a bug in the deduplication code, which did not handle the case
+  where the first element in the package list was a duplicate.
+  The package_dedupe() function from libpakke was modified to return
+  the new list head.
+
+0.2.1 2002-06-30
+----------------
+
+- Added support for using '--changelog', '--pre-install-readme',
+  '--post-install-readme', '--pre-uninstall-readme' and
+  '--post-uninstall-readme' on installed packages.
+
+- Removed '-$(MAKEFLAGS)' from Makefiles, since MAKEFLAGS are passed
+  via the environment. The usage of '-$(MAKEFLAGS) broke the Makefiles,
+  when trying to set variables on the make command line, e.g.:
+
+      make FOO=bar all
+
+- "zippo" was renamed to "pakke", to prevent confusion with
+  Zippo Manufacturing Company's trade mark on the Zippo name
+  for Zippo lighters.
+
+0.2.0 2002-05-19
+----------------
+
+- Fixed a bug in installing/upgrading a package from a renamed archive file.
+  Previously install/upgrade would look for the archive file specified
+  in the DSM, rather than using the renamed archive file.
+
+  NB: When installing a package that comes as multiple archives,
+  the archives *must* still have the names specified in the DSM.
+
+- Check the dependencies on a package, before checking whether all
+  its archives are present. This re-ordering is necessary as part
+  of supporting HTTP/FTP downloads of packages.
+
+- Search the alphas/ and beta/ subdirectories of the DJGPP directories
+  (v2/, v2apps/, v2gnu/, v2misc/, v2tk/), when looking for packages
+  in archive directories. Also look in the allegro/ directory of v2tk/.
+
+- You can now upgrade a package using its entry in the available database.
+  E.g.:
+
+      pakke --upgrade --available 'bison 1.35 (binaries)'
+
+- pakke can now download archives from a web server or FTP server,
+  if it cannot find a package's archives.
+
+- pakke can now download the 'djgpp-dsms' package from a web server
+  or FTP server, when run with the '--syncdb' option. The 'djgpp-dsms'
+  package contains DSMs for all the latest DJGPP packages.
+
+- pakke can now be run in non-interactive mode. In this mode it will
+  automatically and cautiously answer questions it would have asked
+  the user.
+
+- Build system changes: A 'maintainer-distclean' target was added,
+  to remove all automatically-generated files, including Makefiles
+  generated by the configure script.
+
+- Fixed a bug in the handling of package names, when using
+  escape characters. The escape characters were managled by pakke,
+  so packages would not match.
+
+- Fixed a bug in the handling of package names with '+' characters,
+  e.g. g++. The '+' characters were not interpreted properly, so
+  error messages like the following could be seen:
+
+      bash-2.04$ pakke -q g++
+      Warning: Could not compile regular expression '^g++$'
+      g++ 3.0.3 (binaries)
+      1 package(s) matched
+
+  pakke will not also fail, if it cannot compile regular expressions
+  like this, to avoid selecting the wrong package in some cases.
+
+- There were updates to work with version 0.6.0 of the DSM specification:
+
+  * Package names are now treated insensitively of case, e.g.: GdB == gdb.
+
+  * The 'type' directive, the 'duplicate-action' directive,
+    the platform component of the 'version' directive, feature names
+    and qualifiers (in dependencies) are now be treated insensitively
+    of case.
+
+  * If the package type is specified as, say, binaries, but
+    a 'binaries-dsm' directive is given, then an error will be produced.
+    This should help avoid cut and paste errors, when maintainers are
+    producing DSMs for binaries, documentation and sources versions
+    of a package.
+
+0.1.6 release 2 2002-03-16
+--------------------------
+
+- Include wget sources to comply with the GNU GPL. Thanks to DJ Delorie
+  for pointing out this necessity.
+
+0.1.6 2002-03-11
+----------------
+
+- package_free() now only frees the child data. The PACKAGE_INFO struct
+  must be freed separately. packlist_free() now only works on lists where
+  each PACKAGE_INFO struct has been dynamically-allocated.
+
+- Install and upgrade now perform all checks on archives, dependencies, etc.,
+  before aborting if there is something wrong. This is so the user can fix
+  everything at once.
+
+- package_version_string() now includes the type in the returned version
+  string, since the type is part of the version. package_type_string()
+  now takes a package version as parameter, rather than the package itself.
+
+- Leading zeroes are now ignored in version comparisons, so 2.03 == 2.3.
+  The leading zeroes are considered to be for presentation purposes only.
+
+- Fixed some build warnings with gcc 3.x -
+  the "does not give a valid preprocessing token" warnings
+  (see http://gcc.gnu.org/ml/gcc/2001-10/msg00804.html).
+
+- Fixed a problem where filenames in ZIP archives were handled in
+  a case sensitive way on a case insensitive platform (i.e. DOS/Windows).
+
+- Dependencies now show the package type for dependencies without
+  version numbers.
+
+- Since type is now a part of a version, the type is defaulted in
+  dependencies to the type of the package with the dependency. This is
+  a temporary fix until the DSM specification allows types to be
+  specified in dependencies.
+
+- configure script ('config') changes:
+
+  * Don't check for libsocket anymore. pakke will use external programs
+    for its networking.
+
+  * The '-ggdb' flag produces DWARF-2 debug information with
+    the DJGPP port of gcc 3.x. Since the DJGPP port of gdb 5.0
+    doesn't understand DWARF-2, use '-gstabs+' instead in
+    the compiler flags.
+
+- Added a platform DSM for Windows XP.
+
+- DSM parsing fixes:
+
+  * Line numbers are now counted correctly.
+
+  * The parser copes with multiple occurrences of 'version' and '*-version'
+    directives now. (NB: It's illegal to have multiple occurrences of
+    these directives.) The parser now uses the last occurrence.
+
+- Test suite changes:
+
+  * Added 'test/dep/multi.c' to check dependencies work, when
+    multiple versions of a package are installed.
+
+  * 'test/dsm' is now part of the test suite, to check DSM parsing.
+
+- KITE now builds with gcc 3.x.
+
+- The configuration file parser now supports substituting environment
+  variables (see the example pakkerc). Some bugs were fixed in
+  the parser: in particular, it should now report the line number
+  correctly in error reports.
+
+- pakke will no longer issue a warning like the following,
+  when querying a package file:
+
+     "Warning: Unable to read MD5 hashes for bison 1.33 (binaries) -
+      using manifest"
+
+- '--syncdb' will now look for the latest version of the djgpp-dsms package
+  and install/upgrade it automatically. This ensures that the latest DSMs
+  for the latest packages in the DJGPP archive will always be available.
+
+- Install, upgrade and uninstall will no longer automatically
+  add or remove info directory entries. Previously pakke could trash
+  the info directory. In future pakke will run the commands specified
+  in DSMs to add or remove info directory entries.
+
+  (This topic was thoroughly discussed on djgpp-workers. You may wish
+  to search the mail archives at http://www.delorie.com/djgpp/ .
+  Thanks to Peter J. Farley III for his work on this problem.)
+
+- If you try to install from a non-existent package file, it will
+  produce an error message. Previously it would produce
+  a cryptic message like:
+
+     "ds020131.zip: Package unsupported
+      Error: Unable to parse DSM!"
+
+0.1.5 2001-08-27
+----------------
+
+- '--check-integrity' now ignores virtual and group packages.
+  (Tim van Holder, Richard Dawe)
+
+- Some build improvements in the Makefiles: pakke should be built less
+  frequently now, because comptime.[ch] generated better; some cruft
+  removed; binaries left in source directory and copied into bin/ and lib/
+  (Tim van Holder).
+
+- Fixed a parsing bug in user specifiers - e.g.:
+
+      pakke -q 'binutils 2.* (binaries)'
+
+  should now match.
+
+- '--rcfile' should work again.
+
+- The test suite now uses pakke's default configuration file. This should
+  avoid problems that can be caused by a non-default configuration file
+  (e.g. pakke generating warnings, causing a test to fail).
+
+- Queries on package files or an available package will now show correctly
+  whether the dependencies are satisfied by the installed packages.
+
+- Packages can now be installed by name, e.g.:
+
+      pakke -i -A 'gcc (binaries)'
+
+0.1.4 2001-07-01
+----------------
+
+- Added a script to generate a package containing all DSMs from a mirror
+  of the DJGPP archive - scripts/pkgdsms.sh.
+
+- Fix for bug #32: "maintainer & maintainer-email DSM directives not
+  supported." Up to 8 maintainer* directives are now supported.
+
+- Fix for bug #35: "pakke crashes on exit."
+
+- configure script improvements: make help for options blend in with
+  help for configure's other options; use autoheader to generate config.hin;
+  update bzip2 library tests to work with bzip2 1.0; fix --with-pmode-stub
+  to check value of $withval; allow PMSTUB to be called from any directory
+  in the source tree, not just src/. (Tim van Holder)
+
+- Updated the DSM specification version 0.5.0 to clarify certain points -
+  use of 'type' instead of 'dsm-type'; purpose of standard provisions.
+
+- '--initdb' should now detect and install a platform DSM for Windows ME.
+
+- Various minor bugs were fixed in the DSM parser.
+
+- When installing packages from ZIP files, pakke will now preserve
+  the timestamp on the files. I.e. the extracted files will have the same
+  date & time as the original file in the ZIP file.
+
+- The libpakke headers now include version information: libpakke/dsm.h
+  defines DSM_VERSION_MAJOR, DSM_VERSION_MINOR, DSM_VERSION_SUBMINOR
+  to contain the digits of the supported DSM specification version;
+  libpakke/version.h defines LIBPAKKE_VERSION_MAJOR, LIBPAKKE_VERSION_MINOR,
+  LIBPAKKE_VERSION_SUBMINOR to contain the digits of the libpakke version.
+
+- Version 0.5.1 of the DSM specification is now supported. New features
+  supported are: the 'release' component of version information,
+  to support multiple releases of a package.
+
+- The DSM parser now checks 'dsm-version' in the DSM file, to see if
+  it supports the version of the DSM specification used.
+
+- pakke now checks the integrity of all archives belonging to a package,
+  before installing. For ZIP files the CRC for each file is checked.
+
+- Fixed a bug in version comparisons, which may have caused weird
+  side-effects when upgrading packages.
+
+- If a package consists of a single ZIP file, then pakke will now install
+  that package using that ZIP file. Previously it could only install
+  from a ZIP file with the exact name from the DSM. For example: if a DSM
+  contained 'zip: foo.zip', then previously you had to install using
+  a file called 'foo.zip'; now it can be called any name
+  (with a .zip extension).
+
+0.1.3 2001-04-18
+----------------
+
+- '-q <package> --long-info' should now work for packages without DSMs.
+
+- Added introduction to 'dsmcheck' documentation.
+
+- Added platform DSM for Windows 3.x.
+
+- '--syncdb' now synchronises with the package DSMs built into pakke.
+
+- Install, uninstall and upgrade should now back up changed files.
+
+- Removed getopt code, since it's not used anymore - popt replaced it
+  a long time ago.
+
+- Uninstalls now handle packages without DSMs or MD5 hashes better -
+  the user is prompted whether each file should be removed, backed up, kept
+  or whether the uninstall should be aborted. pakke has no way of knowing
+  which files have modified, when there are no MD5 hashes.
+
+- Binutils version now included in build information shown by 'pakke -V'.
+
+- Uninstall now aborts, if it failed while removing package files.
+  Previously it would remove references to the package from pakke's
+  database, leaving the database in a bad state.
+
+- Uninstall and upgrade would previously proceed, when dependencies would
+  be broken. They now abort.
+
+- Rewrote the configuration file (pakkerc) parsing, using flex and bison.
+  It should now be more robust and easier to maintain. Spaces are now
+  allowed in filenames, as long as they are enclosed in double quotes.
+
+- When installing a package that contains info files, pakke will run
+  'install-info' automatically, to add entries to the info directory.
+  Similarly when uninstalling a package that contains info files, pakke will
+  run 'install-info', to remove its info directory entries.
+
+0.1.3 alpha 1 2001-02-23
+------------------------
+
+- Fixed install target to correctly install text documents.
+
+- Fixed regression in handling of missing ZIPs.
+
+- Added 'package_set_defaults()' function to set sensible defaults in
+  the absence of information from a DSM.
+
+- Added basic handling of 'duplicate-action' in install.
+
+- Fixed handling of 'mailing-list-description'.
+
+- Added a new function 'packlist_find()', which will find packages based
+  on string input. There can be multiple matching methods, but currently
+  only simple string matching is supported. The single query method
+  (by package name) has been updated to use this.
+
+- Added support for wildcards in version specifiers. This should allow
+  the query options to be more useful in the future
+  (e.g. "-q 'fileutils 4.*'"). The function 'dsm_parse_wildcard_version()'
+  will parse this kind of version specifier.
+
+- {die,warn,info}f() functions now use v*printf() instead of the internal
+  library function _doprnt(), to increase portability.
+
+- 'dsmcheck' now works for DSM files in archives.
+
+- Added support for '--changelog', '--pre-install-readme',
+  '--post-install-readme', '--pre-uninstall-readme' and
+  '--post-uninstall-readme' queries.
+
+- The DSM parsing was fixed to allow multiple occurrences of the directives
+  that should be multiply allowed, according to the DSM specification.
+
+- '--long-info' and '--longinfo' will now list all information for a package.
+
+- Added a check that 'binaries-dsm', 'sources-dsm' and 'documentation-dsm'
+  do not have a file extension.
+
+- Added support for the 'install-warning' directive, both in the install
+  code and as a query type.
+
+- Further interface tidy-ups - more usage of 'const'. Some header file
+  fixes - path to libpakke headers, C++ inclusion protection.
+
+- The version parsing function ver_parse() was split into two functions -
+  ver_parse() and ver_get_and_parse() - for an interface similar to the DSMs'.
+
+- The package type is now stored in the PACKAGE_VERSION structure.
+
+- Removed very verbose, very quiet modes - they're redundant.
+
+- '--syncdb' now searches the manifest directory for DSMs of packages that
+  have been installed without pakke.
+
+- Fixed Linux build.
+
+- "--initdb --with-pakke" now installs a DSM for pakke too.
+
+- Test suite now rebuilds tests automatically if lib/libpakke.a changes.
+
+- Uninstall support
+
+- Upgrade support added, but preliminary
+
+0.1.2 patchlevel 3 2000-09-09
+-----------------------------
+
+Nothing important was done - this is a checkpoint release for importing into
+CVS. pakke will now be hosted on DJ Delorie's CVS server (thanks!).
+
+0.1.2 patchlevel 2 2000-08-23
+-----------------------------
+
+- Patch to fix build with libsocket 0.7.4 beta 4 and later
+  (Laurynas Biveinis).
+
+- DSM specification changed to allow pre-release number as part of
+  the version specification. Added a test DSM - 'test/dsm/badver.dsm'.
+
+- Install now uses dsm_get_and_parse(). To support this, more error reports
+  were added to dsm_perror().
+
+- Install will now search the package's directory for archives. This fixes
+  the bug with installing from a directory that wasn't in the archive search
+  path.
+
+- The PMODE/DJ stub is not used by default now - use the '--with-pmode-stub'
+  to build with it. Also, a bug from patchlevel 1 in the configure script was
+  fixed, so the stub should be found properly now.
+
+- Started pakke coding standards (see coding.txt).
+
+0.1.2 patchlevel 1 2000-08-13
+-----------------------------
+
+- Makefile fixes: pl0 built a document by default - fixed to build by default
+  again; documentation built a little better; use $(MAKE) instead of make.
+
+- 'tags' target added for building Emacs tags file. 'ID' target added for
+  building table for GNU id-utils. 'check' target added for running test
+  suite.
+
+- Switched to using calloc() instead of malloc() followed by bzero(); switched
+  to using malloc() instead of bzero() (Laurynas Biveinis).
+
+- 'config' script changes:
+  . To build with MSS, you now need to pass '--with-mss' to the config script.
+  . Now detects: more programs; file extensions; standard C headers.
+
+- Fixed a bug in package_free(), where it attempted to free an array.
+
+- '--install' now checks that all archives specified by a DSM exist, before
+  creating the prefix. It also checks that the package is one of the currently
+  supported types: binaries, sources, documentation, virtual.
+
+- Moved DJGPP archive prefix information into new DJGPP shared data
+  and functions files: src/libpakke/djgpp.c, include/libpakke/djgpp.h.
+
+- Added '-L' and '--license' options to pakke and dsmcheck for displaying
+  the license.
+
+- 'make -C doc all' will build optional documentation formats - this now
+  includes DVI and PostScript formats.
+
+- Added a new function dsm_get_and_parse(); some new error codes were added
+  to include/libpakke/dsm.h for this. (Laurynas Biveinis)
+
+- Fixed a memory corruption bug in dsm_parse().
+
+- Restructured the manifest parsing code - added the functions mft_get(),
+  mft_get_from_archive(). As a result, some user-interface code was moved
+  from src/libpakke/mft.c to src/query.c (i.e. out of libpakke):
+
+  . mft_show_files() -> query_show_files()
+  . mft_has_file() -> query_has_file()
+
+  As a side-effect, the '-f' query now works for archives.
+
+- dief(), warnf(), infof(), logf() now use gcc's printf-format checking
+  for varargs.
+
+0.1.2 patchlevel 0 2000-08-06
+-----------------------------
+
+- popt port removed, now that there's a proper DJGPP port.
+
+- libpakke interfaces now use 'const' appropriately (Laurynas Biveinis).
+
+- '--install' and '-qp' on a ZIP file that has no DSM file now produces
+  a sensible message - try the test case test/zip/useless.zip.
+
+- '--help' and '--version' now work when the database has not been
+  initialised.
+
+- dsmcheck now has '--help' and '--version' options. dsmcheck's texinfo
+  documentation also started.
+
+- 'distclean' now removes binaries from bin/.
+
+- Texinfo documentation is now distributed under the terms of the GNU Free
+  Documentation License (GNU FDL).
+
+0.1.1 patchlevel 14 2000-06-15
+------------------------------
+
+- Option parsing now uses popt (Kalum Somaratna). A hacked-up port of popt
+  is included, pending a proper port (Richard Dawe).
+
+- Small fix for using MSS on read-only or full media, e.g. CD-ROMs. pakke will
+  disable writing an MSS log file and will log to stdout instead.
+
+0.1.1 patchlevel 13 2000-05-18
+------------------------------
+
+- MD5 hash generation is now done on install, in addition to syncdb.
+
+0.1.1 patchlevel 12 2000-05-10
+------------------------------
+
+- Graph code (Laurynas Biveinis).
+
+- Texinfo documentation for pakke now includes install instructions.
+
+- 'install' target now installs pakke documentation into the 'DJGPP Package
+  Management' category in the info directory (dir).
+
+0.1.1 patchlevel 11 2000-05-06
+------------------------------
+
+- Dependency code changed to use generic dependency parsing function
+  (Laurynas Biveinis, Richard Dawe) - now all DSM parsing functions take the
+  directive as their first argument; browser function added to run a function
+  on each package in a package list (useful in the future for checking
+  dependencies).
+
+- '--install' option now works, but '-qi' is broken. The option parsing code
+  needs a little fixing.
+
+- HTML documentation now built with texinfo 4.0's 'makeinfo --html' option.
+
+- Some DSM bugfixes.
+
+0.1.1 patchlevel 10 2000-05-02
+------------------------------
+
+- DSM specification is now at version 0.4.2 - thanks to Eli Zaretskii for
+  his comments.
+
+- The 'changelog', scripting and 'newsgroup-description' directives are now
+  parsed. Note that these directives aren't actually supported in a useful
+  way by pakke yet.
+
+- Fix for building comptime.h when doing 'make dep' (Laurynas Biveinis).
+
+- Windows NT 4 platform DSM now 'provides' Windows functionality, to support
+  packages that require Windows.
+
+0.1.1 patchlevel 9 2000-04-19
+-----------------------------
+
+- Added OS detection code for '--initdb', so the appropriate platform DSM
+  can be installed automatically (Kalum Somaratna).
+
+- Fix for getopt handling of '--with-platform' (Kalum Somaratna).
+
+0.1.1 patchlevel 8 2000-04-16
+-----------------------------
+
+- '--syncdb' now updates DSMs for the installed packages in share/pakke/db,
+  if a more recent DSM is found in share/pakke/db-avail.
+
+- MD5 hashes are generated for all files listed in the manifest; MD5 hashes
+  are not generated for none, group or virtual packages.
+
+- DSM parser now skips whitespace lines, rather than considering them to be
+  directives.
+
+0.1.1 patchlevel 7 2000-04-13
+-----------------------------
+
+[ Not much changed - only a to-do added to todo.txt. ]
+
+0.1.1 patchlevel 6 2000-04-10
+-----------------------------
+
+- Code previously used 'operator' as field in structures - switched to 'op'
+  to avoid problems with C++ (Laurynas Biveinis).
+
+- Many DSM corrections, new DSM provide: 'info-reader'. (Laurynas Biveinis)
+
+- MD5 hash-generation code now works (test programs included).
+
+- Logging code started.
+
+- New platform DSMs written.
+
+- Dependencies should now be generated properly for libpakke headers included
+  using '<...>'.
+
+0.1.1 patchlevel 5 2000-04-05
+-----------------------------
+
+[ This was not distributed, as far as I can tell. ]
+
+- Added two group DSMs - one for former Borland C developers; one for GNU
+  development tools (Laurynas Biveinis).
+
+0.1.1 patchlevel 4 2000-04-04
+-----------------------------
+
+- DSMs improved (Laurynas Biveinis, a little by Richard Dawe); another test
+  DSM added - test/dsm/baaad2.dsm.
+
+- Fixes in the DSM parsing code - line-numbering was out by 1; lines with
+  directive but no content were erroneously allowed. (Laurynas Biveinis)
+
+- Documentation corrections (Laurynas Biveinis).
+
+- Base64 encoding code started (untested).
+
+0.1.1 patchlevel 3 2000-04-02
+-----------------------------
+
+- Fix for comptime.h generation (Laurynas Biveinis).
+
+- 'install-lib' Makefile target added (Laurynas Biveinis).
+
+- MD5 hash-generation code added to build.
+
+- Some texinfo fixes.
+
+- More DSMs added.
+
+0.1.1 patchlevel 2 2000-03-27
+-----------------------------
+
+- pakke texinfo documentation started.
+
+- Improved option parsing using getopt() (Kalum Somaratna).
+
+- 'string.h' now included in files generated by mkplat. Its omission was
+   a bug that manifested itself when not using MSS, because the MSS headers
+   include 'string.h'.
+
+- Some automatically generated files removed from the build.
+
+- Added new levels of output - quiet & very quiet. WARNING: The varying levels
+  of verbosity are not well supported yet.
+
+0.1.1 patchlevel 1 2000-02-19
+-----------------------------
+
+- Patched a couple of routines to avoid calling free() on NULL pointers -
+  patch by Laurynas Biveinis.
+
+- Updated the required package list, as I had omitted some and not known about
+  others.
+
+- Changed libpakke's licence to be licensed under the terms of the GNU Lesser
+  General Public License. This is so that libpakke can be incorporated into
+  non-GPL programs.
+
+- Fixed the '--syncdb' option. Previously it would fail if no DSMs existed
+  in the package database - for a system that only has manifests for packages,
+  this was broken behaviour.
+
+- Some tidy-ups - removed CVS copies of the files share/pakke/pakkerc,
+  share/pakke/simtelrc - the "real" copies of these are in src/defaults.
+
+- Added an install option to the Makefile.
+
+- Fixed small bug in output of '-q -a -f <file>'.
+
+0.1.1 2000-02-09
+----------------
+
+- Fixed a bug in the patch to recursive_mkdir() that lead to SIGSEGV's on
+  Linux.
+
+- Fixed dsm_parse() not to trash the passed buffer. This fixed a problem
+  noticed by Laurynas Biveinis, while using the install option.
+
+- Added check for presence of zlib, thanks to suggestion by Laurynas Biveinis.
+
+- Added '--syncdb' option to create missing DSMs in the installed database
+  from the list of manifest files using the available DSM database.
+
+- Added new directives to the DSM specification:
+. mailing-list-request
+. dsm-author
+. dsm-author-email
+. dsm-author-im
+. dsm-author-web-site
+. dsm-author-ftp-site
+. dsm-file-version
+. newsgroup-email-gateway
+. license
+
+- All ICQ directives have been changed to a more generic instant messaging
+  directive.  All '-icq' directives -> '-im'.
+
+- Fixed a bug in '--initdb' that copied 'pakke' rather than 'pakke.exe' under
+  DOS.
+
+(There's probably a whole load of other stuff I forgot in the two months
+ before I got round to releasing this version.)
+
+0.1 snapshot 1999-08-07 patch 1999-08-14
+----------------------------------------
+
+- Fixed a bug in recursive_mkdir() that made it fail on DOS platforms. Thanks
+  to Laurynas Biveinis for fixing this.
+
+- Fixed configure.in and Makefile.in to find gcc automatically. Thanks to
+  Laurynas Biveinis for fixing this.
+
+0.1 snapshot 1999-08-07
+-----------------------
+
+- long-description is now parsed by dsm_parse().
+
+- Rewrote dsm_parse() - this now parses a DSM passed as a string. The code
+  using dsm_parse() was changed to load DSMs into memory first (see
+  read_text_file_to_memory() in util.c and archive_extract_file_to_memory()
+  in archive.c). The DSM parser also returns an error if an unknown DSM is
+  directive is present.
+
+- Multiple 'zip' or 'tar-gzip' directives are now parsed. Previously only
+  one occurence was handled.
+
+- The build process is now completely controlled by the configure script.
+  Use 'bash configure --help' to view all the '--enable-xxx' options.
+
+- Included the package versions in the output of the '-a' and '-A' options.
+
+- Fixed a couple of DSM parsing bugs.
+
+- Made sensible default values for the root and prefix, namely c:/djgpp. If
+  no prefix is specified, the value of the root will be used. The compiled-in
+  defaults can be viewed using the '-V' option.
+
+- Added support for platform information as part of the version information.
+
+- Added a platform specifier to the version information.
+
+0.1 snapshot 1999-07-17
+------------------------
+
+- Fixed bug in dsm_load_all() which caused a segfault on closedir() on a NULL
+  pointer.
+
+- MSS helped find a bug in rcfile_substitute_special().
+
+- Added configure auto-detection of MSS, a memory allocation debugger. BTW
+  this works with DJGPP & Linux.
+
+- Fixed a couple of bugs in the DSM version parsing.
+
+- Added a new DSM version field 'snapshot' for date-based releases at the
+  request of Laurynas Biveinis. The versions of pakke are now snapshots rather
+  than alphas ;)
+
+- Updated the install instructions, with a more complete list of required
+  packages to build pakke.
+
+- Added a sample DSM for libsocket in share/pakke/db-avail/
+
+0.1 alpha 2
+-----------
+
+- Began install option support, but so far it only checks the dependencies.
+
+- Version numbers for manifests obtained from .ver files. The package type is
+  also guessed from the last letter, e.g. one of b, s, d, and defaults to
+  none/unknown.
+
+- Fixed autoconf script for strlwr() and stricmp(). It should now compile
+  properly with DJGPP.
+
+- Added parsing of dependencies & querying of them.
+
+- Added support for reading of DSMs and manifests from ZIP files -
+  manifest/<name>.dsm or <name>.dsm and manifest/<name>.mft and <name>.mft
+  names are matched in the ZIP. The directory and extension names are matched
+  case insensitively.
+
+- Default query format is now to display package name, version & type.
+
+0.1 alpha 1
+-----------
+
+- Initial version.
+
+Richard Dawe <rich@phekda.freeserve.co.uk>
