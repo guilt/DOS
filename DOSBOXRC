@@ -30,7 +30,6 @@ autolock=true
 sensitivity=100
 waitonerror=true
 priority=higher,normal,lower
-# mapperfile=mapper.map
 
 [dosbox]
 # language: Select another language file.
@@ -198,7 +197,6 @@ keyboardlayout=auto
 
 [ipx]
 # ipx -- Enable ipx over UDP/IP emulation.
-
 ipx=false
 
 [autoexec]
