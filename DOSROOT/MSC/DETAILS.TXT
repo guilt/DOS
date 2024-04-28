@@ -1,0 +1,862 @@
+                               DETAILS.TXT File
+               Product Information for Microsoft(R) C/C++, Version 7.0
+                  (C) Copyright Microsoft Corporation, 1992
+
+     This document contains release notes for version 7.0 of Microsoft
+     C/C++ and its libraries for MS-DOS(R) and Microsoft Windows(TM)
+     operating systems.
+
+================================< Contents >===============================
+
+
+     This file has the following sections:
+
+     Part 1: Using PWB
+     Part 2: Command-Line Options
+     Part 3: C++ Topics
+     Part 4: Specifying Program Starting Execution Points
+     Part 5: Run-Time Support for Windows Exit Procedure Routines
+     Part 6: New Function and Pragma Behavior
+     Part 7: Identifier Naming Issues
+     Part 8: Using the CodeView(R) Debugger with MS C/C++ 
+
+
+===========================< Part 1: Using PWB >===========================
+
+
+     Running PWB in a Window
+     -----------------------
+
+     To run PWB in a window by default, the following changes need 
+     to be made:
+
+     1. Use PIFEDIT.EXE to edit the PWB.PIF file.
+        - Change Display Usage to Windowed
+        - Change Execution to Background (optional) 
+
+     2. Choose the Project Templates option from the Options menu. The
+        Customize Project Templates dialog box will appear. Do the 
+        following:
+        - Type: macro WXFLAGS "/w" into the Build Rule edit field
+        - Select: Set Build Rule
+        - Select: OK
+
+
+     Using Precompiled Headers from PWB
+     ----------------------------------
+
+     This feature is not described in the "Environment and Tools"
+     book. To use precompiled headers in PWB, you must follow the
+     procedures and restrictions that are listed in Help.
+
+     To view the Help on using precompiled headers, choose the
+     "Precompiled-Header Options" button in  CL Help. This topic
+     explains the use of precompiled headers with CL and provides
+     important background information. At the end of this topic,
+     there is a button for "Using Precompiled Headers in PWB." To go
+     directly to this topic, request Help for "pwb.pch".
+
+
+     New PWB Switches: Friction and Factor 
+     --------------------------------------
+
+     The implementation of PWB's friction and factor switches have
+     changed since PWB version 1.x.  If your cursor doesn't move when
+     you hold down a key, edit your TOOLS.INI file and change these
+     switches back to their default settings.
+
+
+     Minimum Memory Requirement for Accessing Help in PWB
+     ----------------------------------------------------
+
+     The minimum amount of memory required for accessing Help from
+     PWB is 500K.
+
+
+=====================< Part 2: Command-Line Options >======================
+
+
+     New CL Default is /Od if Optimizations Not Specified
+     ----------------------------------------------------
+
+     If you do not specify any optimization options, the CL
+     command uses the Disable Optimization option (/Od). Using
+     /Od causes CL to compile your program using the fast
+     compiler (/f). This feature allows you to quickly compile
+     code that is under development and to reserve use of the
+     optimizing compiler until it is needed.
+
+     The /f option compiles source files without any default
+     optimizations. It generates the _FAST preprocessor
+     constant. Programs compiled with /f are slower and larger
+     but compile in less time than the optimizing compiler
+     requires; this option is useful during the development
+     process. The /f option does not support initialized static
+     huge data.
+
+
+     Mixing P-Code and Fully Optimized Machine Code
+     ----------------------------------------------
+
+     If you compile a module with p-code optimizations (/Oq) and also
+     specify full optimizations (/Ox), and then disable p-code
+     generation in parts of the module using #pragma optimize("q",off)
+     then the procedures that are not p-code will not be fully
+     optimized. In particular, the compiler will not remove unnecessary
+     loops.
+
+     To mix p-code and fully optimized machine code, use #ifdef
+     directives to specify where p-code or native machine code should be
+     generated. Then compile the file twice, to different .OBJ files,
+     once with full p-code optimization, and once with full native code
+     optimization. Link both .OBJ files into your project. Both types
+     of code will be fully optimized.
+
+
+===========================< Part 3: C++ Topics >==========================
+
+
+     Destructors for Objects in Global and Static Arrays
+     ---------------------------------------------------
+
+     The compiler erroneously does not generate destructors for objects
+     that contain implicit destructors if the objects are contained in
+     a global or static array and there are no other objects with that
+     type in the translation unit. In the following example, class B
+     has an implicit destructor because it contains an object of
+     class A. In this case, the linker will generate "error L2029:
+     unresolved external" for B::~B.
+
+          class A { public: ~A() {} };
+          class B { A a; };                 // implicit destructor
+
+          B b_array[10];
+
+     To work around this problem, make the destructor of class B
+     explicit:
+
+          class B { A a; public: ~B() {} }; // explicit destructor
+
+
+     Defining const struct Parameters for Member Functions
+     -----------------------------------------------------
+
+     If you have a member function with a single parameter that is a
+     reference to a const struct, such as:
+
+     class C {
+             void memfunc(const RD &);
+             };
+
+     the struct must be defined as:
+
+     typedef struct RD
+     {...
+     } RD;
+
+     rather than:
+
+     typedef struct
+     {...
+     } RD;
+
+
+     Return Types for Based Virtual Functions
+     ----------------------------------------
+
+     Based virtual functions cannot return pointer or reference types. 
+     Attempting to do so causes the compiler to generate redefinition 
+     errors. To work around this problem, use the #pragma code_seg 
+     directive to place virtual functions in different segments.
+
+
+     Calling Temporary Objects of Types with Destructors
+     ---------------------------------------------------
+
+     Any temporary object generated in the  "mem-initializer-list"
+     of a constructor-initializer ("ctor-initializer") when a
+     "mem-initializer" uses the syntax
+
+     "complete-class-name( expression-list opt )"
+
+     will not be destroyed if it has a destructor. The destructor will
+     not be called, but the space allocated to the destructor will
+     be released.
+
+     Therefore, do not write expressions for "complete-class-name
+     ( expression-list opt )" that will generate temporary objects
+     of types with destructors. See "Initializing Bases and Members"
+     on page 329 of the "C++ Language Reference" for more information.
+
+
+     Explicit Conversion Recommended for Member Functions
+     ----------------------------------------------------
+     Converting a member function to a pointer to a member function
+     type should be done explicitly when using the pointer in an
+     expression. For example, suppose you are assigning the pointer
+     to a variable or calling a function with a parameter that is a
+     pointer to a member function type. In such a case,
+     Class::MemFunc should be specified as &Class::MemFunc. This is
+     not necessary when calling the member function.
+
+
+     Function-Style Initializers Starting with Casts
+     -----------------------------------------------
+
+     Function-style initializers will not work properly if the
+     object in the initializer list is a function-style cast.
+     The following example shows an initializer of this kind:
+
+          class T
+          {
+             T(int);
+          };
+
+          class K
+          {
+             K(T, int);
+          };
+
+          int i, j;
+
+          K f(T(i), j);  // Causes an incorrect error message
+
+     In this case, the initializer must use the equal-sign syntax,
+     as in:
+
+          K f = K(T(i), j);
+
+
+=========< Part 4: Specifying Program Starting Execution Points  >=========
+
+
+     The Windows libraries that are provided with Microsoft C/C++
+     allow your program's starting execution point to be either main,
+     WinMain, or LibMain. The starting execution point depends on the
+     library used.
+
+
+          Windows 3.x Executable Files (EXE)
+          ----------------------------------
+
+          The startup code looks first for a function named main to treat
+          as the entry point. If a main function does not exist, then the
+          startup code attempts to use WinMain. If neither of these
+          functions exist, the run-time system emits the following error:
+
+          "R6021 no main function"
+
+
+          Windows 3.x Dynamic-Link Libraries (DLL)
+          ----------------------------------------
+
+          The startup code looks first for a function named main to treat
+          as the entry point. If a main function does not exist, then the
+          startup code attempts to use LibMain. Unless you link in one of
+          the NOCRT libraries, such as SNOCRTW.LIB, a main or LibMain
+          function is not required and no error is reported.
+
+
+          Windows 3.x and the NOCRT Libraries
+          -----------------------------------
+
+          If you link with any of the NOCRT libraries, such as SNOCRTW.LIB,
+          then your program must have either a WinMain (EXE) or a LibMain
+          (DLL). If neither of these functions exist, the run-time system
+          emits an error.
+
+
+=====< Part 5: Run-Time Support for Windows Exit Procedure Routines >======
+
+
+     Beginning with Microsoft C/C++, the standard C run-time libraries
+     contain the Windows Exit Procedure (WEP) for dynamic-linked
+     libraries (DLLs). The C run-time WEP performs several cleanup
+     functions when Windows unloads a DLL from memory (for example, it
+     releases memory and calls atexit routines). You can optionally
+     write your own termination code to be called from the run-time
+     library's WEP as needed.
+
+
+          Information on the Windows WEP Routine
+          --------------------------------------
+
+          The C run-time libraries that support DLLs for Windows (such
+          as SDLLCEW.LIB) contain both startup and termination code. The
+          termination code is contained within a routine named WEP.
+          Microsoft C/C++ automatically links this routine into DLLs
+          that are written for Windows.
+
+          Note that the run-time libraries with names containing NOCRT
+          (such as SNOCRTDW.LIB) do not have a WEP. These libraries are
+          for use when creating DLLs that do not use any C run-time
+          services or routines.
+
+          Using a WEP requires that you follow some important rules and
+          restrictions when building a DLL for Windows.
+
+          To make use of the WEP routine, it must remain resident in memory
+          as long as the associated DLL remains in memory. To ensure that it
+          does, you must include the following statements in the DLL's
+          definition file (DEF) file:
+
+                 SEGMENTS 'WEP_TEXT' FIXED PRELOAD
+
+                 EXPORTS
+                     WEP @1 RESIDENTNAME
+
+          The SEGMENTS declaration tells Windows to load the WEP_TEXT segment
+          into a fixed memory location as it loads the DLL into memory.
+          RESIDENTNAME tells Windows to keep the WEP name resident in memory
+          so that the WEP routine can always be called--even when there is
+          little available memory. The WEP's code is very small; making the
+          WEP_TEXT segment resident in memory should not adversely impact
+          Windows' performance.
+
+          If you use any of the run-time DLL libraries, such as SDLLCEW.LIB,
+          you must include information in the definition file.
+
+
+          Providing Your Own DLL Termination Routine
+          ------------------------------------------
+
+          You can, optionally, provide your own termination routine to
+          perform additional DLL termination processing. To do so, you must
+          write a routine that fits the following prototype; unlike the
+          Windows WEP routine, the name of your routine must begin with a
+          leading underscore:
+
+               int __far __pascal _WEP( int <parameter> );
+
+          The value returned by your _WEP routine, if any, is passed through
+          to Windows as if it were the Windows WEP termination value.
+          Normally, this should be 1 to signify success.
+
+          If you have an existing WEP routine, you can use it with Microsoft
+          C/C++ by adding a leading underscore (_) to the name. If a
+          procedure named _WEP exists at link time, the C run time will
+          automatically call it at DLL termination time.
+
+          Note that the _WEP routine must be compiled as extern "C" when
+          used in a C++ program:
+
+               extern "C" int __far __pascal _WEP( int <parameter> );
+
+          DLL termination code should avoid the following:
+
+             Deep stack usage
+               In some cases, DLL termination code can be called on a stack
+               that has insufficient space remaining. This stack overflow
+               produces unpredictable problems.
+
+             Operating system requests
+               Due to the potential for insufficient stack space, avoid calls
+               to the operating system.
+
+             File I/O
+               Files are owned by processes (executable files), not DLLs.
+               When DLL termination code is called, processes have already
+               stopped and files are already closed.
+
+               Note: This is the reason that the run-time library DLL
+                     termination code does not attempt to do a final flushall
+                     as it does in other environments.
+
+
+          General Notes
+          -------------
+
+          Most DLL termination problems occur due to memory constraints (for
+          example, insufficient memory to load the DLL initialization code or
+          to swap in DLL termination code). For cases in which memory
+          contention rarely occurs, DLLs will run even if you do not follow
+          the above restrictions.
+
+          The C run-time library WEP termination code is one of the startup
+          source files (WEP.ASM) so that sophisticated users can alter
+          it as needed.
+
+          Because the startup functionality previously provided by
+          LIBENTRY.OBJ (and LIBENTRY.ASM) is now provided by the standard
+          run-time libraries that support DLLs for Windows, do not link with
+          LIBENTRY.OBJ.
+
+          For more information on Windows DLL termination, refer to the
+          Windows Software Development Kit documentation.
+
+
+          Library Initialization Code in Windows DLLs
+          -------------------------------------------
+
+          Compiling a DLL with Microsoft C version 6.0 requires that the
+          first object module linked is LIBENTRY.OBJ, or the equivalent.
+          Microsoft C/C++ version 7.0 automatically provides the library
+          initialization code that used to be provided by LIBENTRY.OBJ. 
+          Makefiles used to build DLLs in version 6.0 must be changed to 
+          eliminate linking in LIBENTRY.OBJ. If you provide your own 
+          initialization ENTRY object. If you don't use the run-time 
+          library functions, you can still get the correct initialization 
+          code. Do this without the run-time library overhead by linking 
+          with a (x)NOCRTDW.LIB library, where x can be S, M, C, or L 
+          (small, medium, compact, or large model).
+
+
+===============< Part 6: New Function and Pragma Behavior >================
+
+
+     Using the Intrinsic Version of strlen
+     -------------------------------------
+
+     In certain rare cases, the intrinsic version of strlen(), when
+     used with a far pointer argument and global optimizations, may
+     improperly use register ax.  This may cause program failure.
+     If you observe this behavior, turn off global optimizations
+     or use the function version of strlen() by using:
+
+             #pragma function(strlen)
+
+     around the suspected code.
+
+
+     The check_pointer Pragma
+     ------------------------
+
+     In Microsoft C/C++ version 7.0, the check_pointer pragma works
+     function by function, not statement by statement. To use this
+     pragma, place a pair of check_pointer pragmas around any function
+     definition that contains pointer usage that you want to check:
+
+     #pragma check_pointer( on )
+     void myfunc( void )
+     {
+         /* code that contains a pointer */
+     }
+     #pragma check_pointer( off )
+
+
+     The data_seg Pragma
+     -------------------
+
+     Pragma data_seg behaves differently than described in Help.
+     According to Help's description, if a pragma data_seg is given,
+     then subsequent initialized variables are allocated in the named
+     segment specified by the pragma. However, in the case of an
+     initialized array of unspecified size, for example:
+
+          char foo[] = "string";
+
+     the array will not be allocated in the named segment. Instead, it
+     will be allocated in the default segment. This problem can be 
+     avoided by specifying the size of the array. For example, if the 
+     array of the previous example is rewritten as:
+
+          char foo[7] = "string";
+
+     the array will be allocated in the named segment.
+
+     The description also states that pragma data_seg does not affect
+     the allocation of uninitialized objects. This is true under -Za.
+     However, under -Ze the uninitialized objects also get allocated
+     in the segment specified by the data_seg pragma.
+
+
+===================< Part 7: Identifier Naming Issues >====================
+
+
+     Finding Local Static Variables in Browser Information
+     -----------------------------------------------------
+
+     A local static variable such as "LENGTH" appears in the Browser
+     Name list as "??LENGTH" or in a similar "decorated name" form.
+     This does not affect the variable's definition or references, but
+     does affect where you might search in the list for the variable's name.
+
+
+     Missing Symbol Names for enums
+     ------------------------------
+
+     If an enum name is missing from the Browser information for symbol
+     names, check the beginning of the list for an unnamed (blank) symbol.
+     To find the enum you want, check the definitions and references
+     for the blank symbol.
+
+
+     Long Identifier Names Create Problems for LIB.EXE
+     -------------------------------------------------
+
+     The Microsoft C/C++ version 7.0 compiler creates an internal version 
+     of each C++ name as a long string that contains information such as 
+     class, parameters, return type, and calling convention. These names 
+     are called "decorated" names. Because of decoration, a name that is 
+     less than 127 characters long in your source code can exceed 127 
+     characters as an internal name. A problem can occur when LIB builds 
+     a library from an object file that contains decorated names. Symbol 
+     names more than 127 characters long can cause LIB to hang. Microsoft 
+     is investigating this problem. For more information on decorated 
+     names, see Appendix B in the "Environment and Tools" manual. 
+
+
+===========< Part 8: Using the CodeView Debugger with MS C/C++ >===========
+
+
+     CodeView Runs in a Windows-Like Environment
+     -------------------------------------------
+
+     Setup adds the following statement to your SYSTEM.INI file:
+
+     DEVICE=CVW1.386
+
+     This statement is required for CodeView to run in a window.
+
+     Note: The window CodeView uses by default cannot be sized or moved
+     as can typical windows under the Windows 3.x environment. The window
+     can be positioned at startup using the following command-line options:
+
+     /x:x /y:y   - where x:x and y:y are x and y pixel locations
+
+     To run CodeView in its window-like environment on an 80386, these
+     additional files must be installed on the host computer. These
+     files cannot be used on an 80286 computer:
+
+     - CVW.EXE (single monitor CodeView)
+     - CVW1.386 (VxD for single monitor debugging)
+
+
+     CodeView Error When Debugging Programs Built with Class Libraries
+     -----------------------------------------------------------------
+
+     When you use CodeView to open an executable file that was built
+     using the Microsoft Class Libraries, CodeView displays a dialog
+     box that asks you to "Enter the directory for winmain.exe".
+     CodeView is actually looking for the location of the Class
+     Library's source files. By default, the Microsoft C/C++ Setup
+     program installs these sources in \C700\MFC\SRC.
+
+
+     Extended-Line Modes Enabled for CodeView Debugger
+     -------------------------------------------------
+
+     The CVW.EXE version of CodeView for Windows can be run in 25-, 43-,
+     or 50-line mode on a VGA monitor, and in 25- or 43-line mode on
+     an EGA monitor.
+
+     To display 43 or 50 lines on a screen, you must use the OEM fonts
+     supplied  with CodeView. There are two OEM font files: OEM08.FON
+     for 50-line mode, and OEM10 for 43-line mode. To use these fonts,
+     change the OEMFONTS.FON entry in your SYSTEM.INI file.  For example,
+     to use 50-line mode, change:
+
+     OEMFONTS.FON=VGAOEM.FON
+
+     to:
+
+     OEMFONTS.FON=C:\C700\BIN\OEM08.FON
+
+     Start CVW.EXE with the /43 or /50 switch to use the extended-line
+     modes.
+
+     Changing the fonts entries in your SYSTEM.INI file may not be necessary
+     for resolutions greater than 640x480.
+
+
+     Remote Debugging with CodeView
+     ------------------------------
+
+     The required files needed on the host and the remote debugging
+     machine are operating-system dependent.
+
+     For running CodeView under MS-DOS, the following files must be
+     installed on the MS-DOS host. These files are needed for all
+     execution models:
+
+     - CV.EXE (CodeView kernel)
+     - SHD1.DLL (symbol handler)
+     - EED1CXX.DLL or EED1CAN.DLL (C++ expression evaluator or ANSI C
+       expression evaluator. Only one is needed, but EED1CXX.DLL
+       is required for programming with C++.)
+
+     For remote debugging, you need to include these statements in the
+     [RCVCOM] section of your TOOLS.INI file:
+
+     parameters: com1:9600
+
+     or specify this at the command line:
+
+     RCVCOM [-p com1:4800] [-r] [-?]
+
+     where [ ] represents an optional parameter. See page 396 in the
+     "Environment and Tools" manual for a description of these parameters.
+
+     Remote debugging has three limitations:
+
+     - You must specify that the shell be exclusive.
+
+     - The recommended baud rate is 9600. If you experience any problems,
+       try decreasing the baud rate.
+
+     - The shell should be specified as full screen.
+
+     Specify these settings in a .PIF file or in a DOS session. Use the
+     Settings command to specify these settings in a DOS shell.
+
+     If you install a CodeView DLL in a directory other than where Setup
+     installs it, specify the path of the DLL with the appropriate entry
+     in your TOOLS.INI file. For example:
+
+     SYMBOLHANDLER:C:\CV4\SHD1.DLL
+
+     See also "Configuring CodeView with TOOLS.INI" on page 329, and
+     "Remote Debugging" on page 393, both in the "Environment and Tools"
+     manual.
+
+     The following four sections describe additional files you need for
+     specific hosts and targets.
+
+
+          DOS-Hosted, DOS-Targeted Debugging: Host Computer
+          -------------------------------------------------
+
+          If you are not doing remote debugging, these additional files
+          must be installed on the host computer for DOS-hosted,
+          DOS-targeted debugging:
+
+          - EMD1D1.DLL (DOS host/DOS target execution model)
+          - TLD1LOC.DLL (local transport layer)
+
+          If you are doing remote debugging, these additional files must
+          be installed on the host computer for DOS-hosted, DOS-targeted
+          debugging:
+
+          - EMD1D1.DLL (DOS host/DOS target execution model)
+          - TLD1COM.DLL (COM port transport layer)
+
+          To specify these transport options, use the TRANSPORT statement
+          in your TOOLS.INI file. The path must be specified:
+
+          TRANSPORT:C:\CV4\DLL\TLD1COM.DLL COM1:9600
+
+          If you do not specify COM#:baud_rate in the TRANSPORT statement,
+          CodeView prompts you for it.
+
+          You must also add the Native entry to your TOOLS.INI file giving
+          the execution model. The path is required:
+
+          NATIVE:C:\CV4\EMD1D1.DLL (for DOS host/DOS target execution model)
+
+
+          DOS-Hosted, DOS-Targeted Debugging: Target Computer
+          ---------------------------------------------------
+
+          If you are doing remote debugging, this file must be installed
+          on the target computer for DOS-hosted, DOS-targeted debugging:
+
+          - RCVCOM.EXE (remote CodeView for COM port)
+
+
+          DOS-Hosted, Windows-Targeted Debugging: Host Computer
+          -----------------------------------------------------
+
+          If you are doing remote debugging, these additional files must be
+          installed on the host computer for DOS-hosted, Windows-targeted
+          debugging:
+
+          - EMD1W0.DLL (DOS host/Windows target execution model)
+          - TLD1COM.DLL (COM port transport layer)
+
+
+          DOS-Hosted, Windows-Targeted Debugging: Target Computer
+          -------------------------------------------------------
+
+          If you are doing remote debugging, these additional files must be
+          installed on the target computer for DOS-hosted, Window-targeted
+          debugging:
+
+          - RCVWCOM.EXE (remote CodeView for COM port)
+          - DMW0.EXE (debug monitor on Windows target)
+          - TOOLHELP.DLL (Toolhelp)
+
+
+     Debugging Locally on an 80286
+     -----------------------------
+
+     To run CodeView under Windows and debug locally on an 80286 computer,
+     these files must be installed on the host computer:
+
+     - CVW4.EXE (CodeView kernel)
+     - EEW0CXX.DLL (C++ expression evaluator)
+     - EEW0CAN.DLL (ANSI C expression evaluator)
+     - SHW0.DLL (symbol handler)
+     - EMW0W0.DLL (Windows-Windows execution model)
+     - TLW0LOC.DLL (local transport layer)
+     - TOOLHELP.DLL (Toolhelp)
+
+
+     Running CodeView on an 80286 Computer
+     -------------------------------------
+
+     To run CVW on an 80286 computer, delete CVW.EXE and rename CVW4.EXE as
+     CVW.EXE. Local debugging on an 80286 computer with an EGA adapter
+     requires a secondary monitor. Single screen debugging is not supported.
+     Local debugging on an EGA requires CodeView to be invoked with the /2
+     command-line option.
+
+
+     Debugging P-Code
+     ----------------
+
+     To debug p-code, your TOOLS.INI file must contain one of these MODEL
+     statements. The path giving the location of these DLLs is required:
+    
+     MODEL:D:\path\NMD1PCD.DLL (native model for p-code under MS-DOS)
+    
+     MODEL:D:\path\NMW0PCD.DLL (native model for p-code under Windows)
+
+
+     CodeView's Access to Function Code in Libraries
+     -----------------------------------------------
+
+     The C/C++ CodeView debugger and linker do not guarantee that the
+     name of an .OBJ file is the same name the debugger or linker uses
+     to access the function code. To be certain of function access, use
+     the /f option when compiling. To avoid problems, do not put code in
+     include files. If you do put code into include files, specify the
+     function as inline.
+
+
+     Unloading DLLs When CodeView Terminates
+     ---------------------------------------
+
+     You may have applications that use the LoadLibrary function to load
+     DLLs to be used by the application. When CVW.EXE terminates or
+     restarts such applications, Windows terminates the application without
+     unloading DLLs or decrementing the DLL usage count. As a result, DLLs
+     still exist in the system. To unload DLLs, you must either exit
+     Windows and restart, or use a utility.
+
+
+     Removing CodeView 3.07 from SDK Program Manager Group
+     -----------------------------------------------------
+
+     You can safely remove CodeView 3.07 from your SDK Program Manager 
+     group to avoid confusion with the CodeView for Windows provided 
+     with MS C/C++.
+
+
+     Unsuccessful Connection to Remote Terminal
+     ------------------------------------------
+
+     A remote monitor may appear to hang (the screen clears except for 
+     the CodeView sign-on banner) when connecting to it from a host that 
+     is running the debug kernel. In order to resolve this situation, 
+     retry the connection when the debug kernel is not running on the 
+     host computer.
+
+
+     Running Screen Saver Programs While Debugging
+     ---------------------------------------------
+
+     Do not run screen savers such as Idlewild or AfterDark while
+     debugging, as their interactions with Windows can cause problems
+     when debugging.
+
+
+     DOS Session Running in a Window Does Not Have Mouse Support
+     -----------------------------------------------------------
+
+     Running CodeView with the /2 option in a DOS session window does
+     not have mouse support. If you want mouse support, change the
+     DOS session to full screen.
+
+
+     Application I/O When Debugging Can Cause Screen Corruption
+     ----------------------------------------------------------
+
+     If an application executes an I/O operation when the Flip/Swap
+     option is OFF, the screen may be corrupted.
+
+
+     Recovering From "Internal Debugger Error"
+     -----------------------------------------
+
+     If CodeView generates an "Internal debugger error," restart your
+     system.
+
+
+     Debugging Applications That Use a Mouse
+     ---------------------------------------
+
+     If you are using CV.EXE in a Windows DOS session, and if you are
+     debugging an application that uses or alters the mouse, you must
+     specify the CodeView /M option to disable the mouse. This option is
+     necessary because the DPMI services provided by Windows 3.x in
+     enhanced mode do not allow for saving and restoring the mouse state
+     correctly.
+
+
+     Debugging Basic or FORTRAN in the Windows Environment
+     -----------------------------------------------------
+
+     Because CodeView for Windows version 4 does not have an
+     expression evaluator for Basic or FORTRAN, use CodeView for
+     Windows version 3 to debug code in these languages. From the
+     Command window, choose the Use command.
+
+
+     Setting the Scope of the Show Address Option in CodeView
+     --------------------------------------------------------
+
+     The printed documentation and Help incorrectly list the
+     syntax for setting the scope of the Show Address option in
+     the CodeView Command window (OL) as:
+
+          OL[<scope>]
+
+     instead of:
+
+          OL[[<scope>][+|-]].
+
+     The + and - switches can be used to turn other options on or
+     off, but will cause a syntax error if used to modify the scope
+     of the Show Address option.
+
+     Several options for the OL command can be chosen at the same time.
+     Each time you use the OL command, the scopes you specify will be
+     turned on and the scopes you don't specify will be turned off.
+     The OL command does not toggle the scopes. For example, the command:
+
+          ollfg
+
+     turns on lexical, function, and global scope while it turns off module
+     and executable scope.
+
+
+     Disable the Minimize On Use Option When Debugging
+     -------------------------------------------------
+
+     Running an application in CodeView for Windows can disable
+     mouse and keyboard control if the Minimize On Use option
+     is set in the Windows Program Manager.  This behavior occurs
+     if you run an application using F5, restart from the Run
+     menu, and begin to debug the application. If you experience
+     this problem, use CTRL+ALT+SysRq to stop the application,
+     issue the WKA command from within Codeview for Windows, and
+     choose Exit from the File menu to return to Windows.
+
+===========================================================================
+
+
+     Microsoft, MS, MS-DOS, and CodeView are registered trademarks, and
+     Windows is a trademark of Microsoft Corporation.
+
+     386-Max is a trademark of Qualitas, Inc.
+
+     Bernoulli Box is a trademark of Iomega Corporation.
+
+     Norton Utilities is a registered trademark of Peter Norton Computing.
+
+     SuperStor is a trademark and Addstor is a registered trademark of
+     Addstor, Inc.
+
+     NOTE: Microsoft improves its languages documentation at the time of
+     reprinting, so some of the information in this file may already be
+     included in your manuals.

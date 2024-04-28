@@ -1,0 +1,91 @@
+// speakn.rc : Defines the resources for the SpeakN application.
+//
+// This is a part of the Microsoft Foundation Classes C++ library.
+// Copyright (C) 1992 Microsoft Corporation
+// All rights reserved.
+//
+// This source code is only intended as a supplement to the
+// Microsoft Foundation Classes Reference and Microsoft
+// QuickHelp documentation provided with the library.
+// See these sources for detailed information regarding the
+// Microsoft Foundation Classes product.
+//
+
+#include "speakn.h"
+
+AFX_IDI_STD_FRAME   ICON    speakn.ico
+
+/////////////////////////////////////////////////////////////////////////////
+// Dialog Template for main window
+
+MAINDIALOG DIALOG 90, 9, 144, 188
+STYLE WS_CAPTION | WS_SYSMENU
+CAPTION "Speak 'n Pen - Word Game"
+FONT 10, "MS Sans Serif"
+BEGIN
+    LTEXT           "What is this ?", IDC_PROMPT_TEXT, 3, 10, 99, 19
+    CONTROL         "replay", IDC_REPLAY_SOUND, "Button", BS_OWNERDRAW | 
+                    WS_TABSTOP, 117, 3, 22, 13
+    CONTROL         "", IDC_PICTURE, "Button", BS_OWNERDRAW, 0, 32, 144, 100
+    CONTROL         "ALC<2>", IDC_INPUT_EDIT, "bedit", 
+                    ES_LEFT | ES_UPPERCASE | WS_TABSTOP, 0, 132, 144, 23
+    PUSHBUTTON      "GiveUp", IDC_GIVE_UP, 4, 169, 40, 14
+    ICON            IDI_FACE_NEUTRAL, IDC_STATUS_FACE, 66, 166, 16, 16
+    DEFPUSHBUTTON   "Guess", IDOK, 99, 169, 40, 14
+END
+
+/////////////////////////////////////////////////////////////////////////////
+// Extra resources for user interface
+
+// Happy face icons
+IDI_FACE_NEUTRAL    icon        face01.ico
+IDI_FACE_HAPPY      icon        face02.ico
+IDI_FACE_HAPPIER    icon        face03.ico
+IDI_FACE_SAD        icon        face04.ico
+
+// Bitmap buttons
+replayU             bitmap      replayU.bmp     ; button up
+replayD             bitmap      replayD.bmp     ; button down
+replayF             bitmap      replayF.bmp     ; button focused
+
+// Intro picture
+intro               bitmap      intro.dib
+
+// standard sounds
+IDSOUND_WELCOME     sound       welcome.wav
+IDSOUND_QUESTION    sound       question.wav
+IDSOUND_CORRECT     sound       correct.wav
+IDSOUND_INCORRECT   sound       incorrec.wav
+IDSOUND_GIVEUP      sound       giveup.wav
+IDSOUND_GOODBYE     sound       goodbye.wav
+
+// Lesson data
+
+SAMPLE1 lesson PRELOAD
+BEGIN
+	// list of target words
+	"DOG\0",
+	"PIG\0",
+	"FROG\0",
+	"TRAIN\0",
+	0 ; end of data
+END
+
+; DOG
+DOG                 bitmap      dog.dib
+DOG                 sound       dog.wav
+
+; PIG
+PIG                 bitmap      pig.dib
+PIG                 sound       pig.wav
+
+; FROG
+FROG                bitmap      frog.dib
+FROG                sound       frog.wav
+
+; TRAIN
+TRAIN               bitmap      train.dib
+TRAIN               sound       train.wav
+
+
+/////////////////////////////////////////////////////////////////////////////

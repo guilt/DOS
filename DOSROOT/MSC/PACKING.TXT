@@ -1,0 +1,1012 @@
+	Packing List for Microsoft C/C++ Version 7.0 
+	Copyright (C) Microsoft Corp. 1986, 1992. All rights reserved.
+
+
+
+DISK 1 : Disk1: Setup
+
+ Files                        Description
+ -----                        -----------
+
+ANSWERS.TXT                   Questions and Answers for Microsoft C/C++ 7.0
+
+bin\CV.ICO                    MS-DOS CodeView Icon
+bin\MPC.EXE                   Make P-code utility 
+bin\MSD.EXE                   Diagnostics utility 
+bin\MSD.TXT                   Documentation for diagnostics utility
+bin\PWB.EXE                   MS-DOS Programmer's Workbench
+bin\PWB.ICO                   Icon for PWB
+bin\PWB.PIF                   PIF file for PWB
+bin\PWBC.MXT                  C Extension for PWB
+bin\PWBHELP.MXT               Help Extension for PWB
+bin\PWBUTILS.MXT              Utilities for MS-DOS PWB
+bin\QH.ICO                    QuickHelp Icon
+
+bin\video\ATIVESA.BAT         ATI VESA driver
+bin\video\EVRXVESA.COM        Everex VESA driver
+bin\video\MSHERC.COM          Hercules driver
+bin\video\V7VESA.COM          Video 7 VESA driver
+bin\video\VVESA.COM           ATI VESA driver
+bin\video\WDVESA.EXE          Paradise VESA driver
+
+bin\VMB.386                   Windows Spawn Driver
+bin\WX.EXE                    Windows Spawner
+bin\WXSRVR.EXE                Windows Spawn Server
+
+CSETUP.EXE                    MS-DOS Setup Component
+CSETUP.INF                    MS-DOS Setup program information file
+DETAILS.TXT                   Detailed information about topics in README.TXT
+DETCMD.DLL                    Windows Setup DLL
+ERRATA1.TXT                   Documentation Changes for Microsoft C/C++ 7.0
+ERRATA2.TXT                   Documentation Changes for Microsoft C/C++ 7.0
+LIBW.EXE                      Library Manager (Windows Hosted)
+PACKING.TXT                   This listing of files for Microsoft C/C++ 7.0 
+README.TXT                    New Information for Microsoft C/C++ 7.0
+SETUP.EXE                     Boot Setup program -- installs Microsoft C/C++ 7.0
+VER.DLL                       Windows Setup DLL
+WSETUP.EXE                    Windows Setup Component
+WSETUP.HLP                    WinHelp for Windows Setup Component
+WSETUP.INF                    Windows Setup program information file
+
+
+DISK 2 : Disk2: Utilities
+
+ Files                        Description
+ -----                        -----------
+
+bin\BSCMAKE.EXE               Browser Database Maintenance Utility
+bin\BSCMAKEV.EXE              Browser Database Maintenance Utility (for VM)
+bin\CL.EXE                    MS-DOS compiler driver
+bin\EED1CAN.DLL               Expression evaluator for MS-DOS  ANSI C
+bin\EED1CXX.DLL               Expression evaluator for MS-DOS  C++
+bin\EMD1D1.DLL                Execution model for MS-DOS  to MS-DOS
+bin\EMD1W0.DLL                MS-DOS to WIN3 Execution Model
+bin\EXEHDR.EXE                File Header Utility
+bin\EXP.EXE                   File Expunge Utility
+bin\IMPLIB.EXE                Import Library Manager
+bin\LIB.EXE                   Library Manager
+bin\LINK.EXE                  Segmented Executable Linker
+bin\NMD1PCD.DLL               MS-DOS Non-Native PCode Execution Model
+bin\PWBBASIC.MXT              BASIC Extension for PWB
+bin\PWBFORT.MXT               FORTRAN Extension for PWB
+bin\PWBMASM.MXT               MASM Extension for PWB
+bin\PWBRMAKE.EXE              Browser Database Maintenance Utility (calls BSCMAKE)
+bin\PWBROWSE.MXT              Browser Extension for PWB
+bin\QH.EXE                    QuickHelp Utility
+bin\RCVCOM.EXE                MS-DOS Serial Debug Monitor
+bin\RM.EXE                    File Removal Utility
+bin\SBRPACK.EXE               Browser Information Compactor
+bin\SHD1.DLL                  Symbol handler for MS-DOS
+bin\TLD1COM.DLL               MS-DOS Serial Transport Layer
+bin\TLD1LOC.DLL               Local transport layer for MS-DOS
+bin\UNDEL.EXE                 File Undelete Utility
+
+help\PWB.HLP                  Help for PWB
+
+
+DISK 3 : Disk3: C and C++ Compiler
+
+ Files                        Description
+ -----                        -----------
+
+bin\C1.ERR                    Error messages for MS-DOS compiler pass 1
+bin\C13216.EXE                MS-DOS compiler - pass 1
+bin\C1XX3216.EXE              MS-DOS C++ compiler - pass 1
+bin\C23.ERR                   Error messages for MS-DOS compiler passes 2 and 3
+bin\C23216.EXE                MS-DOS compiler - pass 2
+bin\C23PCD.EXE                PCode pass 2
+bin\C33216.EXE                MS-DOS compiler - pass 3
+bin\CL.DEF                    Default .DEF file used by Linker
+bin\CL.ERR                    Error messages for MS-DOS CL.EXE
+bin\CL.MSG                    Message file for MS-DOS CL.EXE
+bin\Q23.EXE                   MS-DOS Quick compiler
+
+lib\CLIBCQ.LIB                Windows 3.x qwin C library- compact model
+lib\CLIBCR.LIB                MS-DOS run-time library (compact model)
+lib\CLIBCW.LIB                Windows 3.x exe libs- compact model
+lib\CLIBFA.LIB                Alternate math library (compact model)
+lib\CLIBFAW.LIB               Windows 3.x alternate math library- compact model
+lib\CLIBFP.LIB                Floating-point library (compact model)
+lib\CLIBFPW.LIB               Windows 3.x em/87 math library- compact model
+lib\CNOCRTDW.LIB              Windows 3.x DLL nocrt library- compact model
+lib\CNOCRTW.LIB               Windows 3.x exe nocrt library-compact model
+lib\NOQWIN.LIB                Windows 3.x non-quickwin library
+lib\QWIN.LIB                  Windows 3.x quickwin library
+lib\SLIBCQ.LIB                Windows 3.x qwin C library - small model
+lib\SLIBCW.LIB                Windows 3.x exe libs - small model
+lib\SLIBFAW.LIB               Windows 3.x alternate math library- small model
+lib\SNOCRTDW.LIB              Windows 3.x DLL nocrt library- small model
+lib\SNOCRTW.LIB               Windows 3.x exe nocrt library-small model
+
+
+DISK 4 : Disk4: Help Files - I
+
+ Files                        Description
+ -----                        -----------
+
+help\CLANG.HLP                Help for C Language
+help\CV.HLP                   Help for CV.EXE
+help\MFC.HLP                  Help for MFC
+
+
+DISK 5 : Disk5: Library Files
+
+ Files                        Description
+ -----                        -----------
+
+lib\87.LIB                    Floating-point library for math coprocessor
+lib\BINMODE.OBJ               Changes default I/O from text to binary
+lib\CDLLCW.LIB                Windows 3.x dll libs- compact model
+lib\CDLLCXXW.LIB              Windows 3.x C++ DLL libs- compact model
+lib\CLIBCXX.LIB               C++ IOStream Library--compact model
+lib\COMMODE.OBJ               Sets global files commit mode to commit
+lib\COURB.FON                 Font for Graphics Library
+lib\CP437.OBJ                 Alternate code page for graphics library fonts
+lib\CRTCOM.LIB                MS-DOS run-time  Library 
+lib\EM.LIB                    Floating-point library for emulator
+lib\EXTHDR.OBJ                PWB Extension object module
+lib\EXTSUP.LIB                PWB Extension supplemental library
+lib\FILEINFO.OBJ              Allows child programs to inherit files
+lib\GRAPHICS.LIB              Graphics library
+lib\HELVB.FON                 Font for Graphics Library
+lib\LDLLCW.LIB                Windows 3.x dll libs- large model
+lib\LDLLCXXW.LIB              Windows 3.x C++ DLL libs- large model
+lib\LIBH.LIB                  Model independent routines library
+lib\LLIBCQ.LIB                Windows 3.x qwin C library- large model
+lib\LLIBCR.LIB                MS-DOS run-time library (large model)
+lib\LLIBCW.LIB                Windows 3.x exe libs- large model
+lib\LLIBCXX.LIB               C++ IOStream Library--large model
+lib\LLIBFA.LIB                Alternate math library (large model)
+lib\LLIBFAW.LIB               Windows 3.x alternate math library- large model
+lib\LLIBFP.LIB                Floating-point library (large model)
+lib\LLIBFPW.LIB               Windows 3.x em/87 math library- large model
+lib\LNOCRTDW.LIB              Windows 3.x DLL nocrt library- large model
+lib\LNOCRTW.LIB               Windows 3.x exe nocrt library-large model
+lib\LSEEKCHK.OBJ              Error checking lseek()
+lib\MDLLCW.LIB                Windows 3.x dll libs- medium model
+lib\MDLLCXXW.LIB              Windows 3.x C++ DLL libs- medium model
+lib\MGRAPHFA.LIB              Graphics alternate fp - medium/large
+lib\MGRAPHFP.LIB              Graphics emulator fp - medium/large
+lib\MLIBCQ.LIB                Windows 3.x qwin C library- medium model
+lib\MLIBCR.LIB                MS-DOS run-time library (medium model)
+lib\MLIBCW.LIB                Windows 3.x exe libs- medium model
+lib\MLIBCXX.LIB               C++ IOStream Library--medium model
+lib\MLIBFA.LIB                Alternate math library (medium model)
+lib\MLIBFAW.LIB               Windows 3.x alternate math library- medium model
+lib\MLIBFP.LIB                Floating-point library (medium model)
+lib\MLIBFPW.LIB               Windows 3.x em/87 math library- medium model
+lib\MNOCRTDW.LIB              Windows 3.x DLL nocrt library- medium model
+lib\MNOCRTW.LIB               Windows 3.x exe nocrt library-medium model
+lib\MODERN.FON                Font for Graphics Library
+lib\MOVE.LIB                  MOVE library
+lib\MOVETR.LIB                MOVE library (with TRACE.EXE support)
+lib\OLDNAMES.LIB              Allows pre-ANSI names for source compatibility
+lib\PCD.LIB                   Pcode interpreter
+lib\PCDM.LIB                  Pcode DLL support library
+lib\PGCHART.LIB               Graphics charting package
+lib\ROMAN.FON                 Font for Graphics Library
+lib\SCRIPT.FON                Font for Graphics Library
+lib\SDLLCXXW.LIB              Windows 3.x C++ DLL libs- small model
+lib\SETARGV.OBJ               Expands wildcards in command-line arguments
+lib\SGRAPHFA.LIB              Graphics alternate fp - small/compact
+lib\SGRAPHFP.LIB              Graphics emulator fp - small/compact
+lib\SLIBCR.LIB                MS-DOS run-time library (small model)
+lib\SLIBCXX.LIB               C++ IOStream Library--small model
+lib\SLIBFA.LIB                Alternate math library (small model)
+lib\SLIBFP.LIB                Floating-point library (small model)
+lib\SLIBFPW.LIB               Windows 3.x em/87 math library- small model
+lib\TMSRB.FON                 Font for Graphics Library
+lib\TXTONLY.OBJ               Allows graphics calls to be stubbed out
+lib\VARSTCK.OBJ               Allows heap and stack to compete for space
+lib\VM.LIB                    MS-DOS Virtual Memory kernel
+
+
+DISK 6 : Disk6: Codeview
+
+ Files                        Description
+ -----                        -----------
+
+bin\CV.EXE                    MS-DOS CodeView debugger for MS-DOS
+bin\CVPACK.EXE                Debugging Information Compactor
+bin\CVW.EXE                   CodeView for Windows - Single Monitor
+bin\CVW1.386                  CodeView for Windows Driver
+bin\CVW4.EXE                  CodeView for Windows
+bin\DMW0.DLL                  Debugging Monitor
+bin\EEW0CAN.DLL               Windows expression evaluator for ANSI C
+bin\EEW0CXX.DLL               Windows C++ expression evaluator
+bin\NMW0PCD.DLL               WIN3 Non-Native PCode Execution Model
+bin\OEM08.FON                 Font
+bin\OEM10.FON                 Font
+bin\QWIN.HLP                  Windows QuickWin Help
+bin\RCVWCOM.EXE               Windows serial remote debugging monitor
+bin\SHW0.DLL                  Windows hosted symbol handler
+bin\TLW0LOC.DLL               Windows local transport layer
+bin\VMCPD.386                 MS-DOSX32 DPMI support driver
+bin\VPFD.386                  MS-DOSX32 DPMI support driver
+
+help\CL.HLP                   Help for CL.EXE
+help\IOSTREAM.HLP             Help for IOstream Libraries
+help\PCODE.HLP                Help for PCode
+help\QH.HLP                   Help for QuickHelp
+help\UTILS.HLP                Help for Miscellaneous Utilities
+
+
+DISK 7 : Disk7: Microsoft Foundation Classes - I
+
+ Files                        Description
+ -----                        -----------
+
+bin\EMM386.EXE                Expanded memory manager
+bin\EMW0W0.DLL                Windows to windows execution model
+bin\HELPMAKE.EXE              Help File Maintenance Utility
+bin\HIMEM.SYS                 Extended memory manager
+bin\ILINK.EXE                 Incremental Linker
+bin\MOUSE.COM                 Mouse driver
+bin\MS32EM87.DLL              MS-DOSX32 FP emulator dll
+bin\MS32KRNL.DLL              MS-DOSX32 kernel
+bin\NMAKE.EXE                 Program Maintenance Utility 
+bin\RAMDRIVE.SYS              Virtual RAM disk drive
+bin\SMARTDRV.EXE              Disk cache
+bin\TRACE.EXE                 MOVE Trace Utility
+
+help\LINK.HLP                 Help for LINK.EXE and run-time errors
+
+lib\SDLLCW.LIB                Windows 3.x dll libs- small model
+
+mfc\doc\readme.txt            overview of tech notes
+mfc\doc\tn001.txt             tech note on class registration
+mfc\doc\tn002.txt             tech note on persistent objects
+mfc\doc\tn003.txt             tech note on handle maps
+mfc\doc\tn004.txt             tech note on templates
+mfc\doc\tn005.txt             tech note on MDI
+mfc\doc\tn006.txt             tech note on message maps
+mfc\doc\tn007.txt             tech note on Windows debugging aids
+mfc\doc\tn008.txt             tech note on Foundation OLE support
+mfc\doc\tn009.txt             tech note on writing an OLE client with MFC
+mfc\doc\tn010.txt             tech note on writing an OLE server with MFC
+mfc\doc\tn011.txt             tech note on writing a DLL with MFC
+mfc\doc\tn012.txt             tech note on MFC/Win 3.1 robustness features
+mfc\doc\tn013.txt             tech note on COMMDLG.DLL
+mfc\doc\tn014.txt             tech note on MFC custom control features
+mfc\doc\tn015.txt             tech note on MFC support of Pen for Windows
+mfc\doc\tn016.txt             tech note on use of multiple inheritance in MFC
+
+mfc\include\afx.h             base mfc classes
+mfc\include\afx.inl           inline functions for base
+mfc\include\afxcoll.h         collections
+mfc\include\afxdlgs.h         COMMDLG classes
+mfc\include\afxmsg.h          implementation for message maps
+mfc\include\afxole.h          OLE support classes
+mfc\include\afxoleui.h        OLE user interface classes
+mfc\include\afxoleui.rc       OLE user interface resource definitions
+mfc\include\afxpen.h          Pen Windows classes
+mfc\include\afxres.h          windows resource ids
+mfc\include\afxwin.h          windows mfc classes
+mfc\include\afxwin.inl        inline functions for windows
+
+mfc\README.TXT                Introduction to the MFC library
+
+mfc\samples\about2\about2.cpp  About2 sample from Petzold
+mfc\samples\about2\about2.def  About2 sample from Petzold
+mfc\samples\about2\about2.dlg  About2 sample from Petzold
+mfc\samples\about2\about2.h   About2 sample from Petzold
+mfc\samples\about2\about2.ico  About2 sample from Petzold
+mfc\samples\about2\about2.mak  About2 sample from Petzold
+mfc\samples\about2\about2.rc  About2 sample from Petzold
+mfc\samples\about2\about2.sts  About2 sample from Petzold
+mfc\samples\about2\makefile   About2 sample from Petzold
+mfc\samples\about2\readme.txt  About2 sample from Petzold
+mfc\samples\about2\resource.h  About2 sample from Petzold
+
+mfc\samples\chart\about.dlg   Charting sample application
+mfc\samples\chart\chart.cpp   Charting sample application
+mfc\samples\chart\chart.def   Charting sample application
+mfc\samples\chart\chart.h     Charting sample application
+mfc\samples\chart\chart.ico   Charting sample application
+mfc\samples\chart\chart.mak   Charting sample application
+mfc\samples\chart\chart.rc    Charting sample application
+mfc\samples\chart\chart.sts   Charting sample application
+mfc\samples\chart\chartdlg.cpp  Charting sample application
+mfc\samples\chart\chartdlg.h  Charting sample application
+mfc\samples\chart\chartwnd.cpp  Charting sample application
+mfc\samples\chart\chartwnd.h  Charting sample application
+mfc\samples\chart\chfile.cpp  Charting sample application
+mfc\samples\chart\dobject.cpp  Charting sample application
+mfc\samples\chart\dobject.h   Charting sample application
+mfc\samples\chart\entry.dlg   Charting sample application
+mfc\samples\chart\makefile    Charting sample application
+mfc\samples\chart\resource.h  Charting sample application
+
+mfc\samples\dlltrace\hello1.cpp  DLL sample and application
+mfc\samples\dlltrace\hello1.def  DLL sample and application
+mfc\samples\dlltrace\hello1.ico  DLL sample and application
+mfc\samples\dlltrace\hello1.mak  DLL sample and application
+mfc\samples\dlltrace\hello1.rc  DLL sample and application
+mfc\samples\dlltrace\hello1.sts  DLL sample and application
+mfc\samples\dlltrace\makefile  DLL sample and application
+mfc\samples\dlltrace\resource.h  DLL sample and application
+mfc\samples\dlltrace\traceapi.h  DLL sample and application
+mfc\samples\dlltrace\tracer.cpp  DLL sample and application
+mfc\samples\dlltrace\tracer.def  DLL sample and application
+mfc\samples\dlltrace\tracer.mak  DLL sample and application
+mfc\samples\dlltrace\tracer.rc  DLL sample and application
+mfc\samples\dlltrace\tracer.sts  DLL sample and application
+
+mfc\samples\hello\hello.cpp   Hello/Generic application
+mfc\samples\hello\hello.def   Hello/Generic application
+mfc\samples\hello\hello.dlg   Hello/Generic application
+mfc\samples\hello\hello.h     Hello/Generic application
+mfc\samples\hello\hello.ico   Hello/Generic application
+mfc\samples\hello\hello.mak   Hello/Generic application
+mfc\samples\hello\hello.rc    Hello/Generic application
+mfc\samples\hello\hello.sts   Hello/Generic application
+mfc\samples\hello\makefile    Hello/Generic application
+mfc\samples\hello\readme.txt  Hello/Generic application
+mfc\samples\hello\resource.h  Hello/Generic application
+
+mfc\samples\helloapp\helloapp.cpp  World's smallest MFC app
+mfc\samples\helloapp\helloapp.def  World's smallest MFC app
+mfc\samples\helloapp\helloapp.mak  World's smallest MFC app
+mfc\samples\helloapp\helloapp.sts  World's smallest MFC app
+mfc\samples\helloapp\makefile  World's smallest MFC app
+
+mfc\samples\mdi\about.dlg     Bounce/Hello MDI app
+mfc\samples\mdi\bounce.cpp    Bounce/Hello MDI app
+mfc\samples\mdi\bounce.h      Bounce/Hello MDI app
+mfc\samples\mdi\common.h      Bounce/Hello MDI app
+mfc\samples\mdi\hello.cpp     Bounce/Hello MDI app
+mfc\samples\mdi\hello.h       Bounce/Hello MDI app
+mfc\samples\mdi\hello.ico     Bounce/Hello MDI app
+mfc\samples\mdi\makefile      Bounce/Hello MDI app
+mfc\samples\mdi\mdi.cpp       Bounce/Hello MDI app
+mfc\samples\mdi\mdi.def       Bounce/Hello MDI app
+mfc\samples\mdi\mdi.h         Bounce/Hello MDI app
+mfc\samples\mdi\mdi.ico       Bounce/Hello MDI app
+mfc\samples\mdi\mdi.mak       Bounce/Hello MDI app
+mfc\samples\mdi\mdi.rc        Bounce/Hello MDI app
+mfc\samples\mdi\mdi.sts       Bounce/Hello MDI app
+mfc\samples\mdi\resource.h    Bounce/Hello MDI app
+
+mfc\samples\minmdi\about.dlg  World's smallest MDI app
+mfc\samples\minmdi\child.ico  World's smallest MDI app
+mfc\samples\minmdi\frame.ico  World's smallest MDI app
+mfc\samples\minmdi\makefile   World's smallest MDI app
+mfc\samples\minmdi\minmdi.cpp  World's smallest MDI app
+mfc\samples\minmdi\minmdi.def  World's smallest MDI app
+mfc\samples\minmdi\minmdi.h   World's smallest MDI app
+mfc\samples\minmdi\minmdi.mak  World's smallest MDI app
+mfc\samples\minmdi\minmdi.rc  World's smallest MDI app
+mfc\samples\minmdi\minmdi.sts  World's smallest MDI app
+mfc\samples\minmdi\resource.h  World's smallest MDI app
+
+mfc\samples\multipad\bar.cpp  Multipad sample app
+mfc\samples\multipad\bar.h    Multipad sample app
+mfc\samples\multipad\makefile  Multipad sample app
+mfc\samples\multipad\menu.h   Multipad sample app
+mfc\samples\multipad\mpfile.cpp  Multipad sample app
+mfc\samples\multipad\mpfind.cpp  Multipad sample app
+mfc\samples\multipad\mpinit.cpp  Multipad sample app
+mfc\samples\multipad\mpmain.cpp  Multipad sample app
+mfc\samples\multipad\mpprint.cpp  Multipad sample app
+mfc\samples\multipad\multipad.def  Multipad sample app
+mfc\samples\multipad\multipad.dlg  Multipad sample app
+mfc\samples\multipad\multipad.h  Multipad sample app
+mfc\samples\multipad\multipad.ico  Multipad sample app
+mfc\samples\multipad\multipad.mak  Multipad sample app
+mfc\samples\multipad\multipad.rc  Multipad sample app
+mfc\samples\multipad\multipad.sts  Multipad sample app
+mfc\samples\multipad\notepad.ico  Multipad sample app
+mfc\samples\multipad\resource.h  Multipad sample app
+
+mfc\samples\oclient\fileio.cpp  OLE client sample app
+mfc\samples\oclient\itemwnd.cpp  OLE client sample app
+mfc\samples\oclient\itemwnd.h  OLE client sample app
+mfc\samples\oclient\mainwnd.cpp  OLE client sample app
+mfc\samples\oclient\mainwnd.h  OLE client sample app
+mfc\samples\oclient\makefile  OLE client sample app
+mfc\samples\oclient\oclient.cpp  OLE client sample app
+mfc\samples\oclient\oclient.def  OLE client sample app
+mfc\samples\oclient\oclient.h  OLE client sample app
+mfc\samples\oclient\oclient.ico  OLE client sample app
+mfc\samples\oclient\oclient.mak  OLE client sample app
+mfc\samples\oclient\oclient.rc  OLE client sample app
+mfc\samples\oclient\oclient.sts  OLE client sample app
+mfc\samples\oclient\resource.h  OLE client sample app
+
+mfc\samples\oserver\about.dlg  OLE server sample app
+mfc\samples\oserver\bibdoc.cpp  OLE server sample app
+mfc\samples\oserver\bibdoc.h  OLE server sample app
+mfc\samples\oserver\bibitem.cpp  OLE server sample app
+mfc\samples\oserver\bibitem.h  OLE server sample app
+mfc\samples\oserver\bibref.cpp  OLE server sample app
+mfc\samples\oserver\bibref.def  OLE server sample app
+mfc\samples\oserver\bibref.h  OLE server sample app
+mfc\samples\oserver\bibref.ico  OLE server sample app
+mfc\samples\oserver\bibref.mak  OLE server sample app
+mfc\samples\oserver\bibref.rc  OLE server sample app
+mfc\samples\oserver\bibref.reg  OLE server sample app
+mfc\samples\oserver\bibref.sts  OLE server sample app
+mfc\samples\oserver\bibsvr.cpp  OLE server sample app
+mfc\samples\oserver\bibsvr.h  OLE server sample app
+mfc\samples\oserver\item.dlg  OLE server sample app
+mfc\samples\oserver\mainwnd.cpp  OLE server sample app
+mfc\samples\oserver\mainwnd.h  OLE server sample app
+mfc\samples\oserver\makefile  OLE server sample app
+mfc\samples\oserver\resource.h  OLE server sample app
+
+mfc\samples\readme.txt        explanation of the MFC Samples 
+
+mfc\samples\showfont\about.dlg  Showfont sample app
+mfc\samples\showfont\cfont.cpp  Showfont sample app
+mfc\samples\showfont\cfont.dlg  Showfont sample app
+mfc\samples\showfont\dialogs.cpp  Showfont sample app
+mfc\samples\showfont\drawing.cpp  Showfont sample app
+mfc\samples\showfont\mainwnd.cpp  Showfont sample app
+mfc\samples\showfont\mainwnd.h  Showfont sample app
+mfc\samples\showfont\makefile  Showfont sample app
+mfc\samples\showfont\resource.h  Showfont sample app
+mfc\samples\showfont\showfont.cpp  Showfont sample app
+mfc\samples\showfont\showfont.def  Showfont sample app
+mfc\samples\showfont\showfont.h  Showfont sample app
+mfc\samples\showfont\showfont.ico  Showfont sample app
+mfc\samples\showfont\showfont.mak  Showfont sample app
+mfc\samples\showfont\showfont.rc  Showfont sample app
+mfc\samples\showfont\showfont.sts  Showfont sample app
+
+mfc\samples\templdef\afxcoll.htt  template for afxcoll.h
+mfc\samples\templdef\array.ctt  MFC array template
+mfc\samples\templdef\list.ctt  MFC list template
+mfc\samples\templdef\makefile  makefile to build template tool
+mfc\samples\templdef\map.ctt  MFC map template
+mfc\samples\templdef\map_s.ctt  MFC string map template
+mfc\samples\templdef\mkcoll.bat  batch file to build templates
+mfc\samples\templdef\readme.txt  instructions
+mfc\samples\templdef\templdef.cpp  source for template tool
+mfc\samples\templdef\templdef.mak  source for template tool
+mfc\samples\templdef\templdef.sts  source for template tool
+
+mfc\samples\testclnt\clipbd.cpp  MFC OLE Test Client Sample
+mfc\samples\testclnt\defs.h   MFC OLE Test Client Sample
+mfc\samples\testclnt\error.cpp  MFC OLE Test Client Sample
+mfc\samples\testclnt\makefile  MFC OLE Test Client Sample
+mfc\samples\testclnt\newclnt.cpp  MFC OLE Test Client Sample
+mfc\samples\testclnt\newclnt.h  MFC OLE Test Client Sample
+mfc\samples\testclnt\newdoc.cpp  MFC OLE Test Client Sample
+mfc\samples\testclnt\newdoc.h  MFC OLE Test Client Sample
+mfc\samples\testclnt\readme.txt  MFC OLE Test Client Sample
+mfc\samples\testclnt\resource.h  MFC OLE Test Client Sample
+mfc\samples\testclnt\tcfile.cpp  MFC OLE Test Client Sample
+mfc\samples\testclnt\tcobject.cpp  MFC OLE Test Client Sample
+mfc\samples\testclnt\testclnt.cpp  MFC OLE Test Client Sample
+mfc\samples\testclnt\testclnt.def  MFC OLE Test Client Sample
+mfc\samples\testclnt\testclnt.h  MFC OLE Test Client Sample
+mfc\samples\testclnt\testclnt.ico  MFC OLE Test Client Sample
+mfc\samples\testclnt\testclnt.mak  MFC OLE Test Client Sample
+mfc\samples\testclnt\testclnt.rc  MFC OLE Test Client Sample
+mfc\samples\testclnt\testclnt.sts  MFC OLE Test Client Sample
+mfc\samples\testclnt\tests.cpp  MFC OLE Test Client Sample
+
+mfc\samples\testserv\clipbd.cpp  MFC OLE Test Server Sample
+mfc\samples\testserv\defs.h   MFC OLE Test Server Sample
+mfc\samples\testserv\error.cpp  MFC OLE Test Server Sample
+mfc\samples\testserv\makefile  MFC OLE Test Server Sample
+mfc\samples\testserv\newserv.cpp  MFC OLE Test Server Sample
+mfc\samples\testserv\newserv.h  MFC OLE Test Server Sample
+mfc\samples\testserv\readme.txt  MFC OLE Test Server Sample
+mfc\samples\testserv\resource.h  MFC OLE Test Server Sample
+mfc\samples\testserv\servdoc.cpp  MFC OLE Test Server Sample
+mfc\samples\testserv\servdoc.h  MFC OLE Test Server Sample
+mfc\samples\testserv\tests.cpp  MFC OLE Test Server Sample
+mfc\samples\testserv\testserv.cpp  MFC OLE Test Server Sample
+mfc\samples\testserv\testserv.def  MFC OLE Test Server Sample
+mfc\samples\testserv\testserv.h  MFC OLE Test Server Sample
+mfc\samples\testserv\testserv.ico  MFC OLE Test Server Sample
+mfc\samples\testserv\testserv.mak  MFC OLE Test Server Sample
+mfc\samples\testserv\testserv.rc  MFC OLE Test Server Sample
+mfc\samples\testserv\testserv.reg  MFC OLE Test Server Sample
+mfc\samples\testserv\testserv.sts  MFC OLE Test Server Sample
+mfc\samples\testserv\tsfile.cpp  MFC OLE Test Server Sample
+mfc\samples\testserv\tsobject.cpp  MFC OLE Test Server Sample
+mfc\samples\testserv\tsobject.h  MFC OLE Test Server Sample
+
+mfc\samples\tracer\makefile   MFC Diagnostic Trace Control Sample
+mfc\samples\tracer\tracer.cpp  MFC Diagnostic Trace Control Sample
+mfc\samples\tracer\tracer.def  MFC Diagnostic Trace Control Sample
+mfc\samples\tracer\tracer.ico  MFC Diagnostic Trace Control Sample
+mfc\samples\tracer\tracer.mak  MFC Diagnostic Trace Control Sample
+mfc\samples\tracer\tracer.rc  MFC Diagnostic Trace Control Sample
+mfc\samples\tracer\tracer.sts  MFC Diagnostic Trace Control Sample
+
+mfc\samples\tutorial\char\readme.txt  tutorial samples applications
+
+mfc\samples\tutorial\cmdbook  tutorial samples applications
+mfc\samples\tutorial\cmdbook.cpp  tutorial samples applications
+mfc\samples\tutorial\cmdbook.mak  tutorial samples applications
+mfc\samples\tutorial\cmdbook.sts  tutorial samples applications
+mfc\samples\tutorial\database.cpp  tutorial samples applications
+mfc\samples\tutorial\database.h  tutorial samples applications
+mfc\samples\tutorial\dmtest   tutorial samples applications
+mfc\samples\tutorial\dmtest.cpp  tutorial samples applications
+mfc\samples\tutorial\dmtest.mak  tutorial samples applications
+mfc\samples\tutorial\dmtest.sts  tutorial samples applications
+mfc\samples\tutorial\person.cpp  tutorial samples applications
+mfc\samples\tutorial\person.h  tutorial samples applications
+mfc\samples\tutorial\phbook   tutorial samples applications
+mfc\samples\tutorial\phbook.def  tutorial samples applications
+mfc\samples\tutorial\phbook.dlg  tutorial samples applications
+mfc\samples\tutorial\phbook.ico  tutorial samples applications
+mfc\samples\tutorial\phbook.mak  tutorial samples applications
+mfc\samples\tutorial\phbook.rc  tutorial samples applications
+mfc\samples\tutorial\phbook.sts  tutorial samples applications
+mfc\samples\tutorial\readme.txt  tutorial samples applications
+mfc\samples\tutorial\resource.h  tutorial samples applications
+mfc\samples\tutorial\view.cpp  tutorial samples applications
+mfc\samples\tutorial\view.h   tutorial samples applications
+
+mfc\samples\tutorial\win\readme.txt  tutorial samples applications
+
+mfc\src\abort.cpp             MFC source code file
+mfc\src\afx.ini               .ini file: controls Windows diagnostic trace options
+mfc\src\archive.cpp           MFC source code file
+mfc\src\archivex.cpp          MFC source code file
+mfc\src\array_b.cpp           MFC source code file
+mfc\src\array_d.cpp           MFC source code file
+mfc\src\array_o.cpp           MFC source code file
+mfc\src\array_p.cpp           MFC source code file
+mfc\src\array_s.cpp           MFC source code file
+mfc\src\array_w.cpp           MFC source code file
+mfc\src\assert.cpp            MFC source code file
+mfc\src\dosio_.h              MFC source code file
+mfc\src\dumpcont.cpp          MFC source code file
+mfc\src\dumpinit.cpp          MFC source code file
+mfc\src\elements.h            MFC source code file
+mfc\src\except.cpp            MFC source code file
+mfc\src\file.cpp              MFC source code file
+mfc\src\filemem.cpp           MFC source code file
+mfc\src\filetxt.cpp           MFC source code file
+mfc\src\filex.cpp             MFC source code file
+mfc\src\list_o.cpp            MFC source code file
+mfc\src\list_p.cpp            MFC source code file
+mfc\src\list_s.cpp            MFC source code file
+mfc\src\makefile              nmake makefile to build all libraries
+mfc\src\map_pp.cpp            MFC source code file
+mfc\src\map_pw.cpp            MFC source code file
+mfc\src\map_so.cpp            MFC source code file
+mfc\src\map_sp.cpp            MFC source code file
+mfc\src\map_ss.cpp            MFC source code file
+mfc\src\map_wo.cpp            MFC source code file
+mfc\src\map_wp.cpp            MFC source code file
+mfc\src\memory.cpp            MFC source code file
+mfc\src\object.cpp            MFC source code file
+mfc\src\olecli.cpp            MFC source code file
+mfc\src\olefile.cpp           MFC source code file
+mfc\src\olemisc.cpp           MFC source code file
+mfc\src\oleptr_.h             MFC source code file
+mfc\src\olesvr.cpp            MFC source code file
+mfc\src\oleui.cpp             MFC source code file
+mfc\src\oleui2.cpp            MFC source code file
+mfc\src\penctrl.cpp           MFC source code file
+mfc\src\plex.cpp              MFC source code file
+mfc\src\plex.h                MFC source code file
+mfc\src\readme.txt            how to build the libraries
+mfc\src\string.cpp            MFC source code file
+mfc\src\stringex.cpp          MFC source code file
+mfc\src\time.cpp              MFC source code file
+mfc\src\trace.cpp             MFC source code file
+mfc\src\trace_.h              MFC source code file
+mfc\src\tracedat.h            MFC source code file
+mfc\src\validadd.cpp          MFC source code file
+mfc\src\version.cpp           MFC source code file
+mfc\src\winapp.cpp            MFC source code file
+mfc\src\winbtn.cpp            MFC source code file
+mfc\src\winctrl.cpp           MFC source code file
+mfc\src\windlgs.cpp           MFC source code file
+mfc\src\window.cpp            MFC source code file
+mfc\src\window_.h             MFC source code file
+mfc\src\wingdi.cpp            MFC source code file
+mfc\src\winhand_.h            MFC source code file
+mfc\src\winmain.cpp           MFC source code file
+mfc\src\winmdi.cpp            MFC source code file
+mfc\src\winmenu.cpp           MFC source code file
+mfc\src\winstr.cpp            MFC source code file
+
+source\move\MOVEAPI.H         MOVE API include file
+source\move\MOVEAPI.TXT       Additional documentation for MOVE
+source\move\MOVEINIT.C        MOVE startup source file
+
+source\startup\_FILE.C        OS Independent startup source file
+source\startup\CHKSTK.ASM     OS Independent startup source file
+source\startup\CHKSUM.ASM     OS Independent startup source file
+source\startup\CMACROS.INC    OS Independent startup source file
+source\startup\CMSGS.INC      OS Independent startup source file
+source\startup\CRT0FP.ASM     OS Independent startup source file
+source\startup\CSTARTUP.BAT   Build batchfile for startup sources
+source\startup\CSUB.BAT       Subroutine file for cstartup.bat
+source\startup\DEFSEGS.INC    OS Independent startup source file
+
+source\startup\dos\CRT0.ASM   MS-DOS specific startup source file
+source\startup\dos\CRT0DAT.ASM  MS-DOS specific startup source file
+source\startup\dos\CRT0MSG.ASM  MS-DOS specific startup source file
+source\startup\dos\EXECMSG.ASM  MS-DOS specific startup source file
+source\startup\dos\NMSGHDR.ASM  MS-DOS specific startup source file
+source\startup\dos\NULBODY.LNK  MS-DOS specific startup source file
+source\startup\dos\STDALLOC.ASM  MS-DOS specific startup source file
+source\startup\dos\STDARGV.ASM  MS-DOS specific startup source file
+source\startup\dos\STDENVP.ASM  MS-DOS specific startup source file
+
+source\startup\FCNTL.INC      OS Independent startup source file
+source\startup\FILE.ASM       OS Independent startup source file
+source\startup\FILE2.H        OS Independent startup source file
+source\startup\FMSGHDR.ASM    OS Independent startup source file
+source\startup\HEAP.INC       OS Independent startup source file
+source\startup\INTERNAL.H     OS Independent startup source file
+source\startup\MAKEFILE.DOS   Makefile for MS-DOS Startup
+source\startup\MAKEFILE.WIN   Makefile for Windows Startup
+source\startup\MSDOS.H        OS Independent startup source file
+source\startup\MSDOS.INC      OS Independent startup source file
+source\startup\NULBODY.C      OS Independent startup source file
+source\startup\RCHKSTK.ASM    OS Independent startup source file
+source\startup\README.TXT     Startup build instructions
+source\startup\REGISTER.H     OS Independent startup source file
+source\startup\RTERR.INC      OS Independent startup source file
+source\startup\SETARGV.ASM    OS Independent startup source file
+source\startup\STDIO.INC      OS Independent startup source file
+source\startup\STDLIB.INC     OS Independent startup source file
+source\startup\VERSION.INC    OS Independent startup source file
+source\startup\WILD.C         OS Independent startup source file
+
+source\startup\win\CRT0.ASM   Windows specific startup source file
+source\startup\win\FATAL.ASM  Windows specific startup source file
+source\startup\win\NOQWIN.ASM  Windows specific startup source file
+source\startup\win\NULBODY.DEF  Windows specific startup source file
+source\startup\win\NULBODY.LNK  Windows specific startup source file
+source\startup\win\QWCINIT.ASM  Windows specific startup source file
+source\startup\win\STUBMAIN.ASM  Windows specific startup source file
+source\startup\win\STUBWEP.ASM  Windows specific startup source file
+source\startup\win\WCHKSTK.ASM  Windows specific startup source file
+source\startup\win\WEP.ASM    Windows specific startup source file
+source\startup\win\WFILE.ASM  Windows specific startup source file
+source\startup\win\WINDGRP.ASM  Windows specific startup source file
+source\startup\win\WINDGRPX.C  Windows specific startup source file
+source\startup\win\WNULL.ASM  Windows specific startup source file
+
+source\startup\WINDLL.MKF     Makefile for Windows DLL startup
+source\startup\WINEXE.MKF     Makefile for Windows EXE startup
+
+
+DISK 8 : Disk8: Microsoft Foundation Classes - II
+
+ Files                        Description
+ -----                        -----------
+
+mfc\lib\lafxdwd.lib           MFC Large Windows Debug DLL Support
+mfc\lib\mafxcrd.lib           MFC Medium MS-DOS Debug
+mfc\lib\mafxcw.lib            MFC Medium Windows Retail
+mfc\lib\mafxcwd.lib           MFC Medium Windows Debug
+mfc\lib\readme.txt            Information file for MFC Libraries
+mfc\lib\safxcw.lib            MFC Small Windows Retail
+mfc\lib\safxcwd.lib           MFC Small Windows Debug
+
+
+DISK 9 : Disk9: Microsoft Foundation Classes - III
+
+ Files                        Description
+ -----                        -----------
+
+help\ADVISOR.HLP              Help for Advisor
+
+include\ASSERT.H              Include file
+include\BIOS.H                Include file
+include\CONIO.H               Include file
+include\CTYPE.H               Include file
+include\DIRECT.H              Include file
+include\DOS.H                 Include file
+include\ERRNO.H               Include file
+include\EXT.H                 PWB Extension header file
+include\FCNTL.H               Include file
+include\FGRAPH.FD             FORTRAN Graphics include file
+include\FGRAPH.FI             FORTRAN Graphics include file
+include\FLOAT.H               Include file
+include\FSTREAM.H             C++ IOStream include file
+include\GRAPH.H               Graphics include file
+include\IO.H                  Include file
+include\IOMANIP.H             C++ IOStream include file
+include\IOS.H                 C++ IOStream include file
+include\IOSTREAM.H            C++ IOStream include file
+include\ISTREAM.H             C++ IOStream include file
+include\LIMITS.H              Include file
+include\LOCALE.H              Include file
+include\MALLOC.H              Include file
+include\MATH.H                Include file
+include\MEMORY.H              Include file
+include\NEW.H                 C++ IOStream include file
+include\OSTREAM.H             C++ IOStream include file
+include\PGCHART.H             Pgchart routines header
+include\PROCESS.H             Include file
+include\READCHAR.H            PWB extension include file for ReadChar
+include\SEARCH.H              Include file
+include\SETJMP.H              Include file
+include\SHARE.H               Include file
+include\SIGNAL.H              Include file
+include\STDARG.H              Include file
+include\STDDEF.H              Include file
+include\STDIO.H               Include file
+include\STDIOSTR.H            C++ IOStream include file
+include\STDLIB.H              Include file
+include\STREAMB.H             C++ IOStream include file
+include\STRING.H              Include file
+include\STRSTREA.H            C++ IOStream include file
+
+include\sys\LOCKING.H         System include file
+include\sys\STAT.H            Stat() and fstat() structure include file
+include\sys\TIMEB.H           Ftime() include file
+include\sys\TYPES.H           File and time information include file
+include\sys\UTIME.H           Utime() include file
+
+include\TIME.H                Include file
+include\VARARGS.H             Include file
+include\VMEMORY.H             Include file
+
+init\SAMPLE.INI               PWB TOOLS.INI Samples
+init\TOOLS.PRE                Sample TOOLS.INI file
+
+mfc\lib\mafxcr.lib            MFC Medium MS-DOS Retail
+
+mfc\samples\ctrltest\bbutton.cpp  Custom Control sample
+mfc\samples\ctrltest\bmtest1.dlg  Custom Control sample
+mfc\samples\ctrltest\bmtest2.dlg  Custom Control sample
+mfc\samples\ctrltest\canceld.bmp  Custom Control sample
+mfc\samples\ctrltest\cancelf.bmp  Custom Control sample
+mfc\samples\ctrltest\cancelu.bmp  Custom Control sample
+mfc\samples\ctrltest\ctrltest.cpp  Custom Control sample
+mfc\samples\ctrltest\ctrltest.def  Custom Control sample
+mfc\samples\ctrltest\ctrltest.h  Custom Control sample
+mfc\samples\ctrltest\ctrltest.ico  Custom Control sample
+mfc\samples\ctrltest\ctrltest.mak  Custom Control sample
+mfc\samples\ctrltest\ctrltest.rc  Custom Control sample
+mfc\samples\ctrltest\ctrltest.sts  Custom Control sample
+mfc\samples\ctrltest\custlist.cpp  Custom Control sample
+mfc\samples\ctrltest\custlist.dlg  Custom Control sample
+mfc\samples\ctrltest\custmenu.cpp  Custom Control sample
+mfc\samples\ctrltest\derpen.cpp  Custom Control sample
+mfc\samples\ctrltest\dertest.cpp  Custom Control sample
+mfc\samples\ctrltest\dertest.dlg  Custom Control sample
+mfc\samples\ctrltest\dlgpen.cpp  Custom Control sample
+mfc\samples\ctrltest\dlgpen.dlg  Custom Control sample
+mfc\samples\ctrltest\featpen.cpp  Custom Control sample
+mfc\samples\ctrltest\featpen.dlg  Custom Control sample
+mfc\samples\ctrltest\image1d.bmp  Custom Control sample
+mfc\samples\ctrltest\image1f.bmp  Custom Control sample
+mfc\samples\ctrltest\image1u.bmp  Custom Control sample
+mfc\samples\ctrltest\image2d.bmp  Custom Control sample
+mfc\samples\ctrltest\image2f.bmp  Custom Control sample
+mfc\samples\ctrltest\image2u.bmp  Custom Control sample
+mfc\samples\ctrltest\makefile  Custom Control sample
+mfc\samples\ctrltest\muscroll.dll  Custom Control sample
+mfc\samples\ctrltest\muscroll.h  Custom Control sample
+mfc\samples\ctrltest\okd.bmp  Custom Control sample
+mfc\samples\ctrltest\okf.bmp  Custom Control sample
+mfc\samples\ctrltest\oku.bmp  Custom Control sample
+mfc\samples\ctrltest\paredit.cpp  Custom Control sample
+mfc\samples\ctrltest\paredit.h  Custom Control sample
+mfc\samples\ctrltest\paredit2.cpp  Custom Control sample
+mfc\samples\ctrltest\spin.cpp  Custom Control sample
+mfc\samples\ctrltest\spin.h   Custom Control sample
+mfc\samples\ctrltest\spintest.cpp  Custom Control sample
+mfc\samples\ctrltest\spintest.dlg  Custom Control sample
+mfc\samples\ctrltest\subtest.cpp  Custom Control sample
+mfc\samples\ctrltest\subtest.dlg  Custom Control sample
+mfc\samples\ctrltest\wclstest.cpp  Custom Control sample
+mfc\samples\ctrltest\wclstest.dlg  Custom Control sample
+
+mfc\samples\fileview\fileview.cpp  Text file viewer application
+mfc\samples\fileview\fileview.def  Text file viewer application
+mfc\samples\fileview\fileview.dlg  Text file viewer application
+mfc\samples\fileview\fileview.h  Text file viewer application
+mfc\samples\fileview\fileview.ico  Text file viewer application
+mfc\samples\fileview\fileview.mak  Text file viewer application
+mfc\samples\fileview\fileview.rc  Text file viewer application
+mfc\samples\fileview\fileview.sts  Text file viewer application
+mfc\samples\fileview\linefile.cpp  Text file viewer application
+mfc\samples\fileview\makefile  Text file viewer application
+mfc\samples\fileview\resource.h  Text file viewer application
+
+mfc\samples\minsvr\about.dlg  Minimal OLE Server
+mfc\samples\minsvr\change.dlg  Minimal OLE Server
+mfc\samples\minsvr\mainwnd.cpp  Minimal OLE Server
+mfc\samples\minsvr\makefile   Minimal OLE Server
+mfc\samples\minsvr\mindoc.cpp  Minimal OLE Server
+mfc\samples\minsvr\minitem.cpp  Minimal OLE Server
+mfc\samples\minsvr\minsvr.cpp  Minimal OLE Server
+mfc\samples\minsvr\minsvr.def  Minimal OLE Server
+mfc\samples\minsvr\minsvr.h   Minimal OLE Server
+mfc\samples\minsvr\minsvr.ico  Minimal OLE Server
+mfc\samples\minsvr\minsvr.mak  Minimal OLE Server
+mfc\samples\minsvr\minsvr.rc  Minimal OLE Server
+mfc\samples\minsvr\minsvr.reg  Minimal OLE Server
+mfc\samples\minsvr\minsvr.sts  Minimal OLE Server
+mfc\samples\minsvr\resource.h  Minimal OLE Server
+
+mfc\samples\minsvrmi\about.dlg  Minimal OLE Server/MI
+mfc\samples\minsvrmi\change.dlg  Minimal OLE Server/MI
+mfc\samples\minsvrmi\mainwnd.cpp  Minimal OLE Server/MI
+mfc\samples\minsvrmi\makefile  Minimal OLE Server/MI
+mfc\samples\minsvrmi\minsvrmi.cpp  Minimal OLE Server/MI
+mfc\samples\minsvrmi\minsvrmi.def  Minimal OLE Server/MI
+mfc\samples\minsvrmi\minsvrmi.h  Minimal OLE Server/MI
+mfc\samples\minsvrmi\minsvrmi.ico  Minimal OLE Server/MI
+mfc\samples\minsvrmi\minsvrmi.mak  Minimal OLE Server/MI
+mfc\samples\minsvrmi\minsvrmi.rc  Minimal OLE Server/MI
+mfc\samples\minsvrmi\minsvrmi.reg  Minimal OLE Server/MI
+mfc\samples\minsvrmi\minsvrmi.sts  Minimal OLE Server/MI
+mfc\samples\minsvrmi\resource.h  Minimal OLE Server/MI
+
+mfc\samples\restool\dlgres.h  Restool app
+mfc\samples\restool\makefile  Restool app
+mfc\samples\restool\restool.cpp  Restool app
+mfc\samples\restool\restool.mak  Restool app
+mfc\samples\restool\restool.sts  Restool app
+
+mfc\samples\speakn\correct.wav  Multimedia/Pen Speech Sample
+mfc\samples\speakn\dog.dib    Multimedia/Pen Speech Sample
+mfc\samples\speakn\dog.wav    Multimedia/Pen Speech Sample
+mfc\samples\speakn\face01.ico  Multimedia/Pen Speech Sample
+mfc\samples\speakn\face02.ico  Multimedia/Pen Speech Sample
+mfc\samples\speakn\face03.ico  Multimedia/Pen Speech Sample
+mfc\samples\speakn\face04.ico  Multimedia/Pen Speech Sample
+mfc\samples\speakn\frog.dib   Multimedia/Pen Speech Sample
+mfc\samples\speakn\frog.wav   Multimedia/Pen Speech Sample
+mfc\samples\speakn\giveup.wav  Multimedia/Pen Speech Sample
+mfc\samples\speakn\goodbye.wav  Multimedia/Pen Speech Sample
+mfc\samples\speakn\incorrec.wav  Multimedia/Pen Speech Sample
+mfc\samples\speakn\intro.dib  Multimedia/Pen Speech Sample
+mfc\samples\speakn\makefile   Multimedia/Pen Speech Sample
+mfc\samples\speakn\pig.dib    Multimedia/Pen Speech Sample
+mfc\samples\speakn\pig.wav    Multimedia/Pen Speech Sample
+mfc\samples\speakn\question.wav  Multimedia/Pen Speech Sample
+mfc\samples\speakn\replayd.bmp  Multimedia/Pen Speech Sample
+mfc\samples\speakn\replayf.bmp  Multimedia/Pen Speech Sample
+mfc\samples\speakn\replayu.bmp  Multimedia/Pen Speech Sample
+mfc\samples\speakn\speakn.cpp  Multimedia/Pen Speech Sample
+mfc\samples\speakn\speakn.def  Multimedia/Pen Speech Sample
+mfc\samples\speakn\speakn.h   Multimedia/Pen Speech Sample
+mfc\samples\speakn\speakn.ico  Multimedia/Pen Speech Sample
+mfc\samples\speakn\speakn.mak  Multimedia/Pen Speech Sample
+mfc\samples\speakn\speakn.rc  Multimedia/Pen Speech Sample
+mfc\samples\speakn\speakn.sts  Multimedia/Pen Speech Sample
+mfc\samples\speakn\train.dib  Multimedia/Pen Speech Sample
+mfc\samples\speakn\train.wav  Multimedia/Pen Speech Sample
+mfc\samples\speakn\welcome.wav  Multimedia/Pen Speech Sample
+
+samples\cpptutor\CONST.CPP    Tutorial Sample
+samples\cpptutor\DATE.CPP     Tutorial Sample
+samples\cpptutor\DATE.H       Tutorial Sample
+samples\cpptutor\DEFARG.CPP   Tutorial Sample
+samples\cpptutor\DEMO.CPP     Tutorial Sample
+samples\cpptutor\EMPLIST.CPP  Tutorial Sample
+samples\cpptutor\EMPLOYEE.CPP  Tutorial Sample
+samples\cpptutor\EMPLOYEE.H   Tutorial Sample
+samples\cpptutor\ENUM.CPP     Tutorial Sample
+samples\cpptutor\FRAC1.CPP    Tutorial Sample
+samples\cpptutor\FRAC1.H      Tutorial Sample
+samples\cpptutor\FRAC2.CPP    Tutorial Sample
+samples\cpptutor\FRAC2.H      Tutorial Sample
+samples\cpptutor\HANDLER.CPP  Tutorial Sample
+samples\cpptutor\INLINE.CPP   Tutorial Sample
+samples\cpptutor\INTARRAY.CPP  Tutorial Sample
+samples\cpptutor\INTARRAY.H   Tutorial Sample
+samples\cpptutor\LINKAGE.CPP  Tutorial Sample
+samples\cpptutor\NEWDEL.CPP   Tutorial Sample
+samples\cpptutor\NEWDEL2.CPP  Tutorial Sample
+samples\cpptutor\NEWDEL3.CPP  Tutorial Sample
+samples\cpptutor\NEWDEL4.CPP  Tutorial Sample
+
+samples\cpptutor\ood\EVENT.CPP  Tutorial Sample
+samples\cpptutor\ood\EVENT.H  Tutorial Sample
+samples\cpptutor\ood\INTERACT.CPP  Tutorial Sample
+samples\cpptutor\ood\INTERACT.H  Tutorial Sample
+samples\cpptutor\ood\LIFEWIN.CPP  Tutorial Sample
+samples\cpptutor\ood\LIFEWIN.H  Tutorial Sample
+samples\cpptutor\ood\LIST.CPP  Tutorial Sample
+samples\cpptutor\ood\LIST.H   Tutorial Sample
+samples\cpptutor\ood\MISC.CPP  Tutorial Sample
+samples\cpptutor\ood\MISC.H   Tutorial Sample
+samples\cpptutor\ood\OODEMO.CPP  Tutorial Sample
+samples\cpptutor\ood\OODEMO.MAK  Tutorial Sample
+samples\cpptutor\ood\OODEMO.STS  Tutorial Sample
+samples\cpptutor\ood\OODEMO.TXT  Tutorial Sample
+samples\cpptutor\ood\PRIM.CPP  Tutorial Sample
+samples\cpptutor\ood\PRIM.H   Tutorial Sample
+samples\cpptutor\ood\TEXTWIN.CPP  Tutorial Sample
+samples\cpptutor\ood\TEXTWIN.H  Tutorial Sample
+samples\cpptutor\ood\WINMGR.CPP  Tutorial Sample
+samples\cpptutor\ood\WINMGR.H  Tutorial Sample
+
+samples\cpptutor\OVERLOAD.CPP  Tutorial Sample
+samples\cpptutor\PERSINFO.CPP  Tutorial Sample
+samples\cpptutor\PERSINFO.H   Tutorial Sample
+samples\cpptutor\PHONLIST.CPP  Tutorial Sample
+samples\cpptutor\PHONLIST.H   Tutorial Sample
+samples\cpptutor\REFADDR.CPP  Tutorial Sample
+samples\cpptutor\REFDEMO.CPP  Tutorial Sample
+samples\cpptutor\REFPARM.CPP  Tutorial Sample
+samples\cpptutor\SAVINGS.CPP  Tutorial Sample
+samples\cpptutor\SAVINGS.H    Tutorial Sample
+samples\cpptutor\SCOPERES.CPP  Tutorial Sample
+samples\cpptutor\STRNG.CPP    Tutorial Sample
+samples\cpptutor\STRNG.H      Tutorial Sample
+samples\cpptutor\VARDECL.CPP  Tutorial Sample
+
+samples\graphics\CHRTDEMO.C   Graphics Demo
+samples\graphics\CHRTDEMO.H   Graphics Demo
+samples\graphics\CHRTDEMO.MAK  Graphics Demo
+samples\graphics\CHRTDEMO.STS  Graphics Demo
+samples\graphics\CHRTOPT.C    Graphics Demo
+samples\graphics\CHRTSUPT.C   Graphics Demo
+samples\graphics\GRDEMO.C     Graphics Demo
+samples\graphics\GRDEMO.MAK   Graphics Demo
+samples\graphics\GRDEMO.STS   Graphics Demo
+samples\graphics\MENU.C       Graphics Demo
+samples\graphics\MENU.H       Graphics Demo
+samples\graphics\MOUSE.C      Graphics Demo
+samples\graphics\MOUSE.H      Graphics Demo
+samples\graphics\TURTLE.C     Graphics Demo
+samples\graphics\TURTLE.H     Graphics Demo
+
+samples\iostutor\EXIOS101.CPP  Iostream Demo
+samples\iostutor\EXIOS102.CPP  Iostream Demo
+samples\iostutor\EXIOS103.CPP  Iostream Demo
+samples\iostutor\EXIOS104.CPP  Iostream Demo
+samples\iostutor\EXIOS105.CPP  Iostream Demo
+samples\iostutor\EXIOS106.CPP  Iostream Demo
+samples\iostutor\EXIOS107.CPP  Iostream Demo
+samples\iostutor\EXIOS108.CPP  Iostream Demo
+samples\iostutor\EXIOS109.CPP  Iostream Demo
+samples\iostutor\EXIOS110.CPP  Iostream Demo
+samples\iostutor\EXIOS111.CPP  Iostream Demo
+samples\iostutor\EXIOS112.CPP  Iostream Demo
+samples\iostutor\EXIOS113.CPP  Iostream Demo
+samples\iostutor\EXIOS114.CPP  Iostream Demo
+samples\iostutor\EXIOS115.CPP  Iostream Demo
+samples\iostutor\EXIOS116.CPP  Iostream Demo
+samples\iostutor\EXIOS117.CPP  Iostream Demo
+samples\iostutor\EXIOS118.CPP  Iostream Demo
+samples\iostutor\EXIOS119.CPP  Iostream Demo
+samples\iostutor\EXIOS120.CPP  Iostream Demo
+samples\iostutor\EXIOS121.CPP  Iostream Demo
+samples\iostutor\EXIOS122.CPP  Iostream Demo
+samples\iostutor\EXIOS201.CPP  Iostream Demo
+samples\iostutor\EXIOS202.CPP  Iostream Demo
+samples\iostutor\EXIOS203.CPP  Iostream Demo
+samples\iostutor\EXIOS204.CPP  Iostream Demo
+samples\iostutor\EXIOS204.MAK  Iostream Demo Makefile
+samples\iostutor\EXIOS204.STS  Iostream Demo Status File
+samples\iostutor\HSTREAM.CPP  Iostream Demo
+samples\iostutor\HSTREAM.H    Iostream Demo
+samples\iostutor\PAYROLL      Iostream Demo
+samples\iostutor\README.TXT   Iostream Demo
+
+samples\pwbexten\BASE.C       PWB extension outline (uncommented)
+samples\pwbexten\DISKMENU.C   Sample PWB extension
+samples\pwbexten\FILTER.C     Sample PWB extension
+samples\pwbexten\INDENT.C     Sample PWB extension
+samples\pwbexten\ISEARCH.C    Sample PWB extension
+samples\pwbexten\SKEL.C       PWB extension outline (uncommented)
+samples\pwbexten\TEXT.C       Sample PWB extension
+samples\pwbexten\TWOKEY.C     Sample PWB extension
+samples\pwbexten\UREPEAT.C    Sample PWB extension
+
+samples\pwbtutor\ANNUITY1.C   PWB Tutorial single-module example (w/errors)
+samples\pwbtutor\ANNUITY2.C   PWB Tutorial single-module example
+samples\pwbtutor\CNT.MAK      Sample non-PWB makefile
+samples\pwbtutor\COUNT.C      PWB Tutorial multimodule example
+samples\pwbtutor\COUNT.H      PWB Tutorial multimodule example
+samples\pwbtutor\COUNTBUF.C   PWB Tutorial multimodule example
+samples\pwbtutor\COUNTCH.C    PWB Tutorial multimodule example
+samples\pwbtutor\EXTRA.TXT    PWB Tutorial multimodule example
+
+samples\SAMPLES.TXT           Samples Document
+
+samples\sortdemo\SORTDEMO.C   Sort Demo
+samples\sortdemo\SORTDEMO.MAK  Sort Demo
+samples\sortdemo\SORTDEMO.STS  Sort Demo

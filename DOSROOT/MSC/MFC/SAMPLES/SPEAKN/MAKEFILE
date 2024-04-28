@@ -1,0 +1,45 @@
+# Makefile : Builds the SpeakN application
+#
+# Usage:     NMAKE option (build SpeakN)
+#    or:     NMAKE clean  (erase all compiled files)
+#
+# option:    DEBUG=[0|1]  (DEBUG not defined is equivalent to DEBUG=0)
+
+# This is a part of the Microsoft Foundation Classes C++ library.
+# Copyright (C) 1992 Microsoft Corporation
+# All rights reserved.
+#
+# This source code is only intended as a supplement to the
+# Microsoft Foundation Classes Reference and Microsoft
+# QuickHelp documentation provided with the library.
+# See these sources for detailed information regarding the
+# Microsoft Foundation Classes product.
+#
+
+
+# Win 3.1 only (MultiMedia and Pen aware)
+CPPFLAGS= /AM /Zp /GA /GEs /G2
+LINKFLAGS=/NOD /ONERROR:NOEXE /ALIGN:16
+
+!if "$(DEBUG)"=="1"
+CPPFLAGS=/D_DEBUG $(CPPFLAGS) /Od /f /Zi /W4
+LINKFLAGS=$(LINKFLAGS) /COD
+LIBS=mafxcwd libw mlibcew mmsystem
+!else
+CPPFLAGS=$(CPPFLAGS) /Oselg /Gs /W3
+LINKFLAGS=$(LINKFLAGS)
+LIBS=mafxcw libw mlibcew mmsystem
+!endif
+
+
+speakn.exe:    speakn.obj speakn.def speakn.res
+		link $(LINKFLAGS) speakn, speakn, NUL, $(LIBS), speakn.def;
+		rc -31 /t speakn.res
+
+speakn.res: speakn.rc *.ico *.bmp *.wav
+speakn.obj: speakn.h
+
+clean:
+		-erase speakn.exe
+		-erase speakn.res
+		-erase speakn.obj

@@ -1,0 +1,32 @@
+REGEDIT
+
+/////////////////////////////////////////////////////////////////////////////
+// Registry initialization file
+
+// This is a part of the Microsoft Foundation Classes C++ library.
+// Copyright (C) 1992 Microsoft Corporation
+// All rights reserved.
+//
+// This source code is only intended as a supplement to the
+// Microsoft Foundation Classes Reference and Microsoft
+// QuickHelp documentation provided with the library.
+// See these sources for detailed information regarding the
+// Microsoft Foundation Classes product.
+
+
+// TestServ is the OLE Class name
+// AFX OLE Test Server is the human readable name
+
+HKEY_CLASSES_ROOT\TestServ = AFX OLE Test Server
+
+// the absolute path name of the OLE server's .EXE file
+HKEY_CLASSES_ROOT\TestServ\protocol\StdFileEditing\server = C:\C700\MFC\SAMPLES\TESTSERV\TESTSERV.EXE
+
+// Verbs for this object type
+HKEY_CLASSES_ROOT\TestServ\protocol\StdFileEditing\verb\0 = Edit
+
+// Additional data for the server
+HKEY_CLASSES_ROOT\TestServ\.credits\testing = AFX OLE Team
+HKEY_CLASSES_ROOT\TestServ\.credits\implementation = AFX OLE Team
+
+/////////////////////////////////////////////////////////////////////////////

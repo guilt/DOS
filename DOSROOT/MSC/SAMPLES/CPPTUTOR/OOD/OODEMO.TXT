@@ -1,0 +1,94 @@
+          OODEMO.TXT: Notes on the Object-Oriented Design Example
+
+PRIM.H/.CPP
+   Defines primitive classes Point and Rect.
+
+MISC.H/.CPP
+   Defines Screen, Mouse, and various constants.
+
+EVENT.H/.CPP
+   Defines Event hierarchy.
+
+                   (Event)
+                      |
+     ---------------------------------- 
+     |          |          |          |
+  KbdEvent  MouseEvent  ScrlEvent  PushEvent
+
+
+LIST.H/.CPP
+    Defines List and ListItem. Used for WinMgr's collection class.
+
+
+INTERACT.H/.CPP
+   Defines basic Interactor hierarchy (derived from ListItem).
+
+                 (Interactor)
+                      |
+               -------------
+               |           |
+           (Control)     (Win)
+               |
+         ------------
+         |          |
+     ScrollBar  PushButton   
+
+
+TEXTWIN.H/.CPP
+   Defines TextWin, EditWin. (Derived from Win.)
+
+         TextWin
+           |
+         EditWin
+
+
+LIFEWIN.H/.CPP
+
+   Defines LifeWin. (Derived from TextWin.)
+
+WINMGR.H/.CPP
+   Defines WinMgr. 
+
+OODEMO.CPP
+   Driver program for demo.
+
+
+
+
+
+*********************************************************
+
+Notes on OODEMO.EXE
+-------------------
+
+Usage
+-----
+
+TAB changes the active window.
+
+ESC quits.
+
+All windows respond to cursor keys, HOME, END, PGUP, PGDN.
+
+Windows can be moved with Ctrl-U (up), Ctrl-H (left), Ctrl-J (right), 
+and Ctrl-N (down).
+
+Windows can be resized with Ctrl-T (shorter), Ctrl-F (narrower), 
+Ctrl-G (wider), and Ctrl-V (longer).
+
+DELETE removes active window.
+
+EditWin accepts text input.
+
+Cells can be added or killed from the LifeWin screen, using
+either the mouse or the spacebar. Commands can be executed
+by clicking mouse on the buttons, or with the keyboard
+(C to clear, R to randomize, N to compute next generation.)
+
+Limitations
+-----------
+Scrollbar sliders cannot be dragged. There is no "auto-repeat"
+for the end arrows; i.e. holding down the mouse button will
+not cause continuous scrolling. There is no bounds-checking
+to prevent windows from being moved off the screen.
+

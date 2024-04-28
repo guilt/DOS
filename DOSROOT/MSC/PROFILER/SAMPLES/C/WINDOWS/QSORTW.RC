@@ -1,0 +1,41 @@
+/* Resource file for QSORTW.C */
+
+#include <WINDOWS.H>
+#include "qsortw.h"
+
+/* Menu items */
+SORTMENU    MENU
+{
+    POPUP "&File"
+    {
+	MENUITEM "&Sort File", IDM_SORT
+	MENUITEM "&Exit",IDM_EXIT
+    }
+}
+
+/* Input dialog box definition */
+GETFILE DIALOG LOADONCALL MOVEABLE DISCARDABLE 85, 56, 130, 51
+CAPTION "Sort File"
+STYLE WS_BORDER | WS_CAPTION | WS_DLGFRAME | WS_SIZEBOX | WS_POPUP
+BEGIN
+    CONTROL "Input file:", ID_INPUT, "static", SS_LEFT | WS_CHILD, 5, 8, 33, 8
+    CONTROL "", ID_IN_EDIT, "edit", ES_LEFT | WS_BORDER | WS_TABSTOP | WS_CHILD, 38, 5, 89, 12
+    CONTROL "Output file:", ID_OUTPUT, "static", SS_LEFT | WS_CHILD, 1, 21, 40, 10
+    CONTROL "", ID_OUT_EDIT, "edit", ES_LEFT | WS_BORDER | WS_TABSTOP | WS_CHILD, 38, 19, 89, 12
+    CONTROL "Ok", IDOK, "button", BS_PUSHBUTTON | WS_TABSTOP | WS_CHILD, 20, 33, 37, 15
+    CONTROL "Cancel", IDCANCEL, "button", BS_PUSHBUTTON | WS_TABSTOP | WS_CHILD, 74, 34, 36, 14
+END
+
+/* "Loading..." message box definition */
+LOADING DIALOG LOADONCALL MOVEABLE DISCARDABLE 91, 48, 100, 43
+STYLE WS_DLGFRAME | WS_POPUP | WS_VISIBLE
+BEGIN
+    CONTROL "Loading...", 2100, "static", SS_CENTER | WS_CHILD, 30, 16, 40, 10
+END
+
+/* "Sorting..." message box definition */
+SORTING DIALOG LOADONCALL MOVEABLE DISCARDABLE 91, 48, 100, 43
+STYLE WS_DLGFRAME | WS_POPUP | WS_VISIBLE
+BEGIN
+    CONTROL "Sorting...", 3100, "static", SS_CENTER | WS_CHILD, 31, 16, 40, 10
+END

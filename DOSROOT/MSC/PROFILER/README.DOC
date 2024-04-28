@@ -1,0 +1,101 @@
+
+                               README.DOC File
+
+             Release Notes for the Microsoft(R) Source Profiler
+                   Performance Analysis Tool, Version 1.2
+
+                  (C) Copyright Microsoft Corporation, 1992
+                                          
+     This document contains release notes for version 1.2 of the
+     Microsoft Source Profiler Performance Analysis Tool for MS-DOS(R),
+     the Microsoft Operating System/2 (MS(R) OS/2(R)), and the Microsoft
+     Windows(TM) graphical environment. The information in this document
+     and in the Microsoft Advisor (online help) is more up-to-date than
+     that in the "Microsoft Source Profiler Users Guide."
+  
+     Microsoft improves its languages documentation at the time of
+     reprinting, so some of the information in this file may already be
+     included in the User's Guide.
+
+
+
+================================< Contents >================================
+
+  
+     This file has 3 parts:
+  
+               Part     Contents
+               ----     --------
+               1        Installation Reminders
+
+               2        Notes on VTD.386
+
+               3        Additional Error Messages
+
+
+
+
+======================< Part 1: Installation Reminders >====================
+
+
+     Profiling with Windows
+
+     ----------------------
+
+     Before attempting to profile with Windows, make sure that you
+     follow the directions in "Modifying Your Windows Configuration"
+     on page 9 of the "Microsoft Source Profiler User's Guide."
+
+
+     Profiling with the Programmer's WorkBench (PWB)
+     -----------------------------------------------
+
+     The TOOLS.PRE file contains key and color assignments for using
+     the profiler with PWB. Make sure that you add the contents of this
+     file to the [PWB] section of your TOOLS.INI file before running the
+     profiler from PWB.
+
+     The profiler PWB extension will load automatically only if the
+     extension file (PWBPROF.MXT or PWBPROF.PXT) is in the same directory
+     as the PWB executable file (PWB.COM or PWB.EXE).
+
+     The PWB extension shipped with this version of the profiler is
+     compatible only with version 2.x of the Programmer's WorkBench;
+     it will not work with version 1.0 or 1.1.
+
+
+
+
+========================< Part 2: Notes on VTD.386 >========================
+
+
+     Reprogramming the Timer
+     -----------------------
+
+     The VTD.386 device driver (required for profiling under Microsoft
+     Windows) virtualizes the 8253 timer, so DOS programs that reprogram
+     the timer or hook to timer interrupt 1Ch may not work correctly in
+     a DOS box under Microsoft Windows.
+
+
+
+
+====================< Part 3: Additional Error Messages >===================
+
+
+     Add the following warning to the list of PREP errors:
+
+
+     Profiler warning PR4323
+
+     The profiler was unable to find the line number for function
+     'function' in the source file.
+
+     The CodeView information in the executable file is inconsistent.
+     The information indicates that there is a function, procedure, or
+     subroutine at a certain line number, but there was none found on
+     that line. The profiler will not profile 'function'.
+
+     This warning can occur if the C++ compiler generated internal
+     functions that are not in the source file. It can also occur if you
+     are using Microsoft FORTRAN version 5.0 or earlier.

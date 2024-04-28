@@ -1,0 +1,186 @@
+###############################################################################
+#									      #
+#	Copyright (c) 1986-1992, Microsoft Corporation.  All rights reserved. #
+#									      #
+#	Makefile for building c runtime startup objects (WIN).		      #
+#									      #
+#	This makefile is invoked by CSTARTUP.<BAT,CMD>. 		      #
+#	See CSTARTUP.<BAT,CMD> for usage information.			      #
+#									      #
+###############################################################################
+
+#
+# environment variable settings
+#
+# this makefile assumes that the following environment variables are
+# defined on input:
+#
+#	SRC = directory where sources reside
+#	INC = directory for ASM include files
+#	CL = compiler command line
+#	ASM = assembler command line
+#	CMACROS = standard assembler include files
+#
+# see winexe.mkf and windll.mkf for these definitions
+#
+
+#
+# WIN EXE objects
+#
+
+win:	\
+	fatal.obj	 \
+	fmsghdr.obj	 \
+	qwcinit.obj	 \
+	stubmain.obj	 \
+	wild.obj	 \
+        crt0dat.obj  \
+        crt0msg.obj  \
+        file.obj     \
+        nmsghdr.obj  \
+        stdargv.obj  \
+        _setargv.obj \
+        stdenvp.obj  \
+        stdalloc.obj \
+        wchkstk.obj  \
+        wfile.obj    \
+        windgrp.obj  \
+        windgrpx.obj \
+        wcrt0.obj    \
+        nocrt.obj    \
+        wnull.obj    \
+        noqwin.obj    \
+	nulbody.obj	 \
+	winstart
+
+#
+# WIN DLL objects
+#
+
+windll: \
+	fatal.obj	 \
+	stubmain.obj	 \
+        crt0dat.obj  \
+        crt0msg.obj  \
+        file.obj     \
+        nocrt.obj    \
+        stubwep.obj  \
+        wcrt0.obj    \
+        wep.obj
+
+
+#
+# startup modules built from DOS sources
+#
+
+
+crt0dat.obj: $(SRC)\dos\crt0dat.asm $(CMACROS) $(INC)\msdos.inc
+            $(ASM) $(SRC)\dos\crt0dat.asm,crt0dat.obj;
+
+crt0msg.obj: $(SRC)\dos\crt0msg.asm $(CMACROS) $(INC)\rterr.inc
+            $(ASM) $(SRC)\dos\crt0msg.asm,crt0msg.obj;
+
+file.obj:   $(SRC)\file.asm $(CMACROS) \
+            $(INC)\defsegs.inc $(INC)\stdio.inc
+    $(ASM) $(SRC)\file.asm,file.obj;
+
+fmsghdr.obj:	$(SRC)\fmsghdr.asm $(CMACROS) $(INC)\msdos.inc
+		$(ASM) $(SRC)\fmsghdr.asm;
+
+nmsghdr.obj: $(SRC)\dos\nmsghdr.asm $(CMACROS) $(INC)\msdos.inc
+            $(ASM) $(SRC)\dos\nmsghdr.asm,nmsghdr.obj;
+
+stdargv.obj: $(SRC)\dos\stdargv.asm $(CMACROS) $(INC)\msdos.inc \
+            $(INC)\rterr.inc
+            $(ASM) $(SRC)\dos\stdargv.asm,stdargv.obj;
+
+stdalloc.obj: $(SRC)\dos\stdalloc.asm $(CMACROS) \
+            $(INC)\heap.inc $(INC)\msdos.inc
+            $(ASM) $(SRC)\dos\stdalloc.asm,stdalloc.obj;
+
+stdenvp.obj: $(SRC)\dos\stdenvp.asm $(CMACROS) $(INC)\msdos.inc \
+            $(INC)\rterr.inc
+            $(ASM) $(SRC)\dos\stdenvp.asm,stdenvp.obj;
+
+#
+# startup sources built from WIN sources
+#
+
+noqwin.obj: $(SRC)\win\noqwin.asm $(CMACROS) \
+            $(INC)\rterr.inc
+        $(ASM) $(SRC)\win\noqwin.asm,noqwin.obj;
+
+fatal.obj: $(SRC)\win\fatal.asm $(CMACROS) \
+		$(INC)\defsegs.inc $(INC)\rterr.inc
+	$(ASM) $(SRC)\win\fatal.asm,fatal.obj;
+
+qwcinit.obj: $(SRC)\win\qwcinit.asm $(CMACROS) \
+		$(INC)\cmsgs.inc $(INC)\defsegs.inc \
+		$(INC)\fcntl.inc $(INC)\rterr.inc
+	$(ASM) $(SRC)\win\qwcinit.asm,qwcinit.obj;
+
+stubmain.obj: $(SRC)\win\stubmain.asm $(CMACROS)
+	$(ASM) $(SRC)\win\stubmain.asm,stubmain.obj;
+
+wchkstk.obj: $(SRC)\win\wchkstk.asm $(CMACROS)
+    $(ASM) $(SRC)\win\wchkstk.asm,wchkstk.obj;
+
+wfile.obj: $(SRC)\win\wfile.asm $(CMACROS) \
+            $(INC)\defsegs.inc $(INC)\stdio.inc
+    $(ASM) $(SRC)\win\wfile.asm,wfile.obj;
+
+windgrp.obj: $(SRC)\win\windgrp.asm $(CMACROS)
+    $(ASM) $(SRC)\win\windgrp.asm,$@;
+
+windgrpx.obj: $(SRC)\win\windgrpx.c
+    $(CL) $(MEM) -Gw -Fo$@ $(SRC)\win\windgrpx.c
+
+wcrt0.obj: $(SRC)\win\crt0.asm $(CMACROS) \
+            $(INC)\msdos.inc $(INC)\defsegs.inc \
+            $(INC)\rterr.inc $(INC)\stdlib.inc
+    $(ASM) $(SRC)\win\crt0.asm,wcrt0.obj;
+
+nocrt.obj: $(SRC)\win\crt0.asm $(CMACROS) \
+            $(INC)\msdos.inc
+    $(ASM) -D_NOCRT $(SRC)\win\crt0.asm,nocrt.obj;
+
+stubwep.obj: $(SRC)\win\stubwep.asm $(CMACROS)
+    $(ASM) $(SRC)\win\stubwep.asm,stubwep.obj;
+
+wep.obj: $(SRC)\win\wep.asm $(CMACROS)
+    $(ASM) $(SRC)\win\wep.asm,wep.obj;
+
+wnull.obj: $(SRC)\win\wnull.asm $(CMACROS)
+    $(ASM) $(SRC)\win\wnull.asm,wnull.obj;
+
+#
+# wild card expansion support modules
+#
+
+setargv.obj: $(SRC)\setargv.asm $(CMACROS)
+                $(ASM) $(SRC)\setargv.asm,setargv.obj;
+
+_setargv.obj: $(SRC)\dos\stdargv.asm $(CMACROS) $(INC)\msdos.inc \
+		$(INC)\rterr.inc
+                $(ASM) -DWILDCARD $(SRC)\dos\stdargv.asm,_setargv.obj;
+
+wild.obj: 	$(SRC)\wild.c $(CINC)\stddef.h $(CINC)\string.h \
+		$(CINC)\malloc.h $(INC)\register.h $(CINC)\ctype.h \
+		$(INC)\msdos.h
+		$(CL) -Zel $(SRC)\wild.c
+
+#
+# small program
+#
+
+nulbody.obj: $(SRC)\nulbody.c
+		$(CL) -Fonulbody.obj $(SRC)\nulbody.c
+
+#
+# this step is always done because the target does not exist
+#
+
+winstart:
+                link @$(SRC)\win\nulbody.lnk,,/NOD:$(MODEL)libce \
+                $(MODEL)libcewq.lib libw.lib, \
+                $(SRC)\win\nulbody.def

@@ -1,0 +1,136 @@
+PWB-GENERATED FILE: DO NOT MODIFY
+[shared-]
+	version=3
+	project=".\helloapp.mak"
+	buildmode=3
+[edit-]
+	srch=
+	fSrchRe=0
+	rpl=
+	src=
+	fRplRe=0
+[pwb]
+	winstyle=3
+	file="<COMPILE>Build Results" 1 1 1 1
+	wnd=c 0 0 0 0 0 0
+	file="<SEARCH>Search Results" 1 1 1 1
+	wnd=c 0 0 0 0 0 0
+	file="<PRINT>Print Results" 1 1 1 1
+	wnd=c 0 0 0 0 0 0
+	file="<RECORD>Record" 1 1 1 1
+	wnd=c 0 0 0 0 0 0
+	file="<CLIPBOARD>Clipboard" 1 1 1 1
+	wnd=c 0 0 0 0 0 0
+	file="<pwbhelp>Help" 1 1 1 1
+	wnd=c 0 0 0 0 0 0
+	file="<browse>Browser Output" 1 1 1 1
+	wnd=c 0 0 0 0 0 0
+[build]
+    build: language "C++"
+    build: template "Windows 3.0 EXE" modified
+    build: macro DEBUG "0"
+    build: macro BRFLAGS ""
+    build: macro BROWSE "0"
+    build: macro PACK_SBRS "1"
+    build: macro CC "cl"
+    build: macro CFLAGS_G "/W2 /GA /GEf /Zp /BATCH /DWINVER=0x0300"
+    build: macro CFLAGS_D "/f /Zi /Od /Gs"
+    build: macro CFLAGS_R "/f- /Oe /Og /Os /Gs"
+    build: macro CXX "cl"
+    build: macro CXXFLAGS_G "/W3 /G2 /GA /DWINVER=0x0300 /GEs /Zp /BATCH"
+    build: macro CXXFLAGS_D "/f /Od /Zi /D_DEBUG"
+    build: macro CXXFLAGS_R "/f- /Os /Ol /Og /Oe /Gs"
+    build: macro BSCMAKE "bscmake"
+    build: macro SBRPACK "sbrpack"
+    build: macro NMAKEBSC1 "set"
+    build: macro NMAKEBSC2 "nmake"
+    build: macro MAPFILE_D "NUL"
+    build: macro MAPFILE_R "NUL"
+    build: macro LFLAGS_G "/NOD /BATCH /ONERROR:NOEXE"
+    build: macro LFLAGS_D "/CO /NOF"
+    build: macro LFLAGS_R "/NOF"
+    build: macro LLIBS_G "LIBW.LIB"
+    build: macro LINKER "link"
+    build: macro ILINK "ilink"
+    build: macro LRF "echo > NUL"
+    build: macro ILFLAGS "/a /e"
+    build: macro RC "rc"
+    build: macro RCFLAGS2 "/k /t /30"
+    build: macro LLIBS_R "SAFXCW /NOD:SLIBCE SLIBCEW"
+    build: macro LLIBS_D "SAFXCWD /NOD:SLIBCE SLIBCEW"
+    build: all $(PROJ).exe
+    build: target $(PROJ).bsc bscmake
+    build: target $(PROJ).exe lrf_exe link_exe rc_exe
+    build: inference .c.sbr cc_c_sbr
+    build: inference .cxx.sbr cx_cxx_sbr
+    build: inference .cpp.sbr cx_cxx_sbr
+    build: inference compile .c.obj cc_c_obj
+    build: inference compile .cxx.obj cx_cxx_obj
+    build: inference compile .cpp.obj cx_cxx_obj
+    build: inference .rc.res rc_rc_res
+    build: release command cc_c_sbr "@$(CC) @<<$(PROJ).rsp\n/Zs $(CFLAGS_G)\n$(CFLAGS_R) /FR$@ $<\n<<"
+    build: debug command cc_c_sbr "@$(CC) @<<$(PROJ).rsp\n/Zs $(CFLAGS_G)\n$(CFLAGS_D) /FR$@ $<\n<<"
+    build: release command cx_cxx_sbr "@$(CXX) @<<$(PROJ).rsp\n/Zs $(CXXFLAGS_G)\n$(CXXFLAGS_R) /FR$@ $<\n<<"
+    build: debug command cx_cxx_sbr "@$(CXX) @<<$(PROJ).rsp\n/Zs $(CXXFLAGS_G)\n$(CXXFLAGS_D) /FR$@ $<\n<<"
+    build: release command cc_c_obj "@$(CC) @<<$(PROJ).rsp\n/c $(CFLAGS_G)\n$(CFLAGS_R) /Fo$@ $<\n<<"
+    build: debug command cc_c_obj "@$(CC) @<<$(PROJ).rsp\n/c $(CFLAGS_G)\n$(CFLAGS_D) /Fo$@ $<\n<<"
+    build: release command cx_cxx_obj "@$(CXX) @<<$(PROJ).rsp\n/c $(CXXFLAGS_G)\n$(CXXFLAGS_R) /Fo$@ $<\n<<"
+    build: debug command cx_cxx_obj "@$(CXX) @<<$(PROJ).rsp\n/c $(CXXFLAGS_G)\n$(CXXFLAGS_D) /Fo$@ $<\n<<"
+    build: command bscmake "$(BSCMAKE) @<<\n$(BRFLAGS) $(SBRS)\n<<"
+    build: command nmakebsc1 "-$(NMAKEBSC1) MAKEFLAGS="
+    build: command nmakebsc2 "-$(NMAKEBSC2) $(NMFLAGS) -f $(PROJFILE) $(PROJ).bsc"
+    build: release command lrf_exe "$(LRF) @<<$(PROJ).lrf\n$(RT_OBJS: = +^\n) $(OBJS: = +^\n)\n$@\n$(MAPFILE_R)\n$(LIBS: = +^\n) +\n$(LLIBS_G: = +^\n) +\n$(LLIBS_R: = +^\n)\n$(DEF_FILE) $(LFLAGS_G) $(LFLAGS_R);\n<<"
+    build: debug command lrf_exe "$(LRF) @<<$(PROJ).lrf\n$(RT_OBJS: = +^\n) $(OBJS: = +^\n)\n$@\n$(MAPFILE_D)\n$(LIBS: = +^\n) +\n$(LLIBS_G: = +^\n) +\n$(LLIBS_D: = +^\n)\n$(DEF_FILE) $(LFLAGS_G) $(LFLAGS_D);\n<<"
+    build: command link_exe "$(LINKER) @$(PROJ).lrf"
+    build: command rc_exe "$(RC) $(RCFLAGS2) $(RESS) $@"
+    build: command rc_rc_res "$(RC) $(RCFLAGS1) /r /fo $@ $<"
+    build: command run "WX $(WXFLAGS) $(PROJ).exe $(RUNFLAGS)"
+    build: command debug "WX /p $(WXFLAGS) CVW $(CVFLAGS) $(PROJ).exe $(RUNFLAGS)"
+    build: suffixes
+    build: include dependencies
+    build: include no system
+    build: include path .cxx
+    build: include path .cpp
+    build: include .c "^[ \t]*#[ \t]*include[ \t]*\"[ \t]*\\(\\:p\\)[ \t]*\"" case
+    build: include .c "^[ \t]*#[ \t]*include[ \t]*<[ \t]*\\(\\:p\\)[ \t]*>" case system
+    build: include .h "^[ \t]*#[ \t]*include[ \t]*\"[ \t]*\\(\\:p\\)[ \t]*\"" case
+    build: include .h "^[ \t]*#[ \t]*include[ \t]*<[ \t]*\\(\\:p\\)[ \t]*>" case system
+    build: include .cxx "^[ \t]*#[ \t]*include[ \t]*\"[ \t]*\\(\\:p\\)[ \t]*\"" case
+    build: include .cxx "^[ \t]*#[ \t]*include[ \t]*<[ \t]*\\(\\:p\\)[ \t]*>" case system
+    build: include .cpp "^[ \t]*#[ \t]*include[ \t]*\"[ \t]*\\(\\:p\\)[ \t]*\"" case
+    build: include .cpp "^[ \t]*#[ \t]*include[ \t]*<[ \t]*\\(\\:p\\)[ \t]*>" case system
+    build: include .hxx "^[ \t]*#[ \t]*include[ \t]*\"[ \t]*\\(\\:p\\)[ \t]*\"" case
+    build: include .hxx "^[ \t]*#[ \t]*include[ \t]*<[ \t]*\\(\\:p\\)[ \t]*>" case system
+    build: include .hpp "^[ \t]*#[ \t]*include[ \t]*\"[ \t]*\\(\\:p\\)[ \t]*\"" case
+    build: include .hpp "^[ \t]*#[ \t]*include[ \t]*<[ \t]*\\(\\:p\\)[ \t]*>" case system
+    build: include .rc "^[ \t]*rcinclude[ \t]+\\([^ \t]+\\)"
+    build: include .rc "^[ \t]*#[ \t]*include[ \t]*\"[ \t]*\\(\\:p\\)[ \t]*\""
+    build: include .rc "^[ \t]*#[ \t]*include[ \t]*<[ \t]*\\(\\:p\\)[ \t]*>" system
+    build: include .rc "^\\:i\\:bBITMAP\\:b\\(\\:p\\)"
+    build: include .rc "^\\:i\\:bCURSOR\\:b\\(\\:p\\)"
+    build: include .rc "^\\:i\\:bFONT\\:b\\(\\:p\\)"
+    build: include .rc "^\\:i\\:bICON\\:b\\(\\:p\\)"
+    build: message "^SYS[0-9][0-9][0-9][0-9]:\\:b"
+    build: message "^NET[0-9][0-9][0-9][0-9]:\\:b"
+    build: message "^\\(\\{\\:p\\!<[^>]*>\\}\\) \\([0-9]+\\) \\([0-9]+\\)[ ]*:" file line col
+    build: message "^\\(\\:p\\):\\([0-9]+\\):" file line
+    build: message "^[^(]+(\\(\\:p\\)) : error L[0-9]+[ ]*: '_*\\([^']+\\)' : unresolved external" file token
+    build: message "^[^(]+(\\(\\:p\\)) : [^L]+L[124]" file
+    build: message "^LINK [^L]+L[124]"
+    build: message "^ILINK : [^L]+L[124]"
+    build: message "^\\(\\:p\\)(\\(\\:z\\))[ ]*: [^U]+U[124]" file line
+    build: message "^NMAKE : [^U]+U[124]"
+    build: message "^\\:p : [^U]+U[124]\\:d\\:d\\:d"
+    build: message "^\\(\\:p\\)(\\(\\:z\\)) : [^C]+C[124]" file line
+    build: message "^[^C]+C[124][0-9]+: "
+    build: message "^[^D]+D[124][0-9]+ : "
+    build: message "^BIND : [^U]+U[124]"
+    build: message "^\\(\\:p\\)(\\(\\:z\\)) RC:" file line
+    build: message "\\(\\:p\\)(\\(\\:z\\)) : error RC\\:z:" file line
+    build: message "^RC:"
+    build: message "^RC :"
+    build: message "^LIB :"
+    build: message "^MPC :"
+    build: message "^CVPACK :"
+    build: message "^bscmake: [^B]+BK[124]"
+    build: message "^sbrpack: [^S]+SB[124]"

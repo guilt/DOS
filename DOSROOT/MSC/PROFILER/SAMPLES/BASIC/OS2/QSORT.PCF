@@ -1,0 +1,11 @@
+LPROFILE TIME              # Choose timing by line
+PROGRAM QSORT.EXE DELETE   # Leave all lines in QSORT unselected
+OBJECT QSORT.OBJ
+FUNCTION QUICKSORT ADD     # Select QuickSort, GetWords, and OutWords for 
+                           # profiling
+FUNCTION GETWORDS% ADD
+FUNCTION OUTWORDS ADD
+FILE QSORT.BAS             # Select lines 43-52 of QSORT.BAS for profiling
+LINE ADD 43-52
+MAKEPBI QSORT.PBI          # Specify output PBI name
+MAKEPBT QSORT.PBT          # Specify output PBT name

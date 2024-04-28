@@ -1,0 +1,87 @@
+/* testserv.rc : Defines the resources for the application.
+//
+// This is a part of the Microsoft Foundation Classes C++ library.
+// Copyright (C) 1992 Microsoft Corporation
+// All rights reserved.
+//
+// This source code is only intended as a supplement to the
+// Microsoft Foundation Classes Reference and Microsoft
+// QuickHelp documentation provided with the library.
+// See these sources for detailed information regarding the
+// Microsoft Foundation Classes product.
+*/
+
+
+#include <windows.h>
+#include "resource.h"
+#include <afxres.h>
+
+AFX_IDI_STD_FRAME   ICON                testserv.ico
+
+MainMenu MENU
+{
+	POPUP           "&File"
+	{
+		MENUITEM    "&New",             IDM_NEW
+		MENUITEM    "&Open...",            IDM_OPEN
+		MENUITEM    "&Save",            IDM_SAVE
+		MENUITEM    "Save &As...",         IDM_SAVEAS
+		MENUITEM    SEPARATOR
+		MENUITEM    "E&xit",            IDM_EXIT
+	}
+	
+	POPUP           "&Edit"
+	{
+		MENUITEM    "Copy &Link",       IDM_COPYLINK
+		MENUITEM    "Copy &Object",     IDM_COPYOBJECT
+	}
+
+	POPUP           "&Test"
+	{   
+		MENUITEM    "&Logging",         IDM_LOGGING
+		MENUITEM    SEPARATOR
+		POPUP       "&Server APIs"
+		{
+			MENUITEM "&Revoke",         IDM_REVOKESVR
+		}
+		POPUP       "&Document APIs"
+		{
+			MENUITEM "&Revoke",         IDM_REVOKEDOC
+			MENUITEM "Re&vert",         IDM_REVERTDOC
+			MENUITEM "&Saved",          IDM_SAVEDOC
+			MENUITEM "&Closed",         IDM_CLOSEDOC
+			MENUITEM "C&hanged",        IDM_CHANGEDOC
+		}
+		POPUP       "&Item APIs"
+		{
+			MENUITEM "&Changed",            IDM_CHANGEITEM
+		}
+	}
+
+	POPUP           "&Help"
+	{
+		MENUITEM    "&About...",           IDM_ABOUT
+	}
+}
+
+IDDT_EDIT DIALOG LOADONCALL MOVEABLE DISCARDABLE 13, 19, 150, 65
+STYLE WS_DLGFRAME | WS_POPUP
+BEGIN
+	CONTROL "", IDC_EDIT, "edit", ES_LEFT | WS_BORDER | WS_TABSTOP | WS_CHILD, 25, 23, 115, 15
+	CONTROL "Text:", IDC_TEXT, "static", SS_LEFT | WS_CHILD, 5, 25, 20, 10
+	CONTROL "OK", IDC_OK, "button", BS_DEFPUSHBUTTON | WS_TABSTOP | WS_CHILD, 25, 45, 30, 15
+	CONTROL "Cancel", IDC_CANCEL, "button", BS_PUSHBUTTON | WS_TABSTOP | WS_CHILD, 85, 45, 30, 15
+	CONTROL "AFX Test Server OLE Item Editor", IDC_TITLE, "static", SS_LEFT | WS_CHILD, 20, 5, 110, 10
+END
+
+IDDT_ABOUT DIALOG 34, 22, 144, 75
+STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "About Test Server"
+FONT 8, "Helv"
+BEGIN
+	CTEXT           "Microsoft Windows", -1, 0, 5, 144, 8
+	CTEXT           "Microsoft Foundation Classes", -1, 0, 14, 144, 8
+	CTEXT           "OLE Server Sample", -1, 0, 23, 144, 8
+	CTEXT           "Version 1.0", -1, 0, 36, 144, 8
+	DEFPUSHBUTTON   "OK", IDOK, 56, 53, 32, 14, WS_GROUP
+END

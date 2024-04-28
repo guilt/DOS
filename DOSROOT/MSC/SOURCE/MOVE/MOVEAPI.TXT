@@ -1,0 +1,542 @@
+                              MOVEAPI.TXT File
+
+                           Release Notes for the
+                    Microsoft(R) Overlay Virtual Environment
+
+                        Released with the Microsoft(R) C
+                  Professional Development System, Version 7.0
+
+                  (C) Copyright Microsoft Corporation, 1991
+
+
+     This document describes advanced features of the Microsoft Overlay
+     Virtual Environment (MOVE). MOVE is a dynamic overlay manager
+     for use in creating DOS programs with overlays. MOVE is described
+     in the chapter called "Creating Overlaid DOS Programs" in the
+     "Environment and Tools" manual. This file discusses ways you can
+     customize your overlaid program and analyze its performance.
+
+
+
+=============================< Contents >==============================
+
+
+     This file has 3 parts:
+
+          Part     Note
+          ----     ----
+
+          1        The MOVE API
+
+          2        MOVE Environment Variables
+
+          3        The TRACE Utility
+
+
+
+=======================< Part 1: The MOVE API >========================
+
+
+     The MOVE API is provided in a library called MOVE.LIB. This
+     library is a component of the C combined libraries for medium and
+     large models. (Another form of the library, MOVETR.LIB, also
+     contains the MOVE API. See Part 3 below.) The MOVE API is declared
+     in the file MOVEAPI.H, which is available on disk. The following
+     sections describe the routines and functionality provided by MOVE.
+
+
+     The _moveinit function
+     ----------------------
+
+     MOVE begins an overlaid program with a call to _moveinit.
+
+     You can use the default function provided in MOVE.LIB, or you can
+     write your own version of _moveinit and link it to your program.
+     The source code for the default version of this function is
+     available on disk in the file MOVEINIT.C. The _moveinit function
+     must calculate the heap and cache needed for the overlays and
+     allocate memory for the heap and cache.
+
+     The _moveinit call occurs before the call to _astart that begins a
+     C program and performs initialization. Because of this, do not
+     call C run-time routines from any version of _moveinit.
+
+     The following functions are called from _moveinit:
+
+          _movesetheap
+          _movegetcache
+          _movesetcache
+          _movetraceon (only in MOVETR.LIB)
+
+     The functions are described in the sections below. In addition,
+     several variables are created by LINK and begin with $$; these
+     variables are described in the "LINK Variables" section below.
+
+
+     Heap allocation
+     ---------------
+
+     extern unsigned short __far __cdecl _movesetheap(
+                                         unsigned short maxovl,
+                                         unsigned short minheap,
+                                         unsigned short reqheap );
+
+     The _movesetheap function sets the overlay heap size.
+
+     <maxovl>
+          The maximum number of overlays. The $$COVL variable always
+          contains this value.
+
+     <minheap>
+          The minimum heap size, specified in 16-byte paragraphs. The
+          heap must be at least the size of the largest overlay. To
+          calculate overlay sizes, use $$MPOVLSIZE as in MOVEINIT.C.
+
+     <reqheap>
+          The requested heap size, specified in 16-byte paragraphs. The
+          default _moveinit routine requests the sum of the sizes of
+          the three largest overlays.
+
+     MOVE attempts to allocate the requested amount of memory. If that
+     much memory is not available, MOVE tries to allocate as much as
+     possible. If the amount of available memory is less than the
+     minimum heap requested, MOVE ends the program and issues a
+     run-time error.
+
+
+     Cache allocation
+     ----------------
+
+     extern void __far __cdecl _movegetcache(
+                               unsigned short __far *expmem,
+                               unsigned short __far *extmem );
+
+     The _movegetcache function determines the amount of memory
+     available for a cache.
+
+     *<expmem>
+          Available expanded memory, in kilobytes.
+
+     *<extmem>
+          Available extended memory, in kilobytes.
+
+
+     extern unsigned short __far __cdecl _movesetcache(
+                                         unsigned short expmem,
+                                         unsigned short extmem );
+
+     The _movesetcache function allocates expanded and extended memory
+     for an overlay cache.
+
+     <expmem>
+          Requested amount of expanded memory, specified in kilobytes.
+
+     <extmem>
+          Requested amount of extended memory, specified in kilobytes.
+
+
+     The default _moveinit routine requests a cache equal to the sum of
+     all overlays. If _movesetcache cannot allocate the requested
+     amount of memory, it sets a bit in the return value. MOVEAPI.H
+     defines the following constants to represent bits in the return
+     value:
+
+          __MOVESETCACHE_ERR_NO    0   No error
+          __MOVESETCACHE_ERR_XMS   1   Cannot allocate extended memory
+          __MOVESETCACHE_ERR_EMS   2   Cannot allocate expanded memory
+
+
+     The following global variables are set by _movesetcache when the
+     overlay cache is allocated:
+
+          extern unsigned short __far __cdecl _moveckbxms;
+          extern unsigned short __far __cdecl _moveckbems;
+
+     The _moveckbxms variable is set to the size of the allocated
+     extended memory. The _moveckbems variable is set to the size of
+     the allocated expanded memory.
+
+
+     Freeing and reallocating cache memory
+     -------------------------------------
+
+     You can temporarily release and then restore the memory allocated
+     for the overlay cache. This is useful when your program spawns
+     another program that uses extended or expanded memory or when you
+     want to prepare for a possible abnormal exit from your program.
+
+
+     extern void __far __cdecl _movepause( void );
+
+          The _movepause function frees the cache memory and closes the
+          executable file.
+
+     extern void __far __cdecl _moveresume( void );
+
+          The _moveresume function reallocates memory for the overlay
+          cache and reopens the executable file.
+
+
+     MOVEAPI.H defines the following variables for use by these
+     functions:
+
+          extern unsigned short __far __cdecl _movefpause;
+          extern unsigned short __far __cdecl _movefpaused;
+
+
+     MOVEAPI.H also defines constants to represent bits in _movefpause
+     and _movefpaused, as follows:
+
+          __MOVE_PAUSE_DISK     2    Represents the executable file
+          __MOVE_PAUSE_CACHE    4    Represents the cache memory
+
+
+     The _movepause function reads the value in _movefpause, and it
+     sets _movefpaused to the value of the action taken by _movepause.
+     Before you call _movepause, set _movefpause to __MOVE_PAUSE_DISK
+     to close the file, and set it to __MOVE_PAUSE_CACHE to free the
+     cache, as in:
+
+          _movefpause |= __MOVE_PAUSE_DISK;
+          _movefpause |= __MOVE_PAUSE_CACHE;
+          _movepause();
+
+
+     The _moveresume function reads the value in _movefpaused, then it
+     clears _movefpaused. The overlays that were in the heap and cache
+     are not restored. Therefore, after a call to _moveresume, the
+     program may at first run slightly more slowly as it makes calls to
+     routines in overlays.
+
+
+     LINK Variables
+     --------------
+
+     The following variables are created by LINK:
+
+     $$MAIN
+          Entry point to an overlaid program.  In a C program, this is
+          defined to be __astart.
+
+     $$CGSN
+          Number of global segments. Each object file contributing to
+          an overlay takes up one global segment number (GSN). Each
+          COMDAT (packaged-function) segment takes up one GSN.
+
+     $$COVL
+          Number of overlays. Each overlay can contain several GSNs.
+
+     $$MPGSNBASE
+          Map of GSNs to segment displacements in an overlay.
+
+     $$MPGSNOVL
+          Map of GSNs to overlay numbers.
+
+     $$MPOVLLFA
+          Map of overlay numbers to logical file addresses of overlays
+          in the executable file.
+
+     $$MPOVLSIZE
+          Map of overlay numbers to overlay image sizes (the size of
+          the code actually loaded into the overlay heap).
+
+     $$INTNO
+          Overlay interrupt number.
+
+
+
+================< Part 2: MOVE Environment Variables >=================
+
+
+     You can use environment variables at run time to specify the size
+     of the requested overlay heap and overlay cache and the maximum
+     number of overlays. The _moveinit function given in MOVEINIT.C
+     provides environment support; you can compile this function and
+     link it with your program. (MOVETR.LIB contains a version of
+     _moveinit that already contains environment support.)
+
+     First, enable environment support by compiling MOVEINIT.C with
+     MOVE_ENV defined. Then specify the resulting MOVEINIT.OBJ when
+     linking your program. With MOVE_ENV defined, MOVEAPI.H declares
+     the following variable:
+
+          extern unsigned short __far __cdecl _movesegenv;
+
+     Compiling for environment support causes MOVEINIT.C to define a
+     function called _movegetenv. The environment-support version of
+     _moveinit uses _movegetenv to get the values of the following
+     environment variables:
+
+          MOVE_HEAP     Requested heap (paragraphs)
+          MOVE_COVL     Maximum number of overlays
+          MOVE_EMS      Requested expanded-memory cache (paragraphs)
+          MOVE_XMS      Requested extended-memory cache (paragraphs)
+
+     To use these variables, set them to strings that represent the
+     desired settings. Each string must consist of exactly four
+     hexadecimal digits.
+
+
+
+=====================< Part 3: The TRACE Utility >=====================
+
+
+     You can optimize the overlays in your program with the help of the
+     tracing form of the MOVE library (MOVETR.LIB) and the Microsoft
+     MOVE Trace Utility (TRACE) version 1.00. MOVETR.LIB contains
+     MOVE.LIB and additional routines for use in tracing overlay
+     behavior.
+
+     Create a tracing version of your program as described in the
+     following sections. When you run your program, the tracing
+     functions create a binary file called MOVE.TRC in the directory
+     from which the program is run. After your program ends, use TRACE
+     to read MOVE.TRC. If the tracing results show you that some
+     functions cause overlays to be swapped frequently, you can
+     reorganize the functions in the overlays by using statements in
+     the module-definition file.
+
+
+     Creating a Tracing Version of an Overlaid Program
+     ------------------------------------------------------
+
+     To create a program that will trace overlay performance, specify
+     MOVETR.LIB in LINK's <libraries> field. This causes LINK to use
+     the MOVETR.LIB library instead of the MOVE.LIB component of the
+     default combined library. Use LINK's /NOE option to prevent
+     conflicts between MOVETR.LIB and the combined library. If you
+     explicitly specify the combined library in the <libraries> field,
+     list MOVETR.LIB before the combined library.
+
+
+     The Trace Functions
+     ------------------
+
+     By default, tracing is in effect during the entire run of your
+     program. You do not need to make any changes in your program to
+     enable tracing. However, MOVETR.LIB provides two functions that
+     you can use to turn tracing on and off within your program:
+
+     extern void __far __cdecl _movetraceon( void );
+
+          Turns on tracing. This function opens the file MOVE.TRC and
+          activates tracing. During tracing, information about overlay
+          behavior is written to MOVE.TRC. The default _moveinit
+          function calls _movetraceon at the start of the program if
+          MOVE_PROF is defined; this definition is in MOVETR.LIB.
+
+     extern void __far __cdecl _movetraceoff( void );
+
+          Turn off tracing and closes MOVE.TRC.
+
+     The tracing functions are declared in MOVEAPI.H. They are defined
+     only in MOVETR.LIB.
+
+
+     Running TRACE
+     -------------
+
+     To run TRACE, use the following syntax:
+
+          TRACE [options] [tracefile]
+
+     The <tracefile> is the MOVE.TRC file created during a tracing
+     session. You can specify a path with the filename. If <tracefile>
+     is not specified, TRACE looks in the current directory for a file
+     called MOVE.TRC.
+
+     An option is preceded by an option specifier, either a forward
+     slash (/) or a dash (-). Options are not case sensitive. An option
+     can be abbreviated to its initial letter. Options can appear
+     anywhere on the command line.
+
+     /SUM
+          Displays a summary of the program's performance. If /SUM is
+          not specified, TRACE displays the entire tracing session. For
+          details, see "TRACE Performance Summary" below. If /SUM is
+          specified, /EXE and /MAP have no effect.
+
+     /EXE:filename
+          Allows TRACE to read the executable file that was traced and
+          extract function names for use in the trace output. Specify
+          the filename of the executable file that generated the
+          MOVE.TRC file. You can specify a path with the filename. If
+          /EXE is not specified, the trace output refers to functions
+          by overlay number and offset.
+
+          The program must contain Micrososft Symbolic Debugging
+          Information that is compatible with Microsoft CodeView
+          version 4.00. To include debugging information, create the
+          object file using the /Zi option and link the program using
+          the /CO option.
+
+     /HELP
+          Displays a usage statement.
+
+     /?
+          Displays a usage statement.
+
+
+     TRACE Output
+     ------------
+
+     TRACE displays information on the tracing session to the standard
+     output device. You can use the redirection operator (>) to save
+     the output in a file. The output is in table format. Each line of
+     output represents an interoverlay transaction. A line of
+     information is organized into the following fields:
+
+        - The overlay to which to return from the current transaction
+          (If blank, the overlay in the previous line is implied.)
+
+        - The physical return address in segment:offset form
+          (If blank, the address in the previous line is implied.)
+
+        - The transaction type, which is one of the following:
+
+             - Present
+             - Load from disk
+             - Load from expanded memory
+             - Load from extended memory
+             - Discard from heap
+             - Cache to expanded memory
+             - Cache to extended memory
+             - Discard from cache
+             - Invalid
+
+        - The overlay that is the object of the transaction
+
+        - The segment in memory where the transaction overlay is loaded
+
+        - The interoverlay operation, which is one of the following:
+
+             - Call <function>, in which <function> is:
+                  - An overlay number and an offset in default output
+                  - A function name if /EXE is used
+                  - A decorated function name if /EXE and /MAP are used
+
+             - Return
+
+             - If blank, the Call in the previous line is implied.
+
+
+     TRACE Performance Summary
+     -------------------------
+
+     When you run TRACE with the /SUM option, TRACE displays a summary
+     of overlay performance to the standard output device. The full
+     session is not displayed. You can use the redirection operator (>)
+     to save the output in a file. The summary information is organized
+     into the following fields:
+
+          OVERALL
+          -------
+
+          calls
+               Sum of "Call" operations
+
+          returns
+               Sum of "Return" operations
+
+          HEAP
+          ----
+
+          discards
+               Sum of "Discard from heap" transactions
+
+          discards / entries
+               Discards as percent of (calls + returns)
+
+          loads from disk
+               Sum of "Load from disk" transactions
+
+          loads from expanded memory
+               Sum of "Load from expanded memory" transactions
+
+          loads from extended memory
+               Sum of "Load from extended memory" transactions
+
+          CACHE
+          -----
+
+          discards
+               Sum of "Discard from cache" transactions
+
+          discards / entries
+               Discards as percent of (calls + returns)
+
+          caches to expanded memory
+               Sum of "Cache to expanded memory" transactions
+
+          caches to extended memory
+               Sum of "Cache to extended memory" transactions
+
+
+     TRACE Errors
+     ------------
+
+     This section describes the errors and warnings issued by TRACE.
+
+
+     TR1001    invalid filename for /EXE
+
+               The string specified with the /EXE option was not a
+               valid filename.
+
+     TR1005    missing filename for /EXE
+
+               The /EXE option must be followed by a colon and a
+               filename, with no spaces in between.
+
+     TR1007    unrecognized option
+
+               The command line contained an option specifier, either
+               a forward slash (/) or a dash (-), but the string that
+               followed was not recognized as a TRACE option.
+
+     TR1010    cannot find trace file
+
+               One of the following occurred:
+
+                  - A trace file was specified on the command line,
+                    but the specified file does not exist.
+
+                  - No trace file was specified on the command line
+                    and TRACE assumed a trace file called MOVE.TRC,
+                    but MOVE.TRC does not exist.
+
+
+     TR1011    error opening/reading .EXE file
+
+               TRACE either failed to find the executable file
+               specified with /EXE or encountered an error while
+               opening the file.
+
+     TR1012    out of memory
+
+               The available memory is insufficient for the size of the
+               program being traced.
+
+     TR1013    invalid debugging information
+
+               The debugging information contained in the executable
+               file was not packed using CVPACK 4.00.
+
+     TR4001    cannot find function name
+
+               TRACE could not find a function name in order to display
+               it. TRACE continued to generate output, but the function
+               name was missing from the output.
+
+               Function names are displayed when the /EXE option is
+               specified. Either the executable file contains corrupt
+               debugging information or a module in the executable file
+               was compiled without the /Zi option for including
+               debugging information.
+
+     TR4002    missing debugging information for module
+
+               TRACE could not find a symbol to correspond to a given
+               physical address. Probably a module was compiled without
+               the /Zi option for including debugging information.
+

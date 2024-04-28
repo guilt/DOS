@@ -1,0 +1,1382 @@
+
+                               ERRATA2.TXT File
+
+     Documentation Errata, Part Two, for Microsoft(R) C/C++, Version 7.0
+
+                  (C) Copyright Microsoft Corporation, 1992
+
+     This document contains information on known errors and omissions
+     in the documentation provided with version 7.0 of Microsoft C/C++.
+     The information in this document and in the Microsoft Advisor
+     Help system is more up-to-date than that in the manuals.
+
+     Microsoft updates its languages documentation at the time of
+     reprinting, so some of the information in this file may already be
+     included in your manuals.
+
+
+================================< Contents >================================
+
+
+     This file has nine parts:
+
+               Part     Title
+               ----     -----
+
+               6        Notes on "Run-Time Library Reference"
+
+               7        Notes on "Class Libraries Reference"
+
+               8        Notes on "Class Libraries User's Guide"
+
+               9        Notes on "Comprehensive Index and Errors
+                        Reference"
+
+               10       Notes on "CLANG.HLP" (Help)
+
+               11       Notes on "CL.HLP" (Help)
+
+               12       Notes on "LINK" (Help)
+
+               13       Notes on Header Files
+
+               14       Notes on "Microsoft Class Libraries" 
+                        Quick-Reference Card
+
+     See also ERRATA1.TXT.
+
+
+=============< Part 6: Notes on "Run-Time Library Reference" >===============
+
+     The CString Class and Type const char *
+     ---------------------------------------
+
+     Because the Microsoft Foundation Class's (MFC) CString class has a
+     conversion operator for type const char *, you can pass CString
+     objects to any run-time library function that accepts arguments of
+     type const char *.
+
+     In this version and previous versions of the run-time library
+     documentation, the const keyword was left out of the syntax line
+     that begins each run-time function's description. This omission
+     was made because the const keyword served mainly as an instruction
+     to the compiler and offered little useful information to C
+     programmers.
+
+     The run-time libraries that ship with Microsoft C/C++ contain over
+     175 functions that accept arguments of type const char *. Look in
+     the associated include file if you are uncertain whether a function
+     accepts such arguments.
+
+     Page    Note
+     ----    ----
+
+     13      Operating-System Considerations
+             -------------------------------
+
+             For ANSI compatibility, change all occurrences of "stdaux"
+             and "stdprn" to "_stdaux" and "_stdprn".
+
+     32      Text and Binary Modes
+             ---------------------
+
+             For ANSI compatibility, change all occurrences of "stdaux"
+             and "stdprn" to "_stdaux" and "_stdprn".
+
+     36      Using Predefined Stream Pointers
+             --------------------------------
+
+             For ANSI compatibility, change all occurrences of "stdaux"
+             and "stdprn" to "_stdaux" and "_stdprn".
+
+     36      Controlling Stream Buffering
+             ----------------------------
+
+             For ANSI compatibility, change all occurrences of "stdaux"
+             and "stdprn" to "_stdaux" and "_stdprn".
+
+     37      Closing Streams
+             ---------------
+
+             For ANSI compatibility, change all occurrences of "stdaux"
+             and "stdprn" to "_stdaux" and "_stdprn".
+
+     40      Using Predefined Handles
+             ------------------------
+
+             For ANSI compatibility, change all occurrences of "stdaux"
+             and "stdprn" to "_stdaux" and "_stdprn".
+
+     63,     _doserrno, errno, _sys_errlist, _sys_nerr
+     64      -----------------------------------------
+
+             For ANSI compatibility, both the _sys_nerr variable and the
+             _sys_errlist variable require leading underscores.
+
+     129     The _cabs and _cabsl Functions
+             ------------------------------
+
+             For these functions, replace the Return Value section
+             with the following:
+
+             "These functions return the absolute value if successful, or
+             HUGE_VAL on overflow (_LHUGEVAL for _cabsl). The errno
+             variable is set to ERANGE on overflow. Error handling can
+             be changed with the _matherrl function."
+
+     163     The cos Functions
+             -----------------
+
+             For the cos functions, replace the Return Value section
+             with the following:
+
+             "If <x> is large, a partial loss of significance in the
+             result may occur in a call to cos, in which case the
+             function generates a _PLOSS error. If <x> is so large that
+             significance is completely lost, cos prints a _TLOSS
+             message to stderr and returns 0. In both cases, errno is
+             set to ERANGE.
+
+             "If the result is too large in a cosh call, the functions
+             return HUGE_VAL (_LHUGE_VAL for _coshl) and set errno to
+             ERANGE. This behavior can be changed with _matherr."
+
+     177     The difftime Function
+             ---------------------
+
+             The final printf statement in the example program DIFFTIME.C 
+             uses a format specifier, "%6.2f", which incorrectly implies 
+             accuracy to a hundredth of a second. The difftime function 
+             always returns a whole number. Replace the printf statement 
+             with the following:
+
+             printf( "\nProgram takes %6.0f seconds.\n", elapsed_time );
+
+             Replace the last line of the output with the following:
+
+             Program takes   4 seconds.
+
+     236     The _dup and _dup2 Functions
+             ----------------------------
+
+             Replace the third paragraph in the Remarks section with the
+             following:
+
+             "Both _dup and _dup2 accept file handles as arguments. If
+             you want to pass a stream (FILE *) to either of these
+             functions, use the _fileno function. This function
+             associates a stream with a file handle. The following example
+             shows how to associate stderr (defined as FILE * in STDIO.H)
+             with a handle:
+
+             cstderr = _dup( _fileno( stderr ));
+
+             "Note that in a QuickWin application, you cannot use either
+             _dup or _dup2 with _fileno on the stdin, stdout, or stderr
+             streams. You can, however, use the combination of the _dup 
+             functions and the _fileno function on other streams."
+
+     253     The exp and _expl Functions
+             ---------------------------
+
+             For these functions, replace the Return Value section with
+             the following:
+
+             "These functions return the exponential value of <x> if
+             successful. On overflow, expl returns _HUGE_VAL and _expl
+             returns _LHUGE_VAL. On underflow, they return 0. The errno
+             variable is set to ERANGE on overflow but is not set on
+             underflow."
+
+     260     The fclose and _fcloseall Functions
+             -----------------------------------
+
+             For ANSI compatibility, change all occurrences of "stdaux"
+             and "stdprn" to "_stdaux" and "_stdprn".
+
+     277     The fgets Function
+             ------------------
+
+             In the Description section, replace the description of
+             the int n argument with "Maximum number of characters 
+             to read".
+
+             In the Remarks section, remove the following sentence:
+             "If <n> is equal to 1, <string> is empty ("")."
+
+     312     The FREOPEN.C Example
+             ---------------------
+
+             For ANSI compatibility, change all occurrences of "stdaux"
+             and "stdprn" to "_stdaux" and "_stdprn".
+
+     318     The fseek Function
+             ------------------
+
+             Starting with Microsoft C/C++, the default action of the
+             fseek function is to not check whether the file pointer is
+             positioned before the beginning of the specified file. This
+             change was made for performance reasons.
+
+             If you want to receive an error message when an attempt is
+             made to seek before the beginning of a file, you must
+             explicitly link with LSEEKCHK.OBJ. This new object enables
+             the code that checks for and reports the occurrence of the
+             error condition. Because the error check slows fseek, you
+             may wish to use LSEEKCHK.OBJ during the development cycle
+             but not in the final product.
+
+             Replace the last sentence in the third paragraph of the
+             Remarks section with the following:
+
+             "An attempt to position the pointer before the beginning of
+             the file causes an error only if you explicitly link with
+             LSEEKCHK.OBJ."
+
+     326     The _fstat Function
+             -------------------
+
+             The last paragraph in the Remarks section for the _fstat
+             function should read as follows:
+
+             "In the File Allocation Table (FAT) file system supported by
+             MS-DOS, the creation and last access times of a file are not
+             kept separately. Therefore st_atime, st_ctime, and st_mtime
+             are always the same. These fields have different values
+             under UNIX.
+
+             "Note that if <handle> refers to a device, the size and
+             time fields in the _stat structure are not meaningful.
+             Also, because STAT.H uses the _dev_t type, which is defined
+             in TYPES.H, you must include TYPES.H before STAT.H in your
+             code."
+
+     335,    The _fwopen Function
+     337     --------------------
+
+             Change all occurrences of "_WINVER" to "_QWINVER".
+
+     348     _getch, _getche
+             ---------------
+
+             These functions cannot be used in QuickWin programs.
+
+     366     The _getgtextvector Function
+             ----------------------------
+
+             Change the first word in the Description sentence from
+             "Changes" to "Gets".
+
+     367     The _getimage Functions
+             -----------------------
+
+             Remove the following sentence fragment from the final
+             paragraph of the Remarks section:
+
+             "or by using the formula described on the _imagesize
+             reference page."
+
+
+     424     The _hypot and _hypotl Functions
+             --------------------------------
+
+             For these functions, replace the Return Value section with
+             the following:
+
+             "These functions return the length of the hypotenuse if
+             successful or _HUGE_VAL (_LHUGE_VAL for _hypotl) on
+             overflow. The errno variable is set to ERANGE on overflow."
+
+     447     The _ldexp, and _ldexpl Functions
+             ---------------------------------
+
+             For these functions, replace the first paragraph of the
+             Return section with the following:
+
+             "These functions return an exponential value if successful.
+             On overflow (depending on the sign of <x>), _ldexp returns
+             +/-_HUGE_VAL, and _ldexpl returns +/-_LHUGE_VAL; the errno
+             variable is set to ERANGE."
+
+     462     The _locking Function
+             ---------------------
+
+             The LOCKING.C example should include a call to the lseek
+             function (between the call to printf and the call to
+             _locking in the if block). Add the following line to
+             correctly reset the file pointer before unlocking the file:
+
+             lseek( fh, 0L, SEEK_SET );
+
+     463     The log Functions
+             -----------------
+
+             For the _logl and _logl10 functions, replace the first
+             paragraph of the Return Value section with the following:
+
+             "The log functions return the logarithm of <x> if
+             successful. If <x> is negative, the functions print a
+             _DOMAIN error message to stderr, return the value -HUGE_VAL
+             (-_LHUGE_VAL for the long double functions), and set errno
+             to EDOM. If <x> is 0, they print a _SING error message to
+             stderr, and set errno to ERANGE."
+
+     471     The _lseek Function
+             -------------------
+
+             Starting with Microsoft C/C++, the default action of the
+             _lseek function is to not check whether the file pointer is
+             positioned before the beginning of the specified file. This
+             change was made for performance reasons.
+
+             If you want to receive an error message when an attempt is
+             made to seek before the beginning of a file, you must
+             explicitly link with LSEEKCHK.OBJ. This new object enables
+             the code that checks for and reports the occurrence of the
+             error condition. Because the error check slows _lseek, you
+             may wish to use LSEEKCHK.OBJ during the development cycle
+             but not in the final product.
+
+             Replace the last sentence in the Remarks section with:
+
+             "An attempt to position the pointer before the beginning of
+             the file causes an error only if you explicitly link with
+             LSEEKCHK.OBJ."
+
+     480     malloc Functions
+             ----------------
+
+             The list of functions that can call malloc should include
+             the realloc and ::operator new functions.
+
+
+     484     The _matherr and _matherrl Functions
+             ------------------------------------
+
+             The description of the _UNDERFLOW value for the type field
+             of the _exception structure should read as follows:
+
+             _UNDERFLOW  The result is too small to be represented.
+                         (This condition is not currently supported.)
+
+     521     The mktime Function
+             -------------------
+
+             The fourth paragraph in the Remarks section should read as
+             follows:
+
+             "The mktime function handles dates in any time zone from
+             midnight, December 31, 1899 to midnight, February 5, 2036.
+             If timeptr references a date before midnight, December 31,
+             1899, mktime returns -1 cast to type time_t."
+
+     547     perror
+             ------
+
+             For ANSI compatibility, both the _sys_nerr variable and the
+             _sys_errlist variable require leading underscores.
+
+     654     The setbuf Function
+             -------------------
+
+             For ANSI compatibility, change all occurrences of "stdaux"
+             and "stdprn" to "_stdaux" and "_stdprn".
+
+     570     The _pg_initchart Function
+             --------------------------
+
+             The first paragraph under the Remarks section should end
+             with the following sentence:
+
+             "Also, _pg_initchart must be called after each change of the
+             video mode."
+
+     613     The realloc Functions
+             ---------------------
+
+             Add the following sentence to the last sentence of the second
+             paragraph in the Remarks section:
+
+             "Because the new block can be in a new memory location, the
+             pointer returned by the realloc functions is not guaranteed
+             to be the pointer passed through the <memblock> argument."
+
+     670     The setmod Function
+             -------------------
+
+             For ANSI compatibility, change all occurrences of "stdaux"
+             and "stdprn" to "_stdaux" and "_stdprn".
+
+     638     scanf
+             -----
+
+             The format specifier %U listed in table R.5 is obsolete and
+             is no longer supported.
+
+     712     The sinh Functions
+             ------------------
+
+             For the sin functions, replace the second paragraph of the
+             Return Value section with the following:
+
+             "The sinh function returns the hyperbolic sine of <x>. If
+             the result is too large, sinh sets errno to ERANGE and
+             returns +/-HUGE_VAL (+/-_LHUGE_VAL for the long double
+             functions). Error handling can be changed with the _matherr
+             function."
+
+     734     _stat
+             -----
+
+             For ANSI compatibility, type _dev_t requires a leading
+             underscore.
+
+     755     strerror, _strerror
+             -------------------
+
+             For ANSI compatibility, both the _sys_nerr variable and the
+             _sys_errlist variable require a leading underscore.
+
+     799     strxfrm
+             -------
+
+             At the end of the Remarks section, this line:
+
+                 return( strlen( _string2 ) );
+
+             should be:
+
+                 return strlen( _string1 );
+
+     866     The _wclose Function
+             --------------------
+
+             Change all occurrences of "_WINVER" to "_QWINVER".
+
+     872     The _wgetexit Function
+             ----------------------
+
+             Change all occurrences of "_WINVER" to "_QWINVER".
+
+     879     The _wgetsize Function
+             ----------------------
+
+             Change all occurrences of "_WINVER" to "_QWINVER".
+
+     882,    The _wopen Function
+     884     -------------------
+
+             Change all occurrences of "_WINVER" to "_QWINVER".
+
+     890     The _wsetexit Function
+             ----------------------
+
+             Change all occurrences of "_WINVER" to "_QWINVER".
+
+     897     The _wsetsize Function
+             ----------------------
+
+             Change all occurrences of "_WINVER" to "_QWINVER".
+
+     906     Index
+             -----
+
+             The _daylight variable is missing its leading underscore in
+             the index to the "Run-Time Library Reference."
+
+     915     Index
+             -----
+
+             Under O, insert:
+                OLDNAMES.LIB, x (Introduction)
+
+     922     Index
+             -----
+
+             The _timezone and _tzname variables are missing their
+             leading underscores in the index to the "Run-Time Library
+             Reference."
+
+=============< Part 7: Notes on "Class Libraries Reference" >===============
+
+     The LPSTR parameter type in the following functions was changed to 
+     LPCSTR:
+
+     CWinApp::LoadCursor
+     CWinApp::LoadStandardCursor
+     CWinApp::LoadIcon
+     CWinApp::LoadStandardIcon
+     CDC::Escape(..., LPSTR lpInData, ...);
+
+     The LPSTR parameter type in the following functions was changed to 
+     const void FAR*:
+
+     CBitmap::CreateBitmap
+     CBitmap::SetBitmapBits
+     CDC::CreateDC
+     CDC::CreateIC
+     CMenu::LoadMenuIndirect
+     CDialog::CreateIndirect
+
+     The const char FAR* parameter type in the following functions was 
+     changed to LPSTR:
+
+     CWnd::DlgDirList
+     CWnd::DlgDirListComboBox
+     CDC::GetTextFace
+
+     The function CWnd::SetWindowPos returns a Boolean value, which is 
+     nonzero if successful. 
+
+     The function CGdiObject::DeleteObject now returns a Boolean value.
+
+     The return type has changed for the following global functions and 
+     member function:
+
+     HINSTANCE AfxGetInstanceHandle();
+     HINSTANCE AfxGetResourceHandle();
+     WNDPROC* CWnd::GetSuperWndProcAddr();
+
+     The LPSTR parameter type has been replaced in the syntax of the 
+     following member functions, as follows:
+
+     DWORD CBitmap::GetBitmapBits( DWORD dwCount, void FAR* lpBits) const;
+     int CDC::Escape( int nEscape, int nCount, LPCSTR lpInData, void FAR* 
+             lpOutData);
+     int CGdiObject::GetObject( int nCount, void FAR* lpObject) const;
+
+     The CWnd* parameter type in the syntax of the following member 
+     functions has changed to the CListBox* or CScrollBar* type:
+
+     afx_msg int CWnd::OnCharToItem(UINT nChar, CListBox* pListBox, UINT 
+             nIndex);
+     afx_msg void CWnd::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* 
+             pScrollBar);
+     afx_msg int CWnd::OnVKeyToItem(UINT nKey, CListBox* pListBox, UINT 
+             nIndex);
+     afx_msg void CWnd::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* 
+             pScrollBar);
+
+     Both the parameter and parameter type have changed for the following 
+     member function: 
+
+     afx_msg void CWnd::OnNcCalcSize( NCCALCSIZE_PARAMS FAR* lpncsp);
+
+     Changes should be made to the "Class Libraries Reference" manual 
+     on the following pages:
+
+     Page    Note
+     ----    ----
+
+     74      WM_PAINTICON Message is No Longer Supported
+             -------------------------------------------
+
+             The WM_PAINTICON message is no longer supported by Windows 
+             3.1. Therefore, the OnPaintIcon member function (described on 
+             page 773) is no longer part of the CWnd class. This also means 
+             that the message-map entry ON_WM_PAINTICON() on page 74 and 
+             the corresponding function prototype are not supported. Windows 
+             now generates the WM_PAINT message for events that would have 
+             triggered WM_PAINTICON messages, so CWnd::OnPaint can be used 
+             instead of OnPaintIcon.
+
+     90      Class Hierarchy Chart
+             ---------------------
+
+             The chart should show that class CMDIFrameWnd is derived
+             from CFrameWnd instead of CWnd. This change should also
+             be made to the Microsoft Class Libraries quick-reference
+             card.
+
+     271     CDialog::OnInitDialog
+             --------------------
+
+             Replace the paragraph under Return Value with the
+             following:
+
+             "Specifies whether the application has set the input focus
+             to one of the controls in the dialog box. If OnInitDialog
+             returns TRUE, Windows sets the input focus to the first
+             control in the dialog box. The application can return
+             FALSE only if it has explicitly set the input focus to one
+             of the controls in the dialog box."
+
+     437     The description of the lpRectReserved parameter of 
+             CMenu::TrackPopupMenu should say that lpRectReserved points 
+             to a RECT structure or CRect object instead of a RECT structure 
+             or CPoint object. 
+
+     514     class CPoint
+             ------------
+
+             The description of the return value for member function
+             Offset of class CPoint should read as follows:
+
+             "A CPoint offset by a POINT, CPoint, SIZE, or CSize."
+
+     606     class CTime
+             -----------
+
+             Add the following sentence to the third paragraph:
+
+             "Note that CTime uses the strftime function, which is
+             not supported for Windows DLLs. Therefore, CTime cannot be
+             used in Windows DLLs."
+
+     773     WM_PAINTICON Message is No Longer Supported
+             -------------------------------------------
+
+             The WM_PAINTICON message is no longer supported by Windows 
+             3.1. Therefore, the OnPaintIcon member function is no longer 
+             part of the CWnd class. 
+
+============< Part 8: Notes on "Class Libraries User's Guide" >=============
+
+     Page    Note
+     ----    ----
+
+     9       Makefile Defaults
+             -----------------
+
+             The third paragraph in the "Makefile Defaults" section
+             should read as follows:
+
+             "Both release mode and debug mode sample programs build
+             into the same directory. DMTEST and CMDBOOK build into
+             the MFC\SAMPLES\TUTORIAL\CHAR directory. PHBOOK builds
+             into the MFC\SAMPLES\TUTORIAL\WIN directory. HELLO
+             builds into the MFC\SAMPLES\HELLO directory."
+
+             The fourth paragraph in the same section should be
+             completely deleted. This paragraph begins as follows:
+
+             "For debug mode builds, DMTEST and CMDBOOK build into
+             the MFC\SAMPLES\TUTORIAL\CHARD directory...."
+
+     11      How to Build with PWB
+             ---------------------
+
+             At the top of the page, item 7 in the list should be
+             replaced by the following:
+
+             "If you get errors, examine the error messages in the
+             Build Results window. You can get information on the
+             error messages in Help or in the 'Comprehensive
+             Index and Error Reference' manual. After correcting these
+             errors, rebuild your program."
+
+     12      Debug Mode for PWB
+             ------------------
+
+             Item 3 under "To switch from release builds to debug-
+             ging builds with PWB" should read simply as follows:
+
+             3. Select "Use Debug Options"
+
+             Delete the explanatory paragraph below item 3.
+
+     12      Debug Mode for NMAKE
+             --------------------
+
+             Add the following lines just after "To switch from
+             release builds to debugging builds with NMAKE":
+
+             - Remove all existing release-mode object, compiled
+               resource, and executable files by invoking NMAKE
+               on the sample makefile while specifying the 'clean'
+               target. For example:
+
+               NMAKE /F PHBOOK clean      (case is significant)
+
+               You must always move or delete old compiled files before
+               switching build modes (from release to debug or from
+               debug to release).
+
+     59      Incorrect Output Listing
+             ------------------------
+
+             The line following the second instance of "List contains:"
+             in the program output should read:
+
+             Meyers, Brian 236-1234
+
+             The corresponding output from the sample program
+             (DMTEST.EXE) is correct.
+
+     116     RESOURCE.H Source Code Listing
+             ------------------------------
+
+             The file listing for file RESOURCE.H is missing an end-
+             comment delimiter. The first line of the file should end
+             with a "*/" comment delimiter. The code is correct on
+             disk.
+
+     165     How Dialog Objects Work
+             -----------------------
+
+             The last sentence in the first paragraph of this section
+             should read "For a distinction between modal and modeless
+             dialog boxes, see 'Modal vs. Modeless Dialog Boxes' on
+             page 162."
+
+     171     VIEW.CPP Source Code Listing
+             ----------------------------
+
+             Change the one occurrence of the following:
+
+                 extern "C"
+                 {
+                     #include <commdlg.h>
+                 }
+
+             to the following:
+
+                 #include <commdlg.h>
+
+     176     VIEW.CPP Source Code Listing
+             ----------------------------
+
+             Change both occurrences of the following:
+
+                 char ErrorMsg[25];
+
+             to the following:
+
+                 char ErrorMsg[SIZESTRING];
+
+     178     VIEW.CPP Source Code Listing
+             ----------------------------
+
+             Change the one occurrence of the following:
+
+                 char szError[50];
+
+             to the following:
+
+                 char szError[SIZESTRING];
+
+             Also on page 178, change the following:
+
+                 UINT nExtPage = ( dc->GetDeviceCaps(VERTRES) -
+                                   nCharHeight ) / nCharHeight;
+
+             to the following:
+
+                 int nExtPage = ( dc->GetDeviceCaps(VERTRES) -
+                                  nCharHeight ) / nCharHeight;
+
+     180     VIEW.CPP Source Code Listing
+             ----------------------------
+
+             After the line that reads:
+
+                 pMenu -> EnableMenuItem( IDM_FINDALL, MF_ENABLED );
+
+             add the line:
+
+                 pMenu -> EnableMenuItem( IDM_FIND, MF_GRAYED );
+
+
+     181     VIEW.CPP Source Code Listing
+             ----------------------------
+
+             After the line that reads:
+
+                 pMenu -> EnableMenuItem( IDM_FINDALL, MF_GRAYED );
+
+             add the line:
+
+                 pMenu -> EnableMenuItem( IDM_FIND, MF_ENABLED );
+
+
+     184     VIEW.CPP Source Code Listing
+             ----------------------------
+
+             Change the occurrence of the following:
+
+                 void CMainWindow::OnVScroll( UINT wParam, UINT pos, CWnd* )
+
+             to the following:
+
+                 void CMainWindow::OnVScroll( UINT wParam, UINT pos,
+                                              CScrollBar* )
+
+     185     VIEW.CPP Source Code Listing
+             ----------------------------
+
+             Change the occurrence of the following:
+
+                 void CMainWindow::OnHScroll( UINT wParam, UINT pos, CWnd* )
+
+             to the following:
+
+                 void CMainWindow::OnHScroll( UINT wParam, UINT pos,
+                                              CScrollBar* )
+
+
+     192     VIEW.CPP Source Code Listing
+             ----------------------------
+
+             Change the occurrences of the following:
+
+                 of.lpstrFilter = (LPSTR)szFilter;
+                 of.lpstrCustomFilter = (LPSTR)NULL;
+                 of.lpstrTitle = (LPSTR)NULL;
+                 of.lpstrDefExt = (LPSTR)"pb";
+
+             to the following:
+
+                 of.lpstrFilter = szFilter;
+                 of.lpstrCustomFilter = NULL;
+                 of.lpstrTitle = NULL;
+                 of.lpstrDefExt = "pb";
+
+     193     VIEW.CPP Source Code Listing
+             ----------------------------
+
+             Change both occurrences of the following:
+
+                 char ErrorMsg[25];
+
+             to the following:
+
+                 char ErrorMsg[SIZESTRING];
+
+     203     To add a constructor definition:
+             --------------------------------
+
+             The last sentence in the first paragraph on this page
+             should read "For more information about the VERIFY macro
+             and its companion, the ASSERT macro, see Chapter 11 in this
+             manual."
+
+     364     Microsoft C/C++ Input/Output Alternatives
+             -----------------------------------------
+
+             Add the following sentence to the last paragraph on the
+             page:
+
+             "You cannot use iostreams in tiny-model programs. The reason
+             is that tiny-model programs cannot contain static objects
+             like the cin and cout stream objects."
+
+======< Part 9: Notes on "Comprehensive Index and Errors Reference" >=======
+
+     NOTE: The Comprehensive Index does not include entries for books 
+     ordered as fulfillment items for MS C/C++.
+
+     Page    Note
+     ----    ----
+
+     77,     Index
+     252     -----
+
+             The _daylight and _tzname variables are missing their
+             ANSI-mandated underscores.
+
+     255     Index
+             -----
+
+             The _timezone variable is not listed. The _timezone
+             variable is described on page 62 of the "Run-Time Library
+             Reference."
+
+     Changes to "Error Messages"
+     ---------------------------
+
+     If there is a difference between the printed description of an
+     error or warning and its description in Help, then the information
+     in Help supersedes information in the printed documentation.
+
+     The printed descriptions for the following errors are superseded
+     by the descriptions given in Help:
+
+     DOS Extender Run-Time Errors
+
+          R6901, R6903, R6907, R6914, R6918, R6921, R6950
+
+     CVPACK Error
+
+          CK1003
+
+     The CVPACK error message CK1002 is incorrect:
+
+     CK1002  out of virtual memory
+
+             The printed documentation and Help for this error
+             incorrectly mention a DPMI server named MSDPMI.EXE.
+             To make extended memory available to CVPACK, run it in
+             a DOS session under Windows 3.x enhanced mode, or under
+             another DPMI server such as the version of Qualitas 
+             386-Max that ships with Microsoft C/C++. 
+
+     Neither the printed nor the online documents describe the following
+     new CVPACK error message:
+
+     CK1022  Symbol table for <filename> is too large.
+
+             The corrective action is to compile <filename> without
+             CodeView information, reduce the number of symbols in
+             the file, or split the file into two or more pieces.
+
+     The following CodeView error messages are new:
+
+     CV1060  command not supported for current configuration
+
+             If you have specified the two-monitors option (/2), you
+             cannot specify the flip/swap option (/of- or /of+) from the
+             CodeView Command Window.
+
+     CV3627  no nonnative execution model
+
+             You must specify a nonnative execution model in order to
+             debug a p-code program. If you do not, CodeView displays a
+             message box that reminds you that you must.
+
+             Add the following line to your TOOLS.INI file:
+
+                  model:nmd1pcd.dll
+
+    Compiler error C1060 should include the following information:
+
+    C1060    compiler is out of far heap space
+
+             In addition to the solutions described in the printed
+             documentation and Help, increasing the amount of virtual
+             memory that Windows provides can solve this problem.
+             To do this, run the Control Panel program in the Windows
+             Main group, and then open the 386 Enhanced dialog box.
+             Next, click the "Virtual Memory" button and then click
+             the "Change" button. Enter a larger value in the "New
+             Size" field. You may need to free some disk space before
+             you can use more virtual memory.
+
+     The printed description of the following errors and warnings
+     should be replaced:
+
+     C1004   unexpected end of file found
+
+             The default disk drive did not contain sufficient space
+             for compiler-generated temporary files. The space required
+             is approximately two times the size of the source file.
+
+             This message appears: 
+
+             - When #if directives evaluate to false without corresponding 
+               closing #endif directives.
+
+             - If the precompiled headers option (/Yu) is enabled, but the 
+               file doesn't contain a hdrstop pragma.
+
+             - When the /Yu<filename> option is used and the source file 
+               being compiled does not contain an #include "<filename>" 
+               directive that uses the same filename used with /Yu.
+
+     C4010   single-line comment contains line-continuation character
+
+             A single-line comment (introduced by //) contains a
+             line-continuation character (\). The next line after the
+             line-continuation character is ignored; it is considered to
+             be the continuation of the previous line and is treated as
+             a comment.
+
+     The following compiler error is not described in the printed
+     documentation or in Help:
+
+     C2599   'function' : local functions are not supported
+
+     The specified function was defined inside the body of another
+     function.
+
+     This error can be caused by omitting the closing curly brace (})
+     in a function definition.
+
+     The following is an example of this error:
+
+          void func1()
+          {
+                                 // Missing a closing curly brace here
+               void func2() {}   // Error detected on this line
+
+          void func3()
+          {
+               void func4() {}   // Error detected on this line
+          }                      // Local functions not allowed
+
+     The following errors have been renumbered:
+
+     C2852 is now C1852
+     C2853 is now C1853
+
+The following compiler errors are not documented in Help or in the
+printed documentation.
+
+
+     C2675   unary 'operator' : 'class' does not define this operator or
+             a conversion to a type acceptable to the builtin operator
+
+             The specified operator was used on a user-defined type
+             that did not define the operator or allow the type to be
+             converted to a fundamental type.
+
+             This error can be caused by specifying a parameter type
+             in a unary operator definition. A unary operator is
+             always passed an implicit this pointer to the object
+             the operator is applied to, so the correct definition
+             syntax for a unary operator uses empty parentheses.
+
+             The following is an example of this error:
+
+                  class C
+                  {
+                     public:
+                     operator +(int);  // binary +, not unary
+                  } c;
+
+                  class D
+                  {
+                     public:
+                     operator int();   // conversion to int
+                  } d;
+
+                  class E
+                  {
+                     public:
+                     operator +();     // correct unary syntax
+                  } e;
+
+                  int i;
+                  void main()
+                  {
+                     i = +c;   // error
+                     i = +d;   // OK, d is converted to int first
+                     i = +e;   // OK, unary + is defined
+                  }
+
+     C2676   binary 'operator' : 'class' does not define this operator
+             or a conversion to a type acceptable to the builtin
+             operator
+
+             The specified operator was used on a user-defined type
+             that did not define the operator or allow the type to be
+             converted to a fundamental type.
+
+             This error can be caused by defining the unary form of
+             an operator but not the binary form. The correct syntax
+             for a binary operator uses one parameter.
+
+             The following is an example of this error:
+
+                  class C
+                  {
+                     public:
+                     operator +();     // unary +, but not binary
+                  } c;
+
+                  class D
+                  {
+                     public:
+                     operator int();   // conversion to int
+                  } d;
+
+                  class E
+                  {
+                     public:
+                     operator +(int);  // correct binary syntax
+                  } e;
+
+                  int i;
+                  void main()
+                  {
+                     i = c + 1;   // error
+                     i = d + 1;   // OK, d is converted to int first
+                     i = e + 1;   // OK, binary + is defined
+
+     C2677   binary 'operator' : no global operator defined which
+             takes type 'class' (or there is no acceptable conversion)
+
+             The specified operator was used on a user-defined type
+             that did not define the operator or allow the type to be
+             converted to a fundamental type.
+
+             This error can be caused by an incorrect definition of the
+             operator, or by using the parameters in the wrong order.
+
+             The following is an example of this error:
+
+                  class C
+                  {
+                     public:
+                     operator +(int);  // OK for C + int
+                  } c;
+
+                  void main()
+                  {
+                     c = 1 + c;        // error for int + C
+                  }
+
+             The following example shows correct declaration of a global
+             operator for a user-defined type:
+
+                  class C
+                  {
+                     public:
+                     friend C operator+( int, C& );
+                  } c;
+
+                  void main()
+                  {
+                     c = 1 + c;   // OK
+                  }
+
+     Compiler Warning C4793 is not documented in Help or in the printed
+     documentation:
+
+     C4793   native code generated for p-code function 'function' with
+             inline assembly
+
+             Because the specified function contained inline assembly,
+             it was not compiled as a p-code function. It is not possible
+             to mix p-code and assembly in a function.
+               
+     Additions to "Error Messages"
+     -----------------------------
+
+     The following errors and warnings are described in Help but are not
+     described in the printed documentation.
+
+     Fatal Errors:
+
+     C1014  too many include files : depth = 'level'
+     C1038  compiler limit : 'function' : control flow state too
+            complex; simplify function
+     C1506  unrecoverable block scoping error
+
+     Compiler Errors:
+
+     C2080  illegal __far __fastcall function or __saveregs function
+     C2081  'identifier' : name in formal parameter list illegal
+     C2117  'identifier' : array bounds overflow
+     C2128  'function' : alloc_text/same_seg applicable only to
+            functions with C linkage
+     C2138  cannot define an enumeration with no members
+     C2147  'identifier' : const array must be fully initialized
+     C2201  'identifier' : cannot export static declarations
+     C2225  'function' : function allocation must be in a named segment
+     C2230  'operator' : indirection to different types
+     C2240  unexpected 'token' following formal list. (only modifiers
+            are allowed.)
+     C2265  'identifier' : reference to a zero sized array is illegal
+     C2266  'identifier' : reference to a nonconstant bounded array is
+            illegal
+     C2267  'function' : block scoped static functions are illegal
+     C2275  'identifier' : illegal use of this type as an expression
+     C2276  illegal address of bound member function expression
+     C2277  'identifier' : cannot take the address of a constructor
+     C2278  'function' : no function with C linkage found
+     C2279  cannot use braces to initialize default arguments
+     C2280  missing '{' before identifier 'identifier'?
+     C2281  'identifier1' : is not a function, but contains <function
+            returning>. 'identifier2' is expected.
+     C2282  'identifier1' is followed by 'identifier2'. (missing ','?)
+     C2283  'identifier' : pure specifier not allowed on unnamed
+            class-key
+     C2290  C++ 'keyword' syntax is reserved for future use
+     C2379  formal parameter 'number' has different type when promoted
+     C2379  formal parameter 'number' has different type when promoted
+     C2387  ambiguous conversion from 'type1&' to 'type2&'
+     C2423  'number' : illegal scale
+     C2466  cannot allocate an array of constant size 0
+     C2513  'type' : decl-specifier is missing a declarator before '='
+     C2602  'class::identifier' is not a member of a base of 'class'
+     C2603  illegal access declaration: 'class1' is not a direct base
+            of 'class2'
+     C2604  cannot declare 'modifier' access to 'modifier' member
+     C2605  overloaded functions 'class::function' do not have same
+            access
+     C2606  'class::identifier': illegal private access declaration
+     C2610  identifier 'identifier' can never be instantiated; user
+            defined constructor is required
+     C2634  '&class::member' : pointer to reference member is illegal
+     C2723  'function' : 'specifier' storage class specifier illegal
+            on function definition
+     C2758  'const' : must be initialized in constructor base/member
+     C2855  command-line option 'option' inconsistant with precompiled
+            header
+     C2856  #pragma hdrstop cannot be inside an #if block
+     C2857  '#include filename' statement specified with the
+            /Yc'filename'command-line option was not found in the
+            source file
+
+     Compiler Warnings:
+
+     C4011  'identifier' : identifier was truncated to 'number'
+            characters
+     C4032  formal parameter 'number' has different type when promoted
+     C4056  overflow in floating point constant arithmetic
+     C4057  'operator' : indirection to slightly different base types
+     C4058  unions are now aligned on alignment requirement, not size
+     C4097  nonstandard extension : typedef-name 'identifier1' used as
+            synonym for class-name 'identifier2'
+     C4126  'option' : unknown memory-model command-line option
+     C4127  conditional expression is constant
+     C4146  unary minus operator applied to unsigned type, result still
+            unsigned
+     C4147  'identifier' : 'modifier' ignored on pointer and reference
+            declarations
+     C4152  nonstandard extension, function/data ptr conversion in
+            expression
+     C4153  function/data pointer conversion in expression
+     C4154  deletion of an array expression; conversion to pointer
+            supplied
+     C4155  deletion of an array expression without using the array
+            form of 'delete'
+     C4156  deletion of an array expression without using the array
+            form of 'delete'; array form substituted
+     C4251  'identifier' : base type 'type' should be exported to
+            export 'class-key' 'identifier'
+     C4260  no override, 'class1::function1' has 'model' 'this' memory
+            model whereas 'class2::function2' has 'model 'this' memory
+            model
+     C4261  no override, 'class1::function1' has 'model' calling
+            convention whereas 'class2::function2' has 'model' calling
+            convention
+     C4307  'operator' : integral constant overflow; result truncated
+     C4308  negative integral constant converted to unsigned type
+     C4309  'identifier' : truncation of constant value
+     C4355  'this' : used in base member initializer list
+     C4385  'text' the 'identifier1' in base 'identifier2'
+     C4386  'text' to the 'identifier1' in base 'identifier2'
+     C4622  overwriting debug information formed during creation of the
+            precompiled header in object file: 'file'
+     C4741  /Oq option ignored for __fastcall function 'function'
+
+     Command-Line Warnings:
+
+     D4023  option 'option' forces use of optimizing compiler
+
+     LINK Warnings:
+
+     L4086  /r not first on command line; ignored
+
+     DOS Extender Run-Time Errors:
+
+     R6950  VMCPD.386 has been superseded by a later version of Windows.
+            Change the [386Enh] section in SYSTEM.INI by replacing this
+            line:
+
+                device=[path\]vmcpd.386
+
+            with this line:
+
+                device=*vmcpd
+
+================< Part 10: Notes on "CLANG.HLP" (Help) >==================
+
+     Example Program for vsprintf, vprintf, and vfprintf
+     ---------------------------------------------------
+
+     In the WPRINTF.C example program for the vsprintf, vprintf, and
+     vfprintf functions, the following line is incorrect:
+
+          size = (size > 512) ? 512 : size * 5;
+
+     The greater-than operator should be a less-than operator:
+
+          size = (size < 512) ? 512 : size * 5;
+
+     __near, __far, __huge, and __based with Static Data Objects
+     -----------------------------------------------------------
+
+     Online Help for __near, __far, __huge, and __based says that these
+     keywords modify data objects. More precisely, they modify static
+     data objects (variables with file scope, or static local variables),
+     not automatic variables.
+
+==================< Part 11: Notes on "CL.HLP" (Help) >===================
+
+     The second paragraph in the following MPC error message should read
+     as follows:
+
+     MP1083 segment overflow writing p-code tables in segment <segment>
+
+            Reduce the size of the given segment and relink. If you are
+            generating a Windows executable or are using the LINK /PACKC
+            option, you must reserve enough space for the p-code tables
+            with the LINK /PACKC:<number> option. The <number> specifies
+            the maximum size of a code segment--63488 bytes (64K minus 
+            512 bytes) is recommended.
+
+     The following NMAKE error is not documented in Help or in the printed
+     documentation:
+
+     U1059  syntax error : '}' missing in dependent
+
+            A search path for a dependent was incorrectly specified.
+            Either a space existed in the path or the closing brace (})
+            was omitted. The syntax for a directory specification for a
+            dependent is:
+
+                 {directories}dependent
+
+            where <directories> specifies one or more paths, each
+            separated by a semicolon (;). No spaces are allowed.
+
+            If part or all of a search path is replaced by a macro, be
+            sure that no spaces exist in the macro expansion.
+
+=======================< Part 12: Notes on "LINK" >=======================
+
+     The /PCODE option for LINK is not documented in Help for LINK or
+     in the printed documentation. The /PCODE option tells LINK to
+     call the Make P-Code (MPC) utility after linking. If you link a
+     p-code program using LINK instead of using CL, you must use /PCODE
+     to generate a valid executable file.
+ 
+     Section 3.4 of the "Programming Techniques" manual (page 53) contains
+     information on how to manually link p-code programs.
+
+===================< Part 13: Notes on Header Files >=====================
+
+     Correction to Function Definition 
+     ---------------------------------
+
+     The inline definition of istream::getline(signed char *, int, char)
+     is missing "_fGline++;" This omission will cause the getline function 
+     to behave like the get function in all cases. Replace the definition
+     with the following:
+
+     inline istream& istream::getline(char _HFAR_ * _b,int  \
+       _lim,char _delim) { _fGline++; return get(_b, _lim, _delim); }
+     inline istream& istream::getline(unsigned char _HFAR_ *  \
+       _b,int _lim,char _delim) { _fGline++; return get((char _HFAR_ \
+       *)_b, _lim, _delim); }
+     inline istream& istream::getline(signed char _HFAR_ *
+       _b,int _lim,char _delim) { _fGline++; return get((char _HFAR_ *)_b, \
+       _lim, _delim); }
+
+     Missing Modifier in Prototypes
+     ------------------------------
+
+     The set_new_handler prototypes in the NEW.H include file are missing 
+     the __cdecl modifier.  The correct prototypes are:
+
+     _PNH __cdecl _set_new_handler( _PNH );
+     _PNH __cdecl _set_nnew_handler( _PNH );
+     _PNH __cdecl _set_fnew_handler( _PNH );
+     _PNHH __cdecl _set_hnew_handler( _PNHH );
+     _PNHB __cdecl _set_bnew_handler( _PNHB );
+
+===< Part 14: Notes on "Microsoft Class Libraries" Quick-Reference Card >===
+
+     The chart should show that class CMDIFrameWnd is derived from
+     CFrameWnd instead of CWnd. This change should also be made to the
+     chart on pages 90 and 91 of the "Class Libraries Reference" book.
+
+==========================================================================
+
+     Microsoft, MS, MS-DOS, CodeView and QuickC are registered trademarks,
+     and Windows is a trademark of Microsoft Corporation.
+
+     UNIX is a registered trademark of American Telephone & Telegraph
+     Company.

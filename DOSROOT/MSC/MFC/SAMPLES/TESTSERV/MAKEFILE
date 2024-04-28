@@ -1,0 +1,69 @@
+# Makefile : Builds the application.
+#
+# This is a part of the Microsoft Foundation Classes C++ library.
+# Copyright (C) 1992 Microsoft Corporation
+# All rights reserved.
+#
+# This source code is only intended as a supplement to the
+# Microsoft Foundation Classes Reference and Microsoft
+# QuickHelp documentation provided with the library.
+# See these sources for detailed information regarding the
+# Microsoft Foundation Classes product.
+#
+# Usage:     NMAKE options     (builds the application)
+#    or:     NMAKE CLEAN       (erases the compiled files)
+#
+# Options:   DEBUG=[0|1]       (default is 0)
+
+PCH=testserv.h
+CPPFLAGS=  /DWINVER=0x0300 /AM /W3 /GA /GEs /G2 /Zp /Yu$(PCH)
+LINKFLAGS=/NOD /ONERROR:NOEXE
+
+!if "$(DEBUG)"=="1"
+CPPFLAGS=$(CPPFLAGS) /Od /f /Zi /D_DEBUG
+LINKFLAGS=$(LINKFLAGS) /COD
+LIBS=mafxcwd libw mlibcew shell olesvr commdlg
+!else
+CPPFLAGS=$(CPPFLAGS) /Oselg /Gs
+LINKFLAGS=$(LINKFLAGS)  
+LIBS=mafxcw libw mlibcew shell olesvr commdlg
+!endif
+
+OBJS=testserv.obj newserv.obj tsobject.obj servdoc.obj clipbd.obj \
+		tsfile.obj error.obj tests.obj
+
+all : testserv.exe
+
+testserv.obj testserv.pch: testserv.cpp testserv.h defs.h resource.h
+		$(CPP) $(CPPFLAGS) /Yc$(PCH) /c testserv.cpp
+
+CPPFLAGS=$(CPPFLAGS)
+
+testserv.res : testserv.rc resource.h testserv.ico
+		rc -r testserv.rc
+
+testserv.exe : $(OBJS) testserv.def testserv.res
+	link $(LINKFLAGS) @<<
+$(OBJS),
+testserv,
+NUL,
+$(LIBS),
+testserv.def;
+<<
+	rc -30 -k -t testserv.res
+
+newserv.obj  : testserv.h defs.h
+tsobject.obj : testserv.h resource.h
+servdoc.obj  : testserv.h
+clipbd.obj   : testserv.h
+tsfile.obj   : testserv.h resource.h defs.h
+error.obj    : testserv.h resource.h defs.h
+tests.obj    : testserv.h
+
+testserv.h   : tsobject.h servdoc.h newserv.h
+
+clean:
+		-erase testserv.exe
+		-erase testserv.res
+		-erase testserv.pch
+	-erase *.obj

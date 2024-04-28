@@ -1,0 +1,312 @@
+
+                              ANSWERS.TXT File
+
+       Commonly Asked Questions About Microsoft(R) C/C++, Version 7.0
+
+                  (C) Copyright Microsoft Corporation, 1992
+
+     This document contains answers to common questions posed by
+     first-time users of Microsoft C/C++ version 7.0 and its libraries
+     for MS-DOS(R) and Microsoft Windows(TM) operating systems.
+
+
+================================< Contents >================================
+
+
+     This file is divided into three parts:
+
+               Part     Title
+               ----     -----
+               1        Setup and Configuration Questions
+
+               2        Compiler and Languages Questions
+
+               3        Documentation Questions
+
+
+================< Part 1: Setup and Configuration Questions >===============
+
+
+     Q: How can I set up my system to ensure the fastest
+        possible compile times?
+
+     A: Here are four tips for fast compiling:
+
+       1. Use Precompiled Headers
+
+          Because the compiler spends a lot of time processing 
+          header files, precompiled headers can speed compilation 
+          significantly, especially when used with the fast compile 
+          option. This speed increase is particularly important when 
+          you include large header files, such as WINDOWS.H or the 
+          Microsoft Foundation Class header files.
+
+          Three compiler options let you take advantage of precompiled 
+          headers: /Yc (create precompiled header), /Yu (use precompiled 
+          header), and /Yd (include debugging information). 
+
+          For details, see Chapter 2, "Using Precompiled Header Files," 
+          in the "Programming Techniques" manual.
+
+       2. Use the Fast Compile Option
+
+          The fast compile option (/f) increases compilation speed by
+          eliminating some of the optimizations performed in a release
+          compilation. During the development phase of a project, when
+          execution speed is less important than build time, these fast 
+          compilations can dramatically boost your productivity. As a 
+          given portion of code stabilizes, you can use the optimizing 
+          compiler to obtain faster, smaller code.
+
+          The fast compile option is on by default if you do not select 
+          any optimizations (the /O options). Explicitly disabling 
+          optimizations using the /Od option also implies /f.
+
+          Note: The fast compile option does not impose capacity 
+          limitations on the optimizing compiler. 
+
+          See the README.TXT file for the most current information on the 
+          fast compile option.
+
+       3. Use a Disk Caching Program
+
+          Microsoft C/C++ includes SMARTDRV 4.0, a sophisticated disk 
+          caching program that significantly outperforms earlier versions 
+          of SMARTDRV. The new SMARTDRV is installed in your AUTOEXEC.BAT 
+          file by the Microsoft C/C++ Setup program. You should use 
+          SMARTDRV 4.0 in place of earlier versions. 
+
+          SMARTDRV 4.0 dramatically speeds up compile and link times 
+          compared to other disk caching programs.
+
+          Using RAMDRIVE.SYS to create one or more RAM drives may limit the 
+          memory assigned to your SMARTDRV cache. For best system 
+          performance, consider assigning more memory to SMARTDRV and less
+          to RAMDRIVE. SMARTDRV 4.0 is more flexible and efficient in the
+          way it uses memory than RAMDRIVE under such conditions. 
+
+       4. Use a RAM Disk Program
+
+          If you don't use SMARTDRV 4.0, try using a RAM disk program, such 
+          as RAMDRIVE.SYS, to store the compiler's intermediate files in 
+          RAM instead of on disk. 
+
+          To use this RAM disk, be sure to specify its drive designator in 
+          the TMP environment variable. To learn more about setting 
+          environment variables, see Chapter 3, "Configuring Your System," 
+          in the "Getting Started" manual. 
+
+
+     Q: How do I copy a single file from the installation disks onto
+        my machine?
+
+     A: There are two ways to copy a single file from the installation
+        disks. One method is to use the Setup program that installs
+        C/C++ for MS-DOS only. The other method is to use the DECOMP
+        utility provided with the Profiler.
+
+        To use the MS-DOS Setup program:
+
+        1. Exit the Windows environment.
+
+        2. Insert Disk1 into drive A.
+
+        3. Type A:CSETUP.EXE and select the "Copy a file from the
+        distribution disks" option.
+
+        4. Follow the instructions for installing one or more files.
+
+        To use the DECOMP utility provided on the Profiler Disk 1
+        installation disk, use the following syntax:
+
+        DECOMP srcFile destFile
+
+        where srcFile is the file (or files) to be copied and
+        destFile is the destination on your hard disk. For additional
+        information, type DECOMP /? at the command line to see Help
+        on the DECOMP utility.
+
+
+     Q: Since the /double_buffer option used with SMARTDRV.EXE can slow
+        performance in some instances, how can I determine if I really
+        need it?
+
+     A: The Setup program always installs SMARTDRV.EXE with the 
+        /double_buffer option. To determine if this option is needed
+        on your computer, see the information on SMARTDRV.EXE that begins 
+        on page 25 of the "Getting Started" manual. 
+
+
+     Q: When I press CTRL+C at a linker prompt, LINK does not
+        terminate. Why not?
+
+     A: After you press CTRL+C, press ENTER. The program then 
+        terminates. Pressing the ENTER key is necessary because 
+        DOS-extended programs respond differently to CTRL+C at an 
+        input prompt than do MS-DOS programs. This is most likely to 
+        occur when using the linker, but it can also occur at an input 
+        prompt in any DOS-extended program. DOS-extended programs in 
+        C/C++ 7.0 include the compiler, linker, CVPACK,MPC, and BSCMAKE.
+
+
+================< Part 2: Compiler and Languages Questions >=================
+
+
+     Q: I'm trying to use object files that I compiled with a previous
+        version of Microsoft C, but I'm getting LINK error "L2029:
+        unresolved external" for the run-time library functions. What's
+        wrong?
+
+     A: For full ANSI compatibility, all non-ANSI run-time functions,
+        constants, variables, typedefs, structures, and macros in the
+        new Microsoft include files begin with a single underscore (_).
+
+        However, not all non-ANSI symbols in older Microsoft C 
+        include files began with an underscore. For example, since
+        the function named "read" in older Microsoft include files is
+        not an ANSI function, it is now named "_read." Your old object
+        file contains symbols that do not begin with the correct
+        number of underscores.
+
+        The solution is to use the new OLDNAMES.LIB library, which
+        contains alias records that map the old names to the new names
+        (for example, "read" maps to "_read"). This aliasing happens
+        at link time so there is no time or space overhead in the
+        resulting executable file. Only programs that use non-ANSI
+        symbols require linking with OLDNAMES.LIB.
+
+        For more information about OLDNAMES.LIB, see "ANSI
+        Compatibility" on page x of the "Introduction" to the "Run-Time
+        Library Reference" manual.
+
+
+     Q: I'm trying to build an MFC sample program and I get a compilation
+        error stating that WINDOWS.H cannot be found. What should I do?
+
+     A. The Windows 3.1 Software Development Kit contains the necessary
+        files. Run the installation program for the SDK.
+
+
+     Q: When building an MFC sample program, the compiler generates an 
+        error regarding redefinition of NEAR, FAR, and CDECL. What
+        does this mean?
+
+     A. The compiler is accessing the wrong version of WINDOWS.H. Make sure
+        you are using the version of WINDOWS.H that shipped with C/C++.
+
+
+     Q: I'm trying to link C++ object files with C object files, but I'm
+        getting LINK error "L2029: unresolved external" for some of my
+        functions. What's wrong?
+
+     A: If you are going to call C functions from a C++ module, you must
+        declare those C functions as extern "C" in the C++ module. If you
+        are going to call C++ functions from a C module, you must declare
+        those C++ functions as extern "C" in the C++ module.
+
+        If you are writing a DLL in C++, you must also declare all
+        exported functions as extern "C".
+
+
+     Q: When PWB is building my application, CTRL+C does not cancel the
+        build. Why not?
+
+     A: Your CONFIG.SYS file needs the statement BREAK=ON for CTRL+C
+        to be recognized. 
+
+
+     Q: Does Microsoft C/C++ support 32-bit programming?
+
+     A: The current version of the compiler does not support 32-bit
+        programming. However, 32-bit programming will be supported
+        in a future release of the compiler.
+
+
+     Q: Is the Microsoft implementation of C++ fully compliant with the
+        ANSI draft specification for the C++ language?
+
+     A: Microsoft C++ is fully compliant with "The Annotated C++
+        Reference Manual" by Ellis & Stroustrup (published by Addison-
+        Wesley Publishing Company), with two exceptions: a class must be 
+        defined before a pointer to member of that class can be declared, 
+        and local classes are not supported (local classes without member 
+        functions are treated as global classes, and local classes with 
+        member functions generate the compiler error "C2601: functions 
+        cannot be defined in local classes").
+
+
+     Q: Does Microsoft C/C++ support templates (parameterized types)?
+
+     A: The current version of the compiler does not support templates.
+        Templates will be supported in a future release of the
+        compiler.
+
+        The Microsoft Foundation Classes provide an example program
+        named TEMPLDEF.CPP, which implements a subset of the template
+        facility. For more information about this example program, see
+        the contents of the directory \C700\MFC\SAMPLES\TEMPLDEF and
+        the file TN004.TXT in the directory \C700\MFC\DOC. (The MFC
+        directories are present only if you chose to install the
+        Microsoft Foundation Classes when running Setup.) Note that
+        this program is only an example, and the syntax it supports
+        may change in the future.
+
+
+     Q: Does Microsoft C/C++ support exception handling?
+
+     A: The current version of the compiler does not support exception
+        handling. Exception handling will be supported in a future
+        release of the compiler.
+
+        The Microsoft Foundation Classes provide an exception-handling
+        facility that is similar to the one proposed by the ANSI
+        committee. For more information about this facility, see
+        Chapter 12 of the "Class Libraries User's Guide", and the
+        CException class in the "Class Libraries Reference."
+
+
+====================< Part 3: Documentation Questions >=====================
+
+
+     Q: Where can I find a summary of the compiler options and
+        other new features included in Microsoft C/C++ version 7.0?
+
+     A: See Chapter 1 of "Getting Started," and Appendix C of the
+        "C Language Reference."
+
+
+     Q: The documentation set is so large--how can I find what I'm
+        looking for?
+
+     A: There is a topical overview of the Microsoft C/C++ documentation 
+        in Chapter 1 of "Getting Started." You might also want to spend 
+        a few minutes browsing through the comprehensive index (a combined
+        index to all the C/C++ books) in the "Comprehensive Index and 
+        Errors Reference" manual.
+
+
+     Q: Where is the Windows documentation?
+
+     A: The Microsoft Foundation Classes provide classes for writing
+        Windows programs in C++. You can find information on these
+        classes in the "Class Libraries User's Guide" manual, the "Class
+        Libraries Reference" manual, and in Help.
+
+        When you install the Windows 3.1 SDK, you can request that Help
+        be installed for the Windows programming tools. Unless you 
+        request different directory locations during installation, the
+        help files can be found in C700\HELP and in C700\BIN.
+
+
+     Q: Where can I find a list of the errors returned by the
+        compiler and utilities?
+
+     A: See the "Comprehensive Index and Errors Reference" manual
+        or Help.
+
+
+============================================================================
+
+
+     Microsoft, MS, and MS-DOS are registered trademarks, and Windows is a
+     trademark of Microsoft Corporation.

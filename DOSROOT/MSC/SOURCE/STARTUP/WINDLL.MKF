@@ -1,0 +1,25 @@
+###############################################################################
+#									      #
+#	Copyright (c) 1986-1992, Microsoft Corporation.  All rights reserved. #
+#									      #
+#	Makefile for building c runtime startup objects (WIN).		      #
+#									      #
+#	This makefile is invoked by CSTARTUP.<BAT,CMD>. 		      #
+#	See CSTARTUP.<BAT,CMD> for usage information.			      #
+#									      #
+###############################################################################
+
+#
+# environment variable settings for WIN DLL objects
+#
+
+SRC=..\..
+INC=..\..
+
+CFLAGS=-A$(MODEL)w -I$(INC) -I$(CINC) -Oart -Gs -GW -c -D_WINDOWS -D_WINDLL
+CL=cl $(CFLAGS)
+
+ASMFLAGS= -Mx -Dmem_$(MODEL) -I$(INC) -DSS_NEQ_DGROUP -D_WINDOWS -D_WINDLL
+ASM=masm $(ASMFLAGS)
+
+CMACROS=$(INC)\version.inc $(INC)\cmacros.inc

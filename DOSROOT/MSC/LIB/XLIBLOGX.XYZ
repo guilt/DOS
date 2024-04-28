@@ -1,0 +1,174 @@
+***SETUP LIB LOG FILE***
+
+This file contains the output of the LIB utility
+
+
+Microsoft (R) Library Manager  Version 3.20.010
+Copyright (C) Microsoft Corp 1983-1992.  All rights reserved.
+
+Library name: C:\MSC\LIB\SLIBCE.LIB
+Library does not exist.  Create? (y/n) Y
+Operations: +C:\MSC\LIB\SLIBCR.LIB  &
+Operations: +C:\MSC\LIB\LIBH.LIB  &
+Operations: +C:\MSC\LIB\EM.LIB  &
+Operations: +C:\MSC\LIB\SLIBFP.LIB  &
+Operations: +C:\MSC\LIB\SGRAPHFP.LIB  &
+Operations: +C:\MSC\LIB\SLIBCXX.LIB  &
+Operations: +C:\MSC\LIB\PCD.LIB            &
+Operations: +C:\MSC\LIB\VM.LIB;
+
+Microsoft (R) Library Manager  Version 3.20.010
+Copyright (C) Microsoft Corp 1983-1992.  All rights reserved.
+
+Library name: C:\MSC\LIB\SLIBC7.LIB
+Library does not exist.  Create? (y/n) Y
+Operations: +C:\MSC\LIB\SLIBCR.LIB  &
+Operations: +C:\MSC\LIB\LIBH.LIB  &
+Operations: +C:\MSC\LIB\87.LIB  &
+Operations: +C:\MSC\LIB\SLIBFP.LIB  &
+Operations: +C:\MSC\LIB\SGRAPHFP.LIB  &
+Operations: +C:\MSC\LIB\SLIBCXX.LIB  &
+Operations: +C:\MSC\LIB\PCD.LIB            &
+Operations: +C:\MSC\LIB\VM.LIB;
+
+Microsoft (R) Library Manager  Version 3.20.010
+Copyright (C) Microsoft Corp 1983-1992.  All rights reserved.
+
+Library name: C:\MSC\LIB\SLIBCA.LIB
+Library does not exist.  Create? (y/n) Y
+Operations: +C:\MSC\LIB\SLIBCR.LIB  &
+Operations: +C:\MSC\LIB\LIBH.LIB          &
+Operations: +C:\MSC\LIB\SLIBFA.LIB  &
+Operations: +C:\MSC\LIB\SGRAPHFA.LIB  &
+Operations: +C:\MSC\LIB\SLIBCXX.LIB  &
+Operations: +C:\MSC\LIB\PCD.LIB            &
+Operations: +C:\MSC\LIB\VM.LIB;
+
+Microsoft (R) Library Manager  Version 3.20.010
+Copyright (C) Microsoft Corp 1983-1992.  All rights reserved.
+
+Library name: C:\MSC\LIB\MLIBCE.LIB
+Library does not exist.  Create? (y/n) Y
+Operations: +C:\MSC\LIB\MLIBCR.LIB  &
+Operations: +C:\MSC\LIB\LIBH.LIB  &
+Operations: +C:\MSC\LIB\EM.LIB  &
+Operations: +C:\MSC\LIB\MLIBFP.LIB  &
+Operations: +C:\MSC\LIB\MGRAPHFP.LIB  &
+Operations: +C:\MSC\LIB\MLIBCXX.LIB  &
+Operations: +C:\MSC\LIB\PCD.LIB  &
+Operations: +C:\MSC\LIB\MOVE.LIB  &
+Operations: +C:\MSC\LIB\VM.LIB;
+
+Microsoft (R) Library Manager  Version 3.20.010
+Copyright (C) Microsoft Corp 1983-1992.  All rights reserved.
+
+Library name: C:\MSC\LIB\MLIBC7.LIB
+Library does not exist.  Create? (y/n) Y
+Operations: +C:\MSC\LIB\MLIBCR.LIB  &
+Operations: +C:\MSC\LIB\LIBH.LIB  &
+Operations: +C:\MSC\LIB\87.LIB  &
+Operations: +C:\MSC\LIB\MLIBFP.LIB  &
+Operations: +C:\MSC\LIB\MGRAPHFP.LIB  &
+Operations: +C:\MSC\LIB\MLIBCXX.LIB  &
+Operations: +C:\MSC\LIB\PCD.LIB  &
+Operations: +C:\MSC\LIB\MOVE.LIB  &
+Operations: +C:\MSC\LIB\VM.LIB;
+
+Microsoft (R) Library Manager  Version 3.20.010
+Copyright (C) Microsoft Corp 1983-1992.  All rights reserved.
+
+Library name: C:\MSC\LIB\MLIBCA.LIB
+Library does not exist.  Create? (y/n) Y
+Operations: +C:\MSC\LIB\MLIBCR.LIB  &
+Operations: +C:\MSC\LIB\LIBH.LIB          &
+Operations: +C:\MSC\LIB\MLIBFA.LIB  &
+Operations: +C:\MSC\LIB\MGRAPHFA.LIB  &
+Operations: +C:\MSC\LIB\MLIBCXX.LIB  &
+Operations: +C:\MSC\LIB\PCD.LIB  &
+Operations: +C:\MSC\LIB\MOVE.LIB  &
+Operations: +C:\MSC\LIB\VM.LIB;
+
+Microsoft (R) Library Manager  Version 3.20.010
+Copyright (C) Microsoft Corp 1983-1992.  All rights reserved.
+
+Library name: C:\MSC\LIB\CLIBCE.LIB
+Library does not exist.  Create? (y/n) Y
+Operations: +C:\MSC\LIB\CLIBCR.LIB  &
+Operations: +C:\MSC\LIB\LIBH.LIB  &
+Operations: +C:\MSC\LIB\EM.LIB  &
+Operations: +C:\MSC\LIB\CLIBFP.LIB  &
+Operations: +C:\MSC\LIB\SGRAPHFP.LIB  &
+Operations: +C:\MSC\LIB\CLIBCXX.LIB  &
+Operations: +C:\MSC\LIB\PCD.LIB            &
+Operations: +C:\MSC\LIB\VM.LIB;
+
+Microsoft (R) Library Manager  Version 3.20.010
+Copyright (C) Microsoft Corp 1983-1992.  All rights reserved.
+
+Library name: C:\MSC\LIB\CLIBC7.LIB
+Library does not exist.  Create? (y/n) Y
+Operations: +C:\MSC\LIB\CLIBCR.LIB  &
+Operations: +C:\MSC\LIB\LIBH.LIB  &
+Operations: +C:\MSC\LIB\87.LIB  &
+Operations: +C:\MSC\LIB\CLIBFP.LIB  &
+Operations: +C:\MSC\LIB\SGRAPHFP.LIB  &
+Operations: +C:\MSC\LIB\CLIBCXX.LIB  &
+Operations: +C:\MSC\LIB\PCD.LIB            &
+Operations: +C:\MSC\LIB\VM.LIB;
+
+Microsoft (R) Library Manager  Version 3.20.010
+Copyright (C) Microsoft Corp 1983-1992.  All rights reserved.
+
+Library name: C:\MSC\LIB\CLIBCA.LIB
+Library does not exist.  Create? (y/n) Y
+Operations: +C:\MSC\LIB\CLIBCR.LIB  &
+Operations: +C:\MSC\LIB\LIBH.LIB          &
+Operations: +C:\MSC\LIB\CLIBFA.LIB  &
+Operations: +C:\MSC\LIB\SGRAPHFA.LIB  &
+Operations: +C:\MSC\LIB\CLIBCXX.LIB  &
+Operations: +C:\MSC\LIB\PCD.LIB            &
+Operations: +C:\MSC\LIB\VM.LIB;
+
+Microsoft (R) Library Manager  Version 3.20.010
+Copyright (C) Microsoft Corp 1983-1992.  All rights reserved.
+
+Library name: C:\MSC\LIB\LLIBCE.LIB
+Library does not exist.  Create? (y/n) Y
+Operations: +C:\MSC\LIB\LLIBCR.LIB  &
+Operations: +C:\MSC\LIB\LIBH.LIB  &
+Operations: +C:\MSC\LIB\EM.LIB  &
+Operations: +C:\MSC\LIB\LLIBFP.LIB  &
+Operations: +C:\MSC\LIB\MGRAPHFP.LIB  &
+Operations: +C:\MSC\LIB\LLIBCXX.LIB  &
+Operations: +C:\MSC\LIB\PCD.LIB  &
+Operations: +C:\MSC\LIB\MOVE.LIB  &
+Operations: +C:\MSC\LIB\VM.LIB;
+
+Microsoft (R) Library Manager  Version 3.20.010
+Copyright (C) Microsoft Corp 1983-1992.  All rights reserved.
+
+Library name: C:\MSC\LIB\LLIBC7.LIB
+Library does not exist.  Create? (y/n) Y
+Operations: +C:\MSC\LIB\LLIBCR.LIB  &
+Operations: +C:\MSC\LIB\LIBH.LIB  &
+Operations: +C:\MSC\LIB\87.LIB  &
+Operations: +C:\MSC\LIB\LLIBFP.LIB  &
+Operations: +C:\MSC\LIB\MGRAPHFP.LIB  &
+Operations: +C:\MSC\LIB\LLIBCXX.LIB  &
+Operations: +C:\MSC\LIB\PCD.LIB  &
+Operations: +C:\MSC\LIB\MOVE.LIB  &
+Operations: +C:\MSC\LIB\VM.LIB;
+
+Microsoft (R) Library Manager  Version 3.20.010
+Copyright (C) Microsoft Corp 1983-1992.  All rights reserved.
+
+Library name: C:\MSC\LIB\LLIBCA.LIB
+Library does not exist.  Create? (y/n) Y
+Operations: +C:\MSC\LIB\LLIBCR.LIB  &
+Operations: +C:\MSC\LIB\LIBH.LIB          &
+Operations: +C:\MSC\LIB\LLIBFA.LIB  &
+Operations: +C:\MSC\LIB\MGRAPHFA.LIB  &
+Operations: +C:\MSC\LIB\LLIBCXX.LIB  &
+Operations: +C:\MSC\LIB\PCD.LIB  &
+Operations: +C:\MSC\LIB\MOVE.LIB  &
+Operations: +C:\MSC\LIB\VM.LIB;

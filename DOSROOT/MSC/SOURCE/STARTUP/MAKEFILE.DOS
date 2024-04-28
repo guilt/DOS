@@ -1,0 +1,169 @@
+###############################################################################
+#									      #
+#	Copyright (c) 1986-1992, Microsoft Corporation.  All rights reserved. #
+#									      #
+#	Makefile for building c runtime startup objects (DOS).		      #
+#									      #
+#	This makefile is invoked by CSTARTUP.<BAT,CMD>. 		      #
+#	See CSTARTUP.<BAT,CMD> for usage information.			      #
+#									      #
+###############################################################################
+
+#
+# environment variable settings
+#
+
+SRC=..\..
+INC=..\..
+
+CFLAGS=-A$(MODEL) -I$(INC) -I$(CINC) -Oart -Gs  -c
+CL=cl $(CFLAGS)
+
+ASMFLAGS= -Mx -Dmem_$(MODEL) -I$(INC)
+ASM=masm $(ASMFLAGS)
+
+CMACROS=$(INC)\version.inc $(INC)\cmacros.inc
+
+#
+# DOS objects
+#
+
+dos:	\
+        crt0.obj \
+        crt0dat.obj \
+        crt0msg.obj \
+        fmsghdr.obj \
+        nmsghdr.obj \
+        chksum.obj \
+        stdargv.obj \
+        stdalloc.obj \
+        stdenvp.obj \
+        nchkstk.obj \
+        fchkstk.obj \
+        nrchkstk.obj \
+        frchkstk.obj \
+        _file.obj \
+        setargv.obj \
+        _setargv.obj \
+        wild.obj \
+        crt0fp.obj \
+        execmsg.obj \
+        nulbody.obj \
+	dosstart
+
+#
+# .COM file (tiny model) support
+#
+
+crtcom: crtcom.lib
+
+
+#
+# startup modules
+#
+
+crt0.obj: $(SRC)\dos\crt0.asm $(CMACROS) $(INC)\msdos.inc \
+            $(INC)\heap.inc $(INC)\rterr.inc
+            $(ASM) $(SRC)\dos\crt0.asm,crt0.obj;
+
+crt0dat.obj: $(SRC)\dos\crt0dat.asm $(CMACROS) $(INC)\msdos.inc
+            $(ASM) $(SRC)\dos\crt0dat.asm,crt0dat.obj;
+
+crt0msg.obj: $(SRC)\dos\crt0msg.asm $(CMACROS) $(INC)\rterr.inc
+            $(ASM) $(SRC)\dos\crt0msg.asm,crt0msg.obj;
+
+fmsghdr.obj:	$(SRC)\fmsghdr.asm $(CMACROS) $(INC)\msdos.inc
+		$(ASM) $(SRC)\fmsghdr.asm;
+
+nmsghdr.obj: $(SRC)\dos\nmsghdr.asm $(CMACROS) $(INC)\msdos.inc
+            $(ASM) $(SRC)\dos\nmsghdr.asm,nmsghdr.obj;
+
+chksum.obj:	$(SRC)\chksum.asm $(CMACROS) $(INC)\rterr.inc
+		$(ASM) $(SRC)\chksum.asm;
+
+stdargv.obj: $(SRC)\dos\stdargv.asm $(CMACROS) $(INC)\msdos.inc \
+            $(INC)\rterr.inc
+            $(ASM) $(SRC)\dos\stdargv.asm,stdargv.obj;
+
+stdalloc.obj: $(SRC)\dos\stdalloc.asm $(CMACROS) \
+            $(INC)\heap.inc $(INC)\msdos.inc
+            $(ASM) $(SRC)\dos\stdalloc.asm,stdalloc.obj;
+
+stdenvp.obj: $(SRC)\dos\stdenvp.asm $(CMACROS) $(INC)\msdos.inc \
+            $(INC)\rterr.inc
+            $(ASM) $(SRC)\dos\stdenvp.asm,stdenvp.obj;
+
+nchkstk.obj: $(SRC)\chkstk.asm $(CMACROS) $(INC)\msdos.inc
+    $(ASM) -DMI_NEAR $(SRC)\chkstk.asm,nchkstk.obj;
+
+fchkstk.obj: $(SRC)\chkstk.asm $(CMACROS) $(INC)\msdos.inc
+    $(ASM) -DMI_FAR $(SRC)\chkstk.asm,fchkstk.obj;
+
+nrchkstk.obj: $(SRC)\rchkstk.asm $(CMACROS) $(INC)\msdos.inc
+    $(ASM) -DMI_NEAR $(SRC)\rchkstk.asm,nrchkstk.obj;
+
+frchkstk.obj: $(SRC)\rchkstk.asm $(CMACROS) $(INC)\msdos.inc
+    $(ASM) -DMI_FAR $(SRC)\rchkstk.asm,frchkstk.obj;
+
+#
+# .com file modules (tiny model)
+#
+
+com0.obj: $(SRC)\dos\crt0.asm $(CMACROS) $(INC)\heap.inc $(INC)\msdos.inc \
+		$(INC)\rterr.inc
+        $(ASM) -D_COM_ $(SRC)\dos\crt0.asm,com0.obj;
+
+com0dat.obj: $(SRC)\dos\crt0dat.asm $(CMACROS) $(INC)\rterr.inc
+        $(ASM) -D_COM_ $(SRC)\dos\crt0dat.asm,com0dat.obj;
+
+crtcom.lib: com0.obj com0dat.obj
+        if exist crtcom.lib del crtcom.lib
+        lib crtcom.lib com0.obj+com0dat.obj;
+
+#
+# stdio file module
+#
+
+_file.obj:  $(SRC)\_file.c $(CINC)\stdio.h $(INC)\file2.h
+            $(CL) -Zel -Fo_file.obj $(SRC)\_file.c
+
+#
+# wild card expansion support modules
+#
+
+setargv.obj: $(SRC)\setargv.asm $(CMACROS)
+             $(ASM) $(SRC)\setargv.asm,setargv.obj;
+
+_setargv.obj: $(SRC)\dos\stdargv.asm $(CMACROS) $(INC)\msdos.inc \
+              $(INC)\rterr.inc
+              $(ASM) -DWILDCARD $(SRC)\dos\stdargv.asm,_setargv.obj;
+
+wild.obj: 	$(SRC)\wild.c $(CINC)\stddef.h $(CINC)\string.h \
+		$(CINC)\malloc.h $(INC)\register.h $(CINC)\ctype.h \
+		$(INC)\msdos.h
+		$(CL) -Zel $(SRC)\wild.c
+
+#
+# error message modules
+#
+
+crt0fp.obj:	$(SRC)\crt0fp.asm $(CMACROS) $(INC)\rterr.inc
+		$(ASM) $(SRC)\crt0fp.asm;
+
+execmsg.obj: $(SRC)\dos\execmsg.asm $(CMACROS) $(INC)\rterr.inc
+             $(ASM) $(SRC)\dos\execmsg.asm,execmsg.obj;
+
+
+#
+# small program
+#
+
+nulbody.obj: $(SRC)\nulbody.c
+             $(CL) -Lr -Fonulbody.obj $(SRC)\nulbody.c
+
+#
+# this step is always done because the target does not exist
+#
+
+dosstart:
+		link @$(SRC)\dos\nulbody.lnk;

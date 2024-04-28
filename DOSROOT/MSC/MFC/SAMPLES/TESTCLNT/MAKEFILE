@@ -1,0 +1,72 @@
+# Makefile : Builds the application.
+#
+# This is a part of the Microsoft Foundation Classes C++ library.
+# Copyright (C) 1992 Microsoft Corporation
+# All rights reserved.
+#
+# This source code is only intended as a supplement to the
+# Microsoft Foundation Classes Reference and Microsoft
+# QuickHelp documentation provided with the library.
+# See these sources for detailed information regarding the
+# Microsoft Foundation Classes product.
+#
+# Usage:     NMAKE option      (builds the application)
+#    or:     NMAKE CLEAN       (erases the compiled files)
+#
+# Options:   DEBUG=[0|1]       (default is 0)
+
+
+PCH=testclnt.h
+CPPFLAGS=  /DWINVER=0x0300 /AM /W3 /GA /GEs /G2 /Zp /Yu$(PCH)
+LINKFLAGS=/NOD /ONERROR:NOEXE
+
+!if "$(DEBUG)"=="1"
+CPPFLAGS=/D_DEBUG $(CPPFLAGS) /Od /Zi /f
+LINKFLAGS=$(LINKFLAGS) /COD
+LIBS=mafxcwd libw mlibcew shell olecli commdlg
+!else
+CPPFLAGS=$(CPPFLAGS) /Oselg /Gs
+LINKFLAGS=$(LINKFLAGS)
+LIBS=mafxcw libw mlibcew shell olecli commdlg
+!endif 
+
+OBJS=testclnt.obj tcobject.obj clipbd.obj newclnt.obj newdoc.obj \
+	error.obj tcfile.obj tests.obj
+
+all:  testclnt.exe
+
+testclnt.obj testclnt.pch : testclnt.cpp testclnt.h resource.h defs.h
+	$(CPP) $(CPPFLAGS) /Yc$(PCH) /c testclnt.cpp
+
+CPPFLAGS=$(CPPFLAGS)
+
+testclnt.res: testclnt.rc resource.h testclnt.ico
+	rc -r testclnt.rc
+
+
+testclnt.exe : $(OBJS) testclnt.def testclnt.res
+	link $(LINKFLAGS) @<<
+$(OBJS),
+testclnt,
+NUL,
+$(LIBS),
+testclnt.def;
+<<
+	rc -30 -k -t testclnt.res
+
+tcobject.obj : testclnt.h defs.h resource.h
+clipbd.obj   : testclnt.h defs.h resource.h
+newclnt.obj  : testclnt.h defs.h resource.h
+newdoc.obj   : testclnt.h
+tcfile.obj   : testclnt.h defs.h resource.h
+tests.obj    : testclnt.h defs.h resource.h
+error.obj    : testclnt.h defs.h resource.h
+testclnt.obj : testclnt.h defs.h resource.h
+
+testclnt.h   : newdoc.h newclnt.h
+
+clean:
+	-erase testclnt.exe
+	-erase testclnt.res
+	-erase testclnt.pch
+	-erase *.obj

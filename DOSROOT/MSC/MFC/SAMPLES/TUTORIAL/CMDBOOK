@@ -1,0 +1,60 @@
+# Makefile : Builds COMMAND BOOK
+#
+# Usage:     NMAKE cmdbook           (build CmdBook application)
+#    or:     NMAKE -f cmdbook clean  (erase all compiled files)
+#            DEBUG=[0|1]             (DEBUG not defined equivalent to DEBUG=0)
+
+# This is a part of the Microsoft Foundation Classes C++ library.
+# Copyright (C) 1992 Microsoft Corporation
+# All rights reserved.
+#
+# This source code is only intended as a supplement to the
+# Microsoft Foundation Classes Reference and Microsoft
+# QuickHelp documentation provided with the library.
+# See these sources for detailed information regarding the
+# Microsoft Foundation Classes product.
+
+CPPFLAGS=/D_DOS /AM /W3 /Zp
+LINKFLAGS=/NOD /ONERROR:NOEXE /STACK:8192
+
+DIR=CHAR
+
+!if "$(DEBUG)"=="1"
+CPPFLAGS=/D_DEBUG $(CPPFLAGS) /Od /Zi /f /Fo$*.OBJ
+LINKFLAGS=$(LINKFLAGS) /COD
+LIBS=mafxcrd mlibce
+!else
+CPPFLAGS=$(CPPFLAGS) /Oselg /Gs /Fo$*.OBJ
+LINKFLAGS=$(LINKFLAGS)  /EXE 
+LIBS=mafxcr mlibce
+!endif
+
+.cpp{$(DIR)}.obj:
+	$(CPP) /c $(CPPFLAGS) $<
+
+cmdbook.exe : $(DIR)\cmdbook.exe
+	copy $** $@
+
+$(DIR)\cmdbook.exe: $(DIR) $(DIR)\cmdbook.obj $(DIR)\person.obj \
+					$(DIR)\database.obj
+	link $(LINKFLAGS) @<<
+$(DIR)\cmdbook $(DIR)\person $(DIR)\database,
+$@,
+NUL,
+$(LIBS);
+<<
+
+$(DIR):
+	@IF NOT EXIST $(DIR)\*.* MD $(DIR)
+
+database.h : person.h
+person.obj : person.h
+database.obj : database.h
+cmdbook.obj : database.h
+
+
+clean:
+	-del $(DIR)\database.obj
+	-del $(DIR)\person.obj
+	-del $(DIR)\cmdbook.obj
+	-del $(DIR)\cmdbook.exe

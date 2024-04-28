@@ -1,0 +1,52 @@
+# Makefile : Builds DMTEST
+#
+# Usage:     NMAKE dmtest         (build dmtest application)
+#    or:     NMAKE -f dmtest clean (erase all compiled files)
+#            DEBUG=[0|1]          (DEBUG not defined is equivalent to DEBUG=0)
+
+# This is a part of the Microsoft Foundation Classes C++ library.
+# Copyright (C) 1992 Microsoft Corporation
+# All rights reserved.
+#
+# This source code is only intended as a supplement to the
+# Microsoft Foundation Classes Reference and Microsoft
+# QuickHelp documentation provided with the library.
+# See these sources for detailed information regarding the
+# Microsoft Foundation Classes product.
+
+CPPFLAGS=/D_DOS /AM /W3 /Zp
+LINKFLAGS=/NOD /ONERROR:NOEXE
+
+DIR=CHAR
+
+!if "$(DEBUG)"=="1"
+CPPFLAGS=/D_DEBUG $(CPPFLAGS) /Od /Zi /f /Fo$*.OBJ
+LINKFLAGS=$(LINKFLAGS) /COD
+LIBS=mafxcrd mlibce
+!else
+CPPFLAGS=$(CPPFLAGS) /Oselg /Gs /Fo$*.OBJ
+LINKFLAGS=$(LINKFLAGS)  /EXE 
+LIBS=mafxcr mlibce
+!endif
+
+.cpp{$(DIR)}.obj:
+	$(CPP) /c $(CPPFLAGS) $<
+
+dmtest.exe : $(DIR)\dmtest.exe
+	copy $** $@
+
+$(DIR)\dmtest.exe: $(DIR) $(DIR)\dmtest.obj $(DIR)\person.obj
+	link $(LINKFLAGS) $(DIR)\dmtest $(DIR)\person, $*,NUL, $(LIBS);
+
+
+$(DIR):
+	@IF NOT EXIST $(DIR)\*.* MD $(DIR)
+
+
+dmtest.obj: person.h
+person.obj: person.h
+
+clean:
+	-del $(DIR)\person.obj
+	-del $(DIR)\dmtest.obj
+	-del $(DIR)\dmtest.exe

@@ -1,0 +1,955 @@
+                               ERRATA1.TXT File
+
+     Documentation Errata, Part One, for Microsoft(R) C/C++, Version 7.0
+
+                  (C) Copyright Microsoft Corporation, 1992
+
+     This document contains information on known errors and omissions
+     in the documentation provided with version 7.0 of Microsoft C/C++.
+     The information in this document and in the Microsoft Advisor
+     Help system is more up-to-date than that in the manuals.
+
+     Microsoft updates its languages documentation at the time of
+     reprinting, so some of the information in this file may already be
+     included in your manuals.
+
+
+================================< Contents >================================
+
+
+     This file has five parts:
+
+               Part     Title
+               ----     -----
+               1        Notes on "Environment and Tools"
+
+               2        Notes on "C++ Tutorial"
+
+               3        Notes on "C Language Reference"
+
+               4        Notes on "C++ Language Reference"
+
+               5        Notes on "Programming Techniques"
+
+     See also ERRATA2.TXT.
+
+
+===============< Part 1: Notes on "Environment and Tools" >==================
+
+     Page    Note
+     ----    ----
+
+     24      Building the Program
+             --------------------
+
+             This page describes how to run or debug a program that you
+             have just built from within PWB. It erroneously states that
+             you must return to the Program Manager to start your
+             Microsoft Windows(TM) program or CodeView(R) for Windows.
+             In fact, you can run and debug your Windows program directly
+             from PWB when the WX server is running. Do this by choosing
+             the Run and Debug commands from the PWB Run menu.
+
+     50      Using Existing Projects
+             -----------------------
+
+             The last item in the bulleted list on page 50 erroneously
+             states that PWB saves all environment variables for a
+             project. By default, PWB does not save the environment for
+             projects or between sessions. PWB uses the current
+             environment table.
+
+             However, PWB is capable of restoring the environment table
+             for individual projects or between sessions. To enable
+             these features, change the settings of the Envprojsave and
+             Envcursave switches. For more information, see Chapter 7
+             of "Environment and Tools."
+
+
+     139     Project Status Files
+             --------------------
+
+             The last item in the bulleted list in the second paragraph
+             on page 139 erroneously states that PWB saves all
+             environment variables for a project. By default, PWB does
+             not save the environment for projects or between sessions.
+             PWB uses the current environment table.
+
+             However, PWB is capable of restoring the environment table
+             for individual projects or between sessions. To enable
+             these features, change the settings of the Envprojsave and
+             Envcursave switches. For more information, see Chapter 7
+             of "Environment and Tools."
+
+     335     Transport
+             ---------
+
+             Add the following to the end of the Transport entry's
+             Syntax line:
+
+             [COM{1|2}:[rate]]
+
+             Add the following paragraph after the transport table:
+
+             "The optional [COM{1|2}:[rate]] specifies a communications
+             port and baud rate for remote debugging. No space is
+             allowed between COM and the port number (1 or 2). The
+             default port is COM1. The <rate> can be any number from
+             50 through 9600. The default rate is 9600."
+
+     369     Source Window
+             -------------
+
+             The table of options available in the Source Window Options
+             dialog box is incomplete. The dialog box also contains
+             options corresponding to each of the options for the VS
+             (View Source) command, listed on pages 457-458.
+
+     387     Terminating Your Program
+             ------------------------
+
+             Add the following paragraph to the bottom of the page:
+
+             "You should also exercise caution when using the WKA command
+             on an application that loads a DLL. If you terminate the
+             application before it frees the DLL, the DLL remains
+             loaded. If you rebuild the DLL and then run CVW again, the
+             new version of the DLL doesn't get loaded."
+
+     445     CodeView Command Window Options
+             ---------------------------------------
+
+             The correct syntax for the Show Address option in
+             the CodeView Command window is:
+
+                  OL[<scope>]
+
+             instead of:
+
+                  OL[[<scope>][+|-]]
+
+     486     The CL Command Line
+             -------------------
+
+             In the entry for the ".ASM" extension in the table of
+             filename extensions, the program name "ML.EXE" should be
+             "MASM.EXE".
+
+     486     How the CL Command Works
+             ------------------------
+
+             The following should be the first two paragraphs of
+             Section 13.2:
+
+             "If you do not specify any optimization options, the CL
+             command uses the Disable Optimization option (/Od). Using
+             /Od causes CL to compile your program using the fast
+             compiler (/f). This feature allows you to quickly compile
+             code that is under development and to reserve use of the
+             optimizing compiler until it is needed.
+
+             "Use the default fast compiler with the new precompiled
+             header options (/Yc, /Yd, /Yu, /Fp, and the hdrstop
+             pragma) to further speed compilation. See page 494 for more
+             information on the Fast Compile option, page 533 for more
+             information on the Disable Optimization option, and pages
+             546-550 for more information on precompiled headers."
+
+     488     CL Options
+             ----------
+
+             The third paragraph of this section should be replaced with
+             the following two paragraphs:
+
+             "Options can appear anywhere on the CL command line. With
+             two exceptions (/c, /Fe), each CL option applies to the
+             files that follow it on the command line and does not
+             affect files preceding it on the command line.
+
+             "It is not required that the /f or the /Oq option be first
+             on the command line."
+
+             The fourth paragraph of this section should be replaced with
+             the following two paragraphs:
+
+             "You can define CL options in response files. Unlike either
+             the command line or the CL environment variable, using a
+             response file allows multiple lines of options and
+             filenames. See Response Files below.
+
+             "You can also define CL options in the CL environment variable.
+             These options are used every time you invoke CL. See
+             'Specifying Options with the CL Environment Variable' on
+             page 557."
+
+     488     The following heading and associated text on response files
+             should immediately follow the CL Options section. The last
+             paragraph of the CL Options section should be moved to the
+             end of the Response Files section.
+
+             Response Files
+             --------------
+
+             The CL utility accepts a compiler "response file" as an
+             argument on the command line. A response file is an ASCII
+             file that can contain multiple options and filenames that
+             you would otherwise type on the command line or specify
+             by using the CL environment variable. Unlike either the
+             command line or the CL environment variable, using a
+             response file allows multiple lines of options and
+             filenames.
+
+             The options in the response file are interpreted as if
+             they were present on the command line at the position of
+             the response file invocation. An exception to this rule
+             is the /link command. If /link appears in the response
+             file, all options on the rest of the line are passed to
+             the linker. Options in subsequent lines in the response
+             file and options on the command line after the response
+             file invocation are still accepted as compiler options.
+
+             Note that a response file should not contain the CL
+             command. Also, each option must begin and end on the same
+             line; you cannot use the backslash (\) to concatenate an
+             option across two lines.
+
+             To invoke a response file, type the at sign (@) followed
+             immediately by a filename; you can also specify a drive
+             and path. A response file invocation is not allowed in
+             the CL environment-variable string or in another response
+             file.
+
+             For example, you could put the following into a file
+             named RESP:
+
+                  /Od /Zp /link SLIBCE.LIB
+
+             CL uses these options, in addition to any options you specify
+             on the CL command line. If you specify this CL command:
+
+                  CL /Ob2 @RESP MYAPP.C
+
+             the resulting command to CL is:
+
+                  CL /Ob2 /Od /Zp MYAPP.C /link SLIBCE.LIB
+
+             Note that the commands are effectively concatenated. You
+             can use NMAKE to create a temporary response file for a
+             single compilation step:
+
+                  MYAPP.OBJ : MYAPP.C
+                      CL @<< MYAPP.C
+                  /DV100 /Lr /Od /Zp
+                  <<
+
+     494     /f (Fast Compile)
+             -----------------
+
+             Replace the discussion of /f with the following:
+
+             Option   /f
+                      /f-
+
+             Use the /f option to select the fast compiler and the /f-
+             option to select the optimizing compiler. If neither option
+             is specified, the compiler used depends on the optimizing
+             options specified:
+
+             -  If no options are specified, the fast compiler is selected
+                using no optimization options.
+
+             -  If the Disable Optimization option (/Od) is specified,
+                the fast compiler is used.
+
+             -  If any optimizing option other than /Od is specified,
+                the optimizing compiler is used.
+
+             The /f option compiles source files without any default
+             optimizations. It defines the _FAST preprocessor constant.
+             Programs compiled with /f can be slower and larger, but
+             because they compile in less time than the optimizing
+             compiler requires, this option is useful during the
+             development process. The /f option does not support
+             initialized static huge data.
+
+             If optimizations are disabled, the following options
+             generate warnings and start the optimizing compiler
+             instead of the fast compiler:
+
+             Option     Description
+             ------     -----------
+
+             /FPa       Selects fast alternate math package
+             /FPc       Selects emulation-calls math package
+             /FPc87     Selects 8087-calls math package
+             /Fs        Names source-file listing
+             /Ss        Specifies title for source-file listing
+             /St        Specifies subtitle for source-file listing
+             /Sl        Specifies line length for source-file listing
+             /Sp        Specifies page length for source-file listing
+
+             Use the /f- option to suppress the warning generated when
+             using any of the eight options in the above list. When using
+             /f-, the /Od option is still the default. You can thus use
+             these eight options during the development process without
+             incurring the debugging difficulties caused by use of
+             optimization options other than /Od. The /Od option does
+             not reorganize code, making it easier to debug.
+
+             If you put both the /f and /f- options on the command line,
+             CL uses whichever option occurs last.
+
+     495     /Oq (Maximum P-Code Optimization)
+             ---------------------------------
+
+             It is not required that the /Oq option appear first on the
+             CL command line.
+
+     507     Replace the description of the Specify Precompiled Header
+             Filename option (/Fp) found on page 507 with the
+             description of /Fp found with the other precompiled header
+             file options on page 546.
+
+     513     The NO87 Environment Variable
+             -----------------------------
+
+             Replace the third sentence in the second paragraph with the
+             following:
+
+             "The message is printed if a coprocessor is present and
+             suppressed, or if no coprocessor is present."
+
+     516     /GE (Customize Windows Entry/Exit Code)
+             ---------------------------------------
+
+             Replace the /GEf table entry with the following:
+
+             /GEf     Treat all far functions as Windows callback
+                      functions.
+
+     522     /Gw, /GW (Generate Entry/Exit Code for Real-Mode Windows)
+             ---------------------------------------------------------
+
+             Remove "marked as __export" from the end of the first
+             sentence in the first paragraph.
+
+             At the end of the first sentence in the second paragraph,
+             replace "functions not marked as __export" with "far
+             functions that are not Windows callback functions."
+
+     528     /MA (Macro Assembler Options)
+             -----------------------------
+
+             The last paragraph should read as follows:
+
+             "Specifying .ASM files on the command line causes MASM.EXE
+             to be invoked. You can specify any option that MASM.EXE
+             accepts. If you have MASM 6.0, you cannot specify options
+             specific to ML.EXE."
+
+     529     /ND (Name Data Segment)
+             -----------------------
+
+             Add the following two paragraphs:
+
+             "Using the /ND option with C++ requires special care. If a
+             module defining a derived class is compiled with the /ND
+             option while the module defining the base class is compiled
+             without /ND, a run-time error may result. This occurs
+             because the compiler treats the derived class's module data
+             segment as the default before it calls the base class
+             constructors. Consequently, the base class constructors use
+             the incorrect data segment.
+
+             "To avoid this problem, you must ensure that /ND is either
+             used consistently throughout your class hierarchy, or not
+             used at all in the hierarchy."
+
+     533     /Od (Turn Off Optimization)
+             ---------------------------
+
+             Replace the paragraph on the /Od option with the following:
+
+             "The /Od option tells the compiler to turn off all
+             optimizations in the program, which speeds compilation.
+             Because /Od suppresses code movement, you can use it to
+             simplify the debugging process. The Generate Debugging
+             Information option (/Zi) is discussed in this chapter on
+             page 553.
+
+             "Note that using /Od selects the fast compiler (/f) unless you
+             explicitly specify /f-."
+
+     538     /Op (Improve Float Consistency)
+             -------------------------------
+
+             Add the following paragraph:
+
+             "If you use the /Za (compile for ANSI compatibility)
+             option, CL uses the /Op option to improve the consistency
+             of floating-point tests for equality and inequality. This
+             use of /Op with /Za is for strict ANSI conformance and is
+             the only situation under which /Op is selected by
+             default. The /Op- option is provided to override the
+             default selection of /Op with /Za. Placing the /Op-
+             option on the command line with the /Za option will
+             disable /Op."
+
+     550     /Za, /Ze (Enable or Disable Language Extensions)
+             ------------------------------------------------
+
+             Add the following paragraph:
+
+             "If you use the /Za option, CL uses the /Op option to
+             improve the consistency of floating-point tests for
+             equality and inequality; this use of /Op is for strict
+             ANSI conformance. A program compiled with /Op may be
+             slower and larger than one compiled without /Op. Placing
+             the /Op- option on the command line with the /Za option
+             will disable /Op."
+
+     552     /Zc (Specify Pascal Naming)
+             ---------------------------
+
+             The /Zc option is no longer supported.
+
+     553     /Zi, /Zd (Compile and Link for Debugging)
+             -----------------------------------------
+
+             Replace the discussion of the /Zi and /Zd options with the
+             following:
+
+             "The /Zi option produces an object file containing line
+             numbers and full symbolic-debugging information for use
+             with the CodeView window-oriented debugger. If you do not
+             use the Compile Only (/c) option, the linker places this
+             information into the executable file. This symbolic
+             information is a map of your source code that the debugger
+             uses. It includes information on each module: its associated
+             name, line numbers, types, variables, and function names
+             with their return types. It also includes full symbol-table
+             information.
+
+             "The /Zd option produces an object file and, without the use
+             of /c, an executable file containing only global and
+             external symbol information and line-number information.
+             Use this option when you want to reduce the size of an
+             executable file that you will be debugging with the
+             CodeView debugger. You can also use /Zd when you do not
+             need to use the expression evaluator during debugging.
+
+             Example
+
+                  CL /Zi TEST.C
+
+             "This command produces an executable file named TEST.EXE,
+             which contains full symbolic debugging information for use
+             by CodeView."
+
+     554     /Zp (Pack Structure Members)
+             ----------------------------
+
+             Replace the Option line with the following:
+
+                 Option    /Zp[{1|2|4|8|16}]
+
+             Replace the third paragraph with the following:
+
+             "Use the /Zp option to specify the same packing for all
+             structures in a module. When you give the /Zp<n> option,
+             where <n> is 1, 2, 4, 8, or 16, each structure member after
+             the first is stored on <n>-byte boundaries, depending on the
+             number you choose. If you use the /Zp option without an
+             argument, structure members are packed on one-byte
+             boundaries. No space is allowed between /Zp and its
+             argument."
+
+     608     Overview
+             --------
+
+             In the second sentence of the first paragraph, replace
+             "This file is required for DLLs and overlaid DOS programs"
+             with "This file should be used for DLLs and overlaid DOS
+             programs."
+
+     623     The EXPORTS Statement
+             ---------------------
+
+             Replace the syntax line for the EXPORTS statement with the
+             following:
+
+             EXPORTS
+             entryname[=internalname][@ord[nametable]][NODATA][PRIVATE]
+
+             Add the following paragraph to the bottom of the page:
+
+             "The optional PRIVATE keyword tells IMPLIB to ignore the
+             definition. PRIVATE prevents <entryname> from being placed
+             in the import library. The keyword has no effect on LINK."
+
+     674     In the Section "Calling NMAKE Recursively," remove these
+             sentences from the first paragraph:
+
+             "When you call NMAKE recursively by macro rather than by
+             literally specifying the command NMAKE, NMAKE does not run
+             a new copy of itself. Instead, it uses its own stack for the
+             recursive parts of the build. This saves space in memory."
+
+             Also remove the note at the end of that same section on
+             page 675.
+
+     733     Methods for Increasing Efficiency
+             ---------------------------------
+
+             The following heading and paragraph should be added:
+
+             Using Precompiled Headers
+             -------------------------
+
+             "Using Precompiled headers speeds up BSCMAKE because the
+             browser information for the precompiled code is generated
+             only when the .PCH file is created. The browser information
+             is not replicated in each source file's browser file, as
+             it is when you do not use precompiled headers. This reduces
+             the size of .SBR files for object files that use precompiled
+             headers and makes database building faster. Also, less disk
+             space is used."
+
+     739     SBRPACK
+             -------
+
+             The second paragraph should read as follows:
+
+             "Packing .SBR files is optional. The Microsoft C/C++
+             Compiler version 7.0 (CL) automatically calls SBRPACK when
+             you specify either /FR or /Fr to create an .SBR file. If you
+             specify /Zn, CL does not call SBRPACK to pack the .SBR file.
+             Other compilers and assemblers do not pack .SBR files. You
+             may want to use SBRPACK to pack an .SBR file that was
+             created without packing."
+
+     864     Index
+             -----
+
+             Add the following after "PWB, 307-308" under "Regular
+             expressions, matching":
+
+             "UNIX, 778, 785"
+
+===================< Part 2: Notes on "C++ Tutorial" >=======================
+
+     Page    Note
+     ----    ----
+
+     119     Collections Using Base Class Pointers
+             -------------------------------------
+
+             In the example of the "printNames" function that appears at
+             the bottom of the page, the following three lines should be
+             added immediately before the "while" loop:
+
+             person = anIter.getFirst();
+             count++;
+             cout << count << ' ' << person->getName() << '\n';
+
+================< Part 3: Notes on "C Language Reference" >==================
+
+     Page    Note
+     ----    ----
+
+     32      Parsing Command-Line Arguments (Microsoft Specific)
+             ---------------------------------------------------
+
+             The second line in the table at the bottom of the page
+             should read as follows:
+
+             Command-Line Input    argv[1]   argv[2]   argv[3]
+
+             "ab\"c" "\\" d        ab"c       \        d
+
+     59      Data Declarations with the __based Keyword
+             ------------------------------------------
+
+             The second sentence in the third paragraph should read: "The
+             <string-literal> can be the name of a predefined segment
+             ('_CODE', '_CONST' or '_DATA', but not '_STACK'), or it
+             can be the name of a new segment you define."
+
+     127     Multiplicative Operators
+             ------------------------
+
+             In the table describing the multiplicative operators,
+             the second subentry in the entry for the % (remainder)
+             operator should read: "If both operands are positive or
+             unsigned, the result is positive."
+
+     155     The do-while Statement
+             ----------------------
+
+             The syntax line at the top of the page should end with
+             a semicolon.
+
+     171     Fastcall Functions
+             ------------------
+
+             Add the following material:
+
+             Windows entry/exit code and the __fastcall calling
+             convention can conflict in their use of the ax register.
+             As a result, using the following combinations of options
+             and keywords will generate errors:
+
+             - __fastcall, __far, Gw
+             - __fastcall, __far, __export, GA
+             - __fastcall, __far, __export, GD
+             - __fastcall, __far, GA, GEf
+             - __fastcall, __far, GD, GEf
+             - __fastcall, __far, __export, GA, GEf
+             - __fastcall, __far, __export, GD, GEf
+
+     185     Arguments
+             ---------
+
+             In the third paragraph from the bottom of the page, the
+             first sentence should read: "The order in which arguments
+             are evaluated can vary under different compilers and
+             optimization levels."
+
+     200     Predefined Macros
+             -----------------
+
+             The table of predefined macros should include all of the
+             following:
+
+             Identifier          Specifies
+
+             _CHAR_UNSIGNED      Default char type is unsigned.
+                                 Identifier defined when /J is specified.
+             __cplusplus         Identifier defined when compiling a C++
+                                 program.
+             _DLL                Code that assumes a dynamic-link library.
+                                 Identifier defined when /MD is specified.
+             _FAST               Fast compile. Identifier defined when /f
+                                 is specified.
+             M_I86   _M_I86      Member of the I86 processor family.
+             M_I86mM _M_I86mM    Memory model type:
+                                 <m>= T            Tiny
+                                      S            Small (default)
+                                      C            Compact model
+                                      M            Medium model
+                                      L            Large model
+                                      H            Huge model
+                                 Identifiers defined by /AT, /AS, /AC, /AM,
+                                 /AL, and /AH, respectively.
+             M_I8086 _M_I8086    8088 or 8086 processor; default or defined
+                                 when /G0 is specified.
+             M_I286  _M_I286     80286 processor. Identifier defined when
+                                 /G1 or /G2 is specified.
+             M_I386  _M_I386     80386 processor. Identifier defined when
+                                 /G3 is specified.
+             _MSC_VER            Microsoft C version; currently defined as
+                                 the string "700".
+             MSDOS   _MSDOS      MS-DOS operating system.
+             __STDC__            Full conformance with the ANSI C standard.
+                                 Identifier defined when /Za is specified.
+             _PCODE              Translation to p-code. Identifier defined
+                                 when /Oq is selected.
+             _QC                 Microsoft QuickC(R) Compiler. Identifier
+                                 defined when /qc is specified. For
+                                 Microsoft C/C++ version 7.0, the /qc
+                                 option is superseded by the /f option.
+             __TIMESTAMP__       Date and time of the last modification of
+                                 the source file, expressed as a string
+                                 literal in the form:
+                                      "Ddd Mmm hh:mm:ss yyyy"
+             _WINDLL             Windows protected-mode dynamic-link
+                                 library is selected with /GD.
+             _WINDOWS            Windows protected-mode is selected with
+                                 /GA, /Gn, /GW, /Mq, or /GD.
+
+             NOTE:  If a predefined identifier has two forms, with and
+                    without an underscore, the command-line driver defines
+                    both if you specify the /Ze option (compile for
+                    Microsoft extensions). It defines only the leading
+                    underscore form if you specify the /Za option (compile
+                    for ANSI compatibility).
+
+     210     Pragma Directives (Microsoft Specific)
+             --------------------------------------
+
+             Replace the second occurrence of "check_stack" with
+             "inline_depth". Also, insert "init_seg" between
+             "inline_recursion" and "intrinsic".
+
+     211     Pragma Directives (Microsoft Specific)
+             --------------------------------------
+
+             Add the following syntax line and discussion for the
+             init_seg pragma:
+
+             #pragma init_seg({ compiler | lib | user | "seg-name" })
+
+             "Specifies a keyword or segment that affects the order in
+             which startup code is executed. Because initialization
+             of global static objects can involve executing code, you
+             must specify a keyword that defines when the objects are
+             to be constructed. It is particularly important to use
+             the init_seg pragma in DLLs or libraries requiring
+             initialization.
+
+             "The 'compiler' option is reserved for Microsoft C
+             run-time library initialization. Objects in this group
+             are constructed first. The 'lib' option is available
+             for third-party class-library vendors' initializations.
+             Objects in this group are constructed after those
+             marked as compiler but before any others. The 'user' is
+             available to any user. Objects in this group are
+             constructed last. The 'seg-name' allows explicit
+             specification of the initialization segment. Objects in
+             a user-specified <seg_name> are not implicitly
+             constructed; however, their addresses are placed in the
+             segment named by <seg-name>.
+
+             "If you need to defer initialization (for example, in a
+             DLL), you may choose to specify the segment name
+             explicitly. You must then call the constructors for each
+             static object. For an example of how these
+             initializations are done, see the file CRT0DAT.ASM in
+             the \SOURCE\STARTUP\DOS subdirectory."
+
+     241     Truncation of Floating-Point Values
+             -----------------------------------
+
+             The last sentence of the paragraph should read: "An overflow
+             may cause a run-time error or it may produce an unpredictable
+             value, depending on the optimizations specified."
+
+     254     Time Returned by the time Function
+             ----------------------------------
+
+             The following paragraph should be added:
+
+             "The type time_t returned by the time and mktime functions
+             is now defined as unsigned long instead of long. Because
+             the implementation can change, code that relies on the
+             underlying implementation of an inplementation-specific
+             type is not portable."
+
+===============< Part 4: Notes on "C++ Language Reference" >=================
+
+     Page    Note
+     ----    ----
+
+     11      C++ Operator Precedence, Syntax, and Associativity
+             --------------------------------------------------
+
+             The equality operator (==) should be moved from the top of
+             the table to become the third entry on page 13. The equality
+             operator has the same precedence as the inequality operator,
+             and the precedence of both operators is lower than that
+             of the less-than-or-equal-to and greater-than-or-equal-to
+             operators.
+
+     82      Positive and Negative Subscripts
+             --------------------------------
+
+             In the example for negative subscripts, the line
+
+             int *iNumberLine = &iNumberLine[512];
+
+             should be
+
+             int *iNumberLine = &iNumberArray[512];
+
+     152     Declaration of Static Objects
+             -----------------------------
+
+             Add the following sentence to the first paragraph:
+
+             "You cannot declare static objects in a tiny-model program."
+
+     196     Pointers to Members
+             -------------------
+
+             Insert the following after the first sentence in the second
+             paragraph of this section:
+
+             "A class must be defined before a pointer to a member of
+             that class can be declared."
+
+     202     Interpretation of the Subscript Operator
+             ----------------------------------------
+
+             The formula for deriving the address of a multidimensional
+             array should read as follows:
+
+             *((array-name) + (subscript1 * max2 * max3 ... maxn)
+                            + (subscript2 * max3 * ... maxn)
+                            ...
+                            + (subscriptn))
+
+     239     Declaring Unsized Arrays in Member Lists (Microsoft Specific)
+             -------------------------------------------------------------
+
+             Add the following sentence to the first paragraph in the
+             Restrictions section:
+
+             "A class containing an unsized array cannot have a direct
+             or indirect virtual base class."
+
+     374     Predefined Macros
+             -----------------
+
+             Add the following two Microsoft-compatible predefined macros
+             to Table 13.1:
+
+             _WINDLL             Windows protected-mode dynamic-link
+                                 library is selected with /GD.
+             _WINDOWS            Windows protected-mode is selected with
+                                 /GA, /Gn, /GW, /Mq, or /GD.
+
+===============< Part 5: Notes on "Programming Techniques" >=================
+
+     Page    Note
+     ----    ----
+
+     6       Controlling Optimizations from PWB
+             ----------------------------------
+
+             The second sentence on the page should read: "From that
+             dialog box, you can specify the options for either a debug
+             or release compile."
+
+     19      Performing Loop Optimizations (/Ol)
+             -----------------------------------
+
+             In the last sentence on the page, the words "the g option"
+             should be "the l option."
+
+     25      Optimizing for Maximum Efficiency (/Ox)
+             ---------------------------------------
+
+             In the list of options implied by /Ox, the entry "Perform
+             maximum inlining (/Ob2)" should be removed. The /Ox option
+             selects the default level of inlining (/Ob1) for an optimized
+             program.
+
+             For the fastest program possible, use the following
+             options:
+
+                  /Ozaxb2 /Gr
+
+             For the smallest program possible, use the following
+             options:
+
+                  /Oase /Gs
+
+             Note that you can use /Oa only if your code contains no
+             aliasing. If your code contains aliasing, use the following
+             options:
+
+                  /Ose /Gs
+
+     35      Precompiled Header Filename Option (/Fp)
+             ----------------------------------------
+
+             In the first example, "/FpDPROG" should be "/FpDPROG.PCH".
+             In the second example, "/FpRPROG" should be
+             "/FpRPROG.PCH". The /Fp option does not assume the .PCH
+             extension for the name of the precompiled header file;
+             you must specify it explicitly.
+
+     60      The Tiny Memory Model
+             ---------------------
+
+             Add the following paragraph to the end of the section:
+
+             "If you are programming in C++, you cannot construct static
+             objects under the tiny model. Since the predefined stream
+             objects (like cin and cout) are static objects, you cannot
+             use iostreams in a tiny-model program."
+
+     86      Data Stored in a Named Segment
+             ------------------------------
+
+             You cannot store data in the _STACK segment. Of the four
+             predefined segments, you can store data in only the _CODE,
+             _DATA, and _CONST segments.
+
+     95      Techniques for Using Virtual Memory
+             -----------------------------------
+
+             In the first paragraph following the example, the words
+             "the search function" should be "the find function."
+
+     122     The example of an __asm block in "Calling C Functions" fails
+             to clean up the stack.  The following line needs to be added
+             at the end of the __asm block after the printf statement:
+
+             add sp,6
+
+             This removes the parameters that were passed on the stack.
+
+     153     QuickWin vs. Windows Applications
+             ---------------------------------
+
+             Add the following entry to the list of QuickWin's
+             limitations:
+
+             - Use the stdprn or stdaux streams.
+
+     175     Limitations of VESA Support
+             ---------------------------
+
+             Change the third item in the list to the following:
+
+             "Super VGA BIOS functions 2, 3, 6, 7, and 9 must be
+             supported. See section 6 of the VESA Super VGA Standard
+             for more information."
+
+             Change the fourth item in the list to the following:
+
+             "Three types of hardware windows are supported: single
+             window systems with a readable/writable 64K window
+             beginning at A000h, dual overlapping 64K windows beginning
+             at A000h, and dual adjacent 32K readable/writable windows
+             beginning at A000h and A800h. See section 5.2.1 of the
+             VESA Super VGA Standard for more information."
+
+     248     Calling a Pascal Function from C
+             --------------------------------
+
+             In the example at the top of the page, the definition for
+             the Pascal function Fact should be replaced with the
+             following:
+
+             FUNCTION Fact (n : INTEGER) : INTEGER;
+
+             VAR
+                 temp : INTEGER;
+
+             BEGIN
+                 temp := 1;
+                 WHILE n > 0 DO
+                 BEGIN
+                     temp := temp * n;
+                     n := n - 1;
+                 END;
+                 Fact := temp;
+             END;
+
+     277     Byte Order in a Word
+             --------------------
+
+             The implementation of the two macros LOBYTE and HIBYTE
+             assumes that type unsigned is always twice the size of
+             type char. Because ANSI does not require this relationship,
+             these macros are not completely portable.
+
+============================================================================
+
+     Microsoft, MS, MS-DOS, CodeView and QuickC are registered trademarks,
+     and Windows is a trademark of Microsoft Corporation.
+
+     UNIX is a registered trademark of American Telephone & Telegraph
+     Company.
