@@ -1,0 +1,314 @@
+ ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+ บ         HWiNFO ๙ Copyright (c)1995-2023 Martin Malกk, REALiX s.r.o.        บ
+ บ ฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤ บ
+ บ                 Version 6.2.3; Last Update: Dec-29-2023                  บ
+ ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+
+
+
+
+
+
+                 ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฟ
+                 ณ  USE THIS PROGRAM ONLY AT YOUR OWN RISK  ณ
+                 ภฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤู
+
+
+
+
+
+  CONTENTS
+
+    1.  Intro
+    2.  Updates and download
+    3.  Requirements
+    4.  Creating a logfile
+    5.  Limitations
+    6.  Running HWiNFO under V86 Memory Managers and Windows
+    7.  Resetting the CPU
+    8.  HWiNFO Crash
+    9.  Miscellaneous notes
+   10.  Some abbreviations
+   11.  Disclaimer and Terms of License
+
+
+
+
+
+
+ ## 1. Intro ##################################################################
+
+
+  HWiNFO is a *POWERFUL* hardware detection program. It is simple, quick and
+  on most systems very efficient. It gives important information about all the
+  hardware devices in your computer so that you need not look inside the PC to
+  see what's there.
+
+
+
+
+ ## 2. Updates and download ###################################################
+
+
+
+  The newest version is always (immediately) available at:
+
+  HWiNFO Homepage: https://www.hwinfo.com
+
+  SAC ftp            - ftp.elf.stuba.sk/pub/pc/utildiag
+  SAC WWW            - www.sac.sk
+
+
+ ## 3. Requirements ###########################################################
+
+
+  HWiNFO for DOS:
+  ===============
+    - 80386 or later CPU
+    - ~ 550 KB of free Conventional system memory
+    - ~ 830 KB (Non-PCI systems) / 5 MB (PCI systems) free XMS memory (XMS manager recommended)
+
+  HWiNFO16 for 8086-286:
+  ======================
+    - 8086/8088/80186/80188/NEC V20/V30/80286 CPU
+    - ~300 KB of system memory
+    - 80x25 text mode
+    - HWiNFO16 is an esspecially tweaked version for 8086-286 CPUs only. It lacks support
+      of technologies present on 386 and later systems (i.e. CPU ID, EISA, VLB, PCI, etc.)
+      for which HWiNFO should be used.
+
+ ## 4. Creating a logfile #####################################################
+
+
+  There are three possible methods how to create a logfile:
+
+  1. Simple log
+     After pressing the <F2> key, HWiNFO adds the results from current screen
+     to a logfile. You can add only information you are interested in. If the file
+     already exists it will be appended.
+
+  2. Report file ("-r" switch)
+     HWiNFO creates AUTOMATICALLY a COMPLETE logfile at startup.
+     This logfile has the same format as the one created with <F2> key, but
+     there's no need to navigate HWiNFO through all the screens.
+
+  3. Short report file ("-s" switch)
+     HWiNFO creates AUTOMATICALLY a logfile, which contains only the
+     MOST IMPORTANT items. This format is suitable for further automatical
+     processing (or printing) of logfiles (e.g. if you would like to create
+     an inventory of more machines).
+
+  The "-v" switch enables Verbose Mode, where all screen outputs are supressed.
+
+  The default log filename is "HWiNFO.LOG". You can change its name if you
+  enter it as a paramater to HWiNFO (e.g. "HWiNFO.EXE -s -v HOME.LOG").
+
+
+
+
+ ## 5. Limitations ############################################################
+
+
+
+  The Mainboard Chipset identification works only on newer (1991 and above)
+  AMI and newer AWARD BIOSes. HWiNFO is also able to detect some chipsets, not
+  depending on the type of BIOS.
+
+
+  PCMCIA detection requires Socket Services or Card Services to be installed.
+  If you want more info about sockets, install Card Services.
+
+
+  The VESA Local Bus can be detected only if a VLB card is present.
+
+
+ ## 6. Running HWiNFO under V86 Memory Managers and Windows ###################
+
+
+  In order to achieve best results, HWiNFO accesses directly the hardware.
+  Some of the routines (privileged) require to be run in Real mode or at
+  privilege level 0 (PL0, most privileged), but in V86 mode are all
+  applications run at PL3. This means, if such a routine is run, the CPU
+  raises an exception, which is handled by the V86 manager. Note, that
+  V86 mode is the only way to run a DOS application (Real mode) under
+  MS Windows (Protected mode). EMM (Expanded Memory Manager) also use the
+  V86 mode to provide paging.
+
+
+  But HWiNFO v3.00+ is able to run the privileged routines in V86 mode under
+  some circumstances. There is a special call (called WINDOWS INIT BROADCAST),
+  which can be used to force an V86 manager to switch to Real mode (of course,
+  the V86 manager must support it). This call was originally used by
+  MS Windows while starting, while an Expanded Memory Manager was running
+  (this is needed, because EMM is running in Protected mode and Windows too).
+
+  Such known EMM managers are:
+   - Microsoft EMM386 Expanded Memory Manager
+   - Quarterdeck QEMM386 Expanded Memory Manager
+   - Qualitas 386MAX Expanded Memory Manager
+   - Nu-Mega Soft-ICE Debugger
+   ...
+
+  So HWiNFO uses this call to force the manager to switch back to Real mode.
+
+  But there are some disadvantages while runnig in V86 mode:
+
+   - Some V86 managers are able to relocate BIOSes, so HWiNFO won't be able
+     to identify BIOS type and some video cards.
+
+   - A crash while detecting the CPU type could happen on some older
+     CPUs requiring CPU RESET to identify them properly.
+
+
+  The other case is, if a manager doesn't support the call. This happens if
+  you are running under Microsoft Windows95 OSR2 or Windows98 DOS mode.
+  If these managers receive the Windows INIT BCAST, they display a message
+  about running an incompatible application and stop. So the only way is
+  to skip the privileged routines.
+
+  Pre v4.4.1 of HWiNFO refused to run under this circumstances, but
+  later versions run with the following restrictions (skip privileged routs):
+
+   - CPU frequency can't be measured using TSC
+   - CPU RESET can't be performed
+     (this is needed only for older CPUs or to receive the Processor Number
+     while this feature has been disabled)
+   - TI486 Potomac CPUs can't be identified
+   - L2 cache ECC presence can't be detected (P-II, Xeon)
+   - CPU Update Revision can't be reported (PPro and above)
+
+
+  If you try to run HWiNFO directly from Microsoft Windows (DOS box), it will
+  refuse to continue. This is because Windows controls also access to some
+  ports and doesn't allow a direct access from a DOS application. This
+  means, that if HWiNFO wouldn't refuse to run, but continue, it would be
+  unable to return info about IDE/ATAPI drives, COM/LPT ports, BIOS scan,
+  PnP resources wouldn't be accurate...
+  Windows NT VDM (Virtual DOS Machine) is even more strict.
+
+
+
+
+
+ ## 7. Resetting the CPU ######################################################
+
+
+  The CPU ID is available only on 386+ CPUs and HWiNFO uses three ways to
+  obtain this ID:
+
+  Method 1 - Resets the CPU while A20 is Enabled.
+             This method works on all systems, but the Reset handler gets
+             control after BIOS. And some BIOSes (some newer AMI/Award BIOSes)
+             destroy CPU ID (EDX) and therefore this ID could be invalid.
+             This method is default <Enabled> in Setup section.
+
+  Method 2 - Resets the CPU while A20 is Disabled.
+             This method works only on some machines, which do have a
+             Fully-Terminated bus. It's the best way to obtain CPU ID, because
+             it gets control immediately after Reset (the BIOS can't destroy
+             EDX). I've found some problems with this method while running
+             with Norton cache.
+             This method is default <Disabled> in Setup section.
+
+  Method 3 - Try to use this method if your BIOS destroys CPU ID. But it works
+             only on systems, which do not have Main BIOS (area at 0F000:0)
+             Write-Protected, because it modifies it for a bit, and then
+             restores back. This method is on some machines the only way
+             to obtain CPU ID.
+             This method is default <Enabled> in Setup section.
+
+
+
+  HWiNFO tries to determine CPU ID this way, via: 1. CPUID instruction
+                                                  2. BIOS (INT 15h)
+                                                  3. Method 2 (if Enabled)
+                                                  4. Method 3
+                                                  5. Method 1
+
+  If you have an UMC U5SX/SD/SLV/486DX2/SX2, Enhanced Am486DX2/DX4/DX4-WB,
+  AMD-K5 and above, Intel 486DX/SX/DX2 SL-Enhanced, IntelDX4, IntelSX2,
+  IntelDX2 W-B Enh. or Intel Pentium(R) and above, there is no need to Reset
+  the CPU (these CPU support CPUID instruction). Most CPUs today support
+  CPUID instruction.
+
+  Note: NexGen Nx586 does NOT support the CPUID instruction.
+        Cyrix 5x86 and above support the CPUID instruction only if CPUIDEN bit
+        in CCR4 register is set. HWiNFO 3.0.7+ sets this bit automatically.
+
+  Disabling "CPU ID detection via Method 1, 2 and 3" reduces your CPU
+  detection ability. And if there's no other way to obtain this ID
+  (via BIOS or CPUID instruction), it won't identify 386SL, i386CX/EX,
+  486DX2, IBM 486... and some other CPUs. Do this only if your system
+  hangs while attempting CPU detection.
+
+  Some BIOSes simply OVERWRITE the CPU ID (EDX) :-< ! In this case an
+  invalid CPU ID is displayed and the CPU is probably incorrectly identified.
+  If this problem occurs, try to use Method 3 (but your Main BIOS must be
+  Write-Enabled !). If it doesn't work, try to use Method 2 (but you must
+  have a Fully-Terminated bus !). And if HWiNFO still displays, that Method 1
+  was used to obtain CPU ID, not Method 2 nor 3 can obtain it.
+
+
+
+
+ ## 8. Bugs, Issues ###########################################################
+
+  - In case of any issues, run HWiNFO in Debug Mode (by including the -d switch)
+    and after closing (or Reboot in case of hang) sumbit the HWINFO.DBG file
+    created to the author (e-mail, forum).
+
+  - Detection of Super-IO chips or 3Com EtherLink III adapters can cause a crash
+    on some systems. You can disable these in the Configuration section.
+
+  - If HWiNFO crashes while starting or while the "Flushing Disk Caches..."
+    message is displayed, disable the "FlushDiskCaches" option in HWiNFO.INI
+    or HWiNFO|Setup.
+
+
+ ## 9. Miscellaneous notes ####################################################
+
+
+  Intel Pentium(R) and above CPUs do not report, that the "APIC on-chip"
+  feature is present. Most of them (P54C yes, but P54CQS and P54LM don't)
+  have an on-chip APIC, but don't report it, if it isn't supported by
+  external hardware.
+
+
+  If you have an Intel 420LX/420NX/430FX/430HX/430VX/430MX/430TX,
+  SiS 85C501/5120/5511/5571/5581/5596/5597/5591, AMD-640 chipset or
+  VIA Apollo VP-1/VPX/VP-2/VP3/MVP3, HWiNFO is able to detect the type of
+  External Cache and its size direct from the PCI chipset registers.
+
+
+
+ ## 10. Disclaimer ############################################################
+
+
+ ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+ บ  All product names are copyright and registered trademarks/tradenames of   บ
+ บ                        their respective owners.                            บ
+ ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+
+
+           HWiNFO IS COPYRIGHTED MATERIAL AND PROTECTED BY APPLICABLE
+               COPYRIGHT LAWS AND INTERNATIONAL TREATY PROVISIONS.
+
+
+    THE PROGRAM AND ITS DOCUMENTATION ARE COPYRIGHTED BY THE ORIGINAL
+    PROGRAMMER/AUTHOR (COPYRIGHT HOLDER). ALL RIGHTS ARE RESERVED CONCERNING
+    FUTURE CHANGES OF THE NAME AND CONTENTS OF THIS DISTRIBUTION PACKAGE. NO
+    CHANGES MUST BE MADE FOR ANY REASONS AT ANY TIME BY ANYBODY IN ANY ASPECT,
+    INCLUDING, BUT NOT LIMITED TO, MODIFICATION OF THE COPYRIGHT NOTICE OR
+    CHANGES OF THE COMPILED BINARIES HEREBY ALTERING THE ORIGINALLY INTENDED
+    PROGRAM EXECUTION FLOW.
+
+    REALiX SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, AND
+    ALL LIABILITY, INCLUDING CONSEQUENTIAL AND OTHER INDIRECT DAMAGES, FOR
+    THE USE OF THIS SOFTWARE, INCLUDING LIABILITY FOR INFRINGEMENT OF ANY
+    PROPRIETARY RIGHTS. REALiX DOES NOT ASSUME ANY RESPONSIBILITY FOR ANY
+    ERRORS WHICH MAY APPEAR IN THIS CODE NOR ANY RESPONSIBILITY TO UPDATE IT.
+
+    THE PERSON USING THE SOFTWARE BEARS ALL RISKS AS TO THE QUALITY AND
+    PERFORMANCE OF THIS SOFTWARE.
+
+ ## END #######################################################################

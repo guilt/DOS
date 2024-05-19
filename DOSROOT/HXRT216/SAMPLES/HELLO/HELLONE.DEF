@@ -1,0 +1,11 @@
+
+NAME
+
+STUB '..\..\bin\dpmist32.bin'
+
+CODE	MIXED1632
+DATA	MIXED1632
+
+STACKSIZE 2		;for 32bit NE binaries the loader will interpret this
+				;to allocate 2 PAGES!
+

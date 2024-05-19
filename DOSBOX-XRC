@@ -75,7 +75,7 @@
 #
 fullscreen        = true
 fulldouble        = false
-fullresolution    = 800x600
+fullresolution    = 640x480
 windowresolution  = original
 windowposition    = 
 display           = 0
@@ -96,7 +96,7 @@ mouse_emulation   = locked
 mouse_wheel_key   = -1
 waitonerror       = true
 priority          = higher,normal
-mapperfile        = mapper-dosbox-x.map
+mapperfile        = 
 usescancodes      = auto
 overscan          = 0
 titlebar          = 
@@ -113,7 +113,7 @@ showmenu          = true
 # -> vga; vgagfx; vgamisc; int10; sblaster; dma_control; fpu; cpu; paging; fcb; files; ioctl; exec; dosmisc; pit; keyboard; pic; mouse; bios; gui; misc; io; pci; sst; int21; fileio
 #
 logfile     = 
-debuggerrun = debugger
+debuggerrun = normal
 
 [dosbox]
 #                  language: Select a language file for DOSBox-X to use. Encoded with either UTF-8 or a DOS code page.
@@ -212,16 +212,16 @@ hostkey                   = mapper
 mapper send key           = ctrlaltdel
 ime                       = auto
 synchronize time          = false
-machine                   = svga_s3
+machine                   = vesa_oldvbe
 captures                  = capture
 autosave                  = 
 saveslot                  = 1
 savefile                  = 
 saveremark                = true
-forceloadstate            = false
+forceloadstate            = off_fake
 a20                       = mask
-memsize                   = 16
-nocachedir                = false
+memsize                   = 32
+nocachedir                = true
 freesizecap               = cap
 convertdrivefat           = true
 
@@ -428,7 +428,7 @@ j3100colorscroll = false
 # Advanced options (see full configuration reference file [dosbox-x.reference.full.conf] for more details):
 # -> vmemdelay; vbe window granularity; vbe window size; enable 8-bit dac; svga lfb base; pci vga; vga attribute controller mapping; enable supermegazeux tweakmode; vga bios use rom image; vga bios rom image; vga bios size override; video bios dont duplicate cga first half rom font; video bios always offer 14-pixel high rom font; video bios always offer 16-pixel high rom font; video bios enable cga second half rom font; forcerate; sierra ramdac; sierra ramdac lock 565; vga fill active memory; page flip debug line; vertical retrace poll debug line; cgasnow; vga 3da undefined bits; rom bios 8x8 CGA font; rom bios video parameter table; int 10h points at vga bios; unmask timer on int 10 setmode; vesa bank switching window mirroring; vesa bank switching window range check; vesa zero buffer on get information; vesa set display vsync; vesa lfb base scanline adjust; vesa map non-lfb modes to 128kb region; ega per scanline hpel; allow hpel effects; allow hretrace effects; hretrace effect weight; vesa modelist cap; vesa modelist width limit; vesa modelist height limit; vesa vbe put modelist in vesa information; vesa vbe 1.2 modes are 32bpp; allow low resolution vesa modes; allow explicit 24bpp vesa modes; allow high definition vesa modes; allow unusual vesa modes; allow 32bpp vesa modes; allow 24bpp vesa modes; allow 16bpp vesa modes; allow 15bpp vesa modes; allow 8bpp vesa modes; allow 4bpp vesa modes; allow 4bpp packed vesa modes; allow tty vesa modes; double-buffered line compare; ignore vblank wraparound; ignore extended memory bit; enable vga resize delay; resize only on vga active display width increase; vga palette update on full load; ignore odd-even mode in non-cga modes; ignore sequencer blanking
 #
-vmemsize                  = -1
+vmemsize                  = 4
 vmemsizekb                = 0
 high intensity blinking   = true
 memory io optimization 1  = true
@@ -661,7 +661,7 @@ mpuirq          = -1
 mt32.romdir     = 
 mt32.model      = auto
 fluid.driver    = default
-fluid.soundfont = 
+fluid.soundfont = D:\WS\DOS\DOSROOT\SFONT\GUS1471.SF2
 
 [sblaster]
 #                       sbtype: Type of Sound Blaster to emulate. 'gb' is Game Blaster.
@@ -769,7 +769,7 @@ ultradir          = C:\ULTRASND
 #    quality: Set SID emulation quality level (0 to 3).
 #               Possible values: 0, 1, 2, 3.
 innova     = false
-samplerate = 22050
+samplerate = 48000
 sidbase    = 280
 quality    = 0
 
@@ -947,7 +947,7 @@ serial6       = disabled
 serial7       = disabled
 serial8       = disabled
 serial9       = disabled
-phonebookfile = phonebook-dosbox-x.txt
+phonebookfile = 
 
 [parallel]
 # parallel1: parallel1-9 -- set type of device connected to the parallel (LPT) port.
@@ -1219,11 +1219,11 @@ timeout = default
 # Advanced options (see full configuration reference file [dosbox-x.reference.full.conf] for more details):
 # -> restricted; disable_host_loopback; mtu; mru; tcp_port_forwards; udp_port_forwards
 #
-ipv4_network    = 10.0.2.0
+ipv4_network    = 10.2.0.0
 ipv4_netmask    = 255.255.255.0
-ipv4_host       = 10.0.2.2
-ipv4_nameserver = 10.0.2.3
-ipv4_dhcp_start = 10.0.2.15
+ipv4_host       = 10.2.0.2
+ipv4_nameserver = 10.2.0.3
+ipv4_dhcp_start = 10.2.0.31
 
 [ide, primary]
 # enable: Enable IDE interface
@@ -1301,7 +1301,7 @@ numlock     =
 shell       = 
 dos         = high, umb
 fcbs        = 100
-files       = 200
+files       = 100
 country     = 
 lastdrive   = a
 set path    = Z:\;Z:\SYSTEM;Z:\BIN;Z:\DOS;Z:\4DOS;Z:\DEBUG;Z:\TEXTUTIL
@@ -1317,5 +1317,5 @@ devicehigh  =
 # You can put your MOUNT lines here.
 
 @mount C D:\WS\DOS\DOSROOT\
-@loadfix -96
+@loadfix -64
 @if exist C:\AUTOEXEC.BAT C:\AUTOEXEC.BAT

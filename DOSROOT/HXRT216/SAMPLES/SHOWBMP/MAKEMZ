@@ -1,0 +1,52 @@
+
+# nmake makefile, enter:
+#    nmake 
+# with symbolic debugging info:
+#    nmake debug=1
+# for source level debugging with WD use wlink instead of MS link (MSLINK=0)
+# WD must be started with parameter /swap on plain DOS
+
+name = ShowBmp
+name2 = DDClass
+
+MSLINK=1
+
+!ifdef DEBUG
+COPTD=-v
+LOPTDM=
+LOPTDW=debug dwarf
+OUTDIR=TEXT
+!else
+COPTD=
+LOPTDM=
+LOPTDW=
+OUTDIR=TEXT
+!endif
+
+CC = d:\dm\bin\dmc -c -o$* -mx -Pz -D_ML $(COPTD) -D_WIN32 -D__NT__=1 -D_STDCALL_SUPPORTED -D_KERNEL32_ -D_USER32_ -D_GDI32_ -I\dm\include 
+
+LIBOMF=..\..\LibOMF
+
+!if $(MSLINK)
+LIBS=$(LIBOMF)\jmppm32.lib $(LIBOMF)\dkrnl32s.lib $(LIBOMF)\duser32s.lib $(LIBOMF)\dgdi32s.lib $(LIBOMF)\vesa32s.lib $(LIBOMF)\dddraws.lib $(LIBOMF)\libc32.lib
+LOPT=$(LOPTDM) /ONE:NOE /NOD  
+LINK=link16.exe
+MODS=$(LIBOMF)\jmppm32.obj $*.obj $(OUTDIR)\$(name2).obj $(LIBOMF)\dmythunk.obj 
+!else
+LOPT=system hxmz $(LOPTDW) name $*.exe opt map opt start=_start opt stack=0x8000
+MODS=file $*.obj, $(OUTDIR)\$(name2).obj
+LIBS=library dddraws.lib, libc32.lib
+LINK=wlink.exe
+!endif
+
+$(OUTDIR)\$(name).exe: $*.obj $(OUTDIR)\$(name2).obj
+    $(LINK) @<<
+$(LOPT) $(MODS),$*.EXE,$*.map,$(LIBS);
+<<
+
+$(OUTDIR)\$(name).obj: $(name).cpp Makefile
+     $(CC) $(name).cpp
+
+$(OUTDIR)\$(name2).obj: $(name2).cpp Makefile
+     $(CC) $(name2).cpp
+

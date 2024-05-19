@@ -1,0 +1,43 @@
+
+# WLINK format definition for HX: hxnt, hxnts and hxdos. 
+
+system begin hxnt
+    option osname='HX Extender (Win32 PE)'
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/nt
+    library kernel32,user32,advapi32,ole32,oleaut32
+    format windows nt ^
+    op stub=dpmist32.bin
+    runtime console=4.0
+end
+
+# the next 2 formats require to run patchPE after wlink step!!!
+# all MZ stubs supplied with HX will work, but LOADPE.BIN and DPMILD32.BIN
+# are the recommended ones. The latter is significantly larger, but supports
+# loading PE dlls in DOS.
+
+# DOS PE binary format with Win32 CRT and Win32 linked statically
+# stack must be at least 128 kB because of OW peculiarities
+
+system begin hxnts
+    option osname='HX Extender (DOS PE, static Win32)'
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/nt
+    libfile cstrtwhx.obj
+    op stack=0x40000
+    library dkrnl32s,duser32s
+    op stub=loadpe.bin
+    format windows nt ^
+    runtime console=4.0
+end
+
+system begin hxdos
+    option osname='HX Extender (DOS PE)'
+    libpath %WATCOM%/lib386
+    libpath %WATCOM%/lib386/dos
+    library hxow
+    libfile cstrtdhx.obj
+    op stub=loadpe.bin
+    format windows nt ^
+    runtime console=4.0
+end

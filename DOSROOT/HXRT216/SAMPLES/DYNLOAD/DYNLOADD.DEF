@@ -1,0 +1,6 @@
+
+LIBRARY
+
+EXPORTS
+ DllFunction1 @1
+ DllFunction2 @2

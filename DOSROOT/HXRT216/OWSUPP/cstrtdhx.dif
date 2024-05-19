@@ -1,0 +1,34 @@
+211a212,219
+> ;--- start HX
+>         mov		eax,[esi+3Ch]
+>         add		eax,esi
+> 		add		ebx,4096-1
+>         and		bx,0F000h
+>         sub		ebx,[eax+4+20+72]		;get PE reserved stack size
+> 		mov		_STACKLOW,ebx
+> ;--- end HX
+253c261,262
+<         je      short know_extender     ; - quit if not Rational DOS/4G
+---
+> ;        je      short know_extender    ; - quit if not Rational DOS/4G
+>         je      short not_DOS4G         ; - jmp to non-DOS/4G
+270a280,290
+> ;--- added for non-DOS4G support
+> not_DOS4G:
+>         mov     ah,51h                  ; assume we get the PSP selector
+>         int     21h                     ; by a simple DOS call
+>         mov     _psp,bx
+>         mov		es,ebx
+>         mov		cx,es:[2Ch]
+> 		mov		ebx,ds
+>         mov     al,X_RATIONAL
+>         mov		ah,XS_NONE              ; default is zerobased FLAT
+> ;--- end of additions
+341c361
+<         mov     _STACKLOW,edi           ; save low address of stack
+---
+> ;       mov     _STACKLOW,edi           ; save low address of stack
+420a441
+> _DATA segment	;HX
+421a443
+> _DATA ends		;HX end
