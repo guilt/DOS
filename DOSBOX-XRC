@@ -224,6 +224,7 @@ memsize                   = 32
 nocachedir                = true
 freesizecap               = cap
 convertdrivefat           = true
+shell environment size    = 4096
 
 [render]
 #      frameskip: How many frames DOSBox-X skips before drawing one.
