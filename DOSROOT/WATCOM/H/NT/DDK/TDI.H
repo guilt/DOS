@@ -706,7 +706,7 @@ typedef struct _STREAMS_TDI_ACTION {
 typedef STREAMS_TDI_ACTION  *PSTREAMS_TDI_ACTION;
 
 /* Functions in TDI.SYS */
-NTSTATUS NTAPI  TdiOpenNetbiosAddress( PHANDLE, PUCHAR, PVOID, PVOID );
+NTSTATUS    NTAPI TdiOpenNetbiosAddress( PHANDLE, PUCHAR, PVOID, PVOID );
 
 #ifdef __cplusplus
 } /* extern "C" */

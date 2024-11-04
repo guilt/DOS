@@ -45,12 +45,12 @@ extern "C" {
 
 /* Functions exported by UPS minidrivers */
 #if (NTDDI_VERSION >= 0x05010000) && (NTDDI_VERSION < 0x06000000)
-void NTAPI  UPSCancelWait( void );
-DWORD NTAPI UPSGetState( void );
-DWORD NTAPI UPSInit( void );
-void NTAPI  UPSStop( void );
-void NTAPI  UPSTurnOff( DWORD );
-void NTAPI  UPSWaitForStateChange( DWORD, DWORD );
+void    NTAPI UPSCancelWait( void );
+DWORD   NTAPI UPSGetState( void );
+DWORD   NTAPI UPSInit( void );
+void    NTAPI UPSStop( void );
+void    NTAPI UPSTurnOff( DWORD );
+void    NTAPI UPSWaitForStateChange( DWORD, DWORD );
 #endif
 
 #ifdef __cplusplus

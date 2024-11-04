@@ -1,0 +1,83 @@
+:Base f_readme.hlp>main
+:Title Open Watcom 2.0 FORTRAN 77 Getting Started
+:Index Open Watcom 2.0 FORTRAN 77 Getting Started Help=f_readme.hlp
+
+1 Open Watcom 2.0 FORTRAN 77 Getting Started
+2 Introduction to Open Watcom FORTRAN 77
+2 Introduction=Introduction_to_Open_Watcom_FORTRAN_77
+2 What is in version 2.0 of Open Watcom FORTRAN 77?=What_is_in_version_2_0_of_Open_Watcom_FORTRAN_77_
+3 Technical Support and Services
+3 Introduction=Technical_Support_and_Services
+3 Resources at Your Fingertips=Resources_at_Your_Fingertips
+3 Contacting Technical Support=Contacting_Technical_Support
+3 Information Technical Support Will Need to Help You=Information_Technical_Support_Will_Need_to_Help_You
+4 Suggested Reading
+4 Introduction=Suggested_Reading
+4 DOS Developers=DOS_Developers
+4 Extended DOS Developers=Extended_DOS_Developers
+4 Windows 3.x Developers=Windows_3_x_Developers
+4 Windows NT Developers=Windows_NT_Developers
+4 OS/2 Developers=OSD2_Developers
+2 Installation
+2 Introduction=Installation
+2 Hardware and Software Requirements=Hardware_and_Software_Requirements
+2 The README File=The_README_File
+2 Installing Open Watcom FORTRAN 77=Installing_Open_Watcom_FORTRAN_77
+2 Incremental Installation=Incremental_Installation
+2 System Configuration File Modifications=System_Configuration_File_Modifications
+2 Installation Notes for Windows 3.x=Installation_Notes_for_Windows_3_x
+2 Installation Notes for OS/2=Installation_Notes_for_OSD2
+2 Hands-on Introduction to Open Watcom FORTRAN 77
+2 Introduction=HandsMon_Introduction_to_Open_Watcom_FORTRAN_77
+2 Outline=Outline
+3 The Open Watcom FORTRAN 77 Tutorial
+3 Introduction=The_Open_Watcom_FORTRAN_77_Tutorial
+3 Defining a Project=Defining_a_Project
+3 Adding Multiple Targets=Adding_Multiple_Targets
+3 Making a Target=Making_a_Target
+3 Making All Targets=Making_All_Targets
+3 Executing the Program=Executing_the_Program
+3 Smart Editing=Smart_Editing
+3 Debugging the Program=Debugging_the_Program
+3 Correcting an Error=Correcting_an_Error
+3 Editing a Bitmap=Editing_a_Bitmap
+3 Editing Menus=Editing_Menus
+3 Sampling and Profiling an Executable=Sampling_and_Profiling_an_Executable
+3 Saving the Project and Terminating the Session=Saving_the_Project_and_Terminating_the_Session
+2 Tutorial Review=Tutorial_Review
+2 Documentation
+2 Introduction=Documentation
+3 Accessing On-line Documentation
+3 Introduction=Accessing_OnMline_Documentation
+3 On-line Documentation under DOS and Linux=OnMline_Documentation_under_DOS_and_Linux
+3 On-line Documentation under Windows=OnMline_Documentation_under_Windows
+3 On-line Documentation under OS/2=OnMline_Documentation_under_OSD2
+2 Release Notes for Open Watcom FORTRAN 77 2.0
+2 Introduction=Release_Notes_for_Open_Watcom_FORTRAN_77_2_0
+2 Changes in 11.0 that may Require Recompilation=Changes_in_11_0_that_may_Require_Recompilation
+3 Major Differences from Version 10.6
+3 Introduction=Major_Differences_from_Version_10_6
+3 Changes to the Code Generator for 11.0=Changes_to_the_Code_Generator_for_11_0
+3 Changes to the Compiler Tools for 11.0=Changes_to_the_Compiler_Tools_for_11_0
+3 Changes to the C/C++ Libraries for 11.0=Changes_to_the_CDCPP_Libraries_for_11_0
+3 Changes to the DOS Graphics Library for 11.0=Changes_to_the_DOS_Graphics_Library_for_11_0
+3 Changes in Microsoft Win32 SDK Support for 11.0=Changes_in_Microsoft_Win32_SDK_Support_for_11_0
+2 Changes in 10.6 that may Require Recompilation=Changes_in_10_6_that_may_Require_Recompilation
+3 Major Differences from Version 10.5
+3 Introduction=Major_Differences_from_Version_10_5
+3 Windows 95 Help File Format=Windows_95_Help_File_Format
+3 Changes to the C Library=Changes_to_the_C_Library
+3 Changes to the Image Editor=Changes_to_the_Image_Editor
+3 Changes to the Dialog Editor=Changes_to_the_Dialog_Editor
+3 Changes to the Resource Editor=Changes_to_the_Resource_Editor
+3 Changes to the Resource Compiler=Changes_to_the_Resource_Compiler
+3 Major Differences from Version 9.5
+3 Introduction=Major_Differences_from_Version_9_5
+3 Items No Longer Supported=Items_No_Longer_Supported
+3 Changes that may Require Recompilation=Changes_that_may_Require_Recompilation
+2 Major Differences from Version 9.0=Major_Differences_from_Version_9_0
+2 Sybase Open Watcom Public License
+2 Introduction=Sybase_Open_Watcom_Public_License
+2 Trouble-Shooting
+2 Introduction=TroubleMShooting
+2 Win-OS/2 and OS/2 Specific=WinMOSD2_and_OSD2_Specific

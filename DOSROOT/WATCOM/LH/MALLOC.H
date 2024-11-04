@@ -70,12 +70,16 @@ extern "C" {
   #pragma aux stackavail __modify __nomemory
   #pragma aux _stackavail __modify __nomemory
 
-  extern void __based(__segname("_STACK")) *__doalloca(__w_size_t __size);
-     #pragma aux __doalloca = \
-            "sub esp,eax"   \
-        __parm __nomemory [__eax] \
-        __value [__esp] \
-        __modify __exact __nomemory [__esp]
+  #if defined(__COMPACT__) || defined(__LARGE__) || defined(__HUGE__) || defined(__SW_ZU)
+   extern void __based(__segname("_STACK")) *__doalloca(__w_size_t __size);
+  #else
+   extern void *__doalloca(__w_size_t __size);
+  #endif
+   #pragma aux __doalloca = \
+           "sub esp,eax"   \
+       __parm __nomemory [__eax] \
+       __value [__esp] \
+       __modify __exact __nomemory [__esp]
 
   #define __ALLOCA_ALIGN( s )   (((s)+(sizeof(int)-1))&~(sizeof(int)-1))
   #define __alloca( s )         __doalloca(__ALLOCA_ALIGN(s))

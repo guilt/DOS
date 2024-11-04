@@ -53,7 +53,7 @@ typedef struct _EMULATOR_ACCESS_ENTRY {
 typedef EMULATOR_ACCESS_ENTRY   *PEMULATOR_ACCESS_ENTRY;
 
 /* Banked section routine */
-typedef VOID (NTAPI *PBANKED_SECTION_ROUTINE)( ULONG, ULONG, PVOID );
+typedef VOID        (NTAPI *PBANKED_SECTION_ROUTINE)( ULONG, ULONG, PVOID );
 
 #ifdef __cplusplus
 } /* extern "C" */

@@ -167,7 +167,6 @@
 3 rm command=rm_command
 3 mkdir command=mkdir_command
 3 rmdir command=rmdir_command
-3 copy command=copy_command
 3 Make internal commands=Make_internal_commands
 2 Compatibility Between Open Watcom Make and UNIX Make=Compatibility_Between_Open_Watcom_Make_and_UNIX_Make
 2 Open Watcom Make Diagnostic Messages=Open_Watcom_Make_Diagnostic_Messages

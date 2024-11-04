@@ -1,0 +1,416 @@
+:Base f77lr.hlp>main
+:Title Open Watcom 2.0 FORTRAN 77 Language Reference
+:Index Open Watcom 2.0 FORTRAN 77 Language Reference Help=f77lr.hlp
+
+1 Open Watcom 2.0 FORTRAN 77 Language Reference
+2 FORTRAN Source Program Format
+2 Introduction=FORTRAN_Source_Program_Format
+2 Character Set=Character_Set
+2 Extended Character Set=Extended_Character_Set
+3 Source Program Format
+3 Introduction=Source_Program_Format
+3 Comment Line=Comment_Line
+3 Debug Line (Extension)=Debug_Line_LExtensionR
+3 Initial Line=Initial_Line
+3 Continuation Line=Continuation_Line
+3 Significance of the Blank Character=Significance_of_the_Blank_Character
+3 Significance of Lower Case Characters (Extension)=Significance_of_Lower_Case_Characters_LExtensionR
+3 Examples=Examples
+2 Order of FORTRAN Statements and Lines=Order_of_FORTRAN_Statements_and_Lines
+2 FORTRAN Statements
+2 Introduction=FORTRAN_Statements
+2 Classifying Statements=Classifying_Statements
+2 FORTRAN Statement Summary=FORTRAN_Statement_Summary
+2 ADMIT Statement=ADMIT_Statement
+2 ALLOCATE Statement=ALLOCATE_Statement
+2 Statement Label Assignment (ASSIGN) Statement=Statement_Label_Assignment_LASSIGNR_Statement
+2 AT END Statement=AT_END_Statement
+2 BACKSPACE Statement=BACKSPACE_Statement
+2 BLOCK DATA Statement=BLOCK_DATA_Statement
+2 CALL Statement=CALL_Statement
+2 CASE Statement=CASE_Statement
+3 CHARACTER Statement
+3 Introduction=CHARACTER_Statement
+3 Standard CHARACTER Statement=Standard_CHARACTER_Statement
+3 Extended CHARACTER Statement: Data Initialization=Extended_CHARACTER_Statement__Data_Initialization
+2 CLOSE Statement=CLOSE_Statement
+2 COMMON Statement=COMMON_Statement
+3 COMPLEX Statement
+3 Introduction=COMPLEX_Statement
+3 Standard COMPLEX Statement=Standard_COMPLEX_Statement
+3 Extended COMPLEX Statement: Length Specification=Extended_COMPLEX_Statement__Length_Specification
+3 Extended COMPLEX Statement: Data Initialization=Extended_COMPLEX_Statement__Data_Initialization
+2 CONTINUE Statement=CONTINUE_Statement
+2 CYCLE Statement=CYCLE_Statement
+2 DATA Statement=DATA_Statement
+2 DEALLOCATE Statement=DEALLOCATE_Statement
+2 DIMENSION Statement=DIMENSION_Statement
+3 DO Statement
+3 Introduction=DO_Statement
+3 Standard DO Statement=Standard_DO_Statement
+3 Extended DO Statement=Extended_DO_Statement
+3 Description of DO Statement=Description_of_DO_Statement
+3 DOUBLE COMPLEX Statement
+3 Introduction=DOUBLE_COMPLEX_Statement
+3 Simple DOUBLE COMPLEX Statement=Simple_DOUBLE_COMPLEX_Statement
+3 DOUBLE COMPLEX Statement: Data Initialization=DOUBLE_COMPLEX_Statement__Data_Initialization
+3 DOUBLE PRECISION Statement
+3 Introduction=DOUBLE_PRECISION_Statement
+3 Standard DOUBLE PRECISION Statement=Standard_DOUBLE_PRECISION_Statement
+3 Extended DOUBLE PRECISION Statement: Data Initialization=Extended_DOUBLE_PRECISION_Statement__Data_Initialization
+2 DO WHILE Statement=DO_WHILE_Statement
+2 ELSE Statement=ELSE_Statement
+2 ELSE IF Statement=ELSE_IF_Statement
+2 END Statement=END_Statement
+2 END AT END Statement=END_AT_END_Statement
+2 END BLOCK Statement=END_BLOCK_Statement
+2 END DO Statement=END_DO_Statement
+2 ENDFILE Statement=ENDFILE_Statement
+2 END GUESS Statement=END_GUESS_Statement
+2 END IF Statement=END_IF_Statement
+2 END LOOP Statement=END_LOOP_Statement
+2 END MAP Statement=END_MAP_Statement
+2 END SELECT Statement=END_SELECT_Statement
+2 END STRUCTURE Statement=END_STRUCTURE_Statement
+2 END UNION Statement=END_UNION_Statement
+2 END WHILE Statement=END_WHILE_Statement
+2 ENTRY Statement=ENTRY_Statement
+2 EQUIVALENCE Statement=EQUIVALENCE_Statement
+2 EXECUTE Statement=EXECUTE_Statement
+2 EXIT Statement=EXIT_Statement
+2 EXTERNAL Statement=EXTERNAL_Statement
+2 FORMAT Statement=FORMAT_Statement
+3 FUNCTION Statement
+3 Introduction=FUNCTION_Statement
+3 Standard FUNCTION Statement=Standard_FUNCTION_Statement
+3 Extended FUNCTION Statement=Extended_FUNCTION_Statement
+2 Unconditional GO TO Statement=Unconditional_GO_TO_Statement
+2 Computed GO TO Statement=Computed_GO_TO_Statement
+2 Assigned GO TO Statement=Assigned_GO_TO_Statement
+2 GUESS Statement=GUESS_Statement
+2 Arithmetic IF Statement=Arithmetic_IF_Statement
+2 Logical IF Statement=Logical_IF_Statement
+3 Block IF Statement
+3 Introduction=Block_IF_Statement
+3 Standard Block IF Statement=Standard_Block_IF_Statement
+3 Extended Block IF Statement=Extended_Block_IF_Statement
+3 IMPLICIT Statement
+3 Introduction=IMPLICIT_Statement
+3 Standard IMPLICIT Statement=Standard_IMPLICIT_Statement
+3 Extended IMPLICIT Statement=Extended_IMPLICIT_Statement
+3 IMPLICIT NONE Statement=IMPLICIT_NONE_Statement
+3 Description of IMPLICIT Statement=Description_of_IMPLICIT_Statement
+2 INCLUDE Statement=INCLUDE_Statement
+3 INQUIRE Statement
+3 Introduction=INQUIRE_Statement
+3 INQUIRE by FILE=INQUIRE_by_FILE
+3 INQUIRE by UNIT=INQUIRE_by_UNIT
+3 Inquiry Specifiers=Inquiry_Specifiers
+3 Definition Status of Specifiers - Inquire by File=Definition_Status_of_Specifiers_M_Inquire_by_File
+3 Definition Status of Specifiers - Inquire by Unit=Definition_Status_of_Specifiers_M_Inquire_by_Unit
+3 INTEGER Statement
+3 Introduction=INTEGER_Statement
+3 Standard INTEGER Statement=Standard_INTEGER_Statement
+3 Extended INTEGER Statement: Length Specification=Extended_INTEGER_Statement__Length_Specification
+3 Extended INTEGER Statement: Data Initialization=Extended_INTEGER_Statement__Data_Initialization
+2 INTRINSIC Statement=INTRINSIC_Statement
+3 LOGICAL Statement
+3 Introduction=LOGICAL_Statement
+3 Standard LOGICAL Statement=Standard_LOGICAL_Statement
+3 Extended LOGICAL Statement: Length Specification=Extended_LOGICAL_Statement__Length_Specification
+3 Extended LOGICAL Statement: Data Initialization=Extended_LOGICAL_Statement__Data_Initialization
+2 LOOP Statement=LOOP_Statement
+2 MAP Statement=MAP_Statement
+2 NAMELIST Statement=NAMELIST_Statement
+2 OPEN Statement=OPEN_Statement
+2 OTHERWISE Statement=OTHERWISE_Statement
+2 PARAMETER Statement=PARAMETER_Statement
+2 PAUSE Statement=PAUSE_Statement
+3 PRINT Statement
+3 Introduction=PRINT_Statement
+3 Standard PRINT Statement=Standard_PRINT_Statement
+3 Extended PRINT Statement=Extended_PRINT_Statement
+3 Description of PRINT Statement=Description_of_PRINT_Statement
+2 PROGRAM Statement=PROGRAM_Statement
+2 QUIT Statement=QUIT_Statement
+3 READ Statement
+3 Introduction=READ_Statement
+3 Standard READ Statement=Standard_READ_Statement
+3 Extended READ Statement=Extended_READ_Statement
+3 Description of READ Statement=Description_of_READ_Statement
+3 REAL Statement
+3 Introduction=REAL_Statement
+3 Standard REAL Statement=Standard_REAL_Statement
+3 Extended REAL Statement: Length Specification=Extended_REAL_Statement__Length_Specification
+3 Extended REAL Statement: Data Initialization=Extended_REAL_Statement__Data_Initialization
+2 RECORD Statement=RECORD_Statement
+2 REMOTE BLOCK Statement=REMOTE_BLOCK_Statement
+2 RETURN Statement=RETURN_Statement
+2 REWIND Statement=REWIND_Statement
+2 SAVE Statement=SAVE_Statement
+2 SELECT Statement=SELECT_Statement
+2 STOP Statement=STOP_Statement
+2 STRUCTURE Statement=STRUCTURE_Statement
+2 SUBROUTINE Statement=SUBROUTINE_Statement
+2 UNION Statement=UNION_Statement
+2 UNTIL Statement=UNTIL_Statement
+2 VOLATILE Statement=VOLATILE_Statement
+2 Block WHILE Statement=Block_WHILE_Statement
+2 WHILE Statement=WHILE_Statement
+2 WRITE Statement=WRITE_Statement
+2 Names, Data Types and Constants
+2 Introduction=Names__Data_Types_and_Constants
+2 Symbolic Names=Symbolic_Names
+2 Data Types=Data_Types
+2 Data Type of a Name=Data_Type_of_a_Name
+3 Constants
+3 Introduction=Constants
+3 Integer Constants=Integer_Constants
+3 Real Constants=Real_Constants
+3 Double Precision Constant=Double_Precision_Constant
+3 Complex Constant=Complex_Constant
+3 Double Precision Complex Constant (Extension)=Double_Precision_Complex_Constant_LExtensionR
+3 Logical Constant=Logical_Constant
+3 Character Constant=Character_Constant
+3 String Constant (Extension)=String_Constant_LExtensionR
+3 Hollerith Constants (Extension)=Hollerith_Constants_LExtensionR
+3 Hexadecimal Constants (Extension)=Hexadecimal_Constants_LExtensionR
+3 Octal Constants (Extension)=Octal_Constants_LExtensionR
+2 Symbolic Constants=Symbolic_Constants
+2 Arrays
+2 Introduction=Arrays
+2 Properties of Arrays=Properties_of_Arrays
+2 Array Elements=Array_Elements
+3 Classifying Array Declarators by Dimension Declarator
+3 Introduction=Classifying_Array_Declarators_by_Dimension_Declarator
+3 Constant Array Declarator=Constant_Array_Declarator
+3 Adjustable Array Declarator=Adjustable_Array_Declarator
+3 Assumed-size Array Declarator=AssumedMsize_Array_Declarator
+3 Allocatable Array Declarator=Allocatable_Array_Declarator
+3 Classifying Array Declarators by Array Name
+3 Introduction=Classifying_Array_Declarators_by_Array_Name
+3 Actual Array Declarator=Actual_Array_Declarator
+3 Dummy Array Declarator=Dummy_Array_Declarator
+2 Use of Array Names=Use_of_Array_Names
+2 Character Substrings
+2 Introduction=Character_Substrings
+2 Substring Names=Substring_Names
+2 Extensions=Extensions
+2 Structures, Unions and Records
+2 Introduction=Structures__Unions_and_Records
+2 Structures and Records=Structures_and_Records
+2 Arrays of Records=Arrays_of_Records
+2 Unions=Unions
+2 Expressions
+2 Introduction=Expressions
+3 Arithmetic Expressions
+3 Introduction=Arithmetic_Expressions
+3 Arithmetic Operators=Arithmetic_Operators
+3 Rules for Forming Standard Arithmetic Expressions=Rules_for_Forming_Standard_Arithmetic_Expressions
+3 Arithmetic Constant Expression=Arithmetic_Constant_Expression
+3 Data Type of Arithmetic Expressions=Data_Type_of_Arithmetic_Expressions
+3 Character Expressions
+3 Introduction=Character_Expressions
+3 Character Operators=Character_Operators
+3 Rules for Forming Character Expressions=Rules_for_Forming_Character_Expressions
+3 Character Constant Expressions=Character_Constant_Expressions
+3 Relational Expressions
+3 Introduction=Relational_Expressions
+3 Relational Operators=Relational_Operators
+4 Form of a Relational Expression
+4 Introduction=Form_of_a_Relational_Expression
+4 Arithmetic Relational Expressions=Arithmetic_Relational_Expressions
+4 Character Relational Expressions=Character_Relational_Expressions
+3 Logical Expressions
+3 Introduction=Logical_Expressions
+3 Logical Operators=Logical_Operators
+3 Rules for Forming Logical Expressions=Rules_for_Forming_Logical_Expressions
+3 Logical Constant Expressions=Logical_Constant_Expressions
+2 Evaluating Expressions=Evaluating_Expressions
+2 Constant Expressions=Constant_Expressions
+2 Assignment Statements
+2 Introduction=Assignment_Statements
+2 Arithmetic Assignment=Arithmetic_Assignment
+2 Logical Assignment=Logical_Assignment
+2 Statement Label Assignment=Statement_Label_Assignment
+2 Character Assignment=Character_Assignment
+2 Extended Assignment Statement=Extended_Assignment_Statement
+2 Program Structure Control Statements
+2 Introduction=Program_Structure_Control_Statements
+2 IF - ELSE - END IF=IF_M_ELSE_M_END_IF
+2 ELSE IF=ELSE_IF
+2 DO - END DO=DO_M_END_DO
+2 DO WHILE - END DO=DO_WHILE_M_END_DO
+2 LOOP - END LOOP=LOOP_M_END_LOOP
+2 WHILE - END WHILE=WHILE_M_END_WHILE
+2 WHILE - Executable-statement=WHILE_M_ExecutableMstatement
+2 UNTIL=UNTIL
+2 SELECT - END SELECT=SELECT_M_END_SELECT
+2 EXECUTE and REMOTE BLOCK=EXECUTE_and_REMOTE_BLOCK
+2 GUESS-ADMIT-END GUESS=GUESSMADMITMEND_GUESS
+2 QUIT=QUIT
+2 EXIT=EXIT
+2 CYCLE=CYCLE
+2 AT END=AT_END
+2 Notes on Structured Programming Statements=Notes_on_Structured_Programming_Statements
+2 Input/Output
+2 Introduction=InputDOutput
+2 Reading and Writing=Reading_and_Writing
+3 Records
+3 Introduction=Records
+3 Formatted Record=Formatted_Record
+3 Unformatted Record=Unformatted_Record
+3 Endfile Record=Endfile_Record
+3 Files
+3 Introduction=Files
+3 External Files=External_Files
+3 Internal Files=Internal_Files
+2 Units=Units
+3 Specifiers
+3 Introduction=Specifiers
+3 The Unit Specifier=The_Unit_Specifier
+3 Format Specifier=Format_Specifier
+3 Record Specifier=Record_Specifier
+3 Input/Output Status Specifier=InputDOutput_Status_Specifier
+3 Error Specifier=Error_Specifier
+3 End-of-File Specifier=EndMofMFile_Specifier
+2 Printing of Formatted Records=Printing_of_Formatted_Records
+2 Format
+2 Introduction=Format
+2 The FORMAT Statement=The_FORMAT_Statement
+2 FORMAT as a Character Expression=FORMAT_as_a_Character_Expression
+2 Format Specification=Format_Specification
+2 Repeatable Edit Descriptors=Repeatable_Edit_Descriptors
+2 Nonrepeatable Edit Descriptors=Nonrepeatable_Edit_Descriptors
+3 Editing
+3 Introduction=Editing
+3 Apostrophe Editing=Apostrophe_Editing
+3 H Editing=H_Editing
+3 Positional Editing: T, TL, TR and X Editing=Positional_Editing__T__TL__TR_and_X_Editing
+3 Slash Editing=Slash_Editing
+3 Colon Editing=Colon_Editing
+3 S, SP and SS Editing=S__SP_and_SS_Editing
+3 P Editing=P_Editing
+3 BN and BZ Editing=BN_and_BZ_Editing
+3 $ or \ Editing (Extension)=__or_B_Editing_LExtensionR
+4 Numeric Editing: I, F, E, D and G Edit Descriptors
+4 Introduction=Numeric_Editing__I__F__E__D_and_G_Edit_Descriptors
+4 Integer Editing: Iw and Iw.m Edit Descriptors=Integer_Editing__Iw_and_Iw_m_Edit_Descriptors
+4 Floating-point Editing: F, E, D and G Edit Descriptors=FloatingMpoint_Editing__F__E__D_and_G_Edit_Descriptors
+4 F Editing=F_Editing
+4 E and D Editing=E_and_D_Editing
+4 G Editing=G_Editing
+4 Complex Editing=Complex_Editing
+3 L Edit Descriptor=L_Edit_Descriptor
+3 A Edit Descriptor=A_Edit_Descriptor
+3 Z Editing (Extension)=Z_Editing_LExtensionR
+2 Format-Directed Input/Output=FormatMDirected_InputDOutput
+3 List-Directed Formatting
+3 Introduction=ListMDirected_Formatting
+3 List-Directed Input=ListMDirected_Input
+3 List-Directed Output=ListMDirected_Output
+3 Namelist-Directed Formatting (Extension)
+3 Introduction=NamelistMDirected_Formatting_LExtensionR
+3 Namelist-Directed Input (Extension)=NamelistMDirected_Input_LExtensionR
+3 Namelist-Directed Output=NamelistMDirected_Output
+2 Functions and Subroutines
+2 Introduction=Functions_and_Subroutines
+3 Statement Functions
+3 Introduction=Statement_Functions
+3 Referencing a Statement Function=Referencing_a_Statement_Function
+3 Statement Function Restrictions=Statement_Function_Restrictions
+3 Intrinsic Functions
+3 Introduction=Intrinsic_Functions
+3 Specific Names and Generic Names of Intrinsic Functions=Specific_Names_and_Generic_Names_of_Intrinsic_Functions
+3 Type Conversion: Conversion to integer=Type_Conversion__Conversion_to_integer
+3 Type Conversion: Conversion to real=Type_Conversion__Conversion_to_real
+3 Type Conversion: Conversion to double precision=Type_Conversion__Conversion_to_double_precision
+3 Type Conversion: Conversion to complex=Type_Conversion__Conversion_to_complex
+3 Type Conversion: Conversion to double complex=Type_Conversion__Conversion_to_double_complex
+3 Type Conversion: Character conversion to integer=Type_Conversion__Character_conversion_to_integer
+3 Type Conversion: Conversion to character=Type_Conversion__Conversion_to_character
+3 Truncation=Truncation
+3 Nearest Whole Number=Nearest_Whole_Number
+3 Nearest Integer=Nearest_Integer
+3 Absolute Value=Absolute_Value
+3 Remainder=Remainder
+3 Transfer of Sign=Transfer_of_Sign
+3 Positive Difference=Positive_Difference
+3 Double Precision Product=Double_Precision_Product
+3 Choosing Largest Value=Choosing_Largest_Value
+3 Choosing Smallest Value=Choosing_Smallest_Value
+3 Length=Length
+3 Length Without Trailing Blanks=Length_Without_Trailing_Blanks
+3 Index of a Substring=Index_of_a_Substring
+3 Imaginary Part of Complex Number=Imaginary_Part_of_Complex_Number
+3 Conjugate of a Complex Number=Conjugate_of_a_Complex_Number
+3 Square Root=Square_Root
+3 Exponential=Exponential
+3 Natural Logarithm=Natural_Logarithm
+3 Common Logarithm=Common_Logarithm
+3 Sine=Sine
+3 Cosine=Cosine
+3 Tangent=Tangent
+3 Cotangent=Cotangent
+3 Arcsine=Arcsine
+3 Arccosine=Arccosine
+3 Arctangent=Arctangent
+3 Hyperbolic Sine=Hyperbolic_Sine
+3 Hyperbolic Cosine=Hyperbolic_Cosine
+3 Hyperbolic Tangent=Hyperbolic_Tangent
+3 Gamma Function=Gamma_Function
+3 Natural Log of Gamma Function=Natural_Log_of_Gamma_Function
+3 Error Function=Error_Function
+3 Complement of Error Function=Complement_of_Error_Function
+3 Lexically Greater Than or Equal=Lexically_Greater_Than_or_Equal
+3 Lexically Greater Than=Lexically_Greater_Than
+3 Lexically Less Than or Equal=Lexically_Less_Than_or_Equal
+3 Lexically Less Than=Lexically_Less_Than
+3 Binary Pattern Processing Functions: Boolean AND=Binary_Pattern_Processing_Functions__Boolean_AND
+3 Binary Pattern Processing Functions: Boolean Inclusive OR=Binary_Pattern_Processing_Functions__Boolean_Inclusive_OR
+3 Binary Pattern Processing Functions: Boolean Exclusive OR=Binary_Pattern_Processing_Functions__Boolean_Exclusive_OR
+3 Binary Pattern Processing Functions: Boolean Complement=Binary_Pattern_Processing_Functions__Boolean_Complement
+3 Binary Pattern Processing Functions: Logical Shift=Binary_Pattern_Processing_Functions__Logical_Shift
+3 Binary Pattern Processing Functions: Arithmetic Shift=Binary_Pattern_Processing_Functions__Arithmetic_Shift
+3 Binary Pattern Processing Functions: Circular Shift=Binary_Pattern_Processing_Functions__Circular_Shift
+3 Binary Pattern Processing Functions: Bit Testing=Binary_Pattern_Processing_Functions__Bit_Testing
+3 Binary Pattern Processing Functions: Set Bit=Binary_Pattern_Processing_Functions__Set_Bit
+3 Binary Pattern Processing Functions: Clear Bit=Binary_Pattern_Processing_Functions__Clear_Bit
+3 Binary Pattern Processing Functions: Change Bit=Binary_Pattern_Processing_Functions__Change_Bit
+3 Binary Pattern Processing Functions: Arithmetic Shifts=Binary_Pattern_Processing_Functions__Arithmetic_Shifts
+3 Allocated Array=Allocated_Array
+3 Memory Location=Memory_Location
+3 Size of Variable or Structure=Size_of_Variable_or_Structure
+3 Volatile Reference=Volatile_Reference
+3 External Functions
+3 Introduction=External_Functions
+3 Referencing an External Function=Referencing_an_External_Function
+3 Actual Arguments for an External Function=Actual_Arguments_for_an_External_Function
+3 External Function Subprogram Restrictions=External_Function_Subprogram_Restrictions
+3 Subroutines
+3 Introduction=Subroutines
+3 Referencing a Subroutine: The CALL Statement=Referencing_a_Subroutine__The_CALL_Statement
+3 Actual Arguments for a Subroutine=Actual_Arguments_for_a_Subroutine
+3 Subroutine Subprogram Restrictions=Subroutine_Subprogram_Restrictions
+3 The ENTRY Statement
+3 Introduction=The_ENTRY_Statement
+3 ENTRY Statements in External Functions=ENTRY_Statements_in_External_Functions
+3 ENTRY Statement Restrictions=ENTRY_Statement_Restrictions
+3 The RETURN Statement
+3 Introduction=The_RETURN_Statement
+3 RETURN Statement in the Main Program (Extension)=RETURN_Statement_in_the_Main_Program_LExtensionR
+3 RETURN Statement in Function Subprograms=RETURN_Statement_in_Function_Subprograms
+3 RETURN Statement in Subroutine Subprograms=RETURN_Statement_in_Subroutine_Subprograms
+3 Subprogram Arguments
+3 Introduction=Subprogram_Arguments
+3 Dummy Arguments=Dummy_Arguments
+3 Actual Arguments=Actual_Arguments
+4 Association of Actual and Dummy Arguments
+4 Introduction=Association_of_Actual_and_Dummy_Arguments
+4 Length of Character Actual and Dummy Arguments=Length_of_Character_Actual_and_Dummy_Arguments
+4 Variables as Dummy Arguments=Variables_as_Dummy_Arguments
+4 Arrays as Dummy Arguments=Arrays_as_Dummy_Arguments
+4 Procedures as Dummy Arguments=Procedures_as_Dummy_Arguments
+4 Asterisks as Dummy Arguments=Asterisks_as_Dummy_Arguments
+2 Open Watcom FORTRAN 77 Extensions to Standard FORTRAN 77
+2 Introduction=Open_Watcom_FORTRAN_77_Extensions_to_Standard_FORTRAN_77

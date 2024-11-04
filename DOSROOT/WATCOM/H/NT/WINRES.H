@@ -16,9 +16,9 @@
  #pragma read_only_file
 #endif
 
-/* Define default version number */
+/* Define default Windows version number. */
 #ifndef WINVER
-    #define WINVER  0x0400
+    #define WINVER          0x0400
 #endif
 
 #include <winresrc.h>

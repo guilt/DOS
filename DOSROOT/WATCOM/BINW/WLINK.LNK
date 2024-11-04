@@ -44,6 +44,11 @@ system begin pharlap
     libpath '%WATCOM%/lib386/dos'
     format phar ^
 end
+system begin pharlapext
+    libpath '%WATCOM%/lib386'
+    libpath '%WATCOM%/lib386/dos'
+    format phar ext ^
+end
 system begin x32r
     option osname='FlashTek (register calling convention)'
     libpath '%WATCOM%/lib386'

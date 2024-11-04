@@ -27,7 +27,9 @@
 extern "C" {
 #endif
 
-#pragma pack( __push, 4 )
+#ifndef NAME_MAX
+ #define NAME_MAX       255     /* maximum filename for Linux         */
+#endif
 
 /*
  *  POSIX 1003.1 types
@@ -47,16 +49,12 @@ extern "C" {
  typedef long           off_t;  /* Used for file sizes, offsets     */
 #endif
 
-#define _DIRBUF  8  /*  Max number of dir entries buffered  */
-
 #undef  _DIRENT_HAVE_D_NAMLEN
 #define _DIRENT_HAVE_D_RECLEN
 #define _DIRENT_HAVE_D_OFF
 #undef  _DIRENT_HAVE_D_TYPE
 
-#ifndef NAME_MAX
- #define NAME_MAX       255     /* maximum filename for Linux         */
-#endif
+#pragma pack( __push, 4 )
 
 struct dirent {
     ino_t           d_ino;

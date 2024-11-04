@@ -108,11 +108,9 @@ _WCRTLINK extern int        _execvpe( const char *__file, const char *const __ar
  _WCRTLINK extern void  _endthread( void );
 #endif
 
-#if !(defined(SYSV) || defined(BSD) || defined(XENIX) || defined(_UNIX_H_INCLUDED))
 _WCRTLINK extern char       *getcmd( char *__buffer );
 _WCRTLINK extern int        _bgetcmd( char *__buffer, int __len );
 _WCRTLINK extern char       *_cmdname( char *__name );
-#endif
 
 _WCRTLINK extern int        spawnl( int __mode, const char *__path, const char *__arg0, ... );
 _WCRTLINK extern int        spawnle( int __mode, const char *__path, const char *__arg0, ... );

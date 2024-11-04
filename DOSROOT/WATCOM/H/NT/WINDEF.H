@@ -34,7 +34,7 @@ extern "C" {
 
 /* Define default Windows version number. */
 #ifndef WINVER
-    #define WINVER  0x0400
+    #define WINVER          0x0400
 #endif
 
 /* Override default compiler behavior for these keywords. */

@@ -13,6 +13,9 @@ end
 system begin pharlap
     ARCH i386 -bt=dos
 end
+system begin pharlapext
+    ARCH i386 -bt=dos
+end
 system begin x32r
     ARCH i386 -bt=dos
 end

@@ -532,19 +532,23 @@ extern  wchar_t             **__wargv;  /* vector of wide cmd line args */
   #pragma aux stackavail __modify __nomemory
   #pragma aux _stackavail __modify __nomemory
 
-  extern void __based(__segname("_STACK")) *__doalloca(__w_size_t __size);
-  #ifdef _M_I86
-    #pragma aux __doalloca = \
-            "sub sp,ax"     \
-        __parm __nomemory [__ax] \
-        __value [__sp] \
-        __modify __exact __nomemory [__sp]
+  #if defined(__COMPACT__) || defined(__LARGE__) || defined(__HUGE__) || defined(__SW_ZU)
+   extern void __based(__segname("_STACK")) *__doalloca(__w_size_t __size);
   #else
-     #pragma aux __doalloca = \
-            "sub esp,eax"   \
-        __parm __nomemory [__eax] \
-        __value [__esp] \
-        __modify __exact __nomemory [__esp]
+   extern void *__doalloca(__w_size_t __size);
+  #endif
+  #ifdef _M_I86
+   #pragma aux __doalloca = \
+           "sub sp,ax"     \
+       __parm __nomemory [__ax] \
+       __value [__sp] \
+       __modify __exact __nomemory [__sp]
+  #else
+   #pragma aux __doalloca = \
+           "sub esp,eax"   \
+       __parm __nomemory [__eax] \
+       __value [__esp] \
+       __modify __exact __nomemory [__esp]
   #endif
 
   #define __ALLOCA_ALIGN( s )   (((s)+(sizeof(int)-1))&~(sizeof(int)-1))

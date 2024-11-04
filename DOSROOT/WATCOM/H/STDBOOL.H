@@ -29,13 +29,13 @@
 
 #else /* __cplusplus not defined */
 
- #define bool _Bool
- #define true  1
- #define false 0
- #if __STDC_VERSION__ < 199901L
+ #if defined( _NO_EXT_KEYS ) && __STDC_VERSION__ < 199901L /* C89 and extensions disabled */
   typedef unsigned char _Bool;
  #endif
 
+ #define bool _Bool
+ #define true  1
+ #define false 0
  #define __bool_true_false_are_defined 1
 
 #endif /* __cplusplus not defined */

@@ -1,0 +1,258 @@
+:Base fguide.hlp>main
+:Title Open Watcom 2.0 FORTRAN 77 User's Guide
+:Index Open Watcom 2.0 FORTRAN 77 User's Guide Help=fguide.hlp
+
+1 Open Watcom 2.0 FORTRAN 77 User's Guide
+2 About This Manual
+2 Introduction=About_This_Manual
+2 Open Watcom FORTRAN 77 Compiler Options
+2 Introduction=Open_Watcom_FORTRAN_77_Compiler_Options
+2 Open Watcom F77 Options Summary=Open_Watcom_F77_Options_Summary
+2 Compiler Options=Compiler_Options
+2 The Open Watcom FORTRAN 77 Compiler
+2 Introduction=The_Open_Watcom_FORTRAN_77_Compiler
+2 Open Watcom FORTRAN 77 Command Line Format=Open_Watcom_FORTRAN_77_Command_Line_Format
+2 WFC/WFC386 Environment Variables=WFCDWFC386_Environment_Variables
+2 Open Watcom FORTRAN 77 Command Line Examples=Open_Watcom_FORTRAN_77_Command_Line_Examples
+2 Compiler Diagnostics=Compiler_Diagnostics
+2 Open Watcom FORTRAN 77 INCLUDE File Processing=Open_Watcom_FORTRAN_77_INCLUDE_File_Processing
+2 The Open Watcom FORTRAN 77 Libraries
+2 Introduction=The_Open_Watcom_FORTRAN_77_Libraries
+2 Open Watcom FORTRAN 77 80x87 Emulator Libraries=Open_Watcom_FORTRAN_77_80x87_Emulator_Libraries
+2 The "NO87" Environment Variable=The__NO87__Environment_Variable
+2 Open Watcom FORTRAN 77 Compiler Directives
+2 Introduction=Open_Watcom_FORTRAN_77_Compiler_Directives
+2 The EJECT Compiler Directive=The_EJECT_Compiler_Directive
+2 The INCLUDE Compiler Directive=The_INCLUDE_Compiler_Directive
+2 The PRAGMA Compiler Directive=The_PRAGMA_Compiler_Directive
+2 The DEFINE Compiler Directive=The_DEFINE_Compiler_Directive
+2 The UNDEFINE Compiler Directive=The_UNDEFINE_Compiler_Directive
+2 The IFDEF, IFNDEF and ENDIF Compiler Directive=The_IFDEF__IFNDEF_and_ENDIF_Compiler_Directive
+2 The ELSE Compiler Directive=The_ELSE_Compiler_Directive
+2 The ELSEIFDEF and ELSEIFNDEF Compiler Directive=The_ELSEIFDEF_and_ELSEIFNDEF_Compiler_Directive
+2 Debugging statements ("D" in Column 1)=Debugging_statements_L_D__in_Column_1R
+2 General Notes About Compiler Directives=General_Notes_About_Compiler_Directives
+2 Open Watcom FORTRAN 77 File Handling
+2 Introduction=Open_Watcom_FORTRAN_77_File_Handling
+2 Record Access=Record_Access
+3 Record Format
+3 Introduction=Record_Format
+3 FORMATTED Records=FORMATTED_Records
+3 UNFORMATTED Records=UNFORMATTED_Records
+3 Files with no Record Structure=Files_with_no_Record_Structure
+3 Attributes of Files
+3 Introduction=Attributes_of_Files
+3 Record Type=Record_Type
+3 Record Size=Record_Size
+3 Print File Attributes=Print_File_Attributes
+3 Input/Output Buffer Size=InputDOutput_Buffer_Size
+3 File Sharing=File_Sharing
+3 File Names in the FAT File System
+3 Introduction=File_Names_in_the_FAT_File_System
+3 Special DOS Device Names=Special_DOS_Device_Names
+3 Examples of FAT File Specifications=Examples_of_FAT_File_Specifications
+3 File Names in the High Performance File System
+3 Introduction=File_Names_in_the_High_Performance_File_System
+3 Special OS/2 Device Names=Special_OSD2_Device_Names
+3 Examples of HPFS File Specifications=Examples_of_HPFS_File_Specifications
+2 Establishing Connections Between Units and Files=Establishing_Connections_Between_Units_and_Files
+2 A Preconnection Tutorial=A_Preconnection_Tutorial
+2 Logical File Name Support=Logical_File_Name_Support
+2 Terminal or Console Device Support=Terminal_or_Console_Device_Support
+2 Printer Device Support=Printer_Device_Support
+2 Serial Device Support=Serial_Device_Support
+2 File Handling Defaults=File_Handling_Defaults
+2 The Open Watcom F77 Subprogram Library
+2 Introduction=The_Open_Watcom_F77_Subprogram_Library
+2 Subroutine FEXIT=Subroutine_FEXIT
+2 INTEGER Function FGETCMD=INTEGER_Function_FGETCMD
+2 INTEGER Function FGETENV=INTEGER_Function_FGETENV
+2 INTEGER Function FILESIZE=INTEGER_Function_FILESIZE
+2 Subroutine FINTR and FINTRF=Subroutine_FINTR_and_FINTRF
+2 INTEGER Function FLUSHUNIT=INTEGER_Function_FLUSHUNIT
+2 INTEGER Function FNEXTRECL=INTEGER_Function_FNEXTRECL
+2 INTEGER Function FSIGNAL=INTEGER_Function_FSIGNAL
+2 INTEGER Function FSPAWN=INTEGER_Function_FSPAWN
+2 INTEGER Function FSYSTEM=INTEGER_Function_FSYSTEM
+2 Subroutine FTRACEBACK=Subroutine_FTRACEBACK
+2 Subroutine GETDAT=Subroutine_GETDAT
+2 Subroutine GETTIM=Subroutine_GETTIM
+2 INTEGER Function GROWHANDLES=INTEGER_Function_GROWHANDLES
+2 Functions IARGC and IGETARG=Functions_IARGC_and_IGETARG
+2 Math Error Functions=Math_Error_Functions
+2 INTEGER Function SEEKUNIT=INTEGER_Function_SEEKUNIT
+2 INTEGER Function SETJMP/Subroutine LONGJMP=INTEGER_Function_SETJMPDSubroutine_LONGJMP
+2 INTEGER Function SETSYSHANDLE=INTEGER_Function_SETSYSHANDLE
+2 INTEGER*2 Function SYSHANDLE=INTEGERT2_Function_SYSHANDLE
+2 REAL Function URAND=REAL_Function_URAND
+3 Default Windowing Functions
+3 Introduction=Default_Windowing_Functions
+3 dwfDeleteOnClose=dwfDeleteOnClose
+3 dwfSetAboutDlg=dwfSetAboutDlg
+3 dwfSetAppTitle=dwfSetAppTitle
+3 dwfSetConTitle=dwfSetConTitle
+3 dwfShutDown=dwfShutDown
+3 dwfYield=dwfYield
+2 Data Representation On x86-based Platforms
+2 Introduction=Data_Representation_On_x86Mbased_Platforms
+2 LOGICAL*1 Data Type=LOGICALT1_Data_Type
+2 LOGICAL and LOGICAL*4 Data Types=LOGICAL_and_LOGICALT4_Data_Types
+2 INTEGER*1 Data Type=INTEGERT1_Data_Type
+2 INTEGER*2 Data Type=INTEGERT2_Data_Type
+2 INTEGER and INTEGER*4 Data Types=INTEGER_and_INTEGERT4_Data_Types
+2 REAL and REAL*4 Data Types=REAL_and_REALT4_Data_Types
+2 DOUBLE PRECISION and REAL*8 Data Types=DOUBLE_PRECISION_and_REALT8_Data_Types
+2 COMPLEX, COMPLEX*8, and DOUBLE COMPLEX Data Types=COMPLEX__COMPLEXT8__and_DOUBLE_COMPLEX_Data_Types
+2 COMPLEX*16 Data Type=COMPLEXT16_Data_Type
+2 CHARACTER Data Type=CHARACTER_Data_Type
+2 Storage Organization of Data Types=Storage_Organization_of_Data_Types
+2 Floating-point Accuracy On x86-based Platforms=FloatingMpoint_Accuracy_On_x86Mbased_Platforms
+2 Floating-point Exceptions On x86-based Platforms=FloatingMpoint_Exceptions_On_x86Mbased_Platforms
+2 Compiler Options Relating to Floating-point=Compiler_Options_Relating_to_FloatingMpoint
+2 Floating-point Exception Handling=FloatingMpoint_Exception_Handling
+2 Memory Models
+2 Introduction=16Mbit__Memory_Models
+2 Code Models=16Mbit__Code_Models
+2 Data Models=16Mbit__Data_Models
+2 Summary of Memory Models=16Mbit__Summary_of_Memory_Models
+2 Mixed Memory Model=16Mbit__Mixed_Memory_Model
+2 Linking Applications for the Various Memory Models=16Mbit__Linking_Applications_for_the_Various_Memory_Models
+2 Memory Layout=16Mbit__Memory_Layout
+2 Assembly Language Considerations
+2 Introduction=16Mbit__Assembly_Language_Considerations
+3 Calling Conventions
+3 Introduction=16Mbit__Calling_Conventions
+3 Processing Function Return Values with no 80x87=16Mbit__Processing_Function_Return_Values_with_no_80x87
+3 Processing Function Return Values Using an 80x87=16Mbit__Processing_Function_Return_Values_Using_an_80x87
+3 Processing Alternate Returns=16Mbit__Processing_Alternate_Returns
+4 Alternate Method of Passing Character Arguments
+4 Introduction=16Mbit__Alternate_Method_of_Passing_Character_Arguments
+4 Character Functions=16Mbit__Character_Functions
+3 Writing Assembly Language Subprograms
+3 Introduction=16Mbit__Writing_Assembly_Language_Subprograms
+3 Returning Values from Assembly Language Functions=16Mbit__Returning_Values_from_Assembly_Language_Functions
+2 Pragmas
+2 Introduction=16Mbit__Pragmas
+3 Auxiliary Pragmas
+3 Introduction=16Mbit__Auxiliary_Pragmas
+3 Specifying Symbol Attributes=16Mbit__Specifying_Symbol_Attributes
+3 Alias Names=16Mbit__Alias_Names
+4 Predefined Aliases
+4 Introduction=16Mbit__Predefined_Aliases
+4 Predefined "__cdecl" Alias=16Mbit__Predefined____cdecl__Alias
+4 Predefined "__pascal" Alias=16Mbit__Predefined____pascal__Alias
+4 Predefined "__watcall" Alias=16Mbit__Predefined____watcall__Alias
+3 Alternate Names for Symbols=16Mbit__Alternate_Names_for_Symbols
+4 Describing Calling Information
+4 Introduction=16Mbit__Describing_Calling_Information
+4 Loading Data Segment Register=16Mbit__Loading_Data_Segment_Register
+4 Defining Exported Symbols in Dynamic Link Libraries=16Mbit__Defining_Exported_Symbols_in_Dynamic_Link_Libraries
+4 Defining Windows Callback Functions=16Mbit__Defining_Windows_Callback_Functions
+4 Describing Argument Information
+4 Introduction=16Mbit__Describing_Argument_Information
+4 Passing Arguments to non-FORTRAN Subprograms=16Mbit__Passing_Arguments_to_nonMFORTRAN_Subprograms
+4 Passing Arguments in Registers=16Mbit__Passing_Arguments_in_Registers
+4 Forcing Arguments into Specific Registers=16Mbit__Forcing_Arguments_into_Specific_Registers
+4 Passing Arguments to In-Line Subprograms=16Mbit__Passing_Arguments_to_InMLine_Subprograms
+4 Removing Arguments from the Stack=16Mbit__Removing_Arguments_from_the_Stack
+4 Passing Arguments in Reverse Order=16Mbit__Passing_Arguments_in_Reverse_Order
+4 Describing Subprogram Return Information
+4 Introduction=16Mbit__Describing_Subprogram_Return_Information
+4 Returning Subprogram Values in Registers=16Mbit__Returning_Subprogram_Values_in_Registers
+4 Returning Structures and Complex Numbers=16Mbit__Returning_Structures_and_Complex_Numbers
+4 Returning Floating-Point Data=16Mbit__Returning_FloatingMPoint_Data
+3 A Subprogram that Never Returns=16Mbit__A_Subprogram_that_Never_Returns
+3 Describing How Subprograms Use Variables in Common=16Mbit__Describing_How_Subprograms_Use_Variables_in_Common
+3 Describing the Registers Modified by a Subprogram=16Mbit__Describing_the_Registers_Modified_by_a_Subprogram
+4 Auxiliary Pragmas and the 80x87
+4 Introduction=16Mbit__Auxiliary_Pragmas_and_the_80x87
+4 Using the 80x87 to Pass Arguments=16Mbit__Using_the_80x87_to_Pass_Arguments
+4 Using the 80x87 to Return Subprogram Values=16Mbit__Using_the_80x87_to_Return_Subprogram_Values
+4 Preserving 80x87 Floating-Point Registers Across Calls=16Mbit__Preserving_80x87_FloatingMPoint_Registers_Across_Calls
+2 Memory Models
+2 Introduction=32Mbit__Memory_Models
+2 Code Models=32Mbit__Code_Models
+2 Data Models=32Mbit__Data_Models
+2 Summary of Memory Models=32Mbit__Summary_of_Memory_Models
+2 Flat Memory Model=32Mbit__Flat_Memory_Model
+2 Mixed Memory Model=32Mbit__Mixed_Memory_Model
+2 Linking Applications for the Various Memory Models=32Mbit__Linking_Applications_for_the_Various_Memory_Models
+2 Memory Layout=32Mbit__Memory_Layout
+2 Assembly Language Considerations
+2 Introduction=32Mbit__Assembly_Language_Considerations
+3 Calling Conventions
+3 Introduction=32Mbit__Calling_Conventions
+3 Stack-Based Calling Convention=32Mbit__StackMBased_Calling_Convention
+3 Processing Function Return Values with no 80x87=32Mbit__Processing_Function_Return_Values_with_no_80x87
+3 Processing Function Return Values Using an 80x87=32Mbit__Processing_Function_Return_Values_Using_an_80x87
+3 Processing Alternate Returns=32Mbit__Processing_Alternate_Returns
+4 Alternate Method of Passing Character Arguments
+4 Introduction=32Mbit__Alternate_Method_of_Passing_Character_Arguments
+4 Character Functions=32Mbit__Character_Functions
+3 Writing Assembly Language Subprograms
+3 Introduction=32Mbit__Writing_Assembly_Language_Subprograms
+3 Using the Stack-Based Calling Convention=32Mbit__Using_the_StackMBased_Calling_Convention
+3 Returning Values from Assembly Language Functions=32Mbit__Returning_Values_from_Assembly_Language_Functions
+2 Pragmas
+2 Introduction=32Mbit__Pragmas
+3 Auxiliary Pragmas
+3 Introduction=32Mbit__Auxiliary_Pragmas
+3 Specifying Symbol Attributes=32Mbit__Specifying_Symbol_Attributes
+3 Alias Names=32Mbit__Alias_Names
+4 Predefined Aliases
+4 Introduction=32Mbit__Predefined_Aliases
+4 Predefined "__cdecl" Alias=32Mbit__Predefined____cdecl__Alias
+4 Predefined "__pascal" Alias=32Mbit__Predefined____pascal__Alias
+4 Predefined "__stdcall" Alias=32Mbit__Predefined____stdcall__Alias
+4 Predefined "__syscall" Alias=32Mbit__Predefined____syscall__Alias
+4 Predefined "__watcall" Alias (register calling convention)=32Mbit__Predefined____watcall__Alias_Lregister_calling_conventionR
+4 Predefined "__watcall" Alias (stack calling convention)=32Mbit__Predefined____watcall__Alias_Lstack_calling_conventionR
+3 Alternate Names for Symbols=32Mbit__Alternate_Names_for_Symbols
+4 Describing Calling Information
+4 Introduction=32Mbit__Describing_Calling_Information
+4 Loading Data Segment Register=32Mbit__Loading_Data_Segment_Register
+4 Defining Exported Symbols in Dynamic Link Libraries=32Mbit__Defining_Exported_Symbols_in_Dynamic_Link_Libraries
+4 Describing Argument Information
+4 Introduction=32Mbit__Describing_Argument_Information
+4 Passing Arguments to non-FORTRAN Subprograms=32Mbit__Passing_Arguments_to_nonMFORTRAN_Subprograms
+4 Passing Arguments in Registers=32Mbit__Passing_Arguments_in_Registers
+4 Forcing Arguments into Specific Registers=32Mbit__Forcing_Arguments_into_Specific_Registers
+4 Passing Arguments to In-Line Subprograms=32Mbit__Passing_Arguments_to_InMLine_Subprograms
+4 Removing Arguments from the Stack=32Mbit__Removing_Arguments_from_the_Stack
+4 Passing Arguments in Reverse Order=32Mbit__Passing_Arguments_in_Reverse_Order
+4 Describing Subprogram Return Information
+4 Introduction=32Mbit__Describing_Subprogram_Return_Information
+4 Returning Subprogram Values in Registers=32Mbit__Returning_Subprogram_Values_in_Registers
+4 Returning Structures and Complex Numbers=32Mbit__Returning_Structures_and_Complex_Numbers
+4 Returning Floating-Point Data=32Mbit__Returning_FloatingMPoint_Data
+3 A Subprogram that Never Returns=32Mbit__A_Subprogram_that_Never_Returns
+3 Describing How Subprograms Use Variables in Common=32Mbit__Describing_How_Subprograms_Use_Variables_in_Common
+3 Describing the Registers Modified by a Subprogram=32Mbit__Describing_the_Registers_Modified_by_a_Subprogram
+4 Auxiliary Pragmas and the 80x87
+4 Introduction=32Mbit__Auxiliary_Pragmas_and_the_80x87
+4 Using the 80x87 to Pass Arguments=32Mbit__Using_the_80x87_to_Pass_Arguments
+4 Using the 80x87 to Return Subprogram Values=32Mbit__Using_the_80x87_to_Return_Subprogram_Values
+4 Preserving 80x87 Floating-Point Registers Across Calls=32Mbit__Preserving_80x87_FloatingMPoint_Registers_Across_Calls
+2 Use of Environment Variables
+2 Introduction=Use_of_Environment_Variables
+2 FINCLUDE=FINCLUDE
+2 LFN=LFN
+2 LIB=LIB
+2 LIBDOS=LIBDOS
+2 LIBWIN=LIBWIN
+2 LIBOS2=LIBOS2
+2 LIBPHAR=LIBPHAR
+2 NO87=NO87
+2 PATH=PATH
+2 TMP=TMP
+2 WATCOM=WATCOM
+2 WCL=WCL
+2 WCL386=WCL386
+2 WCGMEMORY=WCGMEMORY
+2 WD=WD
+2 WDW=WDW
+2 WFC=WFC
+2 WFC386=WFC386
+2 WFL=WFL
+2 WFL386=WFL386
+2 WLANG=WLANG

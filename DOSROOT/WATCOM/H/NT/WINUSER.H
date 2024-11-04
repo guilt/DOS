@@ -25,6 +25,11 @@
 extern "C" {
 #endif
 
+/* Define default Windows version number. */
+#ifndef WINVER
+    #define WINVER          0x0400
+#endif
+
 /* Macro to specify user functions */
 #define WINUSERAPI  DECLSPEC_IMPORT
 

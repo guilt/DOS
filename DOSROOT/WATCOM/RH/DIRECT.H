@@ -19,12 +19,16 @@
  #pragma read_only_file
 #endif
 
-#ifndef __COMDEF_H_INCLUDED
- #include <_comdef.h>
+#ifndef _DIRENT_H_INCLUDED
+ #include <dirent.h>
 #endif
 
 #ifndef _SYS_TYPES_H_INCLUDED
  #include <sys/types.h>
+#endif
+
+#ifndef __COMDEF_H_INCLUDED
+ #include <_comdef.h>
 #endif
 
 #ifdef __cplusplus
@@ -32,40 +36,6 @@ extern "C" {
 #endif
 
 #pragma pack( __push, 1 )
-
-#ifndef __cplusplus
- #ifndef _WCHAR_T_DEFINED
- #define _WCHAR_T_DEFINED
-  #define _WCHAR_T_DEFINED_
-  typedef unsigned short wchar_t;
- #endif
-#endif
-
-#ifndef NAME_MAX
- #define NAME_MAX       255     /* maximum filename for RDOS          */
-#endif
-
-struct dirent {
-    int                 d_handle;                   /* directory handle */
-    char                d_match_mask[NAME_MAX+1];   /* mask for matching files */
-    int                 d_entry_nr;                 /* current entry number (first = 0) */
-    int                 d_attr;                     /* file's attribute */
-    unsigned long       d_msb_time;
-    unsigned long       d_lsb_time;                 /* timestamp, rdos formatted */
-    long                d_size;                     /* file's size */
-    char                d_name[NAME_MAX+1];         /* file's name */
-};
-typedef struct dirent   DIR;
-
-/* File attribute constants for d_attr field */
-
-#define _A_NORMAL       0x00    /* Normal file - read/write permitted */
-#define _A_RDONLY       0x01    /* Read-only file */
-#define _A_HIDDEN       0x02    /* Hidden file */
-#define _A_SYSTEM       0x04    /* System file */
-#define _A_VOLID        0x08    /* Volume-ID entry */
-#define _A_SUBDIR       0x10    /* Subdirectory */
-#define _A_ARCH         0x20    /* Archive file */
 
 #ifndef _DISKFREE_T_DEFINED
 #define _DISKFREE_T_DEFINED
@@ -87,10 +57,6 @@ _WCRTLINK extern char       *getcwd( char *__buf, __w_size_t __size );
 _WCRTLINK extern int        chdir( const char *__path );
 _WCRTLINK extern int        mkdir( const char *__path );
 _WCRTLINK extern int        rmdir( const char *__path );
-_WCRTLINK extern DIR        *opendir( const char * );
-_WCRTLINK extern struct dirent *readdir( DIR * );
-_WCRTLINK extern void       rewinddir( DIR * );
-_WCRTLINK extern int        closedir( DIR * );
 
 _WCRTLINK extern char       *_getdcwd( int __drive, char *__buffer, __w_size_t __maxlen );
 _WCRTLINK extern char       *_getcwd( char *__buf, __w_size_t __size );
