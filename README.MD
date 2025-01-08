@@ -6,9 +6,9 @@ the sources, binaries I need to work on.
 ## Instructions
 
 1. `git clone` this repository to a folder called `DOS`.
-2. Install *DOSBox-X >= 2024.03.01*
-3. Copy over the `DOSBOX-X.RC` file as your `dosbox-x.conf` Configuration File.
-   Change any references of `DOSROOT` from `D:\WS\DOS\DOSROOT` to where you cloned this
+2. Install *DOSBox-X >= 2025.01.01*
+3. Copy over the `DOSBOX-XRC` file into your installed *DOSBox-X* directory as `dosbox-x.conf`.
+   Change references of `DOSROOT` from `D:\WS\DOS\DOSROOT` to where you cloned this
    repo, such as `C:\Users\Karthik\Workspace\DOS\DOSROOT`.
 5. Launch *DOSBox-X*.
 
