@@ -1,0 +1,379 @@
+LANtastic 7.0 for DOS: Using Printers
+=====================================
+(c) 1996, Artisoft, Inc.
+------------------------
+
+This file covers the following main topics:
+
+Using an existing printer connection
+Checking existing printer connections
+Making a new printer connection
+Canceling a printer connection
+Viewing and controlling print jobs
+Sending yourself a print completion message
+Delayed printing
+
+Using an existing printer connection
+=====================================
+When you turn on your computer, any printer connections 
+that you set up during software installation become 
+available as soon as you start your computer and run 
+LANtastic. You can begin sending jobs to any printers 
+you're already connected to, either from within 
+applications or from the DOS prompt. 
+
+Hint - If you want to check which printer connections have 
+been set up, "Checking existing printer connections" later 
+in this file. 
+
+Printing from an application
+============================
+
+1. Open the file you want to print. 
+
+2. Issue the program's print command in the usual manner. 
+Your print job now goes to the port that was specified 
+when you set up the application. 
+
+For example, suppose you set up WordPerfect ® to print to 
+LPT1. If you connect your LPT1 port to a printer on 
+another computer, any print jobs sent from WordPerfect go 
+to the shared printer. 
+
+Note - Make sure the file you're printing is in a format 
+that your printer can recognize. For example, if you're 
+sending a PostScript file, make sure your printer or 
+resource is set up for PostScript printing.
+
+Printing from the DOS prompt
+============================
+Type in the NET PRINT command along with the necessary 
+path, filename and port name. For example, type:
+
+NET  PRINT  filename  LPT1 <Enter>
+
+where filename is the path and filename of the file you 
+want to print, and LPT1 is the printer port connected to a 
+shared printer. 
+
+Checking existing printer connections
+=====================================
+If you can't remember which printer connections have 
+already been set up, type NET  SHOW <Enter> at the DOS 
+prompt. A list of the connections that are already set up 
+appears on the screen. Here's an abbreviated example:
+
+Drive K: is connected to \\KEN\C-DRIVE
+Drive S: is connected to \\SUSAN\C-DRIVE
+Printer LPT2 is connected to \\DAN\@PRINTER
+
+If you'd like to add or remove printer connections, refer 
+to "Making a new printer connection" below.
+ 
+Making a new printer connection
+===============================
+The instructions in this section tell you how to make a 
+new printer connection from the NET Main Functions menu. 
+You can make temporary connections that will last only 
+until you turn off your computer. Or LANtastic gives you 
+an easy way to create and save permanent printer 
+connections. These connections will be available to you 
+when running in DOS or Windows.
+
+1. At the DOS prompt, type one of the following commands 
+to bring up the NET Main Functions menu.
+
+- If you want to make a temporary printer connection, type 
+NET  <Enter>. When you do this, the connections you make 
+will last only until you turn off your computer. 
+
+- If you want to make a permanent printer connection, type 
+SETNET  <Enter>. When you do this, the connections you 
+make will be saved in a file called CONNECT.BAT, and 
+you'll be able to use them the next time you turn on your 
+computer. 
+
+2. From the NET Main Functions menu, select Connect to 
+Other Computers' Printers <Enter>. The Printer Connections 
+to Other Computers screen appears. This screen shows 
+existing connections to printers on other computers. There 
+are also a number of available ports that you can use to 
+connect to other printers. 
+
+3. Select the printer port on your computer that you want 
+to connect to a printer on another computer. Choose a port 
+that isn't already being used by one of your printers or 
+connected to another computer's printer <Enter>. The 
+Connect to Computer screen appears. 
+
+Note - If you'd like to connect a local printer port 
+that's already in use to another computer's printer, you 
+can cancel an individual printer connection, as described 
+in the following section. If you choose a printer port 
+that's already in use, the existing connection is 
+automatically canceled when the new connection is made. 
+
+4. If the computer with the printer you'd like to use is 
+listed, select it <Enter>. Then skip to step 5. If the 
+computer you want isn't listed: 
+
+- Press Ins and type in the computer name <Enter>. 
+
+- You may be asked if you want to set your computer's 
+clock to match the time and date of the selected server. 
+You may also be prompted to enter the username and 
+password that will allow you to log in to that computer. 
+Respond to the prompts <Enter>. 
+
+You'll see the list of printers that this computer shares 
+with your group. 
+
+5. Select the printer you'd like to use <Enter>. You're 
+returned to the Printer Connections to Other Computers 
+screen. The new connection is highlighted. 
+
+6. Press Esc from each screen to return to the DOS prompt.
+
+You can now start to send jobs to the shared printer from 
+applications and from the DOS prompt. Instructions earlier 
+in this file. 
+
+On your computers that are running Windows and sending 
+print jobs, make sure Windows is set up to use the 
+printers they are printing to.
+
+Canceling a printer connection
+==============================
+This section explains how you can cancel individual 
+printer connections or groups of connections. 
+
+1. At the DOS prompt type NET <Enter>. 
+
+2. From the NET Main Functions menu, select Connect to 
+Other Computers' Printers <Enter>. The Printer Connections 
+to Other Computers menu appears.
+
+3. If you want to cancel an individual printer connection, 
+select that printer port connection then press Del. You'll 
+be prompted to confirm the name of the printer that you 
+want to disconnect (the printer port you selected appears 
+automatically) <Enter>.
+
+If you want to cancel a group of printer connections, 
+press Del. When you're prompted to enter the name of the 
+printer that you want to disconnect, use an asterisk to 
+specify a group of printer ports. For example, you might 
+type LPT* at the prompt to cancel all printer connections 
+using LPT ports <Enter>.
+
+4. Press Esc from each screen to return to the DOS prompt.
+
+Viewing and controlling print jobs
+==================================
+When you send a print job to a printer on another 
+computer, the job waits in line until the printer becomes 
+available. The wait may be long or short, depending on how 
+many other people have sent jobs to this printer. While 
+your job is waiting, you can view the status of your print 
+job and even cancel it. 
+
+You can also view and control printers using various 
+NET  QUEUE commands at the DOS prompt. See the 
+Commd.txt file for information about LANtastic NET 
+commands and switches.
+
+1. At the DOS prompt type NET <Enter>. 
+
+2. From the NET Main Functions menu, select View Print 
+Jobs <Enter>. 
+
+3. Select the computer that you sent your print job to 
+<Enter>. A screen appears showing only the jobs that 
+you've sent to the selected computer. 
+
+If you're using a LANtastic server and have the Q (Super 
+Queue) privilege, or you're using another type of server, 
+you can also view all print jobs sent to the selected 
+computer. To do this, press F3 and select Show Jobs. 
+Press Enter to toggle between All and Mine. You can also 
+set which printers will be displayed and the order in 
+which jobs are listed using the Show Printers and the 
+Display options.
+
+Note - If you're using a printer attached to an SMB-based 
+server, such as Windows for Workgroups or Windows NT, you 
+can see all jobs, but you can control only those jobs 
+you've sent. If you try to delete someone else's job, for 
+example, you'll receive an "Access denied" message.
+
+The display shows you the sequence number, the printer to 
+which the job was sent, the status of the job, the name of 
+the person who sent the job and any comment that was 
+included when the file was sent (usually the name of the 
+file). The status of your print job can be any of the 
+following:
+
+Printing
+--------
+Job is in the process of printing. 
+
+Immediate
+---------
+Job has started printing before all of the data has been 
+spooled to the server's disk. This option isn't available 
+for jobs on non-LANtastic computers, such as SMB- and 
+NCP-based servers.
+
+Waiting
+-------
+Job is waiting for a printer to become available. 
+
+Held
+----
+Job was halted by someone to keep it from printing. It 
+will remain halted until someone selects it and chooses 
+the Release option described under step 4.
+
+Deleted
+-------
+Job was deleted. 
+
+Rush
+----
+Job has been placed at the front of the line. This option 
+isn't available for jobs on non-LANtastic computers.
+
+4. Select the print job that you'd like to control 
+<Enter>. The Controlling the Selected Print Job screen 
+appears with the following options:
+
+Show
+----
+Provides detailed information about your print job.
+
+Delete
+------
+Lets you delete your print job from the print queue. 
+
+Important - Before deleting a print job that is printing 
+or preparing to print, you should first halt the printer. 
+Selecting the Delete option won't delete a job that's 
+already being printed. If you have the Q (Super Queue) 
+privilege, you can stop a job that's in the process of 
+printing by completing the steps in "Halting and 
+restarting a print job" in the file Mngprt.txt. 
+
+Hold
+----
+Stops the selected job from printing.
+
+Release
+-------
+Allows a job to print after you've held it.
+
+View
+----
+Lets you view the contents of your print job.
+
+Copy
+----
+Allows you to copy your print job to a file.
+
+Print
+-----
+Lets you select a different printer to send the job to.
+
+Rush
+----
+Moves your print job to first place in line. This option 
+is available only if you have the Q (Super Queue) 
+privilege. 
+
+Note - The View, Copy, Print, and Rush options aren't 
+available for jobs on non-LANtastic computers.
+
+5. When you've finished, press Esc in each menu until you 
+return to the DOS prompt. 
+
+Sending yourself a print completion message
+===========================================
+Suppose you know that your print job is going to have to 
+wait in a long line or that it's going to be held up in 
+favor of a priority job. If you send the job to the 
+printer according to the instructions below, LANtastic 
+will beep and send you a message to tell you when printing 
+has been completed. 
+
+1. From the DOS prompt, type the NET  PRINT/NOTIFY 
+command, along with the name of the file that you want to 
+print and the output printer port. For example, you might 
+type 
+
+NET  PRINT/NOTIFY  C:\REPORTS\ROGERS.DOC  LPT1 
+
+2. Resume your work in DOS or any DOS-based application 
+program. When the job has finished printing, your computer 
+will beep and pop up a message.
+
+Delayed printing
+================
+This feature lets you send a file to a printer at a time 
+that you specify in advance. It's especially convenient 
+if you want to print a large job after office hours. If 
+you want, you can even set up a job to print weeks into 
+the future.
+
+1. At the DOS prompt type NET <Enter>. 
+
+2. From the NET Main Functions menu, select View Print 
+Jobs <Enter>. 
+
+3. Select the server that has the printer you want to send 
+the job to <Enter>. The Viewing My Jobs For All Printers 
+On Computer display appears. 
+
+4. Press Ins. The Creating a Print Job screen appears.
+
+5. Select By Copying an Existing Text File <Enter>. 
+
+6. Select the name of the printer to which you want to 
+send the file. For example, @PRINTER <Enter>. 
+
+7. Type in the complete DOS path to the file you want to 
+print. For example, C:\REPORTS\BUDGET.TXT <Enter>. 
+
+8. The Start Time for Printing screen appears. 
+
+Use the Tab key to change the time at which the file will 
+be sent to be printed, and the Up and Down arrow keys and 
+the Tab key to change the date. Pressing Shift+Tab at the 
+same time runs the clock or calendar in reverse. When the 
+start time is correct, press <Enter>. 
+
+9. If you want, type in a comment (title) for the print 
+job <Enter>.
+
+10. If you want to print more than one copy, type in the 
+number <Enter>.
+
+11. You can now see your print job listed on the Viewing 
+My Jobs For All Printers in Sequence On Computer display.
+
+12. Press Esc from each screen to return to the DOS 
+prompt. 
+
+Note - Make sure the file you're printing is in a format 
+that your printer can recognize. For example, if you're 
+sending a PostScript file, make sure your printer or 
+resource is set up for PostScript printing.
+
+Now all you have to do is make sure that the server and 
+its printer are turned on at the time and date you've set 
+for the print job. If they aren't, LANtastic will print 
+the job as soon as you turn on all the necessary machines.
+
+Related Topics
+==============
+For detailed information about managing printing, refer to 
+the file Mngprt.txt.
+

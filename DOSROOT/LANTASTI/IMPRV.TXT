@@ -1,0 +1,661 @@
+LANtastic 7.0 for DOS: Improving Network Performance
+====================================================
+(c) 1996, Artisoft, Inc.
+------------------------
+
+This file covers the following main topics:
+
+Benchmark testing
+Using LANtastic with memory managers
+Server monitoring and management tools
+LANtastic's cache utility
+ALONE program
+Server startup parameter settings
+More performance software settings
+Other performance factors
+
+------------------------------------------------------------
+For normal network use, LANtastic's default server and 
+workstation configurations provide good network throughput 
+and server response times. However, if your network is 
+exceptionally large or bears a lot of traffic, you may 
+want to fine-tune some elements. 
+------------------------------------------------------------
+
+Benchmark testing
+=================
+One of the most important tools in network performance
+tuning is a series of benchmark tests that allow you to 
+measure the effects of changes. For effective benchmark 
+tests, follow these guidelines: 
+
+- In developing your tests, make sure they reflect the 
+real use of your network. For example, if your principal 
+network application is a large database, select 
+performance tests that reflect this type of use. 
+
+- Before running your tests, determine a standard of 
+comparison. To do this, measure the performance of a 
+server without the network in use. For example, determine 
+hard disk speed by timing a large file-copy operation. 
+Copy the same file across the network to get a relative 
+indication of performance.
+
+- Run each test long enough to make timing errors 
+insignificant. A test that takes only three seconds won't 
+give reliable results.
+
+- Set up a stable, easily reproducible testing 
+environment. If your network is active when you run your 
+tests, you won't get meaningful results.
+
+- Change only one network variable at a time. If you 
+change two or more parameters, you can't tell which 
+modification has altered your test results.
+
+- Record all current network parameter settings before you 
+run each test. Be particularly careful to note the server 
+startup parameters and any modifications you've made to 
+LANtastic's default settings. It is unlikely that you'll 
+run all your tests and decide on configuration changes in 
+one session. You'll need information from the previous 
+session when you run your next set of tests.
+
+- After one test shows performance improvement, run all 
+your other tests and note the results. This ensures that 
+the change under test hasn't introduced unwanted 
+interactions.
+
+- Remember that many parameter settings involve a 
+trade-off between memory use and speed improvement. In 
+some cases a small increase in speed consumes a lot more 
+server memory. 
+
+
+Using LANtastic with memory managers
+====================================
+LANtastic 7.0 allows you to take advantage of the expanded 
+memory that's available in your computer with a new memory 
+manager feature called File System Memory. This feature 
+allows you to store the file system components of the 
+LANtastic SERVER program in XMS or EMS expanded memory. 
+This gives larger servers a significant increase in 
+conventional memory for DOS, application programs or other 
+uses. For more information about the File System Memory 
+option see the file Cfgsrv.txt.
+
+In addition to the File System Memory option, LANtastic 
+7.0 offers the modular REDIR and SERVER programs. These 
+programs allow you to decrease the amount of memory they 
+need to run. This may give your other programs the memory 
+they need to run faster and more efficiently. 
+
+Previous versions of LANtastic would load all functions, 
+whether they were enabled or not. You can now disable 
+printing, auditing, notification and other functions, and 
+the code needed to support these functions won't be loaded 
+into memory. Instructions for disabling unwanted functions 
+appear in the file Cfgsrv.txt.
+
+To accommodate the modular design of REDIR and SERVER, a 
+loading function called DOSLOAD uses upper memory blocks 
+(UMBs) to load the LANtastic software, allowing more room. 
+If you're using memory management software such as EMM386 
+(shipped with DOS v5.0 and above) or QEMM, you may have to 
+exclude an area of memory. 
+
+LANtastic 2Mbps adapters and Artisoft A2Mbps adapters, as 
+well as some non-Artisoft network adapters, require you to 
+exclude a shared area of memory, often referred to as 
+RAMBASE. If you want to load the LANtastic software high 
+and you're using QEMM, you must use the /LHIGH switch. For 
+more information on DOSLOAD and the /LHIGH switch, refer 
+to the file Cfgsrv.txt. 
+
+Server monitoring and management tools
+======================================
+As described in detail in the file Mngsrv.txt, LANtastic 
+includes a number of convenient tools that give you 
+insight into the ways that a server is being used and the 
+amount of network traffic it bears. For example, the 
+LANtastic NET program's Monitor and Manage Server Activity 
+screen lets you monitor user activity on a server, as well 
+as data throughput, status information and performance 
+statistics. 
+
+Once you understand a server's working "personality," you 
+can adjust its software settings to enhance its 
+performance. To make these adjustments easy, the Server 
+Startup Parameters screen includes a server personality 
+list that lets you choose pre-set options for print and 
+file servers. To manually adjust these settings, follow 
+the guidelines under "Configuration type" in the file 
+Cfgsrv.txt and "Server startup parameter settings" later 
+in this file. 
+
+If a server is going to be used for several network roles, 
+you can store various sets of server startup parameters in 
+separate control directories and switch among them, as 
+outlined in the file Crldir.txt. Using a different 
+strategy, you can save valuable memory on a server by 
+disabling unused network functions, as described later in 
+this file.
+
+LANtastic's cache utility
+=========================
+Running a caching program is an excellent way to improve 
+network performance. A cache is a small, high-speed memory 
+used for the temporary storage of information.
+
+LANcache is a block-level cache that you run on a server. 
+The LANtastic SERVER program uses it to maintain disk 
+blocks in memory, which speeds up the performance of the 
+server's local hard drive. This means that your foreground 
+work will go faster while someone is accessing your files 
+or using your printer. It also will speed up server 
+response time for people using your server's resources.
+
+LANcache
+--------
+LANcache can greatly improve the performance of a file 
+server. It also helps the performance of a print server, 
+but the improvement isn't as noticeable to network users. 
+If you need to split server roles among computers, use 
+your slower computer as a print server that doesn't run 
+LANcache.
+
+LANcache runs only on computers with 286, 386, 486 or 
+higher processors. Whenever possible, choose a 486 or 
+higher computer as your file server. 
+
+To make LANcache run at bootup, edit your AUTOEXEC.BAT 
+file. Full instructions for running LANcache under DOS and 
+Windows appear in the Lcach.txt file.
+.
+LANcache memory requirements
+----------------------------
+LANcache allows you to use conventional, extended, XMS, or 
+EMS (expanded) memory for caching. As a general rule, use 
+XMS or extended memory on computers with 386- and 486-type 
+processors. For optimum performance with 286 computers, 
+use EMS memory from a hardware adapter. 
+
+When you set up a disk cache, be sure to reduce the number 
+of DOS disk buffers specified in your CONFIG.SYS file. The 
+disk cache takes over most of the disk buffer management 
+job from DOS. When running LANcache, reduce the BUFFERS= 
+switch setting in CONFIG.SYS to eight. You can check the 
+effectiveness of this recommendation with your benchmark 
+tests. 
+
+LANcache performance settings
+-----------------------------
+LANcache provides three adjustable performance factors: 
+the cache size and the values of the AFTER_IO_DELAY= and 
+LONG_WRITE_DELAY= switches. 
+
+In most cases it's best to make the cache size as large as 
+possible - for example, 4MB on a server that has 8MB of 
+RAM. However, the amount of memory that you dedicate to 
+caching depends on your other memory needs as well as on 
+the total amount of memory installed in the computer. It 
+also depends on the applications supported by the server. 
+On a heavily used network file server, the memory 
+allocation for the disk cache should receive especially 
+high priority. 
+
+The same considerations apply to the write cache switches. 
+Tuning the values of these two switches is very 
+application-specific. The AFTER_IO_DELAY= switch specifies 
+how long LANcache should wait before writing its data to 
+disk. If the disk is busy when it's time to flush the 
+cache, LANcache waits another AFTER_IO_DELAY= period and 
+attempts to flush the cache again. It will repeat this 
+process until the disk is idle or until the number of 
+seconds specified for the LONG_WRITE_DELAY= option has 
+expired. This guarantees that data will be written to disk 
+within a reasonable amount of time. 
+
+If your server has an uninterruptable power supply (UPS), 
+it's probably safe to set the Write delay to an extended 
+period (although more than one minute is probably not 
+recommended). If you don't have a UPS, use the default 
+value of 12 seconds for the LONG_WRITE_DELAY= switch.
+
+ALONE program
+=============
+LANtastic's DOS-based ALONE program increases performance 
+on a server if you don't want to use it as a workstation. 
+ALONE allows all of the server's computing resources to be 
+entirely devoted to network traffic. This is a good 
+strategy if you have a slow computer that you want to use 
+only for printing. It's also helpful if you have a fast 
+computer that you want to use only for supporting a large, 
+busy database.
+
+When ALONE is running, the server displays a listing of 
+all user requests. You can also bring up a Detailed User 
+Information screen that lists data about open files on the 
+server.
+
+For security, you can enable a password requirement to 
+exit ALONE. This means you can leave the server running 
+without fear of someone using it locally or restarting it 
+without authorization. Instructions for using the ALONE 
+program appear in "Using the ALONE program" in the file 
+Mngsrv.txt.
+
+Server startup parameter settings
+=================================
+As mentioned earlier, LANtastic's modular REDIR and SERVER 
+programs let you select only the features you want to load 
+for each server. This allows you to optimize your memory 
+usage for your specific needs. For example, if your file 
+server isn't sharing a printer, you can disable all 
+printing modules and dedicate more memory for network 
+buffers, tasks and Request Size functions. 
+
+To make things even easier, LANtastic provides suggested 
+settings for small, medium and large file servers and file 
+and print servers. These settings are well suited to most 
+networks and give you an excellent starting point for 
+setting your own custom configuration. Changing the 
+settings discussed in this section can significantly 
+improve performance. Refer to the file Cfgsrv.txt for 
+instructions on how to change them.
+
+Options in the Performance Parameters section
+=============================================
+You can significantly improve performance by adjusting 
+the settings of the server startup parameters in the 
+Server Performance module of the Server Control Panel 
+window. The file Cfgsrv.txt tells you how to change these.
+
+Network buffer option
+---------------------
+After installation, a LANtastic server has the network 
+buffer option set to 4096 bytes (4K), a value that's 
+generally too small for a high-performance file server. 
+Unless a server is used only for occasional file access 
+or printing, it's wise to increase this default setting. 
+For a heavily used file server, an appropriate setting 
+might be 16384 (16K), even though this consumes server 
+memory. 
+
+Request size option
+-------------------
+This server startup parameter sets the size of the buffer 
+the server uses when "listening" for user requests. If a 
+request such as a directory lookup (DIR) requires more 
+space than the request buffer can hold, the request must 
+be handled with two buffers instead of one. 
+
+By increasing the size of the request buffer to 50 bytes 
+or larger, you can improve performance for operations such 
+as file lookups and small random requests to write to 
+disk. If you set this option to more than 500 bytes, the 
+buffer can actually handle user Read and Write requests. 
+You can gain an additional performance boost by enabling 
+LANtastic's Internal SHARE support and increasing the 
+request buffer. This allows the server to handle multiple 
+user requests with fewer acknowledgments, thus improving 
+server response time.
+
+Because a request buffer is allocated for each user 
+allowed in the Maximum Users field, increasing the size 
+of this buffer consumes server memory. So if you have 
+Maximum Users set to 10 and allocate 50 bytes for each 
+request buffer, the server will use an extra 180 bytes of 
+memory (500 bytes minus the default 320 bytes). 
+
+If a server has only a few network users, increasing the 
+value in this field can improve performance. On a server 
+with many users, however, increasing this option may use 
+more server memory than you want to dedicate to the 
+network. 
+
+Network tasks option
+--------------------
+By default this server startup parameter is set to one. 
+Adding more tasks can improve performance on a server with 
+more than one workstation accessing it simultaneously. One 
+task takes care of one workstation, the second takes care 
+of the next and so forth. However, each task uses a 
+network buffer. Therefore, if you've set up the server 
+with a 16K buffer, increasing the Network Tasks option to 
+two immediately adds another 16K to the server's memory 
+requirements.
+
+If your workstations make only occasional access to the 
+server, adding another network task won't have much 
+effect, since the likelihood of simultaneous access is 
+low. However, if many workstations regularly make 
+simultaneous requests to the server, adding one or more 
+network tasks can give you a major improvement. The 
+server's response to each workstation becomes much 
+smoother as you increase the number of tasks. 
+
+Generally the overall improvement realized by adding each 
+new task diminishes with each addition. Setting more than 
+eight tasks is usually not helpful.
+
+Run Burst option
+----------------
+The Run Burst option determines the maximum number of 
+ticks (1/18 second) that the server will devote to 
+processing network requests before postponing the last 
+request and returning to local tasks. Your decision 
+regarding this setting depends on whether the server is 
+to be partially used for local processing or dedicated 
+entirely to filling network requests. Increasing the value 
+improves network response time but slows the computer's 
+performance at local tasks. Therefore, keep the Run Burst 
+option set to two for a locally used server, but increase 
+it to as high as 255 for a network-dedicated machine.
+
+Internal SHARE option
+---------------------
+LANtastic's Internal SHARE server startup parameter is a 
+replacement for the DOS SHARE program used for file and 
+record locking on servers. It runs internally as an 
+optional server module, so the number of files and locks 
+the computer can support isn't limited by DOS SHARE. This 
+significantly improves file-locking performance from 
+remote workstations because these operations can be 
+handled immediately by the server rather than waiting for 
+SHARE. This means that multi-user applications such as 
+databases run much faster. This option is enabled by 
+default.
+
+Cached Resources option
+-----------------------
+This server startup parameter lets you specify the number 
+of server resources that have user-access information 
+cached. By default it's set to one. If you have multiple 
+drive resources simultaneously in use by a server, 
+increasing this default value can greatly increase the 
+speed at which the server responds to directory lookups 
+and file opens. This is because the access information is 
+read from memory rather than from the server's drive. 
+
+In most cases you'll want to set the Cached Resources 
+option to the maximum number of server drive and print 
+resources that will be used simultaneously. For example, 
+on a server that has 30 users accessing three disk drives 
+and two printers, an appropriate setting would be five. 
+There's no performance advantage to caching more resources 
+than are in active use.
+
+Seek cache size option
+----------------------
+This server startup parameter sets the size of the cache 
+used to store random access location information. It's set 
+to NO CACHE by default. Changing this setting allows a 
+server to find random positions in files more quickly, 
+which helps speed network requests for data. 
+
+The more memory you dedicate to the seek cache function, 
+the more it will help performance for large file 
+operations. For a large database, a 64K setting might be 
+appropriate.
+
+Lock Hold Time option
+---------------------
+This server startup parameter allows you to enable or 
+disable LANtastic's delayed record-locking function. It 
+also sets the length of time that the server will hold a 
+lock request for a record that's already locked by another 
+user. Once the information is unlocked, the server allows 
+the new user to lock the region. This boosts server 
+performance, since the user request isn't constantly 
+retried.
+
+By default delayed record locking is enabled with a 
+lock-hold time of nine seconds. For most networks this 
+default setting works well. If you have many simultaneous 
+database users, however, you may want to experiment with 
+the Lock Hold Time option. For example, on a server that 
+has 30 users accessing a large database, an appropriate 
+setting might be 32. 
+
+Options in the Printing section
+===============================
+The performance of a printer server can benefit from the 
+same fine-tuning that's done for a file server. This is 
+because print jobs are files written to the server's 
+despooling area by the workstations. Most of the options 
+described in this section are server startup parameters 
+that are fully described in the file Cfgsrv.txt.
+
+Printer tasks option
+--------------------
+This server starter parameter specifies the number of 
+network printers to which this server will simultaneously 
+despool. Each printer task requires one printer buffer. 
+The more tasks you allow, the more server memory you use. 
+If your printer server has more than one printer attached, 
+you need to change the default setting. However, if the 
+server is going to despool to only one printer, increasing 
+this setting only consumes memory. 
+
+Printer buffer option
+---------------------
+This server startup parameter sets the size of the buffer 
+used to move data from the server's queue to the printer. 
+Increasing this value can improve server printing 
+performance by reducing the number of times the server 
+must read from its hard drive. However, the maximum 
+attainable printing speed will always be limited to that 
+of the printer(s) you're using. If you're using LANcache, 
+increasing this value will have less effect, since the 
+data will be read from the cache instead of the server's 
+disk. For a printer server with 30 users, an appropriate 
+setting might be 1024 bytes. 
+
+Initial despooling option
+-------------------------
+When this server startup parameter is enabled, print jobs 
+automatically begin despooling to printers whenever the 
+SERVER program is started. When this function is disabled, 
+despooling doesn't begin until a NET QUEUE START or 
+NET QUEUE SINGLE command is given. Unless you want to 
+reserve your printer server for special jobs, leave this 
+parameter at its default Enabled setting. 
+
+Periodic maintenance
+--------------------
+This server startup parameter periodically rebuilds the 
+server's printing control file to optimize printer speed. 
+If your server is kept busy printing or is left on for 
+several days at a time, enable this option.
+
+Immediate despooling option
+---------------------------
+This server startup parameter allows a server to 
+immediately begin to despool a job before all the 
+information has been written to its disk. This minimizes 
+the amount of time it takes to transfer the job from the 
+workstation to the printer. To prevent a paused immediate 
+despooling job from occupying the printer, be sure to set 
+a despooling timeout interval. Specify a value that's 
+greater than the largest NET LPT TIMEOUT setting on your 
+workstations. This option is enabled by default.
+
+Other printing and despooling module options 
+--------------------------------------------
+The Printer Streams and RPS Support options are enabled by 
+default. But if you won't be using these LANtastic 
+features, disable them to save memory on the server. The 
+CS Print Support and HP JetDirect Support options are 
+disabled by default. Enable them only if you'll be 
+creating corresponding resources on the server.
+
+More performance software settings
+==================================
+Although most of the options that influence server 
+performance appear in LANtastic's Server Startup 
+Parameters screen, several other settings can influence 
+network throughput and speed.
+
+Characters per second
+---------------------
+This option is found in NET_MGR's Detailed Information 
+Screen for a printer resource. Instructions for setting it 
+appear in the file Shrres.txt. The Chars/Second field 
+allows you to set the minimum number of characters per 
+second that the despooler will send to the printer. If the 
+server is performing other network tasks, this will give 
+higher priority to the print job in an effort to print the 
+number of characters per second that you set for that 
+shared resource. Setting a value higher than the computer 
+or printer can achieve is usually not recommended, since 
+this may slow your computer's foreground tasks.
+
+When running Windows on a printer server, increase the 
+printer's Chars/Second setting to 9600. You may need to 
+adjust this value for your particular printer or computer 
+setup. See the file Shrres.txt for more information on 
+configuring printer resources.
+
+REDIR parameters 
+================
+Two REDIR parameters can be optimized to improve network 
+performance. You specify these parameters with the SIZE= 
+and BUFFERS= switches on the REDIR command line, as 
+explained in the file Commd.txt.
+
+SIZE= switch 
+------------
+This switch allows you to set what's usually the most 
+important REDIR parameter in terms of overall network 
+performance - the size of the buffer that REDIR allocates 
+when it starts up. By default it's set at 1024K. 
+
+A larger buffer allows the network to transfer more data 
+with each operation and thus increases the speed of 
+sequential file or printing operations. 
+
+Note, however, that increasing the REDIR buffer size 
+doesn't always improve performance. For example, if your 
+major application is a large database that performs only 
+random reads and writes, speed won't be affected by a 
+change in the SIZE= setting.
+
+BUFFERS= switch 
+===============
+This switch allows you to increase the number of REDIR 
+buffers from the default of one, which is adequate for 
+most file processing. The default setting is for one 
+buffer. Adding buffers can speed up a program that 
+processes files that are sequentially read and written in 
+small blocks. An example would be a printing application 
+that reads one line at a time from a text file, reformats 
+it and writes it to a print file. 
+
+Because each REDIR buffer requires additional memory, 
+your gain in speed may be offset by high memory 
+consumption. The maximum amount of memory that the REDIR 
+buffers can consume is 32K. 
+
+DOS disk buffers command
+========================
+Your CONFIG.SYS file includes the DOS BUFFERS= command. 
+During bootup DOS allocates the specified number of disk 
+buffers for use by application programs. 
+
+If you have too few buffers, DOS must continually reuse 
+them, a process that can degrade performance. To avoid 
+this, be sure to allocate at least 16 disk buffers. The 
+LANtastic INSTALL program suggests 32. With a disk cache 
+running, BUFFERS=8 is the suggested choice.
+
+Note that performance isn't always improved by setting a 
+larger number of disk buffers. In fact, if you set the 
+number of buffers larger than 50, you'll usually see 
+performance level off and sometimes decrease.
+
+AILANBIO packet size commands
+=============================
+You can modify the AILANBIO packet size on your computers 
+to better accommodate the type of network you're using. 
+For example, if you're using Ethernet adapters, set the 
+following AILANBIO parameters on the command line that 
+runs your network software (usually in STARTNET.BAT) to 
+increase the speed at which your workstations access the 
+server.
+
+INITIAL_SEND_SIZE=1514
+BUFFERS=1
+SIZE=1514
+
+If you have a Token Ring network, use the following values 
+for your AILANBIO network startup batch files.
+
+INITIAL_SEND_SIZE=4200
+BUFFERS=1
+SIZE=4200
+
+Other performance factors
+=========================
+Even if all of your software parameters are set to the 
+optimum performance values, other factors can help or 
+hinder your network's speed and efficiency.
+
+Computer and network hardware
+-----------------------------
+Everything you know about how to make a single computer 
+operate faster also applies to a network. For example, a 
+speedier processor, faster disk and better memory usage 
+will boost the performance of your network file server 
+just as it does for a stand-alone machine. Techniques such 
+as regular disk defragmentation also help, particularly on 
+a file server.
+
+In addition to slow and outdated computer equipment, 
+badly maintained network adapters and cables can degrade 
+network performance. To make sure that the adapters in all 
+of your computers are communicating properly, run the 
+LANCHECK program, which was installed on your hard disk 
+along with the LANtastic software. Instructions appear in 
+the file Lancheck.txt.
+
+ALONE program
+-------------
+LANtastic's DOS-based ALONE program increases performance 
+on a server if you don't want to use it as a workstation. 
+Instructions for running ALONE appear in the section 
+"Using the ALONE program" in the file Mngsrv.txt.
+
+Audit trails and ACL rights
+---------------------------
+The Read Access (R), Write Access (W), and Indirect (I) 
+ACL rights can slow network performance, especially when 
+used with audit trails. 
+
+As explained in the file Mngsrv.txt, audit trails create 
+an entry in the server's audit trail log whenever a 
+specified type of activity occurs. For example, if you set 
+up auditing for the Read Access (R) and Write Access (W) 
+ACL rights, an entry is made whenever someone reads or 
+writes to a file. This can slow down operations such as 
+file opens. 
+
+Be especially careful of using audit trails if you have 
+limited disk space. If you do choose to use them, be sure 
+to use file access audit trails carefully, and delete old 
+audit files regularly.
+
+When the Indirect (I) ACL right is assigned to a shared 
+directory resource, indirect files can be created and used 
+from within that directory. This slows down file lookups 
+and opens. If you don't need to use indirect files in your 
+network, you can avoid this performance degradation. For 
+more information about indirect files, see the file Indir.txt.
+
+Related Topics
+==============
+- If you experience any problems during daily network use, 
+refer to the LANtastic Troubleshooting Manual. 
+- To expand or change your network, go to the file 
+Expand.txt. 
+

@@ -1,0 +1,353 @@
+LANtastic 7.0 for DOS: Using LANtastic Mail and Chat
+====================================================
+(c) 1996, Artisoft, Inc.
+------------------------
+
+This file covers the following main topics:
+
+Creating Mail resources
+Using Mail with DOS
+Using Chat with DOS
+
+Creating Mail resources
+=======================
+Mail resources are used by the LANtastic Mail feature of 
+LANtastic. If you're using a mail program other than 
+LANtastic Mail, you probably don't need these resources. 
+
+Creating a Mail resource in LANtastic for DOS
+---------------------------------------------
+If you don't already have a LANtastic Mail resource, you 
+can use NET_MGR to create one. You can have only one mail 
+resource per server, and it must use the name @MAIL. 
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select Shared 
+Resources Management <Enter>.
+
+2. Press Ins, then type @MAIL <Enter>. Press Esc to return 
+to the Main Functions menu.
+
+Note - Make sure Printing is enabled under Server Startup 
+Parameters. LANtastic Mail requires printing services in 
+order to function properly.
+
+3. Press Esc. Users can now send and receive e-mail using 
+LANtastic Mail.
+
+Using Mail with DOS
+===================
+With LANtastic Mail, you send messages to a computer 
+that's been designated as your network's Post Office. The 
+Post Office computer must have a mail resource. (If it 
+doesn't, see the section above, Creating Mail resources, 
+for instructions.) You also have to connect to this 
+computer to check for messages that have been sent to you.
+
+To use the Post Office computer, you need to specify its 
+computer name each time you want to use LANtastic Mail, as 
+described here: 
+
+1. If you're starting from the DOS prompt, type NET MAIL 
+<Enter>. If you're starting from the NET Main Functions 
+menu, choose Send and Receive Mail <Enter>. 
+
+2. From the Connect To Computer menu, highlight the name 
+of your group's Post Office computer <Enter>. If it isn't 
+on the list, press the Ins key and type the computer name 
+in the box <Enter>. 
+
+Note - During the rest of your work session, you need to 
+select the Post Office computer each time you choose Send 
+& Receive Mail. 
+
+3. You may be prompted to enter the username and password 
+that will allow you to log in to the Post Office computer. 
+You may also be asked if you want to set the time and date 
+on your computer to match the selected computer's clock. 
+Respond to the prompts <Enter>. You'll see the Viewing My 
+Mail screen. 
+
+4. In the INcoming Mail field, you'll see the names of any 
+messages that have been sent to you. The OUTgoing Mail 
+field shows items you've sent to other people. Both mail 
+lists include the time and date of each message and any 
+comment that the sender has attached. 
+
+On the Viewing My Mail screen, these keys perform the 
+following functions:
+
+F1
+--
+Displays a Help screen.
+
+F8
+--
+Displays a list of all mail messages, whether or not they 
+were sent to or received by you. This function is 
+available only if you have the M (Super Mail) privilege. 
+
+Tab 
+---
+Moves between lists of incoming and outgoing mail to let 
+you select a message. 
+
+Insert
+------
+Brings up the Creating a Mail Message menu.
+
+Enter
+-----
+When a message is selected, brings up the Mail Options 
+menu.
+
+Delete
+------
+Deletes the selected message. If the selected message was 
+also sent to other people on the network, you can't delete 
+it unless you have the M (Super Mail) privilege. 
+
+Creating and sending a message
+==============================
+The Creating a Mail Message menu lets you create and send 
+a new message using the LANtastic text editor or your own 
+text-editing program. 
+
+Using the LANtastic text editor
+-------------------------------
+1. At the DOS prompt, type NET <Enter>. 
+
+2. From the NET Main Functions menu, choose Send and 
+Receive Mail.
+
+3. From the Connect to Computer menu, select the computer 
+you want to send mail to. For the most efficient mail 
+system, this should be a Post Office computer that 
+everyone has agreed to use for mail activities. (If your 
+Post Office computer isn't listed, press Ins and type its 
+name in the box.) <Enter>.
+
+4. You may be prompted to enter the username and password 
+that will allow you to log in to the Post Office computer. 
+You then may be asked if you want to set the time and date 
+on your computer to match the selected computer's clock. 
+Respond to the prompts <Enter>. The Viewing My Mail screen 
+appears. 
+
+5. Press Ins. The Creating a Mail Message menu appears. 
+
+6. Select Using the LANtastic Editor <Enter>. 
+
+7. Type in your message.
+
+8. Press F2, then address your message:
+
+- To send a message to an individual, type in his or her 
+user account name. To see a list of user account names, 
+press F10. 
+
+- To send a message to everyone, type in an asterisk (*) 
+instead of a computer name.
+
+9. Press Enter or, if you want, type in a comment <Enter>. 
+The message now goes to the Post Office computer.
+
+Using your own text editor
+--------------------------
+By creating mail messages in your own text editor, you can 
+take advantage of its text-checking features, such as 
+search-and-replace and spell-checking. 
+
+1. Perform steps 1 - 5 in the previous section. 
+
+2. On the Creating a Mail Message menu, select Using Your 
+Text Editor <Enter>. 
+
+3. If this is the first time you're performing this step, 
+type in the complete DOS path to the location of your text 
+editor, including its filename extension <Enter>. For 
+example, C:\DOS\EDIT.COM <Enter>. After you've done this 
+once, LANtastic remembers the DOS path and displays it 
+whenever you choose Using Your Text Editor. 
+
+Note - Don't use a batch file (.BAT) to call your text 
+editor. Typically the filename extension of a text editor 
+will be .EXE or .COM. 
+
+4. Type in a DOS filename for the message you want to 
+create <Enter>. For example, C:\DOC\MSG.TXT <Enter>. 
+
+5. Create and save your message, then exit the text 
+editor. The file now exists on your disk at the pathname 
+given in step 4. 
+
+6. A pop-up box shows you the pathname of the file to 
+mail. Press Enter to accept this path or type in a new one 
+<Enter>.
+
+7. Press F2, then address your message: 
+
+- To send a message to an individual, type in his or her 
+user account name. To see a list of user account names, 
+press F10. 
+
+- To send a message to everyone, type in an asterisk (*) 
+instead of a computer name. 
+
+8. Press Enter or, if you want, type in a comment <Enter>. 
+The message now goes to the Post Office computer.
+
+Sending an existing file
+------------------------
+Here's how to mail a file that has been previously created 
+in a text editor or a word-processing program and saved to 
+disk.
+
+1. At the DOS prompt, type NET <Enter>. 
+
+2. From the NET Main Functions menu, choose Send and 
+Receive Mail.
+
+3. From the Connect to Computer menu, select the computer 
+you want to send mail to. For the most efficient mail 
+system, this should be a Post Office computer that 
+everyone has agreed to use for mail activities. (If your 
+Post Office computer isn't listed, press Ins and type its 
+name in the box.) <Enter>.
+
+4. You may be prompted to enter the username and password 
+that will allow you to log in to the Post Office computer. 
+You then may be asked if you want to set the time and date 
+on your computer to match the selected computer's clock. 
+Respond to the prompts <Enter>. The Viewing My Mail screen 
+appears.
+
+5. From the Creating a Mail Message menu, select By 
+Sending an Existing Text File <Enter>.
+
+6. Type in the full DOS path of the file you'd like to 
+send <Enter>.
+
+7. Press F2, then address your message: 
+
+- To send a message to an individual, type in his or her 
+user account name. To see a list of user account names, 
+press F10. 
+
+- To send a message to everyone, type in an asterisk (*) 
+instead of a computer name.
+
+8. Press Enter or, if you want, type in a comment <Enter>. 
+The message now goes to the Post Office computer.
+
+Performing other Mail functions
+===============================
+You don't have to go to the Post Office computer's Viewing 
+My Mail screen to see if you have waiting mail. Instead 
+you can type the POSTBOX command at the DOS prompt. 
+LANtastic then tells you if you have mail waiting on the 
+computer you specify or all the computers that you are 
+currently logged in to.
+
+For example, if you type NET POSTBOX \\SHEILA<Enter>, 
+LANtastic will return a message such as "You have 1 
+message on Computer \\SHEILA."
+
+All other LANtastic Mail functions are performed from the 
+Viewing My Mail screen and its associated Mail Options 
+menu. 
+
+To view the Mail Options menu, select a message on the 
+Viewing My Mail screen <Enter>. When you do this, a screen 
+appears showing details of the selected message. 
+Information includes who sent the message, to whom it was 
+sent, the time it was sent, the size of the message (in 
+bytes) and any comment that was added when the message was 
+created.
+
+The Mail Option menu lists the following options for 
+managing messages displayed on the Viewing My Mail screen:
+
+Read Mail
+---------
+Select a message <Enter>, then select Read Mail <Enter>. 
+Use the PgUp and PgDn keys to scroll through the contents. 
+
+Forward Copy of Mail
+--------------------
+Select a message <Enter>, then select Forward Copy of Mail 
+<Enter>. Type in the name of the computer you want to send 
+mail to <Enter>. A screen appears showing the current 
+comment for the message. If you want to keep that comment 
+<Enter>. If not, delete it or type in a new one <Enter>.
+
+Copy Mail to File
+-----------------
+Select a message <Enter>, then select Copy Mail to File 
+<Enter>. Type in the full DOS path and filename of the 
+file you want to copy to <Enter>. For example, to place 
+your message in a file called LETTER.TXT on your 
+computer's hard drive, in a directory called DOC, you'd 
+type C:\DOC\LETTER.TXT <Enter>.
+
+Print Mail
+----------
+Select a message <Enter>, then select Print Mail <Enter>. 
+Select the printer port that's attached to the printer you 
+want to use <Enter>. Your message now goes to that printer.
+
+Delete Mail
+-----------
+Select a message <Enter>, then select Delete Mail <Enter>. 
+You'll be prompted to confirm that you want to delete the 
+selected message <Enter>. If the selected message was also 
+sent to other people on the network, you can't delete it 
+unless you have the M (Super Mail) privilege. 
+
+Note - If you need help in performing one of the above 
+mail functions, move the cursor to the item you want to 
+learn about and press the F1 key.
+
+Using Chat with DOS
+===================
+Chat works between computers running Windows 95, 
+Windows v3.x, OS/2 and DOS. So if you want to initiate 
+a chat session with a DOS or Windows user, follow the 
+steps in this section.
+
+1. From the NET Main Functions menu, choose Chat With 
+Another User. The Chat screen appears. 
+
+2. Press Ins and enter the name of the computer you'd like 
+to call <Enter>. 
+
+3. A pop-up message informs the person you want to chat 
+with that you're waiting for a reply. To complete the 
+connection, that person must bring up the Chat window and 
+choose Call.
+
+4. Once you see the message <Connect> on the screen, the 
+two of you can begin to type messages to each other. Your 
+messages appear at the top of the screen, and the other 
+person's appear at the bottom. You may both type at the 
+same time, using the functions shown in the next section. 
+If you type more text than will fit in the screen, 
+the display scrolls up to give you more space.
+
+Backspace
+---------
+Deletes the character to the left of the cursor.
+
+Home
+----
+Erases the screen.
+
+Enter
+-----
+Takes you to the next line down.
+
+Del
+---
+Cancels the session without exiting Chat.
+
+
+

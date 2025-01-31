@@ -1,0 +1,482 @@
+    AI-LANBIOS Low-level Driver For Western Digital Adapters (WD8003.DOC)
+           -----------------------------------------------------
+                     (C) Copyright 1989 ARTISOFT, Inc.
+                             (Revised 6/26/92)
+
+Introduction
+============
+
+The WD8003 low-level AI-LANBIOS driver is part of the AI-LANBIOS product.
+The low-level driver interfaces directly to the network hardware and
+provides basic unreliable data transfer capabilities.  The AI-LANBIOS
+high-level driver provides the reliable data transfer capabilities
+including all NETBIOS functions.
+
+The WD8003 driver makes extensive use of the on-board memory of the WD8003
+board to improve network throughput.
+
+The driver interfaces to the entire WD8003/WD8013 board line:
+
+  Coaxial Ethernet
+          WD8003EBT      EtherCard Plus with boot ROM socket (discontinued)
+          WD8003ET/A     EtherCard Plus/A for Micro Channel (discontinued)
+          WD8003E        EtherCard PLUS (Tm) 8-bit adapter
+          WD8003EB       EtherCard PLUS 8-bit adapter with boot ROM socket
+                         (software configurable)
+
+          WD8003E/A      EtherCard Plus/A for Micro Channel
+          WD8013EBT      EtherCard PLUS16 (Tm)
+          WD8003EBT      Revision X0
+          WD8013EBT      Revision X0 Elite 16
+          WD8003EP       Standard Ethernet EtherCard Plus Elite
+          WD80013EP      Standard Ethernet EtherCard Plus Elite 16 Combo
+
+  Twisted Pair Ethernet
+          WD8003WT       EtherCard PLUS (Synoptics LattisNet compatible,
+                         not for 10BaseT)
+          WD8003W        EtherCard PLUS10 (8-bit, software configurable,
+                         10BaseT adapter)
+          WD8003W/A      EtherCard PLUS10T/A (10baseT Micro Channel adapter)
+          WD80BEW        10BaseT and Standard Ethernet
+          WD8013W        10BaseT Ethernet EtherCard Plus10T/A
+
+  StarLAN
+          WD8003S        StarCard PLUS
+          WD8003SH       StarLink PLUS
+          WD8003ST/A     StarCard PLUS for Micro Channel
+
+
+Running WD8003
+==============
+
+The WD8003 low-level driver must be run before the AI-LANBIOS.  The WD8003
+driver interfaces to the AI-LANBIOS using a DOS multiplex interrupt
+number.  The default multiplex number is C7.  If you are only running one
+low-level driver and one copy of AI-LANBIOS then you will not have to
+concern yourself with which multiplex number to assign.  Multiplex numbers
+00 through BF are reserved for DOS use so you must use a multiplex number
+between C0 through FF.
+
+Each invocation of the WD8003 driver supports one Western Digital adapter
+board.  You must run multiple copies of WD8003 if you have multiple cards
+installed in your computer.  For each invocation of WD8003 you must run a
+separate invocation of the AI-LANBIOS program.  When running multiple
+invocations of the WD8003 driver each invocation must have a unique
+multiplex number, IRQ, I/O base address, and RAM base address.
+
+NOTE:  If you are running this driver on a Micro Channel machine and you
+        have multiple WD8003 cards installed, you should be aware of how
+        the low-level driver scans for the presence of cards.  The driver
+        will look sequentially at Micro Channel adapter slots 1 through 8.
+        When it encounters a WD8003 adapter and the adapter is not claimed
+        by other software, it will claim the adapter for its own use.
+
+       When running multiple invocations of WD8003 driver each invocation
+       will claim consecutive WD8003 hardware.  For example, if you have a
+       WD8003ET/A card installed in slot 1 and a WD8003TST/A card in slot
+       3, then the first invocation of WD8003 will claim the WD8003ET/A
+       card (in slot 1).  The second invocation will claim the WD8003ST/A
+       card (in slot 3).
+
+The WD8003 low-level driver program name is WD8003.EXE.  The syntax for
+WD8003 is
+
+     WD8003[switches . . . ] [ ; comment]
+
+where [switches . . . ] denotes zero or more optional command line switches. 
+Switches may be delimited by blanks or slashes (/).  If a switch takes a
+value, the switch must be followed by an equal sign (=) or a colon (:).
+Some values may be hexadecimal numbers while other values may be decimal.
+All switch values are range checked and illegal values produce errors.
+
+You may place a comment on the command line by preceding the comment with
+a semicolon (;).  You must precede the comment character with a blank.
+
+The following are valid switch formats:
+
+     SWITCH
+     SWITCH:value
+     /SWITCH
+     /SWITCH=value
+     @file
+
+The valid WD8003 switches are enumerated below.  The letters "ddd" denote
+a decimal number.  The letters "hh" denote a hexadecimal number.  Values
+enclosed in [] indicate default values if the switch is omitted.  Values
+after [] denote the valid range of the switch.
+
+----------
+    8-BIT
+
+ When this switch is used the PC bus will communicate with the adapter in
+ 8-bit mode, but the adapter will still access the on-board 16-bit memory.
+ This is useful for users with WD8013 adapters who experience memory
+ conflicts between VGA adapters and the network cards.
+
+----------
+    @switch-file
+
+This option specifies that further switches are to be taken from an
+switch file.  Any switches after the @switch-file name will be used,
+and the switch settings take precedence over any settings in the switch
+file.  You may invoke switch files from within switch files as often as
+you wish.  The file should contain valid switches and may contain comment
+characters (;) at the beginning of each line or after switches.
+
+For example,
+
+     WD8003 @setup
+
+The file SETUP contains
+
+     ; WD8003 AI-LANBIOS driver setup file
+     ;
+     RAMBASE=D800          ; Set shared RAM to paragraph D800
+     IRQ=2                 ; Use interrupt request 2
+     verbose               ; Display verbose information
+
+----------
+    HELP or ?
+
+This switch displays information about the valid command line switches,
+but does not install the WD8003 driver.  For example,
+
+     WD8003/help
+     WD8003 ?
+
+See the messages section for a detailed description of the HELP display
+output.
+
+----------
+    IOBASE=hhhh [280] 0200-03E0
+
+This switch specifies the I/O base address configured on the WD8003 card.
+The IOBASE switch value must match the jumper setting on the card.  The
+default value is the same as the default factory setting on the cards. 
+
+The IOBASE numbers must be in multiples of 20H.  If a non multiple is
+encountered, the I/O base address is rounded down to the closest address.
+For example, IOBASE=290 is the same as IOBASE=280
+
+Consult the Western Digital User Installation Guide for more information
+about setting I/O base address on the cards.
+
+NOTE: If you have a WD8003E/A, WD8003ET/A or WD8003ST/A Micro Channel
+      card, then this switch is ignored since the board parameters are
+      set at option configuration time.
+
+----------
+    IRQ=d [3] 2-7, 10, 15
+
+This switch specifies the interrupt request (IRQ) level for the board.
+Multiple boards should be on separate IRQs.  The IRQ switch value must
+match the jumper setting on the card.  The default value is the same as
+the default factory setting on the card.  To use IRQs 10 or 15, you must
+be using a WD8013 adapter in a 16-bit slot.
+
+Consult the Western Digital User Installation Guide for more information
+about setting IRQ jumpers on the cards.
+
+NOTE: If you have a WD8003E/A, WD8003ET/A or WD8003ST/A Micro Channel
+      card, then this switch is ignored since the board parameters are
+      set at option configuration time.
+
+----------
+    PACKET_SIZE=dddd [1500] 570-1500
+
+This switch specifies the maximum size of transmitted IEEE 802.3 packets.
+You may need to change this value when using certain bridges that do not
+support the full 1500 byte packet size.  Even when you reduce the packet
+size, the low-level driver can still receive large packets.
+
+----------
+    MPX=hh [C7] C0-FF
+
+This switch specifies the multiplex (MPX) interrupt number to use for
+communication to the high-level AI-LANBIOS.  You will need to change this
+value only if the MPX number is in use by another application or low-level
+driver.
+
+----------
+    RAMBASE=hhhh [D000] 8000-FE00
+
+This switch specifies the RAM base page address the on board RAM will be
+mapped into.  The RAM occupies either 8K or 32K of memory depending on the
+type of board you have.  There are no corresponding jumper settings for
+this option.
+
+The RAM base address should be specified in increments of 2000h.  Values
+not in 2000H increments are rounded down to the closest 2000H increment.
+For example, RAMBASE=C500 would become C400.
+
+You must be careful when choosing RAM base addresses to not conflict with
+existing memory.  The following list enumerates typical memory locations
+that should be avoided:
+
+     below A000    If you have 640K of memory
+     A000-BE00     For some display adapters
+     C000          Disk BIOS ROMs
+     C800          Disk BIOS ROMs
+     CA00          Disk BIOS ROMs
+     E000-FE00     System ROMs
+
+NOTE: If you have a WD8003E/A, WD8003ET/A or WD8003ST/A Micro Channel
+      card then this switch is ignored since the board parameters are
+      set at option configuration time.
+
+----------
+    REMOVE
+
+This switch removes WD8003.EXE from memory.  You must remove TSR programs
+in the opposite order they were loaded.  For example, if you loaded
+WD8003.EXE and then AILANBIO, you must remove AILANBIO before WD8003.EXE
+In addition, if you have more than one invocation of WD8003.EXE and
+AILANBIO you must use the MPX= switch on the command line to specify which
+copy of WD8003.EXE but not (AILANBIO) that you want to unload.  For
+example, if you load two copies of WD8003.EXE and AILANBIO:
+
+WD8003.EXE/MPX=C7
+AILANBIO/ADAPTER=0/MPX=C7
+WD8003.EXE/MPX=D7
+AILANBIO/ADAPTER=1/MPX=D7
+
+To unload these copies of WD8003.EXE and AILANBIO:
+
+AILANBIO/REMOVE
+WD8003.EXE/MPX=D7/REMOVE
+AILANBIO/REMOVE
+WD8003.EXE/MPX=C7/REMOVE
+
+The REMOVE option will remove the most recently run copy of AILANBIO.
+
+----------
+    VERBOSE
+
+This switch causes the WD8003 driver to be installed and detailed
+information about the configuration of the WD8003 driver to be displayed.
+See the messages section for a detailed description of the verbose output.
+
+----------
+    XEROX
+
+This switch causes all transmitted packets to be in the XEROX format
+instead of the IEEE 802.3 standard and WD8003 will receive both XEROX and
+IEEE 802.3 packets.
+
+
+WD8003 messages
+===============
+
+The WD8003 driver produces two types of messages: Informative and Error. 
+All error messages are preceded by the text "ERROR:" and cause the
+WD8003 driver to not be installed.
+
+--------
+MESSAGE:
+AI-LANBIOS WD8003 driver Vn.nn - (C) Copyright 1989 ARTISOFT Inc.
+
+This message is displayed each time the low-level driver is invoked.
+
+--------
+MESSAGE:
+                   ---- WD8003 driver installed ----
+
+This message is displayed after the low-level driver is successfully
+installed. 
+
+--------
+MESSAGE:
+                 ---- WD8003 driver NOT installed ----
+
+This message is displayed if the low-level driver is not installed.  The
+driver will not be installed if help information is displayed or an
+error occurred.
+
+--------
+MESSAGE:
+
+Command line             /verbose 
+IEEE 802.3 node address  0000C0C42210   Network packet size      1500 
+MPX interface number     C7             Machine bus type         PC/XT/AT     
+Shared memory size       8192           IO base address          0280 
+RAM base address         D000           Interrupt request (IRQ)  3 
+Bytes of memory used     1888           
+
+This message is displayed if the VERBOSE switch is specified.  The
+values displayed specify how the low-level driver is configured.  Some
+values may not agree with switch values you specified on the command
+line.  This will happen when you specify an IOBASE or RAMBASE switch
+value that is not a proper multiple of the allowed value.
+
+If you have a Micro Channel card, then the IOBASE and RAMBASE values
+will reflect the actual card settings and not any switch settings you
+placed on the command line.
+
+--------
+MESSAGE:
+
+Valid command line switches:
+   HELP
+   IOBASE= range 0200 to 03E0 hex
+   IRQ= range 2 to 7, 10, 15 decimal
+   MPX= range 00 to FF hex
+   RAMBASE= range 8000 to FE00 hex
+   REMOVE
+   PACKET_SIZE= range 552 to 1500 decimal
+   VERBOSE
+   ?
+   @ range 0 to 2048 byte file
+
+This message is displayed when the HELP or ? switch is used.  Each valid
+switch is listed with the acceptable range of values (if any) and the base
+(hex or decimal) that the numbers must be entered in.  The acceptable file
+size range for indirect files (@) is also listed.
+
+The low-level driver is not installed when this switch is used.
+
+-------
+MESSAGE:
+
+                      ---- WD8003 removed ----
+
+The WD8003.EXE driver has been removed from memory.
+
+--------
+ERROR:    WD8003 not loaded
+
+Meaning:  You have issued the WD8003/REMOVE command and do not have
+          WD8003.EXE loaded into memory.
+
+Remedy:   Only issue this command after the program is loaded.
+
+-------
+ERROR:    Can't REMOVE -- WD8003 interrupts re-hooked
+
+Meaning:  You have attempted to remove WD8003.EXE and the interrupts are
+          in use by another TSR, or WD8003.EXE was not the last TSR
+          loaded.
+
+Remedy:   Remove any TSRs loaded after WD8003.EXE.  For example, if you
+          load WD8003.EXE then AILANBIO.EXE, you must first remove
+          AILANBIO.EXE, then you can remove WD8003.EXE.
+
+-------
+ERROR:    Installed WD8003 is different version
+
+Meaning:  You have loaded a version of the WD8003.EXE program and
+          attempted to remove it from memory with the /REMOVE switch.  The
+          version with which you are attempting to remove WD8003.EXE is
+          not the same version that was loaded.
+
+Remedy:   Remove WD8003.EXE with the same version of the program that was
+          loaded.
+
+------
+ERROR:   MPX number hh is already in use - Try another number
+
+Meaning: Multiplex (MPX) interrupt number hh is being used by another
+         application or low-level driver.
+
+Remedy:  Try another MPX number.
+
+------
+ERROR:   Node address checksum bad - Check IOBASE command switch or
+         I/O jumper
+
+Meaning: Attempts at performing a checksum on the board's built-in node
+         address have failed.  The board may be bad, or the wrong I/O
+         port is being used.
+
+Remedy:  Make sure the IOBASE command line switch corresponds to the I/O
+         base jumper setting on the board.
+
+         Consult the Western Digital User Installation Guide for more
+         information about setting I/O base jumpers on the cards.
+
+------
+ERROR:   Memory not present - Possible conflict with other hardware
+
+Meaning: Attempts at writing and reading the on-board memory have failed
+         The memory may be mapped such that it conflicts or overlaps with
+         existing memory.
+
+Remedy:  Try specifying an alternative RAMBASE= switch value.
+
+------
+ERROR:   No network hardware found or adapter in use by other software
+
+Meaning: The WD8003 hardware could not be located on the Micro Channel
+         bus.  This error message is displayed because the adapter card
+         is not present or another piece of software (possibly another
+         driver) is using the card.
+
+Remedy:  You will only get this message if you have a Micro Channel
+         machine.  Make sure you have hardware before running the low-
+         level driver.  If you have hardware installed, then make sure
+         other software is not already using your hardware.
+
+------
+ERROR:   Illegal switch - ??????=nnnn
+
+Meaning: The switch ??????=nnnn is not a recognized switch.
+
+Remedy:  You may only specify legal switches on the command line.
+
+------
+ERROR:   Illegal character after switch name - ??????xnnnn
+
+Meaning: The switch ?????? is followed by a character other than "=" or
+         ":" or the switch does not take a value.
+
+Remedy:  Only use the characters "=" or ":" to specify switch values and
+         do not place characters after switches that do not take values.
+
+------
+ERROR:   Switch value not in range - ??????=nnnn
+         Valid range is ssss to eeee
+
+Meaning: The value nnnn is not in proper range.  The value ssss
+         represents the lowest acceptable value and the value eeee
+         represents the highest acceptable value.
+
+Remedy:  Limit your range of values to the acceptable range.
+
+------
+ERROR:   Illegal digit in switch value - ??????=nnnn
+
+Meaning: An illegal digit (character) was encountered in the numeric
+         switch value.
+
+Remedy:  You must restrict numeric decimal values to the numbers 0-9. 
+         You must restrict hexadecimal values to the numbers 0-9 and the
+         letters A-F.
+
+------
+ERROR:   Cannot open indirect file - @file
+
+Meaning: The file "file" cannot be opened as an indirect file.
+
+Remedy:  The file must exist before it can be used as an indirect file.
+
+
+Testing WD8003 return code (error level)
+========================================
+
+You may test the WD8003 return code or error level in a batch file by
+using the IF ERRORLEVEL command.  The following error levels are returned:
+
+     0     No error has encountered.  WD8003 driver installed
+     1     MPX number is in use
+     2     Checksum failure
+     3     Switch error
+     4     No memory found or memory error
+     5     No hardware found or hardware already in use
+     6     WD8003 not loaded
+     7     Can't remove, different version loaded
+     8     Cannot remove, interrupts re-hooked
+     9     ERROR: Can't REMOVE -- AI-LANBIOS (R) still installed
+-------------------
+EtherCard PLUS is a trademark of Western Digital
+Micro Channel is a trademark of IBM
+
+

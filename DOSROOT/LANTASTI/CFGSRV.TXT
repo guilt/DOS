@@ -1,0 +1,712 @@
+LANtastic 7.0 for DOS: Configuring Server Software Settings
+===========================================================
+(c) 1996, Artisoft, Inc.
+------------------------
+
+This file covers the following main topics:
+
+Modular server 
+Setting the server startup parameters 
+Fields on the Server Startup Parameters screen
+
+-----------------------------------------------------------
+The server startup parameters are settings that a server
+uses whenever you run the LANtastic software. They allow
+you to fine-tune performance, as described in the file
+Imprv.txt. In addition, you can set a parameter to
+specify how much server memory you want to dedicate to the
+network.
+===========================================================
+
+Modular server
+==============
+LANtastic 7.0's modular design allows you to "turn off" the
+parts of LANtastic that you don't need for each computer.
+Special server startup parameters are provided to make this
+feature convenient. For example, if only one of your 
+computers has a printer attached, you can turn off the 
+Printing parameter for all your other computers, saving 
+valuable application memory.
+
+Setting the server startup parameters
+=====================================
+Warning: The settings you make in the Server Startup 
+Parameters screen can drastically change the way your 
+computer or network will perform. Carefully read the 
+information about each parameter in this screen before 
+setting any values or options.
+
+1. At the DOS prompt, type NET_MGR <Enter>. At the NET_MGR 
+main screen, select Server Startup Parameters <Enter>. 
+
+2. You'll be prompted to enter a path to the SERVER.EXE 
+file. If the default path that appears is correct, press 
+Enter. Otherwise, type in the correct path <Enter>. 
+
+3. The Server Startup Parameters screen appears, along 
+with a screen showing the amount of memory used by the 
+current server configuration. The Server Startup 
+Parameters screen displays the options available for 
+setting your server startup parameters. The other screen 
+may display the Approximate Memory Usage (in bytes) of the 
+selections made in the Server Startup Parameters screen. 
+
+4. Set the values in the fields. To do this, select a 
+desired field <Enter>. In some fields this toggles the 
+selection between Enabled and Disabled; in others you must 
+type in a value or select a parameter from a table. 
+
+5. For descriptions of the fields, see the next section. 
+For information on configuring your server for improved 
+performance, refer to the file Imprv.txt.
+ 
+6. The values you've specified won't take effect until the 
+next time you run the SERVER program. If you already have 
+SERVER running, remove it from memory and run it again. To 
+do this, make sure Windows isn't running and press 
+Ctrl+Alt+Del at the DOS prompt. In the screen that 
+appears, make sure there are no open network files and 
+press S. To restart your system, press Ctrl+Alt+Del again. 
+When your computer reboots, the STARTNET.BAT will be 
+called from your AUTOEXEC.BAT and will load the LANtastic 
+software.
+
+Important - To ensure that unauthorized people don't 
+change the server starter parameters after you've set 
+them, create a password for the control directory on the 
+computer on which you've set those parameters. Whenever 
+someone wants to edit that server's control directory or 
+run the NET_MGR program, she'll be prompted for a 
+password. Instructions appear in the file Crldir.txt.
+
+Fields on the Server Startup Parameters screen
+==============================================
+This section provides descriptions of the software settings
+that you can select on the Server Startup Parameters screen.
+For most fields you'll see the name and default value in 
+brackets, followed by the valid range of values and a 
+description of the option.
+
+Configuration type
+------------------
+Press Enter on this option to bring up a list of 
+pre-designed server configurations. These templates are 
+provided as starting points that can help you configure 
+the server more quickly. To make setting your server 
+startup parameters easy, choose one of these server 
+"personalities" from the list that appears. There are 
+options for print and file servers that service from 5 to 
+100 users. If this server isn't sharing any printers, 
+choose one of the file server options. Even if you want to 
+fine-tune your settings later, these pre-sets make 
+excellent starting places for custom setups.
+
+Note - If you want the server to support the server 
+control, auditing or notification features, you'll have 
+to enable these options. None of the predesigned templates 
+enables these options automatically. 
+
+The predesigned server configurations are based on the 
+resources defined using the NET_MGR program's Shared 
+Resources Management option. To the right of each 
+configuration is a number that tells you the amount of 
+memory it will use. Choosing one of these options 
+automatically alters other settings in the Server Startup 
+Parameters screen. For example, if you select the Small 
+File Server option, the Printing option described later in 
+this file is disabled. However, if you select Small File 
+and Print Server, the Printing option is enabled. 
+
+Maximum users
+-------------
+[5] 2 - 500 - This sets the maximum number of users who 
+can simultaneously log in to this server. If you'll have 
+more than five users logged in to this server at the same 
+time, you need to increase the value in this field. 
+However, the more logins you allow, the more memory this 
+server will use. Each user requires approximately 124 
+bytes of server memory plus the amount of memory used by 
+the Request Size parameter described in the "Performance 
+Parameters" section later in this file. If you need to 
+specify more than 240 users, you must install another 
+network adapter. 
+
+Note - To determine how many people are regularly using a 
+server, set up an audit trail as described in the file 
+Mngsrv.txt. Specify that you want to audit logins by 
+setting that parameter, as described later in this file.
+
+Number of adapters
+------------------
+[6] 1 - 6 - Sets the maximum number of network adapters 
+installed in this server. Normally a server has only one 
+adapter installed. You may, however, use up to six 
+adapters with LANtastic. When using more than one adapter, 
+make sure that each one has its own unique IRQ, I/O Base 
+or any other requirements necessary for its operation. 
+Unless you're using the LANtastic Interchange™ product, 
+each adapter then serves an independent network. For more 
+information on using multiple adapters, refer to the 
+Multi.txt file. There's no harm in setting this to a value 
+that's greater than the number of adapters you actually 
+have installed.
+
+Maximum open files
+------------------
+[Use CONFIG.SYS] Use CONFIG.SYS (0), 50 - 5100 - Sets the 
+maximum number of files that can be open simultaneously. 
+Normally this number is set in your CONFIG.SYS file with 
+the FILES= statement. The default settings are 100 for a 
+server and 60 for a workstation. The maximum number of 
+open files that you can specify in your CONFIG.SYS is 255. 
+If you want to open more files or you need more open files 
+for local functions, you can set the Maximum Open Files 
+field to allow from 50 to 5,100 open files. This causes 
+the server to allocate its own separate files for network 
+functions rather than using those allocated through the 
+CONFIG.SYS file. The files allocated through the 
+CONFIG.SYS file are then used for local functions. 
+Enabling the Use CONFIG.SYS option instructs the server to 
+use the FILES= value given in the CONFIG.SYS file. If you 
+choose a memory other than Conventional, such as XMS or 
+EMS, the file information will be located in the expanded 
+memory.
+
+Important - If you've decided not to use the CONFIG.SYS 
+files option and you're not using conventional memory, the 
+only SHARE program you will be able to use is LANtastic's 
+Internal SHARE.
+
+Note - If you have a large number of people using a single 
+file, specify as many open files as there are people using it. 
+
+File System Memory
+------------------
+[Conventional] EMS (paged), EMS (copied), XMS -This 
+option allows you to load the fie system components of the 
+LANtastic SERVER program into EMS or XMS expanded memory, 
+thus saving conventional memory for DOS, application 
+programs and other uses. Press Enter on this option to 
+toggle between the following options.
+
+Conventional - This is the default memory setting, which 
+you should retain if this server isn't using the Maximum 
+Open Files, Cached Resources and Internal SHARE features 
+of the LANtastic Server program. (These features are 
+disabled by default.)
+
+EMS (paged) - You can choose this option if this server is 
+using one or more of the Maximum Open Files, Cached 
+Resources or Internal SHARE features and you want to save 
+conventional memory. To use this option you need to have 
+an EMS memory manager version 3.2 or above, such as 
+EMM386.EXE.
+
+EMS (copied) - If you're having trouble with the EMS 
+(paged) option above, you can choose this option in its 
+place - although you'll sacrifice some speed. To use this 
+option you need to have an EMS memory manager version 4.0, 
+such as EMM386.EXE. 
+
+XMS - If you don't have an EMS driver, you can choose this 
+option in place of one of the EMS options above. To use 
+this option you need to have an XMS memory manager, such 
+as HIMEM.SYS. 
+
+Printing
+========
+Press Enter on this option to bring up the Printer 
+Configuration screen. This screen contains the following 
+options:
+
+Printing 
+--------
+[Enabled] Enabled, Disabled - Press Enter on this option 
+to toggle printing capability on and off. Select Disabled 
+if you don't have any printers attached to this server. To 
+use LANtastic Mail, the Printing option must be enabled. 
+If you don't have any printers attached but want to use 
+LANtastic Mail, make sure all other options in this screen 
+are either disabled or set to their lowest values.
+
+Printer Tasks 
+-------------
+[1] 0 - 7 - Press Enter to type in a number from zero 
+through seven. This option sets the number of network 
+printers attached to this server. This allows the server 
+to despool print jobs to more than one printer at a time. 
+Each printer task requires one printer buffer. The more 
+tasks you allow, the more server memory you'll use. To 
+allow a spooled keyboard resource to despool while a 
+printer is despooling, you must have a printer task 
+allocated for the spooled keyboard resource.
+
+Printer Buffer 
+--------------
+[512] 512 - 32768 - Press Enter to bring up a screen from 
+which you can select a printer buffer setting. This sets 
+the buffer size that the server will use for each printer 
+task. Generally you can speed network printing by 
+allocating larger buffers. This reduces the number of 
+physical accesses to the disk when printing a file. 
+Increasing the size of the printer buffer uses more 
+server memory.
+
+Initial Despooling 
+------------------
+[Enabled] Enabled, Disabled - Press Enter on this option to
+toggle Initial Despooling on and off. When this option is 
+enabled, jobs in the print queue begin printing as soon as 
+the server is started. If this option is disabled, jobs in 
+the print queue won't print until despooling is started 
+using a NET START or ONE-JOB command. Note that the 
+NET QUEUE SINGLE command isn't active unless the queue has 
+been previously halted.
+
+Periodic Maintenance 
+--------------------
+[Disabled] Enabled, Disabled - Press Enter on this option 
+to toggle Periodic Maintenance on and off. When enabled, 
+this option periodically rebuilds the server's printing 
+control file to optimize printing speed. If your server is 
+kept busy printing or is usually left on for several days 
+at a time or longer, enable Periodic Maintenance.
+
+RPS Support 
+-----------
+[Enabled] Enabled, Disabled - Press Enter on this option 
+to toggle RPS Support on and off. Enable this option to 
+allow remote resources to be despooled by Remote Print 
+Servers.
+
+Printer Streams 
+---------------
+[Enabled] Enabled, Disabled - Press Enter on this option 
+to toggle Printer Streams on and off. Enable this option 
+to control your printers using printer streams, as 
+described in the file Mngprt.txt.
+
+Immediate Despooling 
+--------------------
+[Enabled] Enabled, Disabled - Press Enter on this option 
+to toggle Immediate Despooling on and off. Enable this 
+option to start print jobs printing before the entire file 
+is spooled on resources that are set up for immediate 
+despooling. You can also use this option to disable 
+immediate despooling on all resources.
+
+HP JetDirect Support
+--------------------
+[Disabled] Enabled, Disabled - Enable this option if 
+you'll be creating direct printing resources on the server 
+for an HP JetDirect printer. If you've set up multiple 
+HP JetDirect resources and don't want to use them the next 
+time you start SERVER, disable this option. Note that this 
+option can also be used to enable the use of these 
+resources.
+
+CS Print Support
+----------------
+[Disabled] Enabled, Disabled - Enable this option if 
+you'll be creating resources on the server for printers 
+attached to a Central Station connectivity processor. If 
+you've set up multiple CS Print resources and don't want 
+to use them the next time you start SERVER, disable this 
+option. Note that this option can also be used to enable 
+the use of these resources. 
+
+Security and Send ID
+====================
+Press Enter on this option to bring up the Security 
+Configuration screen. This screen contains the following 
+six options:
+
+Send Server ID 
+--------------
+[Enabled] Enabled, Disabled - If this option is enabled,
+the server's name appears on the list of available network 
+servers on the Server Connection screen in NET or after a 
+NET SHOW command. If this option is disabled, a person 
+must know the name of the server to log in to it.
+
+Login Accounts 
+--------------
+[Enabled] Enabled, Disabled - When enabled, all users must 
+have an account to gain access to the server. When 
+disabled, anyone can log in to and use your computer and 
+its resources.
+
+Accounts Servers 
+----------------
+[Disabled] Select to Manage, Disabled - Press Enter on 
+this option to bring up the Remote Account Server screen. 
+Press Ins to enter the name of the remote server that has 
+the accounts you want to use on this computer. Use this 
+option to centralize and simplify your accounts files and 
+their management. During startup, this list of servers is 
+accessed in order and the accounts file from the first server 
+is used locally. The Login Accounts option must be enabled 
+to use this feature. 
+
+Access Control Lists 
+--------------------
+[Enabled] Enabled, Disabled - Enable this option if you'd 
+like to use Access Control List protection for your shared 
+drives and printers. Disable this option if you want users 
+to have full access to all shared drives and resources. 
+For information on setting ACLs, see the file Shrres.txt. 
+
+File Level ACLs 
+---------------
+[Enabled] Enabled, Disabled - When enabled, people must 
+have access through a file-level ACL to be able to access 
+the selected file. You must have Access Control Lists 
+enabled to use this option.
+
+Group ACLs 
+----------
+[Enabled] Enabled, Disabled - When enabled, a person can
+gain access through a group ACL. You must have Access 
+Control Lists enabled to use this option.
+
+Server Control
+--------------
+Press Enter on this option to bring up the Server Control 
+screen. Use the following two options to enable or disable 
+this server's ability to be controlled over the network 
+from another server. The number at the top of the screen 
+shows you how much memory the option is using in its 
+current configuration. 
+
+Server Control
+--------------
+[Enabled] Enabled, Disabled - When enabled, this 
+option allows this server to be controlled remotely across 
+the network. This includes the ability to schedule and 
+cancel server shutdowns, terminate users, enable and 
+disable logins, flush the server and control the server's 
+keyboard and screen. Select Disabled if you don't want 
+this server to be subject to control over the network. 
+
+Run Buffer Size
+---------------
+[32 bytes] 32 - 1024K - Press Enter to specify the size 
+of the buffer used for NET RUN commands. Remote Control 
+must be enabled to set this field. The higher the value 
+entered here, the more memory will be used to operate the 
+server.
+
+Auditing
+--------
+Auditing increases security by allowing you to keep track 
+of requests made to a server. Press Enter on this option 
+to bring up the Event Auditing screen. Use the 13 options 
+in this screen to configure your server's auditing 
+functions. For more information, refer to the file 
+Mngsrv.txt. 
+
+Auditing
+--------
+[Enabled] Enabled, Disabled - Select Enabled to configure 
+the auditing options that follow. Select Disabled if you 
+don't want an audit trail of server activity.
+
+Server Up
+---------
+[Disabled] To File, Disabled - Makes an audit entry 
+whenever a server is started or shut down.
+
+Logins
+------
+[Disabled] To File, Disabled - Makes an audit entry 
+whenever a user logs in to the server.
+
+Logouts
+-------
+[Disabled] To File, Disabled - Makes an audit entry 
+whenever a user logs out of the server or is disconnected 
+from it.
+
+Queueing
+--------
+[Disabled] To File, Disabled - Makes an audit entry 
+whenever a user makes an entry in the server's mail or 
+print queues. Doesn't record items that are printed from 
+the queue.
+
+Printing
+--------
+[Disabled] To File, Disabled - Makes an audit entry 
+whenever a print job is completed. The log entry contains 
+the number of bytes sent to the printer.
+
+Disk Space
+----------
+[Disabled] To File, Disabled - Makes an audit entry when 
+available disk space falls below the level specified in 
+the Space Threshold option.
+
+Space Threshold
+---------------
+[0K] 0 - 65535K - Specifies the desired minimum amount of 
+disk space. An audit entry is made when available disk 
+space falls below the level specified. The Disk Space 
+option must be enabled to use this function.
+
+CPU Use
+-------
+[Disabled] To File, Disabled - Makes an audit entry when 
+CPU usage exceeds the level specified in the CPU Threshold 
+option.
+
+CPU Threshold 
+-------------
+[0%] 0 - 100% - Specifies the desired maximum amount of 
+CPU usage. An audit entry is created whenever there is 
+more CPU usage than the value set here. The CPU Use option 
+must be enabled to use this function.
+
+User Entry
+----------
+[Disabled] To File, Disabled - When enabled, creates an audit 
+entry whenever a person who has the U privilege issues a 
+NET AUDIT command.
+
+Access Allowed
+--------------
+[12 possible ACL rights, described in "Access Control List 
+rights" in the file Shrres.txt] - Creates an audit entry
+when the specified access is allowed by theserver. For
+example, if the R and W access control rightsare selected
+for a file, an entry is made whenever someone reads or
+writes to the file. If no ACL letters are shown, Access
+Allowed auditing is disabled.
+
+Access Denied
+-------------
+[12 possible ACL rights, described in "Access Control List 
+rights" in the file Shrres.txt] - Creates an audit entry 
+when the specified access is denied by the server. For 
+example, if the D and N access control rights are selected 
+for a file, an entry is made whenever someone is denied 
+the attempt to delete or rename the file. If no ACL 
+letters are shown, Access Denied auditing is disabled.
+
+Notification
+============
+Notification allows you to configure the ways in which 
+people logged in to this server with the O (Operator 
+Notification) privilege will be notified of server events 
+such as logins. Press Enter on this option to bring up the 
+Operator Notification screen. The number at the top of the 
+screen tells you how much memory the notification part 
+of the SERVER program is using. Use the nine options in 
+this screen to configure your server's notification functions. 
+This option must be enabled if you want operator 
+notification to work for any individual printer resource 
+notification that you've set up. 
+
+Notification 
+------------
+[Enabled] Enabled, Disabled - Select Enabled to configure 
+the following notification operations. Select Disabled if 
+you don't want to notify all logged-in users of server 
+events.
+
+Logins
+------
+[Disabled] To Operator, Disabled - Sends a login message 
+whenever another user logs in to this server.
+
+Logouts
+-------
+[Disabled] To Operator, Disabled - Sends a logout message 
+whenever another user logs out of this server.
+
+Queuing
+-------
+[Disabled] To Operator, Disabled - Sends a queuing message 
+whenever an entry is placed into the server's queue.
+
+Printing
+--------
+[Disabled] To Operator, Disabled - Sends a Print Complete 
+message to all logged-in users with the O (Operator 
+Notification) privilege whenever a job is finished 
+printing.
+
+Disk Space
+----------
+[Disabled] To Operator, Disabled - Sends a warning 
+whenever available disk space on any physical fixed disk 
+falls below the level specified in the Space Threshold 
+option.
+
+Space Threshold
+---------------
+[0K] 0 - 65535K - Specifies the desired minimum amount of 
+disk space. Sends a warning whenever available disk space 
+falls below the level specified. The Disk Space option 
+must be enabled to use this function.
+
+CPU Use
+-------
+[Disabled] Enabled, Disabled - Sends a warning whenever 
+CPU usage exceeds the level specified in the CPU Threshold 
+option.
+
+CPU Threshold 
+-------------
+[0%] 0 - 100% - Specifies the desired amount of CPU usage, 
+in percent, at which a warning message is sent to all 
+logged-in users. The CPU Use option must be enabled to use 
+this feature.
+
+Floppy Direct
+-------------
+[Enabled] Enabled, Disabled - Allows a local user to issue 
+DOS FORMAT and CHKDSK commands on diskettes in the 
+server's floppy drives. If this type of access is enabled, 
+and the floppy disk is shared with the rest of the 
+network, you must make sure that no one formats the floppy 
+disk. 
+
+Non-DOS disk support
+--------------------
+[Disabled] Disabled, Enabled 0 - 2400 - This setting 
+specifies the number of non-DOS disk file entries 
+supported during directory-type operations. It lets you 
+enable or disable caching of file location information on 
+non-DOS drives in formats such as CD-ROM. Don't enable 
+this option if this computer is sharing DOS drives only. 
+If you're unable to scan the directory structure of a 
+non-DOS drive, increase the value in this field. This 
+increases the number of disk buffers used for caching 
+directory information. 
+
+Performance parameters
+======================
+
+Network Buffer 
+--------------
+[4096] 2048 - 57344 bytes - Sets the size in bytes of the 
+buffer that the server uses for network communication and 
+disk operations. If you set a larger buffer size, the 
+server can read and write more data at a time but also 
+uses more server memory. 
+
+Request Size
+------------
+[32] 32 - 65535 bytes - Allows you to specify the size of 
+the buffer the server uses when "listening" for a user 
+request. This can help improve performance for operations 
+such as file lookups and small random Write requests. The 
+higher the value entered, the more server memory is used. 
+A request buffer is allocated for each user you allow in 
+the Maximum Users field. 
+
+Network Tasks
+-------------
+[1] 1 - 32 - Specifies how many concurrent user requests 
+the server can process. Each task requires a network 
+buffer. Increasing the value in this field increases the 
+amount of memory the server uses. You may want to increase 
+the number of tasks to improve performance if the server 
+will have a large number of users logged in 
+simultaneously. The following formula is often useful in 
+determining the number of network tasks needed: (1/4 of 
+the number of users) +1 = number of network tasks. 
+
+Note - To determine how many login requests a server is 
+currently processing, set up an audit trail as described 
+in the file Mngsrv.txt. Specify that you want to audit 
+logins by setting that parameter, as described earlier in this file. 
+If LANtastic's Internal SHARE feature will be enabled, 
+include an extra network task in the number you specify. 
+
+Run Burst
+---------
+[2] 1 - 255 ticks - Specifies the maximum number of ticks 
+(1/18 of a second) in which the server will process 
+network requests. After this time expires, the server will 
+return to performing local tasks. Setting a large value 
+for this option increases network performance but will 
+slow the computer's performance of local tasks. 
+
+Cached Resources
+----------------
+[1] 1 - 50 - Specifies the number of server resources that 
+will have user access information cached. Increasing this 
+value can greatly speed network performance. However, a 
+higher value in this field uses more server memory. If you 
+choose a memory other than Conventional, such as XMS or 
+EMS, the Cached Resources will be located in the expanded 
+memory.
+
+Seek Cache Size
+---------------
+[No Cache] 1- 64K - Specifies the size of the cache used to 
+store random access location information. In most cases, 
+setting a larger value increases the speed at which random 
+Reads and Writes are completed.
+
+Lock Hold Time 
+--------------
+[9] Disabled - 182 - Specifies the amount of time in ticks 
+(1/18 of a second) that the server will wait for a record 
+lock before assuming the request has failed. A higher 
+value in this field can increase server response time if 
+you have a large amount of user contention within a 
+database.
+
+Internal SHARE
+==============
+Press Enter on this option to bring up the Internal SHARE 
+Support screen. This option allows LANtastic to exceed the 
+limitations of the DOS SHARE program. This means that file 
+and record-locking procedures are done more quickly and 
+you can allow more locks and space for filenames. 
+
+If you use this option, make sure the DOS SHARE program 
+isn't running. To disable DOS SHARE, delete or comment out 
+the SHARE command in your CONFIG.SYS file or AUTOEXEC.BAT 
+file.
+
+Use the following three options to enable and configure 
+LANtastic's Internal SHARE file-sharing and record-locking 
+feature:
+ 
+Internal SHARE
+--------------
+[Enabled] Enabled, Disabled - Select Enabled to configure 
+the following SHARE operations. Select Disabled if you 
+don't want the server to use internal file-sharing and 
+record-locking. 
+
+SHARE Locks
+-----------
+[400] 1-39,000 - Press Enter to specify the number of 
+simultaneous locks you want the server to support. If you 
+choose a memory option other than Conventional, such as 
+XMS or EMS, the lock information will be located in the 
+expanded memory.
+
+Name Space
+----------
+[4K] 1-600K - Press Enter to specify the number of bytes of 
+file-sharing space you want the server to support. If you 
+choose a memory option other than Conventional, such as 
+XMS or EMS, the Name Space information will be located in 
+the expanded memory.
+
+Related Topics
+==============
+- The file Crldir.txt explains how to work with network 
+control directories, where your server starter parameters 
+are stored.
+- The file Imprv.txt discusses fine adjustments to server 
+startup parameters that affect network performance. 
+- The file Mngsrv.txt contains more information about the 
+server startup parameters that affect security.
+
+

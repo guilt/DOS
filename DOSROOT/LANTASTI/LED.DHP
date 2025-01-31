@@ -1,0 +1,1119 @@
+APPEND {path} /switches
+ 
+  Allows programs to find data files in other directories.
+  Type APPEND ; to clear the appended directory list.
+  Type APPEND without parameters to display the appended directory list.
+       Example:  APPEND C:\DOS
+ 
+  path         Specifies a drive and directory to append.
+  /X:ON        Applies appended directories to file searches and
+               application execution.
+  /X:OFF       Applies appended directories only to requests to open files.
+               /X:OFF is the default setting.
+  /PATH:ON     Applies appended directories to file requests that already
+               specify a path.  /PATH:ON is the default setting.
+  /PATH:OFF    Turns off the effect of /PATH:ON.
+  /E           Stores a copy of the appended directory list in an environment
+               variable named APPEND.  /E may be used only the first time
+               you use APPEND after starting your system.
+ASSIGN letter1=letter2  /switch
+ 
+  Redirects requests for floppy drives to another drive.
+  Type ASSIGN without switches to clear all drives assignments.
+ 
+       /STATUS  Displays current drive assignments.
+      letter1   The drive letter to reassign (A or B). The colon is
+                not required.
+      letter2   The drive to redirect drive1 to.
+ATTRIB {+|-attribute} {path\filespec} /switch
+ 
+     Controls the attribute of a file or files.
+     Use ATTRIB and filespec only to display the attributes of files.
+     +   Sets an attribute.   -   Clears an attribute.
+     Example:  ATTRIB +R C:\AUTOEXEC.BAT
+     
+     Attributes are:
+     
+     R   Read-only          A   Archive 
+     S   System             H   Hidden 
+     
+     /S  Processes files in subdirectories in the specified path.
+BACKUP {path}filespec drive: /switches
+ 
+  Backs up files from one drive to another.
+ 
+  path\filespec      The drive and or path and files to back up.
+  drive:             The drive to backup to.
+  /S                 Include subdirectories.
+  /M                 Include only files that have the archive attribute set.
+  /A                 Adds backup files to an existing backup disk.
+  /F:{size}          Sets the size of the backup disk if unformatted.
+  /D:date            Include only files changed on or after 'date'.
+  /T:time            Include only files changed at or after 'time'.
+  /L:path\file       Creates a log file to record the backup operation.
+BREAK {ON-OFF}
+ 
+      Turns CTRL-C checking on or off.
+ 
+      Use BREAK without a parameter to display the current setting.
+BUFFERS=num1,{num2}
+ 
+      Sets the number of disk buffers.  If you use DOS=HIGH then up
+      to 47 buffers will load high with DOS.
+
+  num1     The number of read buffers (1-99).
+  num2     An optional number of read ahead buffers (1-8).
+CALL {path}filename {parameters}
+ 
+  Runs another batchfile, then returns to the calling file.  The CALLed
+  file must be in the current directory or the PATH.
+ 
+  parameters   Specifies any command-line information required by the
+                    second batch program.  Paramters are optional.
+CHCP {num}
+ 
+      Displays or sets the active code page number.
+      You must first use the COUNTRY and NLSFUNC commands.
+      Type CHCP without a parameter to display the active code page.
+
+      Some valid values of num are:
+
+      437   United States         850   Multilingual {Latin I}
+      860   Portuguese            852   Slavic {Latin II}
+      863   Canadian/French       865   Nordic
+CHDIR {path}
+ 
+  When used with path only, this changes the active directory of the
+  current drive.
+  When used with drive:\path, this changes the active directory of
+  another drive that you are not logged into, without changing drives.
+  CHDIR alone displays the name of the current directory.
+  CHDIR ..   changes to the parent directory.
+  CHDIR drive: to display the current directory of another drive.
+CD {path}
+ 
+  When used with path only, this changes the active directory of the
+  current drive.
+  When used with drive:\path, this changes the active directory of
+  another drive that you are not logged into, without changing drives.
+  CD alone displays the name of the current directory.
+  CD ..   changes to the parent directory.
+  CD drive: to display the current directory of another drive.
+CHKDSK {path\filespec} /switches
+ 
+  Checks a disk for File Allocation Table errors and displays a status
+  report.  It also optionally fixes the errors.  The FAT table stores
+  information about the files on disk and where they are located.
+  Use just CHKDSK to test the current drive.
+ 
+  path\filespec   Selects the drive, path and files to check.
+  /F              Fixes errors on the disk.
+  /V              Displays the full path and name of every file on the disk.
+ 
+CLS
+      Clears the screen and homes the cursor.
+COMMAND {path} {device} /switches
+ 
+  Starts or restarts the COMMAND.COM interpreter.
+ 
+  path            Sets the directory containing COMMAND.COM file.
+  device          Sets the device to use for command input and output.
+                  CON is the default.
+  /E:num          Sets the environment size (160-32768) in bytes. 256 is
+                  the default.  The environment is used to store DOS
+                  variables like PATH, COMSPEC and TEMP.
+  /P              Makes the new command interpreter permanent (can't exit).
+  /C string       Carries out the command specified by string, and then stops.
+  /MSG            Specifies that all error messages be stored in memory. You
+                  need to specify /P with this switch.
+COMP filespec1 filespec2 /switches
+ 
+  Compares the contents of two files or sets of files.
+ 
+  filespec1  Selects the file(s) to compare.
+  filespec2  Selects the file(s) to compare to.
+  /D         Differences are shown in decimal format. This is the default.
+  /A         Differences are shown in ASCII characters.
+  /L         Displays line numbers for differences.
+  /N=num     Compares only 'num' lines in each file.
+  /C         Cancels case sensitive operation of ASCII files.
+COPY filespec1 {filespec2} /switches
+  
+  Copies one or more files to another location.
+  To append files, specify a single file for destination, but multiple files
+  for source (using wildcards or file1+file2+file3 format).
+  If you use wildcards for the source, you can not use a name for target.
+ 
+  filespec1    Selects file or files to be copied.
+  filespec2    Sets the directory and/or filename for the new file(s).
+  /A           Indicates an ASCII text file.
+  /B           Indicates a binary file.
+  /V           Verifies that new files are written correctly.
+COUNTRY=num1,{num2},{path\filename}
+
+    Enables DOS to use international currency, case conversions, decimal
+    seperators, dates and times.
+
+    num1       Sets the country code {see CHCP}.
+    num2       Sets the code page.
+    filename   The file containing the country information.  This defaults
+               to COUNTRY.SYS.
+CTTY device
+ 
+  Changes the terminal device used to control your system.
+ 
+  device   The terminal device you want to use, such as COM1 or CON.
+DATE {date}
+
+      Displays or sets the date.
+
+      Type DATE without parameters to display the current date setting
+      and a prompt for a new one.  Press ENTER to keep the same date.
+DEBUG {path\filename} {parameters}
+
+  Runs Debug, a program testing and editing tool.
+
+  path\filename         Sets the file you want to test.
+  parameters            Sets command-line information required by
+                        the file you want to test.
+
+  After Debug starts, type ? to display a list of debugging commands.
+DEL filespec /switch
+
+  Deletes files from the drive.
+
+  filespec      Selects the file(s) to delete.  
+  /P            Prompts for confirmation before deleting each file.
+ERASE filespec /switch
+  
+  Deletes files from the drive.
+
+  filespec      Selects the file(s) to delete.  
+  /P            Prompts for confirmation before deleting each file.
+DIR {path\filespec} /switches
+
+  Displays a list of files and subdirectories in a directory.
+  Switches may be preset in the DIRCMD environment variable.
+
+  path\filespec   Specifies drive, directory, and/or files to list.
+  /P              Pauses after each screenful of information.
+  /W              Uses wide list format.
+  /A:attrib   Displays files with specified attributes.
+               D  Directories                R  Read-only files
+               H  Hidden files               A  Files ready for archiving
+               S  System files               -  Prefix meaning "not"
+  /O:sort     List by files in sorted order.
+               N  By name                    S  By size 
+               E  By extension               D  By date & time
+               G  Group directories first    -  Prefix to reverse order
+  /S          Displays files in specified directory and all subdirectories.
+  /B          Uses bare format (no heading information or summary).
+  /L          Uses lowercase.
+DISKCOMP drive1: drive2: /switches
+
+      Compares the contents of two floppy disks.
+
+      /1   Compares the first side of the disks.
+      /8   Compares only the first eight sectors of each track.
+DISKCOPY drive1: drive2: /switches
+
+      Copies the contents of one floppy disk to another.
+      The two floppy disks must be the same type.
+      You may specify the same drive for drive1 and drive2.
+
+     /1   Copies only the first side of the disk.
+     /V   Verifies that the information is copied correctly.
+DEVICE=path\filename {parameters}
+      
+      Loads into memory a device driver. The parameters are optional
+      settings that may be used by the driver.  You must use the
+      complete path and filename including the extension.
+DEVICEHIGH /switches =path\filename {parameters}
+      
+      Loads a device driver into high memory if it will fit,
+      otherwise loads it into conventional memory.  You must
+      use the complete path and filename including the extension.
+
+  /L:num1,{num2;...}  The upper memory block to load, conditionaly if
+                      the size num2 is met.
+  /S:num              The resident size of the TSR.
+  parameters          Specifies any command-line information required by the
+                      program you want to load.
+DOS=HIGH-LOW-UMB-NOUMB,{UMB-NOUMB}
+      
+      This CONFIG.SYS command specifies whether Dos is loaded in
+      conventional memory, or into the High Memory Area (HMA), and
+      optionally if Upper Memory Blocks will be used or not.
+DOSKEY /switches macroname=text
+
+  Loads the DOSKEY tsr into memory, which edits command lines, recalls
+  Dos commands, and creates macros.
+
+  /REINSTALL    Installs a new copy of Doskey.
+  /BUFSIZE=size Sets the size of the command history buffer.
+  /MACROS       Displays all Doskey macros.
+  /HISTORY      Displays all commands stored in memory.
+  /INSERT       Sets insert mode.
+  /OVERSTRIKE   Sets typeover mode.
+  macroname     Specifies a name for a macro you create.
+  text          Specifies commands you want to record.
+DOSSHELL /switches
+
+   Starts DOS Shell, an interface to Dos and menu program.
+
+  /T:mode#  Text mode. Values for mode are L for low, M for medium, and H
+            for high, and an optional # value setting the screen resolution.
+  /B        Sets black & white mode.
+  /G        Sets graphics mode.
+DRIVPARM=/switches
+
+  CONFIG.SYS command that sets parameters for hard and floppy drives.
+
+  /D:num          Sets the physical drive number (0-255), 0=A, 1=B etc.
+  /C              Indicates that the drive detects open/closed doors.
+  /F:factor       Sets the drive type:
+                    0   160/180/320 or 360k     1    1.2 meg
+                    2   720k (default)          5    Hard drive
+                    6   Tape drive              7    1.44 meg
+                    8   WORM                    9    2.88 meg
+  /H:num          The number of drive read/write heads (1-99).
+  /I              Indicates a 3.5" drive when BIOS doesn't support it.
+  /N              Indicates non-removable media.
+  /S:num          Sets the number of sectors per track (1-99).
+  /T:num          Sets the number of tracks per side.
+ECHO {text} {ON-OFF}
+
+      Sends the text string 'message', or turns echoing ON or OFF.
+      Use ECHO without parameters to display the current setting.
+EDIT {path\filename} /switches 
+
+  Starts the Dos Editor, for creating and changing ASCII text files.
+
+  /B          Sets black & white mode.
+  /G          Sets fast update on CGA screens.
+  /H          Sets highest lines of resolution.
+  /NOHI       Disables high-intensity colors.
+EDLIN {path\filename} /switch
+
+   Starts Edlin, the line editor for ASCII text files.
+
+  /B   Loads the file in binary mode, ignoring end-of-file characters in it.
+EMM386 {ON-OFF-AUTO} {W=ON-OFF}
+
+  Enables or disables expanded memory support on 386 and higher computers, 
+  and provides upper memory support for loading drivers high in DOS 5.0
+  and up. Type EMM386 without parameters to check status or version.
+
+  AUTO         With this switch the driver is only active if programs
+               request EMS memory.
+  W=           Turns on or off Weitek coprocessor support.
+
+  You must first load EMM386.EXE in the CONFIG.SYS with a device command,
+  such as this example:
+  
+  DEVICE=C:\DOS\EMM386.EXE NOEMS X=C800-CFFf
+
+  X=xxxx-yyyy
+    Specifies a memory range to be excluded from use.
+  
+  NOEMS
+    Turns off expanded memory support, but still provided access to
+    upper memory blocks (UMBs) for loading high.
+
+  Other EMM386 switches:  
+    nnnn (expanded mem size) MIN=nnnn Mx FRAME=xxxx /Pnnnn  Pn=addr 
+    I=xxxx-yyyy B=address L=minXMS A=altregs H=handles D=nnn 
+    RAM=xxxx-yyyy NOVCPI HIGHSCAN VERBOSE WIN=xxxx-yyyy NOHI
+    ROM=xxxx-yyyy NOMOVEXBDA ALTBOOT
+  
+  Memory management is beyond the scope of this help file.  For a full
+  explanation of EMM386, consult you DOS manuals or on-line help.
+EXE2BIN filename1 filename2
+
+  Converts .EXE (executable) files to binary (.COM) format.
+
+  filename1    Source file.
+  filename1    Output file.
+EXIT
+
+      Quits the current command processor {COMMAND.COM}, and returns to
+      the previous one.
+EXPAND filespec1 filespec2
+
+   Expands one or more compressed files.
+
+  filename1       The location and name of a file or set of files to be
+                  expanded. You cannot use wildcards.
+  filename2       The new location and/or name of an expanded file or files.
+FASTOPEN drive:={num} /switch
+
+      Loads the Fastopen program into memory, which tracks the location
+      of openned files for faster access on subsequent requests.
+
+      drive     The drive letter of the disk to track. You can specify
+                multiple drives.
+      num       The number of files (10-999) to track for this drive.
+                48 bytes of memory will be used for each file. 
+      /x        Uses Expanded memory to store the file names tracked.
+FC filename1 filename2 /switches 
+
+   Displays the differences between file1 and file2.
+
+  /A     Displays only first and last lines for each set of differences.
+  /B     Performs a binary comparison.
+  /C     Turns of case sensitive comparison.
+  /L     Indicates an ASCII text comparison.
+  /LBnum Sets the max consecutive differences to num number of lines.
+  /N     Shows the line numbers in an ASCII comparison.
+  /T     Disables converting tabs to 8 spaces.
+  /W     Compresses white space (tabs and spaces) for comparison.
+  /num   Sets the number of consecutive lines that must match 
+         after a mismatch.
+FDISK
+
+      Starts the Fdisk program, which configures a hard disk for use
+      with Dos and partitions it into logical drives.
+FILES=num1
+
+  num1     Sets the maximum number of files (8-255) that can be
+           open at the same time.  This includes devices such as PRN,
+           LPT1, COM1, AUX, and disk files like AUTOEXEC.BAT.
+FCBS=num1,{num2}
+
+      Sets the number of file control blocks.
+
+   num1    The number of FCBS (1-255) to allocate memory for.
+   num2    The number of blocks (1-255) kept open at all times even if
+           the limit of num1 is reached.
+FIND /switches "text" filespec
+
+  Searches for a text string in a file or files.
+
+  /V        Displays all lines NOT containing the specified string.
+  /C        Displays only the count of lines containing the string.
+  /N        Displays line numbers with the displayed lines.
+  /I        Ignores the case of characters when searching for the string.
+  text      The text string to find.
+FOR %variable IN (set) DO command {parameters}
+
+  Runs a specified command for each file in a set of files.
+
+  %variable  Specifies a replaceable parameter.  In a batch file,
+             use %%variable.
+  set        Specifies a set of one or more files.  Wildcards may be used.
+  command    Specifies the command to carry out for each file.
+  parameters Specifies parameters or switches for the specified command.
+FORMAT drive: /switches
+  
+  Formats a disk drive for use with Dos. This also destroys all data
+  currently on the disk.
+
+  /V:label    Specifies the volume label.
+  /Q          Quick format can be used for disks previously formatted.
+  /U          Unconditional format.  The Unformat command will not be
+              able to recover data. 
+  /F:num      Specifies the size of the floppy disk to format (such 
+              as 160, 180, 320, 360, 720, 1.2, 1.44, 2.88).
+  /B          Allocates space on the formatted disk for system files,
+              but does not install the system files.
+  /S          Installs system files to the disk, making it 'bootable'.
+  /T:num      Sets the number of tracks per disk side.
+  /N:num      Sets the number of sectors per track.
+  /1          Formats a single side of a floppy disk.
+  /4          Formats a 5.25-inch 360K floppy disk in a high density drive.
+  /8          Formats eight sectors per track.
+GOTO text
+
+  Used in a batch file to jump to another location, which is marked by
+  a label :text.  Type a label on a line by itself, beginning with a colon.
+
+  text    Text string used to give the label a name.
+GRAFTABL num /switch
+      
+      Allows extended characters of a specified code page in graphics.
+      Some valid values of num are:
+
+      437   United States         850   Multilingual (Latin I)
+      860   Portuguese            852   Slavic (Latin II)
+      863   Canadian/French       865   Nordic
+
+      /STATUS   Displays the code page selected.
+GRAPHICS {prt} {path\filename} /switches
+  
+  Loads the Graphics program, allowing you to do print sceens of graphics.
+
+  prt           Sets the printer type.  Some valid values for prt are COLOR1,
+                COLOR4, COLOR8, HPDEFAULT, DESKJET, GRAPHICS, GRAPHICSWIDE,
+                LASERJET, LASERJETII, PAINTJET, QUIETJET, QUIETJETPLUS,
+                RUGGEDWRITER, RUGGEDWRITERWIDE, THERMAL, AND THINKJET.
+  filename      Sets the file containing information on supported printers.
+                The default is GRAPHICS.PRO.
+  /R            Reverses print (white letters on black screen).  The default
+                is to print black forground on white background.
+  /B            Prints background in color for COLOR4 and COLOR8 printers.
+  /LCD          Prints using LCD aspect ratio.
+  /PRINTBOX:val Sets the print box size, val being either STD or LCD.
+HELP {command}
+      
+      Provides help information for Dos commands.
+IF {NOT} condition1 condition2 command {parameters}
+
+ Performs conditional processing in batch programs.
+
+ NOT          Indicates that Dos should carry out the command only
+              if the condition is false.
+ condition1   The item to test. ERRORLEVEL== sets a true condition if
+              the last program run returned an exit code equal to or greater
+              than the number specified by condition2.
+              EXIST checks for a file specified by condition2.
+              string1== checks for a match with the variable string2
+              specified by condition2.
+ condition2   A number, filename, text or variable to test against.
+ command      Sets the command to carry out if the condition is met.
+INSTALL=path\filename {parameters}
+
+   Used in the CONFIG.SYS to load a memory resident program into memory.
+   Parameters are optional, but you must use the full path and filename,
+   including the extension.
+JOIN {drive1:} {path} /switch
+
+  Joins a disk drive to a directory on another drive.
+  Use JOIN without parameters to list currently joined drives.
+
+  drive1:        Specifies a disk drive that will appear as a directory in
+                 path.
+  path           Specifies the directory to which you want to join drive1. It
+                 must be empty and cannot be the root directory.
+  /D             Cancels any previous JOIN commands for the specified drive.
+KEYB {code},{num} {path\filename} /switches
+
+   Configures the keyboard for specific languages.
+
+   code     The keyboard code, us for United States, sp for Spain, etc.
+   num      The code page.  See CHCP for a list of codes.
+   filename The keyboard definition file.  The default is KEYBOARD.SYS.
+   /e       Use for enhanced keyboards on XT class machines.
+   /id:num  The keyboard number for countries that have more than one
+            layout (France, Italy, United Kingdom).
+LABEL {drive:} {text}
+
+      Creates, changes, or deletes the volume label {name} of a disk.
+LASTDRIVE=letter
+
+      Sets the highest driver letter (A-Z) that can be used for accessing
+      disk drives.
+LOADHIGH /switches path\filename {parameters}
+
+  Tries to load a TSR program into the upper memory area.
+              
+  /L:num1,{num2;...}  The upper memory block to load, conditionaly if
+                      the size num2 is met.
+  /S:num              The resident size of the TSR.
+  parameters          Specifies any command-line information required by the
+                      program you want to load.
+LH /switches path\filename {parameters}
+
+  Tries to load a TSR program into the upper memory area.
+  
+  /L:num1,{num2;...}  The upper memory block to load, conditionaly if
+                      the size num2 is met.
+  /S:num              The resident size of the TSR.
+  parameters   Specifies any command-line information required by the
+               program you want to load.
+LOADFIX path\filename
+
+  Loadfix corrects a problem where programs can not be loaded into
+  the first 64k of memory.  Previous to DOS 5.0 this was not possible,
+  but with DOS=HIGH it is.  Loadfix places the program in memory
+  higher than 64k.
+
+  Use this command if you get the error message "packed file corrupt"
+  when trying to run the program.
+MEM /switches
+
+  Displays the amount of used and free memory in your system.
+
+  /PROGRAM         Displays status of programs currently loaded in memory.
+  /P
+
+  /DEBUG           Displays status of programs, internal drivers, and other
+  /D               information.
+
+  /CLASSIFY        Classifies programs by memory usage. Lists the size of
+  /C               programs, provides a summary of memory in use, and lists
+                   largest memory block available.
+MIRROR {drive: ...} /switches
+
+  Records information about one or more disks.
+
+  drive:       Specifies the drive for which you want to save information.
+  /1           Saves only the latest disk information (does not back up
+               previous information).
+  /Tdrive      Loads the deletion-tracking program for the specified drive.
+  /-entries     Specifies maximum number of entries in the deletion-tracking
+               file.
+  /U           Unloads the deletion-tracking program.
+  /PARTN       Saves hard disk partition information to a floppy diskette.
+MKDIR path
+
+      Creates a directory.
+MD path
+
+      Creates a directory.
+MODE {device} {parameters} /switch
+
+ Configures system devices, printers, comm ports, keyboard, ect.
+ 
+ /S    Display the current status of the device.
+ 
+ Examples:
+ Printer port:   MODE LPT1: COLS=80 LINES=60 RETRY=b
+                 MODE LPT2 80,60,p
+ Serial port:    MODE COM1 BAUD=9600 PARITY=n DATA=8 STOP=1 RETRY=p
+                 MODE COM2: 4800,e,7,1,n
+ Redirection:    MODE LPT1:=COM2:
+ CodePage:       MODE CON CP PREPARE=860 c:\dos\codefile.cpi
+ Select code:    MODE CON CP SELECT=860
+ Refresh code:   MODE CON CP REFRESH
+ Display mode:   MODE CON COLS=40 LINES=25
+ Typematic rate: MODE CON:RATE=20 DELAY=4
+MORE
+
+ Displays output one screen at a time.
+ 
+ Examples:
+ TYPE AUTOEXEC.BAT | MORE
+ MORE < README.DOC
+MSCDEX /switches
+
+        Installs the CD-ROM extensions to DOS, redirecting a drive letter
+        to the CD device driver installed in the CONFIG.SYS.
+
+  /D:name       Name is the driver name installed in the CONFIG
+  /M:num        Sets the number of read buffers
+  /L:letter     Selects the drive letter to be assigned to the CD
+NLSFUNC {path\filename}
+
+      Loads country specific information for National Language Support.
+PATH {path;...}
+
+      Displays or sets a search path for executable files.
+      Type PATH ; to clear all search-path settings.
+      Type PATH without parameters to display the current path.
+PAUSE
+      Suspends processing of a batch program and displays the message 
+      "Press any key to continue..."
+PRINT /switches {path\filename ...}
+
+  Prints a text file while you are using other DOS commands.
+  Use PRINT without parameters to display the contents of the print queue.
+
+ /D:device   Specifies a print device.
+ /B:size     Sets the internal buffer size, in bytes.
+ /U:num      Waits the specified maximum number of clock ticks for the
+             printer to be available.
+ /M:num      Sets the max number of ticks it takes to print a character.
+ /S:num      Allocates the scheduler the specified number of clock ticks
+             for background printing.
+ /Q:num      Specifies the maximum number of files allowed in the queue.
+ /T          Removes all files from the print queue.
+ /C          Cancels printing of the preceding filename and subsequent
+             filenames.
+ /P          Adds the preceding and subsequent filename to the print queue.
+PROMPT {text}
+
+  Changes the DOS command prompt.
+  Use just PROMPT to reset the prompt to the default setting.
+  Prompt text can be made up of characters and/or these special codes:
+
+  $Q   = (equal sign)                   $$   $ (dollar sign)
+  $T   Current time                     $D   Current date
+  $P   Current drive and path           $V   DOS version number
+  $N   Current drive                    $G   > (greater-than sign)
+  $L   < (less-than sign)               $B   | (pipe)
+  $H   Backspace                        $E   Escape code (ASCII code 27)
+  $_   Carriage return and linefeed     
+QBASIC /switches {path\filename}
+
+  Starts the QBasic programming environment.
+ 
+  /B        Allows use of a monochrome monitor with a color graphics card.
+  /EDITOR   Starts the DOS Editor.
+  /G        Provides the fastest update of a CGA screen.
+  /H        Displays the maximum number of lines possible for your hardware.
+  /MBF      Converts the built-in functions MKS$, MKD$, CVS, and CVD to
+            MKSMBF$, MKDMBF$, CVSMBF, and CVDMBF, respectively.
+  /NOHI     Allows the use of a monitor without high-intensity support.
+  /RUN      Runs the specified Basic program before displaying it.
+  filename  Specifies the program file to load or run.
+RECOVER {path}filename
+
+  Recovers readable information from a bad or defective disk.
+REM {text}
+
+      Records comments (remarks) in a batch file or CONFIG.SYS.
+RENAME filename1 filename2
+
+ Renames filename1 to filename2.  You cannot specify a new path for your
+ destination file.
+REN filename1 filename2
+
+ Renames filename1 to filename2.  You cannot specify a new path for your
+ destination file.
+REPLACE {path1}filespec {path2} /switches
+
+  filespec    Sets the source file or files.
+  path2       Sets the directory where files are to be replaced.
+  /A          Adds new files to destination. Cannot be used with /S or /U.
+  /P          Prompts for confirmation for each file. 
+  /R          Replaces read only files.
+  /S          Includes subdirectories of the destination directory.
+              Can't be used with the /A switch.
+  /W          Waits for you to insert a disk before replacing.
+  /U          Replaces only files that are older than source files.
+              Can't be used with the /A switch.
+RESTORE drive: {path\filename} /switches 
+
+  Restores files that were backed up by using the BACKUP command.
+
+  drive:   Sets the drive to read the backup files from.
+  path     The drive and/or files to restore.
+  /S       Includes subdirectories.
+  /P       Prompts before restoring read only files or files changed since
+           the last backup (if appropriate attributes are set).
+  /B:date  Restores only files last changed on or before the specified date.
+  /A:date  Restores only files changed on or after the specified date.
+  /E:time  Restores only files last changed at or earlier than this time.
+  /L:time  Restores only files changed at or later than the specified time.
+  /M       Restores only files changed since the last backup.
+  /N       Restores only files that no longer exist on the destination disk.
+  /D       Displays files on the backup disk that match specifications.
+RMDIR path
+
+      Removes (deletes) a directory.
+RD path
+
+      Removes (deletes) a directory.
+SET {name}={text}
+
+  Displays, sets, or removes DOS environment variables.
+  Use SET without parameters to display the current environment variables.
+  Use SET name= to clear a variable.
+
+  name      Specifies the environment variable name.
+  text      Data to assign to the variable.
+SETVER {path\filename} {num.num} /switches
+
+  Sets the version number that DOS reports to a program.
+  Use just SETVER to display the current table of programs.
+
+ path        Path alone sets location of the SETVER.EXE file.
+ filename    Sets the filename {including extension} of the program
+             to add or delete from the SETVER table.
+ num.num     Sets the DOS version to be reported to the program.
+ /DELETE     Deletes the specified program from the table.
+ /D
+ /QUIET      Turn off the disclaimer message displayed when changing 
+             the table entries.
+SHARE /switches 
+
+   Loads the SHARE tsr into memory.  Use SHARE in multitasking environments
+   such as networks to enable file and record locking on your system.
+
+  /F:num     Sets the size in bytes (20-32767) for a table to store the
+             names of the locked files.  Default is 2048.
+  /L:num     The number of files (1-3000) that can be locked at one time.
+             Default is 20.
+SHELL={path\}filename parameters
+
+      Loads a new Command interpreter (such as Command.com).  Most often
+      this Config.sys command is used to increase the Environment space
+      used to store variables like PATH, TEMP, and PROMPT.
+
+      parameters    -  May be specific to the new interpreter, but
+                       normally would be the default path (as in C:\DOS).
+                       Also would include switches like /E:size.  See
+                       COMMAND for a list of other switches.
+
+      Example:  SHELL=C:\DOS\COMMAND.COM C:\DOS /E:512 /P
+SHIFT
+      
+      Changes the position of replaceable parameters in a batch file.
+      The first parameter is deleted, the rest drop by one number.
+      For example, if AUTOEXEC.BAT issues the command "GO.BAT 5 10 15",
+      and the first command in GO.BAT is SHIFT, then %1 now holds
+      the parameter "10".  Also note that %0 which used to contain
+      "GO.BAT" now holds "5".
+
+      You may works with only ten parameters, %0 through %9.  If you use
+      more than 10 on the command line and then use SHIFT, %9 now holds
+      the 11th item.
+SORT /switches {command} <{path\filename1} >{path\filename2}
+
+  Sorts input and writes results to the screen, a file, or another device.
+
+  /R         Reverses the sort order; that is, sorts Z to A, then 9 to 0.
+  /+num      Sorts the file according to characters in column num.
+  filename1  A file to be sorted.
+  filename2  Sets a file to send the sorted input to.
+  command    Specifies a command whose output is to be sorted.
+STACKS=num1,num2
+
+  Sets up the dynamic use of data stacks to handle hardware interrupts.
+
+  num1          The number of stack frames (0-64).
+  num2          The size of each stack frame (0-512).
+SUBST drive: {path} /switch
+      
+  Sets up a drive letter to represent another drive and path.  Use SUBST
+  with no parameters to display a list of current SUBST'd drives.
+
+  drive      The drive letter to be assigned a new path.
+  path       The physical drive and/or path you want to assign. 
+  /D         Delete this drive's redirection.
+SWITCHES=/k
+
+  Forces enhanced keyboards into conventional mode.
+  
+  /k  This is the only switch allowed.
+SYS {path} drive:
+
+  Copies the DOS system files and command.com to another drive to make
+  that disk "bootable".
+
+  path       A disk and/or path that contains the IO.SYS, MSDOS.SYS,
+             and COMMAND.COM files.
+  drive      The drive the files are to be copied to.
+TIME {hour:min:sec}
+      
+      Displays or sets the system time.  Use TIME with no parameters
+      to display the current time prompt for a new one.  
+
+      hour:min:sec    The new time, in 24 or 12 hour format.
+TREE {path} /switches
+
+   Displays the directory structure of a drive or path.
+
+  /F   Includes the names of files in each directory.
+  /A   Use ASCII characters only for the output.
+TYPE {path\filename}
+      
+      Sends the contents of a text file to the screen.
+UNDELTE {path\filespec} /switches
+
+  Attempts to restore previously deleted file(s).
+
+  /S:drive   Loads the Delete Sentry tsr for the specified drive.
+  /Tdrive-#  Loads Delete Tracker tsr for drive.  The # is the number of
+             entries tracked, from 1-999
+  /DOS       Include only files listed by DOS
+  /DT        Use the Delete Tracker info to recover files.
+  /DS        Use the Delete Sentry info to recover files.
+  /ALL       Attempts to recover using all available methods.  Also skips
+             prompting the user for information.  The first letter of a
+             file is selected alphabetically until a unique name is found.
+  /LIST      List files that have been deleted.
+  /LOAD      Load UNDELETE into memory as a TSR.
+  /U         Unload the driver from memory.
+  /STATUS    Shows the protection system in use for each drive.
+  /PURGE:drv Clears the Delete Sentry information for the given drive.
+UNFORMAT drive: /switches
+
+ Attempts to reverse a FORMAT or RECOVER command.  Hopefully the FORMAT
+ command did NOT use the /U switch (unconditional).
+
+  /L       Lists all filenames found.  When used with the /PARTN switch,
+           this displays current partition tables.
+  /TEST    Test only, do not make changes to the disk.
+  /P       Print message on LPT1.
+VER
+
+      Displays the DOS version.
+VERIFY {ON-OFF}
+
+      When VERIFY is ON, each write to disk is confirmed.  This is slower
+      but safer.  The default is VERIFY OFF.  Use VERIFY with no switch
+      to see the current setting.
+VOL {drive:}
+
+      Displays the disk volume label and serial number.  
+XCOPY filespec1 {filespec2} /switches
+
+  Copies files, directories and subdirectories.
+
+  filespec1    drive, path, and filespec of the file(s) to copy. If you
+               use wildcards in the source, the target can not use a name.
+  filespec2    Sets the location and/or name of the new files.
+  /A           Copy only files with the archive attribute set to on.
+  /M           Same as the /A switch, but clears the archive attribute.
+  /D:date      Copy only files changed on or after 'date'.
+  /P           Prompts you before copying each file.
+  /S           Includes subdirectories except empty ones.
+  /E           Includes empty subdirectories.
+  /V           Verifies each file.
+  /W           Waits for the user to press a key.
+DBLSPACE /switches {drive:} 
+ 
+  Sets up and manages compressed drives.
+
+  /CHKDSK          Checks compressed drives for errors.
+  /CHKDSK /F       Fixes errors on compressed drives.
+  /COMPRESS        Compresses an existing drive.
+  /NEWDRIVE=X: Y:  Gives a compressed drive a new letter. Y is changed to X.  
+  /CONVSTAC=vol    Converts a Stacker drive. vol is Stacker volume name.
+  /CVF=num         Use with /CONVSTAC.  num is the new volume file number.       
+  /CREATE          Makes a new compressed drive.  May replace drive: with
+                   the /NEWDRIVE new: old: switch above.
+  /DEFRAGMENT      Optimizes the compressed drive.
+  /DELETE          Deletes the drive, erasing all data on it.
+  /FORMAT          Deletes all data, keeping the empty drive.
+  /MAP             Shows information on all drives.
+  /MAXCOMPRESS     Allows highest compression of the drive.
+  /MOUNT=num       Connects a compressed volume number to a drive letter.
+                   May use /NEWDRIVE=new: old: for the drive: option.
+  /RATIO=n.um      Sets the estimated compression ratio of a drive.
+  /SIZE=n.um       Changes the size of drive: 
+  /UNMOUNT         Disconnects a drive letter from it's compressed volume.
+DEFRAG {drive:} /switches
+  
+  Relocates files into contiguous sectors for better performance.
+  It is recommened that no other programs be running in memory while
+  defragging, such as Windows, disk caches, screen blankers, etc.
+
+  /F          Removes spaces between files.
+  /U          Does not remove spaces between files.
+  /S:N        Sorts files by name.
+  /S:N-       Sort by reverse alphabet on name.                   
+  /S:E        Sort by file name extension.
+  /S:E-       Sort by reverse alphabet on extension.
+  /S:D        Sort by date and time.
+  /S:D-       Sort by reverse date and time.
+  /S:S        Sort by size.
+  /S:S-       Sort by reverse size.
+  /B          Reboot the computer after defragging.
+  /V          Verify files while defragging.
+  /SKIPHIGH   Force DEFRAG to run in conventional memory only.
+DELTREE /switch path
+
+   Removes a directory and it's files, also removing any subdirectories
+   and files under it.
+
+   /Y    Turns off prompting for confirmation of this command.
+INTERLNK drive1:=drive2:
+
+   Redirects a drive letter to the Interlink Server's drive. Used for
+   connecting drives through serial or parallel cables to another computer.
+   INTERLNK.EXE must first be installed in the CONFIG.SYS before using
+   this command.
+
+   drive1:    The local drive letter to be connected to the server.
+   drive2:    The physical drive of the interlink server.
+INTERSRV drive: /switches
+
+  To use this command, INTERLNK.EXE must be installed in the CONFIG.SYS.
+  This command sets up drives to be shared by the Interlink server.  If
+  drive is left out, all drives are available to the client.
+
+  /B            For black and white displays.
+  /BAUD:num     Sets the baud rate of num.  num may be 9600, 19200, 38400,
+                57600, or the default of 115200.
+  /COMx:ioport  Sets the serial port x for access.  The ioport is optional.
+  /LPTx:ioport  Selects lpt port x for access.  ioport is optional.
+  /V            Overrides timer conflicts that can occur is serial sessions.
+  /RCOPY        Installs Interlink on another computer.  They must be
+                connected with a 7 wire null modem cable and the MODE
+                command must be available.
+  /X=drive:     Excludes a drive from being redirected
+MEMMAKER /switches
+
+  Automatically configures the computer for best memory usage.
+
+  /BATCH        Forces default choices on all prompts.
+  /SWAP:drive   Use if your boot drive changes after startup.
+  /UNDO         Undo the last MEMMAKER changes.
+  /W:num1,num2  Sets the size of Windows transition buffers.  Use /W:0,0 
+                if you don't run Windows.  The default is /W:12,12
+MOVE path\filespec1  path\filespec2
+
+  The MOVE command combines copying files and then deleting the originals
+  into one easy operation.  It works the same as COPY, and has no switches.
+
+  filespec1   The source file or files.
+  filespec2   The destination path or filename.
+MSAV {path} /num /switches
+  Scans the path for viruses.  Without switches it loads a menu system.
+  /num     Lines per screen (25-60).  Valid nums are 25, 28, 43, 50, and 60. 
+  /S       Scan only, do not change files (default).
+  /C       Scan and remove any viruses found.
+  /R       Creates a report file called MSAV.RPT.
+  /A       Skips the floppy drives.
+  /L       Skips Network drives.
+  /N       Skips displaying information on screen until the end.
+  /P       Allow graphics mode.
+  /F       Skips displaying individual file names.
+  /IN      Selects color.
+  /BW      Selects black & white.
+  /MONO    Selects monochrome.
+  /LCD     Selects liquid crystal display for laptops.
+  /FF      Turns on fast updates in CGA mode.
+  /BF      For bios only calls.
+  /NF      For no alternate fonts.
+  /BT      For graphics mouse under Windows.
+  /NGM     For no graphics mouse.
+  /LE      Reverses the mouse button functions.
+  /IM      No mouse.
+  /PS2     Reset the PS2 mouse.
+MSBACKUP  path\filename /switches
+
+  Makes a backup of data on your drives.  The filename is a specfile
+  that lists what files are to be backed up.
+
+  /TF     Full backup.
+  /TI     Incremental backup for only files that have changed.
+  /TD     Backup files from the specfile that have changed.
+  /BW     For black & white.
+  /MDA    For monochrome.
+  /LCD    For laptops.
+MSD {path\filename} /switches
+
+  Runs diagnostic and statistical reports on your system.  The command
+  with no switches loads a menu driven program.
+
+  /B      Sets black & white mode.
+  /I      Skip hardware detection.  Use if MSD fails to load.
+  /F      Runs a full report and stores it in the filename given.  Will
+          prompt you for company information first.  If you leave out
+          the optional filename, the report is sent to the sceen.
+  /P      Partial report without prompting for company info.
+  /S      Summary report only.
+
+  Example:  MSD /Fc:\temp\myreport.txt
+POWER  ADV:setting\STD\OFF /switch
+
+  POWER.EXE must first be loaded in the CONFIG.SYS with a DEVICE= command.
+
+  Displays status of the POWER tsr, or loads it into memory.  If upper
+  memory blocks are available it will try to load high.  POWER is used
+  on portable systems thsat need to conserve energy.  The valid values
+  of setting are MAX for maximum conservation, REG the default for
+  normal conservation, and MIN for minimum.  Including \STD uses your
+  computers own conservation system if it conforms to APM standards.
+  The \OFF setting disables power conservation.
+
+  /LOW   Forces the driver to load into conventional memory.
+SMARTDRV {/E:num} {letter ...} num1 num2 /switches
+
+  Starts or gets a report for the Smartdrive disk caching program.
+  Each drive letter may have an optional + for read and write caching,
+  a - for no caching, or just the letter for read only caching.  Do
+  not include a colon.  If your system has upper memory blocks available,
+  the driver will attempt to load high.
+  
+  /E:num    Sets the size of cache memory (1024-8192) that is accessed at
+            one time. This must be used before the num1 and num2 parameters.
+  num1      The size of the cache size in k-bytes when not running Windows.  
+  num2      The minimum size of the cache when in Windows.  
+  /B:num    Sets the size of the read ahead buffer.  Default is 16k.
+  /C        Flush the cached data in memory to disk.
+  /R        Restarts smartdrv, erasing the current cache memory.
+  /L        Force the driver into conventional memory.
+  /Q        Supresses the status report when the driver loads.
+  /S        Gets the current status report.
+  /DOUBLE_BUFFER may be used when the driver is installed in the CONFIG.SYS
+            with EMM386.EXE or you run in Windows enhanced mode.
+TRUENAME path
+
+  Displays the true drive and path of drives set up by the SUBST
+  command.  For example, if F: is SUBST'd for C:\DOS, then the 
+  command TRUENAME f:\temp returns C:\DOS\TEMP
+VSAFE /num /switches
+
+  This command is a TSR that monitors the computer for new viruses.
+  
+  num    A value (1-8) followed by a + or - to turn on or off that option.
+         1   Warn of attempted hard disk format
+         2   Warn when a program remains resident in memory.
+         3   Halts all disk writes. 
+         4   Scans all executables when run.
+         5   Scans disk boot sectors.
+         6   Warn of attempted write to boot sector or partition table.
+         7   Warn of attempted write to floppy disk boot or partition table.
+         8   Warn of attempted change to executable files.
+  /A{key}    Sets up the hot key to activate the program.  Use /AV for 
+  /C{key}    ALT+V, or /CV for CTRL+V for example.
+  /D         Disables checksum verification.
+  /N         Includes network drives.
+  /NE        Excludes checking of Expanded memory.
+  /NX        Excludes checking of Extended memory.     
+  /U         Unloads the VSAFE tsr from memory.
+INCLUDE=block
+
+  Executes commands found in another block in a multiple configuration
+  CONFIG.SYS file.   This command helps to shorten the file by not having
+  to repeat some commands over and over in each block.  This block would
+  normally only contain commands that need to be shared by several blocks.
+
+  block      The name found between brackets [], elsewhere in the file
+             that identifies the block.
+MENUCOLOR=num1,num2
+
+  Selects the color choices for a menu.  The valid values for each are:
+
+  0 - Black             8 - Grey
+  1 - Blue              9 - Light Blue
+  2 - Green            10 - Light Green 
+  3 - Cyan             11 - Light Cyan
+  4 - Red              12 - Light Red
+  5 - Magenta          13 - Light Magenta
+  6 - Brown            14 - Yellow
+  7 - White            15 - Intense White
+
+  num1     The forground color (0-15).
+  num2     The background color (0-15).
+MENUDEFAULT=block,num
+
+  Sets the default choice in a multiple configuration CONFIG.SYS file.
+  Use this command only once per menu.
+
+  block   The name of a block of commands to execute.  The block name
+          is used later in the file, inclosed in brackets [].
+  num     The number of seconds (0-90) to wait for the user to make a
+          choice.
+MENUITEM=block,text
+
+  Defines a menu choice in a multiple choice CONFIG.SYS file.  The
+  default menu name is [menu], but submenus can be made with SUBMENU.
+  You may use up to 9 MENUITEM and SUBMENU commands per menu.
+
+  block    The name of a block of commands to execute if this choice
+           is selected.  This name is used later in the CONFIG
+           with brackets [] to identify the block.
+  text     Up to 70 characters used to inform the user about the choice.
+NUMLOCK=ON-OFF
+
+  Sets the Numlock key value at boot up time, either ON or OFF.
+SUBMENU=block,text
+
+  Used in multiple configuration CONFIG.SYS files to set up a submenu of
+  choices.  Up to 9 menu choices can be used in each menu, including
+  submenu choices.
+
+  block     The name of a submenu block of commands.  The block name is
+            at the start of the block is brackets, as in [startup].
+  text      A string of text up to 70 letters long to identify the choice.
+CHOICE /switches "prompt"
+
+  Halts a batch file and prompts the user for a choice.  The text in quotes
+  is displayed on the screen.
+
+  /C:keys      Sets the valid key choices for the prompt. Default is Y or N.
+  /N           Skips displaying the valid response keys to the user.
+  /S           Makes response keys case sensitive.
+  /T:key/time  Sets the default 'key' to be used after secounds of 'time'.
+               Range for time is 0-99.
+
+  Your batch file must check the ERRORLEVEL environment variable to see
+  what the response was.  Each valid key is assigned a number in sequence.
+  For example, the default of Y is ERRORLEVEL==1, N is ERRORLEVEL==2.
+  Note that ERRORLEVEL checking must be done from highest to lowest, since
+  IF ERRORLEVEL==1 will match values of 1 or higher.

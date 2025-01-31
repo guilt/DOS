@@ -1,0 +1,1164 @@
+LANtastic 7.0 for DOS: Using Login Accounts for Security
+========================================================
+(c) 1996, Artisoft, Inc.
+------------------------
+This file covers the following main topics:
+
+About the default wildcard account
+About login accounts
+How to create, modify and manage your accounts
+Creating a new login account
+Creating a new ACL group
+Placing an account in an existing ACL group
+Setting privileges for an account
+Setting account and password expirations
+Setting login hours
+Copying and pasting accounts and ACL groups
+Exporting and importing account files
+Disabling a login account
+Deleting an account or ACL group
+Allowing account modifications
+Access Control List summary
+Editing an account
+Managing an account with the NET program
+
+---------------------------------------------------------
+Creating a set of login accounts is the simplest way to
+restrict access to an entire server. When you build these
+accounts into Access Control List (ACL) groups, you can
+also restrict access to a single resource on that server,
+such as a directory on its C: drive.
+=========================================================
+
+About the default wildcard account
+==================================
+During installation, LANtastic automatically created a 
+wildcard account named "*" on every server. This default 
+wildcard account allows up to 255 people on the LANtastic 
+network to share all disk drives and printers without 
+typing in a username or password. This makes things easy 
+if you aren't concerned about network security. You can 
+start sharing disk drives and printers as soon as 
+LANtastic is installed without setting up any login 
+accounts. 
+
+The default "*" account, however, comes with the S 
+(System manager) account privilege that gives everyone 
+the right to manage your network servers. To avoid 
+unauthorized or inadvertent changes to your servers' 
+software settings, you may want to delete the wildcard 
+account or give it special privileges, as discussed under 
+"Setting privileges for an account" in this file . After you 
+delete the wildcard account, you'll need to set up login 
+accounts with associated usernames and passwords. Once 
+you do this, every server on the network will have its own 
+set of login accounts.
+ 
+About login accounts
+====================
+If you keep the default wildcard account and don't care 
+about network security, you don't have to create any login 
+accounts. Everyone on the network can use any server's 
+disk drives and printers without being asked for a 
+username or password. This arrangement is so simple that 
+most people don't realize the default wildcard account exists. 
+
+The simple arrangement described above works fine until 
+security becomes important in your network. Suppose, for 
+example, that your administration department sets up a new 
+server that contains confidential files and directories. 
+To restrict access to this server, you'll need to create a 
+set of individual or wildcard login accounts on it and 
+delete the default wildcard account. Once you've done 
+this, only a person with a valid username and password 
+can log into the administration server. 
+
+Logging in is the process of establishing a connection to 
+a server and identifying yourself with a pre-set username 
+and password. 
+
+Another reason to create login accounts occurs when your
+network becomes quite large. Once you exceed the 255 
+computers allowed by the wildcard account, you'll have to 
+create login accounts to handle additional users. 
+
+Here are some guidelines for setting up individual or 
+wildcard login accounts on a server.
+
+Individual accounts - An individual account is just that 
+- an account intended to allow an individual user to log 
+in to a server. When logging in to a server using 
+LANtastic NET, a user is prompted to type in her username 
+and password (if a password is set up in her account). For 
+example, she might type ANNA SECRET.
+
+If you're setting up a group of individual accounts that 
+need similar access to a server, you might want to put a 
+prefix such as $ or ACCT- in front of individual account 
+names. Templates like these make it easier to set up 
+features such as Access Control List (ACL) security. As 
+an alternative to an ACL template, you can place your 
+group of accounts into an ACL group, as described under 
+"Creating a new ACL group" in this file. To learn how to 
+assign ACL rights to an individual account, a wildcard 
+account, an ACL group, or a template, see "Setting ACL 
+rights for drive resources" in the file Shrres.txt.
+
+Wildcard accounts - A wildcard account allows multiple 
+users to log in to the server using the same prefix. This 
+makes it easy to create one set of accounts with a common 
+set of features. 
+
+For example, you might set up the wildcard account SALES-* 
+for all the users in a company's sales department. If 
+Keith, Diana and Paul are part of the sales group, they'll 
+log in to the server by using the wildcard account name 
+prefix combined with their own names and the password 
+for the account. 
+
+For example: 
+SALES-KEITH SECRET
+SALES-DIANA SECRET
+SALES-PAUL SECRET
+Wildcard account names must end in an asterisk (*). To log 
+in through a wildcard account, you simply add any name in 
+place of the "*".
+
+As you can see, creating one wildcard account can be more 
+convenient than setting up multiple individual accounts. 
+However, security isn't as tight, since everyone uses the 
+same password (SECRET). If tight security is important, 
+create individual accounts with unique passwords. 
+
+Account security features - Login accounts are security 
+features in themselves, since they allow you to restrict 
+the use of a server to people who have an authorized 
+account on it. But once you've created a set of login 
+accounts, you can use them as the framework for setting 
+up many other security features. For example, you can:
+
+- Assign account privileges to the accounts of the people 
+who manage your network. These privileges will allow them 
+to perform operations like monitoring print queues and 
+getting notified if there's a server error. 
+
+- Assign Access Control List (ACL) rights to one or more 
+individual accounts, wildcard accounts, ACL groups or 
+templates (followed by a wildcard character) such as 
+ACCT-*. ACL rights give common access rights to a shared 
+resource such as a disk drive or directory. 
+
+- Set up expiration features, such as an account 
+expiration date, a password expiration date or limited 
+login hours. You can even disable an account if it won't 
+be used for an extended period. 
+
+- Turn off the Broadcast Server ID to all Network Users 
+option in the server startup parameters, so a user must 
+know the server's name before he can log in.
+
+- Enable the Logins and Logouts options in the server 
+startup parameters, so people with the O (Operator) 
+privilege get pop-up messages whenever someone logs in or 
+out of a server.
+
+- Enable the Logins and Logouts auditing options, so 
+LANtastic makes an entry in the server's audit trail 
+whenever someone logs in or out.
+
+Instructions for setting up the last three account 
+security features appear in the file Cfgsrv.txt. 
+The rest of this file explains how to set up and manage 
+login accounts using LANtastic NET_MGR. It ends by 
+explaining how users can manage their own accounts using 
+LANtastic NET.
+
+How to create, modify and manage your accounts
+==============================================
+LANtastic lets you perform these activities in several 
+ways. For example, you can:
+
+- Create a separate set of accounts on each server. By 
+this method, you go to each server in your network and 
+create a separate set of login accounts using the NET_MGR 
+program. Each server's accounts may be the same as or 
+different from those on other servers. For convenience, 
+you can copy and paste existing accounts or import 
+account files from a text editor.
+
+- Create one set of accounts on a single server to be 
+shared by all your other servers. LANtastic's remote 
+accounts feature makes this easy. Just go to each server 
+on the network and toggle the Login Accounts option in 
+the Security Configuration screen to Enabled. You then 
+select the Account Servers option and enter the name of 
+the server that has the accounts that you want this server 
+to use. This makes maintaining individual, wildcard and 
+ACL group accounts simple, because they're all stored in 
+one place. For information on using this feature, see the 
+"Setting up a central account server" section in this file.
+
+- Copy and paste existing accounts to another server's 
+disk. Once you've created one set of accounts, you can 
+copy them to another server and modify them as desired. 
+Instructions appear under the "Copying and pasting 
+accounts and ACL groups" section in this file.
+
+- Copy all the accounts on one server to a local control 
+directory or to one on another server. This allows you to 
+quickly set up the accounts for a new server, or back up 
+the account information for a control directory. 
+Instructions appear under the "Copying and pasting 
+accounts and ACL groups" section in this file.
+
+- Export and import account files. After you've created 
+your accounts using the NET_MGR program, you can export 
+the files to a text editor or database program. You can 
+then copy and edit an account file and use it on multiple 
+servers. Instructions appear under the "Exporting and 
+importing account files" section in this file.
+
+- Manage accounts using the NET_MGR program. You can 
+change the name, password, privileges and other parameters 
+that you set when you created an account by using the 
+Individual Account Management or Wildcard Account 
+Management options from the NET_MGR main screen. You can 
+also disable and delete accounts, as described in the 
+sections "Disabling a login account" and "Deleting an 
+account or ACL group" in this file. For extra convenience, 
+you can manage accounts on a remote server from the 
+keyboard of your own server. For instructions, see 
+"Controlling a remote server" in the file Mngsrv.txt.
+
+- Manage accounts using the NET program. Anyone on the 
+network can view the User Account Status screen using NET. 
+However, you must have an account with the Account 
+Modifications option enabled in order to change your 
+password or disable your account. Instructions for 
+performing these activities appear under the "Managing an 
+account with the NET program" section later in this file.
+
+All of the methods discussed for accounts also apply to 
+ACL groups.
+
+The rest of this file gives detailed steps for using the 
+various methods described in this section.
+ 
+Creating a new login account
+============================
+This section tells you how to create a login account on a 
+server in your LANtastic Network. 
+
+1. At the DOS prompt, type NET_MGR <Enter>. The NET_MGR 
+main screen appears. 
+
+2. Choose the type of account you want to set up.
+ 
+- To create an individual account, select Individual 
+Account Management <Enter>. The Individual Accounts screen 
+appears. 
+
+-To set up a wildcard account, select Wildcard Account 
+Management <Enter>. The Wildcard Accounts screen appears. 
+You must then place the selection bar on the account that 
+you'd like the new account to appear before. The order in 
+which you place the wildcard accounts is important. For 
+guidelines, see "Placement order of wildcard accounts" 
+later in this file.
+
+Note - Wildcard accounts were called group accounts in 
+versions of LANtastic before v5.0.
+
+3.Press Ins and type in a username <Enter>. 
+
+4. Type in a password (optional) <Enter>. If you don't 
+require a password, the user will still be prompted for 
+one when she attempts to log in using the NET menu. 
+However, it's necessary only to press Enter to proceed.
+
+Make sure you type in the password correctly. Once it's 
+entered, you can't see what you typed. If the user wants 
+to, he can change the account password using the NET User 
+Account Management option described under "Managing an 
+account with the NET program" later in this file
+.
+5. If desired, type in a description of the user(s) 
+included in the account <Enter>. For example, you might 
+enter the description "Marketing users' account" for the 
+wildcard account MKTG-* or "Sales Executive" for the 
+individual account KENNY-G.
+
+6. In the Concurrent Logins field, type in the number of 
+times the user can be simultaneously logged in to this 
+server with this account <Enter>. For wildcard accounts, 
+allow at least one concurrent login for each person who'll 
+log in with that account. For individual accounts, 
+allowing extra logins lets the user access this server 
+from more than one computer at the same time.
+
+7. Press Esc to exit each screen.
+
+8. If SERVER is running, you're asked if you want to use 
+the new settings immediately by saving the data to disk. 
+Press Enter to save your changes or Esc to exit without 
+saving them.
+
+Placement order of wildcard accounts
+====================================
+As discussed earlier, for security reasons you should 
+delete the default wildcard account named "*" when you set 
+up individual and wildcard accounts with usernames and 
+passwords. If, however, you haven't deleted this account,
+select it first when you're determining the placement 
+order of your other wildcard accounts. This ensures that 
+the "*" account stays at the bottom of the list. This is 
+important because when a person attempts to log in, the 
+server scans the list from top to bottom and uses the 
+first match it finds. The "*" account matches any 
+username, so LANtastic ignores any wildcard accounts 
+listed after it. 
+
+For example, if a person enters the name SALES-JOEL, 
+LANtastic scans through the list of individual accounts, 
+then the list of wildcard accounts. It sees that the 
+username matches the wildcard account "SALES-*" and 
+allows the person to log in, provided that the correct 
+password is given (if one is required). 
+
+If the "*" account appears on the list above "SALES-*," 
+the first match will be the "*" account, resulting in the 
+"SALES-*" account not being checked. In addition, an entry 
+called S* listed above SALES-* would also match the 
+username SALES-JOEL and any other accounts that begin with 
+the letter S. Because of this, you must make sure you 
+don't have any wildcard account names that are matched by 
+previous entries in the list. 
+
+To place a wildcard account at the bottom of the list, 
+select the empty position at the end of the list, then 
+create the account. If you place the selection bar on a 
+wildcard account, the new account will be placed before 
+the original highlighted account. 
+
+Setting up a central account server 
+===================================
+This section tells how to set up your network so your 
+accounts are all located on a single server to be shared 
+by all your other servers. This makes maintaining 
+individual, wildcard and ACL group accounts simple, 
+because they're all stored in one place. To be safe, you 
+can copy the central account server's account list to a 
+backup server. If the central account server isn't 
+available, your remote servers can automatically use the 
+accounts on the backup server.
+
+1. Select the server where you'll store the accounts for 
+the other servers and set up the individual, wildcard and 
+ACL group accounts.
+
+2. Go to a LANtastic server that will use the remote 
+accounts. At the DOS prompt, type NET_MGR <Enter>. Select 
+Server Startup Parameters <Enter>. 
+
+3. You'll be prompted to confirm the path to the server's 
+.EXE file. Usually this will be C:\LANTASTI. Press Enter 
+to confirm or type in the correct path, then press Enter. 
+The Server Startup Parameters screen appears. 
+
+4. Select Security and Send ID <Enter>. 
+
+5. From the Security Configuration screen, select Account 
+Servers <Enter>.
+
+6. Press Ins and type in the name of the remote server on 
+which the account information is stored <Enter>. 
+
+7. Type in the network adapter number through which you 
+communicate with the server <Enter>. Unless you're running 
+multiple adapters in your server or have specified a 
+non-default adapter number, this will be adapter zero. 
+
+8. If there are any other servers whose accounts you want 
+this computer to use, repeat steps 5 - 7. 
+
+If the local server's name is listed with the account 
+servers, the server searches through its own local 
+accounts list first. If a matching account isn't found on 
+the local list, the server searches for one of the other 
+servers on the list to be available on the network. It 
+will use only the account list from the first server it 
+finds. If you don't include the name of the local server 
+on the account servers list, the server doesn't search its 
+local accounts.
+
+9. When you've finished specifying the remote account 
+servers, press Esc to exit each screen.
+
+10. If SERVER is running, you're asked if you want to use 
+the new settings immediately by saving the data to disk. 
+Press Enter to save your changes or Esc to exit without saving them.
+
+Creating a new ACL group
+========================
+ACL groups are one convenient way of giving a group of 
+individual accounts and/or wildcard accounts common access 
+rights to a shared resource such as a disk drive. For 
+example, if you know that everyone in the accounting 
+department will need the same type of access to a server's 
+disk drive, you can create an ACL group named ACCOUNTING 
+for them. The ACCOUNTING group could contain the following 
+individual and wildcard accounts:
+
+ROBERT
+ANNA
+WILLIAM
+ACCT-*
+
+When you set up ACL rights on the server's drive 
+resources, you need to establish access rights only for 
+the group ACCOUNTING, rather than for all four accounts. 
+
+Another easy strategy for setting ACL rights for a group 
+of accounts is described in "Working with ACL templates" 
+in the file Shrres.txt. Basically, you simply assign a 
+common set of access rights to the group by entering a 
+template name followed by a wildcard character such as 
+"*" - for example, ACCT-*. Any person whose individual 
+account name begins with ACCT- has that group's access
+rights.
+
+Detailed information on setting up ACL rights for shared 
+resources appears in the file Shrres.txt, along with 
+full instructions for setting up ACL groups on your servers.
+
+To create a new ACL group:
+
+1. At the DOS prompt, type NET_MGR <Enter>. Choose 
+Security and Send ID and make sure the Access Control 
+Lists option is enabled.
+
+2. From the NET MGR main screen, select ACL Group Management 
+<Enter>. A list of all the existing ACL groups appears.
+  
+3. Press Ins and type in the name of the ACL group you 
+want to create <Enter>.
+
+4. Type in a description for the ACL group (up to 32 
+characters) <Enter>.
+
+5. Add the desired individual or wildcard account that you 
+want included in the ACL group. To do this: 
+
+- Select the ACL group <Enter>.
+
+- Press Ins. A list of all individual and wildcard 
+accounts appears.
+
+- Select the desired account <Enter>. Repeat this step for 
+each account you want to add to the ACL group.
+
+6. Press Esc to exit each screen.
+
+Placing an account in an existing ACL group
+===========================================
+
+Once you've created an account, you can place it in an ACL 
+group. This allows a user who logs in with the account all 
+the ACL rights allowed for a group of users. To set the 
+rights that this ACL group will have for a resource, see 
+"Setting ACL rights for drive resources" in the file 
+Shrres.txt.
+
+1. At the DOS prompt, type NET_MGR <Enter>.
+ 
+2. Select Individual Account Management or Wildcard 
+Account Management <Enter>. If you haven't yet created an 
+ACL group, see "Creating a new ACL group" later in this file.
+
+3. Select the desired individual or wildcard account 
+<Enter>. 
+
+4. Select ACL Groups <Enter>. A list of any ACL groups to 
+which this account belongs appears. 
+
+5. Press Ins. A list of defined groups appears. 
+
+6. Select an ACL group <Enter>. Alternatively, if you want 
+to select a group that doesn't appear on the list, press 
+Ins. Respond to the prompts to add that group to the list. 
+
+7. Select each desired ACL group from the list <Enter>. 
+Then press Esc to exit each screen.
+
+Setting privileges for an account
+=================================
+You don't need to set any account privileges. If users 
+have valid accounts, they can log in to the server and use 
+its drives and printers without special privileges.
+
+If you have the job of managing your network, however, 
+account privileges are important, because they give you 
+special types of control over a server. For example, they let 
+you manage the server's resources, control print queues 
+and remotely shut down or reboot the server. The account 
+privileges and the control functions associated with each 
+are listed in the next section. 
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select 
+Individual Account Management or Wildcard Account 
+Management <Enter>.
+
+2. Select the individual or wildcard account for which 
+you'd like to set privileges <Enter>.
+
+3. Select Privileges and type the letters A, Q, M, U, S, 
+O, D and/or N to assign the desired privileges for this 
+account.
+
+4. When your privilege assignments are set, press Esc to 
+exit each screen.
+
+Important - To ensure that unauthorized people don't 
+change the privileges that you've set for an account, set 
+a password for the control directory on the server that 
+has that account. Whenever someone wants to edit that 
+server's control directory or run the NET_MGR program, 
+he'll be prompted for a password. Instructions appear in 
+the file Crldir.txt.
+
+List of account privileges
+==========================
+You'd normally give any combination of the access types 
+described in this section to the person acting as the 
+network manager. Privileges A and S cover all types of 
+access.
+
+A - Super ACL 
+-------------
+If you have a limited-access server, this option gives the 
+user full access to every shared resource on the server. 
+Access Control List (ACL) rights protecting shared drives, 
+printers and mail queues aren't checked. Information on 
+ACLs appears in the "Access Control List summary" section 
+later in this file.
+
+Q - Super Queue 
+---------------
+Allows the user to view and control all jobs in the print 
+queue. When the Q privilege is disabled, you can see only 
+your own print jobs. This privilege also allows control over 
+the server's despooler. Give this privilege only to people 
+who need to control all jobs in the print queue and start 
+and stop the despooler. 
+
+M - Super Mail Privilege
+-----------------------
+Lets you view and control all items in the mail queue. If 
+you don't have the M privilege, you can see and control 
+only mail items sent to or by you.
+
+U - User Auditing 
+-----------------
+Allows you to issue NET AUDIT commands and create audit 
+entries in the server audit log. Be careful when giving 
+this privilege because it may result in the server's disk 
+being filled with audit entries. If improperly maintained,
+auditing can slow network performance. Information on
+auditing appears in the file Mngsrv.txt.
+
+S - System Manager 
+------------------
+Lets you perform any of the special System Manager 
+functions, such as remotely shutting down the server and 
+logging users off the server. You can also control the 
+print queues and despooling.
+
+O - Operator
+------------
+Provides you with messages such as logins, logouts, server 
+shutdowns and print jobs being queued.
+
+D - Despooler
+-------------
+Lets you remove print jobs from the server's printer queue 
+using the remote despooler program provided with 
+LANtastic. 
+
+N - Network Manager
+-------------------
+Gives you access to all the statistics kept by the server. 
+
+Setting account and password expirations
+========================================
+These features restrict the use of an account or password 
+to a specified span of dates or hours. This type of 
+security is useful, for example, in a school environment 
+where you want to restrict computer use to classroom hours.
+
+Setting an account expiration date
+==================================      
+This feature allows you to set up a temporary account for 
+a guest user. 
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select 
+Individual Account Management or Wildcard Account 
+Management <Enter>.
+
+2. Select the individual or wildcard account for which you 
+want to set an expiration date <Enter>. 
+
+3. Select Account Expiration Date <Enter>. 
+
+4. Follow the directions on the screen to set the 
+expiration date, then press Esc to exit each screen.
+
+Changing an account password
+============================
+If someone finds out an account's password, you can easily 
+change it to prevent unauthorized use of the account.
+
+1. From the NET_MGR main screen, select either Individual 
+or Wildcard Account Management <Enter>. 
+
+2. Use the arrow keys to highlight the account with the 
+password that you want to change <Enter>.
+
+3. Use the arrow keys to highlight Password <Enter>.
+
+4. Type in a password for the account. Note that once a 
+password is entered there's no way to see what was typed, 
+so make sure you can remember the password you specified.
+
+5. Press Esc to return to the NET_MGR main screen.
+
+Setting a password expiration date
+==================================
+This feature allows you to set up a temporary account for 
+a user. 
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select 
+Individual Account Management or Wildcard Account 
+Management <Enter>. 
+
+2. Select the individual or wildcard account for which you 
+want to set a password expiration date <Enter>. 
+
+3. Select Password Expiration Date, press Enter and follow 
+the directions on the screen to set the expiration date.
+
+4. Press Esc to exit each screen. 
+
+The expiration date is now set. To re-enable the account, 
+you must use the NET_MGR program to enter a new expiration 
+date. 
+
+Establishing regularly changing passwords
+=========================================
+To enhance security in your network, put users on a 
+regular schedule of changing passwords. This helps prevent 
+users from finding out each other's passwords, or former 
+employees from accessing the server through a wildcard account.
+
+1. Set up a schedule for changing passwords, as described 
+in the previous section.
+
+2. From the Account Information screen, select Renew 
+Password Every <Enter>.
+
+3. Type in the number of days you want to set as the 
+regular interval for this user to change passwords. You 
+may specify from 0 to 255 days <Enter>. 
+
+4. Press Esc to exit each screen.
+
+Once the password has expired, LANtastic updates the 
+expiration date for you. For example, if you set an 
+interval of seven days, LANtastic sets a new password 
+expiration date seven days later than the previous one. 
+The user must then change passwords every week. When he 
+logs in through the NET program's Login or Logout option, 
+LANtastic indicates when his password is going to expire. 
+If he doesn't log in by the day the password expires, he's 
+still allowed to log in once at a later date and change 
+passwords.
+
+Setting login hours
+===================
+LANtastic allows you to limit the hours of the day and 
+days of the week that a user is allowed to log in to a 
+server. This helps prevent unauthorized after-hours use of 
+the server.
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select 
+Individual Account Management or Wildcard Account 
+Management <Enter>.
+
+2. Select the desired individual or wildcard account 
+<Enter>. 
+
+3. Select Login Hours <Enter>. 
+
+4. Select the desired half-hour blocks of time. Press Ins 
+to allow access at that time or Del to prohibit access. To 
+quickly mark blocks, press B and move the marker with the 
+arrow keys until all the desired blocks are highlighted. 
+You can then allow access for all the selected blocks by 
+pressing the Ins key or prohibit access by pressing the 
+Del key. 
+
+5. Press Esc to exit each screen. 
+
+6. If SERVER is running, you're asked if you want to use 
+the new settings immediately by saving the data to disk. 
+Press Enter to save your changes or Esc to exit without 
+saving them.
+
+Copying and pasting accounts and ACL groups
+===========================================
+Once you've created an account, you can copy it from one 
+server to another. This allows you to set up your servers 
+quickly. 
+
+If you have multiple control directories set up on the 
+same server, you can copy accounts and ACL groups among 
+them. This can save you time in setting up new control 
+directories, since you can copy accounts from a previous 
+control directory and edit them if necessary. If you 
+haven't already created an alternate control directory, 
+refer to "Creating a new control directory" in the file 
+Crldir.txt.
+
+When you copy an ACL group to another control directory, 
+any individual and wildcard accounts associated with that 
+group are copied as well. Any ACL groups to which these 
+accounts belong are also copied. 
+
+1. If you're copying to a remote server, connect to the 
+drive on the server containing the control directory.
+
+2. At the DOS prompt, type NET_MGR <Enter>. Select 
+Individual Account Management, Wildcard Account Management 
+or ACL Group Management <Enter>.
+
+3. To copy an individual or wildcard account or an ACL 
+group, select it and press C. The Copy Accounts screen or 
+Copy ACL Groups screen appears.
+
+4. Make sure the name listed in the From Account or From 
+ACL Group field represents the account(s) or ACL group(s) 
+you want to copy. If it doesn't:
+
+- Select From Account or From ACL Group <Enter>.
+- Enter the name of the account you want to copy <Enter>.
+- If you want to copy a group of individual accounts, you 
+can enter a wildcard character after the partial name - 
+for example, USER*. 
+
+If you want to copy all the individual accounts in the 
+Individual Accounts list, type only an asterisk "*".
+
+Note - Wildcard accounts and ACL groups must be copied one 
+at a time. 
+
+5. Enter the name you want the copied account or ACL group 
+to have when it's pasted in. 
+
+- Select To Account or To ACL Group <Enter>.
+- Type in the new name for the user account or ACL group 
+<Enter>.
+
+Note - If you enter a wildcard character in the From 
+Account field, the To Account field is set to "*". This is 
+true if you enter a partial name and a wildcard character 
+(such as USER*) or if you enter only the wildcard 
+character. You can't copy a group of user accounts or ACL 
+groups to the same directory from which they came.
+
+6. To paste this account into a different control 
+directory, specify this in the To Control Directory field. 
+To do this: 
+
+- Select To Control Directory <Enter>.
+- Enter the path of the network control directory where 
+you'll paste the account or ACL group <Enter>. 
+
+The specified path can be a remote server's control 
+directory as well. You can specify the control directory 
+with a network path such as 
+\\SERVER1\C-DRIVE\LANTASTI.NET. If you specify a network 
+path, you don't need to establish a network drive 
+connection with the remote server.
+
+7. If you're copying to a control directory that's 
+password-protected, enter the valid password.
+
+- Select Password <Enter>.
+- Type in the password for the network control directory 
+<Enter>. 
+
+8. If you want the account(s) or ACL group(s) you're 
+pasting to overwrite an account with the same name in the 
+destination directory, specify this in the Replace field. 
+To do this, select Replace and press Enter to toggle the 
+option between Yes and No. 
+
+9. Press F10 to copy the selected items, then press Esc to 
+exit each screen.
+
+Exporting and importing account files
+=====================================
+LANtastic lets you maintain your user accounts with your 
+favorite text editor or database program. The easiest way 
+to use this feature is to create one or more accounts 
+using LANtastic's NET_MGR program, then export the file to 
+one of the formats listed under "Account file formats" 
+later in this file. You can then copy and edit the account 
+file to suit your own needs. You can also use the same 
+account file for multiple servers. This makes maintaining 
+accounts on large networks much easier.
+
+Note - For export/import activity, the number of accounts 
+that can be maintained by NET_MGR is 1500. However, the 
+maximum number of logins to a server with one adapter 
+remains at 240.
+
+Exporting a file
+================
+1. Create one or more accounts.
+
+2. At the NET_MGR main screen, select Management Utilities 
+<Enter>. Select Write Accounts to File <Enter>. 
+
+Note -  Passwords assigned to an account won't be 
+transferred when you write an account to file. You can, 
+however, reassign a password after the account file has 
+been exported.
+
+3. Choose one of the three file format options <Enter>. 
+These formats are described in the section "Account file 
+formats" later in this file. 
+
+4. Specify the drive, directory and filename of the 
+accounts file you'd like to create <Enter>. Press Esc to 
+exit each screen. 
+
+The individual account, wildcard account and ACL group 
+accounts are now saved to the accounts file you created. 
+
+Importing a file
+================
+Note - The individual accounts, wildcard accounts and ACL 
+group accounts in the specified accounts file overwrite the 
+existing accounts information.
+
+1. At the NET_MGR main screen, select Management Utilities 
+<Enter>. Select Read Accounts from File <Enter>. 
+
+Note - If a password-protected account file was previously 
+exported using the Write Accounts to File option, you'll 
+need to reassign a password to the file. This is because 
+the Write Accounts to File option doesn't transfer the 
+password along with the export file.
+
+2. Choose one of the three file format options from the 
+Conversion Format Options screen <Enter>. These formats 
+are described in the "Account file formats" section that 
+follows. 
+
+3. Specify the drive, directory and filename of the 
+accounts file you'd like to import <Enter>. Press Esc to 
+exit each screen. 
+
+Account file formats
+====================
+Account files can be imported and exported in these ASCII 
+formats:
+
+Parameter Data Format
+---------------------
+Fields are preceded by a keyword and appear on separate 
+lines. A section begins with the "name" field and 
+continues until the next name field. Fields may be in any 
+order within a record. Key lines have a colon (:) and a 
+space immediately following the keywords. Keywords aren't 
+case-sensitive. At the Conversion Format Options menu, 
+press F1 to view a sample file.
+
+Simple Data Format
+------------------
+Fields are fixed length. Records are separated by carriage 
+return and line feed characters (for example, press 
+Enter). At the Conversion Format Options menu, press F1 to 
+view a sample file. 
+
+Delimited Data Format
+---------------------
+Fields are separated by commas. Records are enclosed 
+within quotation marks. At the Conversion Format Options 
+menu, press F1 to view a sample file.
+
+To view sample files for each of the formats listed on the 
+previous page, press F1 at the Conversion Format Options 
+screen. Scroll down the Help window that appears to view 
+sample files for each format option. 
+
+Disabling a login account
+=========================
+This feature allows you to disable an individual or a 
+wildcard account if it won't be used for an extended 
+period, or if you want to deny access to a user or group. 
+A user with an individual account can disable her own 
+account using the NET program's User Account 
+Management option as described in "Disabling your account" 
+later in this file. This allows a user to disable her 
+account without giving her access to a server's account 
+files. 
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select 
+Individual Account Management or Wildcard Account 
+Management <Enter>.
+
+2. Select the individual or wildcard account you want to 
+disable <Enter>. 
+
+3. Select Number Concurrent Logins <Enter>.
+
+4. To disable the user account, type 0 (zero) in the 
+dialog box, press Enter, then press Esc to exit each 
+screen.
+
+5. If SERVER is running, you're asked if you want to use 
+the new settings immediately by saving the data to disk. 
+Press Enter to save your changes or Esc to exit without 
+saving them.
+
+6. To re-enable the account, reset the Number Concurrent 
+Logins field to a value of one or higher.
+
+Deleting an account or ACL group
+================================
+1. From the NET_MGR main screen, select Individual Account 
+Management, Wildcard Account Management or ACL Group 
+Management <Enter>.
+
+2. In the screen that appears, highlight the desired 
+individual account, wildcard account or ACL group and 
+press Del. Press Enter to confirm the deletion.
+
+3. Repeat step 2 until you've deleted as many accounts as 
+you want to.
+
+4. When you're finished, press Esc to return to the 
+NET_MGR main screen.
+
+Allowing account modifications
+==============================
+The Account Modifications option lets you allow or 
+disallow a user or group member to change her password or 
+disable her account after she has logged in using the NET 
+program. If the Account Modifications option for a user or 
+group is set to Disallowed, the user can't change his 
+password or disable his account. 
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select 
+Individual Account Management or Wildcard Account 
+Management <Enter>.
+
+2. Select the desired individual or wildcard account 
+<Enter>. 
+
+3. Select Account Modifications, press Enter to toggle the 
+setting between Allowed and Disallowed, then press Esc to 
+exit each screen. 
+
+Access Control List Summary
+===========================
+The Access Control List Summary displays a list of all the 
+Access Control Lists for an account. You can use this list 
+to verify an account's ACL settings for each resource on a 
+server. 
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select 
+Individual Account Management or Wildcard Account 
+Management <Enter>.
+
+2. Select the desired individual or wildcard account 
+<Enter>. 
+
+3. Select ACL Summary and press <Enter>. The ACL Summary 
+screen appears.
+
+- The Resource Name list displays the name of the 
+resources on the server.
+- The ACLs list displays all ACL options available to the 
+account. It is compiled from both individual and group 
+account ACL lists.
+- The Account list displays all ACLs available to the 
+account through individual accounts.
+- The Groups list displays all ACLs available to the 
+account through group accounts. 
+
+4. Press Esc to exit each screen. 
+
+Editing an account
+==================
+Once you've created an account, you can change the 
+password, the access privileges, and even the username. 
+Alternatively you can edit the account by exporting it to 
+an account file, as described in the section,"Setting up a 
+central account server" earlier in this file.
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select 
+Individual Account Management or Wildcard Account 
+Management <Enter>.
+
+2. Select the desired account <Enter>. 
+
+3. Select the field that you want to change <Enter>. 
+
+- To change the username or description, select the Name 
+or Description field, press Enter, then type in the new 
+information.
+- To allow or disallow account modification, select 
+Account Modifications. Press Enter to toggle the setting 
+between Allowed and Disallowed.
+- To include the account within an ACL group, select ACL 
+Groups <Enter>. A list of any ACL groups to which this 
+account belongs appears. Press Ins. Select each desired 
+ACL group from the list <Enter>. 
+- To change the password for the account, select Password 
+<Enter>. You may then enter a new password <Enter>.
+- To disable account or password expiration dates, select 
+the Password Expiration or Account Expiration fields, 
+press Enter, then press Del. To change the expiration date 
+for either field, follow the directions on the screen for 
+setting either field.
+- To set the number of days before the user is requested 
+to change the account's password, select Renew Password 
+Every: <Enter>. Type in the number of days <Enter>.
+- To add or remove account privileges, select Privileges. 
+Type in the letter of the privilege you want to give or 
+remove <Enter>. 
+- To set the number of concurrent logins for this account, 
+select the Concurrent Logins field <Enter>. Type in the 
+desired value. 
+- To specify when this user can access the server, select 
+Login Hours. 
+
+4. Press Esc to exit each screen. The changes will take 
+effect when the user next logs in with this account.
+
+Managing an account with the NET program
+========================================
+LANtastic's NET program includes options that let users 
+manage their own accounts. While they can't create or 
+delete accounts, they can perform such functions as 
+checking the status of their accounts and checking their 
+privileges. They can also change their passwords or 
+disable their accounts. 
+
+Checking your account status
+============================
+1. At the DOS prompt, type NET. The NET Main Functions 
+screen appears.
+
+2. Select User Account Management <Enter>. 
+
+3. Select the server with your account <Enter>. 
+
+4. Select Show Account Status <Enter>. The User Account 
+Status screen appears.
+
+The User Account Status screen tells you:
+
+- Your username
+- The description of your account
+- The date you last logged in
+- The date (if any) your account expires 
+- The date (if any) your password expires
+- How often you must change your password
+- Your account privileges (if any)
+- The number of times you can simultaneously log in to the 
+server with the same username
+- The days of the week and hours of the day you can log in 
+to the server
+
+Changing your password
+======================
+To change your password using the steps in this section, 
+you must have an account with the Account Modifications 
+option enabled. Otherwise, you must use NET_MGR to change 
+your password as described under "Changing an account 
+password" earlier in this file.
+
+1. At the DOS prompt, type NET <Enter>. Select User 
+Account Management <Enter>. 
+
+2. Select the server with your account <Enter>. 
+
+3. Select Change Password, press Enter, then type in your 
+old password <Enter>. 
+
+4. Type in your new password, press Enter, then type in 
+your new password again to confirm it <Enter>. 
+
+5. Press Esc to exit each screen.
+
+Switching to a different username
+=================================
+LANtastic lets you log in to a server with a different 
+account without having to log out first. This allows you 
+to change to an account that has more privileges should 
+you need to perform special functions. 
+
+1. At the DOS prompt, type NET <Enter>. Select User 
+Account Management <Enter>. 
+
+2. Select the desired server <Enter>. 
+
+3. Select Switch to New Username, press Enter, then type 
+in the different username <Enter>. 
+
+4. Type in the password (if any) <Enter>. 
+
+5. You may be asked if you want to set your computer's 
+clock to match the time and date of the selected server. 
+Respond to the prompts, press Enter, then press Esc to 
+exit each screen.
+
+6. To make a username change permanent, you must edit the 
+NET USER or NET LOGIN commands in your STARTNET.BAT file.
+
+Disabling your account
+======================
+The NET program also allows you to disable an individual 
+account. To reactivate it, use the NET_MGR program on the 
+server to set the Concurrent Logins value for the account 
+to one or more. You can't use this option to disable a 
+wildcard account. If the account is allowed more than one 
+concurrent login, you must use NET_MGR to disable it. 
+
+1. At the DOS prompt, type NET <Enter>. Select User 
+Account Management <Enter>. 
+
+2. Select the server with the account you want to disable 
+<Enter>. 
+
+3. Select Disable Account, press Enter, then type in your 
+password <Enter>. 
+
+4. Press Esc to exit each screen. 
+
+Your account is now disabled, but you're not logged out of 
+the server.
+
+Related Topics
+==============
+Go to the file Shrres.txt to learn how to assign Access 
+Control List (ACL) rights to one or more individual 
+accounts, wildcard accounts, ACL groups or templates.
+
+Go to the file Cfgsrv.txt to learn how to configure your 
+server software settings.
+
+

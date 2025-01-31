@@ -1,0 +1,541 @@
+LANtastic 7.0 for DOS: Using Drives and Sharing Files
+=====================================================
+(c) 1996, Artisoft, Inc.
+------------------------
+
+This file covers the following main topics:
+
+Using an existing drive connection
+Making a new drive connection
+Canceling a drive connection
+Replacing drive connections
+Logging in to servers
+Logging out of servers
+Shutting down your server
+Canceling a server shutdown
+Making drive connections: an easy example
+
+------------------------------------------------------------ 
+Most of the instructions in this file use the LANtastic 
+NET program. To use LANtastic NET, type NET <Enter> at the 
+DOS prompt. 
+------------------------------------------------------------
+
+Using an existing drive connection
+==================================
+When you turn on your computer, LANtastic automatically 
+makes any drive connections that you set up when you 
+installed the software. If you want to use a file on 
+another computer, all you have to do is load an 
+application program and open the file.
+
+For example, in WordPerfect, you'd press Shift+F10, then 
+type the drive, directory and name of the file that you 
+want to open. It doesn't matter if it's on one of your own 
+drives or a drive on another computer - the commands are 
+the same. You can also run programs that are stored on 
+another person's disk drive. 
+
+If you like to work from the DOS prompt, you can issue DOS 
+commands such as DIR to the other person's drive exactly 
+as if it were your own. If you want to run programs off 
+another person's drive, simply type in the command to 
+execute the program. In DOS applications, the other 
+person's drive is listed with your drives when you select 
+a file to open. 
+
+1. If you'd like to see a list of drives that you're 
+currently connected to, complete this step. Otherwise, 
+skip to step 2.
+
+At the DOS prompt, type 
+
+NET SHOW <Enter>
+ 
+A list of other computers' drives and printers that you're 
+connected to appears on the screen. You'll also see a list 
+of available servers.
+
+To view the NET SHOW output one screen at a time, type 
+NET SHOW --MORE <Enter>
+
+(where the character before "MORE" is the DOS pipe symbol: 
+Shift+Backslash on your keyboard.) At the end of each 
+screen, press any key to view the next screen.
+
+Here's an abbreviated example of what will appear:
+
+Disk S: is connected to \\SUSAN\C-DRIVE
+Disk K: is connected to \\KEN\C-DRIVE
+Printer LPT1 is connected to \\DAN\@PRINTER
+
+In the example above, the S: drive has been connected to 
+the drive named C-DRIVE on the computer SUSAN. The K: 
+drive is connected to C-DRIVE on KEN, and the LPT1 printer 
+port is connected to @PRINTER on the computer named DAN. 
+
+Hint - You can also view a list of existing drive 
+connections by typing NET <Enter> at the DOS prompt. Then 
+from the NET Main Functions menu, select Connect to Other 
+Computers' Drives <Enter>. The Drive Connections to Other 
+Computers screen appears showing your own floppy and hard 
+drives and any drive connections that are already set up. 
+
+You now know which drives are already available to you. If 
+you'd like to add new drive connections, see the following 
+section. If you'd like to add new printer connections, 
+refer to "Making a new printer connection" in the file Print.txt.
+
+2. If you want to see a list of the files on another 
+computer's drive, use the DOS DIR command. For example, 
+
+K: <Enter> 
+DIR <Enter> 
+
+3. Issue a DOS command to view, edit or print a file, or 
+to run an application program. For example, 
+
+EDIT  K:\DOC\MEMO.TXT <Enter> 
+
+You can also copy a file from your own disk drive on to 
+the other computer's drive for file-sharing or backup. 
+
+Important - Some application programs aren't designed for 
+use in a computer-sharing environment. Check your program 
+manuals for more information.
+
+Making a new drive connection
+=============================
+This section tells you how to make a new drive connection 
+from the LANtastic NET Main Functions menu. 
+
+You can make temporary drive connections that will last 
+only until you turn off your computer. Or you can create 
+and save permanent connections that you'll be able to use 
+the next time you turn on your computer. The drive 
+connections you set up will be available to you whether 
+you're running in DOS or Windows.
+
+1. At the DOS prompt, type one of the following commands 
+to bring up the NET Main Functions menu.
+
+- If you want to make a temporary drive connection, type 
+NET <Enter>. When you do this, the connections you make 
+will last only until you turn off your computer. 
+
+- If you want to make a permanent drive connection, type 
+SETNET <Enter>. When you do this, the connections you 
+make will be saved in a batch file called CONNECT.BAT. 
+This file is called by your STARTNET.BAT file when you 
+restart your computer, making all the drive connections 
+you've set up automatically available.
+
+2. From the NET Main Functions menu, select Connect to 
+Other Computers' Drives <Enter>. The Drive 
+Connections to Other Computers screen appears.
+
+The Drive Connections to Other Computers screen shows your 
+own floppy and hard drives and the drive connections that 
+are already set up. It also lists the drive letters that 
+aren't already being used by one of your drives or 
+connected to another computer's drives. You can use any of 
+these available drive letters to connect to other drives. 
+The first of these drive letters is already selected. 
+
+3. If necessary, move the highlight bar to select the 
+drive letter on your computer that you want to connect to 
+a drive on another computer <Enter>. The Connect to 
+Computer screen appears. 
+
+Hint - Choose a drive letter that starts with the first 
+letter of the name of the computer you're connecting to. 
+This makes it easier to remember what drives you have 
+available. For example, you might want to connect your 
+J: drive to the hard drive on the computer named JOHN_H.
+
+4. From the Connect to Computer screen, move the highlight 
+bar to select the computer with the drive that you'd like 
+to use <Enter>. 
+
+If the computer you want isn't listed, press Ins and type 
+in its name <Enter>. (You'll have to use this method to 
+log into Novell NetWare servers and SMB-based servers such 
+as Windows for Workgroups.)
+
+5. You may be prompted to enter the username and password 
+that will allow you to log in to that computer. Type in 
+each item <Enter>. If the login is successful, you'll be 
+asked whether you want to set the time and date on your 
+computer to match the selected computer's clock. Respond 
+to the prompt <Enter>.
+
+A list of drives that this computer shares with other 
+computers appears. The Directory column lists the names 
+of these drives and directories. The Access Rights column 
+indicates the type of access you're allowed for each 
+drive. You're allowed full access to all shared drives 
+unless LANtastic security has been set up to prevent this. 
+(The Access Rights column doesn't appear when you're 
+connecting to NetWare or SMB drives.)
+
+Note - For information about the types of access that can 
+be set up in LANtastic, refer to the file Accts.txt.
+ 
+6. Select the drive you'd like to use <Enter>. You're 
+returned to the Drive Connections to Other Computers 
+screen. The new connection is highlighted.
+
+7. Press Esc from each screen to return to the DOS prompt.
+
+You may now start to use the shared drive just like one of 
+your own. For instructions see "Using an existing drive 
+connection" earlier in this file.
+
+Canceling a drive connection
+============================
+LANtastic allows you to easily cancel one or all of your 
+existing drive connections. 
+
+1. From the NET Main Functions menu, select Connect to 
+Other Computers' Drives <Enter>.
+
+2. If you want to cancel an individual drive connection, 
+select that connection and press Del. You'll be prompted 
+to confirm that you want to disconnect that drive <Enter>. 
+
+If you want to cancel all drive connections, press Del. 
+When you're prompted to specify the drive you want to 
+disconnect, type in the asterisk (*) wildcard character to 
+specify all drives <Enter>. 
+
+3. Press Esc from each screen to return to the DOS prompt. 
+
+Replacing drive connections
+===========================
+This section explains how to connect to another computer's 
+drive using a local drive letter that's already in use. 
+
+1. From the NET Main Functions menu, select Connect to 
+Other Computers' Drives <Enter>.
+
+2. Select the drive connection you want to replace 
+<Enter>. 
+
+3. You'll be prompted to confirm that you want to replace 
+that drive connection <Enter>. The Connect to Computer 
+screen appears. 
+
+4. You can now set up the new connection using that drive. 
+To do this, complete steps 4 - 7 in "Making a new drive 
+connection" earlier in this file. 
+
+Logging in to servers
+=====================
+If your network uses LANtastic's security features, you 
+may need to log in to a server before you can use its 
+drives and printers. Logging in is the process of 
+identifying yourself as a user with a pre-assigned 
+username and password. 
+
+This section explains how you can log in using the Connect 
+to Computer screen. It also provides instructions for 
+increasing the maximum number of computers you're allowed 
+to log in to at the same time. Finally, it includes 
+information on logging into servers running Novell NetWare 
+or SMB-based software, such as Windows for Workgroups, 
+Windows NT and IBM LAN Server. For information about the 
+types of access that can be set up in LANtastic, refer to 
+the file Accts.txt. 
+
+If you like to work from the DOS prompt, you can log in to 
+a computer using the NET LOGIN command. 
+
+Logging in using the LANtastic NET program 
+------------------------------------------
+You can make temporary logins that will last only until 
+you turn off your computer. Or you can establish 
+permanent logins that will automatically be set up the 
+next time you turn on your computer. 
+
+1. At the DOS prompt, type one of the following commands 
+to bring up the NET Main Functions menu. 
+
+- If you want to make a temporary login, type NET <Enter>. 
+When you do this, the connections you make will last only 
+until you turn off your computer. 
+- If you want to make a permanent login, type SETNET 
+<Enter>. When you do this, the logins you make will be 
+saved in a file called CONNECT.BAT. 
+
+2. Select Login or Logout <Enter>. The Connect To Computer 
+screen appears. The names of available servers appear in 
+parentheses. If you're already logged in to any servers, 
+their names are preceded by double backslashes (\\). 
+
+3. To log in to any server on the list, select the 
+server's name <Enter>. 
+
+To log in to a server that doesn't appear on the list, 
+press Ins and type the name of the server <Enter>. (You'll 
+have to use this method to log into Novell NetWare 
+SMB-based servers such as Windows for Workgroups.)
+
+4. You may be prompted to enter the username and password 
+that will allow you to log in to that computer. Type in 
+each item <Enter>. If the login is successful, you'll be 
+asked whether you want to set the time and date on your 
+computer to match the selected computer's clock. Respond 
+to the prompt <Enter>.
+
+The name of the computer that you've logged in to has 
+double backslashes (\\) before its name on the Connect To 
+Computer menu. You may now connect to this computer's disk 
+drives and printers.
+
+5. Press Esc from each screen to return to the DOS prompt. 
+
+Note - Servers won't appear in the available servers list 
+if they're not set up to broadcast their names on the 
+network. If the Send Server ID option has been disabled in 
+the Security Configuration screen of the Server Startup 
+Parameters display, you'll need to know the server's name 
+before you can log in to it. This option is described in 
+the file Cfgsrv.txt. NetWare and SMB servers won't appear 
+in the list at all.
+
+Specifying the number of servers you can log in to
+--------------------------------------------------
+When LANtastic is installed, your computer is 
+automatically set up so you can log in to up to 10 other 
+network servers at the same time. If you know that you'll 
+regularly need to log in to more than 10 computers, you 
+can edit your STARTNET.CFG file to increase the 
+LOGINS= setting. LANtastic allows connections to as many 
+as 255 computers. 
+
+Even if you'll never need to log in to more than 10 
+servers at a time, you may still want to increase this 
+setting. Doing so can make logging in easier because the 
+LOGINS= setting also dictates the number of computers 
+that appear on the list of available servers when you're 
+logging in through the LANtastic NET program. If you're 
+part of a network of 30 computers, for example, you might 
+want to increase the setting to 30 so that all servers 
+will be listed. This saves your having to remember the 
+name of an unlisted server in order to type it in at the 
+top of the Connect To Computer screen. 
+
+To change the LOGINS= setting:
+
+1. Use a text editor such as DOS EDIT to edit the 
+STARTNET.CFG file. This file is located in the directory 
+in which you installed LANtastic (usually C:\LANTASTI).
+
+Under the REDIR section of the STARTNET.CFG file, change 
+the LOGINS=10 value to the number of servers you want to 
+be able to log in to or see on the network. For example, 
+LOGINS=25. 
+
+2. Save your changes and exit the text editor.
+
+Note - Servers won't appear in the Connect To Computer 
+list if they're not set up to broadcast their names on the 
+network. If the Send Server ID option has been disabled in 
+the Security Configuration screen of the Server Startup 
+Parameters display, you'll need to know the server's name 
+before you can log in to it. This option is described in 
+the file Cfgsrv.txt. NetWare and SMB servers won't appear 
+in the list at all.
+
+Logging out of servers
+======================
+If you receive a message that a server is about to shut 
+down, you may want to log out to avoid loss of data or 
+other problems. Logging out of a server cancels any 
+current drive and printer connections. You can use the 
+asterisk (*) wildcard character to log out of a group of 
+servers. 
+
+This section explains how to log out of a computer from 
+the LANtastic NET program or from the DOS command line.
+
+Logging out using the LANtastic NET program 
+-------------------------------------------
+The steps in this section show you how to log out using 
+the NET Login or Logout option. 
+
+1. From the NET Main Functions menu, select Login or 
+Logout <Enter>. The Connect To Computer screen appears. 
+The names of the servers you're logged in to are preceded 
+by double backslashes (\\). 
+
+2. If you want to log out of one server, select that 
+server, then press Del. When you're prompted to specify 
+the computer you want to log out of, the name of the 
+server you selected appears automatically <Enter>. 
+
+If you want to log out of a group of servers, press Del. 
+When you're prompted to specify the computer you want to 
+log out of, use an asterisk to specify that group of 
+servers. For example, you might type ACCTS_* at the prompt 
+to log out of all servers in the Accounts Department <Enter>. 
+
+Logging out from the DOS prompt
+-------------------------------
+To log out from the DOS prompt, type NET  LOGOUT 
+computername <Enter> where computername is the computer 
+you want to log out of. 
+
+You can use the asterisk (*) wildcard character to log out 
+of a group of computers. This is handy, for example, if 
+your network computer names have been set up to identify 
+individual departments or groups of workers in your 
+company. For example, the computers in your sales 
+department might be set up as SALES1, SALES2, SALES3, 
+SALES4 and so on. Then you could type NET  LOGOUT  SALES* 
+<Enter> to log out of all the sales department's computers 
+in one operation. 
+
+Shutting down your server
+=========================
+If your computer is set up to share drives and printers, 
+it's a good idea to follow the guidelines in this section 
+before shutting down your computer. If other people are 
+using files on your computer and you shut it down without 
+warning, they may lose any work they haven't saved. 
+
+Note : If you have the S (System Manager) privilege, you 
+can also shut down another server from your computer. To 
+do this, refer to the file Mngsrv.txt.
+
+1. At the DOS prompt, press Ctrl+Alt+Del. The Server 
+Shutdown screen appears.
+
+2. Check the Open Network Files field in the Server 
+Shutdown screen:
+
+- If it shows zero files open, press S for Shutdown. Wait 
+for the notification that shutdown is complete, then turn 
+off your computer.
+
+If it shows one or more files open, check with your 
+colleagues to see if they want you to keep your computer 
+on until they've finished using your drive. Refer to 
+the following shutdown guidelines. 
+
+If you want to schedule your server to shut down in 
+advance, and you have the S (System Manager) privilege, 
+you can use the NET SHUTDOWN command. You can specify the 
+number of minutes before the shutdown and the message that 
+people who are logged in to your computer will receive. To 
+schedule your server to shut down in advance, at the DOS 
+prompt type NET  SHUTDOWN  \\servername # <Enter> where 
+servername is the name of the server you want to shut down 
+and "#" is the number of minutes you want to schedule 
+before the shutdown. 
+
+Before you do this, follow these guidelines to ensure that 
+people who may be using your computer's drives don't lose 
+important data:
+
+- Make sure the Error Notification feature is enabled on 
+your computer, as described in "Options in the Detailed 
+Information screen" in the file Shrres.txt. That way after 
+you schedule a shutdown as described above, a message 
+notifies all people who are logged in to it about the 
+shutdown.
+
+- Make sure other people's computers are set up to display 
+pop-up messages. LANtastic's NET MESSAGE command 
+can be used to enable the display of warning messages, as 
+described in the Mngsrv.txt file.
+
+- If you see that your printer or plotter is busy, check 
+with your colleagues before scheduling a shutdown. If 
+someone is sending a job to your printer, they'll want 
+you to keep your computer turned on until the job is done.
+
+After you shut down your server, a pop-up message notifies 
+all users who are logged in to that server. 
+
+Note: For more help about shutting down your server, type 
+NET HELP SHUTDOWN at the DOS prompt.
+
+Canceling a server shutdown
+===========================
+If you've scheduled a server shutdown, you can cancel that 
+shutdown before the scheduled shutdown time arrives. 
+
+1. From the LANtastic NET Main Functions screen, choose 
+Monitor & Manage Server Activity. The Connect to Computer 
+screen appears.
+
+2. Select the server whose shutdown you want to cancel 
+<Enter>.
+
+3. At the active Users screen, press F2 to bring up the 
+Server Control Options screen.
+
+4. Select Cancel Server Shutdown <Enter>. The server 
+shutdown is now cancelled.
+
+Making drive connections: an easy example
+=========================================
+The following is an example of how to connect to a 
+server's C: drive and open and edit a file from the drive. 
+
+Suppose you're working on a computer named SERVER1. You 
+want to use the DOS EDIT program (located on your own hard 
+drive) to edit a file called NEWS.TXT. The file, however, 
+is located in the C:\DOCS directory on a server named 
+SALLYS_PC. Because a connection to Sally's drive wasn't 
+set up during software installation, you're going to have 
+to make one now.
+
+1. From the NET Main Functions menu, select Connect to 
+Other Computers' Drives <Enter>.
+
+2. Select your S: drive in the Drive Connections to Other 
+Computers menu <Enter>. 
+
+3. Select SALLYS_PC from the list of available computers 
+<Enter>. 
+
+4. If SALLYS_PC isn't on the list, press Ins and type in 
+the name SALLYS_PC <Enter>.
+
+5. You may be prompted to enter the username and password 
+that will allow you to log in to SALLYS_PC. Type in each 
+item <Enter>. If the login is successful, you'll be asked 
+whether you want to set the time and date on your computer 
+to match the selected computer's clock. Respond to the prompt <Enter>.
+
+6. Select the C-DRIVE from the list of drives, as in the 
+example <Enter>. 
+
+The Drive Connections to Other Computers menu appears 
+again, with the new connection highlighted.
+
+Now you're ready to open the NEWS.TXT file and work with 
+it using EDIT. Press Esc to return to the DOS prompt. 
+
+7. From the DOS prompt, type:
+
+EDIT  S:\DOCS\NEWS.TXT <Enter>
+
+EDIT opens the file and displays it for you.
+
+8. Edit the file.
+
+To exit the EDIT program:
+
+- Press Alt+F or choose File with a mouse.
+- Press X or choose Exit with a mouse. You're returned to 
+the DOS prompt.
+
+Related Topics
+==============
+
+To set up and use printer connections refer to the file Print.txt.
+
+

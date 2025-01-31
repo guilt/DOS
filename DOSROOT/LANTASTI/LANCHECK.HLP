@@ -1,0 +1,207 @@
+$Revision:   1.10  $
+`MW Main Help
+ |A# (Adapter Number)
+  If you have more than one adapter installed in your computer, this field
+  lets you determine to which adapter the statistics on the LANCHECK screen
+  apply.  By default the first adapter in your computer is adapter number
+  zero.  The network adapter number is specified on the LANBIOS, LANBIOS2,
+  LANBIOS3 or AI-LANBIOS command line with the ADAPTER= switch.
+ |NAME (Node Name)
+  The name typed when LANCHECK was started.  If no name is specified,
+  LANCHECK uses the name specified on the REDIR command line.  The node
+  name is not case sensitive, so joe and JOE are the same node name.
+ |NODE NUMBER
+  The unique number assigned to an adapter.  Node numbers on Ethernet
+  adapters are hard-coded and cannot be changed.  If you are using Artisoft
+  2Mbps, E2Mbps or A2Mbps adapters, make sure each adapter has a unique
+  node number.
+ |MINUTES RUNNING
+  The number of minutes the node has been active.
+ |STATUS
+  This is the most important parameter in determining whether your PCs
+  can communicate.  The possible status entries are:
+    active     -  A remote adapter that is actively sending packets.
+    local      -  A local adapter that is actively sending and receiving
+                  packets
+    *waiting*  -  A local adapter that is actively sending packets but
+                  has not received any packets from any other machine.
+                  It is normal for the status to periodically change to
+                  *waiting*.
+    *inactive* -  A machine that was running LANCHECK but is no longer
+                  doing so.
+
+  The following examples illustrate possible LANCHECK results and their
+  interpretations.
+
+  Situation 1:
+       MACHINE A                                MACHINE B
+  A#   NAME ...   STATUS                   A#   NAME ...   STATUS
+  컴컴컴컴컴컴컴컴컴컴컴컴                 컴컴컴컴컴컴컴컴컴컴컴컴
+   0   A          local                     0   B          local 
+   0   B          active                    0   A          active
+
+  Interpretation 1: Machine A and B are communicating properly.
+
+  Situation 2:
+       MACHINE A                                MACHINE B
+  A#   NAME ...   STATUS                   A#   NAME ...   STATUS
+  컴컴컴컴컴컴컴컴컴컴컴컴                 컴컴컴컴컴컴컴컴컴컴컴컴
+   0   A         *waiting*                  0   B          local 
+                                            0   A          active     
+
+  Interpretation 2: Machine A is sending packets but not receiving any.
+                    This is most likely because of an IRQ conflict or
+                    because the IRQ you have set for the hardware does
+                    not match the IRQ you have set for the software
+                    (driver).
+        
+  Situation 3:
+       MACHINE A                                MACHINE B
+  A#   NAME ...   STATUS                   A#   NAME ...   STATUS
+  컴컴컴컴컴컴컴컴컴컴컴컴                 컴컴컴컴컴컴컴컴컴컴컴컴
+   0   A         *waiting*                  0   B         *waiting*
+
+  Interpretation 3: Machines A and B are sending packets but not receiving
+                    any, most likely because of a cable problem.  Check
+                    that the cable is connected properly to both machines
+                    and is in working order.  If this does not solve the
+                    problem, check both machines for the problem described
+                    in Situation 2 above.
+        
+ |ERROR-INDEX
+  A percentage calculated by adding the CRC errors, alignment errors and
+  bad transmissions, then dividing this total by the number of successful
+  transmissions and receives.
+
+  This percentage is only a general indicator of the state of your node.
+  It should only be compared with other nodes that are using the same
+  hardware and software, and have been running for approximately the same
+  length of time.
+
+  The percentage shown in parentheses is the highest error index
+  reported by this node during the present session.
+
+  You can get a more detailed status report by highlighting an entry on the
+  LANCHECK screen and pressing Enter, or by pressing the Ins key and typing
+  the name of the node for which you would like a status report.
+`SH Status Help
+ The name of the node you are getting the status report from is
+ displayed at the top of the window.
+
+ |Adapter Number
+  If you have more than one adapter installed in your computer, this field
+  lets you determine to which adapter the statistics on the LANCHECK screen
+  apply.  By default the first adapter in your computer is adapter number
+  zero.
+ |Node Number
+  The unique number assigned to an adapter.  Node numbers on Ethernet
+  adapters are hard-coded and cannot be changed.  If you are using Artisoft
+  2Mbps, E2Mbps or A2Mbps adapters, make sure each adapter has a unique
+  node number.
+ |Software Version
+  The version number of the NETBIOS software running on this PC.
+
+                    |TRAFFIC AND ERROR STATISTICS
+ |Minutes Running
+  The number of minutes the NETBIOS has been running.
+ |CRC Errors
+  A hardware-generated error associated with corruption of data as it
+  passes through the network.
+ |Alignment Errors
+  A hardware-generated error associated with misalignment of data as
+  it is received.
+ |Collisions
+  The number of times two or more adapters have attempted to access the
+  network simultaneously.
+ |Bad Transmissions
+  The number of unsuccessful transmissions.
+ |Good Transmissions
+  The number of successful transmissions.
+ |Good Receives
+  The number of successful receives.
+ |Retransmissions
+  The number of times a retransmission was necessary due to an error.
+ |Resource Exhaust
+  The number of times the PC could not receive a packet because there were
+  no buffers available to receive the data.
+
+                        |ADAPTER RESOURCE STATISTICS
+ |NCBs Available
+  The number of available network control blocks (NCBs).
+ |NCBs Allocated
+  The number of NCBs allocated for the adapter by the Reset command.
+ |Max NCBs Possible
+  The maximum number of NCBs the adapter can support.
+ |Active Sessions
+  The number of active sessions.
+ |Sessions Allocated
+  The maximum number of sessions supported by the adapter as configured
+  by the Reset command.
+ |Sessions Possible
+  The maximum number of sessions the adapter can support.
+ |Max Packet Size
+  The maximum size of a session data packet.
+ |Number of Names
+  The number of names present on the local NETBIOS name table.
+ |Last Packet Received
+  The time, according to this machine, the last packet was received.
+ |Last Packet Sent
+  The time, according to the sending machine, the last packet was sent.
+
+`AW Select Adapter Help
+ If you have multiple adapters installed on your system, you will need to
+ specify which adapter to use to find the requested node name.
+`NS Enter the Node Name Help
+ Enter the node name of the adapter for which you would like a status
+ report.  The NETBIOS is case sensitive so you MUST enter the node name
+ exactly as it appears in the main window.  You can request an adapter
+ status report on any node running the NETBIOS if you know its node name.
+ Because you cannot enter ASCII zeros, you may be unable to access some
+ nodes.
+`CE Critical Error Help
+ |Retry the Network, Disk or Device operation
+  Selecting this option will attempt the operation again.  First, check
+  whether a floppy disk drive door is open, or if some other minor problem
+  caused the error.  If so, correct the problem and select this option.
+~01 |Fail the Network, Disk or Device operation
+  Selecting this option will cancel the operation in progress and return to
+  the last window.  You should then correct any problems or type ESC to
+  exit the window.
+~02 |Ignore the error, continue with program
+  If you select this option, the program will continue as though nothing
+  happened.  NOTE: the operation will NOT be properly completed and may
+  lead to future errors.  In most cases, you should NOT select this option.
+~03 |Abort the program and return to DOS immediately
+  Will exit the program immediately.
+`ST Refresh Rate Help
+ By default, LANCHECK updates the statistics screens every five seconds.
+ You can change the update rate from 0 to 3600 seconds.  Note that
+ LANCHECK will update the screen every time it receives a node number that
+ is new to its list.  When LANCHECK performs an update, it also broadcasts
+ your unique name and node number across the network.  Setting a faster
+ refresh rate will generate more network traffic.
+ To enable the SCREEN_SAVER switch you must have a refresh rate greater
+ than two minutes.
+`OW File Exists Help
+ |Overwrite existing file
+  Open file, truncating its length to zero.  All existing data in that
+  file will be lost.
+~01 |Append data to existing file
+  Add new data to the end of an existing file.
+~02 |Cancel Operation
+  Cancel the "to file" operation.  Equivalent to pressing the ESC key.
+`DP Enter Pathname for LANCHECK Datafile Help
+ Enter a complete pathname of the file where you want to put the
+ LANCHECK data.  This must be a valid DOS path.  A drive letter is
+ optional.
+`LT Type of Output Help
+|Short List
+  A short output list will show the data from the short list in the
+  same format used by the main screen.
+~01 |Long List
+  A long list will show the status of every node listed in the short
+  list.  The format will be the same as that used in the status screen.
+
+`ZZ THIS MUST BE THE LAST LINE IN THE HELP FILE
+
+
