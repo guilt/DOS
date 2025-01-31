@@ -1,0 +1,1951 @@
+$Revision:   1.83  $
+`MA  Main Functions - LANtastic (R) NET Connection Manager
+ |Connect to Other Computers' Drives
+ This option allows you to set up a new drive connection or remove an
+ existing connection. When you've set up the connections you need, you'll
+ be able to use these drives as easily as you use the drives on your own
+ computer. For example, you'll be able to view edit or print files stored
+ on those drives as if those files were stored on your computer.
+
+~01 |Connect to Other Computers' Printers
+ This option allows you to set up a new printer connection or remove an
+ existing connection. When you've set up the connections you need, you'll
+ be able to send your print jobs to these printers in the same way you'd
+ send them to a printer attached directly to your own computer.
+
+ You can send print jobs to any printer that has been set up to be shared.
+ However, don't forget to check that your word processor or other
+ application is set up to use the printer to which you want to send your
+ print jobs.
+
+~02 |Permanent Connections Management
+ This option allows you to set up and remove printer and drive connections, 
+ make your current connections permanent and enable or disable the display 
+ of the Permanent Connections Management screen each time you reboot your 
+ computer.
+
+~03 |View Print Jobs
+ This option allows you to view the status of any print jobs that you've
+ sent to printers on your network. If you want, you can also check the
+ status of print jobs sent by other people.
+
+ When you or anyone else send a print job to a printer that's attached to
+ another computer, the job is sent first to a temporary storage location
+ on that computer. All the jobs are stored there in a queue of print jobs
+ until they can be sent to the printer. Note that each job is automatically
+ deleted from the queue when it has finished printing.
+
+ If you have the Q privilege, you can control all jobs in the queue. For
+ example, you can change the order in which jobs are printed, view
+ detailed information about each job, remove a job from the queue, put a
+ job on hold and give a job priority status so it's printed before other
+ less important jobs.
+
+~04 |Send and Receive Mail
+ This option allows you to compose and send electronic mail messages and
+ check for mail messages sent to you. You can compose and send messages,
+ and read messages sent to you at a computer that's been set up as a post
+ office.
+
+ To check on your messages or to send a message, you'll need to know the
+ name of the post office computer to which you must connect. If your user
+ account has the |M| (Super |M|ail) privilege, you can control any item in
+ the mail queue.
+
+~05 |Chat With Another User
+ This option allows you to establish a real-time text dialog with another
+ person on the network. If you have an Artisoft Sounding Board installed,
+ you can also hold a real-time voice dialog with another person on the
+ network.
+
+~06 |Login or Logout
+ This option allows you to log in and out of one or more servers at a
+ time.
+
+ You'll also use screens for logging in and out of servers when you want
+ to make new drive and printer connections, connect to a network post
+ office computer to use LANtastic Mail, or view print jobs in a queue on a
+ particular server.
+
+~07 |User Account Management
+ This option allows you to change your password on a server, disable your
+ account or check the access rights and privileges of your account.
+
+~08 |Monitor & Manage Network Activity
+ This option allows you to watch the activity of a select group of
+ computers. You can also synchronize the clocks on a select list of
+ servers.
+
+~09 |Monitor & Manage Server Activity
+ This option allows you to see who is logged in to a server and monitor
+ work on that server. You can also view a remote server's screen, issue
+ commands to be executed by the server and control server functions.
+
+ For example, you can schedule the server to shut down after a specified
+ delay or control who's allowed to use the server. If the server is set up
+ for remote control, you can use your keyboard to type in commands you
+ want carried out by the server just as if you were typing the commands
+ directly on the server's keyboard.
+
+`MA Don't display on-line manuals for now... 
+~0B |Display On-line Manuals
+ This option displays the on-line Bookshelf, which contains detailed
+ information on using your LANtastic network. You can search for
+ information about a word or phrase, and follow up with information
+ on related topics by selecting the |hypertext links| (highlighted words)
+ in the manual text. A table of contents and index are also provided, and
+ you can print selected manual pages. Note that this option won't appear
+ in the Main Function screen if you didn't install the on-line Bookshelf
+ when you installed LANtastic.
+
+`ZD  Color Schemes
+ This screen allows you to specify the colors in which your LANtastic
+ screens are displayed. The default color scheme is Classic. If you want
+ to change to another color scheme, use the arrow keys to highlight the
+ one you want to use, then press |Enter|.
+
+`DC  Drive Connections to Other Computers
+ This screen allows you to set up connections to drives on other computers
+ and to cancel existing drive connections. When you've set up all the
+ connections you need, you can use these drives as if they were drives on
+ your own computer.
+
+ Note that if you want to set up a connection to check LANtastic Mail
+ messages or to send a mail message, you'll need to know the name of the
+ post office computer you want to use.
+
+ |Making a Drive Connection|
+ Use the arrow keys to select a drive letter that's listed on the screen
+ as |<<Available>>|. Press |Enter|. You then specify to which computer
+ you want to connect and select the drive you want to use on that
+ computer. When you've done this, the connection you've set up appears
+ alongside the drive letter on the computer that you selected. Press |Esc|
+ twice to exit to DOS or to the application you want to use to begin
+ working. Then, as an example, if you specified the F: drive, you'd go to
+ your F: drive and begin working just as if you were working on a drive on
+ your computer.
+
+ |Breaking an Existing Drive Connection|
+ To remove an existing drive connection, use the arrow keys to select the
+ connection, then press |Del|. Then press |Enter| to confirm that you want
+ to delete the specified connection.
+
+`QQ  Printer Connections to Other Computers
+ This screen allows you to specify the printer port on your computer that
+ you want to connect to a printer on another computer. You can also use
+ this screen to remove existing printer connections.
+
+ You'll have to specify this printer port from within your applications
+ when you want to print files. When you've set up all the connections,
+ you'll be able to use these printers just as if they were attached
+ directly to your computer.
+
+ |Making a Printer Connection|
+ Use the arrow keys to select a printer port that's listed on the screen
+ as |<<Available>>|. For example, you might choose the LPT1 printer port.
+ Press |Enter|.
+
+ You must then specify to which computer you want to connect and select
+ the printer on that computer where you want to print your files. When
+ you've done this, the connection you've set up appears alongside the
+ printer port you selected on your computer. If as an example, you'd
+ selected the LPT1 printer port, your print command would specify the LPT1
+ port. Press |Esc| twice to exit to DOS or to the application you want to
+ use to print your files.
+
+ |Breaking an Existing Printer Connection|
+ To cancel an existing printer connection, use the arrow keys to select
+ the connection, then press |Del|.
+
+`AC  User Account Management
+ This screen allows you to use the following options to modify the account
+ you used to log into this computer:
+
+~00 |Show Account Status
+ Displays the status of your account including the date your account
+ expires, the date you last logged in, the maximum concurrent log-ins
+ you're allowed and the times of day when you're allowed to log in.
+
+~01 |Switch to New Username
+ Effectively logs you into the computer under a new username. All your
+ drive and printer connections remain in effect, but you take on all the
+ restrictions and privileges of the new account.
+
+~02 |Change Password
+ When this option is selected you're prompted to enter your existing
+ password. Then you're prompted to type in the new password you want to
+ use. |Note| that you must remember the new password. Once you've entered
+ a password, there's no way to find out what you typed.
+
+~03 |Disable Account
+ Use this option to prevent further log-ins to this account. |Note| that
+ this account can be restored only by using the NET_MGR program.
+
+`LI  Connect to Computer
+ This screen allows you to specify the computer to which you want to
+ connect. If the computer for which you're looking isn't listed, press the
+ |Ins| key, type in the name of the computer to which you want to connect
+ and press |Enter|.
+
+ Computers to which you're already connected appear at the top of the list
+ and have two backslashes ("\\") before the computer name. Computers to
+ which you're not connected appear in parentheses.
+
+ Only those servers with Send Server ID enabled will be on this list.
+
+ An A# in the title block of the window and numbers appearing on the
+ right side of the list indicate you have multiple adapters in your
+ computer. You'll receive server IDs from each network to which you are
+ connected. It's possible to have computers with the same name, but with
+ different adapter numbers, appearing on the list.
+
+ You can set up a default username and password by pressing |F2| and
+ answering the questions. When defaults are present, they'll automatically
+ be used for all subsequent log-ins, unless they're not valid for that
+ server. When REDIR is first started, the default username is the same as
+ your machine name with no password. To disable default log-ins, set the
+ username to blank.
+
+ You must log in to a server before you are able to use its shared drives
+ and printers. To do this, you must have a valid username and password on
+ the server.
+
+ To log in, select a server from the list and press |Enter| or press the
+ |Ins| key and enter the information requested. If you have a valid
+ default username and password set, you're logged in using the defaults;
+ otherwise, you're prompted for a valid username and password.
+
+ After you've successfully logged in, you're asked if you want to set the
+ clock in your computer to the server's clock. This is handy for those
+ networks that don't have a clock with a battery backup, or if you want
+ all workstations to synchronize their clocks.
+
+ Logging out breaks all connections with a server. To log out, use the
+ arrow keys to move the highlight bar to the appropriate server, then
+ press the |Del| key.
+
+`SD  Information About Drives That Are Available for Sharing
+ You've already selected the drive on your computer that you want to use
+ to set up a new drive connection. This screen shows you all the drives
+ and directories that are set up to be shared on the computer to which you
+ want to connect. Use the arrow keys to highlight the drive or directory
+ to which you want to connect, then press |Enter|.
+
+ This screen shows the following information:
+   1. The name of each shared drive or directory.
+   2. The access you have to each shared drive or directory. Each letter
+      corresponds to an access control list (ACL) privilege.
+   3. A description of each shared drive or directory (if a description was
+      entered when the drive or directory was set up for sharing).
+ If you select the "." entry, the drive connection will be made to the
+ server's current control directory. To use files on that server you can
+ then use the DOS Change Directory command (CD) to move into subdirectories
+ on the server as you would on your own computer.
+
+`SP  Information About Printers or Other Devices Available for Sharing
+ You've already selected the printer or other device on your computer that
+ you want to use. This screen shows you all the printers or other devices
+ that are set up to be shared on the computer to which you want to
+ connect. Use the arrow keys to highlight the printer/device to which you
+ want to connect, then press |Enter|.
+
+ This screen shows the following information:
+   1. The name of each shared printer/device.
+   2. The access you have to each shared printer/device. Each letter
+      corresponds to an access control list (ACL) privilege.
+   3. A description of each shared printer/device (if a description was
+      entered when the printer/device was set up for sharing).
+
+ When you copy a file to the server's @DEVICE it's automatically placed in
+ the queue and then sent to the printer. For example,
+ COPY PFILE \\MAIN-AT\@PRINTER
+ COPY PFILE LPT1
+ If LPT1 had been redirected to \\MAIN-AT\@PRINTER, both of the commands
+ above would perform the same function. The commands would send the file
+ called PFILE to the remote printer on the server named MAIN-AT.
+
+`SX  Information About Drives That Are Available for Sharing
+ You've already selected the drive on your computer that you want to use
+ to set up a new drive connection. This screen shows you all the drives
+ and directories that are set up to be shared on the computer to which you
+ want to connect. Use the arrow keys to highlight the drive or directory
+ to which you want to connect, then press |Enter|.
+
+ This screen shows the following information:
+   1. The name of each shared drive or directory.
+   2. A description of each shared drive or directory (if a description was
+      entered when the drive or directory was set up for sharing).
+ Access control information isn't available on this server's drives.
+
+`SZ  Information About Printers or Other Devices Available for Sharing
+ You've already selected the printer on your computer that you want to
+ use. This screen shows you all the printers that are set up to be shared
+ on the computer to which you want to connect. Use the arrow keys to
+ highlight the printer/device to which you want to connect, then press
+ |Enter|.
+
+ This screen shows the following information:
+   1. The name of each shared printer/device.
+   2. A description of each shared printer/device (if a description was
+      entered when the printer/device was set up for sharing).
+ Access control information isn't available on this server's printers.
+
+`QM  Print Jobs Management Screen
+ This screen allows you to view print jobs that have been sent to be
+ printed by a printer attached to this computer.
+
+ If you're using a LANtastic server and have the Q (Super Queue) privilege,
+ or you're using another type of server, you can use the |F3| key to go
+ to the Print Job View Options screen and specify whether you want to view
+ only your print jobs or all print jobs sent to this computer. You can also
+ specify the type of information you want displayed.
+
+ When you send print jobs to a network printer, LANtastic prints each job,
+ one at a time, until the queue of pending jobs is empty or it has been
+ paused or halted by a network manager. To control a queue entry, use the
+ arrow keys to select the item and press |Enter|.
+
+ The status of each print job in the queue will be one of the following:
+
+ PRINTING    This job is currently being printed.
+ IMMEDIATE   The printer has been set for immediate printing and has
+             begun to print the job even though not all the data has been
+             sent to the print job queue.  |IMMEDIATE| isn't available
+             for jobs on non-LANtastic computers.
+ WAITING     This job is waiting to be printed. Print jobs remain in the
+             queue until the printer is available.
+ HELD        This job has been put on hold and won't be printed until it's
+             released.
+ DELETING    This job is being deleted. A job is marked as deleted only if
+             it was deleted while in the process of being printed. It
+             will remain in deleted status until a |*CANCELED*| message is
+             printed.
+ *RUSH*      This job has been given priority status by a user with the Q
+             privilege. It will be printed before other less important
+             jobs.  |*RUSH*| isn't available for jobs on non-LANtastic
+             computers.
+
+ You can change the status of a print job by using the arrow keys to
+ select the job. Then press |Enter|. You'll see a list of options for
+ changing the status of the queue entry.
+
+ To control specific printers (LPT1, COM1, etc.), use the |F7| key to view
+ the Device Status screen.  This option isn't available when connected to
+ a computer that isn't running LANtastic.
+
+ If you have the Q privilege and want to control which printer devices are
+ active, use the |F8| key to go to the Logical Streams screen. This option
+ isn't available when connected to a computer that isn't running LANtastic.
+
+`QD  Detailed Print Job Information
+ This screen gives detailed information about the print job you selected:
+
+ |Sequence Number| - A unique number for each print job. Jobs with the
+                   lowest sequence number are printed first.
+ |Comment|         - Comment attached by the person that created the job.
+ |Sent by|         - Identifies the person who created the job.
+ |Machine|         - Identifies the computer the person was using when the
+                   job was created.
+ |Destination|     - The printer where the job is to be printed.
+ |Spooled Time|    - Date/time when the job was created.
+ |Despool Time|    - Date/time when the job will begin printing. If no time
+                   was specified, N/A appears in this field.
+ |Size|            - The size of the print job (in bytes).
+ |Copies|          - The number of copies of the job that will be printed.
+ |Status|          - The current status of the job, specifically:
+      PRINTING     The job is currently being printed.
+      IMMEDIATE    The job is currently printing and spooling.
+      WAITING      The job is waiting to be printed.
+      HELD         The job has been held and can't be printed.
+      DELETING     The job is in the process of being deleted.
+      *RUSH*       This job is a priority job and will be printed next.
+ |Delete?|         - Whether or not the job will be deleted after
+                   being printed.
+
+
+`LS  Logical Streams Information
+ This screen shows the list of logical streams that you've set up.
+ Logical streams are a way of controlling which @devices the server is
+ allowed to despool. You can set up a logical stream to control an
+ individual printer or device. Or you can use wildcard characters--
+ asterisks ("*") and question marks ("?")--to set up a logical stream
+ to control a group of printers or devices.
+
+ Before a job is despooled, the server scans the list of streams to check
+ whether the stream controlling the intended printer or other device is
+ enabled or disabled. It scans the list starting with entry 0. If the
+ stream is enabled, the server despools the job. If the stream is disabled,
+ the server won't despool the job. Instead, the server will repeat this
+ process for the next job in the queue.
+
+ For example, if the logical stream list is
+
+        0: @NORMAL?.???  Enabled
+        1: @LABELS?.???  Disabled
+
+ all jobs sent to @NORMAL?.??? (such as @NORMAL1, @NORMAL2, and so on) would
+ be despooled. All jobs sent to @LABELS?.??? would not be despooled.
+
+ You could use streams to simplify changing printer paper. For example, if
+ @NORMAL?.??? jobs use 8 1/2 by 11 inch paper and @LABELS?.??? jobs use
+ label paper, you would disable the @NORMAL?.??? stream using the |F5|
+ key, switch the paper, then enable the @LABELS?.??? stream.
+
+ |Note| that enabling and disabling a stream has no effect on the job
+ currently being despooled. Before you disable a stream, make sure that all
+ current jobs are finished.
+
+`DS  Status of Printers and Other Devices
+ This screen allows you to control printers and other devices. Use the
+ arrow keys to select the printer or other device you want to control and
+ press |Enter|.
+
+ Each printer/device will be in one of the following states:
+
+ DISABLED       The printer/device is disabled.
+ MULTIPLE JOBS  Set up to despool more than one job.
+ HALT AT EOJ    Set up to despool one job and then stop (EOJ=End of Job).
+ PAUSED         The printer/device has been paused.
+
+ |Note| that the CPS column displays the rate of printing in characters per
+ second. If the CPS rate is 0, the printer isn't accepting any characters
+ or is off-line. If the text (NOT DESPOOLING) is displayed, no jobs are
+ available.
+
+`IQ  Creating a Print Job:
+~00 |Using the LANtastic Editor
+ Select this option if you want to use the text editor that's included
+ with LANtastic to compose a new print job.
+ ~01 |Using Your Text Editor
+ Select this option if you want to use your favorite text editor to edit
+ an existing file that you want to print.
+~02 |By Copying an Existing Text File
+ Select this option if you want to send an existing text file to be
+ printed.
+
+`CQ  Copy Text File to Queue
+ Enter a path to a DOS file name to be copied to the requested queue
+ resource.
+
+`QK  Enter the Pathname Where You Want to Copy the File
+ Allows you to specify the destination of the copy of the file you've
+ selected.
+
+`QC  Controlling the Selected Print Job
+ You can control any print job in the printer queue by using one of the
+ following options:
+~00 |Show
+ Displays additional information about the selected print job.
+~01 |Delete
+ Removes the selected print job from the queue. If the selected job is
+ currently being printed it will remain in the queue with a |DELETED| status
+ until a |*CANCELLED*| message is displayed.
+~02 |Hold
+ Suspends printing of the selected print job. The job is held in the
+ queue until you issue a |Release| option.
+~03 |Release
+ Releases a held print job for printing.
+~04 |View
+ Displays the first part of a print job. You can use this option to
+ determine the contents of a print job. Note that you can't view a print
+ job once it has begun printing.
+~05 |Copy
+ Copies a print job into a file. This option copies to files in binary mode
+ and to printers in ASCII mode. If you want to print your job in binary
+ mode, use the |Print| option. Note that you can't copy a print job once it
+ has begun printing.
+~06 |Print
+ Prints a print job in binary mode. If you want to print your job in ASCII
+ mode, use the |Copy| option. Note that you can't use this option once the
+ selected print job has begun printing.
+~07 |Rush
+ Gives a print job priority so that it's printed before others in the
+ queue. You must have Q privilege to use this option.
+
+`QS  Controlling the Selected Print Job
+ You can control any print job in this printer's queue by using one of the
+ following options:
+~00 |Show
+ Displays additional information about the selected print job.
+~01 |Delete
+ Removes the selected print job from the queue. If the selected job is
+ currently being printed it can't be deleted.
+~02 |Hold
+ Suspends printing of the selected print job. The job is held in the
+ queue until you issue a |Release| option. If the selected job is
+ currently being printed, it can't be Held.
+~03 |Release
+ Releases a held print job for printing. If the selected job isn't
+ held it can't be released.
+
+`ML  Mail Services
+ LANtastic stores the mail in an area of the server's disk. The sender
+ or the recipient can delete the mail item at any time.
+
+ If you have M privilege, you'll see all the mail stored in the mail
+ queue, otherwise you'll see only the items you have sent or received.
+
+`VW  Selecting Voice or Text Mail
+ An Artisoft Sounding Board has been detected. You may send a DOS file
+ or create a text message with the mail editor, or you may record a voice
+ message.
+
+`VV  Recording a Voice Mail Message
+ This screen allows you to record a voice mail message to be sent to
+ another user. You must have an Artisoft Sounding Board installed in
+ your computer to record a message. This screen shows the length of the
+ message in minutes and seconds and the size of the message in bytes. It
+ also shows the current record mode and whether compression is enabled.
+ You can use the following function keys to help record your message:
+
+ |Space|  Toggles between PAUSED and RECORD modes. Since the mode is
+        initially PAUSED, you must press this key to begin recording.
+ |Del|    Clears any message recorded so far, so you may start over.
+ |Esc|    Deletes any message recorded so far, and returns to the previous
+        screen. No mail entry is created.
+ |Enter|  Terminates recording, saves the new mail entry, sends the message,
+        and returns you to the previous screen.
+ |F2|     Allows you to toggle between uncompressed and compressed voice
+        data storage. You can only enable compression at the beginning of
+        a recording, since it applies to the whole message. Uncompressed
+        voice data is stored at 8000 bytes per second. Compressed voice
+        data is stored at 4000 bytes per second with a slight reduction in
+        sound quality.
+`VR  Playing a Voice Mail Message
+ This screen allows you to listen to voice messages if you have an
+ Artisoft Sounding Board. The display shows the length of the message
+ in minutes and seconds and the size of the message in bytes. It also
+ shows the how much of the message has been played and whether or not the
+ message was recorded with compression enabled.
+ You can use the following function keys to help you play the message:
+ |Space|  Toggles between PAUSED and PLAY modes. By default the mode is
+        PAUSED, so you must press the spacebar to hear the message.
+ |Esc|    Terminates playback and returns you to the previous screen.
+ |Home|   Rewinds the message to the beginning.
+ ||      Advances the message by two seconds.
+ ||      Backs up (rewinds) the message by two seconds.
+ ||      Advances the message by one small increment on the visual scale.
+ ||      Backs up the message by one small increment on the visual scale.
+ |PgDn|   Advances the message by one large increment on the visual scale.
+ |PgUp|   Backs up the message by one large increment on the visual scale.
+
+`RD  Reading a Queue Entry
+ When you're viewing a queue entry, you're allowed to see only the first
+ 4K of the file on the screen. If you need to see more, save the file to
+ another file and then look at it with a word processor or a file viewer.
+
+`PI  Detailed Information About Server Activity
+ This screen shows you who is logged in to the server and the work each is
+ currently doing on the server.
+
+ If you have the S privilege and the server is set up for remote control,
+ you can perform server control functions such as viewing the server's
+ screen, scheduling the server to shut down and preventing users from
+ logging in to the server. To perform any of these functions, press |F2|.
+
+ Use the |Del| key to log a selected user out of the server. If you have
+ the N privilege, you can use the |F3| key to get detailed information
+ about how the server is being used.
+
+ |Screen Information:|
+
+ |ID#|       The unique identification number assigned to each user.
+ |Username|  The name with which the user logged in to the serve. If the
+             username is ?, someone is in the process of logging in.
+ |Machine|   The computer where the user logged in.
+ |Command|   The last command the user performed. The commands are:
+
+   AUDIT ENTRY      A user audit entry was created.
+   CANCEL SHUTDOWN  A server shutdown sequence was cancelled.
+   CHANGE PASSWORD  A user changed his or her password.
+   CHANGE USERNAME  A user changed his or her username.
+   CLOSE FILE       A file has been closed.
+   COMMIT FILE      File data has been committed to disk.
+   CONTROL QUEUE    A queue entry was modified, or the despooler
+                    was controlled.
+   COPY FILE        A file copy was requested on the server.
+   CREATE DIR       A directory has been created.
+   CREATE FILE      A file has been created, or an existing file
+                    with the same name may have been overwritten.
+   CREATE INDIRECT  An indirect file was created.
+   CREATE NEW FILE  A new file has been created.
+   DELETE DIR       A directory has been deleted.
+   DELETE FILE      A file has been deleted.
+   DISABLE ACCOUNT  An account was disabled.
+   FILE READ        Data has been read.
+   FILE WRITE       Data has been written.
+   FIND DISK SPACE  A user requested information about the
+                    amount of free disk space.
+   FIND FIRST FILE  A Find First operation was performed.
+   FIND NEXT FILE   A Find Next operation was performed.
+   FLUSH CACHE      The server's caches were flushed.
+   FULL ACCOUNT     Account and ACL Group rights information retrieved.
+   GET ACCOUNT      Account information was requested.
+   GET INDIRECT     The contents of an indirect file were retrieved.
+   GET LINK INFO    A user requested information about a
+                    directory/device Access Control List.
+   GET QUEUE DSPL   Get extended queue entry for despooler.
+   GET QUEUE ENTRY  Queue entry information was requested.
+   GET QUEUE INDEX  Queue index information was requested.
+   GET QUEUE SEQ#   Information was obtained about a print job based on
+                    its sequence number.
+   GET SERVER TIME  The current server time was requested.
+   GET STREAM       A user requested information about a logical
+                    printer stream.
+   GET USERNAME     A username was retrieved from the account file.
+   LOCK RANGE       A file region has been locked.
+   LOGIN            The user is in the process of logging in.
+   MULTI-MODE OPEN  A multi-mode file open was performed.
+   NOTIFY OPERATER  User received an operator notification message.
+   OPEN FILE        A file has been opened.
+   PRINTER FIELDS   User requested printer fields from a resource.
+   PRINTER STATUS   Current printer status was requested.
+   REMOTE DSPL REG  Remote despooler registered.
+   REMOTE DSPL DRG  Remote despooler registration cancelled.
+   REMOTE DSPL IDX  Set remote despooler index.
+   REMOTE Q CNTRL   Remote despooler queue control.
+   RENAME FILE      A file has been renamed.
+   RUN COMMAND      A remote keystroke command string was submitted.
+   SEEK POSITION    A File Seek operation was performed.
+   SERVER CONTROL   Server control parameters were retrieved or set.
+   SET ATTRIBUTE    A file's attributes have been changed.
+   SET QUEUE ENTRY  Detailed queue entry information was modified.
+   SET REMOTE BLK   Set remote device block fields.
+   SET STREAM       Stream information was modified.
+   SHUTDOWN         A server shutdown sequence was initiated.
+   TERMINATE        The user exited a program.
+   TERMINATE USER   A user's access was terminated by operator request.
+   TRANSLATE PATH   A network pathname was translated.
+   UNIQUE FILE      A new file has been created with a unique name.
+   UNLOCK RANGE     A file region has been unlocked.
+   UPDATE LOGIN     Update last date of log-in in accounts file.
+   USER STATUS      User status information was obtained.
+   WRITE W/COMMIT   Data has been written and committed to disk.
+   X GET QUEUE      Extended Queue entry information was requested..
+   X PRINT STATUS   Get extended printer status.
+   X SET QUEUE      Extended queue entry information was modified.
+   TRANSACTION      A user requested detailed server information.
+   SET SERVER TIME  The server time was set.
+
+ |IO bytes|   The amount of data input and output that the server has
+            performed for the user. This number may be followed by a K, M
+            or G. K means this is the IO bytes in Kilobytes (1024 bytes),
+            M (Megabytes) or G (Gigabytes). For example, if 23M is shown,
+            this user has performed 23 megabytes of I/O.
+ |Requests|   The number of server commands performed since the user logged
+            in.
+ |Privs|      The privileges the user has. The meaning of the privilege
+            letters is:
+            |A|    ACL. All server file requests from the user bypass ACL
+                 checking.
+            |Q|    Queue. The user is allowed to manipulate the despooler
+                 and all printer queue entries.
+            |M|    Mail. The user can manipulate everyone's mail.
+            |U|    User Audit. The user may place an entry in the audit
+                 trail with NET AUDIT.
+            |S|    System manager. The user is a system manager.
+            |O|    Operator. The user will be notified of all system
+                 errors.
+            |D|    Despooler. The user can start a remote despooler.
+            |N|    Network manager. The user can get all statistics kept
+                 by the server.
+            |L|    Logged in. The user is fully logged in to the server.
+                 If L isn't displayed, the user is in the process
+                 of logging in.
+            |R|    This computer logged in using the remote booting feature.
+
+`TT  Enter the Number of Minutes Before the User is Logged Off
+ Enter the number of minutes of warning you want to give before the user
+ is logged out of the server. The user will receive periodic warning
+ messages until the specified time has elapsed. If you enter a value of 0,
+ the user will be logged out of the server immediately.
+
+ |Note| that users will be able to log back in immediately if their accounts
+ and server log-ins are enabled. If you don't want to allow any users to
+ log back in, press |F2| and disable server log-ins.
+
+`SW  Enter a Shutdown Warning Message to Send to Users
+ Enter the message you want to pop up periodically to warn users that the
+ server is going to shut down. Two special characters are recognized within
+ this string:
+      |#| is replaced with the number of minutes remaining.
+      |$| is replaced with an |s| if the number of minutes remaining is
+          not 1 (for proper plurality of "minute$").
+ If you want to use the default warning message--"Server will shut down in
+ # minute$"--press |Esc|.
+
+`SC  Server Control Options
+~00 |Schedule Server Shutdown
+ This option allows you to specify the number of minutes before the
+ selected server shuts down, whether or not you want to warn users about
+ the shutdown and how you want the server to function after it shuts down.
+
+~01 |Cancel Server Shutdown
+ This option allows you to cancel a scheduled server shutdown.
+
+~02 |Enable/Disable Log-ins
+ This option enables you to allow or deny any new log-ins to the selected
+ server. It doesn't affect any log-ins that have already been established.
+ |Note| that if all users with the S privilege log out when log-ins are
+ disabled, the server must be restarted to reenable log-ins.
+ Each time the server is started, log-ins are enabled.
+
+~03 |Flush the Server
+ This option instructs the selected server to flush its caches, verify
+ account information for logged in users and reset its statistics. The
+ server will also instruct any other servers using its accounts to flush
+ their caches.
+
+~04 |Control the Server
+ If the selected server is set up for remote control, you can use your
+ keyboard to type in commands you want carried out by the server just as
+ if you were typing the commands directly on the server's keyboard.
+
+`SH  Schedule Server Shutdown
+~00 |Minutes Until Shutdown
+ This option allows you to schedule a shutdown. If you want to give users
+ a chance to finish their work and close their files, you can specify the
+ number of minutes before the server shuts down. If you leave the value
+ set to zero, the server will shut down immediately.
+
+~01 |After Shutdown
+ This option allows you to specify what you want the server to do after it
+ has shut down. Use the |Enter| key to toggle between the following three
+ options:
+       REBOOT    - The computer reboots.
+       CONTINUE  - The computer continues running as a workstation.
+       HALT      - The computer displays a shutdown message. To restart
+                   the computer you'll have to press |Ctrl+Alt+Del|.
+
+~02 |Notify Users
+ This option allows you to specify whether or not users will be warned
+ that the server is about to be shut down. If you enter "Yes," all users
+ who are logged into the server will receive periodic warnings of the
+ pending shutdown.
+
+~03 |Warning Message
+ Enter the message you want to pop up periodically to warn users that the
+ server is going to shut down. Two special characters are recognized within
+ this string:
+      |#| is replaced with the number of minutes remaining.
+      |$| is replaced with an |s| if the number of minutes remaining
+          isn't 1 (for proper plurality of "minute$").
+
+`CE  Critical Error
+ |Retry the Network, Disk or Device operation
+ Attempts the operation again. First, check if a floppy disk drive door is
+ open or if some other minor problem caused the error. If so, correct the
+ problem and retry the operation.
+
+~01 |Fail the Network, Disk or Device operation
+ Cancels the operation in progress and returns to the last screen. You
+ should then correct any problems or type |Esc| to exit the screen.
+
+~02 |Ignore the error, continue with program
+ Continue as though nothing happened. |Note| that the operation will not be
+ properly completed and may lead to future errors. In most cases, you
+ should not select this option.
+
+~03 |Abort NET and return to DOS immediately
+ Exits the program immediately.
+
+`CH  Using Chat
+ LANtastic's chat feature allows two network users to communicate with
+ each other by typing messages. If both users have an Artisoft Sounding
+ Board set to full-duplex mode in their computers, they can also chat
+ using their Sounding Board handsets.
+
+ You can use the top screen to type in your message. The lower screen will
+ show the reply typed in by the person with whom you're chatting. The word
+ |<<Unconnected>>| appears on the lower screen until someone answers your
+ call or someone calls you. When a connection is made, a message appears
+ showing the name of the computer with which you're chatting.
+
+ You can use the following function keys as you chat on the network:
+
+ |F2|    When you're connected to another computer, this key toggles
+       between voice chat enabled and voice chat disabled. When voice chat
+       is enabled, you can communicate directly with the other person
+       using your Sounding Board handset. Note that there's a one-second
+       delay between the time you speak and the time when your voice is
+       heard at the other computer.
+
+ |F3|    When voice chat is enabled this key allows you to specify a
+       voice-activated threshold value. This value specifies how loudly
+       you must speak before voice data is transferred.
+
+ |Ins|   Press this key to establish a chat session with another person.
+       An audible tone and a pop-up message informs the other person that
+       you want to chat.
+
+ |Del|   Hangs up the current chat session, but does not exit the chat
+       program. This allows you to call someone else.
+
+ |Esc|   Hangs up the current chat session, if there is one, and returns
+       you to the LANtastic NET Main Functions screen.
+
+ |Home|  Clears the top chat screen on your computer and the lower chat
+       screen on the computer with which you're chatting.
+
+ ||     Backs up and clears one character on the current line. An
+       identical action will be performed on the computer with which
+       you're chatting.
+
+`CD  Enter the Name of the Computer You Want to Call
+ Enter the network name of the computer you want to call. This is the name
+ that was given to the computer when the REDIR program was run. Press the
+ |Esc| key to cancel the call.
+
+`VT  Specifying a Voice Chat Threshold
+ This screen allows you to specify how loudly you must speak in order
+ for voice data to be transmitted. Setting the threshold to zero (0)
+ will transmit all sounds. Setting the threshold to 127 will transmit only
+ the loudest sounds. The default setting (32) should be suitable for most
+ applications.
+
+ |Note| that the voice chat feature sends a considerable amount of data
+ through the network. You should choose a threshold that allows your speech
+ to be transmitted, but not any background noise. This reduces the amount of
+ data that has to be handled by the network and minimizes the effect of
+ chatting on overall network speed.
+
+`US  Who Do You Want to Send This Mail to?
+ Press |F10| to view a list of people who can receive messages on this post
+ office computer. Use the arrow keys to select the name of the person
+ to whom you want to send the message. If the person's name doesn't appear
+ on the list, you'll have to enter it.
+
+ |Note| that you can enter a "*" at the end of a partial username to send
+ mail to a group of users. For example, if you enter "$*", the mail item
+ will be sent to all users whose usernames begin with a "$" symbol.
+
+`UL  User List
+ You're currently viewing all available mail users on the server. Select
+ the user to whom you want to send mail and press |Enter|. If you want to
+ send to a group of users, press |Esc| and enter a group prefix followed
+ by "*". For example, entering "$*" would send the mail item to all users
+ whose usernames begin with "$."
+
+`MV  Voice Mail Options
+ You can use the following options to control the selected voice mail
+ message:
+
+~00 |Listen to Mail
+ Select this option to listen to the voice mail message. You must have an
+ Artisoft Sounding Board installed in your computer to be able to listen
+ to voice mail.
+~01 |Forward Copy of Mail
+ Select this option to forward the selected message.
+~02 |Copy Mail to File
+ Copies the selected message into a file. This option copies to files in
+ binary mode.
+~03 |Delete Mail
+ Select this option to delete the selected message. Note that unless you
+ have the M (Super Mail) privilege, you can delete only messages that were
+ sent by you.
+
+`MT  Text Mail Options
+ This screen allows you to control the mail message you've selected
+ by using the following options:
+~00 |Read Mail
+ Select this option to read the selected message.
+~01 |Forward Copy of Mail
+ Select this option to forward the selected message.
+~02 |Copy Mail to File
+ Copies the selected message into a file. This option copies to files in
+ binary mode and to printers in ASCII mode. If you want to print the
+ message in binary mode, use the Print Mail option.
+~03 |Print Mail
+ Prints the selected message in binary mode. If you want to print the
+ message in ASCII mode, use the Copy Mail to File option.
+~04 |Delete Mail
+ Select this option to delete the selected message. Note that unless you
+ have the M (Super Mail) privilege, you can delete only messages that were
+ sent by you.
+
+`SO  Creating and Sending a Mail Message
+ This menu gives you the following options for creating and sending mail
+ messages:
+
+~00 |Using the LANtastic Editor
+ Select this option if you want to use the text editor that's included
+ with LANtastic to compose a new mail message.
+~01 |Using Your Text Editor
+ Select this option if you want to use your favorite text editor to edit
+ an existing file that you want to send.
+~02 |By Sending an Existing Text File
+ Select this option if you want to send an existing text file as a mail
+ message.
+~03 |By Sending an Existing Voice File
+ Select this option if you want to send a pre-recorded voice file.
+~04 |By Recording a Voice Mail Message
+ This option allows you to record a voice mail message and send it. |Note|
+ that this option is available only if you have an Artisoft Sounding
+ Board installed in your computer.
+
+`GW  Viewing All Mail Messages
+ This screen lists all mail messages that have been sent to or from this
+ post office computer. If you want to read, forward, copy, print or delete
+ a message, select it and press |Enter|. (Note that you can also press
+ |Del| to delete a selected message.) If you want to create a new mail
+ message, press the |Ins| key.
+
+ If you want to view a list of all mail messages that you've sent to or
+ received from this post office computer, press |F8|.
+
+`GM  Incoming Mail Information
+ This screen lists all mail messages that have been sent to you. If you
+ want to read, forward, copy, print or delete a message, select it and
+ press |Enter|. If you want to create a new mail message, press the |Ins|
+ key. You can also press |Del| to delete a selected message that was sent
+ only to you. Note that unless you have the M (Super Mail) privilege, you
+ can't delete messages sent to you and other people.
+
+ If you want to view a list of mail messages you've sent, press |Tab|. If
+ you want to view a list of all mail messages that have been sent to or
+ from this post office computer, press |F8|.
+
+`SM  Outgoing Mail Information
+ This screen lists all mail messages that you've sent. If you want to
+ read, forward, copy, print or delete a message, select it and press
+ |Enter|. (Note that you can also press |Del| to delete a selected
+ message.) If you want to create a new mail message, press the |Ins| key.
+
+ If you want to view a list of mail messages that have been sent to you,
+ press |Tab|. If you want to view a list of all mail messages that have
+ been sent to or from this post office computer, press |F8|.
+
+`NV  Viewing the Selected Mail Message or Print Job
+ You are currently viewing the contents of the mail message or print job
+ you've selected. You can use the arrow keys to scroll up or down.
+
+`NE  Using the LANtastic Text Editor
+ Use this screen to compose a mail message or print job.
+
+ As you type in your text, you can use the following function keys in
+ addition to the standard NET line editing commands:
+ |F2|    Sends the text you have written.
+ |F7|    Inserts a blank line before your current line.
+ |F9|    Deletes the line on which the cursor is placed.
+ |Esc|   Ends the editing session without sending anything.
+
+`PC  Control for...
+ Use this screen to control one or more of a server's printers/devices.
+ To do this, select one of the following options:
+
+ |Halt|     Halts despooling immediately. Any jobs currently being
+          despooled are stopped.
+ |Stop|     Suspends despooling after the current job finishes.
+ |Pause|    Temporarily stops the jobs being despooled. To continue
+          despooling, issue a Start command.
+ |One-Job|  Allows one job to be despooled and then stops any more jobs
+          from despooling. This is handy if you want to make some
+          modifications to a printer/device between jobs.
+ |Start|    Starts despooling on the selected printer/device.
+ |Restart|  The job currently being despooled is started over from the
+          beginning.
+
+`AS  Account Status Information
+ This screen displays the following information about the current state
+ of your account on this computer:
+
+~00 |Description
+ Gives a 32-character description of the account.
+~01 |Date Last Logged In
+ The last date you logged in to this computer.
+~02 |Account Expiration Date
+ The last date you'll be able to log in to this computer.
+~03 |Password Expiration Date
+ The last date that your password will be valid on this computer.
+~04 |Renew Password Every...
+ The number of days before you must change your password.
+~05 |Privileges
+ The privileges are defined as follows:
+
+ |A| - SuperACL Privilege
+     If this privilege is enabled, the Access Control Lists (ACLs)
+     protecting printers, subdirectories and mail will not be checked.
+     You'll have access to every shared resource on the server. If the A
+     privilege is disabled, ACL protection is enforced.
+
+ |Q| - SuperQueue Privilege
+     If this privilege is enabled, you'll be allowed to view and
+     manipulate all jobs in the print queue. You'll also be able to
+     control despooling on the server's printers. When this privilege is
+     disabled, you'll be able to see and control only your own print jobs.
+
+ |M| - Super Mail Privilege
+     If this privilege is enabled, you'll be allowed to manipulate all
+     mail items in the queue. If the M privilege is disabled, you can only
+     manipulate mail items sent by or to you.
+
+ |S| - System Manager Privilege
+     If this privilege is enabled, you'll be able to perform system
+     management functions on the server.
+
+ |U| - User Auditing Privilege
+     When this privilege is enabled, you may issue NET AUDIT commands and
+     create entries in the server audit log. If the U privilege is
+     disabled, you won't be allowed to create user audit entries.
+
+ |O| - Operator Privilege
+     Provides the user with messages when operator intervention is
+     necessary, such as when a printer is out of paper.
+
+ |D| - Remote Despooler Privilege
+     Lets the user remove print jobs from the server's despooler using
+     RPD.EXE, the remote printer despooler program provided with
+     LANtastic. Refer to your LANtastic manuals for information on
+     running RPD.
+
+ |N| - Network Manager Privilege
+     Lets the user get all the statistics kept by the server.
+
+~06 |Number of Concurrent Log-ins
+ The number of times your username can be used to log in to the server at
+ any given time. If this number is zero (0), your account is disabled and
+ you won't be able to log in again.
+
+~07 |Time of Day Allowed Logins
+ The times and days of the week that you're allowed to log in to the
+ server.
+
+`ES  Enter the Servername
+ Enter the name of the server to which you want to log in. You can specify
+ up to 15 characters.
+
+`SS  Enter the Servername
+ Enter the name of the server to which you want to log in. You can specify
+ up to 15 characters including a wildcard ("*"). If you enter a wildcard
+ servername, your default username and password will be used to log in to
+ any matching servers.
+
+`EU  Enter Your Username
+ Enter the username that you want to use to log in to the server. You can
+ specify up to 16 characters.
+
+`DU  Enter a Default Username
+ Enter the default username that you want to use to log in to all servers.
+ You can enter up to 16 characters. To disable default log-ins, erase the
+ entry and press |Enter|.
+
+`EP  Enter a Password
+ Enter the password that corresponds to your username. You can enter up to
+ 16 characters. For security, your password characters appear on the
+ screen as diamond symbols.
+
+`DP  Enter a Default Password
+ Enter the password that corresponds to your default username. You can
+ enter up to 16 characters. For security, your password characters appear
+ on the screen as diamond symbols.
+
+`ED  Set Your Time and Date Using Server's Clock?
+ If you want to set your computer's clock to the date and time from the
+ server's clock, type "Yes."
+
+`NP  Enter New Password
+ Enter your new password. For security, your password characters appear
+ on the screen as diamond symbols.
+
+`PA  Enter Password Again
+ Enter your new password again to confirm that it was keyed in correctly.
+ For security, your password characters appear on the screen as diamond
+ symbols.
+
+`PM  Enter Pathname of File to Mail
+ Enter the pathname of the existing file you want to send as mail.
+
+`MP  Enter the Pathname Where You Want to Copy the Mail Message
+ Enter the destination (pathname) to which you want the mail message
+ copied.
+
+`CT  Adding a Comment to a Mail Message or Print Job
+ If you want, you can enter a brief comment that identifies this mail
+ message or print job.
+
+`TS  Enter the Number of Minutes Before the Server Shuts Down
+ Enter the number of minutes from now that you want the server to shut
+ down. To shut the server down immediately, enter 0.
+
+`SA  Creating a New Logical Stream Mask
+ Enter the name of the logical printer or other device that you want to
+ control. You can enter wildcard characters such as "*" or "?" to specify
+ a group of printers/devices.
+
+ Once you enter the "*" wildcard character it is converted to the
+ corresponding number of questionmarks (?). For example, if the logical
+ stream list is
+
+        0: @NORMAL?.???  Enabled
+        1: @LABELS?.???  Disabled
+
+ all jobs sent to @NORMAL?.??? (such as @NORMAL1, @NORMAL2, etc.) would
+ be despooled. All jobs sent to @LABELS?.??? would not be despooled.
+
+ You could use streams to simplify changing printer paper. For example,
+ if @NORMAL?.??? jobs use 8 1/2 by 11 inch paper and @LABELS?.??? jobs use
+ label paper, you would disable the @NORMAL?.??? stream using the |F5|
+ key, switch the paper, then enable the @LABELS?.??? stream.
+
+`ST  Refresh Rate
+ The screen you're using contains data that is constantly changing.
+ Normally, pressing the spacebar will cause NET to request new data from
+ the server. This screen allows you to automate the updating of this
+ screen by setting a refresh interval in seconds.
+
+ For example, if the refresh rate is set to 10, NET will make request new
+ data every ten seconds.
+
+ If the server is busy, the data request may take more time than the
+ length of refresh rate. If this happens, NET will make new requests as
+ soon as the old one is completed.
+
+`GA  Text Editor Parameter Changes
+ The parameters for the text editor have changed. To save the parameters
+ you just used, press |Enter|. To disregard these parameters press |Esc|.
+
+`GB  Selecting a Printer
+ Move the highlight bar to select the printer where you want to print the
+ mail message or print job. Press |Esc| to abort the print operation.
+
+`GC  Enter the Full Path to the Text Editor You Want to Use
+ Enter the full path, including the program name and extension, to the
+ text editor you want to use. For example, to run EDITOR.EXE in the
+ UTILITY directory on the C: drive, you'd type: C:\UTILITY\EDITOR.EXE.
+
+`GD  Enter the Full Path to the File You Want to Edit
+ Enter the command line you want to pass to the application. For example,
+ if you want to edit the file TEST.TXT in the \DOC subdirectory, you'd
+ type: \DOC\TEST.TXT.
+
+`GE  Start Time for Printing
+ This screen allows you to specify the exact time you want your print job
+ to begin printing. By default the screen shows the current time and
+ day/date. If you want to print the job right away, simply press |Enter|.
+ If you want to delay the print time, use the following keys:
+
+ |Enter| - Press this key when the time/date or delay is correct.
+ |Esc|   - Press this key to cancel the job.
+ |F2|    - Press this key to toggle between absolute time delay (for
+         example, 12:21PM on 7-Jan-1994) and relative time delay (for
+         example, 1 hour 38 minutes). Note that if you set an absolute
+         time delay of more than 96 hours (for example, if you want to
+         print a job next week), you can't use the F2 key to compute the
+         relative time delay.
+ |E|     - Press the E key to edit the selected entry.
+ |Tab|   - Press the |Tab| key to advance the time, date or delay by 1.
+         Holding the key down will activate an accelerator that will start
+         advancing the field by 20. Press the |Shift| and |Tab| keys
+         together to decrement the fields in a similar manner.
+
+`GF  Specifying the Computers You Want to Log Out of
+ The selected computer is already shown on this prompt. If you want to
+ log out of this computer, press |Enter|. If you want to specify a
+ different computer, type in that computer's name and press |Enter|.
+
+ Depending on how your computer names have been set up, you can also log
+ out of a group of computers. To do this, use the asterisk ("*") wildcard
+ character. For example, you might type "ACCT_*" to log out of all the
+ computers in the accounting department.
+
+ If you want to log out of all the listed computers, type in the asterisk
+ ("*") wildcard character and press |Enter|.
+
+`GH  Copy To File
+ Enter the full pathname of the source file.
+
+`GI  Copy From File
+ Enter the full pathname of the destination file.
+
+`GJ  Device Write Options
+~00 |Use Screen Editor
+ Use the built-in editor to create the text.
+~01 |Use Text Editor
+ Use your favorite text editor to edit a file and then copy the file to
+ the device.
+~02 |Copy File To Device
+ Copy an existing text file to the device.
+
+`GK  Device Read Options
+~00 |View Device
+ Close the current device and start reading the selected device on the
+ screen.
+~01 |Copy Device to File
+ Save the contents of the device into a file.
+~02 |Print Device
+ Save the contents of the device to a printer.
+
+`GL  File Options
+~00 |Overwrite Existing File
+ Destroy the contents of the existing file by overwriting it with
+ new data.
+~01 |Append Data To Existing File
+ Save the contents of the existing file and append this data to the end
+ of the file.
+~02 |Cancel Operation
+ Abort the operation.
+
+`GN  Refresh Period
+ This is the number of ticks (1/18-of-a-second increments) that must
+ elapse before the screen is updated. If you're also controlling the
+ server's keyboard, the screen is updated on every key stroke regardless
+ of the refresh period.
+
+`GY  Control Options
+ This screen allows you to use the following options to help you control
+ the server:
+~00 |Options Help|
+ Shows this Help information screen.
+~01 |Enable/Disable Keyboard Control|
+ Press |Enter| to toggle between enabling or disabling remote keyboard
+ access to the server. You might want to disable this option if, for
+ example, you only want to view the server's screen and don't want to
+ issue commands to the server.
+~02 |Read From the Server|
+ Use this option when you want to select a different screen resource for
+ viewing the server's screen or copying an image of the server's screen
+ to a file or printer.
+~03 |Write To the Server|
+ Use this option when you want to send an image to the server's screen.
+ You'll be able to create the image you want to send by using the
+ LANtastic editor or your favorite text editor. You can also send an image
+ of an existing file.
+~04 |Change Refresh Rate|
+ Changes the refresh rate of your screen. The refresh rate is shown in
+ ticks (1 tick=1/18 s). If you specify a refresh rate less than the
+ default rate of six ticks, commands sent to the server appear more quickly
+ on your screen. However, this increases the amount of data that has to be
+ handled by the network and may have an effect on overall network speed.
+~05 |Enable/Disable Help Line|
+ Press |Enter| to toggle the help line at the top of the screen on or off.
+~06 |Exit Control|
+ Returns you to the Server Control Options screen.
+
+`HA  Enter the Time You Want the Job Printed
+ Enter the time you want the job to begin printing. If you want the job to
+ be printed right away, leave this set to the default which is the
+ current time.
+
+ When you enter the time you must use the format hour:minute. You can use
+ either a 24-hour clock (for example, 19:30) or a 12-hour clock with "AM"
+ or "PM" (for example, 7:30PM).
+
+`HB  Enter the Date You Want the Job Printed
+ Enter the date you want the job to begin printing. If you want the job to
+ be printed right away, leave this set to the default which is the
+ current date.
+
+ When you enter the date you must use the format month-day-year (for
+ example, 1-25-1994) or day-month-year (for example, 25-JAN-1994).
+
+`HC  Enter the Time You Want to Wait Before the Job is Printed
+ Enter the time you want to wait before the job begins printing. If you
+ want the job to be printed right away, leave this set to the default
+ ("None").
+
+ When you enter the time you want to wait you must use the format
+ hours:minutes. For example, you would type 1:15 if you want to wait
+ 1 hour and 15 minutes. The longest time you can wait is 96 hours.
+
+`RF  Enter the Name of the Printer Where You Want to View Jobs
+ If you want to view jobs at a previously specified printer or group of
+ printers, simply press |Enter|.
+
+ If you want to specify a new printer, type in that printer's name and
+ press |Enter|. For example, you might type in "@PRINTER."
+
+ Depending on how your printer names have been set up, you can also
+ specify a group of printers. To do this, use the asterisk ("*") wildcard
+ character. For example, you might type "@ACCT_*" to view jobs on all the
+ printers in the accounting department or you might type "@P" to view jobs
+ on all printers whose names begin with "@P".
+
+ If you want to view all print jobs that have been sent to this computer
+ for printing, make sure this field is empty and press |Enter|.
+
+ |Note| that the printer name is the name that appears in the Destination
+ column on the print jobs Viewing screen.
+
+`UP  Specifying the Drive You Want to Disconnect
+ The selected drive letter is already shown on this prompt. If you want to
+ disconnect this drive, press |Enter|. If you want to specify a different
+ drive to disconnect, type in that drive letter and press |Enter|. If you
+ want to disconnect all your drive connections, type in the asterisk ("*")
+ wildcard character and press |Enter|.
+
+`PU  Specifying the Printer You Want to Disconnect
+ The selected printer port is already shown on this prompt. If you want to
+ disconnect this printer port, press |Enter|. If you want to specify a
+ different printer port to disconnect, type in that printer port and press
+ |Enter|. If you want to disconnect all your parallel printers, type in
+ "LPT*" and press |Enter|. If you want to disconnect all your serial
+ printers, type in "COM*" and press |Enter|. If you want to disconnect all
+ your LPT and COM ports, type in the asterisk ("*") wildcard character and
+ press |Enter|.
+
+`SI  Detailed Server Information
+ This screen shows how the server is being used on the network. The
+ information displayed includes:
+        When LANtastic's Server program was started.
+        How heavily the server is being used.
+        How many users are logged in to the server.
+        How many files are open on the server.
+        Statistics about the server's caches.
+`AA  Resource Name
+ Enter the name of the resource to which you'd like to connect.
+
+`BB  Resource Password
+ Enter the password for the resource to which you're connecting. Press
+ |Enter| if the resource does not have a password.
+
+`NA  Network Activity Information
+ This screen displays a bar graph showing the total number of sends and
+ receives accumulated for each computer for the elapsed time. By default
+ the elapsed time begins when you start viewing this screen. If you want
+ to reset the elapsed time, press the |F8| key. You can also toggle the
+ following function keys to change how the information is displayed:
+
+        |F2| Scales the graph according to a percentage scale or a
+           maximum value scale.
+        |F3| Lists the computers either alphabetically or according to
+           maximum-to-minimum activity.
+
+`IS  Enter the Name of the Computer You Want to Add to the List
+ Enter the name of the computer you want to add to your list of network
+ computers.
+
+`IA  Enter the Adapter Number of the Computer
+ Enter the adapter number of the computer you want to add to your list of
+ network computers.
+
+`OQ  Print Jobs Management Screen
+ This screen allows you to view print jobs that have been sent to a
+ printer attached to this computer. Use the arrow keys to select a print
+ job, then press |Enter| to view detailed information about the job.
+
+`WM  Monitor and Manage Network Activity
+ This screen shows a list of computers found on the network. If the
+ computer you want to monitor or manage doesn't appear on the list, press
+ |Ins| and type in the computer name. Press |Del| to remove a name from
+ the list. Once the list shows all the computers that you want to monitor
+ or manage:
+
+     Press |F4| to view a bar graph showing the total number of receives
+                and sends to and from each computer.
+     Press |F9| to synchronize the clocks on all the servers on the
+                list. |Note| that only those servers that support clock
+                synchronization will remain on the list.
+
+`WS  Synchronizing Servers' Clocks
+ This screen shows all servers on your list that will allow you to
+ synchronize their clocks. Use the arrow keys to select the server you
+ want to use to synchronize the clocks on all the other listed servers.
+ Press |Enter| to start the synchronization.
+
+`VO  Print Job View Options
+ This screen allows you to specify whether you want to view only your own
+ print jobs or all print jobs sent to this computer. You can also specify
+ the type of information that's displayed. This screen has three options:
+
+ |Show Jobs|      Select this option and press |Enter| to toggle between
+                "Mine" and "All." Note that you must have the Q (Super
+                Queue) privilege to use this option.
+ |Show Printers|  Select this option to specify for which printers
+                attached to this computer you want to view print jobs.
+ |Display|        Select this option if you want to specify how the print
+                jobs are displayed.
+
+`ZS  Display Options
+ This screen allows you to control the type of information displayed. Use
+ the arrow keys to highlight the option you want to choose, then press
+ |Enter|. There are three options:
+
+ |Sequence #|     This displays the unique number that's assigned to each
+                print jobs in the queue.
+ |Relative Time|  This shows the amount of time before a job will be
+                finished. For example, if your job is tenth in the queue,
+                this field might show 00hr 15mn 23sc.
+ |Absolute Time|  This shows the actual time when a job will be completed.
+                For example, if it's 10:00AM and your job is tenth in the
+                queue, this field might show 10:15AM.
+`CO  How Many Copies Do You Want to Print?
+ Enter the number of copies of this job you want to print.
+`QW  Permanent Connections Management
+ |Connect to Other Computers' Drives
+ This option allows you to set up a new drive connection or remove an
+ existing connection. When you've set up the connections you need, you'll
+ be able to use these drives as easily as you use the drives on your own
+ computer. For example, you'll be able to view edit or print files stored
+ on those drives as if those files were stored on your computer.
+
+~01 |Connect to Other Computers' Printers
+ This option allows you to set up a new printer connection or remove an
+ existing connection. When you've set up the connections you need, you'll
+ be able to send your print jobs to these printers in the same way you'd
+ send them to a printer attached directly to your own computer.
+
+ You can send print jobs to any printer that has been set up to be shared.
+ However, don't forget to check that your word processor or other
+ application is set up to use the printer to which you want to send your
+ print jobs.
+
+~02 |Make the Current Connections Permanent
+ Permanent connections are connections that will be restored each time you 
+ reboot your computer. Press |ENTER| to save the current drive and printer 
+ connections you have set up. This will overwrite your existing connections 
+ in your CONNECT.BAT file. 
+
+~03 |Show this Menu on Startup: ENABLED/DISABLED
+ When this option is ENABLED, the Permanent Connections Management screen 
+ will be displayed each time you reboot your computer. Press |ENTER| to 
+ toggle between ENABLED and DISABLED.      
+
+`WQ  Overwrite your existing connections?
+ If you want to overwrite your existing CONNECT.BAT file type "Yes."
+
+`ZZ Start of NET command line Help
+`/HELP
+NET/HELP
+ Displays a list of Help items including global switches, NET commands,
+ and general NET topics.
+`/?
+NET/?
+ Displays a list of Help items including global switches, NET commands,
+ and general NET topics.
+`/MONO
+NET/MONO
+ Invokes the NET menu interface in monochrome mode.
+`/NOERROR
+NET/NOERROR command ...
+ Executes a NET command but does not display any error text if an error
+ occurs. You can test for an error by checking the NET_ERROR environment
+ variable. This variable will be set to an error number or 0 if no error.
+`/SCREEN_SAVER
+NET /SCREEN_SAVER
+ Enters the menu portion of NET with a screen saver timeout of two minutes.
+ If there is no keyboard activity for two minutes, the screen will blank.
+ Press any key to restore the screen.
+`ATTACH
+NET ATTACH{/VERBOSE} \\server-name
+ Redirects all available drives to every shared resource on a server.
+ This command is the equivalent of issuing a NET USE command for each of
+ the server's shared resources.
+
+    /VERBOSE     Displays drives and their redirections.
+    server-name  Name of server to redirect drives to.
+`AUDIT
+NET AUDIT \\server-name reason "audit-text"
+ Creates an audit entry in the server's audit file. You must have the "U"
+ privilege to use this command.
+
+    server-name  Name of server to perform audit on.
+    reason       8 character string giving the reason for the audit entry.
+    audit-text   Text to place in audit file.
+`CHAT
+NET CHAT
+ Enters interactive chat mode. This is equivalent of entering the NET
+ Main Functions menu and selecting "Chat With Another User."
+`CHANGEPW
+NET CHANGEPW \\server-name old-password new-password
+ Allows you to change your password on a server
+
+    server-name   Name of server where password is to be changed.
+    old-password  The password you used to log in to the server.
+    new-password  The new password.
+`CLOCK
+NET CLOCK \\server-name
+ Sets date and time from server's clock.
+
+    server-name  Name of server to get time information from.
+`COPY
+NET COPY{/VERBOSE} from-path to-path
+ Copies files directly on a server, bypassing network data transfers.
+ Both from-path and to-path must reside on the same server and reference
+ network paths.
+
+    /VERBOSE     Displays the from-path before it is copied.
+    from-path    Pathname of source files. Wild characters are OK.
+    to-path      Pathname of destination files or directory.
+`DETACH
+NET DETACH \\server-name
+ Breaks all disk redirections with a server. This command is equivalent
+ to issuing a NET UNUSE command for each redirection already made.
+
+    server-name  Server to break all disk redirections with.
+`DIR
+NET DIR{/ALL} {pathname}
+ Displays directory and file information. Unlike the DOS DIR command,
+ NET DIR will work on network paths.
+
+    /ALL         Display all files including system and hidden files.
+    pathname     Path or filename to get directory information about.
+                 May be network path (e.g., \\server\C-DRIVE).
+
+ Directory information is displayed in the form
+
+  FILENAME ATTRIBUTES SIZE DATE TIME
+
+ FILENAME        name of the file.
+ ATTRIBUTES      file's attributes.
+                  I - Indirect file              A - Archive flag
+                  D - Directory flag             V - Volume label
+                  S - System file                H - Hidden file
+                  R - Read only file
+ SIZE           size of the file in bytes.
+ DATE           file's creation date.
+ TIME           file's creation time.
+`DISABLEA
+NET DISABLEA \\server-name password
+ Disables your account from further log-ins.
+
+    server-name  Server on which to disable account.
+    password     Your current password on the server.
+`ECHO
+NET ECHO {string}
+ Displays a string of characters. Unlike the DOS ECHO command, NET ECHO
+ allows you to use special strings.
+
+ Type NET HELP STRING to find out what special strings can be used.
+`EXPAND
+NET EXPAND{/PHYSICAL}{/RECURSE} pathname
+ Expands a pathname to it's full resolution. This is particularly useful
+ in determining how a network indirect files will expand. The pathname
+ does not need to exist.
+
+    /PHYSICAL    Expand to the server's physical path for this pathname.
+    /RECURSE     Recursively expands the last file in an indirect file's
+                 path.
+`FLUSH
+NET FLUSH \\server-name
+ Flushes all caches on the server, including the resource cache, the
+ random-access cache, and LANCACHE. This is useful if you have modified
+ a resource with NET_MGR and want to force the update to take effect.
+
+   server-name   Name of server to flush.
+`HELP
+NET HELP {command}
+ Gets NET command line Help information.
+
+    command      Optional command to get Help on.
+`SCREEN_SAVER
+NET /SCREEN_SAVER
+ Enables the NET screen saver. If there is no keyboard activity for
+ two minutes the screen will be blanked.  Press any key to restore the
+ screen.
+`INDIRECT
+NET INDIRECT pathname actual-name
+ Creates an indirect file on a server.
+
+    pathname     Pathname of indirect file to create. Must be a network
+                 path.
+    actual-name  Actual name indirect file refers to.
+
+`LOGIN
+NET LOGIN{/WAIT/DEFERRED} \\server-name {username} {password} {adapter#}
+ Logs you in to a server thus allowing you to redirect your drives and
+ printers to the server.
+
+    /WAIT        Wait for server to come on-line.
+    /DEFERRED    Retries failed log-in attempt later when a user attempts
+                 to use connection.
+    server-name  Name of server to log in to. The wildcard character ("*")
+                 is accepted as the last character, in which case all
+                 matching servers in the server list are logged into. If
+                 you are already logged into the server, changes your
+                 username without detaching drives or closing files.
+    username     Username to use for log-in. If not specified, the default
+                 username, password, and adapter number specified with
+                 NET USER will be used.
+    password     Password to gain access to server.
+    adapter#     Optional adapter number to log in through.
+`SLOGINS
+NET SLOGINS{/ENABLE}{/DISABLE} \\server-name
+ Globally enables or disables log-ins to the specified server. When
+ log-ins are disabled, no new users can connect to the server. Users
+ already logged in are not affected. You must have the "S" (System
+ Manager) privilege to use this command. Note that if you disable log-ins
+ and then all users with the "S" privilege log out, log-ins cannot be
+ reenabled without restarting the server.
+
+    /ENABLE      Enable log-ins on the server (default).
+    /DISABLE     Disable log-ins on the server.
+`LOGOUT
+NET LOGOUT \\server-name
+ Logs you out of a server and cancels all drive and printer redirections.
+
+   server-name   Name of server to log out of. The wildcard character ("*")
+                 is accepted as the last character, in which case you
+                 are logged out of multiple servers.
+
+`LPT
+NET LPT COMBINE
+ Combines redirected printer output so that there will be no break between
+ print jobs. This can only be used in batch files.
+
+NET LPT FLUSH
+ Forces redirected printer data to be flushed. This can only be used in
+ batch files.
+
+NET LPT{/ENABLE}{/DISABLE} NOTIFY
+ Enables or disables automatic pop-up notification when a print job
+ completes. If neither switch is given, enables it.
+
+NET LPT SEPARATE
+ Separates redirected printer output. This can only be used in batch
+ files.
+
+NET LPT TIMEOUT time-out
+ Sets the length of time before redirected printer output will be
+ automatically flushed.
+
+    time-out     Time-out in seconds.
+`MAIL
+NET MAIL{/VERBOSE}{/VOICE} filename \\server-name recipient {"comment"}
+ Sends a file to a user on a server
+
+    /VERBOSE     Display file name as it is sent.
+    /VOICE       File contains voice information (not text).
+    filename     Pathname of file to send.
+    server-name  Name of server to send mail to.
+    recipient    User to receive mail. Wildcard characters are OK.
+    comment      Comment text associated with mail.
+`MESSAGE
+NET MESSAGE[/ENABLE /DISABLE] [ALL BEEP POP SPEAK]
+ You can use this command to allow or prevent pop-up messages from
+ appearing. Use the BEEP argument to enable or disable the sound that
+ accompanies pop-up messages, and use the POP argument to enable or
+ disable just the pop-up messages. Use the SPEAK argument to enable or
+ disable voice error messaging. Use the ALL switch to enable or disable
+ BEEP, POP and SPEAK.
+
+
+    /ENABLE      Enable flag
+    /DISABLE     Disable flag
+    BEEP         When enabled, messages will beep when received. When
+                 disabled, message will not beep.
+    POP          When enabled, messages will pop up when received. When
+                 disabled, messages will not pop up.
+    SPEAK        When enabled, voice error messages will be played. When
+                 disabled, voice error messages will not be played.
+    ALL          When enabled, BEEP, POP and SPEAK will work. When
+                 disabled, BEEP, POP and SPEAK will not work.
+`PAUSE
+NET PAUSE{/NEWLINE} message {time}
+ Display a message and wait for a given amount of time or until any
+ character is pressed.
+
+    /NEWLINE     Generate a new line at the end of the message
+    message      Message to display. The message isn't new-line
+                 terminated unless /NEWLINE is present.
+    time         Time in seconds (0-999) to delay while displaying the
+                 message. If the time is 0 then the message will be
+                 displayed indefinitely until a key is pressed.
+`PING
+NET PING{/RAW/SILENT} {machine} {number} {adapter#}
+ Queries the network for information about machines running.
+
+    /RAW         Display duplicate entries. Default doesn't display
+                 duplicate entries.
+    /SILENT      Don't display any entries, just return an error code.
+    machine      Name(s) to query. Wildcards ("*") are accepted. It takes
+                 approximately 1/18 of a second to find each name,
+                 therefore, PINGing the entire network ("*" or no name)
+                 can take a considerable amount of time.
+    number       Maximum number of entries to collect. Default is to collect
+                 as many as possible.
+    adapter#     Adapter number to search. Default is to search all adapters.
+
+`POSTBOX
+NET POSTBOX [\\server-name]
+ Scans a single server or all servers the servers you are logged in to
+ for pending mail.
+
+    server-name  Optional servername to scan for waiting mail. If no
+                 servername is given, then all the servers you're logged
+                 in to will be scanned.
+`PRINT
+NET PRINT{/BINARY}{/DELETE}{/DIRECT}{/{NO}NOTIFY}{/DATE=}{/TIME=}{/DELAY=}
+         {/VERBOSE} filename device {comment {copies}}
+ Prints a file through the network
+
+    /BINARY      Print file in binary mode.
+    /DELETE      Delete file after printing. Works only with /DIRECT.
+    /DIRECT      Don't copy file to queue area. Use file directly on
+                 server.
+    /NOTIFY      Notify at print job completion.
+                 Overrides NET LPT/DISABLE NOTIFY.
+    /NONOTIFY    Don't notify at print job completion.
+                 Overrides NET LPT/ENABLE NOTIFY.
+    /DATE=       Sets the despool date. Defaults to the current date.
+                 Date format is month-day-year (e.g., 12-25-1993) or
+                 day-month-year (e.g., 25-DEC-1993)
+    /TIME=       Sets the despool time. Defaults to the current time.
+                 Time format is hour:minute{AM/PM} (e.g., 19:30 or 7:30PM)
+    /DELAY=      Sets a despool delay. Defaults to no delay. Delay
+                 format is hours:minutes (e.g., 1:15 to delay 1 hour and
+                 15 minutes). Maximum delay is 96 hours.
+    /VERBOSE     Display file names as they are queued.
+    filename     Pathname of file to print. Wildcard characters are OK.
+    device       Device name to print on.
+    comment      Comment text associated with print job. If omitted, the
+                 filename is used.
+    copies       Number of copies to print.  If omitted, 1 is assumed.
+`QUEUE
+NET QUEUE command \\server-name {[LPTn COMn despooler-name ALL]}
+
+  commands:
+    START        Starts despooling if STOPped HALTed or PAUSEd.
+    STOP         Stops despooling at end of current job.
+    HALT         Halts despooling immediately. The current print job will
+                 be placed back in the queue and restarted when despooling
+                 is enabled once again.
+    PAUSE        Pauses despooling immediately. The current print job is
+                 not closed and will resume when despooling is restarted.
+    SINGLE       Despools a single print job.
+    RESTART      Restarts despooling at start of the file.
+    STATUS       Displays status of physical printer on server.
+
+  server-name    Name of server on which to perform despool operation
+  LPTn           Parallel printer to control (LPT1, LPT2 or LPT3)
+  COMn           Serial printer to control (COM1, COM2, COM3 or COM4)
+  despooler-name Name of the remote print despooler to control.
+  ALL            Control all printers.
+`RECEIVE
+NET RECEIVE {position delay}
+ Displays last unsolicited message received. Optionally pops-up last
+ message to screen.
+
+    position     Line number to pop up receive message on. Line numbers
+                 range from 0 to 22.
+    delay        Length of time in seconds that a message will appear
+                 before it is removed.
+`RUN
+NET RUN{/NOCR} \\server-name "command"
+ Sends a command string to the server, to be processed as if it had been
+ entered from the server's keyboard.
+
+    /NOCR        Don't append a carriage return to the command string.
+    server-name  Name of server on which to run command.
+    "command"    Command to run on server.
+`SHOW
+NET SHOW{/BATCH/CONNECT}
+ Displays information about the state of the network.
+
+    /BATCH       Display information suitable for use in a batch file.
+    /CONNECT     Same as /BATCH but doesn't display the NET USER command
+                 and uses the /WAIT option on the NET LOGIN command.
+`SEND
+NET SEND machine-name "message" {{server-name} {user-name}}
+ Sends an unsolicited message.
+
+    machine-name Name of machine to send message to.
+    message      Message to send.
+    server-name  Optional name of server that user must be logged into in
+                 order to receive the message.
+    user-name    Optional name of user to receive message. You must
+                 specify a server-name to use this option.
+
+ To send a message to a user-name you could use the following command:
+
+    NET SEND * "<message>" * <user-name>
+`SHUTDOWN
+NET SHUTDOWN{/REBOOT}{/CANCEL}{/HALT}{/SILENT} \\server-name
+                                 {{minutes} "message"}
+
+ Causes a server to be shut down.
+
+    /REBOOT      Reboot the server after shutting down.
+    /HALT        Halt processing on the server after it shuts down.
+    /SILENT      Don't notify logged in users of impending shutdown.
+    /CANCEL      Cancel a pending shutdown for the server.
+    minutes      Number of minutes before actual shutdown (default=0).
+    message      Message to send to logged in users to warn them
+                 of coming shutdown. You can include a # in the message;
+                 it will be expanded to the number of minutes remaining.
+                 A $ will expand to the letter s if the minutes
+                 remaining isn't equal to 1.
+`STREAM
+NET STREAM{/ENABLE /DISABLE} \\server-name {{stream-index} {stream-value}}
+ Gets or sets a logical printer stream on a server. This allows you to
+ enable or disable individual printer streams instead of having to disable
+ the server's printer.
+
+    /ENABLE       Enables the printer stream.
+    /DISABLE      Disables the printer stream.
+    server-name   The server whose printer stream you want to get/set.
+    stream-index  Optional stream index to set/get stream information for.
+    stream-value  New value to assign to stream index.
+`STRING
+NET STRING{/LEFT=n}{/RIGHT=n} variable {string1 {string2}}
+ Assigns a string of characters to a pre-existing environment variable
+ that is either typed in by the user or extracted from one of LANtastic's
+ special string macros. Type NET HELP MACROS for more information on
+ string macros. When two strings are specified they are first linked
+ together (concatenated) before any characters are extracted.
+
+  /LEFT=n          Counting from the left, the number of the character to
+                   begin extraction.
+  /RIGHT=n         Counting from the left, the number of the character to
+                   end extraction.
+  variable         Pre-existing environment variable to receive string.
+  string1          String to assign to environment variable.
+  string2          Optional second string to concatenate after string2.
+`TERMINATE
+NET TERMINATE \\server-name user-name {machine-name} {minutes}
+ Terminates (logs out) specified user(s) from a server. You must have
+ the "S" (System Manager) privilege to use this command. The user may log
+ back in again, subject to the restrictions of his account and the
+ NET LOGINS state for the server. You cannot terminate yourself with this
+ command (Use NET LOGOUT).
+
+    server-name  Name of server to log user(s) out from.
+    user-name    Name of user(s) to terminate. You can end this in an
+                 asterisk ("*") to match multiple users.
+    machine-name Optional name of machine to terminate. You can end this
+                 in an asterisk ("*") to match multiple machines. Both
+                 user-name and machine-name must match for a user to be
+                 terminated. Defaults to "*" (Any machine).
+    minutes      Number of minutes advance warning to give the user before
+                 logging him off. Defaults to 0 (immediately).
+
+ To terminate all users on server MAIN (except yourself) in five minutes,
+ you could use the following command:
+
+    NET TERMINATE \\MAIN * * 5
+`UNLINK
+NET UNLINK
+ Breaks a remote program load connection (usually a remote boot),
+ restoring physical drives A: and B: to their original state.
+`UNUSE
+NET UNUSE [D: LPTn COMn]
+ Cancels a disk or device redirection.
+
+    D:         Disk to cancel redirection for (A-Z or "*").
+    LPTn       Printer to cancel redirection for (LPT1, LPT2, LPT3, LPT4
+               or LPT*).
+    COMn       Printer to cancel redirection for (COM1, COM2, COM3, COM4
+               or COM*).
+`USE
+NET USE{/DEFERRED/REPLACE} D: \\server-name{\path...}
+ Connects a local drive letter on your computer to a shared drive or
+ directory resource on a server.
+
+NET USE{/DEFERRED/REPLACE} [LPTn COMn] \\server-name{[\path... @device]}
+ Connects a local printer port on your computer to a shared printer
+ resource on a server.
+
+    /DEFERRED    Retries failed user attempt later when a user attempts
+                 to use connection.
+    /REPLACE     Replaces any existing connection.
+    D:           Local drive letter to connect to server resource (A-Z).
+    LPTn         Local printer port to connect to server resource (LPT1,
+                 LPT2, LPT3 or LPT4).
+    COMn         Local printer port to connect to server resource (COM1,
+                 COM2, COM3 or COM4).
+    server-name  Server where shared disk or printer resource resides.
+    path         Resource name or DOS path of drive or directory to
+                 connect to local drive letter.
+    @device      Shared printer resource on server to connect to printer.
+
+`USER
+NET USER{/DISABLE} username {password} {adapter#}
+ Sets the default username, password, and adapter number to be used
+ for automatic log-in to servers.
+
+    /DISABLE     Disable automatic log-in feature.
+    username     Username to use for automatic log-ins.
+    password     Password to use for automatic log-ins.
+    adapter#     Optional adapter number through which to log in. If it
+                 isn't specified, all adapters will be attempted.
+`?
+NET ? {command}
+ Provides NET command line Help information.
+
+    command      Optional command on which to get Help.
+`*MACROS
+ Special macro strings available:
+  ?"prompt"        Prompts for input with echo. Expands to typed input.
+  ^"prompt"        Prompts for input with no echo. Expands to typed
+                   input. 
+  #"prompt"        Prompts for input with no echo. Expands to typed
+                   input (use instead of '^' on NT). 
+  !"DATE"          Expands to the current date.
+  !"DAY"           Expands to the current day of the week.
+  !"DIRECTORY"     Expands to current disk and directory.
+  !"ETEXT=n"       Expands to error text associated with error number n.
+  !"FILE=pathname" Expands to the first line contained in the file.
+  !"INSTALLED"     Expands to characters corresponding to installed
+                   programs:
+                   N=NETBIOS  R=REDIR  S=SERVER  P=LANPUP -=Not installed
+  !"LOGIN=server"  Expands to "TRUE" if logged in to server, otherwise it
+                   expands to "FALSE."
+  !"NODEID"        Expands to the current 12-digit NETBIOS node number
+  !"MACHINEID"     Expands to the machine name.
+  !"PROGRAM"       Expands to the full path of the NET program.
+  !"TIME"          Expands to the current time.
+  !"USER"          Expands to the default username for automatic log-ins.
+  !"USERID=server" Expands to the current username on the server. Returns
+                   "FALSE" if not logged in, "TRUE" if logged in but
+                   unable to get account information.
+
+ The special macro strings can be used with any command that takes
+ arguments.
+`*ERRORS
+  Below are the error messages that correspond to the error code levels
+  returned by NET. You can also see the message text displayed if you
+  use the NET ECHO !"ETEXT=number" number command, where "number" refers
+  to any of the NET error code numbers shown in the left column below.
+
+  128  Invalid command. Type NET HELP for Help
+  129  LANtastic (Tm) redirector (REDIR) must be installed
+  130  NETBIOS must be installed
+  131  Wrong REDIR version. NET requires version 6.00
+  132  Missing argument. Type NET HELP
+  133  No such Help item. Type NET HELP
+  134  Unknown subfunction. Type NET HELP
+  135  Bad argument. Type NET HELP.
+  136  Can't find environment variable
+  137  No Help information available for this command
+  138  Unknown macro expansion
+  139  Can't locate NET menu module
+  141  Resource already in use by NetWare(R).
+  142  Password expiring.
+  143  Cannot NET PRINT/DIRECT. File must reside on a network drive.
+  144  Cannot NET PRINT/DIRECT. File and printer port must reside on the
+       same server.
+  145  Cannot NET PRINT/DIRECT. Printer port must be redirected to a
+       server.
+  146  Invalid resource specified. Resource does not exist.
+  147  Wildcard login failed. No available servers support wildcard logins.
+`*SYNTAX
+  The correct syntax for running NET is:
+
+       NET[/switches] command arguments...
+
+   where "switches" refers to any command line switches. "Command" refers
+   to any of the NET commands. "Arguments..." refers to any optional
+   parameters for the NET command. For example,
+
+       NET/MONO
+       NET SHOW
+       NET USE S: \\SERVER1\C-DRIVE
+
+   You can also use commas as delimiters if you want omit one or more
+   arguments. For example, if you want to omit the comment argument in
+   a NET PRINT command but want to specify the number of copies, you can
+   separate the arguments with commas. For example,
+
+   NET PRINT FILE.TXT LPT1,,10
+
+   Without the two commas, the NET program would assume that "10" is the
+   comment for the print job. For more information on the NET PRINT
+   command, type NET HELP PRINT or NET ? PRINT.
+
+   Type NET HELP or NET ? for a complete list of the NET switches and
+   commands.
+
+
+
+
+
+

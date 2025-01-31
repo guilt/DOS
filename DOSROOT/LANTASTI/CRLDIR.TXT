@@ -1,0 +1,312 @@
+LANtastic 7.0 for DOS: Using Control Directories
+================================================
+(c) 1996, Artisoft, Inc.
+-----------------------
+
+This file covers the following main topics:
+
+Creating a new control directory
+Selecting and editing a control directory
+Deleting a control directory
+Backing up a control directory
+Restoring a control directory
+Resetting a control directory
+Requiring a password for a control directory
+Changing a control directory password
+Disabling a control directory password
+
+------------------------------------------------------------
+All the accounts, resources and server startup parameters
+that you create using the NET_MGR program are stored in a 
+network control directory. When you make a change to one 
+of those settings, you edit the control directory.
+
+In most cases a server has only one network control 
+directory - the default LANTASTI.NET. But LANtastic gives 
+you the option of creating multiple control directories on 
+your hard disk. This means you can have more than one 
+network configuration saved. You can then switch control 
+directories whenever your current network situation warrants. 
+
+All changes to control directories are made using the 
+NET_MGR program. This program also lets you edit the 
+control directories of servers located throughout the 
+network, allowing you to maintain all your servers from 
+just one computer. This is especially handy, for example, 
+if you need to set up a user with a new account on several 
+servers. From one computer, you can create or copy an 
+account for that user on any network server.
+------------------------------------------------------------
+
+Creating a new control directory
+================================
+1. At the DOS prompt, type NET_MGR <Enter>. 
+
+2. Select Control Directory Maintenance <Enter>.
+
+3. Select Change Control Directory, press Enter, then type 
+the name and full DOS path for the control directory you 
+want to create <Enter>. 
+
+Note - You can't create a new control directory when an 
+existing control directory is selected. 
+
+4. Select Create Control Directory, press Enter, then 
+press Enter again to confirm. NET_MGR creates a new 
+control directory with no user accounts or resources. You 
+can now set up accounts and resources for the new 
+directory. To quickly set up a control directory, copy 
+accounts and resources from one directory to another as 
+described in "Copying and pasting accounts and ACL groups" 
+and "Copying a resource" in the file Accts.txt. 
+
+Selecting and editing a control directory
+=========================================
+1. Complete steps 1 and 2 in the above "Creating a new 
+control directory." 
+
+2. Select Change Control Directory, press Enter, then type 
+the name and full DOS path for the control directory you 
+want to edit <Enter>. If the control directory is 
+password-protected, you're prompted for the valid 
+password. 
+
+If you've connected a local drive to a remote server's 
+network control directory, you can also enter that drive 
+and directory and edit it as if it resided on one of your 
+own disks.
+
+You can now edit the control directory to your 
+specifications. To instruct the SERVER program to use this 
+control directory by default, include the name of the 
+directory on the SERVER command line. For example, typing 
+SERVER C:\CONTROL.DIR <Enter> would run the SERVER program 
+using the information specified in the CONTROL.DIR network 
+control directory. If you run LANtastic from your 
+STARTNET.BAT file, edit the command line running SERVER so 
+that the desired control directory is used. 
+
+Selecting a control directory with the LAN_DIR variable
+-------------------------------------------------------
+You can use the DOS SET command to set an environment 
+variable to store the location of a default control 
+directory. Once this is done, both NET_MGR and SERVER will 
+use this control directory unless you specify a different 
+one on the command line. This is handy if you want to run 
+NET_MGR from any drive and edit the same directory. 
+Otherwise NET_MGR searches for LANTASTI.NET on the current 
+drive.
+
+The control directory variable is set by default as 
+C:\LANTASTI.NET in your STARTNET.BAT file. To specify a 
+different control directory, edit the SET command in 
+STARTNET. For example, to make D:\NETWORK.DIR the default 
+control directory you'd change the command to 
+SET  LAN_DIR=D:\NETWORK.DIR.
+
+Selecting a control directory from the command line
+---------------------------------------------------
+To specify that you want to edit a control directory other 
+than LANTASTI.NET from the DOS command line, use the 
+NET_MGR CONTROL= switch. The syntax for this switch is: 
+NET_MGR  /CONTROL=directory-name. For example, to edit 
+DIR.NEW, you'd type NET_MGR  /CONTROL=DIR.NEW <Enter>. 
+
+When specifying which control directory you want the 
+SERVER program to use, the syntax is: 
+SERVER  directory-name. For example, 
+SERVER  DIR.NEW <Enter>. 
+
+Deleting a control directory
+============================
+1. Make sure the LANtastic SERVER program isn't running.
+
+- If Windows is running, quit Windows.
+
+- At the DOS prompt, press Ctrl+Alt+Del (don't reboot, 
+though). A shutdown screen appears. 
+
+- If there are any files open, press the space bar to exit 
+the screen and ask people to close any open files. When 
+all files are closed, press Ctrl+Alt+Del, and then S to 
+shut down the SERVER program.
+
+2. At the DOS prompt, type NET_MGR <Enter>.
+
+3. Select Control Directory Maintenance <Enter>.
+
+4. If the name of the control directory that you want to 
+delete doesn't appear at the top of the screen in the 
+NET_MGR USING field, complete the steps in "Selecting and 
+editing a control directory" earlier in this file. 
+
+WARNING! - If you select a remote server's control 
+directory for deletion, make sure the server isn't 
+currently using it. If this occurs, users can't use that 
+server's resources until it's shut down and SERVER is run 
+with a valid control directory specified on the command 
+line.
+
+5. Select Delete Control Directory, press Enter, then 
+press Enter again to confirm that you want to delete the 
+control directory. This option deletes only LANtastic 
+control directory files. Any user files residing in the 
+control directory are preserved. 
+
+6. Press Esc to exit each screen.
+
+Backing up a control directory
+==============================
+1. Complete steps 1 and 2 in "Creating a new control 
+directory" earlier in this file. 
+
+2. Select Change Control Directory, press Enter, then type 
+in the name and full path of the control directory you'd 
+like to back up <Enter>. If you've connected a local drive 
+to a remote server's control directory, you can also back 
+up that directory by specifying its path.
+
+3. Select Backup Control Directory <Enter>. Type in the 
+name under which you want this directory saved, including 
+the full path <Enter>. 
+
+4. Press Esc to exit each screen.
+
+Restoring a control directory
+=============================
+To restore a control directory that's been backed up with 
+the NET_MGR Backup Control Directory feature:
+
+1. Complete steps 1 and 2 in "Creating a new control 
+directory" earlier in this file. 
+
+2. At the DOS prompt, type NET_MGR <Enter>. Select Control 
+Directory Maintenance <Enter>. 
+
+3. Select Restore Control Directory, press Enter, then 
+type in the name of the control directory archive file 
+that you want to restore, including the full path <Enter>. 
+
+4. NET_MGR displays the original name for this directory. 
+Press Enter if this is the desired name or type a new name 
+for the restored control directory <Enter>. 
+
+Note - If you specify an existing control directory, 
+NET_MGR doesn't overwrite any of its files. It restores 
+only those files that don't exist in the current version 
+of the control directory. To restore the existing control 
+directory, you must first delete it. Then you can restore 
+it from the backup control directory.
+
+5. Press Esc to exit each screen.
+
+Resetting a control directory
+=============================
+This option allows you to reset various default values. 
+You can use it to set up default shared disk and printer 
+resources, server startup parameters, and single wildcard 
+accounts and to clear the spool area.
+
+1. Complete steps 1 and 2 in "Creating a new control 
+directory" earlier in this file. 
+
+2. Select Reset Control Directory <Enter>. The  Reset 
+Control Directory Options screen appears.
+
+3. Choose one or more of these four options from the Reset 
+Control Directory Options screen:
+
+Add default resources
+---------------------
+Resets default shared disk and printer resources. This 
+option overwrites any existing resources with the same 
+name as default resources and returns them to their default
+values, including all ACLs and account privileges. It also 
+creates any missing default resources.
+
+Reset server startup parameters
+-------------------------------
+Resets the default server startup parameters. This option 
+returns any existing server settings in the control 
+directory to their default values. 
+
+Reset account
+-------------
+Sets up a single wildcard account. This option deletes all 
+existing accounts and creates a single wildcard account 
+with default privileges.
+
+Clear spool
+-----------
+Clears all mail and printer files from the spool area.
+
+Requiring a password for a control directory
+============================================
+To increase security on a server, you may want to enable 
+a password requirement for a server's control directory. 
+Once this is done, a user must enter the correct password 
+to use NET_MGR to edit that control directory. 
+
+1. At the DOS prompt, type NET_MGR <Enter>.
+
+If the control directory you want to set up with a 
+password doesn't appear at the top of the screen in the 
+NET_MGR USING field, complete the steps in "Selecting and 
+editing a control directory" earlier in this file.
+
+2. Select Password Maintenance <Enter>. 
+
+3. Select Enable Password Access for NET_MGR, press Enter, 
+then type the desired password <Enter>. It can be up to 16 
+characters long. 
+
+WARNING! - Make sure you type the password carefully. Once 
+you enter it, you can't see what you typed. If the 
+password is lost, you must delete the server's control 
+directory and reinstall LANtastic.
+
+4. Type the password again to confirm, press Enter, then 
+press Esc to exit each screen. 
+
+Changing a control directory password
+=====================================
+1. Complete steps 1 and 2 in the previous section. 
+
+2. Type in the current password, press Enter, then select 
+Change Password <Enter>. If the control directory isn't 
+password-protected, the Change Password option doesn't 
+appear. 
+
+3. Type in the new password <Enter>.
+
+WARNING! - Make sure you type the new password in 
+carefully. Once you enter it, you can't see what you 
+typed. If the password is lost, you must delete the 
+server's control directory and reinstall LANtastic. 
+
+4. Type the new password again to confirm, press Enter, 
+then press Esc to exit each screen. 
+
+Disabling a control directory password
+======================================
+1. Complete steps 1 and 2 under "Requiring a password for 
+a control directory" earlier in this file. 
+
+2. Type in the current password <Enter>.
+
+3. Select Disable Password Access for NET_MGR, press 
+Enter, then press Esc to exit each screen. 
+
+Related Topics
+==============
+- The file Mngrpt.txt explains how to use LANtastic's many 
+print management features. You'll learn, for example, how 
+to change the status of a print job and control the 
+despooling process.
+- For information on LANtastic's security, auditing and 
+remote server control abilities, go to the file Mngsrv.txt.
+- To learn about the accounts, resources and server 
+startup parameters stored in each server's control 
+directory, go to files Accts.txt, Shrres.txt, and 
+Cfgsrv.txt, respectively.
+

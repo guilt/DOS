@@ -1,0 +1,639 @@
+1  Config.sys   Alt+1
+
+   Loads the file CONFIG.SYS from the preset location.
+2  Autoexec.bat  Alt+2
+
+   Loads the file AUTOEXEC.BAT from the preset location.
+3  Startnet.bat  Alt+3
+
+   Loads the file STARTNET.BAT from the preset location.
+4  Connect.bat  Alt+4
+
+   Loads the file CONNECT.BAT from the preset location.
+5  Startnet.cfg  Alt+5
+
+   Loads the file STARTNET.CFG from the preset location.
+6  Win.ini      Alt+6
+
+   Loads the file WIN.INI from the preset location.
+7  System.ini   Alt+7
+
+   Loads the file SYSTEM.INI from the preset location.
+8  Wnet.ini     Alt+1
+
+   Loads the file WNET.INI from the preset location.
+9  Protocol.ini  Alt+9
+
+   Loads the file PROTOCOL.INI from the preset location.
+0  Net.cfg       Alt+0
+
+   Loads the file NET.CFG from the preset location.
+Find        Alt+Z 
+          
+   Starts a new search from the start of the file, looking for
+   a match to the same text as what you enter at the prompt.
+find Next    [F3]
+
+   After finding a match while searching, this hotkey will continue
+   the search to find the next match in the file.
+
+   If you select this command without having started a previous
+   search, you are prompted for a search string first.
+Replace     Alt+R
+
+   Use Replace to search for character strings up to 50 letters
+   long, and replace them with new strings.  Options to replace
+   one match at a time with prompting, or to replace all matches
+   at once are given.
+Goto line   Alt+G
+
+   Prompts for a line number, then moves the cursor to that line.  If
+   the number is out of range for the file, an error message is
+   displayed.
+line 1  Ctrl+PgUp
+
+   Places the cursor at the first letter of the first line of the file.
+Endline Ctrl+PgDn
+
+   Takes the cursor to the first letter in the last line of the file.
+win Top Ctrl+Home
+
+   Takes the cursor to the first letter in the line at the top
+   of the current screen window.
+win Bot. Ctrl+End 
+
+   Takes the cursor to the first letter in the last line of the
+   current screen window.  If this line past the end of the file,
+   the cursor is moved to the last line in the file.
+Copy/begin block  [F5]
+
+   Copies the current line, or a range of lines if blocked,
+   into the clipboard.  Any lines already in the clipboard
+   are lost.
+cuT block    SHIFT+Del 
+
+   Removes the current line or a range of blocked lines from
+   the file and places them in the clipboard.  Any lines already
+   in the clipboard are lost.
+delete Block  Ctrl+Del
+
+   Erases a block of lines if a block is highlighted.
+Del line        Ctrl+Y 
+
+   Erases the current line, or block of lines if blocked.
+Ins line    Ctrl+Enter
+
+   Creates a new blank line at the cursor's current row.
+Paste block  SHIFT+Ins
+
+   Inserts the contents of the clipboard into the file at the
+   current cursor row.
+duplicate Line    [F6]
+
+   Makes a copy of the current line and inserts it at the current row.
+Move line/block   [F7]
+
+   Places the current line into a special buffer where it will stay
+   until you select this option again to paste the line.  While
+   moving a line you can continue to edit, cut & paste, etc. without
+   harm to this line.
+
+   If you exit the editor while moving a line, the line is saved and
+   will still be waiting for you to finish the move when the editor
+   is restarted.
+REM/unREM line    [F8] 
+
+   Inserts or removes REM commands at the start of a line.  This
+   helps turn commands on or off by REMarking them.
+
+   While editing a file with a name extension of ".CFG" or ".INI",
+   this command will place or remove a semicolon ; instead of the
+   letters "REM " at the start of a line.
+
+   Using the SHIFT key along with F8 will reverse this command's use
+   of ";" and "REM ", allowing you to use both remark type whatever
+   the file extension.
+load High        [F11]
+
+   Inserts or removes the LOADHIGH command (or LH) at the start of
+   a line.  This command will not work when editing the CONFIG.SYS
+   file.
+cOnnections      Alt+C 
+
+   Pastes the batch file command equivalents of your current
+   network logins and device redirections into the file at the
+   current cursor row.
+
+   This command is not available when the network drivers are not
+   loaded.
+Net commands    [F12] 
+
+   This menu allows you to easily paste the most common NET commands
+   into to the file.
+Topic search [F1]
+
+   If in the editor, this attempts to identify DOS and NET
+   commands on the current line and display information
+   about them.
+
+   In menus, the help for the highlighted menu item is shown.
+
+   When an error message is displayed, help for the error is shown
+   if any can be found.
+DOS help index
+
+   Lists DOS commands that you can get help on.
+Editor help
+
+   Tips on what keys are valid in the main editor.
+About Lan EDit Alt+M
+
+   Displays the copyright, and information about the current 
+   configuration of LED.  Includes items such as how much memory
+   is available, number of lines in the file, number of files in
+   the history list, and the status of some options.
+Line editor    
+
+   Changes LED to a "one line at a time" editor.
+
+   This forces the user to select a line by pressing enter on it first,
+   and saving changes to the line by pressing enter again.  Also, most
+   menu commands are disabled while editing a line.  A scroll bar helps
+   select the correct line to change.  When working with batch or command
+   files, these features help prevent errors.  When editing normal text
+   files, you may wish to turn them off.
+Full screen editor    
+
+   Changes LED to a full screen editor.
+   
+   This disables the need to hit the enter key to change a line, and
+   allows all commands to function all the time.  Also turns off the
+   cursor scroll bar.
+Color scheme
+     
+   Choose the color scheme you prefer.  It is saved for future
+   sessions in the LED.CFG file.
+Turn OFF disclaimer
+
+   Stops the disclaimer from being shown each time the program
+   starts.  This option is saved to the LED.CFG file, so if this
+   file is deleted the disclaimer will display at startup again.
+Turn ON  disclaimer
+
+   Allows the disclaimer to be shown each time the program starts.
+Open File Alt+Q
+        
+   Loads a file. You can also specify a file name on the command
+   line when you start Lan EDit.
+Filename or New Path
+
+   This field allows you to enter a filename, or quickly change
+   drive or path.  You can also enter a server name (with
+   backslashes) as the path if the network is loaded.
+
+   If a mouse driver is loaded, you may it to move from one window
+   to another, or to make selections by clicking twice on the same
+   item within a window.  You may also use some function keys as
+   short cuts (see tip line at bottom).
+Files
+
+   Select a file from the current directory out of this box.  If
+   a filter is set to other than "*.*", only files that match the
+   filter will be shown.
+Drives
+
+   Select a drive from a list of those available.
+Directories
+
+   Change to a different directory.  ".." is the parent of the
+   current directory.
+History
+
+   Shows the history of files edited from most recent to oldest.
+   Up to 64 file names are stored.
+File Filter
+
+   Restrict the files displayed by a standard DOS filter.  The
+   default is "*.BAT" to show only batch files.
+Servers
+
+   Changes the path to another machine on the network.  Use this
+   box to select files from another server when the network is
+   loaded.  This is useful if you need to edit a file on a server
+   but you do not already have a drive redirected to it.
+preset Server Alt+W
+
+   The location of the preset filenames can be changed with
+   this option to use another Server on the network. 
+
+preset Drive  Alt+V
+
+   The drive letter of the preset files can be changed from
+   here.  The directories of the preset files (\LANTASTI and
+   \WINDOWS), can be changed with environment variables
+   (LAN_CFG and WIN_CFG).  For example, SET LAN_CFG=\NETWORK
+   would look for the Startnet and Protocol files in the
+   \NETWORK directory.
+Remove from history
+
+  This option allows you to remove a filename from the history list.
+EDITOR KEYS     (Some of the commands available while editing a file)
+   
+   HOME = Start of line   END = End of line
+   ESC  = Cancels most commands, or will restore a line before you save it
+   SHIFT+PageUp,PageDown,Left,Right,Up,Down = Move cursor and Start Block
+
+   SHIFT+INSERT= Paste                  SHIFT+DELETE  = Cut to clipboard
+   CTRL+ENTER  = Insert a line          CTRL+Y        = Delete line
+   CTRL+Right  = Last word on line      CTRL+Left     = Next word
+   CTRL+PageUp = Top of file            CTRL+PageDown = End of File
+   CTRL+HOME   = Top of screen          CTRL+END      = Screen bottom
+   CTRL+INSERT = Copy to clipboard      CTRL+DELETE   = Erase block
+   
+   ALT+F,E,S,O,I,H = File, Edit, Search, Options, Information, Help Menus
+   ALT+P or F9     = Print file or blocked area
+   ALT+L           = Loads the most previous file edited.
+   ALT+Q           = Open a new file.
+   ALT+X           = Exit the editor completely back to DOS.
+   ALT+C           = Paste current network connections as batch commands
+   
+   Function Keys are shown at the bottom of the screen.  To get help on
+   one of these, go to it's Menu (File, Edit, etc.) and hit F1.
+Save  [F2]
+        
+   Saves the file in the editor to disk.
+
+   The first time you save a file that already exists on the disk,
+   the original is renamed with an extension of ".LE$".  This file
+   will stay as the original archive.
+
+   If the "LE$" original exists, the previous version on disk is
+   renamed with an extension of ".OLD".  So if you have edited a file
+   multiple times, the original file is saved as "filename.le$", and
+   the next to the last version is kept as "filename.old".
+save As... Alt+A
+        
+   Changes the name of the file in memory to a new name, then
+   saves the file to disk.  If the new name is the same as a 
+   file that already exists, you are warned and must confirm
+   before saving.
+New empty file  Alt+N
+        
+   Starts a blank file.  You are asked for a name first.  If the
+   name is the same as a file that already exists, your new file
+   will overwrite the existing file when you save it.
+Jump to... [F4]
+        
+   If the current line contains another batch file as a command or
+   if CALLed, this command will attempt to load that file into
+   the editor.
+Last File   Alt+L
+  
+   This choice allows you to quickly load the last file you edited.
+Print   [F9]
+         
+   Sends the file in memory to the local or network printer.
+Utilities  Alt+U
+
+   Brings up the file Utilities menu, for special troubleshooting.
+   You may use these commands to alter the system configuration
+   files to test, and later restore them easily.
+
+   Note that these Utilities can not be used while a file is loaded
+   into the editor.  You must either save any changes to an open file,
+   or discard them to use Utilities.
+Restore
+
+  Deletes the current version of a file, and restores a previous
+  one. You can choose what type of backup file to restore:
+          Utility (Vanilla/Pause) test (.LED)
+          Last version before save (.OLD)
+          Original Archive (.LE$)
+
+  Restore works by searching for <filename>.LED .OLD or LE$ depending
+  on your selection, and if found, deletes the normal filename, then
+  renames the backup file to the original.  ".OLD" and ".LE$" require
+  confirmation.  Also note that originals (.LE$) are copied, not
+  renamed, which leaves the archive in place.
+
+  If you have used a test utility on an "Other" file, use the exact
+  same path\filename to restore it.
+Utility test backup  (.LED)
+
+  Selects an archive file to restore after Utility testing, such
+  as after a "Vanilla", "Rename", or "Pause" command.
+Last edited version  (.OLD)
+
+  Selects the version of a file just before the last SAVE command
+  to restore.  Each time you save a file in LED, the previous version
+  is renamed to <filename>.OLD first.
+Original archive     (.LE$)
+
+  Selects the original archive of en edited file to be restored.
+
+  The first time an existing file is edited and saved with LED, the
+  original is renamed to <filename>.LE$.  The preserves the original
+  version, since subsequent saves use the extension .OLD and the 
+  backup.
+insert Pauses 
+
+   Select a batch file from the default list or choose "Other"
+   for one-step execution to isolate a problem command.  The file
+   will be saved to <filename>.LED, and a copy will be made with
+   ECHO ON and a PAUSE after each command.
+Vanilla
+
+   This option will allow you to quickly make tests in the system for
+   possible driver conflicts.  The DOS startup files are changed
+   to a "basic" mode.  Select a file (or Both) for changing.  The
+   utility will save the current file to <filename>.LED, and you can
+   later use the RESTORE option to easily undo the changes.  This is
+   an excellent way of testing for a software problem.  If problem goes
+   away under the Vanilla setup, add the old commands one at a time
+   until the problem returns.
+
+   If your system uses special drivers such as disk compression
+   utilities, or if you are using an NDIS network driver, you should
+   choose the "Selective" vanilla option.  This choice will prompt
+   you for which files to keep in the basic setup.
+
+   If you will be troubleshooting with Windows programs, use the
+   Windows versions of vanilla (or Selective).  This will keep the
+   HIMEM.SYS driver loading from the default "\DOS" directory.
+
+   Always have a bootable floppy handy just in case.
+reName
+
+   This option will rename a system startup file to <filename>.LED.
+   You can then boot the machine free of drivers (called a "clean"
+   boot), or proceed to make some test files and easily restore
+   the originals after testing.
+
+   If your system uses special drivers such as disk compression
+   utilities, or if you are using an NDIS network driver, you should
+   choose the "Selective" vanilla option.  This choice will prompt
+   you for which files to keep in the basic setup.
+
+   Always have a bootable floppy handy just in case.
+B - Config & Autoexec 
+
+   Selects the CONFIG.SYS and AUTOEXEC.BAT files for a VANILLA,
+   RENAME, or RESTORE command.
+1 - Config.sys
+
+   Selects the CONFIG.SYS file only for a VANILLA, RENAME, or
+   RESTORE command.
+2 - Autoexec.bat
+
+   Selects the AUTOEXEC.BAT file for a VANILLA, RENAME, PAUSE,
+   or RESTORE command.
+3 - Startnet.bat
+
+   Selects the STARTNET.BAT file for a RENAME, PAUSE,
+   or RESTORE command.
+4 - Connect.bat 
+
+   Selects the CONNECT.BAT file for a PAUSE, or RESTORE command.
+Other
+
+   Allows you to select any batch file for a PAUSE, or RESTORE
+   command.
+1 - Config for Windows
+
+   This selects the CONFIG.SYS file only for a Windows VANILLA, 
+   which leave the HIMEM.SYS line in the file necessary to run
+   Windows.
+W - Both for Windows
+
+   This selects the CONFIG.SYS file only for a Windows VANILLA, 
+   which leave the HIMEM.SYS line in the file necessary to run
+   Windows.  It also selects the AUTOEXEC.BAT file for VANILLA.
+1 - Selective Config
+
+   Allows you to VANILLA the CONFIG.SYS file one line at a time,
+   keeping or removing lines by hitting "Y" or "N".  This allows
+   you to easily reboot several times while troubleshooting a test
+   configuration, without having to step through DOS's prompts
+   over and over again.
+eXit     Alt+X
+
+   Exits the editor.  If the current file is not saved you
+   are asked whether or not to save it.
+System
+
+   Displays the default information screen, which lists details
+   about the local computer hardware, and memory totals.
+Processor
+ 
+   Gives detailed information about the CPU in the computer.
+Netbios information
+
+   If a NetBIOS driver is found running on the system, this
+   will display traffic and error statistics for one adapter
+   at a time.
+network Connections
+
+   Displays network details for the local machine, and also lists
+   current network connections in a scrolling window.
+network Logins
+
+   Displays network details for the local machine, and also lists
+   current logins with available servers in a scrolling window.
+I/O ports
+
+   Displays information about COMM and LPT ports on the local
+   computer.
+IRQ Vectors
+
+   Lists the address and owner in memory for the interrupt vectors. 
+Hardware IRQs
+
+   Lists the address and owner of the 16 hardware interrupt vectors.
+Disk drives
+
+   After selecting a drive, this displays size, sector, and other
+   information.
+Memory blocks
+
+   Lists the memory control block (MCB) chain, showing the address,
+   size, and owner of each block.
+DOS environment
+
+   Reports on what DOS resident programs can be found, and information
+   about the master environment strings in a scrolling window.
+TSR versions
+
+   A utility to list TSR programs in memory and attempt to
+   report on what version they are by looking for the original
+   file on disk.  For LANtastic DOS drivers, the precise version is
+   shown.  For other drivers, only the file date is shown.
+Selective Vanilla for CONFIG.SYS
+
+  A selective vanilla allows you to troubleshoot a computer in a clean
+  environment, but one where the normal Vanilla command would have 
+  removed a driver necessary to use the computer.  Examples of these
+  drivers would be a disk drive compression utility or a TSR that
+  is needed for a specific program to run, like a CD-ROM driver.
+
+  This utility will read the CONFIG.SYS file in the default preset
+  location, and display one line of the file at a time.  You can 
+  choose to keep a line by pressing "Y", not keep it by pressing "N",
+  or hit the ESC key to stop the selective vanilla, and the either
+  abort the process or keep only the lines you have indicated.
+
+  The process of selective vanilla is to rename the existing CONFIG.SYS
+  to CONFIG.LED, then write the lines you say "Yes" to into a new
+  CONFIG.SYS file.  You can restore the original file using the 
+  Utility menu's Restore option.
+YES OR NO
+
+   You are being asked for confirmation on some action before
+   continuing with the last command.  This is probably a warning
+   that your command has consequences.  Normally, these are the
+   choices you can make:
+
+       No  - You don't care about the consequences, proceed.
+
+       Yes - Take corrective action, then proceed.
+
+       ESC - Cancel the command, it was a mistake.
+BUFFER FULL
+                  
+   Either you are trying to create a single line longer than the
+   255 character limit, or the memory set aside for the text buffer
+   has been exhausted.  Note the DOS ignores characters on command
+   lines past 127.  If you need more than 255 on a single line,
+   use another editor.
+
+   If the text buffer is full, use ALT-H for help, then hit A
+   for About LED to see how much memory is available.  The largest
+   size for a single file is 65,519 characters, but that could be
+   less if there's limited memory.  The available memory is divided
+   in half, for the text buffer and clipboard buffer of equal size.
+
+   Note that after you save a file that completely fills the text
+   buffer, it may grow larger to a size that LED can not load.  This
+   is because in memory, only linefeeds separate lines, but on disk
+   DOS uses CR/LF combinations.
+FILE NOT FOUND
+
+   The requested command could not be located.  Check the path and/or
+   the spelling.  If the file was another batch file being CALLed,
+   it should include the full DOS PATH+Filename, or be located
+   somewhere in the current PATH.  
+          
+   In a Jump [F4], the PATH used is from the current ENVIRONMENT,
+   not the PATH= shown in a file being edited.
+NO BACKUP
+
+   The program was unable to remove the previous copy of FILENAME.OLD,
+   where "FILENAME" is the current file name, or it could not rename
+   the current file with a OLD extension.  The OLD file may be write
+   protected or have network security.  There may also be a problem
+   with the disk drive.
+
+   This is only a warning, and LED will try to save the current file
+   without making the backup copy.  
+FILE NOT OPEN
+
+   The requested file could not be opened for either input or
+   possibly output.  This could be due to a write protected disk,
+   a write protected file, a sharing violation, or some other disk
+   error.  This is not the same as "File Not Found".  The file was
+   found, but couldn't be accessed.
+
+   Note that LED opens files in read-only mode.  This allows you
+   to load files that are read-only or locked by share into the
+   editor.  If you then try to save such a file, you will get a 
+   File Not Open error.  In that case, save the file under a
+   different name.
+DISK ERROR
+
+   While writing to a file a disk error occurred.  This might be
+   due to a full disk, or hardware failure.
+
+   You should run a CHKDSK or SCANDISK to be sure the disk's FAT
+   table is not corrupted.
+NO PRINTER
+
+   The printer device is invalid or not responding.  Check that
+   the printer does function in other programs.  Also be sure
+   it is ON-LINE and has paper.  Is the printer attached to the
+   computer?
+PRINTER ERROR
+
+   An error occurred while writing to a printer device.  Check
+   that the printer is powered on, and is not out of paper.
+          
+   Also, if the print job is being spooled to disk, such as in
+   a network, be sure the disk is not full or corrupted.  Run
+   a CHKDSK or SCANDISK (without the network loaded), on the
+   print/spool server.
+FILE EXISTS
+
+   You have changed the name of the current file to one that
+   is already used on the disk in the current directory.
+
+   If you choose to use this name anyway, when you save the
+   file you might be over writing another one.  If you intend
+   to replace the file on disk with this one, ignore this error.
+OUT OF RANGE
+
+   The value given for this command was not within the minimum or
+   maximum allowed.  Most DOS commands that use numbers have limits
+   to their settings, such as LASTDRIVE=Z and FILES=255.
+
+   You may also see this error if you try to "goto" a line number
+   less than 0 or greater than your text file in the LED editor.
+NO HELP
+
+   The context sensitive search system was unable to find a match
+   with any of the key words in the help file.
+
+   If you are looking for help on a driver or command in a file
+   being edited, many drivers have their own help that can be
+   accessed by exiting to DOS, and typing DRIVERNAME /HELP.
+PATH NOT FOUND
+
+   The requested path can not be found or doesn't conform to the
+   DOS standards of valid letters or length.
+INVALID DRIVE
+
+   A drive must be a single letter from A to Z.
+NO NETWORK
+
+   The network software is not loaded.  Many of the functions
+   in Lan EDit only work with the network REDIR.EXE program
+   running.
+NO NETBIOS
+
+   To display this information, you need to have the NetBIOS drivers
+   running.  In an ethernet network, this usually means the low level
+   driver and AILANBIO.  For NDIS, the Protman, card driver,
+   AI-NDIS, and AILANBIO must be loaded.
+FILE NOT CLOSED
+
+   To use the file Utilities, any file in memory must first be closed.
+
+   If the file in memory has changes net yet saved to disk, you must
+   tell the program to saved the changes, or cancel the command.  You
+   may also answer "No" to the "Save Changes" prompt and continue with
+   the utilities, but doing so will discard changes to the current 
+   file.
+MOVE NOT COMPLETE
+
+   You are about to exit LED while a MOVE BLOCK is in progress.  If
+   you continue and exit, the lines of data in the clipboard holding
+   what you are trying to move will be lost.
+
+   MOVE BLOCK uses the memory clipboard to hold the lines being move
+   until you paste them back into the file.  MOVE LINE does not use
+   the clipboard, but has it's own special buffer.  Also, if you exit
+   while using MOVE LINE, the line being moved is saved along with
+   other data in the LED config file, and reloaded into the buffer
+   the next time you start the editor.
+
+   So if you exit while in MOVE BLOCK, the block is lost, but if
+   you exit while in the middle of a MOVE LINE, the line is not
+   lost, and will still be waiting to be pasted when you run LED again.
+

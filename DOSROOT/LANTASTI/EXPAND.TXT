@@ -1,0 +1,609 @@
+LANtastic 7.0 for DOS: Expanding and Changing Your Network
+==========================================================
+(c) 1996, Artisoft, Inc.
+------------------------
+This file covers the following main topics:
+
+Increasing the maximum number of users
+Adding or deleting a network user
+Adding a computer
+Removing a computer
+Adding a CD-ROM drive
+Changing a computer name
+Adding an HP JetDirect printer
+Creating a printer pool resource
+Adding a network printer
+Disconnecting a printer
+Adding a new drive or printer connection
+Adding a Central Station to your network
+Adding a modem to your network
+Changing a workstation to a server
+Changing a server to a workstation
+Improving network performance
+Synchronizing clocks on selected servers
+Synchronizing your clock from another server
+
+Increasing the maximum number of users
+======================================
+
+After you finish the installation steps in the LANtastic 
+Installation and Setup Manual, each of your servers lets 
+up to ten people use its drives and printers at once. If 
+you want a server to allow more people to use it at the 
+same time, follow these steps:
+
+1. Go to the server that needs to allow more users. 
+
+2. At the DOS prompt, type NET_MGR. The NET_MGR main 
+screen appears, showing the name of the current control 
+directory. 
+
+If you want to modify a different control directory, use 
+the Control Directory Maintenance option. For more 
+information about using control directories in DOS, refer 
+to the file Crldir.txt. 
+
+3. Select Server Startup Parameters <Enter>. 
+
+4. Enter a full path to the SERVER.EXE file that you'll use
+with the control directory you're modifying <Enter>. The 
+Server Startup Parameters screen appears. 
+
+5. Select Maximum Users <Enter>.
+
+6. Type in the number of simultaneous users that you want 
+this server to allow <Enter>.
+
+7. Press Esc from each screen to return to the DOS prompt. 
+If the computer is running Windows, exit Windows.
+
+8. Press Ctrl+Alt+Del, then press the S key. To restart 
+your system, press Ctrl+Alt+Del again. 
+
+9. Run your LANtastic software. 
+
+Note - To obtain faster response time on a server that has 
+many simultaneous users, you may want to increase the 
+Network Buffer and Network Task server startup parameters. 
+Instructions appear in the file Cfgsrv.txt.
+
+Adding or deleting a network user
+=================================
+If everyone is automatically logging in to all servers 
+with no restrictions, you can add or delete a user without 
+taking any action at all. The user simply starts or stops 
+using the network. If adding a new user requires a server 
+to allow more than five users at the same time, complete 
+the above instructions for increasing the maximum number 
+of users. In a network that uses security, you'll also 
+have to add or delete accounts and resources. Instructions 
+appear in the files Accts.txt and Shrres.txt.
+
+Adding a computer
+=================
+If you purchase a new computer after LANtastic 
+has been installed, you can easily add it to the network.
+
+1. Install a network adapter in your new computer 
+according to the instructions in your adapter 
+documentation or the LANtastic Installation and Setup 
+Manual. 
+
+2. Turn off all network computers and cable the new 
+computer to your network according to the instructions in 
+your adapter documentation or the LANtastic Installation 
+and Setup Manual. 
+
+3. Install the LANtastic software using the instructions 
+in the LANtastic Installation and Setup Manual. 
+
+4. Go to each computer that will regularly use the new 
+computer's disk drive and make a new permanent drive 
+connection as described under "Making a new drive 
+connection" in the file Drives.txt.
+
+5. If appropriate, follow one or more of these steps:
+
+- If the new computer is a server and you want to allow 
+more than five users at one time, follow the steps for 
+increasing the number of simultaneous users earlier in 
+this file.
+
+- If the new computer is a server with more than one 
+printer attached, follow the steps for creating a shared 
+printer resource in the file Shrres.txt and increasing the 
+number of printer tasks later in this file. 
+
+- If the new computer is a server and you want to set it 
+up with account and resource restrictions, use the NET_MGR 
+program to add security features. See "Review of server 
+security strategies" in the file Mngsrv.txt for more 
+information on LANtastic's security options.
+
+Removing a computer
+===================
+You can either physically disconnect a computer or simply 
+prevent the LANtastic software from running on that 
+particular computer. 
+
+Physically disconnecting a computer
+-----------------------------------
+1. Turn off the computer you want to remove.
+
+2. Disconnect the network cable from the computer you want 
+to remove.
+
+- If you have a thin coaxial cable (10BASE2) network, just 
+remove the T-connector from the computer's network adapter 
+card and attach this cable to the next computer. If you 
+have to remove a section of cable or a T-connector, first 
+turn off all the computers in your network. Otherwise you 
+may disrupt network connections and lose data. If the 
+computer you removed was an end node, move the terminator 
+to the new end node.
+
+- If you have a twisted pair network (10BASE-T), just 
+unplug the RJ45 connector from the computer's network 
+adapter card.
+
+3. If the computer you just removed was a server, go to 
+each computer that has been using that server's disk 
+drives and printers. 
+
+4. Run SETNET on each computer that logged in to the 
+computer you are disconnecting, as described in "Making a 
+new drive connection" in the file Drives.txt. Remove any 
+drive connections to the disconnected computer. This 
+updates the CONNECT.BAT file.
+
+5. Reboot the computer.
+
+6. Repeat steps 4 - 5 for each computer that has been 
+using the server you disconnected. 
+
+Preventing LANtastic from running
+---------------------------------
+To prevent the LANtastic software from running on your 
+computer, you must edit the AUTOEXEC.BAT file as 
+instructed in the following steps. This is convenient when 
+you want to temporarily remove your computer from the 
+network.
+
+1. Use a text-only editor such as EDIT or Windows Notepad 
+to edit your computer's AUTOEXEC.BAT file. Comment out the 
+call to the STARTNET.BAT file as shown below:
+
+REM STARTNET.BAT
+
+2. Save the changes to the AUTOEXEC.BAT file and exit the 
+editor.
+
+Adding a CD-ROM drive
+=====================
+To make a CD-ROM drive available to others on your 
+LANtastic network, you must run extension software such 
+as Microsoft's MSCDEX and add a line to your STARTNET.BAT 
+file as described in this section. Then you must make the 
+CD-ROM drive a shared resource.
+
+1. Install the CD-ROM drive and support software as 
+instructed in the manufacturer's manual. 
+
+2. Open your STARTNET.BAT file (in the LANTASTI directory) 
+using the text editor of your choice. After the REDIR 
+line, add the command that executes the CD-ROM software. 
+You can find this command either by reading your CD-ROM 
+drive documentation or looking in your computer's 
+AUTOEXEC.BAT or CONFIG.SYS file. The command 
+typically appears in the AUTOEXEC.BAT file. When you're 
+finished with this step, the command to execute the CD-ROM 
+software should appear between the REDIR line and the 
+SERVER line in your STARTNET.BAT file.
+
+For example:
+
+REDIR SERVER1
+MSCDEX.EXE /D:MSCD004 /L:F
+SERVER
+
+These instructions may differ from the CD-ROM 
+manufacturer's guidelines. However, with LANtastic you 
+must run the extension software as directed above.
+
+3. Delete the CD-ROM drive's command from your 
+AUTOEXEC.BAT or CONFIG.SYS file.
+
+4. Complete steps 1 - 4 for creating a shared drive 
+resource under "Creating a shared disk or directory 
+resource" in the file Shrres.txt.
+
+5. At the NET_MGR main menu, select Shared Resources 
+Management, press Enter and select the new resource 
+<Enter>. 
+
+6. Select Disk Drive Type, press Enter and select the type 
+of drive you're using (CD-ROM, WORM or other) <Enter>. If 
+a message about using non-DOS disks appears, take a moment 
+to read it then press Esc.
+
+7. Press Esc to go back to the NET_MGR main menu.
+
+8. Select Server Startup Parameters. Enter the full path 
+to LANtastic's SERVER.EXE program (usually 
+C:\LANTASTI\SERVER.EXE). In the Server Startup Parameters 
+screen, make sure Non-DOS Disk Support is enabled. If it 
+isn't, use the arrow key to select it, then give it a 
+setting of 100. For further information about this 
+setting, see the file Cfgsrv.txt. 
+
+Note - When using a shared non-DOS disk connection, you 
+can't use wildcard characters such as "?" and "*" with the 
+DOS DEL and REN commands. Also, if you can't see all the 
+files in a shared drive when you use the DOS DIR command, 
+increase the Non-DOS Disk Support setting in the server 
+startup parameters. Steps appear in the file Cfgsrv.txt. 
+
+Changing a computer name
+========================
+To change the name of a network computer, use a text-only 
+editor such as EDIT or Windows Notepad to edit its 
+STARTNET.BAT file. Change the computer name in the REDIR 
+line and any other lines where the name appears. Save the 
+changes to the STARTNET.BAT file and exit the editor.
+
+Make sure the STARTNET.BAT and CONNECT.BAT files on any 
+other computers with connections to the renamed computer 
+are edited to reflect the new name.
+ 
+Adding an HP JetDirect printer
+==============================
+LANtastic 7.0 allows you to add an HP JetDirect printer 
+directly to your network. This allows you to make use of 
+this printer's high-performance printing abilities, since 
+your print jobs are sent to and received by the printer at 
+a faster rate than non-direct printers. It also allows you 
+to place the printer in nearly any location without 
+compromising space or network security by having a server 
+nearby. 
+
+To add an HP JetDirect printer to your network, you must 
+first set up a resource for it and make some configuration 
+changes on a server in your network. 
+
+Creating a printer pool resource
+================================
+LANtastic V7.0 lets you set up a printer pool resource 
+that contains a prioritized list of other printer 
+resources. When a user wants to print a job, LANtastic 
+will send it to the first available printer in the list. 
+Instructions for setting up this feature appear under 
+"Creating a printer pool resource" in the file Shrres.txt.
+
+Adding a network printer
+========================
+If you purchase a new printer after LANtastic has been 
+installed:
+
+1. Connect the new printer to a server as instructed in 
+your printer manual. 
+
+2. If the server hasn't yet been set up for network 
+printing, do so according to the instructions in the next section.
+
+3. Set up the printer as a shared resource, as described 
+under "Creating a shared printer resource" in the file Shrres.txt.
+
+4. Go to each computer that will regularly use the new 
+printer and make a new permanent printer connection. See 
+"Making a new printer connection" in the file Print.txt.
+
+5. If the server has more than one printer attached, or if 
+the new printer is attached to a port other than LPT1, 
+follow the instructions under "Increasing the number of 
+printer tasks" later in this file.
+
+Setting up a server to support network printing
+-----------------------------------------------
+To set up a server's printer for sharing on the network, 
+the server must be set up to support network printing. 
+
+1. Type NET_MGR <Enter>. The NET_MGR main screen 
+appears, showing the name of the current control 
+directory. 
+
+If you want to modify a different control directory, 
+use the Control Directory Maintenance option. For more 
+information about using control directories in DOS, refer 
+to the file Crldir.txt. 
+
+2. Select Server Startup Parameters <Enter>. 
+
+3. Enter a full path to the SERVER.EXE file that you'll use 
+with the control directory you're modifying <Enter>. The 
+Server Startup Parameters screen appears. 
+
+4. Select the Printing option <Enter>. 
+
+5. At the Printing Configuration screen, press Enter to 
+toggle the Printing option to Enabled. 
+
+6. Press Esc from each screen to return to the DOS prompt.
+
+7. Press Ctrl+Alt+Del, then press the S key. To restart 
+your system, press Ctrl+Alt+Del again.
+
+8. Run your LANtastic software. You must now create a 
+shared printer resource for the new printer as described 
+under "Creating a shared printer resource" in the file 
+Shrres.txt.
+
+9. Go to each computer that will regularly use the new 
+printer and make a new permanent printer connection. To 
+make a new permanent connection, see "Making a new printer 
+connection" in the file Print.txt.
+
+Increasing the number of printer tasks
+--------------------------------------
+If you have multiple printers connected to a server and 
+want to send jobs to them at the same time, you must 
+increase the printer tasks for that server. You also need 
+to follow these steps if a server has a printer attached 
+to a port other than LPT1. 
+
+1. Go to the server with multiple printers.
+
+2. Type NET_MGR <Enter>. The NET_MGR main screen appears, 
+showing the name of the current control directory. 
+
+If you want to modify a different control directory, use the 
+Control Directory Maintenance option. For more information 
+about using control directories in DOS, refer to the file 
+Crldir.txt. 
+
+3. Select Server Startup Parameters <Enter>. 
+
+4. Enter a full path to the SERVER.EXE file that you'll 
+use with the control directory you're modifying <Enter>. 
+The Server Startup Parameters screen appears. 
+
+5. Select the Printing option <Enter>. The Printing 
+Configuration screen appears. 
+
+6. Make sure the Printing option is enabled, then select 
+Printer Tasks <Enter>. 
+
+7. Type in the number of printers attached to this server 
+<Enter>.
+
+8. Press Esc from each screen to return to the DOS prompt.
+Press Ctrl+Alt+Del, then press the S key. To restart your 
+system, press Ctrl+Alt+Del again. 
+
+9. Run your LANtastic software. 
+
+Disconnecting a printer
+=======================
+First disconnect the printer cable from the port on your 
+computer. Your next step is to temporarily or permanently 
+remove the printer from the network as described in the 
+sections that follow. 
+
+Temporarily removing a printer
+------------------------------
+1. From the NET Main Functions menu, select Connect to 
+Other Computers' Printers <Enter>. 
+
+2. Use the arrow keys to select the printer you want to 
+remove, then press Delete. 
+
+3. Press Esc to exit each screen. 
+
+Permanently removing a printer
+------------------------------
+After you disconnect a printer from your network, you need 
+to delete the printer connections to that printer from all 
+the computers in your network that used that printer. 
+After you complete these steps, you can't use this printer 
+until you reconnect it to a server and make a new network 
+connection to it using either NET or SETNET.
+
+Complete these steps to remove a printer connection from 
+computers in your network.
+
+1. On each computer that uses this printer, use a 
+text-only editor such as EDIT or Windows Notepad to open 
+the CONNECT.BAT file. 
+
+2. Remove the NET USE command for the server's printer 
+from the CONNECT.BAT file:
+
+NET USE LPT1 \\OFFICE_SERVER\@PRINTER
+
+3. Save the changes to the CONNECT.BAT file, and exit the 
+editor. 
+
+4. If you're using LANtastic's Windows interface, go to 
+your LANtastic for Windows User's Manual and follow the 
+steps for temporarily removing a printer. Then from the 
+LANtastic Net main window, open the Options menu and 
+choose Save Settings Now. This removes any previously 
+saved connections to the printer you disconnected. 
+
+5. Reboot the computer.
+
+6. Repeat these steps on each computer that has been using 
+the printer you've removed.
+ 
+Adding a new drive or printer connection
+========================================
+When you installed LANtastic you created a set of drive 
+and printer connections that become available whenever you 
+run the network software. To make a new permanent 
+connection, use the SETNET command as described under 
+"Making a new drive connection" in the file Drives.txt and 
+"Making a new printer connection" in the file Print.txt.
+
+Adding a Central Station to your network
+========================================
+With LANtastic 7.0 your servers can now send print jobs 
+directly to an Artisoft Central Station. You no longer 
+have to use the CSPRINT TSR program to capture print jobs 
+for the Central Station. This frees server memory and 
+allows you to take advantage of the Central Station's 
+ability to receive print jobs at a faster rate than local 
+printers. It also allows you to place the printer in 
+nearly any location without compromising space or network 
+security.
+
+To use a Central Station as a despool device on your 
+network, you must first set up a resource for it. This 
+server accepts print jobs from the network and sends them 
+to the Central Station. To add a Central Station to your 
+network, see "Creating a shared printer resource" in the 
+file Shrres.txt.
+
+Adding a modem to your network
+==============================
+With LANtastic 7.0, you can add a modem to a single 
+computer in your network and share it with all the other 
+computers on your network. Instructions appear in the 
+LANtastic for DOS User's Manual. 
+
+Changing a workstation to a server
+==================================
+If you selected the workstation option when you installed 
+LANtastic - that is, you decided not to share your 
+computer's drives and printers - the only way you can 
+make this computer a server is by reinstalling LANtastic.
+
+1. Reinstall the LANtastic software as described in the 
+LANtastic Installation and Setup Manual. Be sure to choose 
+the Share My Computer's Drives and Printers option.
+
+2. Tell your co-workers the new server's computer name, 
+so they can begin to make connections to its drives and 
+printers.
+
+If you did install as a server but for some reason the 
+SERVER program isn't running, exit Windows and type SERVER 
+<Enter> at the DOS prompt. Then type WIN <Enter> to go 
+back to Windows. To find out why your computer isn't 
+automatically loading the SERVER program, refer to the 
+LANtastic Troubleshooting Manual. 
+
+Changing a server to a workstation
+==================================
+To convert a server on your network to a workstation, 
+complete these steps.
+
+1. Use a text-only editor such as EDIT or Windows Notepad 
+to edit your computer's STARTNET.BAT file. Comment out the 
+call to the SERVER program as shown below:
+
+REM SERVER
+
+2. Save the changes to the AUTOEXEC.BAT file and exit the 
+editor.
+
+Note - Any NET LOGIN, NET USE or other commands that 
+reference this computer should be removed from all batch 
+files on other computers, including the WIN.INI file. 
+
+Improving network performance
+=============================
+For normal network use, LANtastic's default server and
+workstation configurations provide excellent speed. 
+However, if a large number of users frequently access 
+the same server, you may want to fine-tune some parameters 
+to obtain faster server response. Instructions appear in 
+the file Imprv.txt. 
+
+Synchronizing clocks on selected servers
+========================================
+In some situations, such as when synchronizing files, it's 
+important that the system clocks on all network servers 
+are set to the same date and time. In a finance office, 
+for example, details of cash transactions may be listed in 
+separate files. To keep reliable records, you'd need to 
+synchronize the clocks on all the finance office servers. 
+Then you can accurately compare the dates and times when 
+transactions were recorded. 
+
+Note - All the servers whose clocks you want to 
+synchronize must already have been set up to support clock 
+synchronization. To set up a server to allow its clock to 
+be synchronized, go to the NET_MGR Server Startup 
+Parameters screen and enable the Server Control option. 
+You can synchronize clocks only if you have the S (System 
+Manager) privilege. Furthermore, this feature is available 
+only in LANtastic's DOS interface. 
+
+You can use any server or workstation on the network to 
+carry out the synchronizing process. To do this, complete 
+these steps: 
+
+1. From the NET Main Functions menu, select Monitor and 
+Manage Network Activity <Enter>. A screen appears listing 
+all the servers and workstations found on the network.
+
+2. If you want to add a server to the list, press Ins and 
+type in the server's name <Enter>. Then type in the 
+adapter number of that server (usually 0) <Enter>. 
+
+3. When all the desired servers appear on the list, press 
+the F9 key. You'll have to wait a few moments as your 
+computer scans each listed computer. All workstations and 
+any servers that haven't been set up to support clock 
+synchronization will be deleted from the list. The date 
+and time that's currently set on each remaining server 
+appears next to that server's name. 
+
+If the list shows only those servers whose times you want 
+to synchronize, skip to step 5. If you want to remove a 
+server from the list, complete step 4.
+
+WARNING! - It's a good idea to double-check that only 
+those computers whose clocks you want to synchronize 
+appear on the list. Once you've started the 
+synchronization process, there's no way to return to the 
+previous settings on any of the listed computers. 
+
+4. If you don't want to synchronize the clocks on every 
+listed server, you can remove a server from the list. To 
+do this, press Esc to return to the previous screen. Then 
+use the arrow keys to select the server you want to remove 
+and press Del. Press Enter to confirm the deletion. Repeat 
+this process until only the desired computers appear on the 
+list. Then press F9.
+
+5. Use the arrow keys to select the computer whose clock 
+you want to use to set all the other computer's clocks. 
+Press Enter to begin the synchronization process. Press 
+Enter to confirm. 
+
+6. Press Esc from each screen to return to the DOS prompt.
+
+Synchronizing your clock from another server
+============================================
+Every time you log in to a server, you'll be prompted to 
+specify whether or not you want to set your computer's 
+clock from that server's clock. If you do, type Yes. If 
+you don't, simply press Enter.
+
+You can also use the NET CLOCK command to set your own 
+computer's clock from the clock on another server. To do 
+this, at the DOS prompt, type: 
+
+NET  CLOCK  \\[Servername] <Enter>
+
+where Servername is the name of the server whose date and 
+time you want to use for your computer's clock. 
+
+You must already be logged in to the server. 
+
+Related Topics
+==============
+Go to the file Imprv.txt to learn how to improve 
+network performance. 
+
+

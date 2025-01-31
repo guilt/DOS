@@ -1,0 +1,1374 @@
+LANtastic 7.0 for DOS: Monitoring and Managing Your Server
+==========================================================
+(c) 1996, Artisoft, Inc.
+------------------------
+
+This file contains the following main topics:
+
+Review of server management strategies
+Review of server security strategies
+Using audit trails
+Monitoring a server using NET
+Controlling a remote server
+Logging a user out of a server
+Disabling user logins to a server
+Shutting down a remote server
+Canceling a server shutdown
+Sending a pop-up message
+Flushing a server's caches
+Using the ALONE program
+UPS support
+
+Review of server management strategies
+======================================
+As described in detail in the file Cfgsrv.txt, the server 
+startup parameters are the settings that a server uses 
+whenever you run LANtastic. As such, they're important 
+server management tools. For example, if only one of your 
+servers has a printer attached, you can turn off the 
+Printing module for all your other servers, saving 
+valuable application memory. 
+
+You can set the server startup parameters by selecting 
+the Server Startup Parameters option from the LANtastic 
+NET_MGR main screen. This screen provides these 
+configuration options:
+
+- In the Server Startup Parameters screen, the 
+Configuration type option includes a server personality 
+list that lets you choose pre-set options for print and 
+file servers. In addition to this convenient list of 
+pre-sets, the Server Startup Parameters screen sets 
+parameters such as the maximum number of users who can 
+access the server, the number of adapters installed, the 
+number of open files the server can support and advanced 
+options like Remote Booting and Floppy Direct access. You 
+can also set performance options such as the network 
+buffer size and the number of tasks the server can perform 
+at the same time.
+
+- A Printing module that lets you set options such as the 
+number of shared printers that people can print to at the 
+same time and the size of the printer buffers.
+
+- The Security and Send ID module that lets you enable 
+server security functions such as sending the server's 
+name to network computers, user accounts and Access 
+Control Lists.
+
+- An Auditing module that sets up a log of server events 
+you want audited.
+
+- A Notification module that lets you specify the types of 
+events you want to receive notification of, such as when 
+free disk space drops below 1MB.
+
+The server startup parameters are stored in a network 
+control directory, which you can use as another server 
+management tool. The file Crldir.txt tells you how to 
+create multiple control directories so you can have more 
+than one network configuration saved.
+
+As shown in the list of modules in the Server Startup 
+Parameters screen, several options can help increase a 
+server's speed and efficiency. The file Imprv.txt explains 
+more about this aspect of server management, including 
+techniques such as running LANtastic's LANcache program. 
+
+You can also increase server efficiency by running 
+LANtastic's ALONE program, which provides improved 
+performance on dedicated servers (servers you aren't using 
+as workstations). For instructions, see "Using the ALONE 
+program" later in this file.
+
+Restricting access to confidential data files is another 
+important part of server management. To ensure that your 
+servers are set up with the right level of security, 
+review the strategies listed in the next section.
+
+Review of server security strategies
+====================================
+As discussed in the file Accts.txt, you can establish 
+security on your server by using account-related 
+strategies such as:
+
+- Deleting the default "*" wildcard account.
+- Setting up individual or wildcard login accounts.
+- Granting account privileges sparingly.
+- Enabling time-of-day logins and password expiration 
+dates.
+
+As described in the file Shrres.txt, you can also take 
+advantage of resource-related security strategies, such as:
+
+- Dividing your hard disk into separate, well-organized 
+directory resources.
+- Giving each user or user group their own set of Access 
+Control List (ACL) rights to each resource.
+- Establishing file-level security.
+
+As described in the file Cfgsrv.txt, you can enable the 
+following security strategies in the Server Startup 
+Parameters screen by:
+
+- Using the Security and Send ID option to turn off the 
+Send Server ID option, so a person must know the server's 
+name before she can log in to it.
+- Enabling the Logins and Logouts options in the 
+Notification module, so people with the O (Operator) 
+privilege will receive pop-up notification when someone 
+logs in or out of the server.
+
+Additional server security strategies include:
+
+- Placing a server with confidential files in a locked 
+room.
+- Using the LANtastic uninterruptable power supply (UPS) 
+support feature, as described in the section titled "UPS 
+support" later in this file.
+- Enabling a password restriction for running LANtastic 
+NET_MGR and editing a server's control directory, as 
+outlined in the file Crldir.txt. 
+- Using the server monitoring and management strategies 
+described in this file.
+
+Note - For more information about network security, 
+including examples of networks with low, medium and high 
+levels of protection, check the list of available 
+Technical Notes on the Arti-Facts BBS.
+ 
+Using audit trails
+==================
+Audit trails enhance security by providing a log of what 
+server disk drives and printers were accessed by network 
+users and what types of access were allowed or denied. You 
+can customize auditing to check for only certain types of 
+access, such as when a user requests a device to which he 
+isn't allowed access. Likewise you can audit whenever a 
+user logs in or out.
+
+Audit trails also let you see how many users are making 
+simultaneous requests to a server. This can help you set 
+the appropriate values for the Maximum Users and Network 
+Tasks server startup parameters. Setting these values 
+correctly can improve performance and prevent you from 
+dedicating too much or too little server memory to the 
+network. 
+
+Another use of audit trails is to determine how well 
+you've distributed the network workload among your 
+servers. If one network server is performing many user 
+requests, you may want to move some of that computer's 
+resources to a server that isn't so busy. Finally, 
+auditing lets you keep accurate records for billing if you 
+charge users for network services. You simply set up an 
+audit trail for the desired services, then check the log 
+each billing period.
+
+Auditing precautions
+====================
+While auditing is a powerful feature, if used improperly 
+it can adversely affect server performance. Carefully 
+select the types of user activity you want audited, as 
+selecting all activities can slow server response time. 
+
+Important - Make sure you regularly delete old audit 
+trails, as they can consume a great deal of server disk 
+space.
+
+To save your audit trail information, refer to "Copying 
+and clearing the audit trail" later in this file. You can 
+then archive this file using a third-party utility, or 
+copy it to another disk. You can delete the old log using 
+the audit trail maintenance feature.
+
+Setting up an audit trail
+=========================
+For instructions on setting audit trail options, see the 
+file Cfgsrv.txt. To set up an audit trail:
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select Server 
+Startup Parameters <Enter>. 
+
+2. Select Auditing, press Enter, then press Enter again to 
+toggle the Auditing option to Enabled.
+
+3. Position the selection bar on each type of event you 
+want to be audited, then press Enter to enable it. 
+Auditing activities are described in detail in the file 
+Cfgsrv.txt. For each of the options that you enable, 
+LANtastic will record an audit trail entry. 
+
+4. Position the selection bar on Access Allowed or Access 
+Denied. This tells the server whether to audit the ACLs 
+that are allowed or the ones denied.
+
+5. In the blanks in the Access Allowed or Access Denied 
+field, type the letter corresponding to the ACL rights you 
+want audited. For example, if you want the server to make 
+an audit entry when someone is allowed read or write 
+access to a file, type R and W in the Access Allowed 
+Field. Refer to "Access Control List rights"  in the file 
+Shrres.txt for a complete description of all the ACL 
+rights, or press F1 for online Help.
+
+You can use the F3 key to quickly set auditing for all the 
+ACLs, or press the F4 key to remove all the ACL letters. 
+
+6. Press Esc to exit each screen.
+
+The settings you've specified won't take effect until the 
+next time you run SERVER. If SERVER is running, you must 
+remove it from memory before running it again. To do this, 
+make sure Windows isn't running and press Ctrl+Alt+Del 
+from the DOS prompt. In the screen that appears, make sure 
+there are no open files, then press S. 
+
+Viewing the audit trail file 
+============================
+Once the audit trail is created, you can view it using the 
+NET_MGR Audit Trail Maintenance option.
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select Audit 
+Trail Maintenance <Enter>. 
+
+2. Use the arrow keys to select View Last Few Audit 
+Entries <Enter>. You'll see a display that includes the 
+fields described in the tables on the following pages.
+
+Type
+----
+The first letter of each entry lists the types of entries 
+logged. The types are described in the following list.
+
+* = Server started. The Variable field (described later in 
+this file) contains a list of what the server will audit.
+
+! = Server shutdown.
+
+I = User logged in to the server. The Reason field 
+(described below) contains the user's privileges.
+
+O = User logged off or server connection broken. The 
+Variable field (described later in this file) contains the 
+amount of I/O performed, followed by the number of 
+requests.
+
+A = Access allowed to a server resource.
+
+D = Access denied to a server resource.
+
+Q = Entry placed on the server's queue.
+
+S = Queue entry despooled to a printer.
+
+H = Disk space has dropped below a preset threshold.
+
+B = CPU usage has risen above a preset threshold.
+
+U = User request to write an audit entry.
+
+Date
+----
+The second part of each entry shows the date it was made 
+in year, month and day format. 
+
+Time
+----
+The time the entry was made in hours, minutes and seconds.
+
+Username
+--------
+The network name of the user who made the request.
+
+Machine
+-------
+The network name of the computer from which the user made 
+the request.
+
+Reason
+------
+The reason the entry was made. It will be one of those 
+shown in the following list.
+
+@ device = Name of the printer where a print job was 
+output.
+
+Access = The type of access allowed or denied 
+(RWCMLDKNEAIP).
+
+TIMEOUT = User's time-of-day log-in session expired.
+
+DISCON = Server disconnect.
+
+NORMAL = User logged off of server.
+
+SHUTDOWN = User logged off by remote shutdown feature.
+
+UPS = User logged off by UPS shutdown feature.
+
+Variable
+--------
+This field contains information that varies with the type 
+of audit entry or the reason for that entry. The following 
+list shows the possible types of entries.
+
+Server startup = Shows any switches included on the SERVER 
+command line. It then displays the letters that correspond 
+to the types of events that are being audited. After this 
+you'll see the types of access allowed and denied that are 
+being recorded.
+
+Printer request = Shows the number of bytes spooled to or 
+output on a printer.
+
+Access request = Displays the name of the requested 
+resource or device.
+
+Any other separation = Shows the number of input/output 
+bytes performed and the number of requests that were made 
+to the server for that operation.
+
+Copying and clearing the audit trail
+====================================
+The Copy Audit Trail to File option enables you to save 
+server disk space by copying the audit trail to a file 
+periodically, then deleting the original audit trail. For 
+example, you might choose to copy the audit trail file 
+every week or every month and archive these files for 
+your permanent records. To do this, at the DOS prompt type 
+NET_MGR <Enter>. Select Audit Trail Maintenance <Enter>. 
+Select Copy Audit Trail To File <Enter>. Type in the full 
+DOS path of the file to which you want to copy the log, 
+press Enter, then press Esc to exit each screen.
+
+The Clear the Audit Trail File option enables you to 
+delete old audit entries that can take up a lot of space 
+on your server's disk. However, bear in mind that the 
+Clear the Audit Trail File option deletes ALL the entries 
+in the log. If you have entries that you want to save, 
+first copy the log to a file as described in the previous 
+section, then clear the audit trail file. To clear the 
+audit trail file, at the DOS prompt type NET_MGR <Enter>. 
+Select Audit Trail Maintenance <Enter>. Select Clear the 
+Audit Trail File, press Enter, then press Enter again to 
+confirm the deletion. This deletes all the entries in the 
+audit log. Press Esc to exit each screen. 
+
+Monitoring a server using NET
+=============================
+You can use the NET program to find out which users are 
+logged in to a server and what types of requests they've 
+made. If you have the N privilege, you can also get 
+detailed information about how the server is being used.
+
+1. At the DOS prompt, type NET <Enter>. Select Monitor and 
+Manage Server Activity <Enter>. 
+
+2. Select the server you'd like to monitor <Enter>. The Server 
+Management display appears. 
+
+- If you have the N privilege, press F3 to get detailed 
+information about how the server is being used. Press Esc 
+to return to the Server Management display.
+
+- The Server Management display provides information about 
+server activity at the time it was brought up. To update 
+the information in the display, press the space bar. Each 
+entry represents a user accessing the server.
+
+- The fields provide the following information: 
+
+ID #
+----
+Unique identification number assigned to each user by the 
+server.
+
+Username
+--------
+Name this user logged in under. A question mark in this 
+field indicates a user is in the process of logging in.
+
+Machine
+-------
+Network name of the user's computer.
+
+Command
+-------
+Last request the user made to this server. Although a 
+command is listed, it doesn't mean it was executed. A 
+server may deny a user request because of insufficient 
+access rights or privileges.
+
+IO Bytes
+--------
+Amount of data input and output in kilobytes (K), 
+megabytes (M) or gigabytes (G) that the server has 
+performed for the user. 
+
+#Reqs
+-----
+Number of requests the person has issued to the server 
+since she logged in.
+
+Privs 
+-----
+Person's account privileges for this server. A list of 
+possible privileges appears in "List of account 
+privileges" in the file Accts.txt.
+
+L-Logged In
+-----------
+User is logged in to the server. If the L isn't displayed, 
+the user is in the process of logging in.
+
+R - Remote Boot Log In
+----------------------
+User is logging in through a remote boot.
+
+
+The following is a list of the names and descriptions of 
+possible user request types that may appear under the 
+Command field.
+
+Audit Entry
+-----------
+A user audit entry was created.
+
+Cancel Shutdown
+---------------
+A server shutdown sequence was canceled.
+
+Change Password
+---------------
+A user changed his or her password.
+
+Change Username
+---------------
+A user changed his or her username.
+
+Close File
+----------
+A file was closed.
+
+Commit File
+-----------
+File data was committed to disk.
+
+Control Queue
+-------------
+A queue entry was modified, or the despooler was 
+controlled.
+
+Copy File
+---------
+A file copy was requested on the server.
+
+Create Dir
+----------
+A directory was created.
+
+Create File
+-----------
+A file was created. 
+
+Create Indirect
+---------------
+An indirect file was created.
+
+Create New File
+---------------
+A new file was created.
+
+Delete Dir
+----------
+A directory was deleted.
+
+Delete File
+-----------
+A file was deleted.
+
+Disable Account
+---------------
+An account was disabled.
+
+File Read
+---------
+Data was read.
+
+File Write
+----------
+Data was written.
+
+Find Disk Space
+---------------
+A user requested information as to the amount of free disk space.
+
+Find First File
+---------------
+A Find First operation was performed.
+
+Find Next File
+--------------
+A Find Next operation was performed.
+
+Flush Cache
+-----------
+Server's caches were flushed.
+
+Full Account
+------------
+A user has requested information about account and ACL 
+group rights.
+
+Get Account
+-----------
+Account information was requested.
+
+Get Indirect
+------------
+Contents of an indirect file were retrieved.
+
+Get Link Info
+-------------
+A user has requested information about a directory/device 
+Access Control List (ACL).
+
+Get Queue Entry
+---------------
+Queue entry information was requested.
+
+Get Queue Seq#
+--------------
+Information on a print job was obtained, based on its 
+sequence number.
+
+Get Resource
+------------
+Detailed information on a resource was obtained.
+
+Get Server Time
+---------------
+The current server time was requested.
+
+Get Stream
+----------
+A user has requested information about a logical printer 
+stream.
+
+Get Username
+------------
+A username was retrieved from the account file.
+
+Lock Range
+----------
+A file region was locked.
+
+Login
+-----
+A user is in the process of logging in.
+
+Multi-Mode Open
+---------------
+A multimode file open was performed.
+
+Notify Operator
+---------------
+A user received an operator notification message.
+
+Open File
+---------
+A file was opened.
+
+Printer Fields
+--------------
+A user requested printer fields from a resource.
+
+Printer Status
+--------------
+Current printer status was requested.
+
+Remote Dspl Drg
+---------------
+Remote despooler registration was canceled.
+
+Remote Dspl Reg
+---------------
+Remote despooler was registered.
+
+Remote Q Ctrl
+-------------
+Remote despooler queue control parameters were retrieved 
+or set.
+
+Rename File
+-----------
+A file was renamed.
+
+Run Command
+-----------
+A remote keystroke command string was submitted.
+
+Seek Position
+-------------
+A file seek operation was performed.
+
+Server Control
+--------------
+Server control parameters were retrieved or set.
+
+Set Attribute
+-------------
+A file's attributes were changed.
+
+Set Queue Entry
+---------------
+Detailed queue entry information was modified.
+
+Set Server Time
+---------------
+Server time was set.
+
+Set Stream
+----------
+Stream information was modified.
+
+Shutdown
+--------
+A server shutdown sequence was initiated.
+
+Terminate
+---------
+A user exited a program.
+
+Terminate User
+--------------
+A user's access was terminated by operator request.
+
+Transaction
+-----------
+A user requested detailed server information.
+
+Translate Path
+--------------
+A network pathname was translated.
+
+Unique File
+-----------
+A new file was created with a unique name.
+
+Unlock Range
+------------
+A file region was unlocked.
+
+Update Login
+------------
+Last login date in the accounts file was updated.
+
+User Status
+-----------
+User status information was obtained.
+
+Write W/Commit
+--------------
+Data was written and committed to disk.
+
+X Get Queue
+-----------
+Extended queue entry information was retrieved.
+
+X Print Status
+--------------
+Extended printer status was requested.
+
+X Set Queue
+-----------
+Extended queue entry information was modified.
+
+Controlling a remote server
+===========================
+LANtastic lets you use the server's keyboard and monitor 
+from your local PC. This is useful if you want to run a 
+command on a server and see the results. For example, 
+you can instruct a remote server to run a backup batch 
+file and see on your screen when the backup is complete. 
+You can even copy an entire server's screen to a file or 
+write directly to a server's screen.
+
+Note - To be able to control a server remotely, the Server 
+Control option of the Server Startup Parameters screen 
+must be enabled as described in the file Cfgsrv.txt. To 
+issue commands to the server, you must have Write access 
+to the server's keyboard resource. To view the server's 
+screen, you must have Read access to the server's screen 
+resource. These access rights are set up in the ACLs for 
+the shared screen or keyboard resource.
+
+1. At the DOS prompt, type NET <Enter>. Select Monitor & 
+Manage Server Activity. 
+
+2. Highlight the server you want to control and press 
+Enter.
+
+3. Press F2. The Server Control Options screen appears.
+
+4. Select Control the Server. You're now viewing the 
+remote server's screen. Any commands you type in at the 
+keyboard are executed at the server. 
+
+Note - The Watched Icon option for the server's screen 
+resource is enabled by default and causes an asterisk to 
+appear at the upper right corner of the remote server's 
+screen. This doesn't appear on your local screen. 
+
+The Help line appears at the top of your screen. It tells 
+you the name of the server, along with the resource you're 
+using to view the server's screen. If you need more help, 
+press Alt+F1. This brings up the Control Options menu with 
+these choices:
+
+Control Options Help
+--------------------
+Displays Help information on the menu items.
+
+Enable/Disable Keyboard Control
+-------------------------------
+Enables or disables keyboard control of the server.
+
+Read From Server
+----------------
+Lets you select the shared screen resource used to view 
+the server's monitor or copy an image of the server's 
+screen to a file or printer.
+
+Write To Server
+---------------
+Lets you copy data to a server's screen or keyboard 
+resource. You can copy an existing file to the server 
+resource or create a new file with the built-in text 
+editor and send it from there. You can also open your own 
+text editor from within this option and send it from that 
+program.
+
+Change Refresh Rate
+-------------------
+Lets you specify (in ticks - 1/18 second) the rate at 
+which the screen provides you with information from 
+the server's screen. Setting a faster refresh rate 
+increases the amount of network traffic, since more screen 
+updates are sent. The default value of six works for most 
+operations.
+
+Enable/Disable Help Line
+------------------------
+Enables or disables the Help line thatappears while 
+controlling the server, and allows you to see the top 
+line of the server's display.
+
+Exit Control
+------------
+Exits the Server Control screen.
+
+5. When you've finished controlling the server, press 
+Alt+F1 to bring up the Control Options menu. Then select 
+Exit Control <Enter>.
+
+Using a spooled keyboard resource
+=================================
+A spooled keyboard resource allows you to send a batch 
+file of commands to a server. The server then executes 
+these commands locally. You can even specify the time at 
+which the spooled commands are to be executed. To use this 
+feature, the server that you want to send a batch file to 
+must have a spooled keyboard resource. Unless it's been 
+deleted, you shouldn't need to create a spooled keyboard 
+resource, because during software installation, the 
+LANtastic SETUP program created an @BATCH spooled keyboard 
+resource on each server. To create a new spooled keyboard 
+resource, see the file Shrres.txt. 
+
+To run a batch file on a remote server:
+
+1. At the DOS prompt, type NET <Enter>. Select View Print 
+Jobs.
+
+2. Select the server to which you'd like to send the batch 
+file, then press Ins. 
+
+3. You can send a batch file to the server's spooled 
+keyboard resource from the DOS command line using the 
+NET PRINT and COPY commands. For example, you might type
+
+NET PRINT C:\BACKUP.BAT   \\ED\@BATCH
+
+COPY C:\BACKUP.BAT   \\ED\@BATCH
+
+You can also send the batch file to the server's spooled 
+keyboard resource using one of the methods outlined in the 
+next three sections.
+
+Using the LANtastic text editor
+===============================
+1. Complete steps one and two from the previous section.
+
+2. Select Using the LANtastic Editor.
+
+3. Select the server's spooled keyboard resource. If 
+created by INSTALL, this is @BATCH.
+
+4. Type in the DOS commands, one per line. When you're 
+finished, press F2.
+
+5. Set the time and date that you'd like the batch file 
+executed, or press Enter to despool the batch file 
+immediately. To set the date or time, press Tab to 
+increase the setting or Shift+Tab to decrease it.
+
+6. Enter a comment (up to 48 characters) <Enter>.
+
+7. Set the number of copies (generally this will be only 
+one) <Enter>. The batch file is sent to the server's queue.
+
+Using a different text editor
+=============================
+1. Complete steps one and two from "Using a spooled 
+keyboard resource" earlier in this file.
+
+2. Select Using Your Text Editor.
+
+3. Type in the full DOS path to the text editor you'd like 
+to use <Enter>. For example, you might type 
+C:\DOS\EDIT.COM.
+
+4. Type in the full DOS path and filename to edit. For 
+example, C:\AUTOEXEC.BAT. The text editor opens for you. 
+
+5. Type in the DOS commands, one per line. When you're 
+finished, save the file, then exit the text editor.
+
+6. Select the server's spooled keyboard resource. If 
+created by INSTALL, this is @BATCH.
+
+7. Type in the full DOS path of the file you're sending to 
+the server's queue <Enter>. 
+
+8. Set the time and date that you'd like the batch file 
+executed, or press Enter to despool the batch file 
+immediately. To set the date or time, press Tab to 
+increase the setting or Shift+Tab to decrease it. 
+
+9. Type in a comment for the batch file (up to 48 
+characters) <Enter>.
+
+10. Set the number of copies (generally this will be only 
+one) <Enter>. 
+
+11. To automatically bring up the same text editor the 
+next time you choose the Using Your Text Editor option, 
+press Enter. Otherwise press Esc. The batch file is sent 
+to the server's queue.
+
+Sending an existing batch file
+==============================
+1. Complete steps one and two from "Using a spooled 
+keyboard resource" earlier in this file.
+
+2. Select By Copying an Existing Text File <Enter>.
+
+3. Select the server's spooled keyboard resource. If 
+created by INSTALL, this is @BATCH.
+
+4. Enter the full DOS path of the batch file <Enter>. For 
+example, you might type C:\TEST\BACKUP.BAT.
+
+5. Set the time and date that you'd like the batch file 
+executed, or press Enter to despool the batch file 
+immediately. To set the date or time, press Tab to 
+increase the setting or Shift+Tab to decrease it.
+
+6. Enter a comment (up to 48 characters) <Enter>.
+
+7. Set the number of copies (generally this will be only 
+one) <Enter>. The batch file is sent to the server's queue.
+
+Logging a user out of a server
+==============================
+If you have the S (System Manager) privilege you can log 
+one or more users out of a server. You may want to do this 
+for security reasons, or if you want to remove all the 
+users while you maintain the server. However, once they're 
+logged out, users can still log back in to the server. To 
+prevent this, follow the steps in the next section after 
+logging all current users out.
+
+1. At the DOS prompt, type NET <Enter>. Select Monitor & 
+Manage Server Activity <Enter>.
+
+2. Select the server where the user is logged in <Enter>. 
+If necessary, log yourself in to this server. 
+
+3. Select the user that you'd like to log out of the 
+server and press Del. (Note that you can't log yourself 
+out with this feature.)
+
+4. Type in the number of minutes that will elapse before 
+logging the user off the server. To remove the user 
+immediately, accept the default value of zero. Press 
+Enter, then press Esc to exit each screen. 
+
+Disabling user logins to a server
+=================================
+If you have the S (System Manager) privilege, you can 
+prevent users from making any new logins to a server. 
+This doesn't cancel any current sessions that they've 
+already established. If you need to cancel current 
+sessions, follow the steps in the previous section before 
+disabling new logins. 
+
+1. At the DOS prompt, type NET <Enter>. Select Monitor & 
+Manage Server Activity <Enter>.
+
+2. Select the server where the user is logged in <Enter>. 
+If necessary, log yourself in to this server. 
+
+3. Press the F2 key, then select Disable Server Logins 
+<Enter>. The option toggles to Enable Server Logins.
+
+4. Press Esc to exit each screen.
+
+Users can no longer log in to this server. To re-enable 
+logins, press Enter to toggle the Disable Server Logins 
+option to Enable Logins.
+
+Shutting down a remote server
+=============================
+If you have the S (System Manager) privilege, you can shut 
+down and/or reboot a remote server without leaving your 
+desk. Any users logged in to the server will receive 
+notification of the pending shutdown so they can save 
+their work and close any open files on the server. You can 
+specify the number of minutes before the shutdown and the 
+message that users logged in to the server will receive. 
+
+Note - The server you're shutting down must have Server 
+Control enabled in the Server Startup Parameters screen.
+
+WARNING! - Remotely shutting down a server that's running 
+Windows may cause lockups and unpredictable activity on 
+that computer. Don't attempt to schedule a shutdown unless 
+you can exit Windows on that computer before the shutdown 
+occurs.
+
+1. At the DOS prompt, type NET <Enter>. Select Monitor & 
+Manage Server Activity <Enter>.
+
+2. Select the server where the user is logged in <Enter>. 
+If necessary, log yourself in to this server. 
+
+3. Press the F2 key, then select Schedule Server Shutdown 
+<Enter>. 
+
+4. Select Minutes till Shutdown, press Enter, then type in 
+the desired number of minutes (from 0 to 65535) <Enter>. 
+To specify an immediate shutdown, accept the default value 
+of zero. 
+
+5. Select After Shutdown, then press Enter to toggle the 
+field to the desired option. You may specify that you want 
+the computer to continue functioning as a workstation, 
+halt all server processing or reboot after the SERVER 
+program is removed from memory.
+
+6. Select Notify Users, then press Enter to toggle to the 
+desired option. When this option displays Yes, anyone now 
+logged in to the server who has Notification enabled in 
+the Server Startup Parameters screen will receive the 
+shutdown warning message specified in the Warning Message 
+field.
+
+7. Select Warning Message. The default message is "Server 
+will shut down in # minute$." When displayed on the remote 
+workstation screens, the pound sign (#) will be converted 
+to the number of minutes until the server shuts down. The 
+dollar sign ($) will be converted to an "s" if there is 
+more than one minute remaining. If you want, you can 
+replace the default with your own message that includes 
+the # and $ symbols.
+
+8. Press the F2 key to execute the shutdown, then press 
+Esc to exit each screen. When the time expires, the server 
+will close all open network files and remove the SERVER 
+program from memory. If you selected Reboot in step 5, the 
+server will reboot.
+
+Note - To remove the SERVER program from memory, use 
+Ctrl+Alt+Del, rather than the SERVER /REMOVE command.
+
+Canceling a server shutdown
+===========================
+Once you've scheduled a shutdown, you can cancel it as 
+long as the amount of time specified hasn't expired and 
+you have the S (System Manager) privilege.
+
+1. At the DOS prompt, type NET <Enter>. Select Monitor & 
+Manage Server Activity <Enter>.
+
+2. Select the server that's scheduled for shutdown 
+<Enter>. If necessary, log yourself into it.
+
+3. Press the F2 key, then select Cancel Server Shutdown 
+<Enter>. A message appears informing you that the shutdown 
+has been canceled. 
+
+4. Press Enter to continue, then press Esc to exit each 
+screen. 
+
+Sending a pop-up message
+========================
+One-line pop-up messages are convenient server management 
+tools. You can send them to a single user, a group of 
+users or your entire network to announce impending server 
+shutdowns or other network information. 
+
+Pop-up messages differ from mail messages in that they 
+appear directly on the destination computer's screen as 
+soon as they're sent. Also, pop-up messages aren't saved 
+in a server's post office like regular mail messages. When 
+sent to a computer running Windows, they're listed in a 
+Pop-Up messages window but are lost when you exit 
+LANtastic Net. When sending a message to a computer 
+running DOS, the message disappears after approximately 
+ten seconds.
+
+Before you complete the steps in this section, make sure 
+the NET MESSAGE command is enabled on all computers to 
+which you want to send a message. This command is enabled 
+by default, and should be disabled only on servers that 
+are running the ALONE program. To determine if the 
+NET MESSAGE is enabled: 
+
+- Type NET SHOW at the DOS prompt. If you see the text 
+"Unsolicited messages will BEEP, POP-UP and SPEAK" in the 
+information that appears, the NET MESSAGE command is 
+enabled. 
+
+- If you see the text "Unsolicited messages will NOT BEEP, 
+NOT POP-UP and NOT SPEAK," type NET MESSAGE/ENABLE ALL at 
+the DOS prompt to enable the command.
+
+Note - DOS and Windows users can send each other pop-up 
+messages. To send a message, Windows users must select 
+Send Pop-Up Messages from the LANtastic Net window as 
+described in the LANtastic for Windows User's Manual.
+
+To send a pop-up message from the DOS command line, type:
+
+NET SEND [destination computer] "message" [servername] 
+[username] <Enter>
+
+where the destination computer is the name of the computer 
+where you want to send the message.
+
+- To send a message to all users on the network, type in 
+the wildcard character "*".
+
+- To send a message to a group of users, type in the group 
+name followed by "*". For example, to send a message to a 
+group of users whose computer names begin with the word 
+"Sales," you'd enter SALES*.
+
+- Type your message (up to 79 characters) enclosed in 
+quotation marks.
+
+- The servername is optional and is the name of a server 
+that you must be logged into so it can receive the message.
+
+- The username is optional and must be used with the 
+servername. This is the name of the person who is to 
+receive your message.
+
+For example, to alert everyone on the network of a server 
+shutdown, type:
+
+NET SEND *"Database computer is shutting down in ten 
+minutes." <Enter>
+
+Flushing a server's caches
+==========================
+LANtastic lets you save to disk all the information stored 
+in a server's resource cache and random access cache. If 
+LANcache is running, it will save its information to disk 
+as well. This feature is useful, for example, if you 
+change the settings of a shared resource and want the 
+changes to take effect immediately. To use this option, 
+you must have the S (System Manager) privilege.
+
+You can flush a cache from the DOS command line by typing 
+
+NET FLUSH \\[servername] <Enter> 
+
+Or you can use the NET program to flush a server's cache. 
+To flush a server's cache using the NET program:
+
+1. From the LANtastic NET main screen, use the up and down 
+arrow keys to highlight the Monitor & Manage Server 
+Activity option <Enter>.
+
+2. Use the Up and Down arrow keys to select a computer for 
+cache flushing <Enter>.
+
+3. If you have the S (System Manager) privilege assigned, 
+the F2 key will be active. If you have this privilege, 
+press F2 and select Flush Server <Enter>.
+
+4. Press Esc to return to the NET main screen.
+
+Using the ALONE program
+=======================
+The ALONE program increases performance on a server if 
+you don't want to use it as a workstation. You run ALONE 
+like any standard DOS-based application. While it's 
+running, ALONE shows a display of all user requests to the 
+server. When you want to use the server for a local task, 
+exit ALONE and use the computer as a LANtastic 
+peer-to-peer server.
+
+For security, you can enable a password requirement to 
+exit ALONE. This means you can leave the server running 
+with no fear of anyone using the computer locally without 
+proper authorization. It also prevents the server computer 
+from being restarted using Ctrl+Alt+Del. 
+
+For LANtastic 7.0, ALONE provides a Detailed User 
+Information screen. Here you'll see such information as 
+the name of a file the user has open on the server, the 
+mode in which it was opened, and the mode in which another 
+user may open it. 
+
+Note - You can't run ALONE in a DOS virtual machine from 
+within Windows. Also, don't run any pop-up TSR (Terminate 
+and Stay Resident) programs while running ALONE.
+
+Running ALONE
+=============
+1. Run your network software on the server, including the 
+SERVER program. 
+
+2. At the DOS prompt of the server on which you are going 
+to run ALONE, type NET MESSAGE/DISABLE ALL. This disables 
+all pop-up messages to the server. Your server cannot 
+receive pop-up messages while running ALONE.
+
+3. At the DOS prompt, type ALONE <Enter>. (You can also 
+include command line switches when you run ALONE. A 
+complete list appears in the Commd.txt file.
+
+Each entry listed on the ALONE main screen includes the 
+following information:
+
+ID#
+---
+User's session identification number. This consists of the 
+last digit of the adapter number on which the user logged 
+in, and the session number. All values are in hexadecimal.
+
+Username
+--------
+Account with which the user logged in to the server. If 
+the username is "?" the user is in the process of logging 
+in.
+
+Machine
+-------
+Network computer from which the user logged in.
+
+Command
+-------
+Last command entered. Descriptions of the user command 
+entries are listed in "Monitoring a server using NET" 
+earlier in this file.
+
+IOBytes
+-------
+Amount of data input and output that the server has 
+performed for the user.
+
+Requests
+--------
+Number of requests performed since login.
+
+Privs
+-----
+Account privileges the user has. These include the 
+account privileges (AQUMSOD) and L (Login).
+
+In addition, the server's network name is displayed in the 
+lower left corner, and the time of day is displayed in the 
+lower right corner. 
+
+On the ALONE main screen, these keys perform the following 
+functions:
+
+Esc
+---
+Terminates the ALONE program.
+
+Enter
+-----
+Brings up a screen showing more detailed information about 
+the highlighted session.
+
+F1
+--
+Provides a display with Help information. Press Z to 
+enlarge or shrink the Help window.
+
+F2
+--
+Toggles filename display on and off. This option shows the 
+number of minutes before the user is forced to log out (if 
+time-of-day logins are in effect) and the name of the file 
+being accessed. Performance is improved when the filename 
+display is turned off. 
+
+F3
+--
+Enables or disables the password requirement to exit the 
+ALONE program. If you'll be using this feature, you must 
+enter the password each time you run ALONE.
+
+4. If you'd like more information on a user's access on 
+the server, complete steps 5 and  7; otherwise, skip to 
+step 8. 
+
+5. Select an entry on the screen <Enter>. The Detailed 
+User Information screen appears. The top portion of the 
+screen provides the same information as is listed on the 
+ALONE main screen. If you're running SHARE on your server, 
+the lower portion of the screen provides the following 
+information on any files the user has open:
+
+Mode
+----
+File-access and file-sharing mode in which the file was 
+opened. Possible file-access modes are Read-only, 
+Write-only, or Read/Write. The file-sharing mode is the 
+type of access granted to any user trying to open the same 
+file. Possible file-sharing modes are Compatibility, 
+Deny-Read, Deny-Write, Deny-Read/Write, and Deny-None.
+
+Position
+--------
+Current position in the file.
+
+Size
+----
+Size of the file.
+
+Lock Start/End
+--------------
+Position in the file of a record lock. A file may have 
+zero or more locks.
+
+6. To return to the ALONE main screen, press Esc. 
+
+7. When you're ready to exit ALONE, press Esc from the 
+main screen.
+
+Rebooting your server while ALONE is running
+============================================
+To prevent users from rebooting a server while ALONE is 
+running, any Ctrl+Alt+Del commands are trapped if ALONE is 
+password-locked. To reboot when ALONE is password-locked, 
+press Esc and enter the password <Enter>. Then press 
+Ctrl+Alt+Del. If ALONE isn't password-locked, pressing 
+Ctrl+Alt+Del presents the user with the SERVER shutdown 
+message. The user can then either shut down the SERVER 
+program or press Esc to cancel. If a server that's running 
+the ALONE program shuts down, ALONE exits concurrently 
+with the SERVER program. 
+
+UPS support
+===========
+The LANtastic uninterruptable power supply support allows 
+you to take advantage of the protection that your UPS 
+provides and shut down a server before a complete power 
+loss occurs. It also provides protection during partial 
+power outages or "brownouts." 
+
+If the power returns to a reliable state, you can instruct 
+the UPS support software to cancel the impending shutdown. 
+In the case of a shutdown, users receive notification so 
+they can close any open network files. If a shutdown is 
+canceled, they're informed so they can resume work.
+
+Supported UPS types
+===================
+The following UPS manufacturers' products function 
+correctly with the LANtastic UPS support feature: 
+
+-Acme SAFE POWER
+-American Power Conversion
+-PARA Systems
+-SOLA Electric 
+-Tripp Lite
+
+Contact the Artisoft Sales Department for more information 
+on supported UPS manufacturers.
+
+Using LANtastic UPS support 
+
+1. Attach the UPS-supplied serial cable between the UPS 
+and the server. Consult your UPS manual for cable 
+requirements. 
+
+2. Using a text editor such as EDIT or Notepad, edit your 
+STARTNET.BAT file to run the LANtastic UPS support program 
+on the server. Place the command after the command running 
+SERVER. The syntax for running the UPS program is 
+UPS /SWITCHES where SWITCHES denotes any optional command 
+line switches. For information on UPS switches, refer to 
+the Commd.txt file. 
+
+Once you've run the UPS program, it will monitor the UPS 
+for signals indicating a power lapse. With default 
+settings, the UPS program will schedule a server shutdown 
+if power is interrupted continuously for ten seconds. Any 
+users logged in to this server receive periodic pop-up 
+messages to keep them informed of the number of minutes 
+before the impending shutdown. Fifteen minutes later, the 
+server shuts down.
+
+If the power comes back for ten seconds before the server 
+shuts down, the UPS program cancels the shutdown and sends 
+notification to any users logged in to the server.
+
+If the UPS program receives a signal that the batteries in 
+the UPS are running low, it will schedule the shutdown 
+sooner to prevent power failure before the shutdown is 
+complete. The default value for a low-battery shutdown is 
+one minute.
+
+Note - If you have any difficulties with the server not 
+receiving signals from the UPS, make sure the cable is the 
+supported type and that it's connected securely. If the 
+problem persists, type 
+
+NET  QUEUE  HALT\\ [servername] [COMx] <Enter> 
+
+to halt server control of the serial port, where 
+[servername] is the name of the server and [COMx] 
+represents the serial port where you've connected the 
+cable to the UPS.
+
+Related Topics
+==============
+
+- When you want to add a computer or a printer, or 
+otherwise change your network, go to the file Imprv.txt.
+
+- To improve server speed and response time, go to Imprv.txt.
+
+- If you experience any problems during daily network use, 
+refer to the LANtastic Troubleshooting Manual. 
+

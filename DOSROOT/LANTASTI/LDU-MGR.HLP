@@ -1,0 +1,358 @@
+`MW LANtastic Dial-Up Manager Main Menu Help
+ |Dial Into Network| - Establishes a modem connection with a remote
+   Central Station.  You must first select a phone list entry to use for
+   configuring your modem and dialing into the Central Station.  Once the
+   network connection is made, you may exit to the DOS prompt and issue
+   NET commands to log in to remote computers and use their resources.
+
+~01 |Hangup Line| - Aborts current modem connection and stops the MPORT
+   driver.  LDU-MGR sends the Attention String and the Abort String to the
+   modem.  LDU-MGR then lowers the Data Terminal Ready hardware signal
+   to tell the modem to hang up the line.
+
+~02 |Edit Phone List| - Allows you to add, delete or modify phone list entries
+   used for calling a Central Station.  The Central Station's phone number
+   and name are stored in these entries.
+
+~03 |Display Modem Status| - Shows the current COM port settings and status
+   of the MPORT network driver.  This information can be used to decide if
+   the modem is currently in use or available.
+
+~04 |Modem Configuration| - Allows you to configure LDU-MGR for the modem you
+   will be using.  The modem's name, init string and other operating
+   parameters are set using this option.
+
+~05 |Terminal Emulation Mode| - Provides an interactive window for you to use
+   to communicate with the COM port.  This is useful for configuring your
+   modem's settings or testing your computer's ability to communicate
+   with your modem.  Network activity is suspended on the local node
+   while you are in terminal mode.
+
+ Note: You also can run LDU-MGR from the command line.  This is useful for
+ establishing connections via a batch file.  For more information, type
+ |LDU-MGR HELP| at the DOS prompt.
+
+`ST Modem Status for MPORT Driver Help
+ The status display gives you the name of the phone list entry in use by
+ the MPORT driver and the current modem state.  This information updates
+ every five seconds or whenever the space bar is pressed.
+
+  |Name|           Name of phone list entry currently in use by the MPORT
+                   driver
+  |Description|    Description of the phone list entry currently in use.
+  |Driver Status|  Driver/connection.
+           |NOT FOUND|   -> Driver MPORT not loaded in memory.
+           |NOT STARTED| -> AILANBIOS not loaded in memory.
+           |SUSPENDED|   -> Driver is halted.
+           |ACTIVE|      -> Driver is running.
+           |OFFLINE|     -> No connection or modem not ready to receive data
+                            (missing CD or CTS signals).
+           |ONLINE|      -> Connection established.
+
+  |Modem Status|  Displays the Modem Status Register bits set to on.
+           |CTS| - Clear To Send.
+           |DSR| - Data Set Ready.
+           |CD|  - Carrier Detect.
+           |RI|  - Ring Indicator.
+
+  |COM Port|       - COM port in use by network.
+  |DTE Rate|       - Current DTE rate setting.
+  |Data bits|      - Current data bits setting.
+  |Stop Bits|      - Current stop bits setting.
+  |Parity Bits|    - Current parity bits setting.
+  |Flow Control|   - Method of data flow control for the transmission of
+                     characters through the COM port.
+
+           |RTS/CTS|  -> Requires CTS & CD bits to transmit data.
+           |RTS Sync| -> Provides RTS syncronization before transmitting.
+                         CTS & CD required to transmit data.
+
+  |ACK_timeout|      - Current value set by MPORT; DCE rate dependent.
+  |RETRY_period|     - Current value set by MPORT; DCE rate dependent.
+  |TIMEOUT|          - Current value set by MPORT; DCE rate dependent.
+                       (Refer to your AI-LANBIOS documentation.)
+
+`DL Select Phone Entry Help
+ Select the phone list entry to which you want to establish a network
+ connection. Information within the selected entry is used by LDU-MGR
+ to set the DTE rate, parity, and flow_control of the MPORT driver.  The
+ modem connection is made using the phone number and initialization
+ parameters contained within the selected entry.
+
+`DB Edit Phone List Help
+ Select the desired phone list entry by using the arrow keys.  Once this
+ is done, use the keys listed below to perform the following functions:
+
+   |Ins|   - Insert a new entry before the one selected.
+   |Del|   - Delete the selected phone list entry from the database.
+   |Enter| - Modify the fields within the entry.
+
+`CW Edit Phone Entry Help
+ Select the desired option using the arrow keys, then press Enter to edit
+ or change the highlighted option.  For some fields, a line editor window
+ appears.  For other options, a menu appears or the values in the field
+ rotate when you press Enter.
+
+ |Name|          - Name for this phone entry.  Each phone list entry must
+                   have a unique name.
+~01 |Description|   - User defined description of this phone list entry.
+~02 |Phone Number|  - The phone number of the Central Station to use in the
+                 modem dial string.  Phone number defines the |<P>| macro
+                 string.
+~03 |DTE Rate|   - DTE rate to set COM port for this connection.  The DTE
+                   rate is the rate at which the computer communicates with
+                   the local modem.  If your modem is capable of data
+                   compression, enable it and set the DTE rate higher than
+                   the DCE (modem-to-modem) rate for optimal performance.
+~04 |Flow Control:| - Method of data flow control for the transmission of
+                      characters through the COM port.
+
+           |RTS/CTS|  -> Requires CTS & CD bits to transmit data.
+           |RTS Sync| -> Provides RTS synchronization before transmitting.
+                         CTS & CD required to transmit data.
+
+~05 |ACK_timeout:|  - Value for AI-LANBIOS to use; preset based upon DCE rate.
+                      Specifies the amount of time that AILANBIO will
+                      wait for an acknowledgement (ACK) from a remote node.
+~06 |RETRY_period:| - Value for AI-LANBIOS to use; preset based upon DCE rate.
+                      This value specifies the amount of time in ticks between
+                      the transmission of inquiry messages.
+~07 |TIMEOUT:|      - Value for AI-LANBIOS to use; preset based upon DCE rate.
+                      Specifies the amount of time that NETBIOS waits before
+                      causing timeouts.
+                      (For more information, see your AILANBIOS documentation.)
+
+~08 |DCE Rate| - The above AI-LANBIOS timeout/period values must be based on
+ the modem-to-modem (DCE) rate you will use.  The default DCE rate is based on
+ your PC-to-modem (DTE) rate.  For baud rates of 9600 or less, the default
+ DCE rate is the same as the DTE rate.  For baud rates over 9600, the default
+ DCE rate is 9600.  If you are using modems with data compression, the DTE
+ rate should be set higher than the DCE rate for optimal performance.
+
+`MC Modem Configuration Help
+ |Modem Name| - This option lets you select your modem from a list of
+   available modem types.  If your modem is not listed, select the
+   |Unlisted| option from the modem type menu. Then modify the init
+   string, attention string, dial command and abort commands to match the
+   settings your modem manufacturer recommends.
+
+~01 |Init String| - This is the string that LDU-MGR sends to your modem to
+   initialize it for proper operation with MPORT and LDU-MGR.  The init
+   string can be from 0 to 50 characters in length.  When you select a
+   modem from the modem name list, the init string is automatically
+   selected for you.
+
+~02 |Dial Command| - This string is used to instruct the modem to dial the
+   specified Central Station's phone number.  The default dial command
+   |ATDT| dials the phone number in touch tone mode.  The dial command is
+   terminated by a carriage return.  The phone number is retrieved from
+   the phone string in the phone list via the special command "|<P>|."
+   The carriage return is generated from the "|<CR>|" command.
+
+~03 |Attention String| - This string places your modem into command mode.
+   The attention string can be from 0 to 50 characters in length. The
+   default is the "|+++|" string, preceded and followed by a one second
+   delay.  The special |<W1>| command instructs LDU-MGR to wait for one
+   second before proceeding with the remainder of the command.
+
+~04 |Abort Command| - This string instructs your modem to abort the
+   current connection. The abort string can be from 0 to 50 characters
+   in length. During an abort sequence LDU-MGR lowers the hardware control
+   lines DTR and RTS and the abort string is transmitted. Most modems sense
+   the lowering of DTR and hang-up the phone line.
+
+   ~05 |Wait For Answer| - The number of seconds that your computer will wait
+   for the Central Station to answer your call.  LDU-MGR waits for your
+   local modem to raise its Carrier Detect (CD) signal.  If this is not
+   detected within the allotted time, the connection attempt fails.  The
+   default wait time is 45 seconds.
+
+`AK Setup Name Help
+ The name field is an alphanumeric name from 1 to 8 characters in length.
+ This field is used as a key to uniquely identify the phone list entry.
+
+`AP Phone Number Help
+ The phone number field is an alphanumeric string.  This field provides
+ the phone number portion of the modem dial command to call a
+ Central Station.  Special characters or waits may be placed in the field
+ using angle brackets.  For example, you could enter |<esc>| for the escape
+ character or |<W5>| for a 5 second wait control character.  To enter
+ control characters enter <ccc> or <ddd>, where ccc is one of the control
+ character names or ddd is a decimal value for an ASCII character.  To
+ insert explicit waits during the output of a control string use <Wddd.d>,
+ where "W" means wait and ddd.d represents the number of seconds and tenths
+ of a second to pause before sending the next character.
+
+ To enter a less than sign "|<|" as part of the control string, enter two
+ "|<<|" in a row with no spaces between them.  The double "|<<|" will be
+ sent as a single "|<|."
+
+ For example, to send an ASCII escape character to your modem use:
+        |<ESC>|  or  |<27>|
+
+ To insert a two second pause before and after and escape character use:
+        |<W2><ESC><W2>|
+
+     Here is a table of special control codes (00 to 31 decimal)
+        ษอออออออออออออออออออออออออออออออออออออออออออออออออออออป
+        บ   0    1    2    3    4    5    6    7    8    9    บ
+    ษอออฮอออออออออออออออออออออออออออออออออออออออออออออออออออออน
+    บ 0 บ | NUL  SOH  STX  ETX  EOT  ENQ  ACK  BEL  BS   HT | บ
+    บ 1 บ | LF   VT   FF   CR   SO   SI   DLE  DC1  DC2  DC3| บ
+    บ 2 บ | DC4  NAK  SYN  ETB  CAN  EM   SUB  ESC  FS   GS | บ
+    บ 3 บ | RS   US                                         | บ
+    ศอออสอออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+
+`AD Description Help
+ The Phone list entry description can be from 0 to 30 characters.  This
+ field lets you enter additional information about the phone list entry.
+
+`UP Central Station Name Prompt Help
+ Enter the name of the Central Station you are dialing into.
+
+`PP Central Station Password Prompt Help
+ Enter the password of the Central Station you are dialing into.
+
+`NS Wait Time Help
+ The amount of time in seconds LDU_MGR should wait for the Central Station to
+ answer the phone when attempting to make a remote connection.  If the Central
+ Station does not answer within this time, LDU-MGR aborts the attempt.
+
+ Specifically, your local computer waits for Carrier Detect to be set high
+ when making a remote connection.  If this does not occur within the time
+ limit, LDU-MGR returns an error message.
+
+`HS TIMEOUT Help
+ Enter a decimal number representing the number of half second increments.
+ The TIMEOUT default value is set based upon the selected DCE rate. Generally,
+ the default setting should be sufficient for most network applications.
+
+ TIMEOUT is the length of time, in half seconds, that the NETBIOS will wait
+ before causing a SESSION STATUS, ADD NAME or CALL/LISTEN operations to
+ timeout.
+
+`NT Enter Decimal Value in Ticks Help
+ Enter a decimal number representing the number of ticks (55ms).
+ ACK_timeout and RETRY_period default values are set based upon the selected
+ DCE rate.  Generally, the default setting should be sufficient for most
+ network applications.
+
+ ACK_timeout is the length of time in ticks (55ms) that AI-LANBIOS will
+ wait for an acknowledgment from a remote node before it times out.
+
+ RETRY_period is the length of time in ticks (55ms) between the transmission
+ of inquire-type messages.
+
+`AC Setup Modem Control String Help
+ Enter a modem setup control string.  Each string can be from 0 to 50
+ characters in length.  To enter control characters, type <ccc> or <ddd>,
+ where "ccc" represents one of the control character names and "ddd"
+ represents a decimal value for an ASCII character.  To insert explicit
+ waits during the output of a control string use <Wddd.d>, where "W"
+ represents wait and ddd.d represents the number of seconds and tenths
+ of a second to pause before sending the next character.  In addition the
+ phone number string may be expanded by using the |<P>| special character
+ function.
+
+ To enter a less than sign "|<|" as part of the control string enter two
+ "|<<|" in a row with no spaces between them.  The double "|<<|" will be
+ sent out as a single "|<|."
+
+ For example, to send an ASCII escape character to your modem you would use:
+        |<ESC>|  or  |<27>|
+
+ To insert a two second pause before and after an escape character use:
+        |<W2><ESC><W2>|
+
+        Here is a table of special control codes (00 to 31 decimal)
+        ษอออออออออออออออออออออออออออออออออออออออออออออออออออออป
+        บ   0    1    2    3    4    5    6    7    8    9    บ
+    ษอออฮอออออออออออออออออออออออออออออออออออออออออออออออออออออน
+    บ 0 บ | NUL  SOH  STX  ETX  EOT  ENQ  ACK  BEL  BS   HT | บ
+    บ 1 บ | LF   VT   FF   CR   SO   SI   DLE  DC1  DC2  DC3| บ
+    บ 2 บ | DC4  NAK  SYN  ETB  CAN  EM   SUB  ESC  FS   GS | บ
+    บ 3 บ | RS   US                                         | บ
+    ศอออสอออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+
+`AA Modem Attention Control String Help
+ Enter a modem setup control string for placing your modem in command mode.
+ The preset modem attention string is the "|+++|" string, with a one second
+ wait before and after the string.
+
+ The modem attention string can be from 0 to 50 characters in length.  To
+ enter control characters enter <ccc> or <ddd>, where "ccc" represents a
+ control character name or "ddd" represents a decimal value for an ASCII
+ character.  To insert waits during the output of a control string, use the
+ syntax <Wddd.d>, where "W" means wait and "ddd.d" represents the number of
+ seconds to pause before sending the next control string character.
+
+ To enter a less than sign "|<|" as part of the control string enter two
+ "|<<|" in a row with no spaces between them.  The double "|<<|" will be
+ sent out as a single "|<|."
+
+ For example, to send an ASCII escape character to your modem use:
+        |<ESC>| or |<27>|
+
+ To insert a two second pause before and after an escape character use:
+        |<W2><ESC><W2>|
+
+      Here is a table of special control codes (00 to 31 decimal)
+        ษอออออออออออออออออออออออออออออออออออออออออออออออออออออป
+        บ   0    1    2    3    4    5    6    7    8    9    บ
+    ษอออฮอออออออออออออออออออออออออออออออออออออออออออออออออออออน
+    บ 0 บ | NUL  SOH  STX  ETX  EOT  ENQ  ACK  BEL  BS   HT | บ
+    บ 1 บ | LF   VT   FF   CR   SO   SI   DLE  DC1  DC2  DC3| บ
+    บ 2 บ | DC4  NAK  SYN  ETB  CAN  EM   SUB  ESC  FS   GS | บ
+    บ 3 บ | RS   US                                         | บ
+    ศอออสอออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+
+`AS Modem Abort Control String Help
+ Enter your modem commands to abort the current connection. 
+
+ The modem abort string can be from 0 to 50 characters in length.  To enter
+ control characters enter <ccc> or <ddd>, where "ccc" represents a control
+ character name or "ddd" represents a decimal value for an ASCII character.
+ To insert waits during the output of a control string use <Wddd.d>, where
+ "W" means wait and "ddd" represents the number of seconds to pause before
+ sending the next control string character.
+
+ To enter a less than sign "|<|" as part of the control string enter two
+ "|<<|" in a row with no spaces between them.  The double "|<<|" will be
+ sent out as a single "|<|."
+
+ For example, to send an ASCII escape character to your modem use:
+        |<ESC>| or |<27>|
+
+ To insert a two second pause before and after an escape character use:
+        |<W2><ESC><W2>|
+
+     Here is a table of special control codes (00 to 31 decimal)
+        ษอออออออออออออออออออออออออออออออออออออออออออออออออออออป
+        บ   0    1    2    3    4    5    6    7    8    9    บ
+    ษอออฮอออออออออออออออออออออออออออออออออออออออออออออออออออออน
+    บ 0 บ | NUL  SOH  STX  ETX  EOT  ENQ  ACK  BEL  BS   HT | บ
+    บ 1 บ | LF   VT   FF   CR   SO   SI   DLE  DC1  DC2  DC3| บ
+    บ 2 บ | DC4  NAK  SYN  ETB  CAN  EM   SUB  ESC  FS   GS | บ
+    บ 3 บ | RS   US                                         | บ
+    ศอออสอออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+
+`DT DTE Rate Selection Help
+ Select the DTE rate to be used for PC to modem communication.  The DTE
+ rate is the rate at which the computer communicates with the local modem.
+ If your modem is capable of data compression, enable it and set the DTE
+ rate higher than the DCE (modem-to-modem) rate for optimal performance.
+ Ranges are from 1200 baud to 57,600 baud.  For DTE rates above 9600, a
+ 286 or faster PC may be needed to keep up with the DTE rate.
+
+`DC DCE Rate Selection Help
+ Select the rate at which your modem and the Central Station modem will
+ communicate.  Ranges are from 1200 bps to 28,800 bps.  Changing the DCE
+ rate will automatically adjust to the ACK_timeout, RETRY_period,
+ and TIMEOUT values.
+
+`SM Select Modem Help
+ Select your modem from the list of available modems.  If your modem is not
+ listed, select the |Unlisted| option from the modem type menu, then modify
+ the init string, attention string, dial command and abort commands to the
+ settings recommended by your modem manufacturer.
+`ZZ

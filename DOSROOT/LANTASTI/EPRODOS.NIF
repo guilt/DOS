@@ -1,0 +1,9 @@
+[EPRO]
+Type = NDIS
+Title = "Artisoft NodeRunner(R) Pro adapter"
+Version = 3.00
+DriverName = EPRO$
+
+[FILE]
+Name = EPRO.DOS
+

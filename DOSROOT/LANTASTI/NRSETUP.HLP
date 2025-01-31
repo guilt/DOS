@@ -1,0 +1,257 @@
+`TO Select one of the following options:
+
+~00 |Automatic NodeRunner Configuration|
+  Select this option to perform an automatic configuration of the
+  NodeRunner adapter.  All NodeRunner parameters will be determined
+  automatically.
+
+~01 |Manual NodeRunner Configuration|
+  Select this option to perform a manual configuration of the
+  NodeRunner adapter.  All NodeRunner parameters will be displayed
+  and can be modified by the user.
+
+~02 |NodeRunner Diagnostics|
+  Select this option to perform a full diagnostic of the NodeRunner
+  adapter.  A full adapter diagnostic will be performed, followed by
+  a live connection test to fully diagnose network connectivity.
+
+`MA NodeRunner Configuration 
+Displayed here are the current settings of all user-configurable
+parameters on the NodeRunner(tm) Ethernet Adapter.
+
+To modify a parameter, select it and press |Enter|.
+
+~00 |I/O Base|
+  The I/O Base setting indicates the start of the block of I/O ports used
+  by the adapter. The default setting of 300 usually does not conflict
+  with an I/O Base setting in use by previously installed hardware.  If
+  this setting does conflict with any existing hardware, change this
+  option to a different setting.
+
+
+~01 |IRQ|
+  This setting establishes the Interrupt Request Line to be used by the
+  adapter. The default setting of 15 usually does not conflict with an IRQ
+  setting in use by previously installed hardware.  If, however, you do
+  detect a conflict, highlight the IRQ setting and press Enter.  Some
+  commonly used IRQs include:
+
+     IRQ3 -- COM2:
+     IRQ4 -- COM1:
+     IRQ7 -- LPT1:
+
+  Note:  To use IRQ 10 or 15, you must place the adapter in a 16-bit
+  (long) expansion slot in your computer.
+
+
+~02 |Boot ROM Address|
+  This setting disables or specifies the memory address used for the
+  optional Boot ROM chip onboard the adapter. If you have purchased this
+  optional chip, install and configure it according to the instructions
+  that come with the chip.  If you have not purchased the Boot ROM chip,
+  leave this setting in Disabled mode.
+
+
+~03 |IOCS16 Timing|
+  This setting selects the timing of the IOCS16 bus control term.  If you
+  are unsure about this setting, leave it at Normal.  If you experience
+  problems such as intermittent disconnects, change this setting to Early.
+  Some PCs require early assertion of the IOCS16 signal for proper 16-bit
+  operation. If you know that you have such a PC, highlight the 10CS16
+  Timing parameter and press Enter to change the setting to Early.
+
+
+~04 |Mode|
+  This setting selects the compatibility mode of the adapter.  If you
+  are using the adapter in an Artisoft network, leave this setting at the
+  default.  If you are using the adapter in a Novell network and are
+  using the Artisoft ODI or IPX drivers provided on your adapter diskette,
+  use the default Artisoft setting.  If you are using Novell-supplied
+  NE1000 or NE2000 drivers, change this setting to NE1000 or NE2000
+  emulation.  If you want to install your adapter in a 8-bit slot in an
+  Artisoft network, choose Artisoft/8.
+
+
+`MB NodeRunner Configuration 
+Displayed here are the current settings of all user-configurable
+parameters on the NodeRunner(tm) Ethernet Adapter.
+
+To modify a parameter, select it and press |Enter|.
+
+~00 |I/O Base|
+  The I/O Base setting indicates the start of the block of I/O ports used
+  by the adapter. The default setting of 300 usually does not conflict
+  with an I/O Base setting in use by previously installed hardware.  If
+  this setting does conflict with any existing hardware, change this
+  option to a different setting.
+
+
+~01 |IRQ|
+  This setting establishes the Interrupt Request Line to be used by the
+  adapter. The default setting of 15 usually does not conflict with an IRQ
+  setting in use by previously installed hardware.  If, however, you do
+  detect a conflict, highlight the IRQ setting and press Enter.  Some
+  commonly used IRQs include:
+
+     IRQ3 -- COM2:
+     IRQ4 -- COM1:
+     IRQ7 -- LPT1:
+
+  Note:  To use IRQ 10 or 15, you must place the adapter in a 16-bit
+  (long) expansion slot in your computer.
+
+
+
+~02 |Boot ROM Address|
+  This setting disables or specifies the memory address used for the
+  optional Boot ROM chip onboard the adapter. If you have purchased this
+  optional chip, install and configure it according to the instructions
+  that come with the chip.  If you have not purchased the Boot ROM chip,
+  leave this setting in Disabled mode.
+
+
+
+~03 |IOCS16 Timing|
+  This setting selects the timing of the I/OCS16 bus control term.  If you
+  are unsure about this setting, leave it at Normal.  If you experience
+  problems such as intermittent disconnects, change this setting to Early.
+  Some PCs require early assertion of the IOCS16 signal for proper 16-bit
+  operation. If you know that you have such a PC, highlight the 10CS16
+  Timing parameter and press Enter to change the setting to Early.
+
+
+~04 |Ethernet Type|
+  Selects between the Ethernet cable types.  The cable type options
+  presented in this field depend upon the type of adapter.  Possible cable
+  types include AUI (10Base5, DB-15, thick Ethernet), Coaxial (10Base2,
+  BNC, cheapernet, thin net), and UTP (10Base-T, twisted-pair).  This
+  option does not appear if the adapter supports one cable type only.
+
+
+~04 |Mode|
+  This setting selects the compatibility mode of the adapter.  If you
+  are using the adapter in an Artisoft network, leave this setting at the
+  default.  If you are using the adapter in a Novell network and are
+  using the Artisoft ODI or IPX drivers provided on your adapter diskette,
+  use the default Artisoft setting.  If you are using Novell-supplied
+  NE1000 or NE2000 drivers, change this setting to NE1000 or NE2000
+  emulation.  If you want to install your adapter in a 8-bit slot in an
+  Artisoft network, choose Artisoft/8.
+
+`CA NodeRunner Configuration 
+Displayed here are the current settings of all user-configurable
+parameters on the NodeRunner(tm) Ethernet Adapter.
+
+To modify a parameter, select it and press |Enter|.
+
+~00 |I/O Base|
+  The I/O Base setting indicates the start of the block of I/O ports used
+  by the adapter. The default setting of 300 usually does not conflict
+  with an I/O Base setting in use by previously installed hardware.  If
+  this setting does conflict with any existing hardware, change this
+  option to a different setting.
+
+
+~01 |IRQ|
+  This setting establishes the Interrupt Request Line to be used by the
+  adapter. The default setting of 15 usually does not conflict with an IRQ
+  setting in use by previously installed hardware.  If, however, you do
+  detect a conflict, highlight the IRQ setting and press Enter.  Some
+  commonly used IRQs include:
+
+     IRQ3 -- COM2:
+     IRQ4 -- COM1:
+     IRQ7 -- LPT1:
+
+  Note:  To use IRQ 10 or 15, you must place the adapter in a 16-bit
+  (long) expansion slot in your computer.
+
+
+
+~02 |Mode|
+  This setting selects the compatibility mode of the adapter.  If you
+  are using the adapter in an Artisoft network, leave this setting at the
+  default.  If you are using the adapter in a Novell network and are
+  using the Artisoft ODI or IPX drivers provided on your adapter diskette,
+  use the default Artisoft setting.  If you are using the Novell-supplied
+  NE1000 driver, change this setting to NE1000 emulation.
+
+
+`CB NodeRunner Configuration 
+Displayed here are the current settings of all user-configurable
+parameters on the NodeRunner(tm) Ethernet Adapter.
+
+To modify a parameter, select it and press |Enter|.
+
+~00 |I/O Base|
+  The I/O Base setting indicates the start of the block of I/O ports used
+  by the adapter. The default setting of 300 usually does not conflict
+  with an I/O Base setting in use by previously installed hardware.  If
+  this setting does conflict with any existing hardware, change this
+  option to a different setting.
+
+
+~01 |IRQ|
+  This setting establishes the Interrupt Request Line to be used by the
+  adapter. The default setting of 15 usually does not conflict with an IRQ
+  setting in use by previously installed hardware.  If, however, you do
+  detect a conflict, highlight the IRQ setting and press Enter.  Some
+  commonly used IRQs include:
+
+     IRQ3 -- COM2:
+     IRQ4 -- COM1:
+     IRQ7 -- LPT1:
+
+  Note:  To use IRQ 10 or 15, you must place the adapter in a 16-bit
+  (long) expansion slot in your computer.
+
+
+`IO I/O Base Selection
+  Use the arrow keys to select the desired I/O base for the NodeRunner
+  adapter, then press |Enter|.
+
+`IR Interrupt Request Selection
+  Use the arrow keys to select an IRQ for the NodeRunner adapter, then
+  press |Enter|.
+
+  |NOTE:| You cannot use IRQ 10 and IRQ 15 if the NodeRunner is installed
+  in an 8-bit (short) slot.
+
+`CA Ethernet type selection
+  Use the arrow keys to select the type of Ethernet cable you are using,
+  then press |Enter|.  Only one cable interface can be active.
+
+`BO Boot ROM address selection
+  To select a boot ROM address, or to disable the boot ROM option, use the
+  arrow keys to move the cursor until the desired option is highlighted,
+  then press |Enter|.
+
+`MO Adapter Mode Selection
+  Use the arrow keys to select the compatibility mode of the NodeRunner
+  adapter, then press |Enter|.
+
+  If you are using the adapter in an Artisoft network, leave this setting
+  at the default.  If you are using the adapter in a Novell network and are
+  using the Artisoft ODI or IPX drivers provided on your adapter diskette,
+  use the default Artisoft setting.  If you are using Novell-supplied
+  NE1000 or NE2000 drivers, change this setting to NE1000 or NE2000
+  emulation.  If you want to install your adapter in an 8-bit slot in an
+  Artisoft network, choose Artisoft/8.
+
+`MC Adapter Mode Selection
+  Use the arrow keys to select the compatibility mode of the NodeRunner
+  adapter, then press |Enter|.
+
+  If you are using the adapter in an Artisoft network, leave this setting
+  at the default.  If you are using the adapter in a Novell network and are
+  using the Artisoft ODI or IPX drivers provided on your adapter diskette,
+  use the default Artisoft setting.  If you are using the Novell-supplied
+  NE1000 driver, change this setting to NE1000 emulation.
+
+`SN Station Name
+  Enter a unique station name to identify this node.  The name you
+  choose will appear on the screens of the other stations running
+  the connection diagnostic.  Pick something that will indicate the
+  true identity of this particular machine.
+
+`ZZ

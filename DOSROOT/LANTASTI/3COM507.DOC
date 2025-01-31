@@ -1,0 +1,395 @@
+                   3COM507 Driver Information File (3COM507.DOC)
+             ------------------------------------------------
+                     (C) Copyright 1993 ARTISOFT Inc.
+                             (Edition 2.0)
+
+Introduction
+============
+The 3COM507.EXE driver runs on both the 3COM EtherLink 16 (coax) and
+EtherLink 16 TP (twisted pair) adapters.  These adapters use memory mapped
+I/O and can run in an 8 - or 16 - bit ISA slot.  Both  adapters provide
+onboard RAM sizes of 16K, 32K, 48K or 64K in an EEPROM that is set up by
+the user.  The configuration program provided by 3COM with the adapter is
+called 3C507.EXE.  You can select all of the adapter settings (i.e.,
+RAMbase, I/O base, RAM size and IRQ) with this program.  Consequently,
+switches are not provided on the driver command line for these settings.
+The valid 3COM507 switches are listed below, followed by a detailed
+explanation.
+
+Running 3COM507
+=========
+The 3COM507 low-level driver must be run before the AI-LANBIOS.  The
+3COM507 driver interfaces to the AILANBIO program using a DOS multiplex
+interrupt number.  The default multiplex number is C7.  If you are only
+running one low-level driver and one copy of AILANBIO, then you do not
+need to be concerned with which multiplex number to assign.  Multiplex
+numbers 00 through BF are reserved for DOS use, so you must use a
+multiplex number between C0 through FF.
+
+You must start additional invocations of the 3COM507 driver if you
+plan to use multiple adapters.
+
+The 3COM507 low-level driver is named 3COM507.EXE.  The syntax for configuring
+3COM507 is:
+
+   3COM507[switches ... ]
+
+where [switches ... ] denotes any of the valid command line switches
+described in the next section.
+
+Running 3COM507 with Command Line Switches
+===========================================
+When using command line switches with 3COM507, place a blank or a slash
+(/) between 3COM507 and the switch.  For example:
+
+3COM507 HELP
+3COM507/HELP
+
+When using multiple switches, you must separate them with blanks or
+slashes.  If a switch takes a value, the switch must be followed by an
+equal sign (=) or a colon (:).  Some values may be hexadecimal numbers,
+while other values may be decimal.  All switch values are range-checked,
+and illegal values produce errors.
+
+When creating batch files with command lines, you may place a comment on
+the command line by preceding the comment with a semicolon (;).  You must
+precede the comment character with a blank.
+
+The valid switch formats are as follows:
+
+     SWITCH
+     SWITCH:value
+     SWITCH=value
+    /SWITCH
+    /SWITCH:value
+    /SWITCH=value
+
+3COM507 Command Line Switches
+================================
+The valid 3COM507 switches appear below.  The letters "ddd" denote a
+decimal number.  The letters "hh" denote a hexadecimal number.  Values
+enclosed in [] indicate default values if the switch is omitted.  Values
+after [] denote the valid range of the switch.
+
+----------
+    @switch-file
+
+This option specifies that further switches are to be taken from a
+switch file.  Any switches after the @switch-file name will be used,
+and the switch settings take precedence over any settings in the switch
+file.  You may invoke switch files from within switch files as often as
+you wish.  The file should contain valid switches and may contain comment
+characters (;) at the beginning of each line or after switches.
+
+For example,
+
+     3COM507 @setup
+
+The file SETUP contains
+
+     ; 3COM507 AI-LANBIOS driver setup file
+     ;
+     packet_size=600     ; Set to small packet size
+     verbose             ; Display verbose information
+
+----------
+    ? or HELP
+
+This switch displays information about the valid command line switches.
+For example,
+
+      3COM507 ?
+      3COM507/help
+
+See the messages section for a detailed description of the HELP display
+output.
+
+----------
+     IEEE
+This switch causes all packets to be transmitted in IEEE 802.3 format. If
+this switch is not specified, all packets will be transmitted in XEROX
+format.
+
+----------
+     MPX=hh [C7] C0 - FF
+
+This switch specifies the multiplex (MPX) interrupt number to use for
+communication to the high level AILANBIO.  You will need to change this
+value only if the MPX number is in use by another application or low-level
+driver.
+
+----------
+    MULTICAST_ADDRESSES [16]  8 - 64
+
+This switch specifies how many multicast addresses will be supported by
+the driver.  Each name that is added by NETBIOS requires a multicast
+address.  The default of 16 should be sufficient in most instances.
+
+----------
+    PACKET_SIZE=dddd [1500] 600..1500
+
+This switch specifies the maximum size packet that the low-level driver
+will report to the AILANBIO program.  Specifying a packet size smaller
+than the default has no effect other than to reduce the performance of
+AILANBIO.
+
+----------
+    REMOVE
+
+This switch removes 3COM507 from memory.  You must remove TSR programs
+in the opposite order they were loaded.  For example, if you loaded
+3COM507 and then AILANBIO, you must remove AILANBIO before 3COM507
+In addition, if you have more than one invocation of 3COM507 and
+AILANBIO you must use the MPX= switch on the command line to specify which
+copy of 3COM507 (but not AILANBIO) that you want to unload.  For
+example, if you load two copies of 3COM507 and AILANBIO:
+
+3COM507/MPX=C7
+AILANBIO/ADAPTER=0/MPX=C7
+3COM507/MPX=D7
+AILANBIO/ADAPTER=1/MPX=D7
+
+To unload these copies of 3COM507 and AILANBIO:
+
+AILANBIO/REMOVE
+3COM507/MPX=D7/REMOVE
+AILANBIO/REMOVE
+3COM507/MPX=C7/REMOVE
+
+The REMOVE option  removes the most recently run copy of AILANBIO.
+
+----------
+    VERBOSE
+
+This switch installs the 3COM507 driver and displays detailed information
+about the configuration of the 3COM507 driver.  See the messages section
+for a detailed description of the verbose output.
+
+---------
+    XEROX
+
+This switch transmits all packets in the XEROX format instead of the IEEE
+802.3 standard.  The driver  receives both XEROX and IEEE 802.3 packets.
+This switch is activated by default if the IEEE switch is not used.
+
+3COM507 Messages
+================
+
+The 3COM507 driver produces informative and error messages.  All error
+messages are preceded by the text "ERROR" and abort installation of the
+3COM507 driver.
+
+--------
+MESSAGE:
+
+AI-LANBIOS 3COM507 driver Vn.nn - (C) Copyright 1993 ARTISOFT Inc.
+
+This message is displayed each time the low-level driver is invoked.
+
+--------
+MESSAGE:
+                   ---- 3COM507 driver installed ----
+
+This message appears after the low-level driver is successfully installed.
+
+--------
+MESSAGE:
+                 ---- 3COM507 driver NOT installed ----
+
+This message appears if the low-level driver is not installed.  The driver
+will not be installed if help information is displayed or an error
+occurred.
+
+--------
+MESSAGE:
+AI-LANBIOS 3COM507 driver Vn.nn -(C) Copyright 1993, ARTISOFT Inc.
+
+Command line                /verbose
+IEEE 802.3 node address     00608CB081A2   Network packet size    1500
+MPX interface number        C7             Machine bus type       PC/XT/AT
+Shared memory size          32768          IO base address        0300
+RAM base address            CC00           Interupt request (IRQ) 15
+Packet type                 XEROX          Multicast Address      16
+Bytes of memory used        2320
+
+                      ----3COM507 Driver Installed----
+
+This message is displayed if the VERBOSE switch is specified.  The values
+displayed indicate how the low-level driver is configured.  (The values
+shown here are for example only - your values may be different.)
+
+--------
+MESSAGE:
+
+Valid command line switches:
+   HELP
+   IEEE
+   MPX=                   range C0 to FF hex
+   MULTICAST_ADDRESSES    range 8 to 64 decimal
+   PACKET_SIZE=           range 600 to 1500 decimal
+   REMOVE
+   VERBOSE
+   XEROX
+   ?
+   @               range 0 to 2048 byte file
+
+This message is displayed when the HELP or ? switch is used.  Each valid
+switch is listed with the acceptable range of values (if any) and the base
+(hex or decimal) in which the numbers must be entered.  The acceptable file
+size range for indirect files (@) is also listed.
+
+The low-level driver is not installed when this switch is used.
+
+-------
+MESSAGE:
+
+                      ---- 3COM507 removed ----
+
+The 3COM507 driver has been removed from memory.
+
+--------
+ERROR:    3COM507 not loaded
+
+Meaning:  You have issued the 3COM507/REMOVE command and do not have
+          3COM507 loaded into memory.
+
+Remedy:   Only issue this command after the program is loaded.
+
+------
+ERROR:   Cannot open indirect file - @file
+
+Meaning: The file "file" cannot be opened as an indirect file.
+
+Remedy:  The file must exist before it can be used as an indirect file.
+
+
+-------
+ERROR:    Can't REMOVE -- 3COM507 interrupts re-hooked
+
+Meaning:  You have attempted to remove 3COM507, and the interrupts are
+          in use by another TSR, or 3COM507 was not the last TSR
+          loaded.
+
+Remedy:   Remove any TSRs loaded after 3COM507.  For example, if you load
+          3COM507 then AILANBIO, you must first remove AILANBIO, then you
+          can remove 3COM507.
+
+
+------
+ERROR:    Illegal character after switch name - ??????xnnnn
+
+Meaning:  The switch ?????? is followed by a character other than '=' or
+          ':' or the switch does not take a value.
+
+Remedy:   Only use the characters '=' or ':' to specify switch values and
+          do not place characters after switches that do not take values.
+
+
+
+------
+ERROR:    Illegal digit in switch value - ??????=nnnn
+
+Meaning:  An illegal digit (character) was encountered in the numeric
+          switch value.
+
+Remedy:   You must restrict numeric decimal values to the numbers 0-9.
+          You must restrict hexadecimal values to the numbers 0-9 and the
+          letters A-F.
+
+------
+ERROR:    Illegal switch - ??????=nnnn
+
+Meaning:  The switch ??????=nnnn is not a recognized switch.
+
+Remedy:   You may only specify legal switches on the command line.
+
+
+------
+ERROR:    Initialization of 3COM507 adapter timed out
+
+Meaning:  The I/O or RAM base you have selected is not available.
+
+Remedy:   Select a different I/O base or RAM base.
+
+
+
+-------
+ERROR:    Installed 3COM507 is different version
+
+Meaning:  You have loaded a version of the 3COM507 program and attempted
+          to remove it from memory with the /REMOVE switch.  The version
+          with which you are attempting to remove 3COM507 is not the same
+          version that was loaded.
+
+Remedy:   Remove 3COM507 with the same version of the program that was
+          loaded.
+
+
+------
+ERROR:    Memory not present - possible conflict with other hardware
+
+Meaning:  Attempts at writing and reading the onboard memory
+          have failed. The memory mapping may be conflicting with or
+          overlapping existing memeory.
+
+Remedy:   Specify an alternative memory address.
+
+
+
+------
+ERROR:   MPX number hh is already in use - Try another number
+
+Meaning: Multiplex (MPX) interrupt number hh is being used by another
+         application or low-level driver.
+
+Remedy:  Try another MPX number.
+
+
+------
+ERROR:   No network hardware found at I/O base address ????h
+
+Meaning: The 3COM507 hardware could not be located.
+
+Remedy:  Select a different I/O base or rambase.
+
+
+------
+ERROR:   Selected rambase must be in the C000h - D800h range
+
+Meaning: The memory address selected with the 3C507.EXE configuration
+         program is invalid.
+
+Remedy:  Change the memory address to a value between C000h and D800h.
+
+
+------
+ERROR:   Switch value not in range - ??????=nnnn
+         Valid range is ssss to eeee
+
+Meaning: The value nnnn is not in proper range.  The value ssss represents
+         the lowest acceptable value, and the value eeee represents the
+         highest acceptable value.
+
+Remedy:  Limit your range of values to the acceptable range.
+
+
+
+
+Testing 3COM507 return code (error level)
+======================================
+
+You may test the 3COM507 return code or error level in a batch file by
+using the IF ERRORLEVEL command.  The following error levels appear:
+
+     0     No error was encountered.  3COM507 driver installed
+     1     MPX number is in use
+     2     Switch error
+     3     Memory not present
+     4     No hardware found at the specified I/O base address
+     6     3COM507 not loaded
+     7     Can't remove, different version loaded
+     8     Cannot remove, interrupts re-hooked
+     9     ERROR: Can't REMOVE -- AI-LANBIOS (R) still installed
+     10    Selected rambase is invalid
+     11    Initialization of 3COM507 adapter timed out
+     ------------------

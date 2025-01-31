@@ -1,0 +1,13 @@
+;* C:\LANTASTI\SAMPLE.INF --- LANtastic INSTALL automated response file
+;* ----- Run 'INSTALL /INF' or see documentation.
+;* ----- (Using DOS INSTALL)
+
+[LANtastic]
+Mode=Fast
+ComputerName=KVK-LAPTOP
+InstallPath=C:\LANTASTI
+Share=no
+Logouts=15
+Logins=10
+Smb=yes
+Connect=yes

@@ -1,0 +1,356 @@
+ AI-LANBIOS Low-Level Driver For XIRCOM Pocket ARCNET Adapters (PATCC.DOC)
+          -----------------------------------------------------
+                    (C) Copyright 1991 ARTISOFT, Inc.
+                           (Revised 6/26/92)
+
+INTRODUCTION
+============
+
+The PATCC.COM low-level AI-LANBIOS driver allows you to use your Xircom
+PA02B6-8K Pocket ARCNET adapters in a LANtastic network.  In order for
+Xircom adapter to operate with the LANtastic Network Operating System
+(NOS), you must first install the adapter as instructed in the Xircom
+installation guide, then run the supporting software (PATCC.COM and
+AILANBIO.EXE).  PATCC.COM communicates with the Xircom adapter, while
+AILANBIO.EXE provides high-level communications across the local area
+network.  Because of this, you cannot run any network software until after
+PATCC.COM and AILANBIO.EXE are loaded.  (Note: For information on running
+AILANBIO.EXE, refer to your LANtastic manuals.)
+
+There are command line switches that you can use when you run PATCC.COM
+and AILANBIO.EXE.  These switches allow you greater flexibility in using
+these programs.  For information on the AILANBIO.EXE command line options
+refer to SWITCHES.DOC In your LANtastic installation directory.  For
+information on PATCC.COM command line switches, refer to "PATCC.COM
+COMMAND LINE OPTIONS" in this file.
+
+
+RUNNING PATCC.COM
+=================
+
+The syntax for running PATCC.COM is
+
+     PATCC[switches . . . ] [ ; comment]
+
+where "switches" denotes any optional command line switches.  If you are
+using more than one switch in a command line, use a space or a forward
+slash (/) to separate the arguments.  If a switch takes a value (such as
+when you designate the DOS multiplex number with the MPX= switch) the
+switch must be followed by an equal sign (=) or a colon (:).  All switch
+values are checked to make sure they are valid.  Illegal values produce
+error messages.
+
+These are valid switch formats:
+
+        SWITCH
+        /SWITCH
+        SWITCH:VALUE
+        /SWITCH=VALUE
+
+You would use one of the first two formats for a switch that does not take
+a value.  For example:
+
+        PATCC/HELP
+
+You would use the third or fourth formats for a switch that takes a value.
+Such as:
+
+        PATCC/MPX=D7
+
+
+PATCC.COM COMMAND LINE OPTIONS
+==============================
+
+The valid PATCC.COM switches are given below.  The letters "ddd"  denote
+that you must provide a decimal number.  The letters "hh" denote a
+required hexadecimal value.  Values enclosed in brackets "[]" indicate
+default values if the switch is omitted.  Values after the brackets denote
+the valid range of variables for the switch.
+
+----------
+    ?
+
+This switch instructs PATCC.COM to display information about the valid
+command line switches, but does not install the PATCC.COM driver.  For
+example,
+
+     PATCC/help
+     PATCC ?
+
+See the messages section for a detailed description of the HELP display
+output.
+
+----------
+    IRQ=d [7] 5 or 7
+
+This switch specifies the interrupt request (IRQ) level for the card.  If
+you have more than one adapter installed, each should have its own unique
+IRQ.  The IRQ switch value must match the jumper setting on the card.  The
+default value is the same as the default factory setting on the card.
+
+Consult the Xircom adapter installation guide for more information on
+setting IRQ jumpers on the cards.
+
+----------
+    LPT=d [1] Range 1 to 3
+
+This switch allows you to specify the parallel port where the Pocket
+ARCNET adapter is installed.  You will need to use this switch if you've
+installed the adapter on LPT2 or LPT3.
+
+----------
+    MPX=hh [C7] C0-FF
+
+This switch specifies the DOS multiplex (MPX) number to use for
+communication with AILANBIO.EXE.  You will need to change this value only
+if the default MPX number is in use by another application or NETBIOS.
+Multiplex numbers 00 through BF are reserved for DOS use; therefore, you
+must use a multiplex number between C0 and FF.
+
+----------
+    REMOVE
+
+This switch removes PATCC.EXE from memory.  You must remove TSR programs
+in the opposite order they were loaded.  For example, if you loaded
+PATCC.EXE and then AILANBIO, you must remove AILANBIO before PATCC.EXE
+In addition, if you have more than one invocation of PATCC.EXE and
+AILANBIO you must use the MPX= switch on the command line to specify which
+copy of PATCC.EXE but not (AILANBIO) that you want to unload.  For
+example, if you load two copies of PATCC.EXE and AILANBIO:
+
+PATCC.EXE/MPX=C7
+AILANBIO/ADAPTER=0/MPX=C7
+PATCC.EXE/MPX=D7
+AILANBIO/ADAPTER=1/MPX=D7
+
+To unload these copies of PATCC.EXE and AILANBIO:
+
+AILANBIO/REMOVE
+PATCC.EXE/MPX=D7/REMOVE
+AILANBIO/REMOVE
+PATCC.EXE/MPX=C7/REMOVE
+
+The REMOVE option will remove the most recently run copy of AILANBIO.
+
+----------
+WINDOWS
+
+This switch is needed if running under Microsoft(R) Windows(TM) in
+enhanced mode on a 386.
+
+
+USING MULTIPLE ADAPTERS
+=======================
+
+PATCC.COM and AILANBIO.EXE communicate with each other using a DOS
+multiplex (MPX) number.  Each PATCC.COM and AILANBIO.EXE pair supports one
+adapter.  You will need to run an additional copy of PATCC.COM and
+AILANBIO.EXE for each additional Xircom adapter installed in your
+computer.  Using command line switches, you must assign each PATCC.COM and
+AILANBIO.EXE pair a unique multiplex, adapter and IRQ number.  You must
+also specify the LPT port to which each adapter is attached.  For example:
+
+        PATCC
+        AILANBIO
+        PATCC/IRQ=5/MPX=D7/LPT=2
+        AILANBIO/ADAPTER=1/MPX=D7
+
+The first invocation of PATCC.COM and AILANBIO.EXE loads into the first
+adapter using the default MPX number (C7) interrupt request number (7) and
+adapter number (0).  This card is attached to LPT1.   The command line
+switches in the second invocation instruct the NETBIOS to load into the
+second card, (adapter number 1) using interrupt request 5 and DOS MPX
+number D7.  This adapter is attached to LPT2.
+
+
+PATCC.COM MESSAGES
+==================
+
+The PATCC.COM driver produces two types of messages: Informative and
+Error.  All error messages are preceded by the text "ERROR:" and in those
+cases the PATCC.COM driver is not installed.
+
+--------
+MESSAGE:
+
+AI-LANBIOS Pocket ARCNET driver Vn.nn (C) Copyright 1989, 1990 ARTISOFT
+Inc.; Portions (C) Copyright 1989, 1990 Xircom, Inc.
+Thomas-Conrad Compatible Version
+Configuration: MPX=C7, LPT=01, IRQ=07
+
+This message is displayed each time the low-level driver is invoked.
+
+--------
+MESSAGE:
+         ---- Pocket ARCNET driver installed successfully ----
+
+This message is displayed after the low-level driver is successfully
+installed. 
+
+--------
+MESSAGE:
+            ---- Pocket ARCNET driver NOT installed ----
+
+This message is displayed if the low-level driver is not installed.  The
+driver will not be installed if HELP information is displayed or an error
+occurred.
+
+--------
+MESSAGE:
+
+Usage: PATCC [?] [LPT=X] [IRQ=Y] [MPX=Z] [REMOVE] [WINDOWS]
+Where: ? if present causes this message to be displayed
+       X is the LPT port number                            (1, 2, or 3)
+       Y is the Interrupt used by the parallel port        (5 or 7    )
+       Z is the Multiplexed interrupt ID in hex            (C0 to FF  )
+       REMOVE removes PATCC from memory
+       WINDOWS is needed if running under Microsoft(R) Windows(TM)
+
+Note:  If the LPT port number or Interrupt are not specified, they will
+       be determined automatically.  If the multiplexed interrupt ID is
+       not specified, C7 will be used.
+
+This message is displayed when the ? switch is used.  The low-level driver
+is not installed when this switch is used.
+
+--------
+MESSAGE:
+
+                      ---- PATCC removed ----
+
+The PATCC.EXE driver has been removed from memory.
+
+--------
+ERROR:    PATCC not loaded
+
+Meaning:  You have issued the PATCC/REMOVE command and do not have
+          PATCC.EXE loaded into memory.
+
+Remedy:   Only issue this command after the program is loaded.
+
+--------
+ERROR:    Can't REMOVE -- PATCC interrupts re-hooked
+
+Meaning:  You have attempted to remove PATCC.EXE and the interrupts are in
+          use by another TSR, or PATCC.EXE was not the last TSR loaded.
+
+Remedy:   Remove any TSRs loaded after PATCC.EXE.  For example, if you
+          load PATCC.EXE then AILANBIO.EXE, you must first remove
+          AILANBIO.EXE, then you can remove PATCC.EXE.
+
+--------
+ERROR:    Installed PATCC is different version
+
+Meaning:  You have loaded a version of the PATCC.EXE program and attempted
+          to remove it from memory with the /REMOVE switch.  The version
+          with which you are attempting to remove PATCC.EXE is not the
+          same version that was loaded.
+
+Remedy:   Remove PATCC.EXE with the same version of the program that was
+          loaded.
+
+--------
+ERROR:   Illegal character after switch name - ??????xnnnn
+
+Meaning: The switch ?????? is followed by a character other than "=" or
+         ":" or the switch does not take a value.
+
+Remedy:  Only use the characters "=" or ":" to specify switch values and
+         do not place characters after switches that do not take values.
+
+--------
+ERROR:   Illegal digit in switch value - ??????=nnnn
+
+Meaning: An illegal digit (character) was encountered in the numeric
+         switch value.
+
+Remedy:  You must restrict numeric decimal values to the numbers 0-9. 
+         You must restrict hexadecimal values to the numbers 0-9 and the
+         letters A-F.
+
+--------
+ERROR:   Illegal switch - ??????=nnnn
+
+Meaning: The switch ??????=nnnn is not a recognized switch.
+
+Remedy:  You may only specify legal switches on the command line.
+
+--------
+ERROR:   MPX number hh is already in use - Try another number
+
+Meaning: The multiplex (MPX) interrupt number hh is being used by another
+         application or low-level driver.
+
+Remedy:  Try another MPX number.
+
+--------
+ERROR:   Node ID must not be 0
+
+Meaning: You have set the node address jumper on the adapter to 0.  Node
+         number 0 is a reserved address in ARCNET networks.
+
+Remedy:  Select a different unique node address.
+
+--------
+ERROR:   Parallel port selected is unavailable, or driver already loaded
+
+Meaning: The parallel port you have selected is already being used by
+         other hardware and/or software, or you have attempted to load a
+         second copy of PATCC.COM into the same adapter.
+
+Remedy:  Attach the adapter to an LPT port that is not in use by any
+         other hardware or software.  Load only one copy of PATCC.COM per
+         adapter.  If you use multiple adapters, make sure each copy of
+         PATCC.COM has a unique MPX, IRQ and LPT value.
+
+--------
+ERROR:   Pocket ARCNET Adapter missing, not powered or malfunctioned
+
+Meaning: PATCC.COM was unable to load into the Pocket ARCNET adapter.
+
+Remedy:  Make sure the adapter is connected to your computer and that is
+         has been powered up and correctly configured to match the
+         PATCC.COM software settings.  If the error persists, contact
+         Xircom Technical Support. The adapter may need servicing.
+
+--------
+ERROR:   Pocket ARCNET Adapter Address EEPROM unreadable.
+
+Meaning: PATCC.COM was unable to read the node address in the adapter
+         EEPROM chip.
+
+Remedy:  Contact Xircom Technical Support.  The adapter may need service.
+
+--------
+ERROR:   Pocket ARCNET Adapter failed memory test.
+
+Meaning: PATCC.COM was unable to read or write to the adapter's on-board
+         RAM.
+
+Remedy:  Contact Xircom Technical Support.  The adapter may need service.
+
+--------
+ERROR:   Switch value not in range - ??????=nnnn
+         Valid range is ssss to eeee
+
+Meaning: The value nnnn is not in proper range.  The value "ssss"
+         represents the lowest acceptable value and the value "eeee"
+         represents the highest acceptable value.
+
+Remedy:  Limit your range of values to the acceptable range.
+
+
+TESTING PATCC.COM RETURN CODES (ERROR LEVEL)
+============================================
+
+You may test the PATCC.COM return code or error level in a batch file by
+using the IF ERRORLEVEL command.  The following error levels are returned:
+
+     0     No error has encountered.  PATCC.COM driver installed
+     6     PATCC not loaded
+     7     Can't remove, different version loaded
+     8     Cannot remove, interrupts re-hooked
+     9     ERROR: Can't REMOVE -- AI-LANBIOS (R) still installed
+-------------------
+ARCNET is a trademark of Datapoint Inc.
+

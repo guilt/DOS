@@ -1,0 +1,1042 @@
+LANtastic 7.0 for DOS: Managing Printing
+========================================
+(c) 1996, Artisoft, Inc.
+------------------------
+
+This file covers the following main topics:
+
+Controlling items in the print queue
+Printing a text file
+Using multiple printers on one server
+Printing banner pages
+Redirecting printer output to a file
+Printer error notification
+Job notification
+Using a server's printer locally
+Setting up immediate despooling
+Using Remote Printer Server (RPS)
+
+------------------------------------------------------------ 
+Many important print management options are available from 
+the Printing module of the NET_MGR server startup 
+parameters. Although some of these are mentioned in this 
+file, it's a good idea to go to the file Cfgsrv.txt and 
+review the full range of options. In addition to improving 
+print performance, the Printing and Despooling options 
+allow you to enable or disable automatic despooling and 
+automatic disk-space-saving functions. For general 
+instructions on sharing printers, see the file Print.txt.
+------------------------------------------------------------
+
+Controlling items in the print queue
+====================================
+When you send data to a network printer, the file is 
+placed in a temporary storage location on the server. This 
+location is called the print queue or printer spool area. 
+Here files wait in the order they were received until the 
+printer becomes available. 
+
+Note - Normally LANtastic automatically despools print 
+jobs to a server upon server startup. If instead you want 
+the server to wait until a NET QUEUE START or 
+NET QUEUE SINGLE command is given, go to the Printing 
+module of the NET_MGR server startup parameters and toggle 
+the Initial Despooling option to Disabled.
+
+Once you've sent an item to a server's print queue, you 
+can still control the print job. If you're using a 
+LANtastic server and have the Q (Super Queue) privilege, 
+you can control any item in the print queue. If not, you 
+can control only print jobs you've sent. Refer to the file 
+Accts.txt for information on setting account privileges.
+
+To control a queue item: 
+
+1. At the DOS prompt, type NET<Enter>. Select View Print 
+Jobs <Enter>. 
+
+2. Select the network server <Enter> with the print queue 
+you want to control. If necessary, log in to that server.
+
+The Viewing My Jobs For All Printers screen appears. For 
+each print job, it displays the sequence number, the 
+destination printer device, the status of the print job, 
+the name of the person who sent it, and any comment she 
+has included. Here are the possible job queue status types:
+
+Printing
+--------
+Job is printing.
+
+Immediate
+---------
+Printer has been set for immediate printing, and the job 
+is printing even though all the data has not been sent to 
+the print queue. This status type isn't available for jobs 
+on non-LANtastic computers, such as those running SMB- or 
+NCP-based network software.
+
+Waiting
+-------
+Job is waiting in the print queue to be sent to the 
+printer.
+
+Held
+----
+Someone has prevented this job from being printed. You can 
+delete or release a held job.
+
+Deleted
+-------
+Someone is deleting the job. A job is marked as deleted 
+only if it's in the process of being printed. It can't be 
+deleted until printing is halted or completed. 
+
+Rush
+----
+The job has been placed at the front of the printing 
+order. You must have the Q (Super Queue) privilege to rush 
+a print job. This status type isn't available for jobs on 
+non-LANtastic computers.
+
+You can update the queue display by pressing the space 
+bar. 
+
+3. Select the print job you want to control <Enter>. 
+You'll see a menu with the following options:
+
+Show
+----
+Provides detailed information about the print job. 
+
+Delete
+------
+Removes the print job from the queue. Caution: Be sure to 
+halt the printer queue before you delete a print job.
+
+Important - Selecting the Delete option won't delete a job 
+that's already being printed. If you have the Q (Super 
+Queue) privilege, you can stop a job that's in the process 
+of printing by completing the steps in the next section, 
+"Halting and restarting a print job."
+
+Hold
+----
+Stops despooling of the selected print job. 
+
+Release
+-------
+Allows a held print job to despool. 
+
+View
+----
+Allows you to view the contents of a print job. This 
+option isn't available for jobs on non-LANtastic computers.
+
+Copy
+----
+Allows you to copy the contents of the print job to a 
+file. This option isn't available for jobs on 
+non-LANtastic computers.
+
+Print
+-----
+Lets you send a print job to any of the available ports on 
+the computer. This allows the job to be printed 
+immediately or to be copied to another printer on the 
+network. This option isn't available for jobs on 
+non-LANtastic computers.
+
+Rush
+----
+Gives the print job top priority. You must have the Q 
+(Super Queue) privilege to rush print jobs. This option 
+isn't available for jobs on non-LANtastic computers.
+
+4. Select the desired option <Enter>. Then press Esc to 
+exit each screen.
+
+Halting and restarting a print job
+==================================
+If you have the Q (Super Queue) or S privilege on a 
+LANtastic server that has a print queue, you can use the 
+LANtastic NET program from any LANtastic computer in the 
+network to stop a job that's in the process of printing. 
+
+To stop a print job: 
+
+1. At the DOS prompt, type NET <Enter>. Select View Print 
+Jobs <Enter>. 
+
+2. At the Viewing All Jobs for All Printers screen, press 
+F7. You'll see a screen showing the status of network 
+printers and other devices. 
+
+3. Select the printer port where the job you want to stop 
+is being printed <Enter>. A printer control screen 
+appears. 
+
+4. Select the Halt option, press Enter, then press Esc to 
+return to the Viewing All Jobs for All Printers screen. 
+
+5. Make sure the job you want to stop is selected, then 
+press Del. The selected job is removed from the print 
+queue. 
+
+Now that you've halted the printer and deleted the print 
+job from the queue, you'll probably have to restart the 
+printer. That way, any other jobs that have been sent to 
+that printer can begin processing. 
+
+1. At the Viewing All Jobs for All Printers screen, press 
+F7. 
+
+2. When the screen showing the status of network printers 
+and other devices appears, select the printer you halted 
+<Enter>. 
+
+3. Select the Start option <Enter>. 
+
+4. Press Esc to return to the Viewing All Jobs for All 
+Printers screen. 
+
+Stopping and restarting printing from the command line
+======================================================
+If you're using a LANtastic server and prefer to work from 
+the command line instead of the NET menu, you can stop and 
+start print jobs from the DOS prompt. To do this, you must 
+have the Q (Super Queue) privilege as described in the 
+file Accts.txt. 
+
+To stop all network printing after the current print job is done, type
+
+NET QUEUE STOP  \\servername  printer <Enter> 
+
+where servername is the name of the server where you want 
+to stop despooling and printer is the port and printer 
+where you want to stop printing. This syntax stops 
+despooling on all of the server's printers. 
+
+To halt printing immediately, type 
+
+NET QUEUE HALT  \\servername  printer <Enter>. 
+
+Once despooling restarts, the print job will start over 
+from the beginning. To stop a print job and start it at 
+the same place later, type
+
+NET QUEUE PAUSE  \\servername  printer <Enter>. 
+
+To resume despooling after using one of the above commands, type 
+
+NET QUEUE START  \\servername  printer <Enter>. 
+
+To despool a single job, use the syntax 
+
+NET QUEUE SINGLE  \\servername  printer <Enter>.
+
+ Note that the queue must be halted before the 
+NET QUEUE SINGLE command can be activated. To resume 
+despooling and start the current print job over from the 
+beginning, type 
+
+NET QUEUE RESTART  \\servername  printer <Enter>. 
+
+For more information on these and other NET printing 
+switches, see the Commd.txt file. 
+
+Printing a text file
+====================
+When you want to print a text item such as a batch file, 
+LANtastic gives you several options. 
+
+Printing an existing text file
+==============================
+This section explains how to send a text file to a 
+server's printer from the View Print Jobs screen. For 
+instructions on printing from an application program, the 
+DOS prompt or the NET menu, see the file Print.txt
+.
+1. At the DOS prompt, type NET <Enter>. Select View Print 
+Jobs <Enter>. 
+
+2. Select the desired server <Enter>.
+
+3. Press Ins, then select By Copying an Existing Text File 
+<Enter>.
+
+4. Select a printer, press Enter, then type in the name 
+and full DOS path of the text file that you want to print 
+<Enter>.
+
+5. The Start Time for Printing screen appears. To print 
+the file immediately, press Enter. Use the Tab key to 
+change the time at which the file will print, and the 
+arrow and Tab keys to change the date. Pressing the Shift 
+and Tab keys at the same time runs the clock or calendar 
+in reverse. 
+
+6. If desired, type a comment for the print job <Enter>.
+
+7. Type in the number of copies you'd like printed, press 
+Enter, then press Esc to exit each screen. 
+
+Creating a print file with the LANtastic text editor
+====================================================
+This section explains how to create and print a new text 
+file using the text editor supplied with LANtastic. 
+
+1. At the DOS prompt, type NET <Enter>. Select View Print 
+Jobs <Enter>. 
+
+2. Select the server that has the printer you want to use 
+<Enter>. 
+
+3. Press Ins, then select Using the LANtastic Editor 
+<Enter>.
+
+4. Select a printer <Enter>. 
+
+5. Type in your text. Keyboard functions are described at 
+the bottom of the screen. 
+
+6. Press F2 to send the job to the printer.
+
+7. Follow steps 5 - 7 under "Printing an existing text 
+file" earlier in this file. 
+
+Creating a print file with a different text editor
+==================================================
+The Use Text Editor option lets you create and print a new 
+text file using your own text editing application rather 
+than LANtastic's default editor. 
+
+1. At the DOS prompt, type NET <Enter>. Select View Print 
+Jobs <Enter>.
+2. Select the server that has the printer you want to use 
+<Enter>. 
+
+3. Press Ins, then select Using Your Text Editor <Enter>. 
+
+4. Type in the full DOS path to the location of the 
+desired text editor <Enter>.
+
+5. Type in the full path and filename of the file you want 
+to create. 
+
+6. Create and save your text. 
+
+7. Select a printer, press Enter, then type in the name 
+and full DOS path of the file you just created <Enter>.
+
+8. Follow steps 5 - 7 under "Printing an existing text 
+file" earlier in this file. 
+
+Moving the print spool area
+===========================
+Changing the location of the printer's spool area (queue) 
+is a good idea if you want to use a larger or faster disk 
+for despooling. For example, you could set up a RAM drive 
+with a portion of the server's memory and do all network 
+despooling there. For more information on creating a RAM 
+drive, refer to your DOS manual. 
+
+When moving your printer's spool area to a RAM disk, 
+consider the following guidelines: 
+
+- Don't use a RAM disk for a print spool area if you're 
+using LANtastic Mail.
+
+- When you shut down the server, any print jobs that 
+remain in the print spool area are lost.
+
+- If you place the spool area in the root directory of the 
+RAM disk, you may receive an error message. It's safe to 
+place the spool area there, so ignore this message.
+
+If you're using a LANtastic server and want to relocate 
+the spool area:
+
+1. Make sure that the SERVER program isn't running. If it 
+is, remove it from memory. To do this, make sure Windows 
+isn't running and press Ctrl+Alt+Del from the DOS prompt. 
+In the screen that appears, make sure there are no open 
+files and then press S.
+
+2. At the DOS prompt, type NET_MGR <Enter>. Select Queue 
+Maintenance <Enter>. 
+
+3. Select Change the Queue Location, press Enter, then 
+type in the full path of the location where you'd like the 
+print files to be kept <Enter>. 
+
+Note - This location must reside locally on the server. 
+Don't specify a location on another server's drive. Also, 
+make sure there's enough disk space to hold all print and 
+mail jobs that will be sent to the queue. 
+
+4. Press Esc to exit each screen. Despooling occurs in the 
+new location as soon as you run the SERVER program.
+ 
+Clearing the print spool area
+=============================
+The print spool area also contains LANtastic Mail 
+messages. If you're using a LANtastic server, you can 
+clear these in the same way that you do print files.
+
+1. Make sure that the SERVER program isn't running. If it 
+is, remove it from memory. To do this, make sure Windows 
+isn't running and press Ctrl+Alt+Del at the DOS prompt. In 
+the screen that appears, make sure there are no open 
+files, then press S.
+
+2. At the DOS prompt, type NET_MGR <Enter>. Select Queue 
+Maintenance <Enter>. 
+
+- Select Clear All Entries From the Queue to delete all 
+mail and print files from the queue <Enter>. 
+
+- Select Clear Print Jobs From the Queue to delete all 
+print files from the queue and leave all mail entries 
+<Enter>. 
+
+- Select Clear Mail Messages From the Queue to delete all 
+mail files from the queue and leave all print entries <Enter>. 
+
+3. Type Yes to clear the items, press Enter, then press 
+Esc to exit each screen. 
+
+Note - Instructions for using LANtastic Mail appear in the 
+Mlcht.txt file.
+
+Using multiple printers on one server
+=====================================
+LANtastic can simultaneously send jobs to multiple 
+printers attached to your server. To use this feature, you 
+must first set up each printer as a shared resource, as 
+described in the file Shrres.txt. You can also set up each 
+printer to print in various modes. Each print mode can 
+then be set up as a separate network resource. 
+
+To use the simultaneous printing feature, make sure you 
+allow a printer task for each printer on the server, as 
+described in the file Cfgsrv.txt. 
+
+Once you've set up a server's printers as network 
+resources, you can control them individually through 
+LANtastic NET. This means that you can halt printing on 
+the device attached to LPT2 but still use the rest of the 
+server's printers. You must have the Q (Super Queue) or S 
+(System Manager) privilege to perform this operation. To 
+control a server's printers:
+
+1. At the DOS prompt, type NET <Enter>. Select View Print 
+Jobs <Enter>. 
+
+2. Select the desired network server from the list 
+attached to it, press Enter, then press F7 to display a 
+list of printers.
+
+3. Use the arrow keys to select the printer that you want 
+to control. If you want to control all the printers 
+attached to the specified server, select ALL <Enter>. 
+Select one of the following options:
+
+Halt
+----
+Halt printing for that printer.
+
+Stop
+----
+Stop despooling at the end of the current print job. 
+
+Pause
+-----
+Temporarily suspend despooling. 
+
+One-Job
+-------
+Print one job, then stop.
+
+Start
+-----
+Begin despooling if the queue has been paused or stopped. 
+
+Restart
+-------
+Restart current print job from the beginning. 
+
+5. If necessary, repeat steps 3 and 4 for any of the other 
+printers on this server. 
+
+6. Press Esc to exit each screen.
+
+Using logical printer streams
+=============================
+One advantage of setting up different printer resources 
+(also known as logical printer streams) is that you can 
+control each one individually. That way you can enable and 
+disable any printer resource without having to halt the 
+entire print queue. 
+
+Note - You must have the Q (Super Queue) privilege to 
+control the printer stream. For information on user 
+account privileges refer to the file Accts.txt.
+
+To enable or disable one or more printer streams:
+
+1. At the DOS prompt, type NET<Enter>. Select View Print 
+Jobs <Enter>.
+
+Note - The Printer Streams option isn't available if 
+you're viewing jobs for a NetWare or SMB-based server, 
+such as a Windows for Workgroups or Windows NT.
+
+2. Select the desired network server from the list 
+provided, press Enter, then press F8.
+
+3. Select @???????.??? <Enter>.
+
+4. Type the name of the printer you want first in the 
+list. If desired, you can use the "?" and "*" wildcard 
+characters. Repeat this process with the rest of the 
+printer names, placing each one on a different line. Refer 
+to the next section for strategies for placing printer 
+names on the list.
+
+Note - When you reset your computer, the logical printer 
+stream settings are lost. If you want to set the streams 
+each time you bring up the server, include the 
+corresponding NET STREAM commands in your STARTNET.BAT 
+file, as described in the Commd.txt file.
+
+5. Disable any printer resources you don't want active by 
+selecting a resource and pressing F5.
+
+6. Press Esc to exit each screen.
+
+Placement order of printer streams
+==================================
+To control individual printer streams, you must place them 
+before the stream @???????.??? (@*.*). For example, to 
+control the individual entry @PRINTER, you must first 
+choose @???????.??? from the list of logical streams. In 
+the window provided, type @PRINTER, placing it first in 
+the list. You can then type in the rest of the streams, 
+placing each one on a different line. 
+
+You can also use wildcard characters such as "*". For 
+example, if you have three printer resources named @FAST1, 
+@FAST2 and @FAST3, you can control them all by creating 
+@FAST*.
+
+The scanning order would be as follows:
+
+@FAST*     Enabled
+@FAST1     Disabled
+@FAST2     Enabled
+@FAST3     Disabled
+
+In the above example, all four of the @FAST streams would 
+be enabled. Once @FAST* is scanned, any of the other 
+streams beginning with @FAST are ignored.
+
+If you want to enable @FAST2 but not @FAST1 and @FAST3, 
+you can also use the scanning order to your advantage. 
+Simply place @FAST2 above @FAST*. For example: 
+
+@FAST2     Enabled
+@FAST*     Disabled
+
+Now any printer streams that begin with @FAST below @FAST* 
+will be disabled, but @FAST2 will be enabled.
+
+If you want to enable only the printer streams that begin 
+with @FAST and @DRAFT but no others, you could place these 
+streams above the @???????.??? printer stream and disable 
+the rest, as in the following example: 
+
+@FAST*            Enabled
+@DRAFT*         Enabled
+@???????.???     Disabled
+
+Now any printer streams after @???????.??? will be 
+disabled. The above example would be useful if @FAST* and 
+@DRAFT* used one type of paper, but the rest of the 
+streams used a letterhead or labels. Whenever you wanted 
+to print on a letterhead, you could disable @FAST* and 
+@DRAFT* and enable the print modes set up to use 
+letterheads.
+
+Note - Printer streams remain in effect only as long as 
+the server is running. You must set them up again each 
+time you restart the SERVER program. To make printer 
+streams permanent, add NET STREAM to your STARTNET.BAT 
+file. Information on NET commands and switches appears in 
+the Commd.txt file.
+
+Printing banner pages
+=====================
+Banner pages allow you to easily determine the contents 
+and ownership of a print file. This is helpful when 
+several people are sending data to the same printer. At 
+the start of each job, the printer outputs a banner page 
+that shows the following information:
+
+- Sender's username
+- Name of the computer from which the user sent the print 
+job 
+- Any comments the user included
+- Year, month and day the file was printed 
+- Time the file was printed in hours, minutes and seconds 
+-Resource name of the printer 
+-Physical port of the printer 
+-Paper width of the print job and banner page 
+-Tab position 
+-Number of copies that follow 
+-Name of the file
+
+When you print a job on a network printer with the banner 
+page option enabled, you'll receive a banner page at the 
+start of each print job.
+
+Note - Don't enable banner pages if people will be 
+printing PostScript files.
+
+To enable banner pages for a printer: 
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select Shared 
+Resources Management <Enter>.
+
+2. Select the printer for which you'd like to enable 
+banner pages <Enter>.
+
+3. Select Banner Page <Enter> to toggle the option from 
+Disabled to Enabled. 
+
+4. Press Esc to exit each screen.
+
+Redirecting printer output to a file
+====================================
+When you redirect a printer port, you normally connect it 
+to a shared printer. For example, this command
+
+NET USE LPT1 \\SERVER1\@PRINTER <Enter>
+
+redirects any data sent to your LPT1 printer port to 
+@PRINTER attached to SERVER1. You can also redirect a 
+printer port to a file on the server. For example, the 
+command 
+
+NET USE LPT1  \\SERVER1\C-DRIVE\OUTPUTS\FILE1 <Enter> 
+
+redirects any data sent to your LPT1 port to FILE1 in the 
+server's C-DRIVE\OUTPUTS subdirectory. 
+
+Important - Before you can redirect printer output to a 
+file, you must create the storage file. One way to make 
+sure that such a file exists is to precede the NET USE 
+command with a redirected ECHO command. For example: 
+
+ECHO>\\SERVER1\C-DRIVE\OUTPUTS\FILE1 <Enter>
+
+NET USE LPT1  \\SERVER1\C-DRIVE\OUTPUTS\FILE1 <Enter>
+
+Each time you print to the file, the previous contents of 
+the file are replaced with the new printer output.
+
+Printer error notification
+==========================
+The printer error notification options in the Detailed 
+Information for @[printer name] screen allows a user with 
+the O (Operator) privilege to receive out-of-paper and 
+other messages from a printer. Even if you already have 
+the O privilege, you must enable the Error Notification 
+option before you can receive messages. To enable or 
+disable the Error Notification option: 
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select Shared 
+Resources Management <Enter>.
+
+2. Select the printer for which you'd like to enable 
+notification <Enter>.
+
+3. Select Error Notification and press Enter to toggle the 
+option from Disabled to Enabled. 
+
+4. Press Esc to exit each screen.
+
+Error Notification Timeout
+==========================
+This option allows you to specify the time (in seconds) 
+that must pass before an error notification message is 
+sent to users with the O (Operator) privilege. To enable 
+or disable the Error Notification T/O (timeout) option: 
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select Shared 
+Resources Management <Enter>.
+
+2. Select the printer for which you'd like to enable 
+timeout <Enter>.
+
+3. Select Notification T/O and press Enter to toggle the 
+option from Disabled to Enabled. 
+
+4. In the field that appears, enter the time in seconds 
+that must pass before a message is sent to all users who 
+are logged in with the O (Operator) privilege.
+
+5. Press Esc to exit each screen.
+
+Job notification
+================
+If you enable the job notification option in the Detailed 
+Information for @[printer name] screen, LANtastic sends 
+you a print completion message when your printer jobs are 
+finished. To enable or disable the Job Notification 
+option: 
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select 
+Shared Resources Management <Enter>.
+
+2. Select the printer for which you'd like to enable 
+notification <Enter>.
+
+3. Select Job Notification and press Enter to toggle the 
+option from Disabled to Enabled. 
+
+4. Press Esc to exit each screen.
+
+Using a server's printer locally
+================================
+If you share your printer, you should send your own print 
+jobs through the network. To do this, you need to connect 
+to your own printer in the same way that you connect to 
+other servers' printers. Steps for doing so appear in the 
+file Print.txt. If you don't follow these steps, any print 
+jobs that you send locally are canceled if a network print 
+job is sent.
+
+If you don't want to set up a network connection to your 
+printer, but still want to print locally, halt your 
+server's printer queue. You can then print your job.
+
+You must have the Q (Super Queue) privilege to use the 
+following NET QUEUE commands.
+
+To halt despooling after the current job, type:
+ 
+NET QUEUE STOP \\[server] [LPTn] <Enter> 
+
+To stop despooling immediately, type: 
+
+NET QUEUE HALT \\[server] [LPTn] <Enter> 
+
+In the previous command lines, [server] refers to the name 
+of your server and [LPTn] (LPT number) refers to the 
+shared printer port. 
+
+To temporarily cancel any connection to the LPTn port, type: 
+
+NET UNUSE LPTn <Enter> 
+
+Your printer (LPTn) will now print only your local jobs. 
+It will still be listed as a server resource, but no 
+network print jobs will be printed. Jobs sent by other 
+people will continue to be spooled but won't be printed. 
+
+Note - If you want to stop printing permanently and remove 
+the server's printers from the list of resources shared on 
+the network, type NET_MGR; select Server Startup 
+Parameters <Enter>. Select the Printing option <Enter>. At 
+the Printing Configuration screen, press Enter to toggle 
+the Printing option to Disabled. 
+
+Setting up immediate despooling
+===============================
+When this LANtastic feature is enabled, a server can 
+immediately begin to despool and print a job before all 
+the information has been written to its disk. A job will 
+print faster because you don't have to wait for it to be 
+completely written from a workstation before printing 
+begins. 
+
+Sometimes, however, an immediate despooling application 
+can pause for an extended period - for example, if the 
+printing application requests keyboard input from the 
+user. To prevent a paused immediate despooling job from 
+occupying the printer, LANtastic allows you to set a 
+despooling timeout interval as described in the steps that 
+follow. To use immediate despooling:
+
+1. At the DOS prompt, type NET_MGR <Enter>. Select Shared 
+Resources Management <Enter>.
+
+2. Select the printer for which you'd like to enable 
+immediate despooling <Enter>. 
+
+3. Select Immed Despool. Press Enter to toggle the option 
+to Enabled. 
+
+4. If you want to change the timeout value from the 
+default of 30 seconds, select Despool Timeout <Enter>. 
+
+Note - Set this option to a value that's at least two 
+times higher than the largest NET LPT TIMEOUT setting on 
+your workstations. The default timeout value specified in 
+STARTNET.BAT is ten seconds. To check this setting, type 
+NET SHOW <Enter> at the DOS prompt.
+
+5. Type in a timeout value <Enter>. To avoid restarting 
+immediate despooling jobs that are only briefly paused, 
+enter a number from 120 to 3600. To disable the timeout 
+interval, enter a value of zero. This gives the current 
+immediate despooling application exclusive use of the 
+printer.
+
+6. After entering your timeout value, press Esc to exit 
+each screen. 
+
+7. Send print jobs from your network workstations as 
+usual. After the timeout interval has elapsed:
+
+- The server aborts the current print job. 
+- If the Printing audit trail option is enabled, the "Time 
+Out" notation appears in the audit file.
+- *TIMEOUT* is printed, and a form feed occurs on the 
+current page in the printer.
+- The next waiting job is printed.
+- The server restarts the aborted job from the beginning 
+of the file. Instead of immediately despooling, the file 
+is completely written and closed by the application 
+program before it begins printing - just like any normal 
+print job.
+
+8. To ensure that immediate despooling is now in effect, 
+type the command 
+
+NET FLUSH \\[servername] <Enter>, 
+
+where [servername] is the server on which you want to 
+enable immediate despooling. In order to issue the 
+NET FLUSH command, you must have the S (System Manager) 
+privilege.
+
+Using Remote Printer Server (RPS)
+=================================
+The LANtastic remote printer server program, RPS.EXE, is 
+installed with the other LANtastic files. RPS lets you 
+share a printer connected to a workstation without setting 
+it up as a file server. 
+
+Workstations send print jobs to one or more special 
+printer resources on a server. The workstation running RPS 
+then takes the print jobs out of the server's queue and 
+prints them locally.
+
+Since the print jobs are stored on a server's hard drive, 
+you can even print to a diskless workstation. Simply make 
+sure the RPS program is available to the workstation in 
+its boot image or on another server's shared drive 
+resource.
+
+If you have a large network with many printers, it may be 
+more convenient to set up a single server for queuing 
+print jobs, and have network workstations print the jobs. 
+You can have total control of network printing by 
+monitoring only one server print queue. You can speed up 
+network printing by setting up multiple printers to 
+service the same shared printer resource. Such a setup is 
+also convenient, since people need to log in to only one 
+server to use network print services. RPS lets a single 
+workstation service up to 32 printer resources and share 
+up to seven printers.
+
+Running RPS
+===========
+Note - In the steps in this section, the workstation that 
+will share its printer with the network is referred to as 
+the RPS workstation. The computer that will store the 
+print jobs until they're printed by the RPS workstation is 
+called the queuing server. 
+
+1. Select a queuing server to use for storing the print 
+jobs for the RPS workstation(s). 
+
+2. Set up a remote printer resource on the queuing server. 
+
+- Complete the steps listed for creating a shared printer 
+resource and specify Remote for the port where the printer 
+is installed. Steps for creating shared printer resources 
+appear in the file Shrres.txt. 
+
+- Make sure you set up the remote printer resource with 
+the parameters you want to use at the RPS workstation's 
+printer. Refer to your printer manual for more 
+information. Though the RPS workstation can override COM 
+port settings locally, it's easier to specify all settings 
+at the server's shared printer resource. 
+
+- When using setup and cleanup files with a remote 
+despooler, you must specify the network path to the 
+files on the server, rather than the DOS path. For 
+example, if you used the setup/cleanup files C:\SETUP.TXT 
+and C:\CLEANUP.TXT for the shared server printer resource 
+@PRINTER, you'd specify \C-DRIVE\SETUP.TXT and 
+\C-DRIVE\CLEANUP.TXT.
+
+Note - The operator notification and immediate despooling 
+features aren't supported with remote printing. 
+
+3. Set up a user account for the RPS workstation. Here are 
+some guidelines:
+
+- If you plan to have only one RPS workstation, create an 
+individual account. For example, you might name the 
+account RPS. Instructions for setting up accounts appear 
+in the file Accts.txt. 
+
+- If you'll have many RPS workstations, set up a wildcard 
+account such as RPS* and give each RPS workstation a name 
+such as RPS1, RPS2, etc. That way you need to set up only 
+one account for all your remote print servers on the 
+queuing server. Make sure you allow one concurrent login 
+for each RPS workstation that will log in using the 
+wildcard account.
+
+Note - If you already log in to the queuing server on a 
+daily basis, make sure your account has the D (Despooler) 
+privilege and that you don't need to create a new account.
+
+4. Give the RPS account(s) the D (Despooler) privilege. 
+Steps for doing this appear in "Setting privileges for an 
+account" the file Accts.txt. 
+
+5. Make sure the Remote Printer Server (RPS) option is 
+enabled in the server startup parameters. Steps appear in 
+the file Cfgsrv.txt. 
+
+6. Repeat steps 1 - 5 for any other queuing servers you 
+want to set up.
+
+You can have as many queuing servers and RPS workstations 
+in your network as you like. You can have multiple 
+workstations taking jobs from the same server or you can 
+have a single RPS workstation taking print jobs from 
+multiple queuing servers.
+
+7. Go to a computer that you want to use as an RPS 
+workstation, quit Windows if it's running, then run RPS at 
+the DOS prompt. Use the following syntax: 
+
+RPS  USERNAME=[username]  PASSWORD=[password]  [switches] 
+<Enter> 
+
+In this command line [username] refers to the name of the 
+account you set up for the RPS account on the queuing 
+server, [password] refers to the password needed to log in 
+with that account and [switches] refers to any of the RPS 
+command line switches described in the file Commd.txt. 
+
+For example, if you created an individual account called 
+RPS1 with no password requirement, you would type the RPS 
+command line: 
+
+RPS USERNAME=RPS1<Enter>. 
+
+This command line would let an RPS workstation print jobs 
+from one shared printer resource to one printer attached 
+locally. 
+
+If you wanted to pull jobs from more resources, you'd 
+use the RESOURCES= switch. For example:
+
+RPS  USERNAME=RPS1  RESOURCES=6 <Enter> 
+
+If your RPS workstation had multiple printers attached and 
+you wanted to use them for network printing, you'd use the 
+PRINTERS= switch. For example, if you had two printers 
+installed on the computer, you'd type: 
+
+RPS  USERNAME=RPS1  RESOURCES=6 PRINTERS=2 <Enter> 
+
+8. Once RPS is loaded, use this syntax to specify the RPS 
+workstation's printer name on the network and indicate 
+which ports will be used for network printing: 
+
+RPS  DEVICE_NAME=[name]  PORT=[LPTn or COMn] <Enter> 
+
+Device names may be up to eight characters long and must 
+be unique on the network. For example, to give your 
+workstation's printer the name RPS-PRN and enable your 
+LPT1 port for network printing you'd type 
+
+RPS  DEVICE_NAME=RPS-PRN  PORT=LPT1 <Enter>. 
+
+You can also add switches to configure the port for use 
+with your printer. See the Commd.txt file for more 
+information.
+
+9. You're now ready to set up connections to the queuing 
+server(s). Use the syntax 
+RPS ATTACH PORT:\\servername\resource <Enter>. 
+
+For example, to connect a printer on your LPT1 port to the 
+@REMOTE resource on the server named SERVER1, you'd type 
+in the command 
+
+RPS ATTACH LPT1:\\SERVER1\@REMOTE <Enter>. 
+
+Repeat this step for any other printer connections you'd 
+like to set up. 
+
+Once connected to one or more remote print resources, your 
+RPS workstation will print any jobs sent to it. The name 
+of the printer appears in the list of printers the server 
+shares in NET. This allows you to manage the workstation's 
+printer.
+
+Note - It may take up to 60 seconds for the RPS 
+workstation to begin printing a job sent by a network 
+user. 
+
+You may want to create a batch file to save the RPS 
+commands needed to set up the desired configuration.
+
+Here's a sample batch file:
+
+RPS USERNAME=RPS2 PASSWORD=SECRET RESOURCES=3 PRINTERS=2
+RPS DEVICE_NAME=RPRINT1 PORT=LPT1
+RPS DEVICE_NAME=RPRINT2 PORT=LPT2
+RPS ATTACH LPT1:\\SERVER1\@REMOTE1
+RPS ATTACH LPT1:\\SERVER2\@RPS
+RPS ATTACH LPT2:\\SERVER1\@REMOTE1
+
+Hint - Once you've set up the connections on each RPS 
+workstation, use the RPS BATCH command to copy your 
+current setup to a batch file. For example, 
+RPS BATCH >RPS-SET.BAT<Enter>. You'll need to edit the 
+resulting batch file to include a password and remove any 
+Help display text to make the output more readable on the 
+screen. 
+
+Using RPS commands and switches
+===============================
+You can specify print parameters for COM ports. The 
+settings you specify will override any parameters set up 
+for the shared printer resource. You can also use commands 
+such as CONFIG to view a list of your RPS connections. See 
+the Commd.txt file for more information. 
+
+Related Topics
+==============
+- To learn how to send jobs to a server's printer, go to 
+the file Print.txt.
+
+- For information on LANtastic's security, auditing and 
+remote server control capabilities, go to the file 
+Mngsrv.txt.
+
+- For explanations of the server startup parameters that 
+control printing, see the file Cfgsrv.txt.
+

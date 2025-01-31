@@ -1,0 +1,388 @@
+    AI-LANBIOS Low-level Driver For The 3Com 3C503 Adapter (3C503MM.DOC)
+           -----------------------------------------------------
+                     (C) Copyright 1991 ARTISOFT, Inc.
+                             (Revised 6/26/92)
+
+Introduction
+============
+
+The 3C503MM low-level AI-LANBIOS driver is part of the AI-LANBIOS product.
+The low-level driver interfaces directly to the network hardware and
+provides basic unreliable data transfer capabilities.  The AI-LANBIOS
+high-level driver provides the reliable data transfer capabilities
+including all NETBIOS functions.
+
+The 3C503MM driver makes extensive use of the on-board memory of the 3C503
+board to improve network throughput.
+
+NOTE:   The 3C503MM driver is a memory mapped version for the 3C503
+        adapter. The memory base address jumper on the adapter must be
+        moved from the Disable position to one of the four memory base
+        locations available.
+
+
+Running 3C503MM
+===============
+
+The 3C503MM low-level driver must be run before the AI-LANBIOS.  The
+3C503MM driver interfaces to the AI-LANBIOS using a DOS multiplex
+interrupt number.  The default multiplex number is C7.  If you are only
+running one low-level driver and one copy of AI-LANBIOS then you will
+not have to worry about which multiplex number to assign.  Multiplex
+numbers 00 through BF are reserved for DOS use so you must use a multiplex
+number between C0 through FF.
+
+Each invocation of the 3C503MM driver supports one 3Com 3C503 adapter
+board.  You must run multiple copies of 3C503MM if you have multiple cards
+installed in your computer.  For each invocation of 3C503MM you must run a
+separate invocation of the AI-LANBIOS program.  When running multiple
+invocations of the 3C503MM driver each invocation must have a unique
+multiplex number, IRQ, and I/O base address.
+
+The 3C503MM low-level driver program name is 3C503MM.EXE.  The syntax for
+3C503MM is
+
+     3C503MM[switches . . . ] [ ; comment]
+
+where [switches . . . ] denotes zero or more optional command line switches. 
+Switches may be delimited by blanks or slashes (/).  If a switch takes a
+value, the switch must be followed by an equal sign (=) or a colon (:).
+Some values may be hexadecimal numbers while other values may be decimal.
+All switch values are range checked and illegal values produce errors.
+
+You may place a comment on the command line by preceding the comment with
+a semicolon (;).  You must precede the comment character with a blank.
+
+The valid switch formats are:
+
+     SWITCH
+     SWITCH:value
+     /SWITCH
+     /SWITCH=value
+     @file
+
+The valid 3C503MM switches are enumerated below.  The letters "ddd"
+denote a decimal number.  The letters "hh" denote a hexadecimal number. 
+Values enclosed in [] indicate default values if the switch is omitted. 
+Values after [] denote the valid range of the switch. 
+
+----------
+    @switch-file
+
+This option specifies that further switches are to be taken from an
+switch file.  Any switches after the @switch-file name will be used,
+and the switch settings take precedence over any settings in the switch
+file.  You may invoke switch files from within switch files as often as
+you wish.  The file should contain valid switches and may contain comment
+characters (;) at the beginning of each line or after switches.
+
+For example,
+
+    3C503MM @setup
+
+The file SETUP contains
+
+    ; 3C503MM AI-LANBIOS driver setup file
+
+    IRQ=2                 ; Use interrupt request 2
+    verbose               ; Display verbose information
+
+----------
+    HELP or ?
+
+This switch displays information about the valid command line switches,
+but does not install the 3C503MM driver.  For example,
+
+    3C503MM/help
+    3C503MM ?
+
+See the messages section for a detailed description of the HELP display
+output.
+
+----------
+    IOBASE=hhhh [300] 250, 280, 2A0, 2E0, 300, 310, 330, 350
+
+This switch specifies the I/O base address configured on the 3C503 card.
+The IOBASE switch value must match the jumper setting on the card.  The
+default value is the same as the default factory setting on the cards.
+
+Consult the 3COM Adapter Guide for more information about setting I/O base
+address on the cards.
+
+----------
+    IRQ=d [3] 2-5
+
+This switch specifies the interrupt request (IRQ) level for the board.
+Multiple boards should be on separate IRQs.
+
+----------
+    MPX=hh [C7] C0-FF
+
+This switch specifies the multiplex (MPX) interrupt number to use for
+communication to the high-level AI-LANBIOS.  You will need to change this
+value only if the MPX number is in use by another application or low-level
+driver.
+
+----------
+    PACKET_SIZE=dddd [1500] 570-1500
+
+This switch specifies the maximum size of transmitted IEEE 802.3 packets.
+You may need to change this value when using certain bridges that do not
+support the full 1500 byte packet size.  Even when you reduce the packet
+size, the low-level driver can still receive large packets.
+
+----------
+    REMOVE
+
+This switch removes 3C503MM.EXE from memory.  You must remove TSR programs
+in the opposite order they were loaded.  For example, if you loaded
+3C503MM.EXE and then AILANBIO, you must remove AILANBIO before 3C503MM.EXE
+In addition, if you have more than one invocation of 3C503MM.EXE and
+AILANBIO you must use the MPX= switch on the command line to specify which
+copy of 3C503MM.EXE but not (AILANBIO) that you want to unload.  For
+example, if you load two copies of 3C503MM.EXE and AILANBIO:
+
+3C503MM.EXE/MPX=C7
+AILANBIO/ADAPTER=0/MPX=C7
+3C503MM.EXE/MPX=D7
+AILANBIO/ADAPTER=1/MPX=D7
+
+To unload these copies of 3C503MM.EXE and AILANBIO:
+
+AILANBIO/REMOVE
+3C503MM.EXE/MPX=D7/REMOVE
+AILANBIO/REMOVE
+3C503MM.EXE/MPX=C7/REMOVE
+
+The REMOVE option will remove the most recently run copy of AILANBIO.
+
+----------
+    TRANSCEIVER_TYPE [ON-BOARD] EXTERNAL
+
+This switch specifies whether the on-board connector (thin ethernet) or an
+external connector (thick ethernet) is to be used.
+
+----------
+    VERBOSE
+
+This switch causes the 3C503MM driver to be installed and detailed
+information about the configuration of the 3C503MM driver to be displayed.
+See the messages section for a detailed description of the verbose output.
+
+----------
+    XEROX
+
+This switch causes all transmitted packets will be in the XEROX format
+instead of the IEEE 802.3 standard and 3C503MM will receive both XEROX and
+IEEE 802.3 packets.
+
+
+3C503MM messages
+===============
+
+The 3C503MM driver produces two types of messages: Informative and Error. 
+All error messages are preceded by the text "ERROR:" and cause the 3C503MM
+driver not to be installed.
+
+--------
+MESSAGE:
+AI-LANBIOS 3C503MM driver Vn.nn - (C) Copyright 1991 ARTISOFT Inc.
+
+This message appears each time the low-level driver is invoked.
+
+--------
+MESSAGE:
+                   ---- 3C503MM driver installed ----
+
+This message appears after the low-level driver is successfully
+installed. 
+
+--------
+MESSAGE:
+                 ---- 3C503MM driver NOT installed ----
+
+This message appears if the low-level driver is not installed.  The driver
+will not be installed if help information is displayed or an error
+occurred.
+
+--------
+MESSAGE:
+
+Command line             /verbose 
+IEEE 802.3 node address  02608C4B10CC   Network packet size      1500 
+MPX interface number     C7             Machine bus type         PC/XT/AT     
+Shared memory size       8192           IO base address          0300 
+RAM base address         D800           Interrupt request (IRQ)  2
+Packet type		 IEEE 802.3     Transceiver type         ON-BOARD
+Bytes of memory used     2160
+
+This message appears if the VERBOSE switch is specified.  The values
+displayed specify how the low-level driver is configured.  Some values may
+not agree with switch values you specified on the command line.  This will
+happen when you specify an IOBASE or RAMBASE switch value that is not a
+proper multiple of the allowed value.
+
+--------
+MESSAGE:
+
+Valid command line switches:
+   HELP
+   IOBASE= One of the following choices:
+      250 280 2A0 2E0 300 310 330 350
+   IRQ= range 2 to 5 decimal
+   MPX= range C0 to FF hex
+   PACKET_SIZE= range 570 to 1500 decimal
+   TRANSCEIVER_TYPE= One of the following choices:
+      ON-BOARD EXTERNAL
+   VERBOSE
+   XEROX
+   ?
+   @ range 0 to 2048 byte file
+
+This message appears when the HELP or ? switch is used.  Each valid switch
+is listed with the acceptable range of values (if any) and the base (hex
+or decimal) that the numbers must be entered in.  The acceptable file size
+range for indirect files (@) is also listed.  The low-level driver is not
+installed when this switch is used.
+
+--------
+MESSAGE:
+
+             ---- 3C503MM removed ----
+
+The 3C503MM.EXE driver has been removed from memory.
+
+--------
+ERROR:   3C503MM not loaded
+
+Meaning: You have issued the 3C503MM/REMOVE command and do not have
+         3C503MM.EXE loaded into memory.
+
+Remedy:  Only issue this command after the program is loaded.
+
+--------
+ERROR:   Can't REMOVE -- 3C503MM interrupts re-hooked
+
+Meaning: You have attempted to remove 3C503MM.EXE and the interrupts are
+         in use by another TSR, or 3C503MM.EXE was not the last TSR
+         loaded.
+
+Remedy:  Remove any TSRs loaded after 3C503MM.EXE.  For example, if you
+         load 3C503MM.EXE then AILANBIO.EXE, you must first remove
+         AILANBIO.EXE, then you can remove 3C503MM.EXE.
+
+--------
+ERROR:   Installed 3C503MM is different version
+
+Meaning: You have loaded a version of the 3C503MM.EXE program and
+         attempted to remove it from memory with the /REMOVE switch.  The
+         version with which you are attempting to remove 3C503MM.EXE is
+         not the same version that was loaded.
+
+Remedy:  Remove 3C503MM.EXE with the same version of the program that was
+         loaded.
+
+--------
+ERROR:   MPX number hh is already in use - Try another number
+
+Meaning: Multiplex (MPX) interrupt number hh is being used by another
+         application or low-level driver.
+
+Remedy:  Try another MPX number.
+
+--------
+ERROR:   Memory not present - Possible conflict with other
+         hardware
+
+Meaning: Attempts at writing and reading the on-board memory have failed
+         The memory may be mapped such that it conflicts or overlaps with
+         existing memory.
+
+Remedy:  Try moving the memory base address jumper to a different
+         location.
+
+--------
+ERROR:   No network hardware found at I/O base address ????H
+
+Meaning: The 3C503 hardware could not be located.  This error message
+         appears displayed because the adapter card is not present or the
+         IOBASE specified on the command line is different from what is
+         jumpered on the adapter.
+
+Remedy:  Check to see that the I/O base is jumpered properly on the 3C503
+	 adapter and that it matches the IOBASE switch specified on the
+	 3C503MM.EXE command line.
+
+--------
+ERROR:	 Memory jumper not installed
+
+Meaning: The memory base address jumper on the 3C503 adapter is not 
+	 installed.
+
+Remedy:	 Be sure to move the memory base address jumper from the Disable
+	 position to one of the four memory base addresses below it.
+
+--------
+ERROR:   Illegal switch - ??????=nnnn
+
+Meaning: The switch ??????=nnnn is not a recognized switch.
+
+Remedy:  You may only specify legal switches on the command line.
+
+--------
+ERROR:   Illegal character after switch name - ??????xnnnn
+
+Meaning: The switch ?????? is followed by a character other than "=" or
+         ":" or the switch does not take a value.
+
+Remedy:  Only use the characters "=" or ":" to specify switch values and
+         do not place characters after switches that do not take values.
+
+--------
+ERROR:   Switch value not in range - ??????=nnnn
+         Valid range is ssss to eeee
+
+Meaning: The value nnnn is not in proper range.  The value ssss
+         represents the lowest acceptable value and the value eeee
+         represents the highest acceptable value.
+
+Remedy:  Limit your range of values to the acceptable range.
+
+--------
+ERROR:   Illegal digit in switch value - ??????=nnnn
+
+Meaning: An illegal digit (character) was encountered in the numeric
+         switch value.
+
+Remedy:  You must restrict numeric decimal values to the numbers 0-9. 
+         You must restrict hexadecimal values to the numbers 0-9 and the
+         letters A-F.
+
+--------
+ERROR:   Cannot open indirect file - @file
+
+Meaning: The file "file" cannot be opened as an indirect file.
+
+Remedy:  The file must exist before it can be used as an indirect file.
+
+
+Testing 3C503MM return code (error level)
+========================================
+
+You may test the 3C503MM return code or error level in a batch file by
+using the IF ERRORLEVEL command.  The following error levels are returned:
+
+     0     No error has encountered.  3C503MM driver installed
+     1     MPX number is in use
+     2     Switch error
+     3     No memory found or memory error
+     4     No hardware found or hardware already in use
+     5     Memory base address jumper not installed
+     6     3C503MM not loaded
+     7     Can't remove, different version loaded
+     8     Cannot remove, interrupts re-hooked
+     9     ERROR: Can't REMOVE -- AI-LANBIOS (R) still installed
+-------------------
+
+
+

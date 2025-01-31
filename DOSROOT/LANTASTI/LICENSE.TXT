@@ -1,0 +1,253 @@
+
+                 LICENSE AGREEMENT
+
+CAREFULLY READ ALL OF THE TERMS AND CONDITIONS OF THIS 
+LICENSE AGREEMENT BEFORE USING THE SOFTWARE ("Software") 
+OR THE HARDWARE ("Hardware"). BY INSTALLING OR USING THIS 
+PRODUCT, YOU INDICATE YOUR COMPLETE AND UNCONDITIONAL 
+ACCEPTANCE OF THESE TERMS AND CONDITIONS. IF YOU DO NOT 
+AGREE TO THE TERMS OF THIS AGREEMENT, PROMPTLY RETURN THE 
+PRODUCT FOR A FULL REFUND. 
+
+This document is a legal agreement between you and 
+ARTISOFT, INC. ("ARTISOFT") concerning the use of the 
+Software and documentation. THIS AGREEMENT CONSTITUTES THE
+COMPLETE AGREEMENT BETWEEN YOU AND ARTISOFT. 
+
+1. LICENSE: Subject to the terms of this agreement, ARTISOFT
+grants to you a non-exclusive, non-transferable personal
+license to use the Software in object code form only (and
+specifically not in source code form) on the platforms
+and on not more than the number of servers/workstations
+indicated in your purchase documentation provided the
+relevant servers/workstations are part of a single network
+installation. If you install or use the Software on more
+than the number of servers/workstations indicated in your
+purchase documentation, you must purchase a separate copy of
+the Software for additional servers/workstations on which the
+Software will be operated. A single network installation is
+defined as any continuously connected group of not more than
+500 servers/workstations on one cabling scheme without
+hardware or software bridges or routers. For a network server,
+the Software is considered "in use" when any portion of the
+Software is either loaded in memory or virtual memory
+("Loaded") or stored on a hard disk or other storage device
+("Stored"). For single-user computers or workstations
+attached to a network, the quantity of the Software "in use"
+is considered to be the greater of (i) the maximum number of 
+computers on which the Software is Loaded at any one time, 
+or (ii) the maximum number of computers on which the 
+Software is Stored. On a multi-user computer, the quantity 
+of Software "in use" is considered to be the maximum 
+number of user sessions executed at any one time.
+If this Software is an upgrade or trade-up from a previous 
+version, you may use the Software only if you are an 
+authorized user of a qualifying product as determined by 
+ARTISOFT. When you install the upgrade, you must delete 
+the copy of the qualifying product. This Agreement 
+supersedes any prior version license and governs your use 
+of the Software. You may use ARTISOFT'S documentation 
+("Documentation") which includes publications such as the 
+User's Manual, other reference manuals, programmer guides 
+and installation guides to assist in the use of the 
+Software. ARTISOFT and its suppliers retain title to and 
+ownership of their respective interests in the Software, 
+any backup copies and any proprietary rights related to 
+the Software and the Documentation. You may make one (1)
+archival copy of the Software for backup provided that you
+reproduce all copyright and other proprietary notices that
+are on the original copy of the Software provided to you.
+You may not copy the Documentation (except where
+otherwise specified) or make alterations or modifications
+to, merge, adapt, decompile, disassemble, reverse engineer,
+copy, create derivative works or attempt to discover the
+source code of, or otherwise use the Software except as
+provided herein. Title, and ownership right, and
+intellectual property rights in and to the Software and the
+Documentation is provided for your own internal use under
+this agreement. You acknowledge that the Software in source
+code form remains a confidential trade secret of ARTISOFT.
+The Software and Documentation, or any portion or copy
+thereof, may not be sublicensed, time-shared, distributed,
+rented, leased, loaned or otherwise transferred, in whole
+or part, to third parties. If the Software is demonstration
+and evaluation software, you may not transfer the Software for
+commercial purposes. The term of this license commences
+upon delivery of the Software to you and your acceptance of
+this License Agreement. The term is perpetual unless earlier
+terminated upon default or as otherwise set forth herein.
+Both the license and your right to use the Software and
+Documentation terminate automatically if you violate any
+part of this Agreement. In the event of termination, you
+must immediately destroy all copies of the Software and
+Documentation or return them to ARTISOFT.
+
+2. LIMITED WARRANTY: Artisoft warrants that (a) the Software
+will perform substantially in accordance with the 
+accompanying written materials for a period of (90) days 
+from the date of receipt, and (b) any Hardware 
+accompanying the Software will be free from defects in 
+materials and workmanship under normal use and service for 
+a period of three (3) years from the date of receipt. Any 
+implied warranties on the Software and Hardware are limited
+to ninety (90) days and three (3) years, respectively.
+THIS WARRANTY DOES NOT APPLY TO DEFECTS DUE DIRECTLY OR
+INDIRECTLY TO MISUSE, ABUSE, NEGLIGENCE, ACCIDENT, REPAIRS 
+OR ALTERATIONS MADE BY THE CUSTOMER OR ANOTHER PARTY, OR 
+IF THE ARTISOFT SERIAL NUMBER HAS BEEN REMOVED OR DEFACED.
+ARTISOFT AND ITS SUPPLIERS DISCLAIM ALL OTHER WARRANTIES, 
+REPRESENTATIONS, PROMISES AND GUARANTEES, EXPRESS OR 
+IMPLIED, STATUTORY OR OTHERWISE, ON THE SOFTWARE, MEDIA, 
+DOCUMENTATION OR RELATED TECHNICAL SUPPORT INCLUDING, 
+WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF 
+MERCHANTABILITY, PERFORMANCE AND FITNESS FOR A PARTICULAR 
+PURPOSE. ARTISOFT WILL NOT BE LIABLE FOR ANY BUG, ERROR, 
+OMISSION, DEFECT, DEFICIENCY OR NONCONFORMITY IN ANY 
+SOFTWARE. ARTISOFT DOES NOT WARRANT, HOWEVER, THAT YOUR
+USE OF THE SOFTWARE WILL BE UNINTERRUPTED OR THAT THE
+OPERATION OF THE SOFTWARE WILL BE ERROR-FREE OR THAT ALL
+SOFTWARE ERRORS WILL BE CORRECTED. AS A RESULT, THE
+SOFTWARE AND DOCUMENTATION IS LICENSED "AS IS", AND THE
+PURCHASER ASSUMES THE ENTIRE RISK AS TO ITS QUALITY
+AND PERFORMANCE. ARTISOFT BE OBLIGED TO HONOR THIS WARRANTY
+ONLY IF YOU INFORM ARTISOFT OF YOUR PROBLEM WITH THE 
+SOFTWARE DURING THE APPLICABLE WARRANTY PERIOD. YOU MUST
+CONTACT ARTISOFT BY TELEPHONE, FACSIMILE, OR BY LETTER TO
+INFORM ARTISOFT OF THE PROBLEM. THIS WARRANTY SHALL NOT
+APPLY IF THE SOFTWARE IS USED ON OR IN CONJUNCTION WITH
+OPEATING SYSTEMS FOR WHICH THE SOFTWARE IS NOT DESIGNED
+TO OPERATE. Some states/jurisdictions do not allow
+limitations on duration of an implied warranty, so the
+above information may not apply to you.
+
+CUSTOMER REMEDIES. Artisoft's and its suppliers' entire 
+liability and your exclusive remedy shall be, at 
+Artisoft's option. either (a) return of the price paid, or 
+(b) repair or replacement of the Software or Hardware that 
+does not meet Artisoft's Limited Warranty and which is 
+returned to Artisoft with a copy of your receipt. This 
+Limited Warranty is void if failure of the Software or 
+Hardware has resulted from accident, abuse, or 
+misapplication. Any replacement Software or Hardware will 
+be warranted for the remainder of the original warranty 
+period or thirty (30) days, whichever is longer. Outside 
+the United States, neither these remedies nor any product 
+support services offered by Artisoft are available without 
+proof of purchase from an authorized non-U.S. source.
+
+3. LIMITATION OF LIABILITY: IN NO EVENT WILL ARTISOFT OR 
+ITS SUPPLIERS BE LIABLE FOR INDIRECT, SPECIAL, INCIDENTAL, 
+CONTINGENT, CONSEQUENTIAL OR SIMILAR DAMAGES OF ANY KIND 
+RESULTING FROM ANY DEFECT IN THE SOFTWARE OR DOCUMENTATION,
+INCLUDING, WITHOUT LIMITATION, ANY LOST PROFITS OR SAVINGS,
+DAMAGES FROM BUSINESS INTERRUPTION, LOSS OF OR TO DATA,
+COMPUTER PROGRAMS, BUSINESS, DOWNTIME, GOODWILL, DAMAGE TO
+OR REPLACEMENT OF EQUIPMENT OR PROPERTY, OR ANY COSTS OF
+RECOVERING, REPROGRAMMING OR REPRODUCING ANY PROGRAM OR DATA
+USED IN CONJUNCTION WITH THE PRODUCTS, EVEN IF ARTISOFT, ITS
+SUPPLIERS OR ANYONE ELSE HAS BEEN ADVISED OF THE POSSIBILITY
+OF SUCH DAMAGES. YOU AGREE THAT ARTISOFT'S AND ITS SUPPLIERS'
+LIABILITY ARISING OUT OF CONTRACT, NEGLIGENCE, STRICT LIABILITY
+IN TORT OR WARRANTY SHALL NOT EXCEED THE AMOUNT PAID BY YOU FOR
+THIS PRODUCT. ANY WRITTEN OR ORAL INFORMATION OR ADVICE GIVEN
+BY ARTISOFT DEALERS, DISTRIBUTORS, AGENTS OR EMPLOYEES WILL IN
+NO WAY INCREASE THE SCOPE OF THIS WARRANTY, NOR MAY YOU RELY
+ON ANY SUCH WRITTEN OR ORAL COMMUNICATION. Some jurisdictions
+do not allow the limitation or exclusion of implied warranties
+or liability for incidental or consequential damages, and some 
+jurisdictions have special statutory consumer protection 
+provisions which may supersede this limitation, so the 
+above limitation or exclusion may not apply to you. This 
+warranty gives you specific legal rights, and you may also 
+have other rights which vary from jurisdiction to jurisdiction.
+
+4. SUPPORT: ARTISOFT will attempt to answer your technical
+support requests concerning the Software; however, this
+service is offered on a reasonable efforts basis only, and
+ARTISOFT may not be able to resolve every support request.
+ARTISOFT supports the Software only if it is used under
+conditions and on operating systems for which the Software
+is designed. For support requests, contact ARTISOFT as indicated
+in the Documentation. IN NO EVENT WILL ARTISOFT OR ITS
+SUPPLIERS BE LIABLE FOR INDIRECT, SPECIAL, INCIDENTAL,
+CONTINGENT, CONSEQUENTIAL OR SIMILAR DAMAGES OF ANY KIND
+RESULTING FROM THE DELIVERY OF TECHNICAL SUPPORT SERVICES
+OF ANY KIND. THIS INCLUDES, BUT IS NOT LIMITED TO, DAMAGE
+TO YOUR COMPUTER EQUIPMENT AND THE LOSS OF YOUR DATA.
+
+5. EXPORT LAW ASSURANCES: You acknowledge and agree that 
+the Software is subject to restrictions and controls imposed
+by the United States Export Administration Act (the "Act")
+and the regulations thereunder. You agree and certify that, 
+except with the prior written consent of ARTISOFT and in 
+accordance with the Act and regulations issued by the Bureau
+of Export Administration of the U. S. Department of Commerce,
+Washington, D.C. 20230, neither the Software nor any other
+technical data received from ARTISOFT, nor the direct product
+thereof, will be acquired, shipped, transferred or transmitted,
+directly or indirectly, or exported outside the United States
+and specifically not to any Group Q, S, W, Y or Z country
+specified in Supplement No. 1 to Section 370 of the Export
+Administration Regulations issued by the U.S. Department of
+Commerce. 
+
+6. GOVERNMENTAL RESTRICTED RIGHTS: If you are acquiring the
+Software on behalf of any unit or agency of the United States
+Government, the following provisions apply: The Government
+acknowledges ARTISOFT'S representation that the Software and
+its Documentation were developed at private expense and no part
+of them is in the public domain. The Software and/or Documentation
+are provided with RESTRICTED and limited RIGHTS. Use, duplication
+or disclosure by the U.S. Government is subject to restrictions
+as set forth in Federal Acquisition Regulations (FAR) 52.227-14
+(June 1987) Alternate III (g)(3)(June 1987), subparagraph (c)
+(1)(ii) of the Rights in Technical Data and Computer Software
+clause at Department of Defense Federal Acquisition Regulations
+Supplement (DFARS) 252.227-7013 (June 1988), or the
+Commercial Computer Software-Restricted Rights at FAR
+52.227-19 (June 1987), as applicable. Contractor/Manufacturer
+is Artisoft, Inc., 1 S. Church Ave., Suite 2200, Tucson,
+Arizona 85701.
+
+7. TRADEMARK AND COPYRIGHT: ARTISOFT is a registered trademark
+of ARTISOFT. The enclosed Software and Documentation are protected
+by copyright laws and international treaty provisions and are the
+proprietary products of ARTISOFT and its third party suppliers from
+whom ARTISOFT has licensed portions of the Software. Such suppliers 
+re expressly understood to be beneficiaries of the terms and
+provisions of this Agreement. All rights not expressly granted are
+reserved by ARTISOFT or its suppliers. 
+
+8. FORCE MAJEURE: ARTISOFT shall not be liable for any delay
+or failure to perform due to any cause beyond its control.
+Causes include, without limitation, strike, acts of God, acts of
+the purchaser, interruptions of transportation or inability to
+obtain necessary labor, materials or facilities. The delivery
+schedule shall be considered extended by a period of time equal to
+the time lost because of any excusable delay. In the event ARTISOFT
+is unable to wholly or partially perform because of any cause beyond
+its control, ARTISOFT may terminate this order without any liability
+to you.
+
+9. MISCELLANEOUS: This License Agreement represents the complete and
+exclusive statement of the agreements concerning this license between
+the parties and superseded all prior agreements and representations
+between them. It may be amended only by a writing executed by both
+parties. the acceptance of any purchase order placed by you for the
+Software and/or Documentation is expressly made conditional on your
+assent to the terms and conditions set forth herein. ARTISOFT agrees
+to furnish the Software and Documentation only upon the terms and
+conditions set forth herein, and not on terms that may be contained
+in your purchase order. All headings are solely for convenience and
+shall not be considered in interpreting this License Agreement. If
+any provision of this Agreement is found to be unlawful, void or
+unenforceable, then that provision shall be severed from this Agreement
+and will not affect the validity and enforceability of any of the
+remaining provisions. The laws of the State of Arizona shall govern
+this Agreement except as required by U.S. Government Rules and
+Regulations to be governed by Federal law.
+
+If you have any questions concerning this Agreement, contact
+ARTISOFT at 1 South Church Avenue, Suite 2200, Tucson, Arizona 85701.
+
+Copyright 1998 Artisoft, INC. All rights reserved.
