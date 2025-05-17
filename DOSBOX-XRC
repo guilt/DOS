@@ -1,4 +1,4 @@
-# This is the configuration file for DOSBox-X 2025.01.01. (Please use the latest version of DOSBox-X)
+# This is the configuration file for DOSBox-X 2025.05.03. (Please use the latest version of DOSBox-X)
 # Lines starting with a # are comment lines and are ignored by DOSBox-X.
 # They are used to (briefly) document the effect of each option.
 # To write out ALL options, use command 'config -all' with -wc or -writeconf options.
@@ -14,8 +14,8 @@
 #    windowposition: Set the window position at startup in the positionX,positionY format (e.g.: 1300,200).
 #                      The window will be centered with "," (or empty), and will be in the original position with "-".
 #           display: Specify a screen/display number to use for a multi-screen setup (0 = default).
-#            output: What video system to use for output (openglnb = OpenGL nearest; openglpp = OpenGL perfect; ttf = TrueType font output).
-#                      Possible values: default, surface, overlay, ttf, opengl, openglnb, openglhq, openglpp, ddraw, direct3d.
+#            output: What video system to use for output (surface = software (SDL_Surface); openglnb = OpenGL nearest; openglpp = OpenGL perfect; ttf = TrueType font output).
+#                      Possible values: default, surface, overlay, ttf, opengl, openglnb, openglhq, openglpp, gamelink, ddraw, direct3d.
 #       videodriver: Forces a video driver (e.g. windib/windows, directx, x11, fbcon, dummy, etc) for the SDL library to use.
 #      transparency: Set the transparency of the DOSBox-X screen (both windowed and full-screen modes, on SDL2 and Windows SDL1 builds).
 #                      The valid value is from 0 (no transparency, the default setting) to 90 (high transparency).
@@ -71,9 +71,9 @@
 #          showmenu: Whether to show the menu bar (if supported). Default true.
 #
 # Advanced options (see full configuration reference file [dosbox-x.reference.full.conf] for more details):
-# -> mapperfile_sdl1; mapperfile_sdl2; forcesquarecorner
+# -> raw_mouse_input; mapperfile_sdl1; mapperfile_sdl2; forcesquarecorner; gamelink master; gamelink snoop
 #
-fullscreen        = true
+fullscreen        = false
 fulldouble        = false
 fullresolution    = 640x480
 windowresolution  = original
@@ -130,7 +130,7 @@ debuggerrun = normal
 #                              Possible values: default, black, red, green, yellow, blue, magenta, cyan, white.
 #  configuration tool theme: Theme for the configuration tool.
 #                              If not set, host dark mode setting will be followed.
-#
+#                              
 #                              Possible values: Windows Default, Arizona, Black Leather Jacket, Bordeaux, Cinnamon, Designer, Emerald City, Fluorescent, HotDog Stand, LCD Default Screen Settings, LCD Reversed - Dark, LCD Reversed - Light, Mahogany, Monochrome, Ocean, Pastel, Patchwork, Plasma Power Saver, Rugby, The Blues, Tweed, Valentine, Wingtips.
 #                 dpi aware: Set this option (auto by default) to indicate to your OS that DOSBox-X is DPI aware.
 #                              If it is not set, Windows Vista/7/8/10 and higher may upscale the DOSBox-X window
@@ -180,6 +180,9 @@ debuggerrun = normal
 #                  savefile: Select the default save file to save/load states. If specified it will be used instead of the save slot.
 #                saveremark: If set, the save state feature will ask users to enter remarks when saving a state.
 #            forceloadstate: If set, DOSBox-X will load a saved state even if it finds there is a mismatch in the DOSBox-X version, machine type, program name and/or the memory size.
+#    shell environment size: Size of the initial DOSBox-X shell environment block, in bytes. Setting to 0 implies a default size of 720 bytes as in DOSBox.
+#                              You can increase this size to store more environment variables in DOS, although this does not affect the environment block
+#                              of sub-processes spawned from the DOS shell. This option has no effect unless the dynamic kernel allocation is enabled.
 #                       a20: A20 gate emulation mode.
 #                              The on/off/on_fake/off_fake options are intended for testing and debugging DOS development,
 #                              or to emulate obscure hardware, or to work around potential extended memory problems with DOS programs.
@@ -212,7 +215,7 @@ debuggerrun = normal
 #           convertdrivefat: If set, DOSBox-X will auto-convert mounted non-FAT drives (such as local drives) to FAT format for use with guest systems.
 #
 # Advanced options (see full configuration reference file [dosbox-x.reference.full.conf] for more details):
-# -> disable graphical splash; allow quit after warning; keyboard hook; weitek; bochs debug port e9; video debug at startup; compresssaveparts; show recorded filename; skip encoding unchanged frames; capture chroma format; capture format; shell environment size; private area size; turn off a20 gate on boot; cbus bus clock; isa bus clock; pci bus clock; call binary on reset; unhandled irq handler; call binary on boot; ibm rom basic; rom bios allocation max; rom bios minimum size; irq delay ns; iodelay; iodelay16; iodelay32; acpi; acpi rsd ptr location; acpi sci irq; acpi iobase; acpi reserved size; memsizekb; dos mem limit; isa memory hole at 512kb; isa memory hole at 15mb; reboot delay; memalias; convert fat free space; convert fat timeout; leading colon write protect image; locking disk image mount; unmask keyboard on int 16 read; int16 keyboard polling undocumented cf behavior; allow port 92 reset; enable port 92; enable 1st dma controller; enable 2nd dma controller; allow dma address decrement; enable 128k capable 16-bit dma; enable dma extra page registers; dma page registers write-only; cascade interrupt never in service; cascade interrupt ignore in service; enable slave pic; enable pc nmi mask; allow more than 640kb base memory; enable pci bus
+# -> disable graphical splash; allow quit after warning; keyboard hook; weitek; bochs debug port e9; video debug at startup; compresssaveparts; show recorded filename; skip encoding unchanged frames; capture chroma format; capture format; private area size; turn off a20 gate on boot; cbus bus clock; isa bus clock; pci bus clock; call binary on reset; unhandled irq handler; call binary on boot; ibm rom basic; rom bios allocation max; rom bios minimum size; irq delay ns; iodelay; iodelay16; iodelay32; acpi; acpi rsd ptr location; acpi sci irq; acpi iobase; acpi reserved size; memsizekb; dos mem limit; isa memory hole at 512kb; isa memory hole at 15mb; reboot delay; memalias; convert fat free space; convert fat timeout; leading colon write protect image; locking disk image mount; unmask keyboard on int 16 read; int16 keyboard polling undocumented cf behavior; allow port 92 reset; enable port 92; enable 1st dma controller; enable 2nd dma controller; allow dma address decrement; enable 128k capable 16-bit dma; enable dma extra page registers; dma page registers write-only; cascade interrupt never in service; cascade interrupt ignore in service; enable slave pic; enable pc nmi mask; allow more than 640kb base memory; enable pci bus
 #
 language                  = 
 title                     = 
@@ -238,7 +241,7 @@ autosave                  =
 saveslot                  = 1
 savefile                  = 
 saveremark                = true
-forceloadstate            = off_fake
+forceloadstate            = false
 shell environment size    = 4096
 a20                       = mask
 memory file               = 
@@ -246,7 +249,6 @@ memsize                   = 32
 nocachedir                = true
 freesizecap               = cap
 convertdrivefat           = true
-shell environment size    = 4096
 
 [render]
 #      frameskip: How many frames DOSBox-X skips before drawing one.
@@ -281,6 +283,29 @@ shell environment size    = 4096
 #                            When using xBRZ scaler with 'surface' output, aspect
 #                            ratio correction is done by the scaler itself, so none of
 #                            the above apply.
+#                     'nearest':
+#                         'direct3d'/opengl outputs: not available, fallbacks to 'true'
+#                            mode automatically
+#                         'surface' output: scaler friendly aspect ratio correction, 
+#                            works by rescaling rendered image using nearest neighbor
+#                            scaler.
+#                            Complex scalers work. Image quality is on par with 'true'
+#                            mode (and better with scalers). More CPU intensive than
+#                            'true' mode
+#                            When using xBRZ scaler with 'surface' output, aspect
+#                            ratio correction is done by the scaler itself, so it
+#                            falls back to 'true' mode.
+#                     'bilinear':
+#                         'direct3d'/opengl outputs: not available, fallbacks to 'true'
+#                            mode automatically
+#                         'surface' output: scaler friendly aspect ratio correction,
+#                            works by rescaling rendered image using bilinear scaler.
+#                            Complex scalers work. Image quality is much better,
+#                            should be on par with using 'direct3d' output + 'true'
+#                            mode. Very CPU intensive, high end CPU may be required.
+#                            When using xBRZ scaler with 'surface' output, aspect
+#                            ratio correction is done by the scaler itself, so it
+#                            falls back to 'true' mode.
 #                   Possible values: false, true, 0, 1, yes, no, nearest, bilinear.
 #   aspect_ratio: Set the aspect ratio (e.g. 16:9) in the aspect ratio correction mode. 0:0 means the default ratio of 4:3, and -1:-1 means the original image ratio.
 #          char9: Allow 9-pixel wide text mode fonts instead of 8-pixel wide fonts.
@@ -297,6 +322,7 @@ shell environment size    = 4096
 #                   To fit a scaler in the resolution used at full screen may require a border or side bars.
 #                   To fill the screen entirely, depending on your hardware, a different scaler/fullresolution might work.
 #                   Scalers should work with most output options, but they are ignored for openglpp and TrueType font outputs.
+#                   If you are using OpenGL/Direct3D output and a shader that requires it, set to hardware_none or hardware2x.
 #                   Possible values: none, normal2x, normal3x, normal4x, normal5x, advmame2x, advmame3x, advinterp2x, advinterp3x, hq2x, hq3x, 2xsai, super2xsai, supereagle, tv2x, tv3x, rgb2x, rgb3x, scan2x, scan3x, gray, gray2x, hardware_none, hardware2x, hardware3x, hardware4x, hardware5x, xbrz, xbrz_bilinear.
 #       glshader: Path to GLSL shader source to use with OpenGL output ("none" to disable, or "default" for default shader).
 #                   Can be either an absolute path, a file in the "glshaders" subdirectory of the DOSBox-X configuration directory, or one of the built-in shaders (e.g. "sharp" for the pixel-perfect scaling mode):
@@ -309,7 +335,7 @@ shell environment size    = 4096
 #                   Possible values: green, amber, gray, white.
 #
 # Advanced options (see full configuration reference file [dosbox-x.reference.full.conf] for more details):
-# -> xbrz slice; xbrz fixed scale factor; xbrz max scale factor
+# -> modeswitch; xbrz slice; xbrz fixed scale factor; xbrz max scale factor
 #
 frameskip      = 0
 aspect         = false
@@ -469,7 +495,7 @@ vsyncrate = 60
 #               core: CPU Core used in emulation. auto will switch to dynamic if available and appropriate.
 #                       For the dynamic core, both dynamic_x86 and dynamic_rec are supported (dynamic_x86 is preferred).
 #                       Windows 95 or other preemptive multitasking OSes will not work with the dynamic_rec core.
-#                       Possible values: auto, dynamic, dynamic_x86, dynamic_nodhfpu, dynamic, dynamic_rec, normal, full, simple.
+#                       Possible values: auto, dynamic, dynamic_x86, dynamic_nodhfpu, dynamic_rec, normal, full, simple.
 #                fpu: Enable FPU emulation
 #                       Possible values: true, false, 1, 0, auto, 8087, 287, 387.
 #         rdtsc rate: If nonzero, the Pentium RDTSC counter will tick at this rate per millisecond instead of by the cycle count
@@ -673,7 +699,7 @@ prebuffer       = 25
 # fluid.soundfont: Soundfont (.SF2 or .SF3) to use with Fluidsynth. One must be specified (e.g. GeneralUser_GS.sf2).
 #
 # Advanced options (see full configuration reference file [dosbox-x.reference.full.conf] for more details):
-# -> mt32.reverse.stereo; mt32.verbose; mt32.thread; mt32.chunk; mt32.prebuffer; mt32.partials; mt32.dac; mt32.analog; mt32.output.gain; mt32.reverb.mode; mt32.reverb.output.gain; mt32.reverb.time; mt32.reverb.level; mt32.rate; mt32.src.quality; mt32.niceampramp; mt32.engage.channel1; fluid.samplerate; fluid.gain; fluid.polyphony; fluid.cores; fluid.periods; fluid.periodsize; fluid.reverb; fluid.chorus; fluid.reverb.roomsize; fluid.reverb.damping; fluid.reverb.width; fluid.reverb.level; fluid.chorus.number; fluid.chorus.level; fluid.chorus.speed; fluid.chorus.depth; fluid.chorus.type
+# -> roland gs sysex; mt32.reverse.stereo; mt32.verbose; mt32.thread; mt32.chunk; mt32.prebuffer; mt32.partials; mt32.dac; mt32.analog; mt32.output.gain; mt32.reverb.mode; mt32.reverb.output.gain; mt32.reverb.time; mt32.reverb.level; mt32.rate; mt32.src.quality; mt32.niceampramp; mt32.engage.channel1; fluid.samplerate; fluid.gain; fluid.polyphony; fluid.cores; fluid.periods; fluid.periodsize; fluid.reverb; fluid.chorus; fluid.reverb.roomsize; fluid.reverb.damping; fluid.reverb.width; fluid.reverb.level; fluid.chorus.number; fluid.chorus.level; fluid.chorus.speed; fluid.chorus.depth; fluid.chorus.type
 #
 mpu401          = intelligent
 mpubase         = 0
@@ -688,7 +714,7 @@ fluid.soundfont = D:\WS\DOS\DOSROOT\SFONT\GUS1471.SF2
 
 [sblaster]
 #                       sbtype: Type of Sound Blaster to emulate. 'gb' is Game Blaster.
-#                                 Possible values: sb1, sb2, sbpro1, sbpro2, sb16, sb16vibra, gb, ess688, ess1688, reveal_sc400, none.
+#                                 Possible values: sb1, sb1.0, sb1.5, sb2, sb2.0, sb2.01, sbpro1, sbpro2, sb16, sb16vibra, gb, ess688, ess1688, reveal_sc400, none.
 #                       sbbase: The IO address of the Sound Blaster.
 #                                 220h to 2E0h are for use with IBM PC Sound Blaster emulation.
 #                                 D2h to DEh are for use with NEC PC-98 Sound Blaster 16 emulation.
@@ -776,7 +802,7 @@ blaster environment variable = true
 #                               with Timidity should work fine.
 #
 # Advanced options (see full configuration reference file [dosbox-x.reference.full.conf] for more details):
-# -> autoamp; unmask dma; ignore channel count while active; pic unmask irq; startup initialized; dma enable on dma control polling; clear dma tc irq if excess polling; force master irq enable; gus panning table; gus fixed render rate; irq hack
+# -> warn on out of bounds dram access; autoamp; unmask dma; ignore channel count while active; pic unmask irq; startup initialized; dma enable on dma control polling; clear dma tc irq if excess polling; force master irq enable; gus panning table; gus fixed render rate; irq hack
 #
 gus                        = true
 global register read alias = auto
@@ -968,7 +994,7 @@ joy2deadzone7+ = 0.60
 #                  Possible values: dummy, disabled, modem, nullmodem, serialmouse, directserial, log, file.
 # phonebookfile: File used to map fake phone numbers to addresses.
 serial1       = dummy
-serial2       = dummy
+serial2       = disabled
 serial3       = disabled
 serial4       = disabled
 serial5       = disabled
@@ -1165,7 +1191,7 @@ timeout     = 0
 #                    dos idle api: If set, DOSBox-X can lower the host system's CPU load when a supported guest program is idle.
 #
 # Advanced options (see full configuration reference file [dosbox-x.reference.full.conf] for more details):
-# -> xms memmove causes flat real mode; xms init causes flat real mode; resized free memory block becomes allocated; badcommandhandler; mscdex device name; hma allow reservation; command shell flush keyboard buffer; special operation file prefix; drive z is remote; drive z convert fat; drive z expand path; drive z hide files; automount drive directories; hidenonrepresentable; hma minimum allocation; dos sda size; hma free space; cpm compatibility mode; minimum dos initial private segment; minimum mcb segment; enable dummy device mcb; maximum environment block size on exec; additional environment block size on exec; enable a20 on windows init; zero memory on xms memory allocation; vcpi; unmask timer on disk io; zero int 67h if no ems; zero unused int 68h; emm386 startup active; zero memory on ems memory allocation; ems system handle memory size; ems system handle on even megabyte; ems frame; umb start; umb end; kernel allocation in umb; keep umb on boot; keep private area on boot; private area in umb; autoa20fix; autoloadfix; startincon; int33 max x; int33 max y; int33 xy adjust; int33 mickey threshold; int33 hide host cursor if interrupt subroutine; int33 hide host cursor when polling; int33 disable cell granularity; int 13 disk change detect; int 13 extensions; biosps2; int15 wait force unmask irq; int15 mouse callback does not preserve registers; filenamechar; collating and uppercase; con device use int 16h to detect keyboard input; zero memory on int 21h memory allocation; pipe temporary device
+# -> turn off a20 gate on load if loadfix needed; xms memmove causes flat real mode; xms init causes flat real mode; resized free memory block becomes allocated; badcommandhandler; mscdex device name; hma allow reservation; command shell flush keyboard buffer; special operation file prefix; drive z is remote; drive z convert fat; drive z expand path; drive z hide files; automount drive directories; hidenonrepresentable; hma minimum allocation; dos sda size; hma free space; cpm compatibility mode; minimum dos initial private segment; minimum mcb segment; enable dummy device mcb; maximum environment block size on exec; additional environment block size on exec; enable a20 on windows init; zero memory on xms memory allocation; vcpi; unmask timer on disk io; zero int 67h if no ems; zero unused int 68h; emm386 startup active; zero memory on ems memory allocation; ems system handle memory size; ems system handle on even megabyte; ems frame; umb start; umb end; kernel allocation in umb; keep umb on boot; keep private area on boot; private area in umb; private area write protect; autoa20fix; autoloadfix; startincon; int33 max x; int33 max y; int33 xy adjust; int33 mickey threshold; int33 hide host cursor if interrupt subroutine; int33 hide host cursor when polling; int33 disable cell granularity; int 13 disk change detect; int 13 extensions; biosps2; int15 wait force unmask irq; int15 mouse callback does not preserve registers; filenamechar; collating and uppercase; con device use int 16h to detect keyboard input; zero memory on int 21h memory allocation; pipe temporary device
 #
 xms                             = true
 xms handles                     = 0
@@ -1225,7 +1251,7 @@ ipx = false
 #            If set to "auto", then "slirp" is selected when available, otherwise "pcap" is selected when available.
 #            NE2000 Ethernet emulation will be disabled if no backend is available (or the specified backend if unavailable).
 #            Possible values: pcap, slirp, nothing, auto, none.
-ne2000  = false
+ne2000  = true
 nicbase = 300
 nicirq  = 3
 macaddr = random
@@ -1238,7 +1264,7 @@ backend = auto
 #            Then make your choice and put either the interface number
 #            (e.g. 2) or a part of your adapters name (e.g. VIA here).
 # timeout: Specifies the read timeout for the device in milliseconds for the pcap backend, or the default value will be used.
-realnic = list
+realnic = 8
 timeout = default
 
 [ethernet, slirp]
@@ -1347,8 +1373,6 @@ devicehigh  =
 [autoexec]
 # Lines in this section will be run at startup.
 # You can put your MOUNT lines here.
-
 @mount C D:\WS\DOS\DOSROOT\
 @loadfix -64
 @if exist C:\AUTOEXEC.BAT C:\AUTOEXEC.BAT
-
