@@ -663,7 +663,7 @@ splash        = true
 nosound         = false
 sample accurate = false
 swapstereo      = false
-rate            = 48000
+rate            = 44100
 blocksize       = 1024
 prebuffer       = 25
 
@@ -705,12 +705,12 @@ mpu401          = intelligent
 mpubase         = 0
 mididevice      = default
 midiconfig      = 
-samplerate      = 48000
+samplerate      = 44100
 mpuirq          = -1
 mt32.romdir     = 
 mt32.model      = auto
 fluid.driver    = default
-fluid.soundfont = D:\WS\DOS\DOSROOT\SFONT\GUS1471.SF2
+fluid.soundfont = D:\WS\DOS\DOSROOT\ULTRASND\FONTS\GUS1471.SF2
 
 [sblaster]
 #                       sbtype: Type of Sound Blaster to emulate. 'gb' is Game Blaster.
@@ -765,7 +765,7 @@ enable speaker               = false
 sbmixer                      = true
 oplmode                      = auto
 oplemu                       = default
-oplrate                      = 48000
+oplrate                      = 44100
 oplport                      = 
 retrowave_bus                = serial
 retrowave_port               = 
@@ -806,7 +806,7 @@ blaster environment variable = true
 #
 gus                        = true
 global register read alias = auto
-gusrate                    = 48000
+gusrate                    = 44100
 gusmemsize                 = -1
 gus master volume          = 0.00
 gusbase                    = 240
@@ -824,7 +824,7 @@ ultradir                   = C:\ULTRASND
 #    quality: Set SID emulation quality level (0 to 3).
 #               Possible values: 0, 1, 2, 3.
 innova     = false
-samplerate = 48000
+samplerate = 44100
 sidbase    = 280
 quality    = 0
 
@@ -852,12 +852,12 @@ quality    = 0
 # -> pcspeaker clock gate enable at startup; initial frequency
 #
 pcspeaker    = true
-pcrate       = 48000
+pcrate       = 44100
 tandy        = auto
-tandyrate    = 48000
+tandyrate    = 44100
 disney       = false
 ps1audio     = off
-ps1audiorate = 48000
+ps1audiorate = 44100
 
 [joystick]
 # joysticktype: Type of joystick to emulate: auto (default),
@@ -1374,5 +1374,5 @@ devicehigh  =
 # Lines in this section will be run at startup.
 # You can put your MOUNT lines here.
 @mount C D:\WS\DOS\DOSROOT\
-@loadfix -64
+@loadfix -24
 @if exist C:\AUTOEXEC.BAT C:\AUTOEXEC.BAT
