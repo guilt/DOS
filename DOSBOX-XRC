@@ -1374,5 +1374,6 @@ devicehigh  =
 # Lines in this section will be run at startup.
 # You can put your MOUNT lines here.
 @mount C D:\WS\DOS\DOSROOT\
+@mount D D:\WS\DOS\DOSROOT\ISO -t CDROM
 @loadfix -24
 @if exist C:\AUTOEXEC.BAT C:\AUTOEXEC.BAT

@@ -1,0 +1,1 @@
+This is a fake endpoint to force creating a CD-ROM entry for DOSBOX.
