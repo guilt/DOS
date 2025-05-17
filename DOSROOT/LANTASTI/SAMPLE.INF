@@ -4,7 +4,7 @@
 
 [LANtastic]
 Mode=Fast
-ComputerName=KVK-LAPTOP
+ComputerName=KVK-DOS
 InstallPath=C:\LANTASTI
 Share=no
 Logouts=15
