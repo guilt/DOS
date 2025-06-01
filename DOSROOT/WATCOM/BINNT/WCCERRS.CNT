@@ -274,6 +274,7 @@
 1 E1205 binary operator '%s' missing left operand=E1205_binary_operator___s__missing_left_operand
 1 E1206 expecting operand after unary operator '%s'=E1206_expecting_operand_after_unary_operator___s_
 1 E1207 %s=E1207__s
+1 E1208 Invalid binary constant=E1208_Invalid_binary_constant
 1 I2000 Not enough memory to fully optimize procedure '%s'=I2000_Not_enough_memory_to_fully_optimize_procedure___s_
 1 I2001 Not enough memory to maintain full peephole=I2001_Not_enough_memory_to_maintain_full_peephole
 1 I2002 '%s' defined in: %s(%u)=I2002___s__defined_in___sL_uR
