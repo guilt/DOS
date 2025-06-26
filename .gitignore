@@ -6,4 +6,7 @@
 *.BAK
 *.CFG
 *.BIN
+*.SWP
+*.BCW
+*.DSW
 WS
