@@ -1,0 +1,101 @@
+<!-- Default style sheet for SIDEBAR in reader's Guide.
+
+  This style sheet is applied in the sidebar's own window, 
+  not in the full-text view from which it was linked.
+
+  Copyright 1992-1994, Electronic Book Technologies.  All rights reserved.
+-->
+
+<!ENTITY	std.font	CDATA	"MS Sans Serif"	>
+
+<sheet>
+
+
+
+<?INSTED COMMENT: UNGROUPED STYLES FOLLOW>
+
+<style name="#SDATA">
+	<font-weight>	attr(weight)	</>
+	<font-charset>	attr(charset)	</>
+	<font-family>	attr(font)	</>
+	<text-before>	char(attr(code))	</> 
+</style>
+
+<style name="B">
+	<font-weight> 	Bold 	</>
+</style>
+
+<style name="COPYRTPG">
+	<right-indent> 	12 	</>
+</style>
+
+<style name="E1">
+	<font-weight> 	Bold 	</>
+</style>
+
+<style name="E2">
+	<font-slant> 	Italics 	</>
+</style>
+
+<style name="E3">
+	<font-weight> 	Bold 	</>
+	<font-slant> 	Italics 	</>
+</style>
+
+<style name="I">
+	<font-slant> 	Italics 	</>
+</style>
+
+<style name="P">
+	<font-family>	&std.font; </>
+	<space-before> 	12 	</>
+	<break-before> 	True 	</>
+</style>
+
+<style name="SIDEBAR">
+	<font-family> 	&std.font; 	</>
+	<font-weight> 	Medium 	</>
+	<font-slant> 	Roman 	</>
+	<font-size> 	14 	</>
+	<foreground> 	black 	</>
+	<left-indent> 	10 	</>
+	<right-indent> 	12 	</>
+	<line-spacing> 	16 	</>
+</style>
+
+<style name="SIDEBAR,LABEL">
+	<font-weight> 	Bold 	</>
+	<justification> 	Center 	</>
+</style>
+
+<style name="SYMBOL">
+	<font-family> 	symbol 	</>
+</style>
+
+<style name="TITLE">
+	<font-weight> 	Bold 	</>
+	<space-before> 	12 	</>
+	<justification> 	Center 	</>
+	<break-before> 	True 	</>
+</style>
+
+<style name="UL">
+	<font-slant> 	Italics 	</>
+</style>
+
+<style name="VBLOCK">
+	<font-family> 	courier 	</>
+	<left-indent> 	+=12 	</>
+	<space-before> 	12 	</>
+	<break-before> 	True 	</>
+</style>
+
+<style name="VERBATIM">
+	<font-family> 	courier 	</>
+	<font-size> 	12 	</>
+	<break-before> 	True 	</>
+</style>
+
+
+
+</sheet>

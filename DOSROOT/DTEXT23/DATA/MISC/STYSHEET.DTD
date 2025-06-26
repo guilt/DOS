@@ -1,0 +1,71 @@
+<!-- Document Type Definition for Style Sheets to
+  drive DynaText, by Electronic Book Technologies, Inc.
+
+  Copyright 1990 Electronic Book Technologies, Inc.
+-->
+
+<!-- This marked section defines the tag names in their full forms,
+   for use by SGML tools that can handle NAMELEN > 8.
+-->
+<![ IGNORE [
+<!ENTITY % dirs
+   "based-on">
+<!ENTITY % fonts
+   "font-family|font-size|font-weight|font-slant|font|foreground">
+<!ENTITY % verts
+   "vertical-offset|break|break-after|
+   space-before|space-after|line-spacing">
+<!ENTITY % horiz
+   "first-indent|left-indent|right-indent|width|justify|truncate">
+<!ENTITY % tables
+   "table-data|eval">
+<!ENTITY % hypers
+   "marginalize|icon|script|hide-text">
+<!ENTITY % tocs
+   "section-level|title">
+<!ENTITY % props
+   "%dirs;|%fonts;|%verts;|%horiz;|%tables;|%hypers;|%tocs;">
+]]>
+
+<!-- This marked section defines the tag names in short forms,
+   for use by SGML tools that are limited to NAMELEN = 8.
+   DynaText will recognize either set of tag names synonymously;
+   the names are purely truncations, so the rule is easy to remember.
+
+   A SED script is available to convert between long and short forms.
+-->
+<![ INCLUDE [
+<!ENTITY % dirs
+   "based-on">
+<!ENTITY % fonts
+   "font-fam|font-siz|font-wei|font-sla|font|foregrou">
+<!ENTITY % verts
+   "vertical|break|break-af|space-be|space-af|line-spa">
+<!ENTITY % horiz
+   "first-in|left-ind|right-in|width|justify|truncate">
+<!ENTITY % tables
+   "table-da|eval">
+<!ENTITY % hypers
+   "marginal|icon|script|hide-tex">
+<!ENTITY % tocs
+   "section-|title">
+<!ENTITY % props
+   "%dirs;|%fonts;|%verts;|%horiz;|%tables;|%hypers;|%tocs;">
+]]>
+
+<!-- ************************************* -->
+
+<!ELEMENT sheet	- - (style*)>
+<!ATTLIST sheet
+     version	CDATA #IMPLIED
+     date	CDATA #IMPLIED
+     author	CDATA #IMPLIED>
+
+<!ELEMENT style	- - (%props;)*>
+<!ATTLIST style
+     name	CDATA #REQUIRED>
+
+<!ELEMENT (%props;)	- - CDATA>
+
+<!-- End of DTD for EBT style sheets. -->
+

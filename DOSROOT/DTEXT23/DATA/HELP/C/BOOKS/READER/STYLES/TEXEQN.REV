@@ -1,0 +1,19 @@
+<!ENTITY	std.font	CDATA	"New Century Schoolbook"	>
+<!ENTITY	std.font-size	CDATA	"14"	>
+<!ENTITY	std.leftindent	CDATA	"10"	>
+<!ENTITY	std.line-spacing	CDATA	"16"	>
+<!ENTITY	std.rightindent	CDATA	"12"	>
+
+<sheet>
+
+<style name="TEXEQN">
+	<font-family>	&std.font	</>
+	<font-size>	18	</>
+	<break-before>	Line	</>
+	<space-before>	10	</>
+	<space-after>	10	</>
+	<hide>		Children	</>
+	<inline>	equation target=me()	</>
+</style>
+
+</sheet>

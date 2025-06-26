@@ -1,0 +1,14 @@
+## $Id: VALUES.TXT 1.1.1.2 1993/08/24 21:20:17 wcs Exp $
+
+# property values
+###########################
+1	Bold;Demibold;Medium
+2	Roman;Italics;Oblique
+3	Regular;Inverse
+4	Left;Right;Center;Verbatim
+5	Left;Right;Inline;Off
+6	Text;Children;;All;Off
+7	Line;Page;Section;None
+8	Before;Children;After;Surround;None
+9	Over;Under;Through;None
+

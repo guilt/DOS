@@ -1,0 +1,51 @@
+## $Id: PROPS.TXT 1.1.1.1 1993/08/24 21:18:32 jlv Exp $
+
+# insted properties
+###########################
+
+1	unattached entity
+2	font family
+3	font weight
+4	font slant
+5	font size
+6	font video
+7	score
+8	character set
+
+9	break before
+10	break after
+11	space before
+12	space after
+13	line spacing
+14	vertical offset
+15	column
+
+16	justification
+17	first indent
+18	left indent
+19	right indent
+20	width
+
+21	script
+22	icon type
+23	icon position
+24	inline
+25	hide
+26	title tag
+
+27	foreground
+28	text before
+29	text after
+30	hrule
+31	vrule
+32	select
+
+
+101	Text
+102	Vert
+103	Horiz
+104	Hyper
+105	Special
+106	Select
+
+

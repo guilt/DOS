@@ -1,0 +1,44 @@
+<!-- Template for new print (*.pv) Stylesheets
+
+  Copyright 1994, Electronic Book Technologies.  All rights reserved.
+-->
+
+<sheet>
+
+<style name ="#ROOT">
+	<break-before>  Line		</>
+</style>
+
+
+<!-- Default settings for printing of annotations -->
+<style name="#ANNOT">
+	<font-family>   Times New Roman		</>
+	<break-before>  line		</>
+	<break-after>   line		</>
+	<font-size>     12		</>
+	<character-set> iso8859-1	</>
+	<line-spacing>	24		</>
+
+	<font-weight>	medium		</>
+	<font-slant>	roman		</>
+	<font-video>	regular		</>
+	<line>		none		</>
+	<horiz-bars>	surround 	</>
+	<vert-bars>	surround 	</>
+</style>
+
+<style name="#SDATA">
+	<font-family>	attr(font)	</>
+	<font-weight>	Medium	</>
+	<font-slant>	Roman	</>
+	<character-set>	attr(charset)	</>
+	<break-before>	None	</>
+	<text-before>char(attr(code))</>
+</style>
+
+<style name ="#TAGS">
+	<font-weight>   Bold		</>
+</style>
+
+
+</sheet>

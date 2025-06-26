@@ -1,0 +1,22 @@
+<!-- Template for new Table of Contents (*.tv) Stylesheets
+
+  Copyright 1994, Electronic Book Technologies.  All rights reserved.
+-->
+
+<sheet>
+
+
+<style name ="#TAGS">
+	<font-weight>   Bold		</>
+</style>
+
+<style name="#SDATA">
+	<font-family>	attr(font)	</>
+	<font-weight>	Medium	</>
+	<font-slant>	Roman	</>
+	<character-set>	attr(charset)	</>
+	<break-before>	None	</>
+	<text-before>char(attr(code))</>
+</style>
+
+</sheet>

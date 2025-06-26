@@ -1,0 +1,10 @@
+#----------------------------------------------------------------------------
+# ObjectWindows - (C) Copyright 1991, 1994 by Borland International
+#----------------------------------------------------------------------------
+
+EXE = validate
+OBJEXE = validatx.obj
+RESEXE = validatx.res
+MODELS=mldf
+!include $(BCEXAMPLEDIR)\owlmake.gen
+

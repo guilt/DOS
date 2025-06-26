@@ -1,0 +1,5 @@
+//----------------------------------------------------------------------------
+// ObjectWindows - (C) Copyright 1993 by Borland International
+//----------------------------------------------------------------------------
+#include <owl\listview.rc>
+#include <owl\editview.rc>

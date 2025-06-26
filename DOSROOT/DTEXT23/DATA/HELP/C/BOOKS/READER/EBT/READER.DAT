@@ -1,0 +1,1107 @@
+#EDIR DATA#
+DOCTYPE='IMIDOC' PUBLICID='-//EBT//imi//EN' SYSTEMID=''DynaTextname='trade' font=symbol charset=fontspecific code=228 
+	descr='[trade]' for Windows Reader GuideRelease 2.3 for Microsoft® Windows
+name='trade' font=symbol charset=fontspecific code=228 
+	descr='[trade]'Electronic Book Technologies, Inc.One Richmond SquareProvidence, RI 02906  USAUSACopyright ©  1990-1994 by Electronic Book Technologies,
+Inc. (EBT). All rights reserved. This work contains confidential trade secrets
+of EBT. Use, examination, copying, transfer and disclosure to others are prohibited,
+except with the express written agreement of EBT.Electronic Book Technologies, Inc. (EBT) reserves the right to make changes
+in specifications and other information contained in this publication without
+prior notice. The reader should in all cases consult EBT to determine whether
+any such changes have been made.DynaText and InStEd are trademarks of Electronic Book Technologies.Microsoft and MS-DOS are registered trademarks and Windows is a trademark
+of the Microsoft Corporation.TTYPE=subEX is a trademark of the American Mathematical Society.Trademarks are the property of their respective holders.Printed in the United States of America.ID="cOver"Document OverviewID="mDocOver"OverviewID="bDocOverInstrucs"Online instructionsThis section describes the structure of the Reader Guide. You can gain direct access
+to any part of the Reader Guide by choosing titles in the Table of Contents, by searching for
+relevant words or phrases using the Search panel, or by using the scroll bars and hyperlink icons
+in the Main view of the document.ID="bDocOverIntro"IntroductionThis manual contains instructions for using this DynaText Browser, a program that
+provides you with the tools to read dynamic, electronic books. For a brief
+introduction to the Browser, see the DynaText Tutorial.ID="bOverDescrip"DescriptionENTRY="Browser|description" REF1="Browser" REF2="description"ENTRY="DynaText Browser. See Browser." REF1="DynaText Browser. See Browser." REF2=""The DynaText Browser is a unique, powerful product that allows you to access information
+in an online environment. When you use the DynaText Browser, you read electronic
+books that appear in windows on your screen. You can read DynaText books linearly,
+but because the Browser can display information using hypertext and hypermedia,
+you can also navigate through information non-linearly, following the sorts
+of intuitive connections that your mind makes.ID="bOverUsers"DynaText system usersThe DynaText system has two types of users:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' the publisher, who creates electronic books using DynaTextname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' the reader, who reads the books using the BrowserThis book is dedicated to the second category of DynaText users, the readers.ID="bOverEBT"EBTThe DynaText system was developed by Electronic Book Technologies, Inc. (EBT), of Providence, Rhode Island.
+EBT has combined insights gained from hypermedia research with the practical
+requirements dictated by today's marketplace to develop an electronic book
+system that is powerful, yet extremely easy to use.ID="mWhatBrowser"What is the DynaText Browser?ID="bWhatBrowserIntro"IntroductionThis section describes the features, advantages, and basic structure of the DynaText
+Browser.ID="bBookAnalogy"The book analogyENTRY="Browser|description" REF1="Browser" REF2="description"You, the reader, read books using the Browser. Groups of books are organized
+into collections by the publisher. You can view one collection's books or the books
+of many collections at once. As is the case with traditional books, you can place
+bookmarks or jot a note in the margin. Unlike reading a traditional book,
+with the Browser you can create your own cross-references within an electronic
+book.ID="bBrowserFeats"Browser featuresENTRY="Browser|features" REF1="Browser" REF2="features"The DynaText Browser provides a variety of features designed to help you find
+information with extraordinary speed and flexibility. The Browser enhances
+the act of reading with a set of powerful, online facilities. In the Browser,
+reading includes:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' scrolling gradually and sequentially through a bookname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' moving quickly and non-sequentially from one part of a book to anothername='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' searching for specific words or phrases in a bookname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' viewing information that supports and enhances book text (such as figures,
+sounds, animations, or cross-references)name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' creating journals (paths through books) or following those created by othersname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' placing bookmarks in the bookname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' adding a private or public note to the bookname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' creating your own cross-references within the bookname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' displaying several views of the same book at oncename='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' opening several books at onceID="bAdvantages"Advantages over paperThe DynaText system contains a number of tools to help you locate information
+more quickly than is possible with traditional paper documents.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' You can keep one or more booksname='mdash' font=symbol charset=fontspecific code=190 
+			descr='[mdash]'or even multiple views of the same bookname='mdash' font=symbol charset=fontspecific code=190 
+			descr='[mdash]'on
+your screen at once, even while running other Windows applications. In this
+way, the information you need is always at your fingertips.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' The Browser makes it easy to move to specific parts of the book and search
+for specific words, phrases, or word or character patterns.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' While reading a book, you can also see linked information that supports and
+enhances the text. You can immediately view footnotes or endnotes, cross-references,
+and even information from external programs.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' DynaText allows publishers who create the books that you read to design
+views of the book that can simulate, and improve on, the way text looks on
+the printed page. For example, a publisher can create two views of a book:
+one that displays introductory information for readers unfamiliar with the
+book's content and one for readers who are more experienced with the book's
+content.ID="bHyperNavig"Hypertext navigationENTRY="Hypertext|navigation" REF1="Hypertext" REF2="navigation"In addition to its other features, the DynaText Browser is also a hypertext product.
+This means that you can move rapidly and non-sequentially through book text
+and related information. You are using hypertext when you click onname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' topics you want to read from the Table of Contents viewname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' hot textname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' hyperlink icons displayed in the margins or within the text of the bookWith a click of your mouse button on hot text or a hyperlink icon, either you simultaneously
+view the text and the linked information or you scroll to the linked information.Linked information can be any of a wide variety of media, such as graphics,
+tables, animations, audio, and digitized video. The publisher of the electronic
+book has the power and flexibility to join together these diverse forms of
+information into a powerful whole. The result is a reading experience impossible
+to create with paper alone. When your publisher includes other media in your
+electronic book, you are not only using hypertext, but also hypermedia.ID="mConventions"Conventions Used in this ManualID="bConventionsIntro"IntroductionENTRY="Conventions used in this manual" REF1="Conventions used in this manual"This section contains an overview of the content of this manual. Typesetting
+conventions used here are also covered.ID="bRGstruc"Structure of the Reader GuideThis Reader Guide uses a task-oriented approach to introduce you to the Browser.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' Chapter 1 provides an overview of the DynaText Browser Desktop, including
+its basic structure, its windows, the menu bar, and Button bar.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' Chapters 2 through 5 introduce you to browsing through,
+searching in, and annotating electronic books.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' Chapters 6 through 11 address more advanced browsing
+tasks: journals, printing, and sources of help.ID="bFontsFormat"Fonts and formattingThroughout this manual, filenames, directories, and pathnames are italicized: TYPE="file"dynatext.ini. The names of buttons in the Button bar are also italicized (for example, TYPE="button"Mark).Anything that should be typed in directly is displayed in Courier font. Often, we refer to cascading menu options using a shorthand method. To refer
+to the TYPE="menu"Create Note menu option, available by first selecting TYPE="menu"Create Annotation from the TYPE="menu"Book menu, we use the simpler: TYPE="menu"Book|Create Annotation|Create Note.ID="bKeyCuts"Keyboard shortcutsENTRY="Keyboard shortcuts" REF1="Keyboard shortcuts"Windows software often contains command accelerators and keyboard equivalents
+that speed your use of the product by keeping your hands on the keyboard while
+you are working.The notation Ctrl-V represents holding down the Ctrl key while pressing v.
+Ctrl-V is a command accelerator for the Paste action. The notation Alt, F,
+O, B represents pressing and releasing each of these keys in sequence. This
+keyboard equivalent performs the same action as selecting TYPE="menu"File|Open|Book. Most menu options have keyboard equivalents. The underlined letter
+in the menu name or menu option is the letter to use in the keyboard equivalent
+for the menu option.ID="mWinEnviron"Using the Windows EnvironmentENTRY="Windows" REF1="Windows"ID="bWinEnvironIntro"IntroductionTo use the Windows version of the DynaText Browser, you should have some familiarity
+with the Windows environment.ID="bUseWin"Using WindowsYou should know how to perform the following basic actions with Windows:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' opening applicationsname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' maximizing windowsname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' minimizing windowsname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' resizing windowsname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' moving windowsname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' activating windowsname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' closing windowsIf you are not familiar with how to manipulate windows in these ways, you
+can refer to your Microsoft Windows manual or speak to your system administrator.
+Or, for a brief introduction to the Windows concept, refer to the "Windows"
+section of the Overview in the Tutorial.ID="bMultiWays"Multiple ways to accomplish one actionOften in DynaText, there are two or more ways to accomplish an action. There may
+be as many as four different ways to accomplish an action using the mouse
+or the keyboard:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Select a menu option using the mouse.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Select a menu option using its keyboard mnemonic. Mnemonics are the underlined
+characters in the menu names and options.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Click the appropriate button on the Button bar.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Double-click on something in the DynaText Desktop.For example, you can open a book from the Collection window in any one of the following
+ways:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Select TYPE="menu"File|Open|Book from the menu bar.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Use the mnemonic: Alt, F, O, B.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Click the TYPE="button"Open button on the Button bar.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Double-click on the book's name in the Book list.ID="cIntroduce" DIVNUM="1"Introducing the Browser DesktopID="mIntroOver"OverviewID="bIntroOverIntro"IntroductionThis chapter describes how to start and quit the DynaText Browser. It also
+introduces the components of the Browser desktop and its windows, without
+explaining how to use each window. You can refer back to this chapter and
+its diagrams for the names and locations of different Browser components.ID="bOverDesktop"The Browser desktop componentsStarting the DynaText Browser brings up the Browser desktop with a Collection window.
+The Browser desktop always remains displayed, as does the menu bar and button
+bar. Using Microsoft Windows MDI (Multiple Document Interface) behavior, the
+Browser allows you to open books and additional Collection windows.FILE="desktop" TYPE="IslandPaint" TITLE="The DynaText Browser desktop" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="mStartQuit"How to Start and Quit the DynaText BrowserENTRY="Browser|starting" REF1="Browser" REF2="starting" ENTRY="Browser|quitting" REF1="Browser" REF2="quitting"ID="bStartQuitIntro"IntroductionUse the instructions below to start and quit the Browser under Windows.ID="bStartBrowser"Starting the BrowserTo start the DynaText Browser, you must be running Microsoft Windows. Open
+the DynaText program group. Double-click on the DynaText icon. An hour glass icon
+appears while the Browser is coming up on the screen.If the Browser does not start, contact your system administrator and ensure
+that your DynaText configuration file (TYPE="file"dynatext.ini)
+is set up correctly. For more information, refer to the Installation and
+System Administration Guide.The Browser desktop appears, containing a Collection window. You are now ready
+to open a book.ID="bQuitBrowser"Quitting the BrowserTo quit the Browser, select the TYPE="menu"Exit option from
+the TYPE="menu"File menu.ID="mColWin"Collection WindowID="bColWinIntro"IntroductionENTRY="Collection window|components" REF1="Collection window" REF2="components"The Collection window, which appears when you start the Browser, is bordered on
+top and bottom by a title bar and the Search panel (also called the Search
+panel). Below the title bar, the window is split into two side-by-side, or
+top-and bottom, panes (depending on the setting in your Collection Window
+Preferences ).: the Collection list and the Book list. The figure below shows a
+typical Collection window.FILE="colwin" TYPE="IslandPaint" TITLE="A typical Collection window" REPRODEP="14pi" REPROWID="21pi" UNITS="PT"ID="bColTitleBar"Title barThe title bar shows the currently selected collection.ID="bColList"Collection listThe left or top pane of the  window called the Collection list, displays the
+currently selected collection or collections.ID="bBookList"Book listENTRY="Book list|in Collection window" REF1="Book list" REF2="in Collection window"The right or bottom pane of the Collection window is called the Book list. In
+addition to listing the names of the books in the currently selected collection,
+it displays the number of search hits found in each book if a search has been
+performed. It also lists the edition, or publish date, of each book. From
+the Book list, a reader can open books or evaluate the results of a collection
+search.ID="bResizeLists"Changing the sizes of the Collection and Book listsENTRY="Collection window|resizing" REF1="Collection window" REF2="resizing"You can change the relative size of the Collection and Book lists, whether you
+have set your Table of Contents position to top-bottom or left-right. To do so, move your
+mouse over the split bar between the two views. When your mouse is over the
+split bar, the cursor turns into a double arrow. Press the left mouse button
+and drag the mouse to set the relative sizes of the lists.ID="bResizeColWin"Changing the size of the Collection windowYou can also grow or shrink the entire Collection window by positioning the
+cursor over the outside border. When the cursor changes to a double arrow,
+you can drag the mouse to change the window size.ID="bColWinFindPrompt"Search panelAt the bottom of the Collection window, a Search panel allows word or phrase searches
+in a collection or across collections.Reference: For an introduction to searching, RID="cSearch"see Chapter 4, "Searching in Books and Collections." For advanced information
+on searching, RID="cAdSearch"see Chapter 7, "Advanced Searching Techniques."ID="bColWinPref"Collection window preferencesENTRY="Collection window|setting preferences" REF1="Collection window" REF2="setting preferences"ENTRY="Preferences|Collection window" REF1="Preferences" REF2="Collection window"As a reader, you can set certain preferences pertaining to the look and
+feel of the Collection window. To view and change the preferences settings for the Collection window: 1. Select the TYPE="menu"File menu and then select the TYPE="menu"Preferences option. Or, use the keyboard equivalent Alt,
+F, F.2. When the DynaText Preferences dialog box appears, click on the icon for Collection window.The figure below contains the dialog box with Collection window preferences.FILE="colpref" TYPE="IslandPaint" TITLE="DynaText Preferences dialog for the Collection window" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"This dialog box controls your preferences
+for the orientation of the Collection list to the Book list, the thickness of the
+split bar between these two lists, and whether the Search panel is visible.The default preferences place the Collection list to the left of the Book list,
+divide the lists with a thick split bar, and make the Search panel initially visible.ID="mBookWin"Book WindowID="bBookWinIntro"IntroductionENTRY="Book window|components" REF1="Book window" REF2="components"A book is displayed in a Book window. Bordered on top and bottom by a title
+bar and the Search panel, this window contains two panes: the Table of Contents view and
+the Main view. The figure below shows a sample Book window.FILE="bwincomp" TYPE="IslandPaint" TITLE="Book window components" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="bBookTitleBar"Title barThe title bar shows the title of the book it contains and the view you
+are looking at (for example, fulltext or inline).ID="bTOCview"Table of Contents viewBordered on the right by a scroll bar, the TOC view contains an expandable
+and collapsible table of contents. Click the plus and minus icons to expand
+(view) or collapse (hide) the levels of the book's table of contents.When you click on a Table of Contents entry, the Main view scrolls to that place in the
+book.ID="bMainView"Main viewThe Main view contains one view of the book. Your publisher may have created
+additional views of your book, which you may display using TYPE="menu"View menu options. The Main view, bordered on its right side by a scroll
+bar, contains text and graphics plus icons that display additional information.ID="bIntroResizeViews"Changing the sizes of the TOC and Main viewsENTRY="Book window|resizing" REF1="Book window" REF2="resizing"You can change the relative size of the TOC and Main views, whether you
+have set your Table of Contents position to top-bottom or left-right. To do so, move your
+mouse over the split bar between the two views. When your mouse is over the
+split bar, the cursor turns into a double arrow. Press the left mouse button
+and drag the mouse to set the relative sizes of the TOC and Main views.ID="bResizeBookWin"Changing the size of the Book windowYou can also grow or shrink the entire Book window by positioning the cursor
+over the outside border. When the cursor changes to a double arrow, you can
+drag the mouse to change the window size.ID="bBwinFindPrompt"Search panelAt the bottom of the Book window, a Search panel allows word or phrase searches
+in a book.Reference: For an introduction to searching, RID="cSearch"see Chapter 4, "Searching in Books and Collections." For advanced information
+on searching, RID="cAdSearch"see Chapter 7, "Advanced Searching Techniques."ID="bBwinPref"Book window preferencesENTRY="Book window|setting preferences" REF1="Book window" REF2="setting preferences"ENTRY="Preferences|Book window" REF1="Preferences" REF2="Book window"As a reader, you can set certain preferences pertaining to the look and
+feel of the Book window. To view and change the preferences settings for the Book window: 1. Select the TYPE="menu"File menu and then select the TYPE="menu"Preferences option. Or, use the keyboard equivalent Alt,
+F, F.2. When the DynaText Preferences dialog box appears, click on the icon for Book window.The figure below contains the dialog box with Book window preferences.FILE="bwinpref" TYPE="IslandPaint" TITLE="DynaText Preferences dialog for the Book window" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"This dialog box controls your preferences
+for the orientation of the TOC view to the Main view, the thickness of the split
+bar between these two views, and whether the Search panel is visible.The default preferences place the TOC view to the left of the Main view, divide
+the views with a thick split bar, and make the Search panel initially visible.ID="mMenuBar"Menu BarID="bMenuBarIntro"IntroductionENTRY="Menu bar|Browser desktop" REF1="Menu bar" REF2="Browser desktop"Below the Browser desktop's title bar is the menu bar. The menu names are
+consistent while menu options may differ slightly depending on which window
+is active. The TYPE="menu"Book menu is displayed when the Book
+window is active. It has more menu options than the Collection window, which is displayed
+when the collection is active. The figure below displays the desktop's title bar,
+menu bar, and button bar.FILE="menubar" TYPE="IslandPaint" TITLE="The Browser's title bar and menu bar" REPRODEP="4pi" REPROWID="7pi" UNITS="PT"ID="bFileMenu"File menuENTRY="Menu bar|File menu" REF1="Menu bar" REF2="File menu"ENTRY="File menu|Book window" REF1="File menu" REF2="Book window"The following table lists the TYPE="menu"File menu's options
+when the Book window is the active window. TYPE="OTHER3"CWL="161:295" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"This menu optionRTY="-"Performs this actionRTY="-"RTL="-:-"RTY="-"Open|BookRTY="-"Opens the book currently selected
+in the Collection windowRTY="-"RTL="-:-"RTY="-"Open|CollectionRTY="-"Opens a new Collection windowRTY="-"RTL="-:-"RTY="-"Open|JournalRTY="-"Opens the Journal toolRTY="-"RTL="-:-"RTY="-"CloseRTY="-"Closes the active windowRTY="-"RTL="-:-"RTY="-"SaveRTY="-"Saves the active windowRTY="-"RTL="-:-"RTY="-"Save
+As...RTY="-"Saves the journal with
+a different nameRTY="-"RTL="-:-"RTY="-"ExportRTY="-"Copies plain text or title text, with or without markup,
+to another fileRTY="-"RTL="-:-"RTY="-"Print...RTY="-"Prints all or portions of a bookRTY="-"RTL="-:-"RTY="-"Print Setup...RTY="-"Allows you
+to modify the printer configurationRTY="-"RTL="-:-"RTY="-"Preferences...RTY="-"Allows you to view your DynaText
+Preferences settingsRTY="-"RTL="-:-"RTY="-"ExitRTY="-"Quits the DynaText BrowserRTY="-"RTL="-:-"ID="bEditMenu"Edit menuENTRY="Menu bar|Edit menu" REF1="Menu bar" REF2="Edit menu"ENTRY="Edit menu|Book window" REF1="Edit menu" REF2="Book window"The following table lists the TYPE="menu"Edit menu's options
+when the Book window is the active window. TYPE="OTHER3"CWL="161:295" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"This menu optionRTY="-"Performs this actionRTY="-"RTL="-:-"RTY="-"UndoRTY="-"Reverses the changes made
+to the Note windowRTY="-"RTL="-:-"RTY="-"CutRTY="-"Cuts the selected text into the ClipboardRTY="-"RTL="-:-"RTY="-"CopyRTY="-"Copies the selected
+text into the ClipboardRTY="-"RTL="-:-"RTY="-"PasteRTY="-"Pastes text from the ClipboardRTY="-"RTL="-:-"RTY="-"Copy SGMLRTY="-"Copies
+the selected text into the Clipboard in SGML formatRTY="-"RTL="-:-"ID="bBookMenu"Book menuENTRY="Menu bar|Book menu" REF1="Menu bar" REF2="Book menu"ENTRY="Book menu|Book window" REF1="Book menu" REF2="Book window"The following table lists the TYPE="menu"Book menu's options
+when the Book window is the active window. TYPE="OTHER3"CWL="161:295" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"This menu optionRTY="-"Performs this actionRTY="-"RTL="-:-"RTY="-"Go
+BackRTY="-"Returns to your previous
+location in the current window.RTY="-"RTL="-:-"RTY="-"FindRTY="-"Searches the book for the entered word or
+phrase.RTY="-"RTL="-:-"RTY="-"Search Forms...RTY="-"Searches the book using a special search form.RTY="-"RTL="-:-"RTY="-"NextRTY="-"Moves to
+the next set of search results.RTY="-"RTL="-:-"RTY="-"PreviousRTY="-"Moves to the previous set of search
+results.RTY="-"RTL="-:-"RTY="-"Clear SearchRTY="-"Cancels the current search and clear its results.RTY="-"RTL="-:-"RTY="-"Search History...RTY="-"Allows you to view a list of previously-performed searchesRTY="-"RTL="-:-"RTY="-"Search PanelRTY="-"Displays the Search panel at the bottom of the Book window. (A check mark
+preceding the menu option indicates that the Search panel is displayed.)RTY="-"RTL="-:-"RTY="-"Open ObjectRTY="-"Opens the selected annotation.RTY="-"RTL="-:-"RTY="-"Delete ObjectRTY="-"Deletes the selected annotation.RTY="-"RTL="-:-"RTY="-"Manage Annotations...RTY="-"Sorts the annotations for the current book.RTY="-"RTL="-:-"RTY="-"Create Annotation|Create BookmarkRTY="-"Places a bookmark at the current selection in the Book window.RTY="-"RTL="-:-"RTY="-"Create Annotation|Start HyperlinkRTY="-"Begins a hyperlink at the current selection
+in the Book window.RTY="-"RTL="-:-"RTY="-"Create Annotation|End HyperlinkRTY="-"Completes a hyperlink at the
+current selection in the Book window.RTY="-"RTL="-:-"RTY="-"Create Annotation|Create
+NoteRTY="-"Attaches a note to the
+current selection in the Book window.RTY="-"RTL="-:-"ID="bColMenu"Collection menuENTRY="Menu bar|Collection menu" REF1="Menu bar" REF2="Collection menu"ENTRY="Edit menu|Book window" REF1="Edit menu" REF2="Book window"The following table lists the TYPE="menu"Collection menu's
+options when the Book window is the active window. TYPE="OTHER3"CWL="161:295" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"This menu optionRTY="-"Performs this actionRTY="-"RTL="-:-"RTY="-"FindRTY="-"Performs a search across a collection
+of booksRTY="-"RTL="-:-"RTY="-"Refine SearchRTY="-"Opens a Multiple Collection View window containing the results of
+a search (except for books that had zero occurrences) so that you can continue
+to refine a search that you have already performed.RTY="-"RTL="-:-"RTY="-"Clear SearchRTY="-"Removes the
+highlighting of search occurrences in the Main view and clears the search
+text from the Find prompt.RTY="-"RTL="-:-"RTY="-"View MultipleRTY="-"Opens the Multiple Collection View window to display
+the selected collections.RTY="-"RTL="-:-"RTY="-"Search PanelRTY="-"Displays the Search panel at the bottom of the Collection windowRTY="-"RTL="-:-"ID="bJournMenu"Journal menuENTRY="Menu bar|Journal menu" REF1="Menu bar" REF2="Journal menu"ENTRY="Journal menu|Book window" REF1="Journal menu" REF2="Book window"The following table lists the TYPE="menu"Journal menu's options
+when the Book window is the active window. TYPE="OTHER3"CWL="161:295" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"This menu optionRTY="-"Performs this actionRTY="-"RTL="-:-"RTY="-"NewRTY="-"Creates a new journalRTY="-"RTL="-:-"RTY="-"Start RecordingRTY="-"Starts recording all movements to the journalRTY="-"RTL="-:-"RTY="-"Stop RecordingRTY="-"Stops recording
+to the journalRTY="-"RTL="-:-"RTY="-"Take SnapshotRTY="-"Records your current location in a particular view in
+the journal.RTY="-"RTL="-:-"RTY="-"ShowRTY="-"Shows the currently selected journal itemRTY="-"RTL="-:-"RTY="-"NextRTY="-"Goes to
+the next journal itemRTY="-"RTL="-:-"RTY="-"PreviousRTY="-"Goes to the previous journal itemRTY="-"RTL="-:-"RTY="-"RenameRTY="-"Renames
+an existing journalRTY="-"RTL="-:-"RTY="-"DeleteRTY="-"Deletes an existing journalRTY="-"RTL="-:-"ID="bViewMenu"View menuENTRY="Menu bar|View menu" REF1="Menu bar" REF2="View menu"ENTRY="View menu|Book window" REF1="View menu" REF2="Book window"The following table lists the TYPE="menu"View menu's options
+when the Book window is the active window. TYPE="OTHER3"CWL="161:295" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"This menu optionRTY="-"Performs this actionRTY="-"RTL="-:-"RTY="-"EnlargeRTY="-"Enlarges the current view.RTY="-"RTL="-:-"RTY="-"ReduceRTY="-"Reduces the current view.RTY="-"RTL="-:-"RTY="-"Original SizeRTY="-"Returns the current view to
+its original size.RTY="-"RTL="-:-"RTY="-"TOC|TOCRTY="-"Displays the TOC (Table of Contents) view.RTY="-"RTL="-:-"RTY="-"TOC|<TOC view view>RTY="-"Displays an optional alternative TOC view created by the publisher (for
+example, FIGURES or TABLES).RTY="-"RTL="-:-"RTY="-"Main|FULLTEXTRTY="-"Displays the "fulltext" view
+of the book for the Main view.RTY="-"RTL="-:-"RTY="-"Main|<alternative Main view>RTY="-"Displays an optional alternative Main view
+created by the publisher. (for example, NOVICE or INLINE).RTY="-"RTL="-:-"ID="bWinMenu"Window menuENTRY="Menu bar|Window menu" REF1="Menu bar" REF2="Window menu"ENTRY="View menu|Book window" REF1="View menu" REF2="Book window"The following table lists the TYPE="menu"Window menu's options
+when the Book window is the active window. TYPE="OTHER3"CWL="161:295" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"This menu optionRTY="-"Performs this actionRTY="-"RTL="-:-"RTY="-"New
+WindowRTY="-"Opens an identical view
+of the bookRTY="-"RTL="-:-"RTY="-"CascadeRTY="-"Cascades the open windowsRTY="-"RTL="-:-"RTY="-"TileRTY="-"Tiles the open windowsRTY="-"RTL="-:-"RTY="-"Arrange IconsRTY="-"Arranges the currently iconified windows along the bottom edge of the DynaText
+desktopRTY="-"RTL="-:-"RTY="-"Close AllRTY="-"Closes all open windowsRTY="-"RTL="-:-"RTY="-"1 Collection
+- <Collection title>2 <book title>:<Main view>RTY="-"Switches to an another window. A check mark precedes the active window.RTY="-"RTL="-:-"ID="bIntroHelpMenu"Help menuENTRY="Menu bar|Help menu" REF1="Menu bar" REF2="Help menu"ENTRY="Help menu|Book window" REF1="Help menu" REF2="Book window"The  TYPE="menu"Help menu selections vary depending upon
+the window that is currently active, providing you with access to information
+that is appropriate to the window type.  Always accessible from the  TYPE="menu"Help menu, regardless of the window that is active are:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' Reader Guide for Windowsname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' About... box, which provides the DynaText software releaseIf a graphic window is active, for example, the help items are: Reader
+Guide, Graphic Window, Scaling Images, Controlling Detail, and About....ID="mButtonBar"Button BarENTRY="Button bar|Browser desktop" REF1="Button bar" REF2="Browser desktop"ID="bButtonBarIntro"IntroductionThe button bar, located below the menu bar, contains buttons that are short
+cuts for selecting menu options.ID="bButtBarContext"In different contextsENTRY="Button bar|Collection window" REF1="Button bar" REF2="Collection window"The contents of the button bar depend on the active window. For example,
+the figure below contains the button bar when the Collection window is active. FILE="colbar" TYPE="IslandPaint" TITLE="The Button bar with Collection window active" REPRODEP="2pi" REPROWID="5pi" UNITS="PT"There are six buttons in the button bar in
+this context.TYPE="OTHER3"CWL="161:295" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"This buttonRTY="-"Performs this actionRTY="-"RTL="-:-"RTY="-"TYPE="button"ColRTY="-"Opens a new Collection
+windowRTY="-"RTL="-:-"RTY="-"TYPE="button"BookRTY="-"Opens the book currently selected in the Collection
+windowRTY="-"RTL="-:-"RTY="-"TYPE="button"FindRTY="-"Performs a search across a collection of booksRTY="-"RTL="-:-"RTY="-"TYPE="button"ClearRTY="-"Cancels the current search and clears its
+resultsRTY="-"RTL="-:-"RTY="-"TYPE="button"JournalRTY="-"Creates a new JournalRTY="-"RTL="-:-"RTY="-"TYPE="button"HelpRTY="-"Opens the DynaText Help SystemRTY="-"RTL="-:-"ENTRY="Button bar|Book window" REF1="Button bar" REF2="Book window"Contrast
+the above figure to the one below, containing the button bar when the Book window
+is active.FILE="bookbar" TYPE="IslandPaint" TITLE="The Button bar with Book window active" REPRODEP="2pi" REPROWID="5pi" UNITS="PT"TYPE="OTHER3"CWL="161:295" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"This buttonRTY="-"Performs this actionRTY="-"RTL="-:-"RTY="-"TYPE="button"FindRTY="-"Searches the book
+for the entered word or phraseRTY="-"RTL="-:-"RTY="-"TYPE="button"PrevRTY="-"Moves to the previous
+set of search resultsRTY="-"RTL="-:-"RTY="-"TYPE="button"NextRTY="-"Moves to the next set
+of search resultsRTY="-"RTL="-:-"RTY="-"TYPE="button"CancelRTY="-"Cancels the current search and
+clears its resultsRTY="-"RTL="-:-"RTY="-"TYPE="button"HistoryRTY="-"Allows you to view a list
+of previously-performed searchesRTY="-"RTL="-:-"RTY="-"TYPE="button"GoBackRTY="-"Returns you to
+your previous location in the current windowRTY="-"RTL="-:-"RTY="-"TYPE="button"CopyRTY="-"Copies the selected text into the ClipboardRTY="-"RTL="-:-"RTY="-"TYPE="button"PasteRTY="-"Pastes the Clipboard contents into the Search PanelRTY="-"RTL="-:-"RTY="-"TYPE="button"NewRTY="-"Opens an identical view of the bookRTY="-"RTL="-:-"RTY="-"TYPE="button"MarkRTY="-"Places a bookmark
+at the current selection in the Book windowRTY="-"RTL="-:-"RTY="-"TYPE="button"NoteRTY="-"Attaches a note to the current selection in the Book windowRTY="-"RTL="-:-"RTY="-"TYPE="button"StartLnkRTY="-"Begins a hyperlink at the current selection in the Book
+windowRTY="-"RTL="-:-"RTY="-"TYPE="button"EndLnkRTY="-"Completes a hyperlink at the current selection
+in the Book windowRTY="-"RTL="-:-"ID="bMenuOptEquivs"Menu option equivalentsButtons in the button bar are menu option equivalents. For example, clicking
+on the TYPE="button"Bookmark button, the open book with the
+red bookmark, performs the same action as selecting TYPE="menu"Book|Create
+Annotation|Create Bookmark. Clicking on the TYPE="button"Bookmark button places a bookmark at the place in the document that contains
+selected text.ID="bButtBarPref"Button bar preferencesENTRY="Button bar|setting preferences" REF1="Button bar" REF2="setting preferences"ENTRY="Preferences|Button bar" REF1="Preferences" REF2="Button bar"As a reader, you can set certain preferences pertaining to the placement
+of the button bar and the information contained in the buttons. To view and
+change the preferences settings for the button bar: name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Select the TYPE="menu"File menu and then select the TYPE="menu"Preferences option. Or, use the keyboard equivalent Alt,
+F, F.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'When the DynaText Preferences dialog box appears, click on the icon for
+button bar.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'The figure below contains the dialog box with button bar preferences.FILE="bbarpref" TYPE="IslandPaint" TITLE="DynaText Preferences dialog for the Button bar" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"This dialog box controls your preferences
+for the placement of the button bar in the Browser desktop and whether the
+buttons contain text only, graphics only, or text and graphics.The default preferences place the button bar at the top of the desktop
+and display buttons as graphics only.ID="mStatusBar"Status BarENTRY="Status bar|Browser desktop" REF1="Status bar" REF2="Browser desktop"ID="bStatBar"DescriptionThe status bar, located at the bottom of the Browser desktop, displays
+information about the currently selected menu option.ID="bStatBarEx"ExampleIf you click on TYPE="button"Mark in the button bar, the
+following help text is displayed in the Status bar:"Place a bookmark at the current selection in the Book window."ID="cOpenClose" DIVNUM="2"Opening and Closing BooksID="mOpenCloseOver"OverviewID="bOpenCloseOverIntro"IntroductionENTRY="Collection window|description" REF1="Collection window" REF2="description"A Collection window is the primary mode of access to collections and books. It
+is from a Collection window that you canname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'search across books and collectionsname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'open another Collection windowname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'open booksID="bOverColsBooks"Collections and BooksJust as in a traditional library, DynaText books are grouped into collections. Using
+the Collection window, you can view the titles of books in one collection or the books
+in several collections. And unlike a traditional library, you can search for words
+across books in a collection or collections.ID="mSelColBooks"Selecting Collections and BooksENTRY="Book|selecting" REF1="Book" REF2="selecting"ENTRY="Collection|selecting" REF1="Collection" REF2="selecting"ID="bSelColBooksIntro"IntroductionThis section describes how to select a collection or book in the Collection window.
+After selecting a collection or book, you can open another Collection window, open a book,
+and search across the books in a collection or collections.ID="bSelectCol"Selecting a collectionWhen the Collection window first appears, the first collection is automatically selected
+and the Book list displays the books that it contains. To view the books in
+another collection, select the collection in the Collection list by clicking on the collection's
+name. The Book list reflects the newly selected collection.ID="bSelectBook"Selecting a bookTo select a book, click on the book's name in the Book list.ID="mOpenColWin"Opening Another Collection windowENTRY="Collections|viewing multiple" REF1="Collections" REF2="viewing multiple"ID="bOpenColWinIntro"IntroductionOne Collection window enables you to view book titles in different collections. But
+two Collection windows allow you to compare the book titles of two different collections.
+Plus, you can compare the search results of searches performed on different collections.This section describes how to open additional Collection windows and how to work
+with multiple Collection windows.ID="bOpenNewColWin"Opening another Collection windowTo open another Collection window, with one collection currently displayed, double-click
+on another collection's name in the Collection list. A new Collection window appears, displaying
+the selected collection and its books. In the first Collection window, the originally
+selected collection remains selected.ID="bView2Cols"Viewing two collections at onceTo view multiple collections displayed in Collection windows, arrange the windows so
+that you can see the contents of each. One way to do this is to select TYPE="menu"Window|Tile from the menu bar or use the keyboard equivalent
+Alt, W, T.You may want to compare the search results of two collections. Or, if one book
+belongs to two different collections, you could compare their editions (or publish
+dates) to determine which book is the most recent.The figure below shows two Collection windows tiled on the Browser desktop.FILE="tile" TYPE="IslandPaint" TITLE="Two Collection windows tiled on the desktop" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="mOpenBook"Opening a BookENTRY="Book|opening" REF1="Book" REF2="opening"ID="bOpenBookIntro"IntroductionOpening a book in the DynaText Browser is very simple. This section describes
+opening a book.ID="bHow2openBook"How to open a bookENTRY="Books|opening" REF1="Books" REF2="opening"To open a book from the Collection window, either: name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Double-click on the book's title in the Book list.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Select the book's title in the Book list. Then, select TYPE="menu"File|Open|Book from the menu bar. Or, use the keyboard equivalent:
+Alt, F, O, B.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Select the book's title in the Book list. Then, click on the Book
+button in the button bar.REVISION="2.3b1"Note: If a key was assigned to the book, this key must appear
+in your dynatext.ini file for the book to open. If there is no
+key in the file, DynaText displays the message "You have not provided authorization
+for secure book bookname." If the book you want is in another collection, select the name of that collection
+in the Collections list. The Book list will now show the contents of the new collection.ID="mCloseBook"Closing a BookENTRY="Book|closing" REF1="Book" REF2="closing"ID="bCloseBookIntro"IntroductionThe Browser displays a book in a Book window. This section describes how to
+close a Book window.ID="bCloseBookWays"Different ways to close a bookENTRY="Books|closing" REF1="Books" REF2="closing"To close an individual book, do either of the following: name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Select TYPE="menu"Close from the Control-menu box or
+double-click on the Control-menu box.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Select the TYPE="menu"Close option under the TYPE="menu"File menu on the Browser menu bar. Or, use the keyboard
+equivalent: Alt, F, C.ID="bCloseBookQuit"Closing books when quitting DynaTextENTRY="DynaText|quitting" REF1="DynaText" REF2="quitting"Quitting DynaText closes any open books. To close a book and quit DynaText, do
+one of the following:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Select TYPE="menu"File|Exit from the Browser menu bar.
+Or, use the keyboard equivalent: Alt, F, X. name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Select the TYPE="menu"Close option from the desktop's
+Control-menu box or use the accelerator: Alt-F4.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Double-click on the desktop's Control-menu box.Then click TYPE="button"Yes in the dialog box.ID="mCloseColWin"Closing a Collection windowENTRY="Collection|closing" REF1="Collection" REF2="closing"ID="bCloseColWinIntro"IntroductionThis section describes how to close a Collection window while remaining in the
+Browser desktop.ID="bCloseColWin"Closing a Collection windowTo close a Collection window, do either of the following:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Make the Collection window active by clicking anywhere on the window. Then,
+select TYPE="menu"File|Close from the menu bar. Or, use the
+keyboard equivalent: Alt, F, C.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Select TYPE="menu"Close from the Collection window's Control-menu
+box. Or, double-click on the Control-menu box.ID="cBrowse" DIVNUM="3"Browsing a BookID="mBrowseOver"OverviewID="bBrowseOverIntro"IntroductionThis chapter introduces you to browsing through a book using the two views
+of the Book window: the Table of Contents view and the Main view. The following figure contains
+a typical Book window.FILE="bookwin" TYPE="IslandPaint" TITLE="A typical Book window" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="bTOCmainViews"The TOC and Main viewsThe Book window is composed of two panes, or views, of the book: the Table of Contents view
+and the Main view. ID="bResizeViews"Resizing the TOC and Main viewsWhether the TOC and Main views are side-by-side or top-and-bottom, you
+can resize them within the boundaries of the Book window. Move the mouse over the
+boundary between the two views, called the "split bar." The cursor changes
+to a double-pointed arrow when it is over the split bar. Press the mouse button
+and drag the mouse in any direction to resize the panes. Release the mouse
+button when you are satisfied with the relative sizes of the views.ID="bShowHideViews"Showing/hiding TOC and Main viewsENTRY="TOC view|showing and hiding" REF1="TOC view" REF2="showing and hiding"ENTRY="Main view|showing and hiding" REF1="Main view" REF2="showing and hiding"Initially, the Book window contains both a TOC view and a Main view. You can choose
+to hide either of these views by moving the split bar to obscure the view
+you want to hide.To hide the TOC view, click and drag the split bar until only the Main view
+is showing. The split bar remains displayed so you can reveal the TOC view
+later if you choose. Hide the Main view in the same way you hid the TOC view.ID="bAdvBrowse"Advanced browsingThis chapter introduces you to browsing, including scrolling, using the TOC view
+to move to specific places in the book, following cross-references, and viewing
+inline tables and graphics. Advanced browsing techniques include manipulating
+graphics in another window and viewing alternative views of the same book.Reference: For information on advanced browsing, RID="cAdBrowse"see Chapter 6, Advanced Browsing.ID="bBeyondBrowse"Beyond browsingIn addition to browsing a book, you may want to search for words and phrases,
+annotate the book with notes, place bookmarks, or create your own cross-references.
+Your publisher may have created a journal, or a directed path, through this
+or other books. You may want to play, or view, an existing journal or create
+your own journal.Reference: TYPE="OTHER3"CWL="230:226" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"For information onRTY="-"SeeRTY="-"RTL="-:-"RTY="-"searching for words and
+phrasesRTY="-"Chapter 4, Searching in Books and CollectionsRTY="-"RTL="-:-"RTY="-"the DynaText Search languageRTY="-"Chapter 7, Advanced Searching TechniquesRTY="-"RTL="-:-"RTY="-"annotating the book with bookmarks, notes, and cross-references, and working
+with these annotationsRTY="-"Chapter 5, Annotating a BookRTY="-"RTL="-:-"RTY="-"viewing journalsRTY="-"Chapter 8, Viewing Pre-Recorded Paths through BooksRTY="-"RTL="-:-"RTY="-"recording
+your own journalsRTY="-"Chapter 9, Recording Your Path through BooksRTY="-"RTL="-:-"ID="mUseTOCview"Using the Table of Contents ViewID="bUseTOCviewIntro"IntroductionENTRY="TOC view|description" REF1="TOC view" REF2="description"The Table of Contents view contains a hierarchical outline of the topics in each open
+book. This outline remains open while you browse a book, allowing you to identify
+your current location and to move quickly from one part of a book to another.When you first open a book, you usually see only the highest two levels
+of the table of contents: the title of the book, and the titles of its major
+divisions.In this section, examples use the book titled Shuttle Press Kit,
+included in the DynaText documentation collection.ID="bExpandSecs"Expanding and collapsing sectionsENTRY="TOC view|expannding and collapsing" REF1="TOC view" REF2="expannding and collapsing"When you expand part of a Table of Contents, the subdivisions under that division appear.Example: If you click on the plus sign next to the "Magellan"
+section (see the "Before" picture below), the display of its subsections
+appears. You can click again on the plus sign in front of the subsection "General"
+to expand the Table of Contents further (see the "After" picture below). Note that the
+subsections of the "General" section are not preceded by plus signs. This
+means that these sections cannot be expanded further.Before...FILE="be4exp" TYPE="IslandPaint" TITLE="TOC before expansion" REPRODEP="15pi" REPROWID="25pi" UNITS="PT"After...FILE="afterexp" TYPE="IslandPaint" TITLE="TOC after expansion" REPRODEP="15pi" REPROWID="25pi" UNITS="PT"When you collapse part of a Table of Contents, all subdivisions under that division
+disappear.Example: If you click on the minus sign next to the "Press
+Notes" section (see the "Before" picture below), the display of its subsections
+is removed (see the "After" picture below).Before...FILE="be4col" TYPE="IslandPaint" TITLE="TOC before Collapse" REPRODEP="15pi" REPROWID="25pi" UNITS="PT" After...FILE="aftercol" TYPE="IslandPaint" TITLE="TOC after Collapse" REPRODEP="15pi" REPROWID="25pi" UNITS="PT"ID="bGotoSec"Moving directly to a sectionENTRY="TOC|selecting a section" REF1="TOC" REF2="selecting a section"ENTRY="Table of Contents. See TOC; TOC view." REF1="Table of Contents. See TOC; TOC view." REF2=""The Table of Contents enables you to scroll directly to a particular section or subsection
+in the book by clicking on its title in the Table of Contents view. In the TOC view, expand
+"Overview of STS-30," then click on the section titled "Press Notes." The
+text of the Main view scrolls to that section as the figure below shows.FILE="scroll" TYPE="IslandPaint" TITLE="The Main view reflects TOC view selection" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="bScrollTview"Scrolling through the TOC viewENTRY="TOC|scrolling through" REF1="TOC" REF2="scrolling through"Use the scroll bars to move forward and backward through the Table of Contents. Click
+above or below the square, or "thumb," to view a pane's worth of information
+above or below the current place in the Table of Contents.ID="mUseMainView"Using the Main ViewID="bUseMainViewIntro"IntroductionENTRY="Main view|description" REF1="Main view" REF2="description"ENTRY="Book contents. See Main view." REF1="Book contents. See Main view." REF2=""ENTRY="Document. See Main view." REF1="Document. See Main view." REF2=""The Main view contains the book text, graphics, tables, and cross-references
+created by the publisher. It also contains annotations created by you and
+other readers. This section describes how to browse through the book using
+the Main view.ID="bScrollMview"Scrolling through the Main viewENTRY="Main view|scrolling throubh" REF1="Main view" REF2="scrolling throubh"Use the scroll bars to move forward and backward through the Main view of
+the text of the book. Click above or below the square, or "thumb," to view
+a pane's worth of information above or below the current place in the book.ID="bXrefIcons"Cross-reference iconsENTRY="Cross reference|icons" REF1="Cross reference" REF2="icons"ENTRY="Icons|cross-reference" REF1="Icons" REF2="cross-reference"Your publisher may have created cross-references to information in this
+or another book. The icons that are used for cross-references are up to the
+discretion of the publisher.Icons that represent cross-references might appear in the left or right
+margin or in line with the text. TYPE="iconshow" TITLE="alink"TYPE="iconshow" TITLE="default"TYPE="iconshow" TITLE="exlink"TYPE="iconshow" TITLE="footnote"TYPE="iconshow" TITLE="hyperlin"TYPE="iconshow" TITLE="inlink"ID="bHotText"Hot textENTRY="Hot text|recognizing" REF1="Hot text" REF2="recognizing"ENTRY="Pickable text. See Hot text; Icons." REF1="Pickable text. See Hot text; Icons." REF2=""ENTRY="Cross reference|hot text" REF1="Cross reference" REF2="hot text"Hot text is specially-formatted text created by your publisher. When clicked
+on, it provides additional information related to the text you are browsing.
+Publishers usually signal hot text by changing type style or color, or underlining
+the text that is hot. Another indication that text is hot is that the cursor
+changes from an arrow to a hand as you move your mouse over it.The DynaText online documentation includes red, underlined hot text. One example
+of hot text is shown below:FILE="hottext" TYPE="IslandPaint" TITLE="Example of hot text" REPRODEP="12pi" REPROWID="24pi" UNITS="PT"ID="bFollowXref"Following cross-referencesENTRY="Cross reference|following" REF1="Cross reference" REF2="following"Whether a cross-reference appears as hot text or an icon, you can follow
+the cross-reference in many ways:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Click on the icon to highlight it. Select TYPE="menu"Book|Open
+Object.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Double-click on the icon.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'Click on the icon to highlight it. Click the right button to display
+the icon's popup menu. Select TYPE="menu"Open.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'When your cursor is over hot text, the cursor changes to a pointing
+finger. Click on the hot text.ID="bInlineStuff"Inline graphics, equations, tablesENTRY="Graphics|inline" REF1="Graphics" REF2="inline"ENTRY="Tables|inline" REF1="Tables" REF2="inline"ENTRY="Equations|inline" REF1="Equations" REF2="inline"Your book may contain graphics, equations, and tables inline with the text
+in the Main view. Depending on how the publisher defined the behavior of those
+inline objects, you may be able to click the graphic or equation and bring
+it up in another window. Bringing a graphic or equation up in another window
+allows you to continue to view the information while scrolling through the
+book. You will know if this behavior is possible if your cursor changes to
+a pointing finger when the mouse passes over the object.An equation you are viewing may be surrounded by a box, indicating that
+the equation is larger than the Main view is currently displaying. Resize the Book window
+larger or click on the equation (if the cursor changes to a pointing finger)
+to view it in another window.Reference: For information on graphics that appear in another
+window, RID="mGraphWin"see section "Viewing Graphics in Another Window" in Chapter 6.ID="bGoBack"The TYPE="button"Go Back buttonENTRY="Buttons|Go Back" REF1="Buttons" REF2="Go Back"ENTRY="Go Back|description" REF1="Go Back" REF2="description"As you read through a book, DynaText remembers where you have been, leaving
+a trail of bread crumbs. You can traverse your steps through the book using
+the TYPE="menu"Go Back option. Click on the TYPE="button"Go Back button or select TYPE="menu"Book|Go Back to move to your previous place in the document.
+You can continue selecting TYPE="menu"Go Back until you return
+to your first place in the book.ID="mSrchInfo"Searching for InformationID="bSrchInfoIntro"IntroductionIn addition to moving through a book linearly and non-linearly, you may
+also want to move to specific pieces of information throughout the book. ID="bSrchPreview"SearchingWhen you are viewing a book in the Browser, you can search for words or
+phrases. The Browser helps you move through the book from occurrence to occurrence
+of the specified word or phrase. Or, using the Table of Contents view, you can go directly
+to particular occurrences of the search word or phrase based on the context
+of the surrounding sections.Reference: For an introduction to searching in the Browser, RID="cSearch"see Chapter 4, Searching in Books and Collections.ID="cSearch" DIVNUM="4"Searching in Books and CollectionsID="mSearchOver"OverviewID="SearchOverIntro"IntroductionENTRY="Queries. See Searches." REF1="Queries. See Searches."DynaText allows you to search for occurrences of words, phrases, and patterns
+(regular expressions) in books or collections. To do so, you use the Search panel at
+the bottom of the Book or Collection window. In addition, you can look through a
+list of your previous searches, performing them again or altering them for
+a different search.This chapter discusses basic searches and how search results are displayed.Reference: For information on more advanced searches, RID="cAdSearch"see Chapter 7, Advanced Searching Techniques.ID="mSearchInBook"Searching Within a BookID="bSearchInBookIntro"IntroductionENTRY="Searches|performing" REF1="Searches" REF2="performing"ENTRY="Query. See Search." REF1="Query. See Search."ENTRY="Books" REF1="Books" REF2="searching in"When you perform a search in a book, the TOC view and Main view change in
+several ways:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'The Main view scrolls from your current location in the document to
+the search's first occurrence after that location.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'The position marker in the Table of Contents reflects the current position at
+the first occurrence of the search.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'All successful search occurrences are highlighted.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'The Table of Contents displays next to each book division the number of search
+occurrences in that division.The figure below contains the Book window after a search for "experiments" in
+the Shuttle Press Kit book.FILE="search" TYPE="IslandPaint" TITLE="Book window after a search for 'experiments'" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"This section discusses searching for words
+and phrases in a book and interpreting the results.ID="bSearchPnl"The Search panelENTRY="Search panel|using" REF1="Search panel" REF2="using"ENTRY="Search panel|displaying and hiding" REF1="Search panel" REF2="displaying and hiding"Every Book window contains a Search panel, a prompt for you to enter searches. By
+default, the Search panel appears at the bottom of the Book window when you open a book.FILE="srchpnl" TYPE="IslandPaint" TITLE="The Book window's Search panel" REPRODEP="1.5pi" REPROWID="5pi" UNITS="PT"To hide the Search panel, select TYPE="menu"Book|Search Panel. To display the Search panel, select the same menu option.
+A checkmark indicates that the Search panel is visible.ID="bCopyPasteFind"Copying and pasting into the Search panelENTRY="Search panel|cutting and pasting into" REF1="Search panel" REF2="cutting and pasting into"Instead of typing your search, you can copy words or phrases from the text
+of a book itself or from other windows in the Windows environment, and then
+paste them into the Search panel.To do so, select the desired word or expression in the Main view, then select TYPE="menu"Edit|Copy to copy the text to the clipboard. Move your
+mouse to the Search panel and select TYPE="menu"Edit|Paste to
+paste your selection.ID="bWordSrch"Word searchENTRY="Search|for a word" REF1="Search" REF2="for a word"ENTRY="Word|search" REF1="Word" REF2="search"To search for all occurrences of a word, simply type the word at the Search
+panel in the Search panel. Capitalizing any letter has no effect on the search,
+as the search is done assuming that all letters are lower case. For example,
+entering the word "orbit" in the Shuttle Press Kit book finds all cases
+of "orbit", such as "Orbit", "ORBIT", and "orbit".Note:You cannot search for words or phrases that are generated
+by the text-before or text-after feature. For example, if you generate"Warning"
+or "Caution" to highlight those types of notes by setting text-before, you
+would not be able to search for the Warning or Caution label.ID="bPhraseSrch"Phrase searchENTRY="Search|for a phrase" REF1="Search" REF2="for a phrase"ENTRY="Phrase|search" REF1="Phrase" REF2="search"To search for a sequence of words or a phrase, type in the phrase at the
+Search panel. DynaText imposes a limit of 10 words per phrase; anything more results
+in an error message.Searches ignore line breaks in multiword searches. If this phrase appears
+anywhere in the document, regardless of line breaks, it is highlighted and
+the count of occurrences appear in the Table of Contents view.For example, entering "venus orbit" results in one find, as does "approximately
+18 days", even though the latter phrase extends across two lines. The figure
+below illustrates a successful phrase search across lines.FILE="lns_hit" TYPE="IslandPaint" TITLE="Search across lines" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="SrchInEqns"Searching within equationsENTRY="Search|within an equation" REF1="Search" REF2="within an equation"ENTRY="Equation|search" REF1="Equation" REF2="search"Depending on how your publisher has set up the equations in the book, you
+may be able to search for components of equations. Search for variable names
+in equations just as you would search for words in the text of the book.ID="bSrchPref"Setting search preferencesENTRY="Search|setting preferences" REF1="Search" REF2="setting preferences"ENTRY="Preferences|for searches" REF1="Preferences" REF2="for searches"When you set search preferences, you are setting preferences for searching
+within a book as well as searching across collections.Instead of receiving exact numbers of search occurrences in the Table of Contents view
+("Full" selection), you can change the search preferences so that your feedback
+in the TOC view is "On/Off"name='mdash' font=symbol charset=fontspecific code=190 
+			descr='[mdash]'showing whether or not there is a search
+occurrence, or "Relevance"name='mdash' font=symbol charset=fontspecific code=190 
+			descr='[mdash]'relative to the total number of occurrences
+in the book (showing the log of the actual number of search occurrences).In addition to changing search feedback in the TOC view, you can change
+the search behavior towards diacritical marks, or accents. You can determine
+whether DynaText looks for the word exactly as typed at the Search panel or whether
+it locates words with and without accents.To open the DynaText Preferences dialog box, select TYPE="menu"File|Preferences.FILE="srchpref" TYPE="IslandPaint" TITLE="DynaText Preferences dialog for searching" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="bSrchRestrictns"Restrictions on word and phrase searchesENTRY="Search|restrictions" REF1="Search" REF2="restrictions"ENTRY="Special characters|searching for" REF1="Special characters" REF2="searching for"ENTRY="Wildcards|searching" REF1="Wildcards" REF2="searching"ENTRY="Punctuation|searching" REF1="Punctuation" REF2="searching"For searching purposes, there are several classes of characters. The table
+below lists the character classes and how the search treats them.TYPE="PARTFUN2"CWL="150:306" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"This character class, consisting ofRTY="-"MatchesRTY="-"RTL="-:-"RTY="-"Letters
+and digitsRTY="-"The same letters
+and digits, whether upper or lower case.Example: clock matches clock, Clock, CLOCK, and so on.RTY="-"RTL="-:-"RTY="-"*RTY="-"Any set of 0 or more characters, up to the end of the word.RTY="-"RTL="-:-"RTY="-"Valid punctuationRTY="-"Exactly what is typed. Valid punctuation consists of all printable characters
+other than letters, digits, and invalid punctuation (< > ( ) = and ").Note: Be careful when using a period or a comma in a search.
+While these characters are valid punctuation, they often appear on the stop
+list, causing DynaText to highlight other punctuation as well as the period or
+comma.Example: 2-3 matches 2-3.RTY="-"RTL="-:-"RTY="-"Invalid punctuationRTY="-"No match. The invalid punctuation characters are: < > ( ) = and ". These characters are invalid because they have
+special meaning to the DynaText search language.RTY="-"RTL="-:-"RTY="-"WildcardsRTY="-"Any letter(s) and digit(s).  RID="bSearching"See the section on Wildcards in this chapter.RTY="-"RTL="-:-"ID="bCancelBookSrch"Canceling a search in progressENTRY="Search|canceling" REF1="Search" REF2="canceling"You can cancel a search in progress by clicking on the TYPE="button"Clear button in the button bar. You can click on the TYPE="button"Clear button even though the cursor is an hour glass.Canceling a search also clears the text in the Search panel.ID="bSrchResTview"Interpreting the search results in the TOC viewENTRY="Search|interpreting the results" REF1="Search" REF2="interpreting the results"When you perform a search, the Table of Contents view contains the numbers of search
+occurrences found in the book and in each section. These counts display to
+the left of the book and section titles.The figure below contains the TOC view after searching for the word "experiments"
+in the Shuttle Press Kit book. Notice that the number of occurrences
+of the word "experiments" is broken down by section.FILE="tocannot" TYPE="IslandPaint" TITLE="TOC view after a search for 'experiments'" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="bNextPrev"Visiting next and previous search resultsENTRY="Search|viewing next and previous occurrence" REF1="Search" REF2="viewing next and previous occurrence"ENTRY="Scrolling|through seach occurrences" REF1="Scrolling" REF2="through seach occurrences"Once you have performed a search, you can move through the document from
+search occurrence to search occurrence by using the TYPE="button"Next and TYPE="button"Prev buttons in the button bar. The TYPE="menu"Next button scrolls to the next occurrence of your search,
+relative to your current location in the document. The TYPE="menu"Prev button scrolls to the previous.Another way to move to the next and previous search occurrences is to use
+the TYPE="menu"Book|Next and TYPE="menu"Book|Previous menu options.ID="bClearSrchRes"Clearing the search results in the Main viewENTRY="Search|clearing the results" REF1="Search" REF2="clearing the results"When you are done with the current search and would like to remove the
+highlighting of its occurrences from your Main view, click the TYPE="menu"Clear button in the button bar or select TYPE="menu"Book|Clear
+Search. This clears the values from the TOC view and the Search panel.ID="bRepeatSrch"Repeating past searches using the Search History dialogAs you browse a book, you might perform several searches. After performing
+searches you may want to call up past searches and use them again or modify
+them slightly. The Browser provides a Search History dialog for doing just
+that. The next section discusses repeating and modifying past searches using
+the Search History dialog box.ID="mRepModSearches"Repeating and Modifying SearchesID="bRepModSrchIntro"IntroductionENTRY="Search history" REF1="Search history"ENTRY="Search history|description" REF1="Search history" REF2="description"ENTRY="Search. See also Search history." REF1="Search. See also Search history."DynaText maintains a list of all the searches that you performed on your book
+during the current session. You can select a search from the Past Searches
+list to repeat, or edit an individual search and execute the edited search.
+The following figure displays the Search History dialog box.FILE="srchhist" TYPE="IslandPaint" TITLE="The Search History dialog box" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"The Search History dialog box
+also contains a combo box from which you can select search forms (if your publisher
+has provided them).Reference: For more information on using search forms, RID="mSearchForms"see section "Specialized Searches" later in this chapter.ID="bRepeatQuer"Repeating past searchesENTRY="Search|repeating past" REF1="Search" REF2="repeating past"ENTRY="Search|replaying" REF1="Search" REF2="replaying"ENTRY="Past searches|list" REF1="Past searches" REF2="list"As you perform a series of searches, they are saved in a list. You can
+look back over this list by selecting TYPE="menu"Book|Search History to open the Search History dialog box.To replay a specific search, select it from the Past Searches list and
+it appears at the dialog box's Search panel. Press Return or the Find button
+at the bottom of the dialog box.ID="bModSrch"Modifying past searchesSelect a search from the Past Searches list. It appears at the Search panel.
+Now, modify it by deleting or adding characters. Then execute the search by
+pressing Return.ID="bNewSrch"Performing new searches from the Search History dialogThe Search History dialog box is not only for recalling past searches.
+You can also use the Search panel just as you do in the Book window.ID="bCloseSrchDia"Closing the Search History dialogWhen you are done performing searches from this dialog box, click the TYPE="button"Close button or double-click on the Control-menu box
+in the upper left corner.ID="mSearchForms"Specialized SearchesID="bSrchFormsIntro"IntroductionENTRY="Search|specialized" REF1="Search" REF2="specialized"You can search for words and phrases using the Search panel, but these
+searches probably show you more occurrences than you want to see. Your publisher
+may have provided a way for you to hone your searches further.For example, you might search for "gravity" and get 14 occurrences of the
+word in your book. Your publisher, however, can provide a way for you to search
+for "gravity" when it appears near another word that you enter, like "experiment."Using search forms created by your publisher, you can perform specialized searches.Note: Your publisher may not have provided search forms with your
+book. If not, any of the books shipped with DynaText have search forms for you to use.ID="bDisplaySrchForms"Displaying search formsENTRY="Search forms|using" REF1="Search forms" REF2="using"To display search forms that were created for your book, select the TYPE="menu"Book|Search Forms menu option. If search forms do not exist for the book you
+are reading, the TYPE="menu"Book|Search Forms option is greyed
+out.Selecting this menu option displays the Search History dialog box, as shown
+in the figure below.FILE="srchhist" TYPE="IslandPaint" TITLE="The Search History dialog box" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="bUseSrchForms"Using search forms created by your publisherENTRY="Search|proximity" REF1="Search" REF2="proximity"ENTRY="Proximity search|performing" REF1="Proximity search" REF2="performing"If your publisher has created search forms, you can use them by selecting TYPE="menu"Book|Search Forms. Selecting this menu option brings up
+the Search History dialog box.At the Search Form prompt, use the combo box to select a search form. The Standard
+search, displayed as the Search panel, is the default. When you select a search form,
+the Search History dialog changes to reflect the specialized search.For example, the Proximity Search, one of the search forms of the DynaText documentation,
+displays three prompts. Together, entries at these prompts find two words
+near each other. The figure below displays the Search History dialog with
+the Proximity Search search form.FILE="proxsrch" TYPE="IslandPaint" TITLE="A Proximity Search search form" REPRODEP="22pi" REPROWID="25pi" UNITS="PT"ID="mSearchXcol"Searching for a Word or Phrase Across a Collection or CollectionsENTRY="Search|across Collections" REF1="Search" REF2="across Collections"ID="bSrchXcolIntro"IntroductionIn addition to searching for words and phrases in a book, you can also
+search for words and phrases (but not for punctuation) across books in a collection
+or across multiple collections. Search for words and phrases in collections in the Collection window.ID="bSrchPanl"The Search panelENTRY="Inside option|use in a search" REF1="Inside option" REF2="use in a search"Perform searches for words and phrases across collections in the Collection window.
+At the bottom of the Collection window is a Search panel similar to the Search panel in the Book window.In addition to a Search panel, the Collection window's Search panel may also have the
+word "inside" next to a combo box. The word "inside" used with a selection
+from the combo box tells DynaText the context within which to perform the collection-level
+search.Activating the "inside" option restricts your search to the context expressed
+by the combo box selection. For example, searching for "launch" by itself
+finds all occurrences of "launch" in the book, while searching for "launch"
+inside titles narrows your search by locating only book and section titles
+containing the word "launch."ID="bSrchXcol"Searching across a collectionTo search for a word or phrase in all the books of a collection:TYPE="num"1.Select a collection in the Collection list of the Collection window.2.Type in a word or phrase at the Search panel. Note: You cannot
+search for puncutation in a collection-level search. If you include punctuation
+in your search, DynaText will perform the search but ignore the punctuation.3.Press Return or select TYPE="menu"Collection|Find.The books in the selected collection list the number of search occurrences in
+the Hits column. Double-clicking on one of the book titles opens it with the
+search performed and the occurrences highlighted.ID="bSrchXcols"Searching across multiple collectionsENTRY="Search|across multiple collections" REF1="Search" REF2="across multiple collections"ENTRY="Collections|searching across" REF1="Collections" REF2="searching across"ENTRY="Multiple Collection View window|use in searches" REF1="Multiple Collection View window" REF2="use in searches"To search for a word or phrase across multiple collections:TYPE="num"1.Select multiple collections in the Collection list of the Collection window. Click
+and drag the mouse across the collections you want highlighted or select individual collections
+by using the Ctrl-click method of selection.2.Type in a word or phrase at the Search panel. Note: You cannot
+search for punctuation in a collection-level search. If you include punctuation
+in your search, ENTRY="punctuation" REF1="punctuation" REF2="in Collection-level searches"DynaTextwill
+perform the search but ignore the punctuation.3.Press Return or select TYPE="menu"Collection|Find.A Multiple Collection View window appears, displaying the results of your search.
+The Multiple Collection View window displays the collections with books that have occurrences
+following the collection name. Next to each book name is the number of search hits
+and the book's publish date.Reference: For more information on the Multiple Collection View
+window, RID="mMultiColView"see the next section, "The Multiple Collection
+View Window."ID="bCancelColSrch"Canceling a search in progressYou can cancel a search in progress by clicking the TYPE="button"Clear button in the button bar. You can click on the TYPE="button"Clear button even though the cursor is an hour glass.Canceling a search also clears the text in the Search panel.ID="mMultiColView"The Multiple Collection View WindowENTRY="Multiple Collection View window|using" REF1="Multiple Collection View window" REF2="using"ID="bMultiColViewIntro"IntroductionThe Multiple Collection View window presents your collections and books in a different
+format from the Collection window. You may prefer one window's presentation over
+another's, but you can use either one to perform collection-level searching, view
+the titles of books in a collection, or open books.ID="bOpenMulColView"Opening a Multiple Collection View WindowENTRY="Multiple Collection View window|opening" REF1="Multiple Collection View window" REF2="opening"To open a Multiple Collection View window:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'In the Collection window, select two or more collections using the click and
+drag method or the Ctrl-click method. Then, select TYPE="menu"Collection|View
+Multiple.A Multiple Collection View window appears with the collections and their books listed.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'In the Collection window, select two or more collections. Then, perform a collection-level
+search. Note: You cannot search for punctuation in a collection-level search. DynaText
+will perform the search but ignore the punctuation.A  Multiple Collection View window appear s with the results of the collection-level
+search.name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'In the Collection window, perform a search on the books of one collection. The
+results of the search appear in the Collection window. Select TYPE="menu"Collection|Refine Search to open a Multiple Collection View window containing
+the results of the search. The Multiple Collection View window contains only the
+books with search occurrences. Books with zero occurrences are not listed
+in this window.ID="bMulColViewWin"Components of the Multiple Collection View windowENTRY="Multiple Collection View window|components" REF1="Multiple Collection View window" REF2="components"The figure below contains a Multiple Collection View window displaying the two collections
+that are shipped with DynaText and their books. Notice that the collections and their
+books are listed differently than in the Collection window. Each collection title is followed
+by the books in that collection. Like the Collection window, the Multiple Collection View window
+has columns to display the number of search hits found and the edition of
+the book.FILE="mulcolvu" TYPE="IslandPaint" TITLE="The Multiple Collection View window" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="bInterpMulColView"Interpreting the Multiple Collection View windowThere are several different ways to open the Multiple Collection View window.
+If it appears after a collection-level search in the Collection window or after selecting TYPE="menu"Collection|Refine Search, the Hits column contains the
+number of occurrences of searches found for books that have occurrences. Books
+that have no occurrences do not appear in the Multiple Collection View window.Note: After clearing the results of a search in a Multiple Collection
+View window, the results are cleared, but any books with zero occurrences
+of the first search do not reappear. To perform a search of all books in a collection,
+close the Multiple Collection View window and perform the search from the Collection window.ID="bSrchPref2"Setting search preferencesENTRY="Search|setting preferences" REF1="Search" REF2="setting preferences"ENTRY="Preferences|for searches" REF1="Preferences" REF2="for searches"When you set search preferences, you are setting preferences for searching
+within a book as well as searching across collections.Instead of receiving exact numbers of search occurrences in the Table of Contents view
+("Full" selection), you can change the search preferences so that your feedback
+in the TOC view is "On/Off"name='mdash' font=symbol charset=fontspecific code=190 
+			descr='[mdash]'showing whether or not there is a search
+occurrence, or "Relevance"name='mdash' font=symbol charset=fontspecific code=190 
+			descr='[mdash]'relative to the total number of occurrences
+in the book (showing the log of the actual number of search occurrences).To change the search feedback in the TOC view or to change the search behavior
+towards diacritical marks, use the DynaText Preferences dialog box. To open this
+dialog, select TYPE="menu"File|Preferences.FILE="srchpref" TYPE="IslandPaint" TITLE="DynaText Preferences dialog for searching" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="bCompareSrchRes"Comparing search results of multiple collectionsENTRY="Search|comparing results from multiple collection" REF1="Search" REF2="comparing results from multiple collection"Searching for a word or phrase across multiple collections in the Collection window
+displays the results in a Multiple Collection View window. The figure below is
+a Multiple Collection View window after searching across both collections for the word
+"command".FILE="mcvwsrch" TYPE="IslandPaint" TITLE="A Multiple Collection View window after a search" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="bRefineSrch"Refining a searchENTRY="Search|refining the results" REF1="Search" REF2="refining the results"Performing successive searches on a collection in a Collection window searches all
+the books in the collection each time, whereas performing successive searches on
+a collection in a Multiple Collection View window refines the previous searches performed
+on that collection.After searching for the word "command" across both collections shipped with DynaText,
+a Multiple Collection View window appears as shown in the previous section. To
+refine this search further, modify the search by adding " data" after the
+word "command" at the Search panel. The result of this refinement is shown
+in the figure below.FILE="refsrch" TYPE="IslandPaint" TITLE="A Multiple Collection View window after refining a search" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="cAnnot" DIVNUM="5"Annotating a BookID="mAnnotOver"OverviewID="bAnnotOverIntro"IntroductionReader can add annotations at selected locations in a book. These annotations
+are automatically saved from one session to the next.Adding annotations to an electronic book is analogous to attaching a paperclip
+to a page of a book, highlighting a section of text, writing a note in the
+margin, or flipping directly from one location in the book to another. You can make annotations anywhere in a Main view, including tables, footnotes,
+alternate views, and other linked Main views.ID="bOverAnnotTypes"Types of AnnotationsENTRY="Annotations|types" REF1="Annotations" REF2="types"ENTRY="Annotation icons|figure" REF1="Annotation icons" REF2="figure"ENTRY="Icons|annotations" REF1="Icons" REF2="annotations"ENTRY="Bookmarks. See also Annotations; Annotation Icons." REF1="Bookmarks. See also Annotations; Annotation Icons."ENTRY="Notes. See also Annotations; Annotation Icons." REF1="Notes. See also Annotations; Annotation Icons."ENTRY="Hyperlinks. See also Annotations; Annotation Icons." REF1="Hyperlinks. See also Annotations; Annotation Icons."ENTRY="Annotations. See also Bookmarks, Notes, Hyperlinks." REF1="Annotations. See also Bookmarks, Notes, Hyperlinks."ENTRY="Annotation-list icon|figure" REF1="Annotation-list icon" REF2="figure"DynaText supports the following kinds of annotations:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'bookmarksname='mdash' font=symbol charset=fontspecific code=190 
+			descr='[mdash]'placeholders in the bookname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'notesname='mdash' font=symbol charset=fontspecific code=190 
+			descr='[mdash]'text that is associated with a particular section of
+the bookname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'hyperlinksname='mdash' font=symbol charset=fontspecific code=190 
+			descr='[mdash]'links (or cross references) between two different
+locations in the bookMultiple annotations in the same paragraph are marked with an annotation-list
+icon.The figure below shows the four annotation icons, which are (from top to
+bottom) bookmark, note, hyperlink, and annotation list.FILE="icons" TYPE="IslandPaint" TITLE="Annotation icons" REPRODEP="16pi" REPROWID="25pi" UNITS="PT" These icons can appear in the right or left margin of
+the Main view or inline with the text.ID="bNoteAccess"Access to AnnotationsENTRY="Annotations|user access" REF1="Annotations" REF2="user access"Annotations can be classified in either of the following access categories: ENTRY="annotations|classes" REF1="annotations" REF2="classes"name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'private, available only to its creatorname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'public, available to all readers of the bookAnnotations are stored in the public and/or private directories specified
+in your TYPE="file"dynatext.ini file.ID="mMarkPlace"Marking Your Place in a BookID="bMarkPlaceIntro"IntroductionENTRY="Annotations|bookmarks" REF1="Annotations" REF2="bookmarks"ENTRY="Bookmarks|description" REF1="Bookmarks" REF2="description"Bookmarks are intended as placeholders in a book. They do not contain any
+textual data. Bookmarks can be identified by their unique names, which are
+analogous to the color or shape of a bookmark in a hardcopy book. This section
+describes how you can add bookmarks to your book.ID="bCreateBkmrk"Creating a bookmarkENTRY="Bookmarks|creating" REF1="Bookmarks" REF2="creating"The table below describes how to create a bookmark.TYPE="PROC2"CWL="85:371" NCOLS="2" WDM="100"RTL="-:-"HDR="1"RTY="-"StepRTY="-"ActionRTY="-"RTL="-:-"RTY="-"1RTY="-"Click and drag the mouse pointer on the text that you want to
+mark.Result: The text is highlighted. RTY="-"RTL="-:-"RTY="-"2RTY="-"Click on the TYPE="button"Mark button in the button bar,
+or select  TYPE="menu"Book|Create Annotation|Create Bookmark
+from the menu.Result: A Create New Bookmark dialog box (shown in Figure
+5-2) appears with a field to type in the Bookmark Name, and two radio
+buttons labeled Public and Private.RTY="-"RTL="-:-"RTY="-"3RTY="-"Select either Public or Private.Result: This determines the access type of the bookmark.Note: On your system, all annotations may be public. Check
+with your system administrator.RTY="-"RTL="-:-"RTY="-"4RTY="-"Enter the name of your bookmark and click on TYPE="button"OK.Result: A bookmark icon appears in the margin near the text
+that you selected. (Figure 5-3 shows an example of a bookmark icon in
+the Shuttle Press Kit book.)Note: You can attach any number of public and/or private
+annotations to any part of the text, and they will all appear as links from
+the same annotation-list icon.RTY="-"RTL="-:-"FILE="mkbkmrk" TYPE="IslandPaint" TITLE="The Bookmark dialog box" REPRODEP="12pi" REPROWID="21pi" UNITS="PT"FILE="bkmrk" TYPE="IslandPaint" TITLE="A sample bookmark in the right margin" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="bReturn2Bkmrk"Returning to a bookmarkEach time you open the book, you can see bookmark icons (or annotation-list
+icons) for all public bookmarks and for any private bookmarks that you created.Refer to the "Organizing Annotations" section, later in this chapter, for
+information on using the Annotation Manager to find bookmarks.ID="bDeleteBkmrk"Deleting a bookmarkENTRY="Bookmarks|deleting" REF1="Bookmarks" REF2="deleting"If you no longer need a bookmark, you can delete it. Click on the bookmark
+icon and select TYPE="menu"Book|Delete Object from the menu.
+If the bookmark is part of an annotation list,  double-click on the annotation-list
+icon, select the entry from the list, and click on TYPE="button"Yes in the dialog box.Or, select the bookmark or annotation-list icon, click on the right mouse
+button, select the bookmark by its name, and click on TYPE="button"Yes in the dialog box.Note:  Only the reader who created the bookmark can delete
+it.ID="mAttNotes"Attaching Notes to the BookID="bNoteIntro"IntroductionENTRY="Annotations|notes" REF1="Annotations" REF2="notes"ENTRY="Notes|description" REF1="Notes" REF2="description"You can create notes with textual content and attach them to the book.ID="bCreateNotes"Creating a noteENTRY="Notes|creating" REF1="Notes" REF2="creating" The table below describes how to create a note.TYPE="PROC2"CWL="85:371" NCOLS="2" WDM="100"RTL="-:-"HDR="1"RTY="-"StepRTY="-"ActionRTY="-"RTL="-:-"RTY="-"1RTY="-"Click and drag the mouse pointer on the text that you want to
+annotate.Result: The text is highlighted.RTY="-"RTL="-:-"RTY="-"2RTY="-"Click on the TYPE="button"Note button in the button bar,
+or select  TYPE="menu"Book|Create Annotation|Create Note from
+the menu.Result: A Create New Note dialog box (shown in Figure 5-4)
+appears with a field to type in the TYPE="default"Note Name,
+and two buttons labeled Public and Private.RTY="-"RTL="-:-"RTY="-"3RTY="-"Select either Public or Private.Result: This determines the access type of the note.Note: On your system, all annotations may be public. Check
+with your system administrator.RTY="-"RTL="-:-"RTY="-"4RTY="-"Enter the name of your note and click on TYPE="button"OK.Result: A note icon appears in the margin near where you
+selected the text and an Annotation window appears in which you can enter
+the text of your note. At the top of the annotation is the name that you specified.
+Next to this is the name of the owner of this annotation and Private in parentheses
+if the note was created with Private access.Note: The owner of a note is typically defined in the autoexec.bat
+file (set user = <username>).RTY="-"RTL="-:-"RTY="-"5RTY="-"When you are done entering the text of the annotation, close the window
+using the TYPE="menu"Control-menu box in the upper-right corner
+of the dialog box, and respond to the Save changes prompt by clicking on the TYPE="button"Yes button.Result: The Annotation window disappears and the note is
+saved.RTY="-"RTL="-:-"Note: You can attach any number of public and/or private
+annotations to any part of the text, and they will all appear as links from
+the annotation-list icon.FILE="newnote" TYPE="IslandPaint" TITLE="Create New Note dialog box" REPRODEP="12pi" REPROWID="21pi" UNITS="PT"ID="bCopyPasteNote"Including book text in a noteENTRY="Notes|copying text from the book" REF1="Notes" REF2="copying text from the book"You can copy text from the book into your note. To do this, click and drag
+the mouse button to select the text that you want to copy. Select TYPE="menu"Edit|Copy from the menu. Then position your cursor in the Annotation
+window of the Create New Note dialog box, and select TYPE="menu"Edit|Paste from the menu. ID="bEditNotes"Editing your noteENTRY="Notes|editing" REF1="Notes" REF2="editing"You can make changes to the text of the note. Double-click on the note
+icon to open the Note window. Alternatively, you can right-click on the note
+icon and click on the Open selection.Use the mouse to position the cursor and select text.  When you are done
+adding or modifying text, close the window and save the changes.ID="bReadNotes"Reading notesENTRY="Notes|reading" REF1="Notes" REF2="reading"As you view a book, note icons (or annotation-list icons) indicate all
+public notes and any private notes that you created. Click on the note icon
+to read the note. Or, double-click on the annotation-list icon to open the
+dialog box, and select the annotation that you want to view from the annotation
+list.Refer to the "Organizing Annotations" section, later in this chapter, for
+information on using the Annotation Manager to find notes.ID="bDeleteNotes"Deleting notesENTRY="Notes|deleting" REF1="Notes" REF2="deleting"If you no longer need a note, you can delete it. Click on the note icon
+and select TYPE="menu"Book|Delete Object from the menu. If the
+note is part of an annotation list, you must double-click on the annotation-list
+icon, select the entry from the list and the TYPE="button"Delete
+button, and click on TYPE="button"Yes in the dialog box.Or, select the note or annotation-list icon, click on the right mouse button,
+select the note by clicking on its name and the TYPE="button"Delete button, and click on TYPE="button"Yes in the dialog
+box.Note:  Only the reader who created the note can delete it.ID="mCreateHyper"Creating Your Own HyperlinksID="bCreateHyperIntro"IntroductionENTRY="Annotations|hyperlinks" REF1="Annotations" REF2="hyperlinks"ENTRY="Hyperlinks|description" REF1="Hyperlinks" REF2="description"You can define hyperlinks, which are user-defined links between two locations
+in the book. Hyperlinks are sometimes called cross references.There are two kinds of hyperlinks:ENTRY="user-links|kinds of" REF1="user-links" REF2="kinds of"name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'one-way (unidirectional) links, which allow you to jump in one direction
+from the origin to the destination of the linkname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'two-way (bidirectional) links, which allow you to jump in either
+direction between the origin and the destinationID="bCreateHypers"Creating hyperlinks within a bookENTRY="Hyperlinks|creating" REF1="Hyperlinks" REF2="creating"The table below describes how to create a hyperlink.TYPE="PROC2"CWL="85:371" NCOLS="2" WDM="100"RTL="-:-"HDR="1"RTY="-"StepRTY="-"ActionRTY="-"RTL="-:-"RTY="-"1RTY="-"Click and drag your mouse pointer on the text that you want
+to link to text in another location in the book.Result: The text is highlighted. RTY="-"RTL="-:-"RTY="-"2RTY="-"Click on the TYPE="button"StartLnk button in the button bar,
+or select  TYPE="menu"Book|Create Annotation|Start Hyperlink
+from the menu.Result: The source of the hyperlink is set to the element
+containing the selected text. Note: No icon is displayed in the margin at this time.RTY="-"RTL="-:-"RTY="-"3RTY="-"Move to the text in the document that you want to be the target of the
+hyperlink. Click and drag on the text to select it. Result: The text is highlighted. RTY="-"RTL="-:-"RTY="-"4RTY="-"Click on the TYPE="button"EndLnk button in the button bar,
+or select  TYPE="menu"Book|Create Annotation|End Hyperlink from
+the menu.Result: A Create New Hyperlink dialog box (shown in Figure
+5-5) appears with a field to type in the Hyperlink Name, two radio buttons
+labeled Public and Private, and two more radio buttons labeled One-Way (unidirectional)
+and Two-Way (bidrectional).RTY="-"RTL="-:-"RTY="-"5RTY="-"Select either Public or Private.Result: This determines the access type of the hypertext
+link.Note: On your system, all annotations may be public. Check
+with your system administrator.RTY="-"RTL="-:-"RTY="-"6RTY="-"Select either One-Way or Two-Way.Result: This determines if the link is unidirectional or
+bidirectional.RTY="-"RTL="-:-"RTY="-"7RTY="-"Enter the name of your hyperlink and click on TYPE="button"OK.Result: A hyperlink icon appears in the margin near where
+you selected the text. RTY="-"RTL="-:-"Note: You can attach any number of public and/or private
+annotations to any part of the text, and they will all appear as links from
+the annotation-link icon.FILE="newhplnk" TYPE="IslandPaint" TITLE="Create New Hyperlink dialog box" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="bUseHypers"Using hyperlinksENTRY="Hyperlinks|using" REF1="Hyperlinks" REF2="using"Double-click on the hyperlink icon to jump to the destination text. If
+the hyperlink is bidirectional, you can double-click on the hyperlink icon
+at the destination to return to the source text.If more than one annotation is associated with the text, double-click on
+the annotation-list icon to display the Annotation dialog box. Then double-click
+on the hyperlink annotation in the list.Refer to the "Organizing Annotations" section, later in this chapter, for
+information on using the Annotation Manager to find hyperlinks.ID="bDeleteHypers"Deleting hyperlinksENTRY="Hyperlinks|deleting" REF1="Hyperlinks" REF2="deleting"If you no longer need a hyperlink, you can delete it. Single-click on the
+hyperlink icon and select TYPE="menu"Book|Delete Object from
+the menu. If the note is part of an annotation list, you must double-click
+on the annotation-list icon, select the entry from the list and the TYPE="button"Delete button, and click on TYPE="button"Yes
+in the dialog box.Or, select the hyperlink or annotation-list icon, click on the right mouse
+button, select the hyperlink by clicking on its name and the TYPE="button"Delete button, and click on TYPE="button"Yes in the dialog
+box.Note: Only the reader who created the hyperlink can delete
+it.ID="mGroupEdit"Group EditingID="bGroupEditIntro"IntroductionENTRY="Group editing" REF1="Group editing"ENTRY="Notes|using for group editing" REF1="Notes" REF2="using for group editing"Annotations can be useful when a group of people are making review comments
+or editing changes to a book.ID="bGroupUseNote"Using notes and bookmarksSeveral people can add comments and markers to a book using the note and
+bookmark annotation features of DynaText. The author (or editor) of the book can
+then read the comments in the notes, check the marked sections indicated with
+bookmarks, and make the appropriate edits to the book.ID="bGroupShareNotes"Making notes available to everyone in the groupIn order for the notes and bookmarks to be available to the group, the
+annotations must be created with public access.Note: Only the creator of the annotation can delete it.ID="mOrganizeAnnots"Organizing AnnotationsID="bOrganizeAnnotsIntro"IntroductionENTRY="Annotation Manager|description" REF1="Annotation Manager" REF2="description"ENTRY="Annotations|searching" REF1="Annotations" REF2="searching"ENTRY="Annotations|displaying all in the book" REF1="Annotations" REF2="displaying all in the book"A particular book can contain several kinds of annotations made by numerous
+users. Since annotations are scattered throughout the book, the Annotation Manager provides
+a convenient way to organize and access all the annotations in the book. Specifically,
+it allows you toname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'view summary information about all the annotations in the bookname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'go to any annotation that you selectname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'delete an annotation (if you created it)name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'sort the annotation list based on any of the header fields in the
+listID="bOpenAnnotMgr"Accessing the Annotation ManagerTo view the Annotation Manager, select TYPE="menu"Book|Manage Annotations
+from the menu.The figure below shows a sample Annotation Manager window.FILE="annotmgr" TYPE="IslandPaint" TITLE="Annotation Manager window" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="bFindAnnot"Finding an annotation in the bookFrom the Annotation Manager window, click on one of the annotations in the list and
+click the TYPE="button"Go To button. Or,  double-click on one
+of the annotations in the list. The Main view scrolls to the place in the
+book where the selected annotation is located.ID="bSortAnnots"Sorting annotations in the annotation listENTRY="Annotation Manager|sorting entries" REF1="Annotation Manager" REF2="sorting entries"ENTRY="Annotations|sorting" REF1="Annotations" REF2="sorting"ENTRY="Sorting annotations" REF1="Sorting annotations"The annotation list can be sorted by:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'title of the annotationname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'owner (the annotation creator)name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'type (bookmark, note, or hyperlink)name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'access (public or private)name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'date that the annotation was createdname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'location (relative position in the book)To sort the annotation list by one of the header fields, click on the header
+button for the particular field. The list is automatically re-sorted by this
+field, and the header button remains "pressed in" to indicate the current
+sort setting.ID="bDeleteAnnots"Deleting annotationsENTRY="Annotations|deleting" REF1="Annotations" REF2="deleting"ENTRY="Bookmarks|using the Annotation Manager to delete" REF1="Bookmarks" REF2="using the Annotation Manager to delete"ENTRY="Notes|using the Annotation Manager to delete" REF1="Notes" REF2="using the Annotation Manager to delete"ENTRY="Hyperlinks|using the Annotation Manager to delete" REF1="Hyperlinks" REF2="using the Annotation Manager to delete"If you no longer need an annotation that you created, you can delete it
+from the Annotation Manager. Select the annotation that you want to from the list and
+click on the TYPE="button"Delete button. Confirm the deletion
+by clicking on TYPE="button"Yes in the dialog box.Note: You can only delete an annotation if you created it.ID="cAdBrowse" DIVNUM="6"Advanced BrowsingID="mAdBrowseOver"OverviewID="bAdBrowseOverIntro"IntroductionIn Chapter 3, you learned how to actively browse through a
+book using the Table of Contents view and the Main view. In this chapter, you will learn
+how to display alternative views of your book and how to work with graphics
+in another window.ID="bOverDiffView"Viewing a book differentlyThe way a book appears when you first open it is only one way that your
+publisher can choose to display the book's information. At your publisher's
+discretion, they can create alternative "views" of the information in a book.For example, a book might have a standard view and a large text view so
+that readers can read the text that is most comfortable to their eyes. Or,
+a book might have a novice view, hiding advanced information, and an expert
+view, hiding introductory information. You might view a table of the book's
+contents or a table of figures in the TOC view.Whether in the Table of Contents or Main view, we call these different ways of looking
+at the book alternative views.ID="bOverGraphics"Getting more out of a book's graphicsIf there are graphics in your books, they may appear inline or they may
+come up in another window or both. When you view graphics in another window,
+you can manipulate the image using zooming and scaling.ID="mOpenAltViews"Opening Alternative ViewsID="bAltViewIntro"IntroductionENTRY="Book|alternative views" REF1="Book" REF2="alternative views"ENTRY="View|alternative Main" REF1="View" REF2="alternative Main"ENTRY="Main view|alternative" REF1="Main view" REF2="alternative"ENTRY="View|alternative TOC" REF1="View" REF2="alternative TOC"ENTRY="TOC view|alternative" REF1="TOC view" REF2="alternative"When a Book window first appears, the view of the book's Table of Contents is called "TOC"
+and the view of the book's content is called "FULLTEXT." Your publisher may
+have created other views for either the TOC or Main view as well.ID="bNewTview"Opening another TOC view for the same bookFollow the steps below to open another Table of Contents view in the already open Book window.TYPE="PROC2"CWL="91:365" NCOLS="2" WDM="100"RTL="-:-"HDR="1"RTY="-"StepRTY="-"ActionRTY="-"RTL="-:-"RTY="-"1RTY="-"Select TYPE="menu"View|TOC in the menu bar.RTY="-"RTL="-:-"RTY="-"2RTY="-"Click
+on the name of the alternative Table of Contents view you would like to use (for example, TYPE="menu"FIGURES).RTY="-"RTL="-:-"ID="bHideTview"Hiding a Table of Contents viewENTRY="TOC view|hiding" REF1="TOC view" REF2="hiding"It is possible to hide the Table of Contents view completely. To hide the TOC view:TYPE="PROC2"CWL="92:364" NCOLS="2" WDM="100"RTL="-:-"HDR="1"RTY="-"ID="bold"StepRTY="-"ActionRTY="-"RTL="-:-"RTY="-"1RTY="-"Move your cursor over the split bar between the TOC and Main views.
+Your cursor changes to a double-arrow when it is over the split bar.RTY="-"RTL="-:-"RTY="-"2RTY="-"Press and drag
+the mouse to make the TOC view so small that it is invisible. The split bar
+remains to one side of the Main view even though you can't see the TOC view.RTY="-"RTL="-:-"To display the Table of Contents view again, repeat the above steps and drag the mouse
+to enlarge the TOC view instead of shrinking it.ID="bNewMview"Opening another Main view for the same bookIf your publisher has provided alternative Main views, and depending on whether
+they are different in formatting or content, you can use them to:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'read a more comfortable font sizename='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'get a different perspective on the book's informationname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'read through a book with or without inline figuresTo change the Main view, follow the instructions:TYPE="PROC2"CWL="91:365" NCOLS="2" WDM="100"RTL="-:-"HDR="1"RTY="-"StepRTY="-"ActionRTY="-"RTL="-:-"RTY="-"1RTY="-"Select TYPE="menu"View|Main in the menu bar.RTY="-"RTL="-:-"RTY="-"2RTY="-"Click
+on the name of the alternative Main view you would like to use (for example, TYPE="menu"BIG).RTY="-"RTL="-:-"ID="bTextSize"Enlarging and reducing text in the Main viewENTRY="Text size|enlarging or reducing" REF1="Text size" REF2="enlarging or reducing"ENTRY="Enlarging text size" REF1="Enlarging text size"ENTRY="Reducing text size" REF1="Reducing text size"To make the text of the book more readable, you might want to enlarge it.
+Or, to fit more text on the screen, you might want to reduce it. Both options
+are available through the TYPE="menu"View menu. To enlarge the text of the Main view, select TYPE="menu"View|Enlarge. To reduce the text of the Main view, select TYPE="menu"View|Reduce. And, however large or small your text is, you can return it to its
+original size by selecting TYPE="menu"View|Original Size.ID="mGraphWin"Viewing Graphics in Another WindowENTRY="Graphics|viewing options" REF1="Graphics" REF2="viewing options"ENTRY="Graphics|viewing inline" REF1="Graphics" REF2="viewing inline"ID="bGraphWinIntro"IntroductionBook graphics may appear inline with the text of the book or in another
+window. And, some inline graphics may also appear in another window when you
+click on them. When graphics appear in another window, you can manipulate
+the image to see greater detail. Plus, the graphic can remain up while you
+continue browsing through the book.The following figure displays a graphic in a window.FILE="graphwin" TYPE="IslandPaint" TITLE="A sample graphic window" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="bGraphicIcons"Graphic iconsENTRY="Icons|graphic" REF1="Icons" REF2="graphic"If the publisher has used an icon to signal a graphic, the icon will most
+likely look like one of these:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'an icon with a camera, indicating a raster graphicname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'an icon with small objects, indicating a vector graphicID="bOpenGraphic"Opening a graphic in another windowENTRY="Graphics|opening in another window" REF1="Graphics" REF2="opening in another window"Whether identified as an icon or hot text or an inline graphic, you can
+open a graphic in another window in several ways.Double-click on an icon or use the right mouse button to select TYPE="menu"Open from the popup menu to open a graphic in another window. Alternatively,
+you can highlight the icon and select TYPE="menu"Book|Open Object
+to open the graphic.If hot text indicates a graphic, click on the hot text to open the graphic
+in another window.ID="bScrollGraphic"Scrolling in the windowENTRY="Graphics|manipulating" REF1="Graphics" REF2="manipulating"You can scroll horizontally and vertically in a graphic window just as
+you do in other DynaText windows.ID="bViewPages"Viewing pages of a vector graphicSome vector graphic images may be multi-page images. To view different
+pages of a vector graphic, use the TYPE="menu"Next, TYPE="menu"Previous, and TYPE="menu"First menu options under the TYPE="menu"View menu.ID="bScaleImages"Scaling imagesScaling vector graphics is a two-step process. To scale a vector graphic
+in a window:TYPE="PROC2"CWL="91:365" NCOLS="2" WDM="100"RTL="-:-"HDR="1"RTY="-"StepRTY="-"ActionRTY="-"RTL="-:-"RTY="-"1RTY="-"Resize the graphic window larger or smaller.RTY="-"RTL="-:-"RTY="-"2RTY="-"Select the TYPE="menu"View|Fit to Window menu option to scale the image to the
+new size of the window.RTY="-"RTL="-:-"ID="bZoomIn"Zooming inYou can zoom in any type of graphic. Zooming in reveals more detail making
+the graphic appear larger. There are two ways to zoom in: in one case, DynaText
+zooms by a standard amount, while in the other, you control how much zooming
+happens.To zoom in by a standard amount, select TYPE="menu"View|Zoom In from the menu bar or click the TYPE="button"Z-in button
+in the button bar.To zoom in to a particular region, click and drag the mouse to define the
+region you want to zoom. See the section on "Setting preferences for zooming"
+to control whether the result of the zoom-in replaces the original graphic
+or appears in a new window. Setting preferences for zooming only applies to
+your click and drag zooming.ID="bZoomOut"Zooming outYou can zoom out, or reduce, any type of graphic. Zooming out shows more
+of the graphic, making the graphic appear smaller within the window. To zoom
+out, select TYPE="menu"View|Zoom Out from the menu bar or click
+the TYPE="button"Z-out button in the button bar.ID="bGraphDetail"Setting preferences for zoomingENTRY="Graphics|zooming preferences" REF1="Graphics" REF2="zooming preferences"You control whether zooming in (via the click-and-drag method) replaces
+the view in the graphic window or displays the zoomed graphic in another window.
+To determine the zooming behavior, select TYPE="menu"View|Zooming Detail and then either TYPE="menu"Replace View or TYPE="menu"New View.ID="mBeyondBrowse"Beyond BrowsingID="bBeyondBrowseIntro"IntroductionBrowsing through a book is a non-sequential way to view a book's content.
+In addition to browsing a book, you can locate information in a book, add
+your own comments to a book, record your path through a book, and print or
+export information from a book. This section directs you to those chapters
+that discuss these other activities.ID="bBBSearch"SearchingIn addition to browsing through a book, you can also search for words and
+phrases in books and across collections.Reference: For an introduction to searching, RID="cSearch"see Chapter 4, Searching in Books and Collections. For a discussion of narrowing
+your searches using the DynaText search language, RID="cAdSearch"see Chapter 7, Advanced Searching Techniques.ID="bBBAnnot"Annotating a bookAfter reading a book and searching for information, you might want to add
+bookmarks, notes, or your own cross-references.Reference: For information on annotating a book, TYPE="cAnnot"see Chapter 5, Annotating a Book.ID="bBBJourn"Recording your path through a bookYou can record the places you stop while browsing a book. This path through
+the book is called a journal. Later, you can play back this journal, or play
+journals created by your publisher or another reader.Reference: For information on reading journals, TYPE="cJournal"see Chapter 8, Viewing Pre-Recorded Paths through Books. To create your own journals, TYPE="cRecord"see Chapter 9, Recording Your Path through Books.ID="bBBPrint"Printing and exporting informationAfter reading and annotating a book, you can print sections of the book
+or the whole book, including your notes. Reference: For descriptions of printing and exporting parts
+or all of a book, see Chapter 10, Printing Books and Exporting Information.ID="cAdSearch" DIVNUM="7"Advanced Searching TechniquesID="mAdSearchOver"OverviewENTRY="Search language. See also Search." REF1="Search language. See also Search."ENTRY="Search. See also Search language." REF1="Search. See also Search language."ID="bSearchOverIntro"IntroductionDynaText supports a very powerful method for searching through a book. Using
+ordinary characters, wildcards and certain keywords, you are able to direct
+a search to complex patterns, specific sections, and other aspects of the
+book. These keywords form the DynaText search language.ID="bOverTypes"Types of searchesThe search language supports the following types of searches:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'a word or phrasename='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'a word or phrase that is near another word or phrasename='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'a pattern that matches several words or phrasesname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'a group of words together or near each otherNote: In addition to these types of searches, DynaText supports
+restricting any search to a particular context in the book (for example, searching
+only within titles of chapters). You can also locate a particular part of
+a book (for example, a chapter or a title) that contains a word or phrase.
+These types of searches require knowledge of the internal breakdown or "tagging"
+of the document. If you are not familiar with the book's tagging, you can
+ignore these additional types of searches.ID="bOverSrchLang"Using the DynaText search languageIf you want a search to be more generalized than a simple word or phrase,
+you can use the DynaText search language to search for patterns. Or, if you want to narrow
+a search to find a word near another word, you do so with the DynaText search language.ID="bOverNoSrch"What you cannot search forThere are certain words and characters that you cannot search for. This
+chapter discusses the stop list containing words you cannot search for.ID="mSearchPatt"Searching for PatternsID="bSearchPattIntro"IntroductionENTRY="Search language|using wildcards" REF1="Search language" REF2="using wildcards"ENTRY="Wildcards|using in searches" REF1="Wildcards" REF2="using in searches"In addition to searching for words and phrases that are completely spelled
+out, the DynaText search language supports two wildcards to enable you to search for words
+and phrases that contain only certain letters or patterns of letters.ID="bSearching"WildcardsWildcards are characters that can stand for any other character, including
+itself. The DynaText search language provides two wildcard characters, * and ?. The table below lists the wildcards and their meaning.TYPE="PARTFUN2"CWL="113:343" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"This wildcardRTY="-"Will matchRTY="-"RTL="-:-"RTY="-"?RTY="-"any single characterRTY="-"RTL="-:-"RTY="-"*RTY="-"any set of 0 or more characters,
+up to the end of the wordRTY="-"RTL="-:-"Note: Because these wildcards have special meaning in the search language,
+it is impossible to search for these characters in your book.ID="bWildWordSrch"Sample word searches with wildcardsThe table below provides several examples of the use of wildcards in word
+searches.TYPE="PARTFUN2"CWL="113:343" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"This queryRTY="-"Will matchRTY="-"RTL="-:-"RTY="-"fan*RTY="-"fan, fanatic, Fantasia, fantasticRTY="-"RTL="-:-"RTY="-"f*lyRTY="-"fly, family, fireflyRTY="-"RTL="-:-"RTY="-"s?tRTY="-"sit, satRTY="-"RTL="-:-"RTY="-"s??tRTY="-"shot, slot, soft, spitRTY="-"RTL="-:-"RTY="-"s*tRTY="-"sit, shot, squatRTY="-"RTL="-:-"RTY="-"??s?tRTY="-"upset, visit, besetRTY="-"RTL="-:-"RTY="-"????RTY="-"all 4-letter wordsRTY="-"RTL="-:-"RTY="-"t*RTY="-"all words beginning with 't'RTY="-"RTL="-:-"ID="bPhraseSrchPatt"Phrase searchThe table below provides several examples of wildcards in phrase searches.TYPE="PARTFUN2"CWL="205:251" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"This queryRTY="-"Will matchRTY="-"RTL="-:-"RTY="-"gas tankRTY="-"gas tankRTY="-"RTL="-:-"RTY="-"g*
+t*    RTY="-"gas tank, giant turtle,
+glad tidingsRTY="-"RTL="-:-"RTY="-"* jacketRTY="-"ski jacket, tweed jacketRTY="-"RTL="-:-"RTY="-"g*t*RTY="-"gravity, guilty, guiltRTY="-"RTL="-:-"ID="mNarrowSearch"Narrowing Your SearchID="bNarrowSrchIntro"IntroductionENTRY="Search|narrowing" REF1="Search" REF2="narrowing"ENTRY="Search language|using keywords to narrow a search" REF1="Search language" REF2="using keywords to narrow a search"Searching for a word or phrase can yield more occurrences than you want
+to look through. You can narrow your search using keywords in the DynaText search language.
+Narrowing your search includes:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'finding one word near another wordname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'searching for two or more words or phrases simultaneouslyname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'searching for a word or phrase in the context of the book's internal
+structureID="bUseKeywords"Using KeywordsENTRY="Search language|using keywords" REF1="Search language" REF2="using keywords"ENTRY="Keywords|used in searches" REF1="Keywords" REF2="used in searches"Some common English words have special meaning to the search language,
+to allow you to specify search types or relationships between the words in
+a search. There are three types of keywords, depending on the type of search
+they enable. This chapter contains examples of searches using these keywords.TYPE="PARTFUN2"CWL="205:251" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"This search typeRTY="-"is performed by these keywordsRTY="-"RTL="-:-"RTY="-"proximity, or words that are near or far from each other in various waysRTY="-"after, before, of, near,
+within, word, wordsRTY="-"RTL="-:-"RTY="-"boolean, or searches that
+widen or narrow the word searchRTY="-"and, or, notRTY="-"RTL="-:-"RTY="-"context, or searches that
+narrow the word search to specific parts of the bookRTY="-"cont, containing, directly, in, inside, null, withRTY="-"RTL="-:-"ID="bProxSrch"Proximity searchesENTRY="Search language|proximity feature" REF1="Search language" REF2="proximity feature"ENTRY="Proximity search" REF1="Proximity search"It is often helpful not to just search for a word or phrase, but to search
+for a particular word or phrase near another word or phrase. By restricting
+the search in this way, you are more likely to find exactly the items you
+want. Proximity searches use the following keywords: after, before, of, near,
+within, word, wordsTo perform a proximity search:TYPE="PROC2"CWL="113:343" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"StepRTY="-"ActionRTY="-"RTL="-:-"RTY="-"1RTY="-"Specify the maximum number of words allowed between the two
+items. For this purpose, the expression "within x words" is used, where x  is a  number. For example, "within 2 words" or "within 5 words"RTY="-"RTL="-:-"RTY="-"2RTY="-"Specify
+whether you want to find the first item before, after, or either before or
+after the second one.RTY="-"RTL="-:-"Below are some examples of proximity searches:jack within 2 words before jilljill within 2 words after jackjack fell down within 6 words before jill came tumblingIn the last example in the list above, DynaText searches for the first phrase
+occurring six words or less before the second phrase. If you do not care about
+the order in which the phrases occur, use of, as in:jack within 2 words of jillID="bBoolSrch"Boolean searchesENTRY="Search language|Boolean" REF1="Search language" REF2="Boolean"ENTRY="Boolean search" REF1="Boolean search"You can also search for more than one word or phrase simultaneously by
+using the keywords: and, or, not Or can be used to find an occurrence of any of the words or phrases
+you wish to search for.motorcycle or tricycleapple or banana or cranberrydownhill ski or cross country skiThe first expression listed above will search for either occurrences of
+the word "motorcycle" or occurrences of the word "tricycle". DynaText will then
+highlight occurrences of both words in the document.Note: The searchdownhill or cross country skiwill search for either the word "downhill" or the phrase "cross country
+ski."  To find either kind of skiing, try the third example in the list above.The and operator provides a more restrictive search. The "and" search
+reports all cases of either of the phrases that are near each other. For example,pitcher and catcherthermos and coffee potThese are counted as how many times each occurs, as the total number of
+occurrences of both.The not keyword can be used with and and or to negate
+the word that follows it. For example, the boolean search:cross country and not skimight be used to find occurrences of cross country that refer to long-distance
+running without finding references to skiing.ID="bContextSrch"Context searchesENTRY="Search|context" REF1="Search" REF2="context"Context searches allow you to find information within specific document
+structures like chapters and titles.Note: Since this capability requires knowledge of the internal
+structure or tagging of the book you are reading, ask your book publisher
+for more information.ID="bSrch4Keyword"Searching for keywordsENTRY="Search|for keywords" REF1="Search" REF2="for keywords"ENTRY="Quotations marks|use in searches" REF1="Quotations marks" REF2="use in searches"Occasionally, you will want to search for the keywords themselves, as text
+within your document, rather than have them signal a type of search to the
+search function. In that case, you must use them between double quotes, either
+by quoting the keyword itself or by quoting the entire phrase in which the
+keyword appears. Example: Search for the phrase "hole in one" by entering
+one of the two following expressions:hole "in" one"hole in one"ID="mCannotSearch"What You Cannot Search ForID="bCannotSrchIntro"IntroductionENTRY="Search|restrictions" REF1="Search" REF2="restrictions"ENTRY="Stop list" REF1="Stop list"A stop list is a list of words that are not tracked by the DynaText search
+function, due to their excessive frequency. Generally, the stop list includes
+very common words that are seldom useful to search for: "the," "is," "for,"
+"because," and so on. Your publisher determines what words are contained on the stop list.ID="bInterpSLwords"How DynaText interprets stop list wordsWhen you enter a phrase with a word from the stop list, DynaText replaces it
+with a space, followed by a *, followed by a space. In other words,
+it will replace the stop list word with the * wildcard, which matches any word. The search is then either successful or unsuccessful in special
+ways.ID="bSrch4SLwords"How to search for stop list wordsIn a successful search with a stop list word, a popup window displays the
+message: "A word is on the stop list." DynaText may indeed have found occurrences
+of the phrase or expression that you were looking for. However, it probably
+also found other phrases with any other word appearing in the place of the
+stop list word.For example, if you perform the search:the documentDynaText will actually look for* documentThis expression matches "the document", but also "classified document",
+"Washington's document", etc.ID="cJournal" DIVNUM="8"Viewing Pre-Recorded Paths through BooksID="mJournalOver"OverviewID="bJournalOverIntro"IntroductionENTRY="Journal tool. See also Journal" REF1="Journal tool. See also Journal"ENTRY="Journal. See also Journal tool." REF1="Journal. See also Journal tool."ENTRY="Journal|viewing" REF1="Journal" REF2="viewing"DynaText allows you to follow previously-recorded reading paths, called journals,
+through one or more books. The Journal tool provides access to and viewing-control
+of these reading paths.Journals are useful forname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'training that takes into account a reader's level of expertisename='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' tracking the specific information that a reader needs to learnname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' locating quick-reference information for easy access by the readerThis chapter describes how to view pre-recorded journals using the Journal tool. RID="cRecord"Chapter 9 describes how to record your own journals.ID="bOverUseJrnl"Using journalsENTRY="journals|using" REF1="journals" REF2="using"Using a journal involves the following overall steps:TYPE="num"1. opening the Journal tool2. creating or loading a previously created journal file3. following the path in the journal fileID="mJtool"Opening and Closing the Journal ToolID="bJtoolIntro"IntroductionENTRY="Journal tool|components" REF1="Journal tool" REF2="components"The figure below shows an example of a previously-created journal in
+the Journal tool window.FILE="jrnlshtl" TYPE="IslandPaint" TITLE="The Journal tool" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"The Journal tool includes, from top to bottom,name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' "Journal:" followed by the name of the journal file, or "Journal:
+untitled" to indicate a new journalname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' journal buttonsname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' optionally, the location list (or journal path)All of these are described in detail in this section.ID="bOpenJrnl"Opening a journalENTRY="Journal|opening" REF1="Journal" REF2="opening"To open a journal that already exists, follow the steps in the table below.TYPE="PROC2"CWL="113:343" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"StepRTY="-"ActionRTY="-"RTL="-:-"RTY="-"1RTY="-"Select TYPE="menu"File|Open|Journal from the menu
+in the collection window.RTY="-"RTL="-:-"RTY="-"2RTY="-"Click on the type of journal you are looking forname='mdash' font=symbol charset=fontspecific code=190 
+			descr='[mdash]'Private
+or Public.Note: On your system, all journals may be public. Check
+with your system administrator.If it is necessary to do so, you can also change the path in the Directories:
+ box and the wildcard specification for the file search in the Files of Type:
+ combo box.Result: A list of the available journals is displayed.RTY="-"RTL="-:-"RTY="-"3RTY="-"Click on the name of the journal you want, then click TYPE="button"OK; or double-click on the journal name to open it.RTY="-"RTL="-:-"ID="bCloseJrnl"Closing the Journal toolENTRY="Journal|closing" REF1="Journal" REF2="closing"To close the Journal tool, click on the Control-menu box and select Close, double-click
+the Control-menu box, or type Ctrl-F4.ID="mIdJrnlButtons"Identifying Journal Tool ButtonsID="bIdJrnlButtIntro"IntroductionENTRY="Journal tool|buttons" REF1="Journal tool" REF2="buttons"ENTRY="Buttons|Journal tool" REF1="Buttons" REF2="Journal tool"The buttons at the top of the Journal tool are similar to those of a tape recorder.
+They allow you to name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' view a journal continuously from start to finishname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' pause and then continue at any pointname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' view particular locations that you selectname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' backtrack through the journalID="bJrnlButts"Journal tool buttonsThe table below describes the buttons in the Journal tool.Note: The default setting for the Journal tool is "Buttons Only."
+To display the journal entries (Location List), click on the Location List
+button (double arrow) at the far right of the Journal tool window.TYPE="IFTHEN2"CWL="179:277" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"Selecting this button RTY="-"Performs this action RTY="-"RTL="-:-"RTY="-"TYPE="button"RecordRTY="-"Creates journals or appends new journal entries to the end of the journal.RTY="-"RTL="-:-"RTY="-"TYPE="button"PrevRTY="-"Displays the previous journal entry.RTY="-"RTL="-:-"RTY="-"TYPE="button"PlayRTY="-"Starts the playback of the currently-selected journal. Each
+journal location is displayed for the number of seconds specified in the playback
+interval field (using TYPE="menu"File|Preferences).RTY="-"RTL="-:-"RTY="-"TYPE="button"NextRTY="-"Displays the next journal entry.RTY="-"RTL="-:-"RTY="-"TYPE="button"StopRTY="-"Ends the recording session or stops playback.RTY="-"RTL="-:-"RTY="-"TYPE="button"PauseRTY="-"Temporarily stops playback or recording. To reverse the Pause function, click
+Pause again; the journal continues the playback (or recording) sequence where
+it left off.RTY="-"RTL="-:-"RTY="-"TYPE="button"RepeatRTY="-"When selected before or during
+a Play cycle, causes the journal to continuously cycle through its scren.
+(Click TYPE="button"Repeat to cancel the cycling.)RTY="-"RTL="-:-"RTY="-"TYPE="button"Location ListRTY="-"Displays or hides the journal entries (path).RTY="-"RTL="-:-"ID="mPlayJrnl"Playing Pre-Recorded JournalsID="bPlayJrnlIntro"IntroductionENTRY="Journal|playing" REF1="Journal" REF2="playing"Once you have opened a previously-created journal, you can use the buttons
+at the top of the Journal tool to replay, step by step, the path defined in the
+selected journal. Reviewing the journal in this way is also called following
+a directed path.Reference: The functions described in this section are also
+available from the TYPE="menu"Journal menu. RID="cRecord"Refer to Chapter 9 for information on the entries in this
+menu.ID="bContinuous"Continuous or noncontinuous viewingENTRY="Journal|viewing" REF1="Journal" REF2="viewing"Click on TYPE="button"Play to view the selected journal continuously.
+At any time, you can click on TYPE="button"Pause to temporarily
+stop the playback for a closer inspection of a specific location or merely
+for a break in journal activity. To restart the journal where you left off,
+press TYPE="button"Pause again; the journal continues the display
+sequence where it left off.If you want to increase or decrease the amount of time for each screen
+to be displayed, select TYPE="menu"File|Preferences from the
+menu, click  the Journal icon, and change the playback interval. The figure
+below shows the DynaText Preference window for the Journal tool.FILE="jrnlpref" TYPE="IslandPaint" TITLE="DynaText Preferences dialog for the Journal tool" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="bPlayJrnl"Playing a journalTo replay (display) an entry in the journal, double-click on the entry
+in the list or select TYPE="menu"Journal|Show from the menu.Note: If the journal entries are not displayed in the Journal tool,
+click on the TYPE="button"Location-List button, (a double up-arrow
+at the far right of the button bar) to display them.If the location recorded by the journal entry is in a window that is closed,
+the window automatically opens. This is true for raster graphics, tables,
+alternate views of the book, and cross-referenced books.  Thus, along with
+the particular view for the journal entry, the book's Table of Contents is displayed,
+allowing you to navigate further in the book if you so choose.ID="bMoveThruJrnl"Moving through the journalENTRY="Journal|moving through" REF1="Journal" REF2="moving through"To move consecutively through a list of locations, use the TYPE="button"Next and TYPE="button"Prev buttons.Click the TYPE="button"Next  button to display the next entry
+in the journal, that is, the entry directly below the currently-selected
+one.Press the TYPE="button"Prev button to show the previous entry
+in the journal, that is, the entry directly above the currently-selected
+one.Double-click on the entry (or select TYPE="menu"Journal|Show
+from the menu) to display the currently-selected entry in the journal.ID="bJrnlRefList"Using the journal as a reference listENTRY="Journal|using as a reference list" REF1="Journal" REF2="using as a reference list"Instead of using the journal as a directed path, you can use it simply
+as a reference list of the important locations in the document for you or
+others to refer back to at a later time. To use the journal in this way,
+double-click on an entry in the journal. Click the TYPE="button"Next and TYPE="button"Prev buttons to move to the other
+locations.ID="cRecord" DIVNUM="9"Recording Your Path through BooksID="mRecordOver"OverviewID="bRecordOverIntro"IntroductionWhile using DynaText, you may wish to keep track of how you have navigated
+through one or many electronic books. The Journal tool allows you to do this. RID="cJournal"Chapter 8 describes how to view pre-recorded journals
+using the Journal tool. This chapter describes how to record your own journals.The Journal tool has the ability to record the movements you make, allowing
+you to create reading paths through books. Within the same journal you can
+record locations from various books.The journal that is created provides a way to backtrack through your
+browsing session. Journals can be saved so that you or others can follow
+the same path again.This DynaText feature is especially useful for training, and for providing
+commentary or criticism of texts.ID="bOverRecord"Recording journalsRecording journals involves the following basic steps:TYPE="num"1. opening the Journal tool2. recording and editing the journal entries3. saving the journal fileID="mRecordJrnl"Recording a New JournalENTRY="Journal tool|recording journals" REF1="Journal tool" REF2="recording journals"ID="bRecordJrnlIntro"IntroductionENTRY="journals|recording" REF1="journals" REF2="recording"Using the Journal tool is an easy way to keep a record of each movement you
+make in one or multiple books. You can mark a series of locations traveled
+(in one book, or many), or parts of books (such as tables or figures) commonly
+referred to. In addition, you have the freedom of recording only those events
+that you want to record, and editing the journal using standard cut/copy/paste
+operations.ID="bWhatRecords"What a journal recordsENTRY="Journal|actions recorded in" REF1="Journal" REF2="actions recorded in"Almost any action in which you move to a new location in a book is recorded
+in the Journal tool. For example, moving to a new location using the Table of Contents, opening
+a table or raster graphic, following a cross-reference link, and moving through
+the document screen by screen using the scroll bar, all create journal entries.Scrolling line by line and opening an annotation or creating one are not recorded. If you open a new book, the first screen of the book is
+an entry in the journal, but not the actual action of opening it. This is
+also true when you open a new view of a book.ID="bOpenJtool"Opening the Journal toolENTRY="Journal|opening a new" REF1="Journal" REF2="opening a new"ENTRY="Preferences|Journal tool" REF1="Preferences" REF2="Journal tool"ENTRY="Journal tool|setting preferences" REF1="Journal tool" REF2="setting preferences"Click the Journal icon in the button bar, or select TYPE="menu"Journal|New from the menu to open the Journal tool and record a new journal.
+The figure below shows the Journal tool (buttons-only display).FILE="jrnlbtns" TYPE="IslandPaint" TITLE="The Journal tool (buttons-only)" REPRODEP="4pi" REPROWID="8pi" UNITS="PT"Note: If the Journal tool is displayed with buttons only, click
+on the double arrow icon (the icon at the far right) to display the full window.
+You can select TYPE="menu"File|Preferences and the Journal
+icon to specify your preference for initial journal setup. The figure below
+shows the DynaText Preference window for the Journal tool.FILE="jrnlpref" TYPE="IslandPaint" TITLE="DynaText Preferences dialog for the Journal tool" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"ID="bRecordJrnl"Recording a journalENTRY="Journal|recording" REF1="Journal" REF2="recording"To begin recording events, click the TYPE="button"Record
+button. After recording is started, your actions are recorded as entries in
+the current Journal tool.ID="bStopRecord"Stopping the recording of a journalENTRY="Journal|stopping the recording of" REF1="Journal" REF2="stopping the recording of"To stop recording events, click the TYPE="button"Stop button.
+When recording is stopped, no actions are added to the current journal.You can also click TYPE="button"Pause to stop recording and
+then click TYPE="button"Pause again to resume recording.ID="bSaveJrnl"Saving a journalENTRY="Journal|saving" REF1="Journal" REF2="saving"Once you have recorded a journal that contains the entries that you want,
+the next step is to save it. To save a journal, with the Journal tool active, follow these steps:TYPE="PROC2"CWL="113:343" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"StepRTY="-"ActionRTY="-"RTL="-:-"RTY="-"1RTY="-"Select TYPE="menu"File|Save from the menu. Result: The Save Journal As dialog box is displayed.Note: If you attempt to close the Journal tool with unsaved changes,
+the Save Journal As dialog box is automatically displayed.RTY="-"RTL="-:-"RTY="-"2RTY="-"Enter the file name. It is recommended that you use the extension TYPE="file".jrn.RTY="-"RTL="-:-"RTY="-"3RTY="-"Select the access typename='mdash' font=symbol charset=fontspecific code=190 
+			descr='[mdash]'Private or Public.Journals can be saved for either private or public access (also called
+private or public paths). A private path is one that is available only to
+its creator; a public path is available to all readers.Note: On your system, all journals may be public. Check
+with your system administrator.RTY="-"RTL="-:-"RTY="-"4RTY="-"Select the Read Only option if you want to prohibit any user from making
+any changes to the journal file.RTY="-"RTL="-:-"RTY="-"5RTY="-"If it is necessary to do so, you can also
+change the path and directory where the file will be saved, but this is not
+recommended.RTY="-"RTL="-:-"RTY="-"6RTY="-"Click TYPE="button"OK.RTY="-"RTL="-:-"RTY="-"7RTY="-"From the Control-menu
+box in the Save Journal As dialog box, close the window.RTY="-"RTL="-:-"The TYPE="menu"Save As command produces the same dialog box
+as the TYPE="menu"Save command. This allows you to save a journal,
+make some changes, and then save the revised one with a different name.ID="mOrgModJrnl"Organizing and Modifying a JournalID="bOrgModJrnlIntro"Introduction ENTRY="Journal|editing" REF1="Journal" REF2="editing"Once you have created a journal file, you canname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' edit the journal, so that it contains only those entries you want,
+in the order you wantname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' cut, copy and paste within or among journal filesname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' save the journal file for you or others to peruse latername='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' delete the journal fileID="bEditJrnl"Editing a journalENTRY="" REF1="journals" REF2="editing"If the journal includes entries that you want to delete, or some entries
+are in the wrong order, you can use the TYPE="menu"Edit menu's
+Cut, Copy, and Paste functions to alter the current journal.Reference: For information on menu and button functions, RID="mMenuButtons"see the "Journal Menu Selections and Journal Tool Buttons"
+section later in this chapter.ID="bEditCuts"Editing shortcutsYou can also use TYPE="menu"Cut, TYPE="menu"Copy,
+and TYPE="menu"Paste with multiple entries in the journal.
+To select consecutive entries:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' click on the first entry and hold the mouse button down while you
+drag to the end of your desired selection, orname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' select the first entry, hold the TYPE="key"Shift key
+down, and select the last item of the list you want.To select entries that are not consecutive, hold the TYPE="key"Ctrl key down and click on those you want to highlight.ID="bReSaveJrnl"Resaving the journalENTRY="" REF1="journals" REF2="saving"Once you have made changes to the journal, the next step is to resave
+it. When you close the Journal tool, the Save Journal dialog box is displayed.
+Click on TYPE="button"OK to save the journal file with the
+current name.Reference: For information on saving a journal file, RID="bSaveJrnl"see the section, "Saving a journal," earlier in this
+chapter.ID="bRemoveJrnl"Removing a journalENTRY="" REF1="journals" REF2="deleting"If you have a journal that is no longer of use, select TYPE="menu"File|Delete from the menu to display the Delete Journal dialog box.
+Click on the name of the journal that you want to delete and then click
+on TYPE="button"OK, or double-click on the file name. Confirm
+the deletion by clicking TYPE="button"OK.ID="bJrnlPref"Setting journal preferencesENTRY="Journal tool|setting preferences" REF1="Journal tool" REF2="setting preferences"ENTRY="Preferences|Journal tool" REF1="Preferences" REF2="Journal tool"Preference settings for the Journal tool are available from TYPE="menu"File|Preferences. Click on the Journal icon. From the Journal preferences
+window, you can specify:name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' TYPE="menu"initial journal setup (Buttons Only or Full Window)name='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]' TYPE="menu"playback interval (in seconds)Note: The Journal tool default settings are "Buttons Only" for
+the initial journal setup and a playback interval of 3 seconds.ID="mMenuButtons"Journal Menu Selections and Journal Tool ButtonsID="bJrnlMenu"The Journal menuENTRY="Journal menu|table" REF1="Journal menu" REF2="table"The table below lists and describes the TYPE="menu"Journal
+menu entries.TYPE="IFTHEN2"CWL="179:277" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"Selecting this from the Journal menu RTY="-"Performs this action RTY="-"RTL="-:-"RTY="-"NewRTY="-"Opens the Journal tool,
+allowing you to record a new journal, or clears a currently-open journal.RTY="-"RTL="-:-"RTY="-"Start RecordingRTY="-"Creates or amends journals. If you are recording to an existing journal,
+the new entry is appended to the end of the Location List.RTY="-"RTL="-:-"RTY="-"Stop RecordingRTY="-"Ends the recording session.RTY="-"RTL="-:-"RTY="-"Take SnapshotRTY="-"Records your current location
+in a particular view in the journal. If you are recording to an existing journal,
+the new entry is appended to the end of the Location List.RTY="-"RTL="-:-"RTY="-"ShowRTY="-"Displays
+the currently-selected journal entry.RTY="-"RTL="-:-"RTY="-"NextRTY="-"Displays the location listed
+below the one that is currently displayed.RTY="-"RTL="-:-"RTY="-"PreviousRTY="-"Displays the location listed
+above the one that is currently displayed.RTY="-"RTL="-:-"RTY="-"RenameRTY="-"Allows you to rename the current journal
+file.RTY="-"RTL="-:-"RTY="-"DeleteRTY="-"Allows you to deletes a journal file.RTY="-"RTL="-:-"ID="bJrnlButt"Journal tool buttonsENTRY="Journal tool buttons|table" REF1="Journal tool buttons" REF2="table"The table below lists and describes the Journal tool buttons.TYPE="IFTHEN2"CWL="179:277" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"Selecting this button RTY="-"Performs this action RTY="-"RTL="-:-"RTY="-"TYPE="button"RecordRTY="-"Creates or amends journals. If you are recording to an existing journal,
+the new entry is appended to the end of the Location List.RTY="-"RTL="-:-"RTY="-"TYPE="button"PrevRTY="-"Displays the location listed above the one that is currently
+displayed.RTY="-"RTL="-:-"RTY="-"TYPE="button"PlayRTY="-"Starts the playback of the currently-selected journal.
+Each journal location is displayed for the number of seconds specified in
+the interval field (using TYPE="menu"File|Preferences).RTY="-"RTL="-:-"RTY="-"TYPE="button"NextRTY="-"Displays the location listed below the one that is currently
+displayed.RTY="-"RTL="-:-"RTY="-"TYPE="button"StopRTY="-"Ends the recording session or
+stops playback.RTY="-"RTL="-:-"RTY="-"TYPE="button"PauseRTY="-"Temporarily stops playback or
+recording. To reverse the Pause function, click TYPE="button"Pause again; the journal continues the display sequence where it left
+off.RTY="-"RTL="-:-"RTY="-"TYPE="button"RepeatRTY="-"When selected before or during a Play cycle,
+causes the journal to continuously cycle through its screens. (Click TYPE="button"Repeat to cancel the cycling.)RTY="-"RTL="-:-"RTY="-"TYPE="button"Location List (double-arrow icon)RTY="-"Toggles the display of (that is, displays
+or closes) the Location List panel, which lists the recorded entries for this journal.RTY="-"RTL="-:-"ID="bMenuChoices"Other menu selectionsThe table below lists and describes miscellaneous menu selections that
+can be used when working with journals.TYPE="IFTHEN2"CWL="179:277" NCOLS="2" WDM="200"RTL="-:-"HDR="1"RTY="-"Selecting thisRTY="-"Performs this action RTY="-"RTL="-:-"RTY="-"File|PreferencesRTY="-"Allows you to specify preferences
+for the Journal tool: initial journal setup (buttons only or full window) and
+the playback interval.The system defaults are "Buttons Only" and a 3-second playback interval.RTY="-"RTL="-:-"RTY="-"File|Open|JournalRTY="-"Displays the Open Journal dialog box allowing you to
+select the journal file to open.RTY="-"RTL="-:-"RTY="-"File|SaveRTY="-"Saves the active Journal file.RTY="-"RTL="-:-"RTY="-"File|Save AsRTY="-"Displays the Save Journal As dialog box, allowing you to specify
+a journal file name, Public or Private Access, Read-only option, and the path
+for the file.RTY="-"RTL="-:-"RTY="-"File|CloseRTY="-"Closes the Journal tool and displays the Save dialog
+box if you have made changes to the Journal file.RTY="-"RTL="-:-"RTY="-"Edit|CutRTY="-"Removes the selected
+entry (or entries) from the list.RTY="-"RTL="-:-"RTY="-"Edit|CopyRTY="-"Copies the selected entry without
+removing it from its current location.RTY="-"RTL="-:-"RTY="-"Edit|PasteRTY="-"Inserts the entry that you just
+cut or copied above your current selection in the Journal tool, or at the bottom
+of the journal list if no entry is selected.RTY="-"RTL="-:-"ID="mUndJrnlEntries"Understanding Journal EntriesID="bUndJrnlEntriesIntro"IntroductionENTRY="Journal entries|description" REF1="Journal entries" REF2="description"An entry in the Journal tool marks a movement or action in a particular document.ID="bReadEntry"Reading a journal entryENTRY="journal entries|components" REF1="journal entries" REF2="components"The figure below shows a sample journal, named TYPE="file"shuttle.jrn, with its location list displayed. In the location list are eight
+entries, which are described in the sections that follow.FILE="jrnlshtl" TYPE="IslandPaint" TITLE="A sample journal" REPRODEP="16pi" REPROWID="25pi" UNITS="PT"The first part of the journal entry is the alias (or
+title) of the book (or, in some case, the journal file name) in which the
+action or movement occurred. Following the book name is some text for the
+new location in the book. Depending on the action, this text takes various
+forms.ID="bTextEntry"Text entriesENTRY="Journal|text entries" REF1="Journal" REF2="text entries"If you moved to a new location in a Main view, the name is the first few words
+of the text that appears at the top of the Main view window.The first three entries in the shuttle journal, shown above, are text entries.
+The first entry, "Space Shuttle Mission Press Kit," was recorded when the
+book was opened. The second, "Preparations and Launch...," was recorded
+when the section with that name was selected from the Table of Contents (TOC)
+view. The third, "Surface Gravity: .907 times that of Earth's gravity...,"
+resulted from a search for the phrase "surface gravity".ID="bGraphicEntry"Graphic entriesENTRY="Journal|graphic entries" REF1="Journal" REF2="graphic entries"If you follow a hyperlink icon to a raster image, the title of the image is
+preceded by the words "ebt-raster."The fourth entry in the shuttle journal, shown above, resulted from clicking
+on the figure titled, "Shuttle Landing," in the Figures TOC view.ID="bTableEntry"Table entriesENTRY="Journal|table entries" REF1="Journal" REF2="table entries"If you select a table by clicking on a table icon, two entries appear in
+the journal. The first is the word "TABLE," to alert you to the fact that
+a table was opened. The second entry is a portion of the top line of text
+in the table.The fifth and sixth entries in the shuttle journal, shown above, resulted
+from clicking the table icon to display a table in the Installation and
+System Administration Guide. The column headings for the table are reflected
+in the sixth entry of the journal.Note:  Some steps needed to open a different collection
+and book are not recorded in the shuttle journal. This direct access to
+the table was possible either by pausing and resuming the journal recording
+or by selecting TYPE="menu"Edit|Cut to delete some of the entries.ID="bXrefEntry"Cross-reference entriesENTRY="Journal|cross-reference entries" REF1="Journal" REF2="cross-reference entries"Following a cross-reference link to a new place in the book, or to a new
+book, produces a basic text entry for the first screen of the book or view.
+However, the actual action of following the link, or opening the new view,
+is not stated in the journal entry.In the last entry of the shuttle journal, shown above, the user selected
+a cross reference and jumped to a page with text that started with the heading
+"Magellan."ID="cPrint" DIVNUM="10"Printing Books and Exporting InformationID="mPrintOver"OverviewID="bPrintOverIntro"IntroductionAfter browsing a book and locating information, you may want to print a
+portion of the book. Or, you may want to export parts of the book for use
+in another application. In addition to exporting information from your book,
+you can also import information to notes attached to the book.This chapter coversname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'printing portions of or whole booksname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'exporting text and SGML informationID="mPrinting"Printing DynaText BooksENTRY="Printing books" REF1="Printing books"ID="bPrintingIntro"IntroductionPrinting in DynaText is based on the same flexible concept of views as the Main view
+and the Table of Contents view: the hard copy of your book is simply one view of the book
+that you are reading. This view itself has many different possible formats.
+Depending on what your publisher has provided, you can have a variety of print
+formats for your books: a "fulltext" view, a large-type view, an outline view,
+and so on.In addition, DynaText allows you to print selected sections of your book, regardless
+of the view. You can print the entire book or simply the very smallest subsection.ID="bPrintDia"The Print dialogENTRY="Print dialog box" REF1="Print dialog box" REF2=""To print a portion or all of your book, select the TYPE="menu"File|Print menu option. The Print dialog box (shown below) appears.FILE="printdia" TYPE="IslandPaint" TITLE="The Print dialog box" REPRODEP="26pi" REPROWID="30pi" UNITS="PT"ID="bPrintProc"ProcedureENTRY="Printing|procedure" REF1="Printing" REF2="procedure"ENTRY="Printing|to a file" REF1="Printing" REF2="to a file"ENTRY="Printing|notes" REF1="Printing" REF2="notes"Printing in DynaText follows the model of viewing your book through the Table of Contents:
+a Print dialog box reproduces the Table of Contents allowing you to select
+the sections for which you want to "view a hard copy" (i.e., print). The following
+table details how to print your DynaText book.TYPE="PROC2"CWL="93:363" NCOLS="2" WDM="100"RTL="-:-"HDR="1"RTY="-"StepRTY="-"ActionRTY="-"RTL="-:-"RTY="-"1RTY="-"Select TYPE="menu"File|Print from the menu bar.
+The Print dialog box appears.RTY="-"RTL="-:-"RTY="-"2RTY="-"Using the Table of Contents in the Print dialog box, expand
+and collapse the section headings by clicking on the + and - signs, until
+you view the title of the section(s) that you want to print.Note: To print the entire book, simply click on the book's
+most comprehensive section, usually the title, which "contains" the entire
+book.RTY="-"RTL="-:-"RTY="-"3RTY="-"Click on the title of the section(s) that you want to print.Note: You can deselect a section heading simply by clicking
+on it again.RTY="-"RTL="-:-"RTY="-"4RTY="-"Pick a print stylesheet by using the "Print formats" combo box and selecting
+the desired format. The title of the format should describe the kind of print
+format.RTY="-"RTL="-:-"RTY="-"5RTY="-"Click on the Print notes check box if you want to print the book's notes
+along with the selected text.Note: By default, these boxes are unchecked.RTY="-"RTL="-:-"RTY="-"6RTY="-"The printer to be used is displayed near the bottom of the Print dialog
+box. If you want to change this printer or print to a file instead, click
+on the TYPE="button"Setup button.The Print Setup dialog box appears allowing you to select paper and printer
+characteristics.RTY="-"RTL="-:-"RTY="-"7RTY="-"Click the TYPE="button"Print button at the bottom
+of the dialog box for DynaText to print the book as you specified or click TYPE="button"Cancel to close the Print dialog box.If you print to a file, DynaText asks you to enter a valid filename that you
+can send later to a printer for printing.RTY="-"RTL="-:-"ID="mExprting"Exporting InformationID="bExprtingIntro"IntroductionENTRY="SGML|exporting" REF1="SGML" REF2="exporting"DynaText allows you to copy and paste text from your DynaText book to a note window,
+to the Search panel, or to a text editor. For more information about this
+process, RID="bCopyPasteNote"see the section on including book text
+in a note in Chapter 5.In addition to copying plain ASCII text or text with SGML markup to the
+clipboard, you can also copy SGML markup information along with the text,
+or copy only titles in your book, and paste it to a file. This process is
+called exporting.ID="bExportDia"The Export to File dialogENTRY="Exporting|to a file" REF1="Exporting" REF2="to a file"To export information to a file, select TYPE="menu"File|Export.
+The Export to File dialog box (shown below) appears.FILE="exportdb" TYPE="IslandPaint" TITLE="The Export to File dialog box" REPRODEP="26pi" REPROWID="30pi" UNITS="PT"ID="bTextOrSGML"Exporting text only or SGML taggingENTRY="Exporting|options" REF1="Exporting" REF2="options"In DynaText, you can export different levels of text and SGML markup information.
+The following table explains the export options and what they produce.TYPE="OTHER2"CWL="141:315" NCOLS="2" WDM="100"RTL="-:-"HDR="1"RTY="-"This optionRTY="-"Exports this contentRTY="-"RTL="-:-"RTY="-"SGML ContentRTY="-"Text with markupRTY="-"RTL="-:-"RTY="-"ContentRTY="-"Section
+as plain textRTY="-"RTL="-:-"RTY="-"SGML TitlesRTY="-"Title text with markupRTY="-"RTL="-:-"RTY="-"TitlesRTY="-"Titles as plain textRTY="-"RTL="-:-"ID="bExportProc"ProcedureENTRY="Exporting|procedure" REF1="Exporting" REF2="procedure"The table below explains how to export text from DynaText to a file.TYPE="PROC2"CWL="93:363" NCOLS="2" WDM="100"RTL="-:-"HDR="1"RTY="-"StepRTY="-"ActionRTY="-"RTL="-:-"RTY="-"1RTY="-"Select TYPE="menu"File|Export from the menu bar.
+The Export to File dialog box appears.RTY="-"RTL="-:-"RTY="-"2RTY="-"Using the Table of Contents in the Export to File dialog
+box, expand and collapse the section headings by clicking on the + and - signs,
+until you view the title of the section(s) that you want to export.Note: To export the entire book, simply click on the book's
+most comprehensive section, usually the title, which "contains" the entire
+book.RTY="-"RTL="-:-"RTY="-"3RTY="-"Click on the title of the section(s) that you want to export.Note: You can deselect a section heading by clicking on
+it again.RTY="-"RTL="-:-"RTY="-"4RTY="-"Pick an export fomat by clicking on the Export formats combo box and selecting
+the desired format. See the preceding section on "Exporting text only or SGML
+tagging" to determine the type of export format that you want.RTY="-"RTL="-:-"RTY="-"5RTY="-"Enter a valid
+filename at the Export to File prompt. If you are not sure where you want
+to save the file, use the TYPE="button"Browse button to search
+through your drives and directories for a filename and format.RTY="-"RTL="-:-"RTY="-"6RTY="-"Click TYPE="button"OK to export the sections of the book as you specified
+or click TYPE="button"Cancel to close the Export to File dialog
+box.RTY="-"RTL="-:-"ID="cHelp" DIVNUM="11"Getting HelpID="mHelpOver"OverviewID="bHelpOverIntro"IntroductionThis chapter provides descriptions of several ways to get help when using
+the Browser.ID="mOnlineHelp"Online HelpID="bOnlineHelpIntro"IntroductionENTRY="Online help" REF1="Online help"ENTRY="Help|obtaining online" REF1="Help" REF2="obtaining online"Help is available inname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'the Collection windowname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'the Book windowname='bull' font=symbol charset=fontspecific code=183 
+	descr='[bull]'the Journal toolID="bHelpHelpMenu"The Help menuEvery window has a TYPE="menu"Help menu. Every TYPE="menu"Help menu can bring up this manual as well as specific sections of
+this manual listed as topics in the menu.ID="bOpenHelp"Opening a help windowENTRY="Help window|opening" REF1="Help window" REF2="opening"To view help information related to a specific window, select the TYPE="menu"Help menu from the menu bar on that window. Select an option
+to see the relevant help text.ID="bCloseHelp"Closing a Help windowENTRY="Help window|closing" REF1="Help window" REF2="closing"When you are done viewing the help information, close the Help window using
+Windows conventions.ID="mGenlQA"General Questions and AnswersENTRY="" REF1="Help" REF2="frequently asked questions"ENTRY="Questions and answers|general" REF1="Questions and answers" REF2="general"ID="bGenQ1"Question 1When I try to choose a new section title from the Table of Contents, I always seem
+to open or close subsections by mistake. What am I doing wrong?You are double-clicking on the plus or minus signs to the left of the titles.
+To select a title and scroll to that section in the book, you need only click
+once, directly on the title.ID="bGenQ2"Question 2 If I want to quit DynaText and I have one or more books open, do I need
+to close the book(s) individually before quitting?No, save time by selecting TYPE="menu"File|Exit to close
+books and leave DynaText.ID="bGenQ3"Question 3 How can I get help information for a Main view?These help topics are available under the TYPE="menu"Help
+menu in the menu bar when the Book window is the active window. ID="bGenQ4"Question 4 Can I change Windows defaults for DynaText windows?Yes. You can change geometry, colors, and many other features using the TYPE="file"dynatext.ini file. If you are not familiar with this file,
+do not make any changes without first consulting your system administrator.ID="bGenQ5"Question 5 I am getting error messages about fonts not being found. What can I
+do?Ask your System Administrator to ensure that all fonts needed by DynaText books
+are installed. ID="mQASearch"Questions and Answers on SearchingENTRY="Questions and answers|on searching" REF1="Questions and answers" REF2="on searching"ID="bSrchQ1"Question 1Why doesn't DynaText perform my search when I type a word?You must press the TYPE="key"Return key, or the TYPE="button"Next button to start the search.ID="bSrchQ2"Question 2 Will using the search language slow down my searches? No, not noticeably. If you do very general searches, such as '*ing' or
+ 'b*', DynaText may take quite a while to find all occurrences of such regular
+expressions. However, DynaText will handle with ease more refined searches, such
+as 'for?' (which matches words such as 'fort', 'fork,' and so on).ID="bSrchQ3"Question 3 How can I correct typing errors in the search word(s) I'm typing?Both the TYPE="key"Backspace  and TYPE="key"Delete keys will work, according to Windows standards. In addition, you can
+highlight the portion that you wish to change, then press Backspace to delete
+it, or start typing to replace it.ID="bSrchQ4"Question 4 The only report I see when I do a search is "|" or nothing next to titles
+in the Table of Contents view. Why?Searching Preferences are set to report only "On/Off"name='mdash' font=symbol charset=fontspecific code=190 
+			descr='[mdash]'that is, whether
+your search word(s) occur in a given section or not. You can change this option
+by selecting TYPE="menu"File|Preferences from the menu bar.ID="bSrchQ5"Question 5 When I do a search, the numbers in the Table of Contents view do not add up to the
+total number of search occurrences for the whole book. What's more, the numbers
+appearing in the Table of Contents are smaller than the actual number of occurrences.
+Why?Searching Preferences are set to report "Relevance"name='mdash' font=symbol charset=fontspecific code=190 
+			descr='[mdash]'that is, the
+relative number of search occurrences. These numbers are generated by computing
+the log of the actual number of search occurrences. You can change this option
+by selecting TYPE="menu"File|Preferences from the menu bar.ID="bSrchQ6"Question 6 Why doesn't the display move when I click the TYPE="button"Next or TYPE="button"Prev button?  I just get a beep sound.If you are already at the last occurrence of your search word, there is
+no next occurrence to display, which is signaled by a beep if you click TYPE="button"Next. In the same way, if you are already at the first
+occurrence of your search word and click TYPE="button"Prev,
+you get a beep.ID="bSrchQ7"Question 7 What is a "stop list"?A stop list is a list of words that are not included in the index of the
+book. Generally, the stop list includes common words that are seldom useful
+to search for: the, it, is, and so forth.If you search for such a word, a box appears saying "A word is on the stop
+list." In this case, try searching instead for a word more specific to the
+thing about which you want to find information.If you search for a phrase that contains a stop list word, you receive
+the same message, but the search is still performed. The highlighted search
+occurrences will look like your search phrase with any word in the place of
+the stop list word. For example, if you search for "close the door", DynaText
+will also highlight "close my door".ID="mQAPrint"Questions and Answers on PrintingENTRY="Questions and answers|on printing" REF1="Questions and answers" REF2="on printing"ID="bPrintQ1"Question 1 Can I print the Table of Contents for the book?You can print the Table of Contents if an outline stylesheet is made available by your
+book publisher. Names of the printing stylesheet will vary, so ask your book
+publisher if you are unsure of the output of a particular print stylesheet.ID="bPrintQ2"Question 2 Why do I get error messages about the book font when I try to print
+the book I'm reading? The publisher who created the stylesheets for the book you are reading
+may have included a font that is not installed on your local system. See your
+system administrator to have the necessary fonts installed, or to modify the
+stylesheet.ID="bPrintQ3"Question 3 Can I print individual DynaText windows?Yes, using the Windows Clipboard and Paintbrush accessories. See Chapter
+2 of the Windows User's Guide for more information.ID="bPrintQ4"Question 4When I am selecting sections to print, I can't see all of the Table
+of Contents because the printing dialog box is in the way. What can I do?Windows is still working, and you can use the usual methods to bring any
+window to the front, or to move windows around.ID="bPrintQ5"Question 5How can I control the formatting of printed output?Select the desired printing stylesheet from the Print dialog box. These
+views are specified by the book publisher.ID="bPrintQ6"Question 6How can I send printed output to a different physical printer?Output goes to your default printer, set through the Windows Control Panel.
+If you need to change this and do not know how, consult your Windows documentation
+or your system administrator.ID="bPrintQ7"Question 7Will printed output include graphics, footnotes, and other linked information?Whether or not graphics or footnotes are printed is at the discretion of
+the publisher. If footnotes are printed, they will appear in the body of the
+text, not at the bottom of the page or the end of the document. Neither cross-reference hyperlink icons
+nor their targets will appear in the printout.You determine whether notes (attached by readers) appear in the output
+by clicking on the Print Notes box on the Print dialog box.

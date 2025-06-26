@@ -1,0 +1,3 @@
+Resources=DynaText Resources 2.3
+Version=DynaText 2.3
+

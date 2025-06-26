@@ -1,0 +1,986 @@
+####################################################################
+# EBT Errors database
+#
+# ----- Error Severity ------
+#     0 - 1999:   Information
+#  2000 - 3999:   Warning
+#  4000 - 5999:   Minor Error
+#  6000 - 7999:   Major Error
+#  8000 - 9999:   Fatal Error
+#
+# Note: Use '\' to continue a message over consecutive lines.
+#
+# Platform:  DOS/Windows
+# Version:   2.3
+# Language:  English
+#
+# Copyright 1990-1994 Electronic Book Technologies, Inc. 
+# All Rights Reserved.
+####################################################################
+
+# $Id: ERRORS.TXT 1.15.1.18 1994/09/01 20:33:16 jcr Exp jcr $
+
+# global errors (0-99)
+###################################
+0000    Version 2.0
+0001    running %s...
+0002    running '%s' at line '%d'...
+
+# Errors 3-6 are the text that precedes an error message.
+0003  Warning
+# Error 4: minor error
+0004  Error
+# Error 5: major error
+0005  Error
+0006    Fatal error
+
+2000    can't open file '%s'
+2001    error reading from file '%s', please check permissions
+2002    error writing to file '%s', please check permissions 
+2003    %s not yet supported
+2004    system error, %s
+2005    can't read directory '%s'
+2006    can't write to directory '%s'
+2007    can't exec sub process '%s'
+2008    file '%s' already exists
+2009    '%s' returned unsuccessfully
+4000    Hardware key not found or is unable to authorize use of %s
+4001    Hardware key not found or is unable to authorize use of program
+4002    can't remove file '%s'
+4003    no such file '%s'
+4004    error reading from file '%s', please check permissions
+4005    error writing to file '%s', please check permissions
+4006    unable to allocate space for '%s'
+4007    can't open file, insufficient permissions on file '%s'
+4008    duplicate occurrence of '%s', using occurrence #%d
+6001    can't reply to rpc call '%s'
+6002    can't register rpc routines
+6003    can't open socket
+6004    Problem accessing Hardware key. Verify connection
+6005    rpc error
+6006    unable to allocate space for %s
+6007    unable to free enough memory
+6010    can't create %s
+6011    error on line %d in file '%s'
+4012    can't get authorization for '%s' option
+6015    Bad case in switch for %s
+6016    Function '%s' failed when called from '%s'
+8000    unable to allocate space for %s
+8001    error reading from file '%s', please check permissions
+8002    error writing to file '%s', please check permissions
+8003    can't open file '%s'
+8004    '%s' is a mandatory INI variable
+8005    invalid authorization service '%s'
+8006    can't open socket
+8007    can't register rpc routine
+8008    can't possible reach this point '%s'
+8009    can't reply to rcp call '%s'
+8010    can't create %s
+8011    bad magic number in %s
+8012    can't find file '%s'
+
+
+# pcolors package (100-109)
+###################################
+2100    %s is too long a color name
+2101    using black, couldn't parse color '%s'
+2102    using black, couldn't allocate color '%s'
+2103    can't find file '%s'
+
+# pfonts package (110-119)
+###################################
+6110    can't load default font '%s'
+4111    can't load xtab '%s', charset may be off
+4112    font '%s' missing charset '%s'
+2111    using '%s', couldn't load '%s'
+
+# pg package (120-129)
+###################################
+2120    can't read bitmap file '%s'
+8120    unable to open display
+
+# str,util package (130-139)
+###################################
+2130    bad attribute name char (accepted) in '%s': '%c' (%d)
+2131    apparent missing value indicator in attribute string '%s', at '%s'
+2132    multiple value indicator (ignored) in attribute string '%s'
+2133    CR or LF inside quoted attr value
+2134    invalid util attr fsa state
+2135    string error '%s'       
+2136    
+2137    buffer too small in huffman decode
+2138    buffer too small in huffman encode
+4130    %d is too long for an attribute buffer
+6130    xtabunion contradictory assignments for char '%d'
+8130    huffman tree error
+
+# raster package (140-149)
+###################################
+6140    can't open bitmap file '%s'
+6141    unable to load bitmap image
+
+# browser,toc, and render packages (150-169)
+############################################
+4151    
+4152    too much data to copy. Copying %d characters only
+6150    can't load bitmap file '%s', trying default
+6151    can't load even default icon '%s'       
+6160    '%s' is invalid in init Browser
+6161    calling Browser::init more than once
+6163    bad root element id '%s'
+8160    can't create '%s'
+
+# sgml package (170-179)
+####################################
+2170    unable to add node of type '%s'
+2171    unable to add attributes for node
+2172    unable to add cdata '%s'
+2173    unable to add entity reference '%s'
+2174    unable to add entity definition '%s'
+2175    unable to add parameter entity '%s'
+2176    unable to add empty declaration '%s'
+2177    unable to find DTD file for book '%s', public id '%s', dtd '%s'
+2178    unknown token type %ld
+2179    unable to use entity reference '%s' inside an equation
+4170    error in SGML entity '%s' at line %ld
+4171    unable to open map file '%s', no update map will be created
+4172    can't use output directory '%s' same as book directory '%s'
+4173    unable to process special control '%s'
+4174    error processing control in file '%s' at lien %ld
+6170    not authorized to add tag '%s', ignoring content
+
+# styles package (180-189)
+####################################
+8180    can't read style '%s' value
+8181    style version mismatch 
+8182    NULL element_tree in query style
+2180    bad property name in '%s' on line #%ld near '%s'
+2181    no open property in '%s' on line #%ld near '%s'
+2182    style '%s' redefined, previously in table
+2183    bad syntax in file '%s' on line #%ld near '%s', \
+	looking for tag 'style'
+2184    
+2185    bad property name '%s' in eval statement
+
+# et package (190-199)
+####################################
+2190    unknown entity in file '%s' at line #%ld
+2191    possible infinite recursion for entity '%s'
+2192    invalid page mode
+2193   
+2194    element text has no length #%ld
+2195    element has no attributes, is cdata #%ld
+4190    too much recursion in virtual document '%s'
+4191    can't remap virtual address
+4192    function '%s' should not be called with a virtual doc
+4193    can't remap virtual tdir address
+4194    virtual document with no subdocs
+4195    cannot open subdoc '%s' from database '%s'
+6190    bad header in file '%s'
+6191    book made with an older version of the DynaText system
+6192    number of elements in edir is less than 1
+6193    can't read tags
+6194    can't read element directory
+6195    book has no table of contents directory
+6196    ETgetEntity called, no longer storing entities
+#this next line is for InStEd, due to a bug in FCS v1.5 insted
+8190    "mkbook" has not yet compiled this .tv file; I can't show a Preview
+8191    can't create BIO buffer pool
+
+# image package (200-209)
+####################################
+2200    writeCALS not yet supported
+2201    error in '%s' file
+2202    bad magic number in '%s' file
+2203    bad width and/or height in '%s' file
+2204    writeTiff not yet supported
+2205    unsupported TIFF format
+2206    no colormap in '%s' file
+2207    do not support '%s' in '%s' file
+4200    image color table too large
+4207    unsupported mode or code '%s' at or about line %d
+
+# mkbook, mkhelp, program and mbl (210-249)
+####################################
+210     storing element %ld ...
+211     Element Directory is already up to date
+212     Building Element Directory ...
+213     Book serial number %ld, revision %d, with %ld elements
+214     indexing element %ld ...
+215     Building Fulltext Index ...
+216     Fulltext Index is already up to date
+217     Fulltext Index Built Successfully
+218     Collection: %s
+219     Book Name: %s
+220     Stop List: %s
+221     Force All: %s
+222     Force Fulltext Index: %s
+223     Suppress Fulltext Index: %s
+224     Authorization Service: %s
+225     Attempting to lock book '%s'
+226     Lock Successful
+227     Making Book ...
+228     Book '%s' Made Successfully
+229     Element Directory Time: %s
+230     Table of Contents Time: %s
+231     Fulltext Index Time: %s
+232     Total Time: %s
+233     Book Counter: %d of %d
+234     Book Counter: unlimited
+235     New Title Count: %d
+236     compiling element %ld ...
+237     Second Table of Contents Pass ...
+238     Table of Contents directory '%s' up to date
+239     Compiling Table of Contents '%s' ...
+240     Table of Contents '%s' compiled successfully
+
+### PC Mkbook Usage Part 1 (Note: Don't change TABBING! Keeps rows aligned)
+241     usage: %s [options] bookname\
+	Options List:\
+	[-cdrom]                Optimize the TOC (for CDROM performance).\
+	[-col collection]       Build book in this collection.\
+	[-compress]             Compress output of build
+### PC Mkbook Usage Part 2:
+1242    [-fa]                   Force book to be completely rebuilt.\
+	[-fi]                   Force index to be rebuilt.\
+	[-gl go_list]           Index only words from this .GO file.\
+	[-key security_key]     Add a password and encrypt the book
+### PC Mkbook Usage Part 3:
+1243	[-log log_file]         Log transcript to this file.\
+	[-mem memory (Kb)]      Sets memory limit used in building Index.\
+	[-out output_directory] Specify output directory.\
+	[-rev revision_number]  Build a book readable by older Browsers
+### PC Mkbook Usage Part 4:
+1244	[-si]                   Suppress rebuilding of Fulltext Index.\
+	[-sl stop_list]         Index all words but those in this .STP file.\
+	[-toc]                  Force TOC to be rebuilt
+ 
+
+242     Log File: %s
+243     Go List: %s
+244     publishing element %ld ...
+245     Compression: %s
+246     Output Directory: %s
+247     Added book '%s' to the booklist.txt, under the alias '%s'  
+248     Book '%s' has already been added to the booklist.txt
+249     Max memory: %ld megabytes
+257     expanding tdir element %ld ...
+258     error: please choose -cdrom without -rev 2.1 or -rev 2.2
+259     CDROM
+260     Revision: %s
+261     error: please choose no more than one -rev option
+640     Mkbook is out of memory. Please try either running with more \
+		memory or running with the -fi (and not the -fa) option.
+2210    unknown in entity file '%s' at line #%ld
+2213    can't open index database '%s'
+2214    index not built
+2215    maximum TOC level exceeded, clamping to '%d'
+4215    can't lock book '%s', might be locked by another program
+4216    can't read authorization file '%s'
+4217    the evaluation license has expired
+# 4218  
+4219    unauthorized to make a book
+4220    lucky, increment failed
+4221    will not output to '%s'
+4222    unauthorized to publish a book
+4223    can't add word to stop list subindex
+4224    error building index
+6208    Book name not specified
+6209    The %s is set to an earlier version of the product. Verify the DATA_DIR setting
+6210    %s variable not specified in %s
+6211    unable to open SGML parser
+6213    can't open book '%s'
+6221    can't load styles from '%s'
+6222    requesting parent of EIDROOT at line #%ld
+6223    requesting parent of EIDNULL at line #%ld
+6224    can't add root node
+6225    can't make a book which is a virtual document
+6226    unable to create a new index directory, please check permissions
+8211    unable to open SGML parser
+8213    fatal error
+8214    can't find book directory '%s' for book '%s'
+8219    unauthorized to make a book
+
+# dtl, dtext, and closely associated modules (250-269)
+########################################################
+250     usage: %s [-col book_database] [bookname]
+251     sorry, '%s' is on the stop list
+252     a word is on the stop list
+253     evaluation book from '%s'
+254     no occurrences found
+255     no occurrences found, but word(s) on stop list
+256     evaluation book
+2250    can't open connection for External API
+2251    can't open book '%s'
+2252    no such book '%s'
+# 2253  
+2254    cdata without text
+2255    can't load style '%s'
+2256    book '%s' is already open
+2257    book '%s' is not open
+2258    help system not available
+2259    can't open print stream and/or style database, aborting print
+2260    can't open target book '%s'
+2261    can't crosslink to current window
+2262    can't create '%s' target view
+2263    no active view
+2264    can't create table
+2265    annotations and journals for '%s' might be out of date
+2266    cannot open fulltext index database '%s'
+2267    single quote character "'" in annotation script '%s'
+2268    error reading index
+2270    there is currently no active query
+4250    not authorized to open book '%s'
+4251    no such script '%s'
+4252    printing error 
+4253    no '%s' parameter to script
+4254    can't create graphic image from file '%s'
+4255    running without fulltext index, cannot perform '%s'
+4256    can't load note file '%s'
+4257    memory problems, query results are too big
+4258    the '%s' script does not support printing
+4259    '%s' has revision %d, but item has revision %d
+4260    can't add annotation
+4261    can't remove annotation
+4262    evaluation book '%s' expired on '%s'
+4263    invalid query expression
+4264    can't get script for element '%s'
+4265    can't find element to scroll view to
+4266    can't find root of new view 
+4267    only owner can delete an annotation
+4268    you have not provided authorization key for secure book '%s'
+6250    null segment in free buffer
+6251    annot already in hash table, element id %ld
+6252    unable to load stylesheet '%s'
+6253    standalone license has invalid hostid
+6254    error reading authorization file for initializing Full Browser
+6255    the evaluation license has expired
+6256    can't read authorization file '%s'
+6257    invalid license file, '%s', for running Full Browser
+6258    authorization failed: %s
+6259    invalid authorization service '%s'
+6260    invalid data_dir passed to DTL
+6261    can't open toc '%s'
+8250    
+8251    can't load style '%s'
+8252    
+8253
+8254    can't initialize interface - '%s'
+8258    nesting of styles in toc, see '%s'
+8259    no level 1's or 2's in table of contents
+
+# dhelp (270-289)
+########################################################
+270     usage: %s [-col book_databases] [-data data_dir] [-xdir xdir] [-auth auth_service] [-private private_dir] [-public public_dir]
+8270    can't get display from DTL instance
+
+# ebt programs (290-300)
+######################################
+290     updating file '%s' ...
+291     usage: %s [-buildmap mapfile -db1 bookdb1 -db2 bookdbr -b1 book1 -b2 book2 \
+		  [-private directory] [-public directory] mapfile
+292     usage:  %s %s [file] \
+		%s %s [file] \
+		%s %s [file] \
+		%s %s [file] \
+		%s %s [file] \
+		%s %s [file] \
+		%s %s [file] \
+		%s %s [file]
+
+# lwin package, lookups (300-305)
+######################################
+2300    unable to save file '%s'
+2301    unable to open file '%s'
+2302    search form '%s' is not defined for this book
+2303    query expression missing for search form '%s'
+2304    field definition(s) missing for search form '%s'
+2305    name attribute missing for search form at line %ld of file '%s'
+
+# bwin package (306-315)
+######################################
+2306    book database '%s' has zero size 
+2307    You must have one or more books selected
+2308    book '%s' is not a valid book
+
+# pubbook & fixbook commands (316-325)
+#####################################
+316     copying '%s' to '%s'
+317     creating backup directory '%s' (see man pages)
+318     book '%s' published successfully
+319     Usage: [-col collection] bookname
+2316    book '%s' already published
+2317    book '%s' is an evaluation book. It must be a full book
+4316    error publishing book '%s'
+8316    usage: fixbook [-col book_dir] book_name.  (or see man page)
+
+# print and render packages (340-349)
+######################################
+2340    window is narrower than minimum required by style sheet
+
+# script package (350-359)
+######################################
+2350    unknown property-value function '%s'
+2351    cannot convert number to unknown format name '%s'  
+2352    property-value function name is too long: '%s'
+2353    duplicate property-value function name '%s'
+2354    too many close parentheses in property-value expression
+4353    unknown property-value function '%s'
+4354    bad type for argument %d of property-value function '%s'
+4355    wrong number of arguments to property-value function '%s' (%d), should be %d-%d
+4356    An open single quote/apostrophe has no matching close quote in property-value expression
+4357    'switch' function requires a test value, then value/result pairs, then 'DEFAULT' and a default value
+
+# dvi (360-364)
+################################################
+4360    unrecognized dvi command. Expected %s
+4361    Unable to render equation.  Equation did not build properly during mkbook.
+
+# ebtfont (365-369)
+################################################
+365     usage: %s [-dest] [-name] [-dpi] filename ... 
+366     unrecognized option '%s'
+
+4365    invalid gf file '%s'
+4366    unrecognized gf command.  Expected %s
+
+# ibase (370-379)
+######################################
+4370    can't create BIO pool
+4371    can't open BIO file '%s'
+4372    can't read header from BIO file '%s'
+4374    bad magic cookie in disk header
+4375    disk version is %ld and ibase version is %ld
+6370    can't read from BIO file
+6371    can't write to BIO file
+6372    bad mode parameter to IBASEnew
+
+# index (380-389)
+######################################
+380     word is on stop list
+381     no such word in index
+382     index flush #%d, at element %ld...
+383     index flush #%d, at end of book
+384     done merging data
+385     restructuring . . 
+388     %.1f%% done, on word "%s"
+389     merging . . 
+2380    problem opening stop list, make sure path is okay 
+2381    problem opening go list, make sure path is okay
+4380    can't delete file
+4381    bad parameter passed
+4382    index not opened with proper mode for operation
+4383    subindex is not active in this index
+4385    error occurred in sub package %s
+4386    cannot rename file from '%s' to '%s'
+4387    the current index is null
+4388    the book is currently null
+5380    incompatible datatypes in operands of a logical operator
+5381    bad datatype on left side of "containing" operator
+5382    bad datatype on right side of "inside" operator
+6380    can't seek to pos %ld in file when %s
+6381    char requested not found in file
+6382    can't read in file
+6383    can't write to file
+6384    can't bisect vocab file
+6385    database record garbled for word '%s', cause: %s
+6386    element stack empty, cannot close element
+6387    unknown data-compression method %d
+6388    compression segment out of range: %d
+6389    INDEXflogCreate failed for %s
+6390    problem reading from %s file, please check permissions
+6391    too many flush files - try resetting max memory
+6392    file '%s' is not a mkbook log file
+6393    pathname for book does not match flush file
+6394    bad length flush-record in flush file
+6395    one record in flush file is invalid
+6396    flush counter out of sync       
+6397    trouble opening vocab in %s. \
+		 Try remaking book
+6398    trouble getting data in %s. \
+    File doesn't exist or is out of date.  Try remaking book
+6399    book has not been made recently.\
+		 Try remaking book
+
+# edit package (390-399)
+######################################
+2390    no text in Clipboard to Paste
+2391    Unable to access data in Clipboard
+
+# os package (390-395) (regex is here)
+######################################
+
+# ilist package (400-429)
+######################################
+6400 Can't operate on NULL list
+4401 Bad item specification parameter
+6402 NULL result buffer passed
+
+6405 can't add by name in an unsorted list
+6406 can't operate by position in a sorted list
+6407 not enough items in list
+6408 shouldn't have dropped out of collect loop
+
+6410 out of memory allocating case-conversion buffer
+6411 out of memory allocating item
+6412 out of memory allocating item name
+
+8415 check field trashed, no free attempted
+8416 trashed value is '%s'
+8417 numItems was off!  Ended at %ld
+8418 links in ilist inconsistent
+
+# hist and annot package (430-434)
+######################################
+2430    
+4430    invalid start tag '%s' in event list
+4431    'TITLE' tag not within 'EVENT' tag in event list
+4432    event list ended in the middle of an event
+4433    invalid start tag '%s' in annot file '%s'
+6430    unable to open SGML parser on file '%s'
+
+# win, hwin and awin package (435-439)
+######################################
+435     no Journal Entries in Clipboard to Paste
+436     no Journal Entries selected to Cut
+437     no Journal Entries selected to Copy
+438     Duplicate Filter Name
+439     Wrong Date Value Specified
+2434    This filter cannot be edited
+2435    This filter cannot be deleted
+2436    A filter name is required
+2437    An annotation must first be selected
+2438    A filter must first be selected
+2439    You must have exactly one item selected for this operation
+4435    Unable to access data in Clipboard
+4436    Can't delete filter group  '%s'  since you don't own it.
+
+# insted (440-499)
+######################################
+440     Usage: %s [-col book_database] [ bookname [stylesheetname] ]
+441     This will be a new style sheet.  How should I initialize it?
+442     Directory '%s' not found -- I will attempt to create it
+443     Warning: A newer autosaved version of %s (book %s) exists. Load autosaved file?
+444     An abandoned version of %s (book %s) exists
+445     This action will overwrite existing file %s
+446     Couldn't find any element of type %s
+447     Warning: could not write to autosave file %s
+448     Warning: whenever you edit a <title-tag> property, you won't see the effect until after you re-make the book
+449     Because a "mkbook" has not been performed for this book successfully, I won't be able to show a Preview window. You will be able to edit the stylesheet, but if you want to be able to view the book hierarchy and to harden styles, I must perform a SLOW load of the book by parsing the SGML myself. This can be a lengthy operation for large books. Would you like me to parse the SGML?
+450     You have made changes that have not yet been saved!  What should I do?
+451     The book's SGML file is newer than the data files created by 'mkbook'
+452     Please close a stylesheet via the main (STYLE SHEET) window
+453     I will be pasting a collection of entities. How should I resolve name conflicts?
+454     Type in a new Stylesheet name.
+455     Error: Could not save file %s. Unable to create temporary backup
+
+456     Trying to open revelatory stylesheet %s: Enter tag name which uses this stylesheet
+457     Could not open book %s
+458     Could not find the tag %s in the book %s
+459     Warning: Could not write to autosave file.  This stylesheet will not be autosaved.
+460     Warning: Could not create autosave directory %s. This stylesheet will not be autosaved.
+461     Could not write autosaved file to saved file
+462     Please type in the entity name.
+463     Please type in the entity value.
+464     Save stylesheet first?
+465     Warning: couldn't create backup directory %s
+466     You must select an icon first.
+467     Bad Property Value
+468     You must rebuild the TOC after changing the title-tag!
+470     Warning: couldn't write to backup file %s
+480     Security initialization failed.  See your system administrator
+490     Warning: that file already exists.  Should I overwrite it?
+491     Your stylesheet is invalid.  It cannot be opened.
+492     The fulltext index for this book is invalid.  You will not be able to open any stylesheets for this book.  Try re-making it as a DynaText 2.0 book
+493     The ebt-reveal script of the selected style references the current stylesheet.  Replace current full view with revelatory view?
+494     Open the revelatory stylesheet %s?
+495     %s is a directory.  Choose a different file name
+496     Stylesheet %s does not exist
+497     You are creating a new stylesheet.  Do you want to set line breaks on all styles?
+498     Name has already been used!
+499     Slot position occupied by Entities window; Default slot used
+
+# don't screw with the spacing.  It's very delicate.
+1440    Stylesheet:                 %s \
+	Book:                          %s \
+	Collection:                   %s \
+	Stylesheet Directory:  %s
+
+2440    DTD file (%s) is non-existent or has improper contents
+2441    No value specified for that property -- no copy performed
+2442    Clipboard is empty -- no paste performed
+2443    No paste performed - incomplete style definition
+2444    Clipboard currently contains a set of values
+2445    Clipboard does not currently contain an entity collection
+2446    Error trying to open the "mkbook"-produced data for book %s
+2447    The .sgm file apparently does not contain valid SGML
+2448    No style definition handles this script
+2449    The "script" property is empty for this style
+2450    This script executes an action (%s) that is not a revelatory action
+2451    Select a style
+2452    Select a property of a style
+2453    Clipboard empty
+2454    No paste performed - no property stored
+2462    No stylesheets present
+2463    Error: Could not build element tree
+
+4440    Value contains "</", which is illegal in property values
+4441    '%s' is not a valid entity name
+4442    '%s' is not a valid tag name
+4443    '%s' is not a valid group name: use lowercase letters, digits, and '-'
+4444    Error in style sheet near: %s
+4446    A shared-styles directory with that name (%s) already exists
+4447    You can't rename/delete a style that is an SGML element in the book
+4448    Bad file name: '%s'
+4449    1 or more errors were found and reported on your console -- be careful!
+4450    Couldn't create directory '%s'
+4451    Internal error: DTD node for given context was not found
+4452    You can't transform from TOC to regular, or vice-versa, this way
+4453    Please use the "Qualify" command in the hierarchical view instead!
+4454    There are styles which belong to the group you want to delete. Do you really want to delete the group %s?
+4455    Failure occurred during attempt to change sharing arrangement. A permissions problem may be the culprit.
+4456    Unknown entity: %s
+4457    A style with that name (%s) already exists
+4458    A group with that name (%s) already exists
+
+4460    You can only save a TOC stylesheet as another TOC stylesheet.
+4461    You can not save a non-TOC stylsheet as a TOC stylesheet.
+
+4470    The styles file %s for this book does not resolve to a valid styles directory.  Check that file as well as the map.txt file to determine the problem.
+4471    Unable to create a private styles directory %s, so there is no styles directory for this book.  Check your write permissions in the directory for this book.
+
+4472    Could not get authorization from Hardware key to rebuild Table Of Contents
+
+5450    You must first select the entity that you want to rename
+5451    Do you really want to delete the group %s?
+5452    You can not ungroup %s.  It is a group
+5453    You can not ungroup %s.  It does not currently belong to any group
+5454    Do you really want to delete the style %s?
+5455    Do you really want to delete the entity %s?
+5456    You must first select the entity that you want to delete
+5457    Do you want to overwrite any existing entities in the event of a naming conflict?
+5458    Stylesheet name to save as:
+5459    %s is not a legal file name
+5460    You do not have write permissions to create the file %s
+5461    You do not have read permissions on the file %s
+5462    You do not have write permissions on the file %s
+5463    The file %s already exists.  Do you want to overwrite it?
+5464    You can not save this file.  You do not have write permissions.
+5465    This should not be happening:  You have no current styles directory
+5466    Entity is used in styles. Replace references with value?
+5467    You do not have write permissions on the file %s, so no changes will be saved.  Do you still want to open it?
+5468    Warning: File has changed on disk since last visited or saved. Saving this stylesheet will overwrite those changes.  Do you still want to save?
+5469    You can only save this stylesheet as a file in the same styles directory.  You can not specify a full path, just the new stylesheet name.
+5470    An element that references the stylesheet you selected could not be found.  You can not open the stylesheet %s
+
+5471    Do you really want to clear the style %s?
+5472    Do you really want to clear the group %s?
+
+5475    The stylesheets for the book %s currently resides in the public styles directory %s. Do you want to copy them to a private styles directory for this book?
+5476    The stylesheets for the book %s currently resides in a private styles directory. Do you want to copy them to the public styles directory %s?
+5477    You can not create the new styles directory.  The path for that directory, %s, already references a file
+5478    The styles directory %s already exists.  Do you want to overwrite its contents?
+5479    You can not create the new styles directory %s.  The directory could not be created.
+5480    You can not create the new styles directory %s: Unable to copy files
+5481    Warning: unable to remove private styles directory
+5482    There is no dtd name associated with the book %s.  In order to share stylesheets, your book must have a dtd name.
+5483    %s is a tag used in this book.  You can only create this style by qualifying ths style %s
+5484    %s in not a context which is found in this book.  This style would never be used.
+5485    The name you typed in, %s, is too long.  The maximum length is %d
+5486    The name you typed in, %s, is invalid. '%c' is not a valid starting character.
+5487    The name you typed in, %s, in invalid. '%c' in not a valid character.
+5488    Property Value Error: %s Do you want to edit the formula?
+5489    "%s" is a reserved word.  It can not be used as the name for a style or group.
+
+5490    The entity to which you are referring has not been defined.
+5491    The %s property requires an integer value.
+5492    The %s property requires True or False.
+5493    The %s property requires one of the specific values from the pull-down list.
+5494    A reference to a character code ("&#") must be followed by a number.
+	
+6440    The stylesheet %s is shared, and has already been opened using book %s of collection %s.  Close that stylesheet first, and then you can open it with this book.
+6441    Stylesheet '%s' is unrecognizable or empty
+6442    Book directory %s is unrecognizable -- no .sgm and no derived data
+6443    This stylesheet is READ-ONLY because you don't have write permission
+6444    This stylesheet is READ-ONLY because it's already open and locked!
+6446    Error 6446 -- an obsolete error message -- contact EBT immediately
+6447    Stylesheet %s for book %s has not been saved.  Do you want to save it?
+6448    Save stylesheet %s of book %s before closing?
+6449    Save failed.  Do you still want to close?
+6450    Error in stylesheet initialization (Need more info here)
+6451    The ebt-reveal script of the selected style references 
+the current stylesheet.  In order to observe the formatting of  
+the hidden item, temporarily disable the "hide" property for   
+the selected style.
+6452    Stylesheet will be automatically saved! Continue?
+6455    Really quit InStEd?
+
+6460    Directory specified for collection, %s, is invalid
+6461    Specified collection %s has no books directory.
+6462    The book %s is not a member of the collection %s
+
+7440    Could not rebuild Table Of Contents
+
+8440    Usage: insted [-coll collection_name] [book_name [stylesheet_name]]
+8441    Unable to allocate memory to rebuild Table Of Contents
+
+# tok package -- SGML parser (500-599)
+######################################
+# 6500-6509 are general tok messages
+#
+
+
+2510 omit-tag flag character trace: '%c', '%c'
+2526 Entity: %s %18s: '%s'
+2527 Trace: Consuming delim %s '%s', but got '%c' instead of '%c'
+2528 NET-enabled element '%s' is closed by normal end-tag: are you sure that's what you want?
+2525 TAGC delimiter found in quoted attribute value: possible missing quote?
+
+4500 SGML syntax error, see ISO 8879 section %s
+4501 Location:  Line %8ld of entity '%s'
+4502 STAGO found within attributes (and not in quotes)
+4503 -used at:  Line %8ld of entity '%s'
+4504 Context:   '%s'...\
+	     '%s'
+4505  Context:  (none available)
+
+4507 unsupported markup declaration type '%s'
+4508 invalid markup declaration type '%s'
+4509 No SYSTEM (file) identifier found for PUBLIC entity '%s'; please add
+4510 end-tag for EMPTY tag '%s'
+4511 bad char '%c' (d%d) for omit-end-tag flag for tag '%s'
+4512 extra argument '%s' to non-PUBLIC system id (ignored)
+4513 bad number of characters to look ahead: %d
+4514 entity '%s' has not been defined, and there is no #DEFAULT
+4515 end-tag found for non-open element '%s'.\
+     Open element stack is: '%s'
+4516 Entity '%s' must not invoke itself even indirectly
+4517 keyword '%s' is not PUBLIC or SYSTEM in external identifier
+4518 already got pending close tag '%s', can't add another
+4519 bad data after external identifier for notation '%s'
+4520 suspiciously long text skipped, lines %ld-%ld
+4521 notation '%s' has already been defined
+4522 element '%s' has already been defined
+4523 TAGC occurs within group
+4524 model group too long
+4525 called not pointing to GRPO
+4526 trace in grabtext loop: c1='%c' (d%03d), resultlen=%03d
+4528 empty end-tag requires SHORTTAG feature
+4529 GRPO not recognized in tag without CONCUR feature
+4530 in grabText, matchDelim returned 
+4531 out of buffer space, could not reload
+4532 unknown delimiter (see 9.6)
+4533 trace on delimiter testing
+4534 trace at top of TOKnextWithPI
+4535 parse error:  inside COM, but not MD or DS
+4536 delimiter found is 
+4537 marked section end outside marked section
+4538 document must start with start-tag or markup declaration
+4539 In DOCTYPE, found DSC with bad following char '%c' (d%d)'
+4540 bad chars in end tag for '%s'
+4541 Numeric character entity '%s' (=d%d) out of defined range
+4542 killed whole open tag stack on end tag for '%s'
+4543 shouldn't be opening MD except from DS or CON
+4544 element '%s' has not yet been defined
+4545 bad char '%c' (d%d) for omit-start-tag flag for element '%s'
+4546 bad content model or declared content for element '%s'
+4547 bad data at end of ELEMENT declaration for element '%s'
+4548 missing MDC in declaration for element '%s'
+4549 invalid entity name in declaration for entity '%s'
+4550 PUBLIC entities are not yet fully supported
+4551 The document instance is empty
+4552 unknown entity type keyword in declaration for entity '%s'
+4553 no LIT/LITA on declaration for '%s'
+4554 no closing LIT/LITA on quoted literal
+4555 bad char between LIT and MDC on declaration of parameter entity '%s'
+4556 SUBDOC feature is not yet supported
+4557 NDATA entity specifies undefined notation '%s'
+4558 bad data at end of ENTITY declaration for '%s'
+4559 couldn't find MDC
+4560 found DSC without DSO in marked section
+4561 found MDC without DSO in marked section
+4562 name-groups not yet supported on marked sections
+4563 unknown keyword '%s' for marked section
+4564 missing DSO after status keyword in marked section
+4565 bad character '%c' (d%d) in status keyword in marked section
+4566 unterminated marked section, started at line %ld
+4567 attributes too long (missing LIT?)
+4568 unknown declared value '%s' for entity '%s'
+4569 Exclusions must precede inclusions in declaration for element '%s'
+4570 bad delimiter for mode: '%s'
+4571 bad delimiter
+4572 duplicate DOCTYPE declaration
+4573 empty ATTLIST declaration for element '%s'
+4574 MDC found when expecting declared value for attribute '%s' of element '%s'
+4575 MDC found when expecting default for attribute '%s' of element '%s'
+4576 bad default value '%s' for attribute '%s' of element '%s'
+4577 unknown named character reference '%s'
+4578 Value for #FIXED attribute '%s' must be '%s', not '%s'
+4579 Value for #REQUIRED attribute '%s' is missing
+4580 unknown parsing option
+4581 unknown parsing option
+4582 Expanded attribute list is too long (limit %d)
+4583 Declaration subsets nested too deep
+4584 requested PI text contains PIC delimiter
+4585 Start-tag for '%s' is not valid in this context
+4586 No '%s' is open, so an end-tag for it is not valid.  The last one was closed at line %ld
+4587 Name is too long, current limit is %ld
+4588 Entity ends within the parameter literal started at line %ld
+4589 Attribute value literal (line %ld-%ld) is too long (max %ld)
+4590 Parameter literal (line %ld-%ld) is too long (max %ld), \
+   has been normalized to fit LITLEN
+4591 Parameter literal (line %ld-%ld) is too long (max %ld), \
+   and could not be fit by normalizing
+4592 NULL character found in input, converted to space
+4593 TAGC delimiter omitted, but SHORTTAG is off
+4594 NET delimiter found in tag, but SHORTTAG is off
+4595 Missing TAGC delimiter (hit end of document)
+4596 Attribute value missing after VI for '%s' attribute
+4597 No ATTLIST, so must have attribute name for token '%s'
+4598 Attribute value '%s' was not declared for any attribute
+4599 Missing parameter literal value for entity '%s'
+4600 End-tag for '%s' is not valid in this context
+
+5500    No notation list for attribute '%s' of element '%s'
+5501    Duplicate ATTLIST for element '%s'
+5502    Required start-tag was omitted
+5503    Required end-tag for '%s' was omitted
+5504    Cannot imply a start-tag before end-tag for '%s'
+5505    Expecting name character but found '%c' (d%d)
+5506    Expecting name-start character but found '%c' (d%d)
+5507    Expecting parameter separator but found '%c' (d%d)
+5510    TAGC delimiter found inside a group; possible unmatched parenthesis?
+5511    Could not find entity '%s' after checking locations listed below
+5512    SGML declaration loading is not yet supported.
+5513    No DOCTYPE was found before the document started (with delim %s)
+5514    Text was found outside comment delimiters within a comment declaration
+5515    Extraneous text was found in the declaration subset; missing DSC delimiter? Text is '%s'
+
+5585 NET delimiter recognized out of context
+#
+6500 out of memory
+6501 NULL stream pointer passed
+6502 bad parameter passed
+6503 data structure sanity-check failed because: %s
+6504 required internal data structure is NULL
+6505 unable to open file '%s'
+6507 delims must be inited before calling
+6509 path name length is too long
+6510 are you really sure you wanted 1000 attributes here?
+6511 unable to find SYSTEM entity '%s'
+6512 bad pointer in linked list of open entities
+6513 bad last pointer in linked list of open entities
+6514 unable to push open element list
+6515 entity nesting depth went negative, to %d
+6516 unexpected tag type '%s'
+6517 got null longTagName in TOKhandleTagStack
+6518 negative buffer size not allowed
+6519 see 4514.
+6520 bad delimiter type returned
+#
+6530 Expected data in STRPOOL but found 1
+6531 NULL parameter passed
+6532 unknown internal TokElement type
+6533 bad text in DOCTYPE declaration after type name '%s'
+6534 save-directory has already been set, to '%s'
+6535 must set save-directory *before* opening document
+6536 unable to open test file '%s'
+# obs 6537 open document before setting expand options
+6538 Parameter entity '%s' not defined
+6539 Bad enumerated value for ATTR_DFT: %d
+6540 Bad entity type returned from parse
+6541 Couldn't define element '%s' to attach attrs to
+6542 Create SDCL before loading SGML declaration
+6543 Bad enum for reserved name set-up: %d
+6544 Couldn't set up SGML declaration
+#
+6577 length tracking out of sync, strlen %ld versus avail %ld
+6578 buffer pointer trashed
+6579 no more room for ungetting chars
+6582 mode stack too deep
+6585 can't pop mode stack when empty
+
+
+
+
+
+
+# mklibidx package -- Making library level index (600-640)
+######################################
+# 
+#
+8600 unable to create new collection index, \
+		check permissions on current index.
+8601 no collection specified in mkbook.ini file
+### Note: 8602 is unused on all platforms.
+8602 no data directory specified in mkbook.ini file
+8603 The collection '%s' does not exist
+8604 %s is not a valid DynaText collection
+8605 usage: %s [-col collection] \
+	[-config book_list] [-data_dir data_dir] [-nl] [-v(erbose)] [-final]
+
+## Errors, in parsing file
+2610 Line %ld of build file -- group has no name,\
+		all index requests for this group will be ignored
+2611 Line %ld of build file -- group '%s' has already been added,\ 
+		all index requests for this group will be ignored
+2612 Line %ld of build file -- book has no name,\
+		all index requests for this book will be ignored
+2613 Line %ld of build file -- book '%s' has already been added,\
+		all index requests will be ignored
+2614 Line %ld of build file -- unrecognized element '%s'
+2615 Line %ld of build file -- no group or book is open, INDEX element ignored
+2621 Line %ld of build file -- tag name '%s' redefined in book '%s'
+2622 Line %ld of build file -- tag name '%s' redefined in group '%s'
+2628 Line %ld of build file -- book '%s', warning omit element '%s' redefined
+2629 Line %ld of build file -- index line does not specify element
+
+## Errors, while building library-level index
+##
+2616 book '%s' -- in group '%s', which does not exist
+2617 Could not add book '%s' -- try remaking before making collection index
+2630 Could not add book '%s' -- not found in collection %s
+2631 Could not add virtual book '%s' -- too many sub-books 
+2620 Tag name conflict in book '%s' for tag '%s' -- using book definition
+4618 problem adding book '%s'
+2625 omit element must appear only within a book
+2626 omit element '%s' in book '%s', not in group '%s'
+2627 conflict: omit element '%s' in book '%s,' also in index list
+2607 problem adding book '%s,' the book has already been added
+
+## Status Messages while building library-level index
+##
+4605 error trying to add book '%s'
+606 added book '%s'
+608 making collection index...
+609 Total Collection Indexing Time: %s 
+637 *** Collection Index Completed ***
+619 Adding book '%s'
+623 Configuration File: %s
+634 Configuration File: Using booklist.txt
+635 Configuration File: None Specified -- Indexing ALL BOOKS
+624 Could not find configuration file: %s
+631 For book '%s,' the elements to index are..
+632 -- deleted  %8s,  not going to index
+633 -- indexing %8s,  under '%s'
+636 --------------------------------------------------------
+
+
+# Lswin package
+###############
+#
+#
+
+666 Lswin: Row %d is beyond the edge of the array
+667 Lswin: Parameter out of bounds
+668 Lswin: Realloc returned NULL
+669 Lswin: Trying to set an out-of-bounds item
+670 Lswin: Needed to grow memory to add item, but couldn't
+
+# Inwin Package
+###############
+
+671 Select a stylesheet or type in a new stylesheet name.
+672 Select a library and book.
+673 Select a book.
+

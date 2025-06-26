@@ -1,0 +1,38 @@
+<!-- CGM.MAP 
+	This file instructs the cgm viewer which fonts to use when displaying
+	Computer Graphics Metafiles. 
+
+	Available fonts include cour, time, helv, and symb.  All but symb are
+	avalable in regular, bold, italic, and bold-italic.
+-->
+
+<!-- Mappings for Carberry's hershey font names -->
+<font name=time sep=","
+	aliases="hershey:cartographic_roman,hershey:simplex_roman,hershey:complex_roman">
+<font name=time weight=b sep=","
+	aliases="hershey:duplex_roman,hershey:triplex_roman">
+<font name=time slant=i sep=","
+	aliases="hershey:complex_italic">
+<font name=symb sep=","
+	aliases="hershey:cartographic_greek,hershey:simplex_greek">
+<font name=symb sep=","
+	aliases="hershey:complex_greek">
+
+
+<!-- Mappings for standard font names -->
+<font name=cour aliases="courier">
+<font name=cour weight=b aliases="courier bold">
+<font name=cour slant=i	aliases="courier italic">
+<font name=cour weight=b slant=i aliases="courier bold italic">
+
+<font name=helv aliases=helvetica>
+<font name=helv weight=b aliases="helvetica bold">
+<font name=helv slant=i	aliases="helvetica italic">
+<font name=helv weight=b slant=i aliases="helvetica bold italic">
+
+<font name=time aliases=times>
+<font name=time weight=b aliases="times bold">
+<font name=time slant=i	aliases="times italic">
+<font name=time weight=b slant=i aliases="times bold italic">
+
+<font name=symb aliases=symbol>
