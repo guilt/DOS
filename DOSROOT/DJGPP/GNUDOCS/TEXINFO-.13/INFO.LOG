@@ -1,0 +1,174 @@
+This is pdfeTeX, Version 3.141592-1.30.6-2.2 (MiKTeX 2.5) (preloaded format=pdftex 2007.6.4)  9 NOV 2008 14:19
+entering extended mode
+**F:/texinfo/srcs/gnu/texinfo4.13/doc/info.texi
+(F:\texinfo\srcs\gnu\texinfo4.13\doc\info.texi (texinfo.tex
+Loading texinfo [version 2008-04-18.10]:
+\bindingoffset=\dimen16
+\normaloffset=\dimen17
+\pagewidth=\dimen18
+\pageheight=\dimen19
+\outerhsize=\dimen20
+\outervsize=\dimen21
+\cornerlong=\dimen22
+\cornerthick=\dimen23
+\topandbottommargin=\dimen24
+\headlinebox=\box16
+\footlinebox=\box17
+\margin=\insert252
+\EMsimple=\toks12
+\groupbox=\box18
+\groupinvalidhelp=\toks13
+\mil=\dimen25
+\exdentamount=\skip18
+\inmarginspacing=\skip19
+ pdf,
+\tempnum=\count26
+\lnkcount=\count27
+\filename=\toks14
+\filenamelength=\count28
+\pgn=\count29
+\toksA=\toks15
+\toksB=\toks16
+\toksC=\toks17
+\toksD=\toks18
+\boxA=\box19
+\countA=\count30
+\nopdfimagehelp=\toks19
+ fonts,
+\sffam=\fam8
+\textleading=\dimen26
+\fontdepth=\count31
+ page headings,
+\titlepagetopglue=\skip20
+\titlepagebottomglue=\skip21
+\evenheadline=\toks20
+\oddheadline=\toks21
+\evenfootline=\toks22
+\oddfootline=\toks23
+ tables,
+\tableindent=\dimen27
+\itemindent=\dimen28
+\itemmargin=\dimen29
+\itemmax=\dimen30
+\itemno=\count32
+\multitableparskip=\skip22
+\multitableparindent=\skip23
+\multitablecolspace=\dimen31
+\multitablelinespace=\skip24
+\colcount=\count33
+\everytab=\toks24
+
+conditionals,
+\doignorecount=\count34
+ indexing,
+\whatsitskip=\skip25
+\whatsitpenalty=\count35
+\secondaryindent=\skip26
+\partialpage=\box20
+\doublecolumnhsize=\dimen32
+ sectioning,
+\unnumberedno=\count36
+\chapno=\count37
+\secno=\count38
+\subsecno=\count39
+\subsubsecno=\count40
+\appendixno=\count41
+\absseclevel=\count42
+\secbase=\count43
+\chapheadingskip=\skip27
+\secheadingskip=\skip28
+\subsecheadingskip=\skip29
+ toc,
+\tocfile=\write0
+\contentsrightmargin=\skip30
+\savepageno=\count44
+\lastnegativepageno=\count45
+\tocindent=\dimen33
+ environments,
+\errorbox=\box21
+\lispnarrowing=\skip31
+\envskipamount=\skip32
+\circthick=\dimen34
+\cartouter=\dimen35
+\cartinner=\dimen36
+\normbskip=\skip33
+\normpskip=\skip34
+\normlskip=\skip35
+\lskip=\skip36
+\rskip=\skip37
+\tabw=\dimen37
+ defuns,
+\defbodyindent=\skip38
+\defargsindent=\skip39
+\deflastargmargin=\skip40
+\defunpenalty=\count46
+\parencount=\count47
+\brackcount=\count48
+ macros,
+\paramno=\count49
+\macname=\toks25
+
+cross references,
+\auxfile=\write1
+\savesfregister=\count50
+ insertions,
+\footnoteno=\count51
+\SAVEfootins=\box22
+\SAVEmargin=\box23
+ (epsf.tex
+This is `epsf.tex' v2.7.3 <23 July 2005>
+\epsffilein=\read0
+\epsfframemargin=\dimen38
+\epsfframethickness=\dimen39
+\epsfrsize=\dimen40
+\epsftmp=\dimen41
+\epsftsize=\dimen42
+\epsfxsize=\dimen43
+\epsfysize=\dimen44
+\pspoints=\dimen45
+)
+\noepsfhelp=\toks26
+ localization,
+\nolanghelp=\toks27
+\countUTFx=\count52
+\countUTFy=\count53
+\countUTFz=\count54
+ formatting,
+\defaultparindent=\dimen46
+ and turning on texinfo input format.) (info.aux)
+@cpindfile=@write2
+@fnindfile=@write3
+@vrindfile=@write4
+@tpindfile=@write5
+@kyindfile=@write6
+@pgindfile=@write7
+
+[1{psfonts.map}] [2] (info.toc) [-1] (info.toc) (info.toc) Chapter 1 [1]
+[2] [3] [4] [5] [6] [7] [8] [9] Chapter 2 [10] [11] [12] [13] Chapter 3
+[14] [15] [16] [17] (Index) [18] (info.cps [19]) [20] ) 
+Here is how much of TeX's memory you used:
+ 1862 strings out of 97696
+ 21763 string characters out of 1213645
+ 72234 words of memory out of 1105184
+ 2727 multiletter control sequences out of 60000
+ 32127 words of font info for 112 fonts, out of 1000000 for 2000
+ 51 hyphenation exceptions out of 8191
+ 12i,6n,17p,320b,496s stack positions out of 5000i,500n,10000p,200000b,32768s
+PDF statistics:
+ 404 PDF objects out of 300000
+ 48 named destinations out of 300000
+ 229 words of extra memory for PDF output out of 10000
+<C:/Programme/MiKTeX 2.5
+/fonts/type1/bluesky/cm/cmsl9.pfb><C:/Programme/MiKTeX 2.5/fonts/type1/bluesky/
+cm/cmmi9.pfb><C:/Programme/MiKTeX 2.5/fonts/type1/bluesky/cm/cmti9.pfb><C:/Prog
+ramme/MiKTeX 2.5/fonts/type1/bluesky/cm/cmtt9.pfb><C:/Programme/MiKTeX 2.5/font
+s/type1/bluesky/cm/cmr9.pfb><C:/Programme/MiKTeX 2.5/fonts/type1/bluesky/cm/cmr
+7.pfb><C:/Programme/MiKTeX 2.5/fonts/type1/bluesky/cm/cmtt12.pfb><C:/Programme/
+MiKTeX 2.5/fonts/type1/bluesky/cm/cmti10.pfb><C:/Programme/MiKTeX 2.5/fonts/typ
+e1/bluesky/cm/cmsl10.pfb><C:/Programme/MiKTeX 2.5/fonts/type1/bluesky/cm/cmsltt
+10.pfb><C:/Programme/MiKTeX 2.5/fonts/type1/bluesky/cm/cmtt10.pfb><C:/Programme
+/MiKTeX 2.5/fonts/type1/bluesky/cm/cmmi10.pfb><C:/Programme/MiKTeX 2.5/fonts/ty
+pe1/bluesky/cm/cmmi12.pfb><C:/Programme/MiKTeX 2.5/fonts/type1/bluesky/cm/cmsy1
+0.pfb><C:/Programme/MiKTeX 2.5/fonts/type1/bluesky/cm/cmr10.pfb><C:/Programme/M
+iKTeX 2.5/fonts/type1/bluesky/cm/cmbx12.pfb>
+Output written on info.pdf (23 pages, 227259 bytes).

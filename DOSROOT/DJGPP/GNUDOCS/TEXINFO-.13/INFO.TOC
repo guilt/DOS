@@ -1,0 +1,27 @@
+@numchapentry{Getting Started}{1}{Getting Started}{1}
+@numsecentry{Starting Info on a Small Screen}{1.1}{Help-Small-Screen}{1}
+@numsecentry{How to use Info}{1.2}{Help}{1}
+@numsecentry{Returning to the Previous node}{1.3}{Help-P}{2}
+@numsecentry{The Space, DEL, B and ^L commands}{1.4}{Help-^L}{2}
+@numsecentry{Invisible text in Emacs Info}{1.5}{Help-Inv}{4}
+@numsubsecentry{The @kbd {]} and @kbd {[} commands}{1.5.1}{Help-]}{4}
+@numsecentry{Menus and the @kbd {m} command}{1.6}{Help-M}{5}
+@numsubsecentry{The @kbd {u} command}{1.6.1}{Help-FOO}{7}
+@numsecentry{Following Cross-References}{1.7}{Help-Xref}{7}
+@numsecentry{Some intermediate Info commands}{1.8}{Help-Int}{8}
+@numsecentry{Quitting Info}{1.9}{Help-Q}{9}
+@numchapentry{Advanced Info Commands}{2}{Advanced}{11}
+@numsecentry{@kbd {s} searches Info documents}{2.1}{Search Text}{11}
+@numsecentry{@kbd {i} searches the indices for specific subjects}{2.2}{Search Index}{11}
+@numsecentry{@kbd {g} goes to a node by name}{2.3}{Go to node}{12}
+@numsecentry{@kbd {1}--@kbd {9} choose a menu subtopic by its number}{2.4}{Choose menu subtopic}{12}
+@numsecentry{@kbd {M-n} creates a new independent Info buffer in Emacs}{2.5}{Create Info buffer}{13}
+@numsecentry{Emacs Info-mode Variables}{2.6}{Emacs Info Variables}{13}
+@numchapentry{Info for Experts}{3}{Expert Info}{15}
+@numsecentry{Adding a new node to Info}{3.1}{Add}{15}
+@numsecentry{How to Create Menus}{3.2}{Menus}{16}
+@numsecentry{Creating Cross References}{3.3}{Cross-refs}{17}
+@numsubsecentry{The node reached by the cross reference in Info}{3.3.1}{Help-Cross}{17}
+@numsecentry{Tags Tables for Info Files}{3.4}{Tags}{17}
+@numsecentry{Checking an Info File}{3.5}{Checking}{18}
+@unnchapentry{Index}{10001}{Index}{19}

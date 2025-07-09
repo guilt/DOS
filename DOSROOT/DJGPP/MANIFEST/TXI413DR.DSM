@@ -1,0 +1,40 @@
+#
+# DSM for Texinfo 4.13 documentation
+# Written by Eli Zaretskii <eliz@is.elta.co.il> 2003-07-24
+#
+
+dsm-file-version: 1.2
+dsm-name: txi413dr3
+dsm-version: 0.6.1
+type: documentation
+
+dsm-author: Eli Zaretskii
+dsm-author-email: eliz@is.elta.co.il
+
+name: Texinfo
+version: 4.13 release 3
+manifest: txi413dr3
+binaries-dsm: txi413br3
+sources-dsm: txi413sr3
+short-description: GNU Texinfo version 4.13
+long-description: Texinfo is a documentation system that produces on-line\n\
+manuals and printed output from the same source
+license: GNU GPL
+author: Brian Fox
+maintainer: Karl Berry
+maintainer-email: karl@gnu.org
+# For reporting bugs
+mailing-list: bug-texinfo@gnu.org
+# For getting help in using Texinfo
+mailing-list: help-texinfo@gnu.org
+# For discussing DJGPP- and DOS/Windows-specific aspects
+mailing-list: djgpp@delorie.com
+newsgroup: comp.os.msdos.djgpp
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: txi413d.zip
+
+replaces: Texinfo < 4.13 release 3

@@ -1,0 +1,375 @@
+\entry{comment}{9}{\code {comment}}
+\entry{c (comment)}{9}{\code {c \r {(comment)}}}
+\entry{ignore}{9}{\code {ignore}}
+\entry{{\tt \indexbackslash }input (raw TeX{} startup)}{10}{\code {{\tt \backslashcurfont }input \r {(raw \TeX {} startup)}}}
+\entry{texinfo-insert-@code}{16}{\code {texinfo-insert-@code}}
+\entry{texinfo-insert-@dfn}{16}{\code {texinfo-insert-@dfn}}
+\entry{texinfo-insert-@end}{16}{\code {texinfo-insert-@end}}
+\entry{texinfo-insert-@item}{16}{\code {texinfo-insert-@item}}
+\entry{texinfo-insert-@kbd}{16}{\code {texinfo-insert-@kbd}}
+\entry{texinfo-insert-@node}{16}{\code {texinfo-insert-@node}}
+\entry{texinfo-insert-@noindent}{16}{\code {texinfo-insert-@noindent}}
+\entry{texinfo-insert-@samp}{16}{\code {texinfo-insert-@samp}}
+\entry{texinfo-insert-@table}{16}{\code {texinfo-insert-@table}}
+\entry{texinfo-insert-@var}{17}{\code {texinfo-insert-@var}}
+\entry{texinfo-insert-@example}{17}{\code {texinfo-insert-@example}}
+\entry{texinfo-insert-braces}{17}{\code {texinfo-insert-braces}}
+\entry{up-list}{17}{\code {up-list}}
+\entry{texinfo-start-menu-description}{17}{\code {texinfo-start-menu-description}}
+\entry{texinfo-show-structure}{18}{\code {texinfo-show-structure}}
+\entry{occur-mode-goto-occurrence}{18}{\code {occur-mode-goto-occurrence}}
+\entry{texinfo-master-menu}{19}{\code {texinfo-master-menu}}
+\entry{texinfo-update-node}{20}{\code {texinfo-update-node}}
+\entry{texinfo-make-menu}{20}{\code {texinfo-make-menu}}
+\entry{texinfo-every-node-update}{20}{\code {texinfo-every-node-update}}
+\entry{texinfo-all-menus-update}{20}{\code {texinfo-all-menus-update}}
+\entry{texinfo-insert-node-lines}{22}{\code {texinfo-insert-node-lines}}
+\entry{texinfo-multiple-files-update (in brief)}{22}{\code {texinfo-multiple-files-update \r {(in brief)}}}
+\entry{texinfo-indent-menu-description}{22}{\code {texinfo-indent-menu-description}}
+\entry{texinfo-sequential-node-update}{22}{\code {texinfo-sequential-node-update}}
+\entry{texinfo-format-region}{23}{\code {texinfo-format-region}}
+\entry{texinfo-format-buffer}{23}{\code {texinfo-format-buffer}}
+\entry{texinfo-tex-buffer}{24}{\code {texinfo-tex-buffer}}
+\entry{texinfo-tex-region}{24}{\code {texinfo-tex-region}}
+\entry{texinfo-tex-print}{24}{\code {texinfo-tex-print}}
+\entry{setfilename}{29}{\code {setfilename}}
+\entry{settitle}{30}{\code {settitle}}
+\entry{copying}{31}{\code {copying}}
+\entry{copyright}{31}{\code {copyright}}
+\entry{insertcopying}{32}{\code {insertcopying}}
+\entry{titlepage}{33}{\code {titlepage}}
+\entry{page, within @titlepage}{33}{\code {page\r {, within \code {@titlepage}}}}
+\entry{shorttitlepage}{33}{\code {shorttitlepage}}
+\entry{titlefont}{33}{\code {titlefont}}
+\entry{center}{33}{\code {center}}
+\entry{sp (titlepage line spacing)}{33}{\code {sp \r {(titlepage line spacing)}}}
+\entry{title}{34}{\code {title}}
+\entry{subtitle}{34}{\code {subtitle}}
+\entry{author}{34}{\code {author}}
+\entry{vskip TeX{} vertical skip}{35}{\code {vskip \r {\TeX {} vertical skip}}}
+\entry{filll TeX{} dimension}{35}{\code {filll \r {\TeX {} dimension}}}
+\entry{end titlepage}{36}{\code {end titlepage}}
+\entry{headings}{36}{\code {headings}}
+\entry{contents}{37}{\code {contents}}
+\entry{summarycontents}{37}{\code {summarycontents}}
+\entry{shortcontents}{37}{\code {shortcontents}}
+\entry{setcontentsaftertitlepage}{38}{\code {setcontentsaftertitlepage}}
+\entry{setshortcontentsaftertitlepage}{38}{\code {setshortcontentsaftertitlepage}}
+\entry{top}{38}{\code {top}}
+\entry{detailmenu}{39}{\code {detailmenu}}
+\entry{documentdescription}{40}{\code {documentdescription}}
+\entry{setchapternewpage}{40}{\code {setchapternewpage}}
+\entry{paragraphindent}{41}{\code {paragraphindent}}
+\entry{firstparagraphindent}{42}{\code {firstparagraphindent}}
+\entry{exampleindent}{42}{\code {exampleindent}}
+\entry{bye}{44}{\code {bye}}
+\entry{printindex}{44}{\code {printindex}}
+\entry{bye}{45}{\code {bye}}
+\entry{chapter}{47}{\code {chapter}}
+\entry{centerchap}{48}{\code {centerchap}}
+\entry{unnumbered}{48}{\code {unnumbered}}
+\entry{appendix}{48}{\code {appendix}}
+\entry{majorheading}{48}{\code {majorheading}}
+\entry{chapheading}{48}{\code {chapheading}}
+\entry{section}{48}{\code {section}}
+\entry{unnumberedsec}{49}{\code {unnumberedsec}}
+\entry{appendixsec}{49}{\code {appendixsec}}
+\entry{heading}{49}{\code {heading}}
+\entry{appendixsection}{49}{\code {appendixsection}}
+\entry{subsection}{49}{\code {subsection}}
+\entry{unnumberedsubsec}{49}{\code {unnumberedsubsec}}
+\entry{appendixsubsec}{49}{\code {appendixsubsec}}
+\entry{subheading}{49}{\code {subheading}}
+\entry{subsubsection}{50}{\code {subsubsection}}
+\entry{unnumberedsubsubsec}{50}{\code {unnumberedsubsubsec}}
+\entry{appendixsubsubsec}{50}{\code {appendixsubsubsec}}
+\entry{subsubheading}{50}{\code {subsubheading}}
+\entry{raisesections}{50}{\code {raisesections}}
+\entry{lowersections}{50}{\code {lowersections}}
+\entry{node}{54}{\code {node}}
+\entry{top (@-command)}{57}{\code {top \r {(@-command)}}}
+\entry{detailmenu}{58}{\code {detailmenu}}
+\entry{anchor}{58}{\code {anchor}}
+\entry{menu}{60}{\code {menu}}
+\entry{xref}{66}{\code {xref}}
+\entry{ref}{70}{\code {ref}}
+\entry{pxref}{71}{\code {pxref}}
+\entry{inforef}{72}{\code {inforef}}
+\entry{uref}{72}{\code {uref}}
+\entry{cite}{74}{\code {cite}}
+\entry{code}{76}{\code {code}}
+\entry{kbd}{77}{\code {kbd}}
+\entry{kbdinputstyle}{77}{\code {kbdinputstyle}}
+\entry{key}{78}{\code {key}}
+\entry{samp}{79}{\code {samp}}
+\entry{verb}{79}{\code {verb}}
+\entry{var}{80}{\code {var}}
+\entry{env}{81}{\code {env}}
+\entry{file}{81}{\code {file}}
+\entry{command}{81}{\code {command}}
+\entry{option}{81}{\code {option}}
+\entry{dfn}{82}{\code {dfn}}
+\entry{abbr}{82}{\code {abbr}}
+\entry{acronym}{82}{\code {acronym}}
+\entry{indicateurl}{83}{\code {indicateurl}}
+\entry{email}{83}{\code {email}}
+\entry{emph}{84}{\code {emph}}
+\entry{strong}{84}{\code {strong}}
+\entry{sc (small caps font)}{84}{\code {sc \r {(small caps font)}}}
+\entry{fonttextsize}{85}{\code {fonttextsize}}
+\entry{b (bold font)}{85}{\code {b \r {(bold font)}}}
+\entry{i (italic font)}{85}{\code {i \r {(italic font)}}}
+\entry{r (roman font)}{85}{\code {r \r {(roman font)}}}
+\entry{sansserif (sans serif font)}{85}{\code {sansserif \r {(sans serif font)}}}
+\entry{slanted (slanted font)}{85}{\code {slanted \r {(slanted font)}}}
+\entry{t (typewriter font)}{85}{\code {t \r {(typewriter font)}}}
+\entry{end}{87}{\code {end}}
+\entry{quotation}{88}{\code {quotation}}
+\entry{example}{88}{\code {example}}
+\entry{verbatim}{89}{\code {verbatim}}
+\entry{verbatiminclude}{90}{\code {verbatiminclude}}
+\entry{lisp}{90}{\code {lisp}}
+\entry{smalldisplay}{91}{\code {smalldisplay}}
+\entry{smallexample}{91}{\code {smallexample}}
+\entry{smallformat}{91}{\code {smallformat}}
+\entry{smalllisp}{91}{\code {smalllisp}}
+\entry{display}{91}{\code {display}}
+\entry{smalldisplay}{91}{\code {smalldisplay}}
+\entry{format}{92}{\code {format}}
+\entry{smallformat}{92}{\code {smallformat}}
+\entry{exdent}{92}{\code {exdent}}
+\entry{flushleft}{92}{\code {flushleft}}
+\entry{flushright}{92}{\code {flushright}}
+\entry{noindent}{93}{\code {noindent}}
+\entry{indent}{94}{\code {indent}}
+\entry{cartouche}{94}{\code {cartouche}}
+\entry{end}{96}{\code {end}}
+\entry{itemize}{97}{\code {itemize}}
+\entry{item}{97}{\code {item}}
+\entry{enumerate}{98}{\code {enumerate}}
+\entry{table}{99}{\code {table}}
+\entry{asis}{100}{\code {asis}}
+\entry{item}{100}{\code {item}}
+\entry{ftable}{101}{\code {ftable}}
+\entry{vtable}{101}{\code {vtable}}
+\entry{itemx}{101}{\code {itemx}}
+\entry{multitable}{101}{\code {multitable}}
+\entry{columnfractions}{102}{\code {columnfractions}}
+\entry{item}{102}{\code {item}}
+\entry{tab}{102}{\code {tab}}
+\entry{headitem}{102}{\code {headitem}}
+\entry{float}{104}{\code {float}}
+\entry{caption}{105}{\code {caption}}
+\entry{shortcaption}{105}{\code {shortcaption}}
+\entry{listoffloats}{105}{\code {listoffloats}}
+\entry{image}{106}{\code {image}}
+\entry{- (in image alt string)}{106}{\code {- (in image alt string)}}
+\entry{footnote}{108}{\code {footnote}}
+\entry{footnotestyle}{109}{\code {footnotestyle}}
+\entry{syncodeindex}{112}{\code {syncodeindex}}
+\entry{synindex}{113}{\code {synindex}}
+\entry{defindex}{113}{\code {defindex}}
+\entry{defcodeindex}{113}{\code {defcodeindex}}
+\entry{@ (literal @)}{115}{\code {@ \r {(literal \samp {@})}}}
+\entry{{\tt \char 123} (literal {\tt \char 123})}{115}{\code {{\tt \char 123} \r {(literal \samp {{\tt \char 123}})}}}
+\entry{{\tt \char 125} (literal {\tt \char 125})}{115}{\code {{\tt \char 125} \r {(literal \samp {{\tt \char 125}})}}}
+\entry{comma}{115}{\code {comma}}
+\entry{<colon> (suppress end-of-sentence space)}{117}{\code {<colon> \r {(suppress end-of-sentence space)}}}
+\entry{. (end of sentence)}{117}{\code {. \r {(end of sentence)}}}
+\entry{! (end of sentence)}{117}{\code {! \r {(end of sentence)}}}
+\entry{? (end of sentence)}{117}{\code {? \r {(end of sentence)}}}
+\entry{<space>}{117}{\code {<space>}}
+\entry{<tab>}{117}{\code {<tab>}}
+\entry{<newline>}{117}{\code {<newline>}}
+\entry{frenchspacing}{118}{\code {frenchspacing}}
+\entry{dmn}{119}{\code {dmn}}
+\entry{documentencoding}{119}{\code {documentencoding}}
+\entry{" (umlaut accent)}{119}{\code {" \r {(umlaut accent)}}}
+\entry{' (umlaut accent)}{119}{\code {' \r {(umlaut accent)}}}
+\entry{= (macron accent)}{119}{\code {= \r {(macron accent)}}}
+\entry{^ (circumflex accent)}{119}{\code {^ \r {(circumflex accent)}}}
+\entry{` (grave accent)}{119}{\code {` \r {(grave accent)}}}
+\entry{~ (tilde accent)}{119}{\code {~ \r {(tilde accent)}}}
+\entry{, (cedilla accent)}{119}{\code {, \r {(cedilla accent)}}}
+\entry{dotaccent}{119}{\code {dotaccent}}
+\entry{H (Hungarian umlaut accent)}{119}{\code {H \r {(Hungarian umlaut accent)}}}
+\entry{ringaccent}{119}{\code {ringaccent}}
+\entry{tieaccent}{119}{\code {tieaccent}}
+\entry{u (breve accent)}{119}{\code {u \r {(breve accent)}}}
+\entry{ubaraccent}{119}{\code {ubaraccent}}
+\entry{udotaccent}{119}{\code {udotaccent}}
+\entry{v (check accent)}{119}{\code {v \r {(check accent)}}}
+\entry{questiondown}{120}{\code {questiondown}}
+\entry{exclamdown}{120}{\code {exclamdown}}
+\entry{aa}{120}{\code {aa}}
+\entry{AA}{120}{\code {AA}}
+\entry{ae}{120}{\code {ae}}
+\entry{AE}{120}{\code {AE}}
+\entry{dotless}{120}{\code {dotless}}
+\entry{l}{120}{\code {l}}
+\entry{L}{120}{\code {L}}
+\entry{o}{120}{\code {o}}
+\entry{O}{120}{\code {O}}
+\entry{oe}{120}{\code {oe}}
+\entry{OE}{120}{\code {OE}}
+\entry{ordf}{120}{\code {ordf}}
+\entry{ordm}{120}{\code {ordm}}
+\entry{ss}{120}{\code {ss}}
+\entry{documentencoding}{120}{\code {documentencoding}}
+\entry{quotedblleft}{121}{\code {quotedblleft}}
+\entry{quoteleft}{121}{\code {quoteleft}}
+\entry{quotedblright}{121}{\code {quotedblright}}
+\entry{quoteright}{121}{\code {quoteright}}
+\entry{quotedblbase}{121}{\code {quotedblbase}}
+\entry{quotesinglbase}{121}{\code {quotesinglbase}}
+\entry{guillemetleft}{121}{\code {guillemetleft}}
+\entry{guillemotleft}{121}{\code {guillemotleft}}
+\entry{guillemetright}{121}{\code {guillemetright}}
+\entry{guillemotright}{121}{\code {guillemotright}}
+\entry{guilsinglleft}{121}{\code {guilsinglleft}}
+\entry{guilsinglright}{121}{\code {guilsinglright}}
+\entry{dots}{121}{\code {dots}}
+\entry{enddots}{121}{\code {enddots}}
+\entry{bullet}{122}{\code {bullet}}
+\entry{TeX}{122}{\code {TeX}}
+\entry{LaTeX}{122}{\code {LaTeX}}
+\entry{copyright}{122}{\code {copyright}}
+\entry{registeredsymbol}{122}{\code {registeredsymbol}}
+\entry{euro}{122}{\code {euro}}
+\entry{pounds}{123}{\code {pounds}}
+\entry{textdegree}{123}{\code {textdegree}}
+\entry{minus}{123}{\code {minus}}
+\entry{geq}{123}{\code {geq}}
+\entry{leq}{123}{\code {leq}}
+\entry{math}{123}{\code {math}}
+\entry{{\tt \indexbackslash } (literal {\tt \indexbackslash } in @math)}{124}{\code {{\tt \backslashcurfont } \r {(literal {\tt \backslashcurfont } in \code {@math})}}}
+\entry{clicksequence}{124}{\code {clicksequence}}
+\entry{click}{124}{\code {click}}
+\entry{arrow}{124}{\code {arrow}}
+\entry{clickstyle}{124}{\code {clickstyle}}
+\entry{result}{125}{\code {result}}
+\entry{expansion}{125}{\code {expansion}}
+\entry{print}{126}{\code {print}}
+\entry{error}{126}{\code {error}}
+\entry{equiv}{127}{\code {equiv}}
+\entry{point}{127}{\code {point}}
+\entry{* (force line break)}{129}{\code {* \r {(force line break)}}}
+\entry{/ (allow line break)}{129}{\code {/ \r {(allow line break)}}}
+\entry{- (discretionary hyphen)}{130}{\code {- \r {(discretionary hyphen)}}}
+\entry{hyphenation}{130}{\code {hyphenation}}
+\entry{allowcodebreaks}{130}{\code {allowcodebreaks}}
+\entry{w (prevent line break)}{131}{\code {w \r {(prevent line break)}}}
+\entry{tie (unbreakable interword space)}{131}{\code {tie \r {(unbreakable interword space)}}}
+\entry{sp (line spacing)}{131}{\code {sp \r {(line spacing)}}}
+\entry{page}{131}{\code {page}}
+\entry{group}{132}{\code {group}}
+\entry{need}{132}{\code {need}}
+\entry{forward-word}{133}{\code {forward-word}}
+\entry{fn-name}{134}{\code {fn-name}}
+\entry{foobar}{135}{\code {foobar}}
+\entry{deffnx}{135}{\code {deffnx}}
+\entry{isearch-forward}{135}{\code {isearch-forward}}
+\entry{isearch-backward}{135}{\code {isearch-backward}}
+\entry{deffn}{136}{\code {deffn}}
+\entry{defun}{136}{\code {defun}}
+\entry{defmac}{137}{\code {defmac}}
+\entry{defspec}{137}{\code {defspec}}
+\entry{defvr}{137}{\code {defvr}}
+\entry{defvar}{137}{\code {defvar}}
+\entry{defopt}{138}{\code {defopt}}
+\entry{deftypefn}{138}{\code {deftypefn}}
+\entry{foobar}{138}{\code {foobar}}
+\entry{deftypefun}{139}{\code {deftypefun}}
+\entry{deftypevr}{139}{\code {deftypevr}}
+\entry{deftypevar}{140}{\code {deftypevar}}
+\entry{deftp}{140}{\code {deftp}}
+\entry{defcv}{141}{\code {defcv}}
+\entry{deftypecv}{141}{\code {deftypecv}}
+\entry{defivar}{142}{\code {defivar}}
+\entry{deftypeivar}{142}{\code {deftypeivar}}
+\entry{defop}{142}{\code {defop}}
+\entry{deftypeop}{143}{\code {deftypeop}}
+\entry{defmethod}{143}{\code {defmethod}}
+\entry{defmethod}{143}{\code {defmethod}}
+\entry{apply}{144}{\code {apply}}
+\entry{ifinfo}{146}{\code {ifinfo}}
+\entry{ifdocbook}{146}{\code {ifdocbook}}
+\entry{ifhtml}{146}{\code {ifhtml}}
+\entry{ifplaintext}{146}{\code {ifplaintext}}
+\entry{iftex}{146}{\code {iftex}}
+\entry{ifxml}{146}{\code {ifxml}}
+\entry{ifnotdocbook}{147}{\code {ifnotdocbook}}
+\entry{ifnothtml}{147}{\code {ifnothtml}}
+\entry{ifnotinfo}{147}{\code {ifnotinfo}}
+\entry{ifnotplaintext}{147}{\code {ifnotplaintext}}
+\entry{ifnottex}{147}{\code {ifnottex}}
+\entry{ifnotxml}{147}{\code {ifnotxml}}
+\entry{tex}{148}{\code {tex}}
+\entry{{\tt \indexbackslash }gdef within @tex}{148}{\code {{\tt \backslashcurfont }gdef \r {within \code {@tex}}}}
+\entry{ifhtml}{148}{\code {ifhtml}}
+\entry{html}{148}{\code {html}}
+\entry{ifxml}{148}{\code {ifxml}}
+\entry{xml}{148}{\code {xml}}
+\entry{ifdocbook}{148}{\code {ifdocbook}}
+\entry{docbook}{148}{\code {docbook}}
+\entry{set}{149}{\code {set}}
+\entry{value}{149}{\code {value}}
+\entry{clear}{149}{\code {clear}}
+\entry{ifset}{150}{\code {ifset}}
+\entry{ifclear}{150}{\code {ifclear}}
+\entry{documentlanguage}{153}{\code {documentlanguage}}
+\entry{documentencoding}{154}{\code {documentencoding}}
+\entry{macro}{156}{\code {macro}}
+\entry{rmacro}{156}{\code {rmacro}}
+\entry{unmacro}{157}{\code {unmacro}}
+\entry{alias}{160}{\code {alias}}
+\entry{definfoenclose}{161}{\code {definfoenclose}}
+\entry{phoo}{161}{\code {phoo}}
+\entry{headword}{161}{\code {headword}}
+\entry{novalidate}{164}{\code {novalidate}}
+\entry{hbox}{171}{\code {hbox}}
+\entry{{\tt \indexbackslash }emergencystretch}{171}{\code {{\tt \backslashcurfont }emergencystretch}}
+\entry{finalout}{171}{\code {finalout}}
+\entry{smallbook}{171}{\code {smallbook}}
+\entry{afourpaper}{172}{\code {afourpaper}}
+\entry{afourlatex}{172}{\code {afourlatex}}
+\entry{afourwide}{172}{\code {afourwide}}
+\entry{pagesizes}{172}{\code {pagesizes}}
+\entry{cropmarks}{173}{\code {cropmarks}}
+\entry{{\tt \indexbackslash }mag (raw TeX{} magnification)}{173}{\code {{\tt \backslashcurfont }mag \r {(raw \TeX {} magnification)}}}
+\entry{makeinfo-region}{181}{\code {makeinfo-region}}
+\entry{makeinfo-buffer}{181}{\code {makeinfo-buffer}}
+\entry{next-error}{181}{\code {next-error}}
+\entry{makeinfo-kill-job}{181}{\code {makeinfo-kill-job}}
+\entry{makeinfo-recenter-output-buffer}{181}{\code {makeinfo-recenter-output-buffer}}
+\entry{texinfo-format-region}{182}{\code {texinfo-format-region}}
+\entry{texinfo-format-buffer}{182}{\code {texinfo-format-buffer}}
+\entry{dircategory}{186}{\code {dircategory}}
+\entry{direntry}{186}{\code {direntry}}
+\entry{include}{231}{\code {include}}
+\entry{texinfo-multiple-files-update}{231}{\code {texinfo-multiple-files-update}}
+\entry{everyheading}{237}{\code {everyheading}}
+\entry{everyfooting}{237}{\code {everyfooting}}
+\entry{evenheading}{237}{\code {evenheading}}
+\entry{evenfooting}{237}{\code {evenfooting}}
+\entry{oddheading}{237}{\code {oddheading}}
+\entry{oddfooting}{237}{\code {oddfooting}}
+\entry{thispage}{238}{\code {thispage}}
+\entry{thissectionname}{238}{\code {thissectionname}}
+\entry{thissectionnum}{238}{\code {thissectionnum}}
+\entry{thissection}{238}{\code {thissection}}
+\entry{thischaptername}{238}{\code {thischaptername}}
+\entry{thischapternum}{238}{\code {thischapternum}}
+\entry{thischapter}{238}{\code {thischapter}}
+\entry{thistitle}{238}{\code {thistitle}}
+\entry{thisfile}{238}{\code {thisfile}}
+\entry{today}{238}{\code {today}}
+\entry{everyheadingmarks}{238}{\code {everyheadingmarks}}
+\entry{everyfootingmarks}{238}{\code {everyfootingmarks}}
+\entry{evenheadingmarks}{239}{\code {evenheadingmarks}}
+\entry{oddheadingmarks}{239}{\code {oddheadingmarks}}
+\entry{evenfootingmarks}{239}{\code {evenfootingmarks}}
+\entry{oddfootingmarks}{239}{\code {oddfootingmarks}}
+\entry{texinfo-show-structure}{243}{\code {texinfo-show-structure}}
+\entry{occur}{244}{\code {occur}}
+\entry{Info-validate}{244}{\code {Info-validate}}

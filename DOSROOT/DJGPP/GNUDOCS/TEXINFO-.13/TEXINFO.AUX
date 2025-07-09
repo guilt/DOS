@@ -1,0 +1,994 @@
+@xrdef{Copying Conditions-title}{Texinfo Copying Conditions}
+@xrdef{Copying Conditions-snt}{}
+@xrdef{Copying Conditions-pg}{2}
+@xrdef{Overview-title}{Overview of Texinfo}
+@xrdef{Overview-snt}{Chapter@tie 1}
+@xrdef{Reporting Bugs-title}{Reporting Bugs}
+@xrdef{Reporting Bugs-snt}{Section@tie 1.1}
+@xrdef{Using Texinfo-title}{Using Texinfo}
+@xrdef{Using Texinfo-snt}{Section@tie 1.2}
+@xrdef{Overview-pg}{3}
+@xrdef{Reporting Bugs-pg}{3}
+@xrdef{Using Texinfo-pg}{3}
+@xrdef{Output Formats-title}{Output Formats}
+@xrdef{Output Formats-snt}{Section@tie 1.3}
+@xrdef{Output Formats-pg}{4}
+@xrdef{Info Files-title}{Info Files}
+@xrdef{Info Files-snt}{Section@tie 1.4}
+@xrdef{Info Files-pg}{5}
+@xrdef{Printed Books-title}{Printed Books}
+@xrdef{Printed Books-snt}{Section@tie 1.5}
+@xrdef{Formatting Commands-title}{@@-commands}
+@xrdef{Formatting Commands-snt}{Section@tie 1.6}
+@xrdef{Printed Books-pg}{7}
+@xrdef{Conventions-title}{General Syntactic Conventions}
+@xrdef{Conventions-snt}{Section@tie 1.7}
+@xrdef{Formatting Commands-pg}{8}
+@xrdef{Comments-title}{Comments}
+@xrdef{Comments-snt}{Section@tie 1.8}
+@xrdef{Conventions-pg}{9}
+@xrdef{Comments-pg}{9}
+@xrdef{Minimum-title}{What a Texinfo File Must Have}
+@xrdef{Minimum-snt}{Section@tie 1.9}
+@xrdef{Minimum-pg}{10}
+@xrdef{Six Parts-title}{Six Parts of a Texinfo File}
+@xrdef{Six Parts-snt}{Section@tie 1.10}
+@xrdef{Short Sample-title}{A Short Sample Texinfo File}
+@xrdef{Short Sample-snt}{Section@tie 1.11}
+@xrdef{Six Parts-pg}{11}
+@xrdef{Short Sample-pg}{11}
+@xrdef{History-title}{History}
+@xrdef{History-snt}{Section@tie 1.12}
+@xrdef{History-pg}{14}
+@xrdef{Texinfo Mode-title}{Using Texinfo Mode}
+@xrdef{Texinfo Mode-snt}{Chapter@tie 2}
+@xrdef{Texinfo Mode Overview-title}{Texinfo Mode Overview}
+@xrdef{Texinfo Mode Overview-snt}{Section@tie 2.1}
+@xrdef{Emacs Editing-title}{The Usual GNU Emacs Editing Commands}
+@xrdef{Emacs Editing-snt}{Section@tie 2.2}
+@xrdef{Texinfo Mode-pg}{15}
+@xrdef{Texinfo Mode Overview-pg}{15}
+@xrdef{Emacs Editing-pg}{15}
+@xrdef{Inserting-title}{Inserting Frequently Used Commands}
+@xrdef{Inserting-snt}{Section@tie 2.3}
+@xrdef{Inserting-pg}{16}
+@xrdef{Showing the Structure-title}{Showing the Section Structure of a File}
+@xrdef{Showing the Structure-snt}{Section@tie 2.4}
+@xrdef{Updating Nodes and Menus-title}{Updating Nodes and Menus}
+@xrdef{Updating Nodes and Menus-snt}{Section@tie 2.5}
+@xrdef{Updating Commands-title}{The Updating Commands}
+@xrdef{Updating Commands-snt}{Section@tie 2.5.1}
+@xrdef{Showing the Structure-pg}{18}
+@xrdef{Updating Nodes and Menus-pg}{18}
+@xrdef{Updating Commands-pg}{18}
+@xrdef{Updating Requirements-title}{Updating Requirements}
+@xrdef{Updating Requirements-snt}{Section@tie 2.5.2}
+@xrdef{Other Updating Commands-title}{Other Updating Commands}
+@xrdef{Other Updating Commands-snt}{Section@tie 2.5.3}
+@xrdef{Updating Requirements-pg}{21}
+@xrdef{Other Updating Commands-pg}{21}
+@xrdef{Info Formatting-title}{Formatting for Info}
+@xrdef{Info Formatting-snt}{Section@tie 2.6}
+@xrdef{Printing-title}{Printing}
+@xrdef{Printing-snt}{Section@tie 2.7}
+@xrdef{Info Formatting-pg}{23}
+@xrdef{Printing-pg}{23}
+@xrdef{Texinfo Mode Summary-title}{Texinfo Mode Summary}
+@xrdef{Texinfo Mode Summary-snt}{Section@tie 2.8}
+@xrdef{Texinfo Mode Summary-pg}{24}
+@xrdef{Beginning a File-title}{Beginning a Texinfo File}
+@xrdef{Beginning a File-snt}{Chapter@tie 3}
+@xrdef{Sample Beginning-title}{Sample Texinfo File Beginning}
+@xrdef{Sample Beginning-snt}{Section@tie 3.1}
+@xrdef{Beginning a File-pg}{27}
+@xrdef{Sample Beginning-pg}{27}
+@xrdef{Texinfo File Header-title}{Texinfo File Header}
+@xrdef{Texinfo File Header-snt}{Section@tie 3.2}
+@xrdef{First Line-title}{The First Line of a Texinfo File}
+@xrdef{First Line-snt}{Section@tie 3.2.1}
+@xrdef{Texinfo File Header-pg}{28}
+@xrdef{Start of Header-title}{Start of Header}
+@xrdef{Start of Header-snt}{Section@tie 3.2.2}
+@xrdef{setfilename-title}{@code {@@setfilename}: Set the output file name}
+@xrdef{setfilename-snt}{Section@tie 3.2.3}
+@xrdef{First Line-pg}{29}
+@xrdef{Start of Header-pg}{29}
+@xrdef{setfilename-pg}{29}
+@xrdef{settitle-title}{@code {@@settitle}: Set the document title}
+@xrdef{settitle-snt}{Section@tie 3.2.4}
+@xrdef{settitle-pg}{30}
+@xrdef{End of Header-title}{End of Header}
+@xrdef{End of Header-snt}{Section@tie 3.2.5}
+@xrdef{Document Permissions-title}{Document Permissions}
+@xrdef{Document Permissions-snt}{Section@tie 3.3}
+@xrdef{copying-title}{@code {@@copying}: Declare Copying Permissions}
+@xrdef{copying-snt}{Section@tie 3.3.1}
+@xrdef{End of Header-pg}{31}
+@xrdef{Document Permissions-pg}{31}
+@xrdef{copying-pg}{31}
+@xrdef{insertcopying-title}{@code {@@insertcopying}: Include Permissions Text}
+@xrdef{insertcopying-snt}{Section@tie 3.3.2}
+@xrdef{Titlepage & Copyright Page-title}{Title and Copyright Pages}
+@xrdef{Titlepage & Copyright Page-snt}{Section@tie 3.4}
+@xrdef{titlepage-title}{@code {@@titlepage}}
+@xrdef{titlepage-snt}{Section@tie 3.4.1}
+@xrdef{insertcopying-pg}{32}
+@xrdef{Titlepage & Copyright Page-pg}{32}
+@xrdef{titlefont center sp-title}{@code {@@titlefont}, @code {@@center}, and @code {@@sp}}
+@xrdef{titlefont center sp-snt}{Section@tie 3.4.2}
+@xrdef{titlepage-pg}{33}
+@xrdef{titlefont center sp-pg}{33}
+@xrdef{title subtitle author-title}{@code {@@title}, @code {@@subtitle}, and @code {@@author}}
+@xrdef{title subtitle author-snt}{Section@tie 3.4.3}
+@xrdef{title subtitle author-pg}{34}
+@xrdef{Copyright-title}{Copyright Page}
+@xrdef{Copyright-snt}{Section@tie 3.4.4}
+@xrdef{Copyright-pg}{35}
+@xrdef{end titlepage-title}{Heading Generation}
+@xrdef{end titlepage-snt}{Section@tie 3.4.5}
+@xrdef{headings on off-title}{The @code {@@headings} Command}
+@xrdef{headings on off-snt}{Section@tie 3.4.6}
+@xrdef{end titlepage-pg}{36}
+@xrdef{headings on off-pg}{36}
+@xrdef{Contents-title}{Generating a Table of Contents}
+@xrdef{Contents-snt}{Section@tie 3.5}
+@xrdef{Contents-pg}{37}
+@xrdef{The Top Node-title}{The `Top' Node and Master Menu}
+@xrdef{The Top Node-snt}{Section@tie 3.6}
+@xrdef{The Top Node-pg}{38}
+@xrdef{Top Node Example-title}{Top Node Example}
+@xrdef{Top Node Example-snt}{Section@tie 3.6.1}
+@xrdef{Master Menu Parts-title}{Parts of a Master Menu}
+@xrdef{Master Menu Parts-snt}{Section@tie 3.6.2}
+@xrdef{Top Node Example-pg}{39}
+@xrdef{Master Menu Parts-pg}{39}
+@xrdef{Global Document Commands-title}{Global Document Commands}
+@xrdef{Global Document Commands-snt}{Section@tie 3.7}
+@xrdef{documentdescription-title}{@code {@@documentdescription}: Summary Text}
+@xrdef{documentdescription-snt}{Section@tie 3.7.1}
+@xrdef{setchapternewpage-title}{@code {@@setchapternewpage}:}
+@xrdef{setchapternewpage-snt}{Section@tie 3.7.2}
+@xrdef{Global Document Commands-pg}{40}
+@xrdef{documentdescription-pg}{40}
+@xrdef{setchapternewpage-pg}{40}
+@xrdef{paragraphindent-title}{@code {@@paragraphindent}: Paragraph Indenting}
+@xrdef{paragraphindent-snt}{Section@tie 3.7.3}
+@xrdef{paragraphindent-pg}{41}
+@xrdef{firstparagraphindent-title}{@code {@@firstparagraphindent}: Indenting After Headings}
+@xrdef{firstparagraphindent-snt}{Section@tie 3.7.4}
+@xrdef{exampleindent-title}{@code {@@exampleindent}: Environment Indenting}
+@xrdef{exampleindent-snt}{Section@tie 3.7.5}
+@xrdef{Software Copying Permissions-title}{Software Copying Permissions}
+@xrdef{Software Copying Permissions-snt}{Section@tie 3.8}
+@xrdef{firstparagraphindent-pg}{42}
+@xrdef{exampleindent-pg}{42}
+@xrdef{Software Copying Permissions-pg}{43}
+@xrdef{Ending a File-title}{Ending a Texinfo File}
+@xrdef{Ending a File-snt}{Chapter@tie 4}
+@xrdef{Printing Indices & Menus-title}{Printing Indices and Menus}
+@xrdef{Printing Indices & Menus-snt}{Section@tie 4.1}
+@xrdef{Ending a File-pg}{44}
+@xrdef{Printing Indices & Menus-pg}{44}
+@xrdef{File End-title}{@code {@@bye} File Ending}
+@xrdef{File End-snt}{Section@tie 4.2}
+@xrdef{File End-pg}{45}
+@xrdef{Structuring-title}{Chapter Structuring}
+@xrdef{Structuring-snt}{Chapter@tie 5}
+@xrdef{Tree Structuring-title}{Tree Structure of Sections}
+@xrdef{Tree Structuring-snt}{Section@tie 5.1}
+@xrdef{Structuring Command Types-title}{Structuring Command Types}
+@xrdef{Structuring Command Types-snt}{Section@tie 5.2}
+@xrdef{Structuring-pg}{46}
+@xrdef{Tree Structuring-pg}{46}
+@xrdef{Structuring Command Types-pg}{46}
+@xrdef{makeinfo top-title}{@code {@@top}}
+@xrdef{makeinfo top-snt}{Section@tie 5.3}
+@xrdef{chapter-title}{@code {@@chapter}}
+@xrdef{chapter-snt}{Section@tie 5.4}
+@xrdef{makeinfo top-pg}{47}
+@xrdef{chapter-pg}{47}
+@xrdef{unnumbered & appendix-title}{@code {@@unnumbered} and @code {@@appendix}}
+@xrdef{unnumbered & appendix-snt}{Section@tie 5.5}
+@xrdef{majorheading & chapheading-title}{@code {@@majorheading}, @code {@@chapheading}}
+@xrdef{majorheading & chapheading-snt}{Section@tie 5.6}
+@xrdef{section-title}{@code {@@section}}
+@xrdef{section-snt}{Section@tie 5.7}
+@xrdef{unnumbered & appendix-pg}{48}
+@xrdef{majorheading & chapheading-pg}{48}
+@xrdef{section-pg}{48}
+@xrdef{unnumberedsec appendixsec heading-title}{@code {@@unnumberedsec}, @code {@@appendixsec}, @code {@@heading}}
+@xrdef{unnumberedsec appendixsec heading-snt}{Section@tie 5.8}
+@xrdef{subsection-title}{The @code {@@subsection} Command}
+@xrdef{subsection-snt}{Section@tie 5.9}
+@xrdef{unnumberedsubsec appendixsubsec subheading-title}{The @code {@@subsection}-like Commands}
+@xrdef{unnumberedsubsec appendixsubsec subheading-snt}{Section@tie 5.10}
+@xrdef{unnumberedsec appendixsec heading-pg}{49}
+@xrdef{subsection-pg}{49}
+@xrdef{unnumberedsubsec appendixsubsec subheading-pg}{49}
+@xrdef{subsubsection-title}{The `subsub' Commands}
+@xrdef{subsubsection-snt}{Section@tie 5.11}
+@xrdef{Raise/lower sections-title}{@code {@@raisesections} and @code {@@lowersections}}
+@xrdef{Raise/lower sections-snt}{Section@tie 5.12}
+@xrdef{subsubsection-pg}{50}
+@xrdef{Raise/lower sections-pg}{50}
+@xrdef{Nodes-title}{Nodes}
+@xrdef{Nodes-snt}{Chapter@tie 6}
+@xrdef{Two Paths-title}{Two Paths}
+@xrdef{Two Paths-snt}{Section@tie 6.1}
+@xrdef{Node Menu Illustration-title}{Node and Menu Illustration}
+@xrdef{Node Menu Illustration-snt}{Section@tie 6.2}
+@xrdef{Nodes-pg}{52}
+@xrdef{Two Paths-pg}{52}
+@xrdef{Node Menu Illustration-pg}{52}
+@xrdef{node-title}{The @code {@@node} Command}
+@xrdef{node-snt}{Section@tie 6.3}
+@xrdef{Node Names-title}{Choosing Node and Pointer Names}
+@xrdef{Node Names-snt}{Section@tie 6.3.1}
+@xrdef{node-pg}{54}
+@xrdef{Writing a Node-title}{How to Write an @code {@@node} Line}
+@xrdef{Writing a Node-snt}{Section@tie 6.3.2}
+@xrdef{Node Names-pg}{55}
+@xrdef{Writing a Node-pg}{55}
+@xrdef{Node Line Tips-title}{@code {@@node} Line Tips}
+@xrdef{Node Line Tips-snt}{Section@tie 6.3.3}
+@xrdef{Node Line Requirements-title}{@code {@@node} Line Requirements}
+@xrdef{Node Line Requirements-snt}{Section@tie 6.3.4}
+@xrdef{Node Line Tips-pg}{56}
+@xrdef{Node Line Requirements-pg}{56}
+@xrdef{First Node-title}{The First Node}
+@xrdef{First Node-snt}{Section@tie 6.3.5}
+@xrdef{makeinfo top command-title}{The @code {@@top} Sectioning Command}
+@xrdef{makeinfo top command-snt}{Section@tie 6.3.6}
+@xrdef{makeinfo Pointer Creation-title}{Creating Pointers with @code {makeinfo}}
+@xrdef{makeinfo Pointer Creation-snt}{Section@tie 6.4}
+@xrdef{First Node-pg}{57}
+@xrdef{makeinfo top command-pg}{57}
+@xrdef{anchor-title}{@code {@@anchor}: Defining Arbitrary Cross-reference Targets}
+@xrdef{anchor-snt}{Section@tie 6.5}
+@xrdef{makeinfo Pointer Creation-pg}{58}
+@xrdef{anchor-pg}{58}
+@xrdef{Menus-title}{Menus}
+@xrdef{Menus-snt}{Chapter@tie 7}
+@xrdef{Menu Location-title}{Menu Location}
+@xrdef{Menu Location-snt}{Section@tie 7.1}
+@xrdef{Writing a Menu-title}{Writing a Menu}
+@xrdef{Writing a Menu-snt}{Section@tie 7.2}
+@xrdef{Menus-pg}{60}
+@xrdef{Menu Location-pg}{60}
+@xrdef{Writing a Menu-pg}{60}
+@xrdef{Menu Parts-title}{The Parts of a Menu}
+@xrdef{Menu Parts-snt}{Section@tie 7.3}
+@xrdef{Less Cluttered Menu Entry-title}{Less Cluttered Menu Entry}
+@xrdef{Less Cluttered Menu Entry-snt}{Section@tie 7.4}
+@xrdef{Menu Example-title}{A Menu Example}
+@xrdef{Menu Example-snt}{Section@tie 7.5}
+@xrdef{Menu Parts-pg}{61}
+@xrdef{Less Cluttered Menu Entry-pg}{61}
+@xrdef{Menu Example-pg}{61}
+@xrdef{Other Info Files-title}{Referring to Other Info Files}
+@xrdef{Other Info Files-snt}{Section@tie 7.6}
+@xrdef{Other Info Files-pg}{62}
+@xrdef{Cross References-title}{Cross References}
+@xrdef{Cross References-snt}{Chapter@tie 8}
+@xrdef{References-title}{What References Are For}
+@xrdef{References-snt}{Section@tie 8.1}
+@xrdef{Cross Reference Commands-title}{Different Cross Reference Commands}
+@xrdef{Cross Reference Commands-snt}{Section@tie 8.2}
+@xrdef{Cross Reference Parts-title}{Parts of a Cross Reference}
+@xrdef{Cross Reference Parts-snt}{Section@tie 8.3}
+@xrdef{Cross References-pg}{64}
+@xrdef{References-pg}{64}
+@xrdef{Cross Reference Commands-pg}{64}
+@xrdef{Cross Reference Parts-pg}{65}
+@xrdef{xref-title}{@code {@@xref}}
+@xrdef{xref-snt}{Section@tie 8.4}
+@xrdef{Reference Syntax-title}{What a Reference Looks Like and Requires}
+@xrdef{Reference Syntax-snt}{Section@tie 8.4.1}
+@xrdef{One Argument-title}{@code {@@xref} with One Argument}
+@xrdef{One Argument-snt}{Section@tie 8.4.2}
+@xrdef{xref-pg}{66}
+@xrdef{Reference Syntax-pg}{66}
+@xrdef{One Argument-pg}{66}
+@xrdef{Two Arguments-title}{@code {@@xref} with Two Arguments}
+@xrdef{Two Arguments-snt}{Section@tie 8.4.3}
+@xrdef{Three Arguments-title}{@code {@@xref} with Three Arguments}
+@xrdef{Three Arguments-snt}{Section@tie 8.4.4}
+@xrdef{Two Arguments-pg}{67}
+@xrdef{Four and Five Arguments-title}{@code {@@xref} with Four and Five Arguments}
+@xrdef{Four and Five Arguments-snt}{Section@tie 8.4.5}
+@xrdef{Three Arguments-pg}{68}
+@xrdef{Four and Five Arguments-pg}{69}
+@xrdef{Top Node Naming-title}{Naming a `Top' Node}
+@xrdef{Top Node Naming-snt}{Section@tie 8.5}
+@xrdef{ref-title}{@code {@@ref}}
+@xrdef{ref-snt}{Section@tie 8.6}
+@xrdef{Top Node Naming-pg}{70}
+@xrdef{ref-pg}{70}
+@xrdef{pxref-title}{@code {@@pxref}}
+@xrdef{pxref-snt}{Section@tie 8.7}
+@xrdef{pxref-pg}{71}
+@xrdef{inforef-title}{@code {@@inforef}}
+@xrdef{inforef-snt}{Section@tie 8.8}
+@xrdef{uref-title}{@code {@@url}, @code {@@uref@{@var {url}[, @var {text}][, @var {replacement}]@}}}
+@xrdef{uref-snt}{Section@tie 8.9}
+@xrdef{inforef-pg}{72}
+@xrdef{uref-pg}{72}
+@xrdef{cite-title}{@code {@@cite}@{@var {reference}@}}
+@xrdef{cite-snt}{Section@tie 8.10}
+@xrdef{cite-pg}{74}
+@xrdef{Marking Text-title}{Marking Words and Phrases}
+@xrdef{Marking Text-snt}{Chapter@tie 9}
+@xrdef{Indicating-title}{Indicating Definitions, Commands, etc.}
+@xrdef{Indicating-snt}{Section@tie 9.1}
+@xrdef{Useful Highlighting-title}{Highlighting Commands are Useful}
+@xrdef{Useful Highlighting-snt}{Section@tie 9.1.1}
+@xrdef{Marking Text-pg}{75}
+@xrdef{Indicating-pg}{75}
+@xrdef{Useful Highlighting-pg}{75}
+@xrdef{code-title}{@code {@@code}@{@var {sample-code}@}}
+@xrdef{code-snt}{Section@tie 9.1.2}
+@xrdef{code-pg}{76}
+@xrdef{kbd-title}{@code {@@kbd}@{@var {keyboard-characters}@}}
+@xrdef{kbd-snt}{Section@tie 9.1.3}
+@xrdef{kbd-pg}{77}
+@xrdef{key-title}{@code {@@key}@{@var {key-name}@}}
+@xrdef{key-snt}{Section@tie 9.1.4}
+@xrdef{key-pg}{78}
+@xrdef{samp-title}{@code {@@samp}@{@var {text}@}}
+@xrdef{samp-snt}{Section@tie 9.1.5}
+@xrdef{verb-title}{@code {@@verb}@{<char>@var {text}<char>@}}
+@xrdef{verb-snt}{Section@tie 9.1.6}
+@xrdef{samp-pg}{79}
+@xrdef{verb-pg}{79}
+@xrdef{var-title}{@code {@@var}@{@var {metasyntactic-variable}@}}
+@xrdef{var-snt}{Section@tie 9.1.7}
+@xrdef{env-title}{@code {@@env}@{@var {environment-variable}@}}
+@xrdef{env-snt}{Section@tie 9.1.8}
+@xrdef{var-pg}{80}
+@xrdef{file-title}{@code {@@file}@{@var {file-name}@}}
+@xrdef{file-snt}{Section@tie 9.1.9}
+@xrdef{command-title}{@code {@@command}@{@var {command-name}@}}
+@xrdef{command-snt}{Section@tie 9.1.10}
+@xrdef{option-title}{@code {@@option}@{@var {option-name}@}}
+@xrdef{option-snt}{Section@tie 9.1.11}
+@xrdef{dfn-title}{@code {@@dfn}@{@var {term}@}}
+@xrdef{dfn-snt}{Section@tie 9.1.12}
+@xrdef{env-pg}{81}
+@xrdef{file-pg}{81}
+@xrdef{command-pg}{81}
+@xrdef{option-pg}{81}
+@xrdef{abbr-title}{@code {@@abbr}@{@var {abbreviation}[, @var {meaning}]@}}
+@xrdef{abbr-snt}{Section@tie 9.1.13}
+@xrdef{acronym-title}{@code {@@acronym}@{@var {acronym}[, @var {meaning}]@}}
+@xrdef{acronym-snt}{Section@tie 9.1.14}
+@xrdef{dfn-pg}{82}
+@xrdef{abbr-pg}{82}
+@xrdef{acronym-pg}{82}
+@xrdef{indicateurl-title}{@code {@@indicateurl}@{@var {uniform-resource-locator}@}}
+@xrdef{indicateurl-snt}{Section@tie 9.1.15}
+@xrdef{email-title}{@code {@@email}@{@var {email-address}[, @var {displayed-text}]@}}
+@xrdef{email-snt}{Section@tie 9.1.16}
+@xrdef{indicateurl-pg}{83}
+@xrdef{email-pg}{83}
+@xrdef{Emphasis-title}{Emphasizing Text}
+@xrdef{Emphasis-snt}{Section@tie 9.2}
+@xrdef{emph & strong-title}{@code {@@emph}@{@var {text}@} and @code {@@strong}@{@var {text}@}}
+@xrdef{emph & strong-snt}{Section@tie 9.2.1}
+@xrdef{Smallcaps-title}{@code {@@sc}@{@var {text}@}: The Small Caps Font}
+@xrdef{Smallcaps-snt}{Section@tie 9.2.2}
+@xrdef{Emphasis-pg}{84}
+@xrdef{emph & strong-pg}{84}
+@xrdef{Smallcaps-pg}{84}
+@xrdef{Fonts-title}{Fonts for Printing, Not Info}
+@xrdef{Fonts-snt}{Section@tie 9.2.3}
+@xrdef{Fonts-pg}{85}
+@xrdef{Quotations and Examples-title}{Quotations and Examples}
+@xrdef{Quotations and Examples-snt}{Chapter@tie 10}
+@xrdef{Block Enclosing Commands-title}{Block Enclosing Commands}
+@xrdef{Block Enclosing Commands-snt}{Section@tie 10.1}
+@xrdef{Quotations and Examples-pg}{87}
+@xrdef{Block Enclosing Commands-pg}{87}
+@xrdef{quotation-title}{@code {@@quotation}: Block quotations}
+@xrdef{quotation-snt}{Section@tie 10.2}
+@xrdef{example-title}{@code {@@example}: Example Text}
+@xrdef{example-snt}{Section@tie 10.3}
+@xrdef{quotation-pg}{88}
+@xrdef{example-pg}{88}
+@xrdef{verbatim-title}{@code {@@verbatim}: Literal Text}
+@xrdef{verbatim-snt}{Section@tie 10.4}
+@xrdef{verbatim-pg}{89}
+@xrdef{verbatiminclude-title}{@code {@@verbatiminclude} @var {file}: Include a File Verbatim}
+@xrdef{verbatiminclude-snt}{Section@tie 10.5}
+@xrdef{lisp-title}{@code {@@lisp}: Marking a Lisp Example}
+@xrdef{lisp-snt}{Section@tie 10.6}
+@xrdef{verbatiminclude-pg}{90}
+@xrdef{lisp-pg}{90}
+@xrdef{small-title}{@code {@@small@dots {}} Block Commands}
+@xrdef{small-snt}{Section@tie 10.7}
+@xrdef{display-title}{@code {@@display} and @code {@@smalldisplay}}
+@xrdef{display-snt}{Section@tie 10.8}
+@xrdef{small-pg}{91}
+@xrdef{display-pg}{91}
+@xrdef{format-title}{@code {@@format} and @code {@@smallformat}}
+@xrdef{format-snt}{Section@tie 10.9}
+@xrdef{exdent-title}{@code {@@exdent}: Undoing a Line's Indentation}
+@xrdef{exdent-snt}{Section@tie 10.10}
+@xrdef{flushleft & flushright-title}{@code {@@flushleft} and @code {@@flushright}}
+@xrdef{flushleft & flushright-snt}{Section@tie 10.11}
+@xrdef{format-pg}{92}
+@xrdef{exdent-pg}{92}
+@xrdef{flushleft & flushright-pg}{92}
+@xrdef{noindent-title}{@code {@@noindent}: Omitting Indentation}
+@xrdef{noindent-snt}{Section@tie 10.12}
+@xrdef{noindent-pg}{93}
+@xrdef{indent-title}{@code {@@indent}: Forcing Indentation}
+@xrdef{indent-snt}{Section@tie 10.13}
+@xrdef{cartouche-title}{@code {@@cartouche}: Rounded Rectangles Around Examples}
+@xrdef{cartouche-snt}{Section@tie 10.14}
+@xrdef{indent-pg}{94}
+@xrdef{cartouche-pg}{94}
+@xrdef{Lists and Tables-title}{Lists and Tables}
+@xrdef{Lists and Tables-snt}{Chapter@tie 11}
+@xrdef{Introducing Lists-title}{Introducing Lists}
+@xrdef{Introducing Lists-snt}{Section@tie 11.1}
+@xrdef{itemize-title}{@code {@@itemize}: Making an Itemized List}
+@xrdef{itemize-snt}{Section@tie 11.2}
+@xrdef{Lists and Tables-pg}{96}
+@xrdef{Introducing Lists-pg}{96}
+@xrdef{itemize-pg}{97}
+@xrdef{enumerate-title}{@code {@@enumerate}: Making a Numbered or Lettered List}
+@xrdef{enumerate-snt}{Section@tie 11.3}
+@xrdef{enumerate-pg}{98}
+@xrdef{Two-column Tables-title}{Making a Two-column Table}
+@xrdef{Two-column Tables-snt}{Section@tie 11.4}
+@xrdef{table-title}{Using the @code {@@table} Command}
+@xrdef{table-snt}{Section@tie 11.4.1}
+@xrdef{Two-column Tables-pg}{99}
+@xrdef{ftable vtable-title}{@code {@@ftable} and @code {@@vtable}}
+@xrdef{ftable vtable-snt}{Section@tie 11.4.2}
+@xrdef{table-pg}{100}
+@xrdef{itemx-title}{@code {@@itemx}}
+@xrdef{itemx-snt}{Section@tie 11.4.3}
+@xrdef{Multi-column Tables-title}{@code {@@multitable}: Multi-column Tables}
+@xrdef{Multi-column Tables-snt}{Section@tie 11.5}
+@xrdef{Multitable Column Widths-title}{Multitable Column Widths}
+@xrdef{Multitable Column Widths-snt}{Section@tie 11.5.1}
+@xrdef{ftable vtable-pg}{101}
+@xrdef{itemx-pg}{101}
+@xrdef{Multi-column Tables-pg}{101}
+@xrdef{Multitable Rows-title}{Multitable Rows}
+@xrdef{Multitable Rows-snt}{Section@tie 11.5.2}
+@xrdef{Multitable Column Widths-pg}{102}
+@xrdef{Multitable Rows-pg}{102}
+@xrdef{Special Displays-title}{Special Displays}
+@xrdef{Special Displays-snt}{Chapter@tie 12}
+@xrdef{Floats-title}{Floats}
+@xrdef{Floats-snt}{Section@tie 12.1}
+@xrdef{float-title}{@code {@@float} [@var {type}][,@var {label}]: Floating Material}
+@xrdef{float-snt}{Section@tie 12.1.1}
+@xrdef{fig:ex1-title}{!!float!!=Figure}
+@xrdef{fig:ex1-snt}{Figure@tie 12.1}
+@xrdef{fig:ex1-lof}{Figure@tie 12.1}
+@xrdef{Special Displays-pg}{104}
+@xrdef{Floats-pg}{104}
+@xrdef{float-pg}{104}
+@xrdef{fig:ex1-pg}{104}
+@xrdef{caption shortcaption-title}{@code {@@caption} & @code {@@shortcaption}}
+@xrdef{caption shortcaption-snt}{Section@tie 12.1.2}
+@xrdef{listoffloats-title}{@code {@@listoffloats}: Tables of Contents for Floats}
+@xrdef{listoffloats-snt}{Section@tie 12.1.3}
+@xrdef{caption shortcaption-pg}{105}
+@xrdef{listoffloats-pg}{105}
+@xrdef{Images-title}{Inserting Images}
+@xrdef{Images-snt}{Section@tie 12.2}
+@xrdef{Image Syntax-title}{Image Syntax}
+@xrdef{Image Syntax-snt}{Section@tie 12.2.1}
+@xrdef{Images-pg}{106}
+@xrdef{Image Syntax-pg}{106}
+@xrdef{Image Scaling-title}{Image Scaling}
+@xrdef{Image Scaling-snt}{Section@tie 12.2.2}
+@xrdef{Image Scaling-pg}{107}
+@xrdef{Footnotes-title}{Footnotes}
+@xrdef{Footnotes-snt}{Section@tie 12.3}
+@xrdef{Footnote Commands-title}{Footnote Commands}
+@xrdef{Footnote Commands-snt}{Section@tie 12.3.1}
+@xrdef{Footnotes-pg}{108}
+@xrdef{Footnote Commands-pg}{108}
+@xrdef{Footnote Styles-title}{Footnote Styles}
+@xrdef{Footnote Styles-snt}{Section@tie 12.3.2}
+@xrdef{Footnote Styles-pg}{109}
+@xrdef{Indices-title}{Indices}
+@xrdef{Indices-snt}{Chapter@tie 13}
+@xrdef{Index Entries-title}{Making Index Entries}
+@xrdef{Index Entries-snt}{Section@tie 13.1}
+@xrdef{Predefined Indices-title}{Predefined Indices}
+@xrdef{Predefined Indices-snt}{Section@tie 13.2}
+@xrdef{Indices-pg}{110}
+@xrdef{Index Entries-pg}{110}
+@xrdef{Predefined Indices-pg}{110}
+@xrdef{Indexing Commands-title}{Defining the Entries of an Index}
+@xrdef{Indexing Commands-snt}{Section@tie 13.3}
+@xrdef{Indexing Commands-pg}{111}
+@xrdef{Combining Indices-title}{Combining Indices}
+@xrdef{Combining Indices-snt}{Section@tie 13.4}
+@xrdef{syncodeindex-title}{@code {@@syncodeindex}}
+@xrdef{syncodeindex-snt}{Section@tie 13.4.1}
+@xrdef{Combining Indices-pg}{112}
+@xrdef{syncodeindex-pg}{112}
+@xrdef{synindex-title}{@code {@@synindex}}
+@xrdef{synindex-snt}{Section@tie 13.4.2}
+@xrdef{New Indices-title}{Defining New Indices}
+@xrdef{New Indices-snt}{Section@tie 13.5}
+@xrdef{synindex-pg}{113}
+@xrdef{New Indices-pg}{113}
+@xrdef{Insertions-title}{Special Insertions}
+@xrdef{Insertions-snt}{Chapter@tie 14}
+@xrdef{Atsign Braces Comma-title}{Inserting @@ and @{@} and @comma {}}
+@xrdef{Atsign Braces Comma-snt}{Section@tie 14.1}
+@xrdef{Inserting an Atsign-title}{Inserting `@@' with @code {@@@@}}
+@xrdef{Inserting an Atsign-snt}{Section@tie 14.1.1}
+@xrdef{Inserting Braces-title}{Inserting `@{' and `@}' with @code {@@@{} and @code {@@@}}}
+@xrdef{Inserting Braces-snt}{Section@tie 14.1.2}
+@xrdef{Inserting a Comma-title}{Inserting `,' with @code {@@comma@{@}}}
+@xrdef{Inserting a Comma-snt}{Section@tie 14.1.3}
+@xrdef{Insertions-pg}{115}
+@xrdef{Atsign Braces Comma-pg}{115}
+@xrdef{Inserting an Atsign-pg}{115}
+@xrdef{Inserting Braces-pg}{115}
+@xrdef{Inserting a Comma-pg}{115}
+@xrdef{Inserting Quote Characters-title}{Inserting Quote Characters}
+@xrdef{Inserting Quote Characters-snt}{Section@tie 14.2}
+@xrdef{Inserting Space-title}{Inserting Space}
+@xrdef{Inserting Space-snt}{Section@tie 14.3}
+@xrdef{Not Ending a Sentence-title}{Not Ending a Sentence}
+@xrdef{Not Ending a Sentence-snt}{Section@tie 14.3.1}
+@xrdef{Inserting Quote Characters-pg}{116}
+@xrdef{Inserting Space-pg}{116}
+@xrdef{Not Ending a Sentence-pg}{116}
+@xrdef{Ending a Sentence-title}{Ending a Sentence}
+@xrdef{Ending a Sentence-snt}{Section@tie 14.3.2}
+@xrdef{Multiple Spaces-title}{Multiple Spaces}
+@xrdef{Multiple Spaces-snt}{Section@tie 14.3.3}
+@xrdef{Ending a Sentence-pg}{117}
+@xrdef{Multiple Spaces-pg}{117}
+@xrdef{frenchspacing-title}{@code {@@frenchspacing} @var {val}: Control sentence spacing}
+@xrdef{frenchspacing-snt}{Section@tie 14.3.4}
+@xrdef{dmn-title}{@code {@@dmn}@{@var {dimension}@}: Format a Dimension}
+@xrdef{dmn-snt}{Section@tie 14.3.5}
+@xrdef{frenchspacing-pg}{118}
+@xrdef{Inserting Accents-title}{Inserting Accents}
+@xrdef{Inserting Accents-snt}{Section@tie 14.4}
+@xrdef{dmn-pg}{119}
+@xrdef{Inserting Accents-pg}{119}
+@xrdef{Inserting Quotation Marks-title}{Inserting Quotation Marks}
+@xrdef{Inserting Quotation Marks-snt}{Section@tie 14.5}
+@xrdef{Inserting Quotation Marks-pg}{120}
+@xrdef{Dots Bullets-title}{Inserting Ellipsis and Bullets}
+@xrdef{Dots Bullets-snt}{Section@tie 14.6}
+@xrdef{dots-title}{@code {@@dots}@{@} (@dots {}) and @code {@@enddots}@{@} (@enddots {})}
+@xrdef{dots-snt}{Section@tie 14.6.1}
+@xrdef{bullet-title}{@code {@@bullet}@{@} (@bullet {})}
+@xrdef{bullet-snt}{Section@tie 14.6.2}
+@xrdef{Dots Bullets-pg}{121}
+@xrdef{dots-pg}{121}
+@xrdef{TeX and copyright-title}{Inserting @TeX {} and Legal Symbols: @copyright {}, @registeredsymbol {}}
+@xrdef{TeX and copyright-snt}{Section@tie 14.7}
+@xrdef{tex-title}{@code {@@TeX}@{@} (@TeX {}) and @code {@@LaTeX}@{@} (@LaTeX {})}
+@xrdef{tex-snt}{Section@tie 14.7.1}
+@xrdef{copyright symbol-title}{@code {@@copyright@{@}} (@copyright {})}
+@xrdef{copyright symbol-snt}{Section@tie 14.7.2}
+@xrdef{registered symbol-title}{@code {@@registeredsymbol@{@}} (@registeredsymbol {})}
+@xrdef{registered symbol-snt}{Section@tie 14.7.3}
+@xrdef{euro-title}{@code {@@euro}@{@} (@euro {}): Euro Currency Symbol}
+@xrdef{euro-snt}{Section@tie 14.8}
+@xrdef{bullet-pg}{122}
+@xrdef{TeX and copyright-pg}{122}
+@xrdef{tex-pg}{122}
+@xrdef{copyright symbol-pg}{122}
+@xrdef{registered symbol-pg}{122}
+@xrdef{euro-pg}{122}
+@xrdef{pounds-title}{@code {@@pounds}@{@} (@pounds {}): Pounds Sterling}
+@xrdef{pounds-snt}{Section@tie 14.9}
+@xrdef{textdegree-title}{@code {@@textdegree}@{@} (@textdegree {}): Degrees Symbol}
+@xrdef{textdegree-snt}{Section@tie 14.10}
+@xrdef{minus-title}{@code {@@minus}@{@} (@minus {}): Inserting a Minus Sign}
+@xrdef{minus-snt}{Section@tie 14.11}
+@xrdef{geq leq-title}{@code {@@geq@{@}} (@geq {}) and @code {@@leq@{@}} (@leq {}): Inserting relations}
+@xrdef{geq leq-snt}{Section@tie 14.12}
+@xrdef{math-title}{@code {@@math}: Inserting Mathematical Expressions}
+@xrdef{math-snt}{Section@tie 14.13}
+@xrdef{pounds-pg}{123}
+@xrdef{textdegree-pg}{123}
+@xrdef{minus-pg}{123}
+@xrdef{geq leq-pg}{123}
+@xrdef{math-pg}{123}
+@xrdef{Click Sequences-title}{Click Sequences}
+@xrdef{Click Sequences-snt}{Section@tie 14.14}
+@xrdef{Glyphs-title}{Glyphs for Examples}
+@xrdef{Glyphs-snt}{Section@tie 14.15}
+@xrdef{Click Sequences-pg}{124}
+@xrdef{Glyphs Summary-title}{Glyphs Summary}
+@xrdef{Glyphs Summary-snt}{Section@tie 14.15.1}
+@xrdef{result-title}{@code {@@result@{@}} (@result {}): Indicating Evaluation}
+@xrdef{result-snt}{Section@tie 14.15.2}
+@xrdef{expansion-title}{@code {@@expansion@{@}} (@expansion {}): Indicating an Expansion}
+@xrdef{expansion-snt}{Section@tie 14.15.3}
+@xrdef{Glyphs-pg}{125}
+@xrdef{Glyphs Summary-pg}{125}
+@xrdef{result-pg}{125}
+@xrdef{expansion-pg}{125}
+@xrdef{Print Glyph-title}{@code {@@print@{@}} (@print {}): Indicating Printed Output}
+@xrdef{Print Glyph-snt}{Section@tie 14.15.4}
+@xrdef{Error Glyph-title}{@code {@@error@{@}} (@error {}): Indicating an Error Message}
+@xrdef{Error Glyph-snt}{Section@tie 14.15.5}
+@xrdef{Equivalence-title}{@code {@@equiv@{@}} (@equiv {}): Indicating Equivalence}
+@xrdef{Equivalence-snt}{Section@tie 14.15.6}
+@xrdef{Print Glyph-pg}{126}
+@xrdef{Error Glyph-pg}{126}
+@xrdef{Point Glyph-title}{@code {@@point@{@}} (@point {}): Indicating Point in a Buffer}
+@xrdef{Point Glyph-snt}{Section@tie 14.15.7}
+@xrdef{Equivalence-pg}{127}
+@xrdef{Point Glyph-pg}{127}
+@xrdef{Breaks-title}{Forcing and Preventing Breaks}
+@xrdef{Breaks-snt}{Chapter@tie 15}
+@xrdef{Break Commands-title}{Break Commands}
+@xrdef{Break Commands-snt}{Section@tie 15.1}
+@xrdef{Line Breaks-title}{@code {@@*} and @code {@@/}: Generate and Allow Line Breaks}
+@xrdef{Line Breaks-snt}{Section@tie 15.2}
+@xrdef{Breaks-pg}{129}
+@xrdef{Break Commands-pg}{129}
+@xrdef{Line Breaks-pg}{129}
+@xrdef{- and hyphenation-title}{@code {@@-} and @code {@@hyphenation}: Helping @TeX {} Hyphenate}
+@xrdef{- and hyphenation-snt}{Section@tie 15.3}
+@xrdef{allowcodebreaks-title}{@code {@@allowcodebreaks}: Control Line Breaks in @code {@@code}}
+@xrdef{allowcodebreaks-snt}{Section@tie 15.4}
+@xrdef{w-title}{@code {@@w}@{@var {text}@}: Prevent Line Breaks}
+@xrdef{w-snt}{Section@tie 15.5}
+@xrdef{- and hyphenation-pg}{130}
+@xrdef{allowcodebreaks-pg}{130}
+@xrdef{tie-title}{@code {@@tie@{@}}: Inserting an Unbreakable Space}
+@xrdef{tie-snt}{Section@tie 15.6}
+@xrdef{sp-title}{@code {@@sp} @var {n}: Insert Blank Lines}
+@xrdef{sp-snt}{Section@tie 15.7}
+@xrdef{page-title}{@code {@@page}: Start a New Page}
+@xrdef{page-snt}{Section@tie 15.8}
+@xrdef{group-title}{@code {@@group}: Prevent Page Breaks}
+@xrdef{group-snt}{Section@tie 15.9}
+@xrdef{w-pg}{131}
+@xrdef{tie-pg}{131}
+@xrdef{sp-pg}{131}
+@xrdef{page-pg}{131}
+@xrdef{need-title}{@code {@@need @var {mils}}: Prevent Page Breaks}
+@xrdef{need-snt}{Section@tie 15.10}
+@xrdef{group-pg}{132}
+@xrdef{need-pg}{132}
+@xrdef{Definition Commands-title}{Definition Commands}
+@xrdef{Definition Commands-snt}{Chapter@tie 16}
+@xrdef{Def Cmd Template-title}{The Template for a Definition}
+@xrdef{Def Cmd Template-snt}{Section@tie 16.1}
+@xrdef{Definition Commands-pg}{133}
+@xrdef{Def Cmd Template-pg}{133}
+@xrdef{Def Cmd Continuation Lines-title}{Definition Command Continuation Lines}
+@xrdef{Def Cmd Continuation Lines-snt}{Section@tie 16.2}
+@xrdef{Def Cmd Continuation Lines-pg}{134}
+@xrdef{Optional Arguments-title}{Optional and Repeated Arguments}
+@xrdef{Optional Arguments-snt}{Section@tie 16.3}
+@xrdef{deffnx-title}{Two or More `First' Lines}
+@xrdef{deffnx-snt}{Section@tie 16.4}
+@xrdef{Def Cmds in Detail-title}{The Definition Commands}
+@xrdef{Def Cmds in Detail-snt}{Section@tie 16.5}
+@xrdef{Optional Arguments-pg}{135}
+@xrdef{deffnx-pg}{135}
+@xrdef{Functions Commands-title}{Functions and Similar Entities}
+@xrdef{Functions Commands-snt}{Section@tie 16.5.1}
+@xrdef{Def Cmds in Detail-pg}{136}
+@xrdef{Functions Commands-pg}{136}
+@xrdef{Variables Commands-title}{Variables and Similar Entities}
+@xrdef{Variables Commands-snt}{Section@tie 16.5.2}
+@xrdef{Variables Commands-pg}{137}
+@xrdef{Typed Functions-title}{Functions in Typed Languages}
+@xrdef{Typed Functions-snt}{Section@tie 16.5.3}
+@xrdef{Typed Functions-pg}{138}
+@xrdef{Typed Variables-title}{Variables in Typed Languages}
+@xrdef{Typed Variables-snt}{Section@tie 16.5.4}
+@xrdef{Typed Variables-pg}{139}
+@xrdef{Data Types-title}{Data Types}
+@xrdef{Data Types-snt}{Section@tie 16.5.5}
+@xrdef{Data Types-pg}{140}
+@xrdef{Abstract Objects-title}{Object-Oriented Programming}
+@xrdef{Abstract Objects-snt}{Section@tie 16.5.6}
+@xrdef{Object-Oriented Variables-title}{Object-Oriented Variables}
+@xrdef{Object-Oriented Variables-snt}{Section@tie 16.5.6.1}
+@xrdef{Abstract Objects-pg}{141}
+@xrdef{Object-Oriented Variables-pg}{141}
+@xrdef{Object-Oriented Methods-title}{Object-Oriented Methods}
+@xrdef{Object-Oriented Methods-snt}{Section@tie 16.5.6.2}
+@xrdef{Object-Oriented Methods-pg}{142}
+@xrdef{Def Cmd Conventions-title}{Conventions for Writing Definitions}
+@xrdef{Def Cmd Conventions-snt}{Section@tie 16.6}
+@xrdef{Def Cmd Conventions-pg}{143}
+@xrdef{Sample Function Definition-title}{A Sample Function Definition}
+@xrdef{Sample Function Definition-snt}{Section@tie 16.7}
+@xrdef{Sample Function Definition-pg}{144}
+@xrdef{Conditionals-title}{Conditionally Visible Text}
+@xrdef{Conditionals-snt}{Chapter@tie 17}
+@xrdef{Conditional Commands-title}{Conditional Commands}
+@xrdef{Conditional Commands-snt}{Section@tie 17.1}
+@xrdef{Conditionals-pg}{146}
+@xrdef{Conditional Commands-pg}{146}
+@xrdef{Conditional Not Commands-title}{Conditional Not Commands}
+@xrdef{Conditional Not Commands-snt}{Section@tie 17.2}
+@xrdef{Raw Formatter Commands-title}{Raw Formatter Commands}
+@xrdef{Raw Formatter Commands-snt}{Section@tie 17.3}
+@xrdef{Conditional Not Commands-pg}{147}
+@xrdef{Raw Formatter Commands-pg}{147}
+@xrdef{set clear value-title}{@code {@@set}, @code {@@clear}, and @code {@@value}}
+@xrdef{set clear value-snt}{Section@tie 17.4}
+@xrdef{set clear value-pg}{148}
+@xrdef{set value-title}{@code {@@set} and @code {@@value}}
+@xrdef{set value-snt}{Section@tie 17.4.1}
+@xrdef{set value-pg}{149}
+@xrdef{ifset ifclear-title}{@code {@@ifset} and @code {@@ifclear}}
+@xrdef{ifset ifclear-snt}{Section@tie 17.4.2}
+@xrdef{value Example-title}{@code {@@value} Example}
+@xrdef{value Example-snt}{Section@tie 17.4.3}
+@xrdef{ifset ifclear-pg}{150}
+@xrdef{value Example-pg}{151}
+@xrdef{Conditional Nesting-title}{Conditional Nesting}
+@xrdef{Conditional Nesting-snt}{Section@tie 17.5}
+@xrdef{Conditional Nesting-pg}{152}
+@xrdef{Internationalization-title}{Internationalization}
+@xrdef{Internationalization-snt}{Chapter@tie 18}
+@xrdef{documentlanguage-title}{@code {@@documentlanguage @var {ll}[_@var {cc}]}: Set the Document Language}
+@xrdef{documentlanguage-snt}{Section@tie 18.1}
+@xrdef{documentencoding-title}{@code {@@documentencoding @var {enc}}: Set Input Encoding}
+@xrdef{documentencoding-snt}{Section@tie 18.2}
+@xrdef{Internationalization-pg}{153}
+@xrdef{documentlanguage-pg}{153}
+@xrdef{documentencoding-pg}{154}
+@xrdef{Defining New Texinfo Commands-title}{Defining New Texinfo Commands}
+@xrdef{Defining New Texinfo Commands-snt}{Chapter@tie 19}
+@xrdef{Defining Macros-title}{Defining Macros}
+@xrdef{Defining Macros-snt}{Section@tie 19.1}
+@xrdef{Defining New Texinfo Commands-pg}{156}
+@xrdef{Defining Macros-pg}{156}
+@xrdef{Invoking Macros-title}{Invoking Macros}
+@xrdef{Invoking Macros-snt}{Section@tie 19.2}
+@xrdef{Invoking Macros-pg}{157}
+@xrdef{Macro Details-title}{Macro Details and Caveats}
+@xrdef{Macro Details-snt}{Section@tie 19.3}
+@xrdef{Macro Details-pg}{159}
+@xrdef{alias-title}{@samp {@@alias @var {new}=@var {existing}}}
+@xrdef{alias-snt}{Section@tie 19.4}
+@xrdef{alias-pg}{160}
+@xrdef{definfoenclose-title}{@samp {definfoenclose}: Customized Highlighting}
+@xrdef{definfoenclose-snt}{Section@tie 19.5}
+@xrdef{definfoenclose-pg}{161}
+@xrdef{Hardcopy-title}{Formatting and Printing Hardcopy}
+@xrdef{Hardcopy-snt}{Chapter@tie 20}
+@xrdef{Use TeX-title}{Use @TeX {}}
+@xrdef{Use TeX-snt}{Section@tie 20.1}
+@xrdef{Format with tex/texindex-title}{Format with @code {tex} and @code {texindex}}
+@xrdef{Format with tex/texindex-snt}{Section@tie 20.2}
+@xrdef{Hardcopy-pg}{163}
+@xrdef{Use TeX-pg}{163}
+@xrdef{Format with tex/texindex-pg}{163}
+@xrdef{Format with texi2dvi-title}{Format with @code {texi2dvi}}
+@xrdef{Format with texi2dvi-snt}{Section@tie 20.3}
+@xrdef{Format with texi2dvi-pg}{164}
+@xrdef{Print with lpr-title}{Shell Print Using @code {lpr -d}}
+@xrdef{Print with lpr-snt}{Section@tie 20.4}
+@xrdef{Within Emacs-title}{From an Emacs Shell}
+@xrdef{Within Emacs-snt}{Section@tie 20.5}
+@xrdef{Print with lpr-pg}{166}
+@xrdef{Within Emacs-pg}{166}
+@xrdef{Texinfo Mode Printing-title}{Formatting and Printing in Texinfo Mode}
+@xrdef{Texinfo Mode Printing-snt}{Section@tie 20.6}
+@xrdef{Texinfo Mode Printing-pg}{167}
+@xrdef{Compile-Command-title}{Using the Local Variables List}
+@xrdef{Compile-Command-snt}{Section@tie 20.7}
+@xrdef{Requirements Summary-title}{@TeX {} Formatting Requirements Summary}
+@xrdef{Requirements Summary-snt}{Section@tie 20.8}
+@xrdef{Compile-Command-pg}{168}
+@xrdef{Preparing for TeX-title}{Preparing for @TeX {}}
+@xrdef{Preparing for TeX-snt}{Section@tie 20.9}
+@xrdef{Requirements Summary-pg}{169}
+@xrdef{Preparing for TeX-pg}{169}
+@xrdef{Overfull hboxes-title}{Overfull ``hboxes''}
+@xrdef{Overfull hboxes-snt}{Section@tie 20.10}
+@xrdef{smallbook-title}{Printing ``Small'' Books}
+@xrdef{smallbook-snt}{Section@tie 20.11}
+@xrdef{Overfull hboxes-pg}{171}
+@xrdef{smallbook-pg}{171}
+@xrdef{A4 Paper-title}{Printing on A4 Paper}
+@xrdef{A4 Paper-snt}{Section@tie 20.12}
+@xrdef{pagesizes-title}{@code {@@pagesizes} [@var {width}][, @var {height}]: Custom Page Sizes}
+@xrdef{pagesizes-snt}{Section@tie 20.13}
+@xrdef{Cropmarks and Magnification-title}{Cropmarks and Magnification}
+@xrdef{Cropmarks and Magnification-snt}{Section@tie 20.14}
+@xrdef{A4 Paper-pg}{172}
+@xrdef{pagesizes-pg}{172}
+@xrdef{PDF Output-title}{PDF Output}
+@xrdef{PDF Output-snt}{Section@tie 20.15}
+@xrdef{Cropmarks and Magnification-pg}{173}
+@xrdef{PDF Output-pg}{173}
+@xrdef{Obtaining TeX-title}{How to Obtain @TeX {}}
+@xrdef{Obtaining TeX-snt}{Section@tie 20.16}
+@xrdef{Obtaining TeX-pg}{174}
+@xrdef{Creating and Installing Info Files-title}{Creating and Installing Info Files}
+@xrdef{Creating and Installing Info Files-snt}{Chapter@tie 21}
+@xrdef{Creating an Info File-title}{Creating an Info File}
+@xrdef{Creating an Info File-snt}{Section@tie 21.1}
+@xrdef{makeinfo advantages-title}{@code {makeinfo} Preferred}
+@xrdef{makeinfo advantages-snt}{Section@tie 21.1.1}
+@xrdef{Invoking makeinfo-title}{Running @code {makeinfo} from a Shell}
+@xrdef{Invoking makeinfo-snt}{Section@tie 21.1.2}
+@xrdef{makeinfo options-title}{Options for @code {makeinfo}}
+@xrdef{makeinfo options-snt}{Section@tie 21.1.3}
+@xrdef{Creating and Installing Info Files-pg}{175}
+@xrdef{Creating an Info File-pg}{175}
+@xrdef{makeinfo advantages-pg}{175}
+@xrdef{Invoking makeinfo-pg}{175}
+@xrdef{makeinfo options-pg}{175}
+@xrdef{Pointer Validation-title}{Pointer Validation}
+@xrdef{Pointer Validation-snt}{Section@tie 21.1.4}
+@xrdef{Pointer Validation-pg}{179}
+@xrdef{makeinfo in Emacs-title}{Running @code {makeinfo} Within Emacs}
+@xrdef{makeinfo in Emacs-snt}{Section@tie 21.1.5}
+@xrdef{makeinfo in Emacs-pg}{180}
+@xrdef{texinfo-format commands-title}{The @code {texinfo-format@dots {}} Commands}
+@xrdef{texinfo-format commands-snt}{Section@tie 21.1.6}
+@xrdef{texinfo-format commands-pg}{181}
+@xrdef{Batch Formatting-title}{Batch Formatting}
+@xrdef{Batch Formatting-snt}{Section@tie 21.1.7}
+@xrdef{Tag and Split Files-title}{Tag Files and Split Files}
+@xrdef{Tag and Split Files-snt}{Section@tie 21.1.8}
+@xrdef{Batch Formatting-pg}{182}
+@xrdef{Tag and Split Files-pg}{182}
+@xrdef{Installing an Info File-title}{Installing an Info File}
+@xrdef{Installing an Info File-snt}{Section@tie 21.2}
+@xrdef{Directory File-title}{The Directory File @file {dir}}
+@xrdef{Directory File-snt}{Section@tie 21.2.1}
+@xrdef{New Info File-title}{Listing a New Info File}
+@xrdef{New Info File-snt}{Section@tie 21.2.2}
+@xrdef{Installing an Info File-pg}{184}
+@xrdef{Directory File-pg}{184}
+@xrdef{New Info File-pg}{184}
+@xrdef{Other Info Directories-title}{Info Files in Other Directories}
+@xrdef{Other Info Directories-snt}{Section@tie 21.2.3}
+@xrdef{Other Info Directories-pg}{185}
+@xrdef{Installing Dir Entries-title}{Installing Info Directory Files}
+@xrdef{Installing Dir Entries-snt}{Section@tie 21.2.4}
+@xrdef{Installing Dir Entries-pg}{186}
+@xrdef{Invoking install-info-title}{Invoking @command {install-info}}
+@xrdef{Invoking install-info-snt}{Section@tie 21.2.5}
+@xrdef{Invoking install-info-pg}{187}
+@xrdef{Generating HTML-title}{Generating HTML}
+@xrdef{Generating HTML-snt}{Chapter@tie 22}
+@xrdef{HTML Translation-title}{HTML Translation}
+@xrdef{HTML Translation-snt}{Section@tie 22.1}
+@xrdef{HTML Splitting-title}{HTML Splitting}
+@xrdef{HTML Splitting-snt}{Section@tie 22.2}
+@xrdef{Generating HTML-pg}{191}
+@xrdef{HTML Translation-pg}{191}
+@xrdef{HTML Splitting-pg}{191}
+@xrdef{HTML CSS-title}{HTML CSS}
+@xrdef{HTML CSS-snt}{Section@tie 22.3}
+@xrdef{HTML CSS-pg}{192}
+@xrdef{HTML Xref-title}{HTML Cross-references}
+@xrdef{HTML Xref-snt}{Section@tie 22.4}
+@xrdef{HTML Xref Link Basics-title}{HTML Cross-reference Link Basics}
+@xrdef{HTML Xref Link Basics-snt}{Section@tie 22.4.1}
+@xrdef{HTML Xref-pg}{193}
+@xrdef{HTML Xref Link Basics-pg}{193}
+@xrdef{HTML Xref Node Name Expansion-title}{HTML Cross-reference Node Name Expansion}
+@xrdef{HTML Xref Node Name Expansion-snt}{Section@tie 22.4.2}
+@xrdef{HTML Xref Node Name Expansion-pg}{194}
+@xrdef{HTML Xref Command Expansion-title}{HTML Cross-reference Command Expansion}
+@xrdef{HTML Xref Command Expansion-snt}{Section@tie 22.4.3}
+@xrdef{HTML Xref Command Expansion-pg}{195}
+@xrdef{HTML Xref 8-bit Character Expansion-title}{HTML Cross-reference 8-bit Character Expansion}
+@xrdef{HTML Xref 8-bit Character Expansion-snt}{Section@tie 22.4.4}
+@xrdef{HTML Xref Mismatch-title}{HTML Cross-reference Mismatch}
+@xrdef{HTML Xref Mismatch-snt}{Section@tie 22.4.5}
+@xrdef{HTML Xref 8-bit Character Expansion-pg}{197}
+@xrdef{HTML Xref Mismatch-pg}{197}
+@xrdef{Command List-title}{@@-Command List}
+@xrdef{Command List-snt}{Appendix@tie @char65{}}
+@xrdef{Command List-pg}{199}
+@xrdef{Command Syntax-title}{@@-Command Syntax}
+@xrdef{Command Syntax-snt}{Section@tie @char65.1}
+@xrdef{Command Syntax-pg}{218}
+@xrdef{Tips-title}{Tips and Hints}
+@xrdef{Tips-snt}{Appendix@tie @char66{}}
+@xrdef{Tips-pg}{220}
+@xrdef{Sample Texinfo Files-title}{Sample Texinfo Files}
+@xrdef{Sample Texinfo Files-snt}{Appendix@tie @char67{}}
+@xrdef{Short Sample Texinfo File-title}{Short Sample}
+@xrdef{Short Sample Texinfo File-snt}{Section@tie @char67.1}
+@xrdef{Sample Texinfo Files-pg}{225}
+@xrdef{Short Sample Texinfo File-pg}{225}
+@xrdef{GNU Sample Texts-title}{GNU Sample Texts}
+@xrdef{GNU Sample Texts-snt}{Section@tie @char67.2}
+@xrdef{GNU Sample Texts-pg}{226}
+@xrdef{Verbatim Copying License-title}{Verbatim Copying License}
+@xrdef{Verbatim Copying License-snt}{Section@tie @char67.3}
+@xrdef{All-permissive Copying License-title}{All-permissive Copying License}
+@xrdef{All-permissive Copying License-snt}{Section@tie @char67.4}
+@xrdef{Verbatim Copying License-pg}{229}
+@xrdef{All-permissive Copying License-pg}{230}
+@xrdef{Include Files-title}{Include Files}
+@xrdef{Include Files-snt}{Appendix@tie @char68{}}
+@xrdef{Using Include Files-title}{How to Use Include Files}
+@xrdef{Using Include Files-snt}{Section@tie @char68.1}
+@xrdef{texinfo-multiple-files-update-title}{@code {texinfo-multiple-files-update}}
+@xrdef{texinfo-multiple-files-update-snt}{Section@tie @char68.2}
+@xrdef{Include Files-pg}{231}
+@xrdef{Using Include Files-pg}{231}
+@xrdef{texinfo-multiple-files-update-pg}{231}
+@xrdef{Include Files Requirements-title}{Include Files Requirements}
+@xrdef{Include Files Requirements-snt}{Section@tie @char68.3}
+@xrdef{Sample Include File-title}{Sample File with @code {@@include}}
+@xrdef{Sample Include File-snt}{Section@tie @char68.4}
+@xrdef{Include Files Requirements-pg}{232}
+@xrdef{Include Files Evolution-title}{Evolution of Include Files}
+@xrdef{Include Files Evolution-snt}{Section@tie @char68.5}
+@xrdef{Sample Include File-pg}{233}
+@xrdef{Include Files Evolution-pg}{233}
+@xrdef{Headings-title}{Page Headings}
+@xrdef{Headings-snt}{Appendix@tie @char69{}}
+@xrdef{Headings Introduced-title}{Headings Introduced}
+@xrdef{Headings Introduced-snt}{Section@tie @char69.1}
+@xrdef{Heading Format-title}{Standard Heading Formats}
+@xrdef{Heading Format-snt}{Section@tie @char69.2}
+@xrdef{Headings-pg}{235}
+@xrdef{Headings Introduced-pg}{235}
+@xrdef{Heading Format-pg}{235}
+@xrdef{Heading Choice-title}{Specifying the Type of Heading}
+@xrdef{Heading Choice-snt}{Section@tie @char69.3}
+@xrdef{Custom Headings-title}{How to Make Your Own Headings}
+@xrdef{Custom Headings-snt}{Section@tie @char69.4}
+@xrdef{Heading Choice-pg}{236}
+@xrdef{Custom Headings-pg}{237}
+@xrdef{Catching Mistakes-title}{Formatting Mistakes}
+@xrdef{Catching Mistakes-snt}{Appendix@tie @char70{}}
+@xrdef{makeinfo Preferred-title}{@code {makeinfo} Find Errors}
+@xrdef{makeinfo Preferred-snt}{Section@tie @char70.1}
+@xrdef{Debugging with Info-title}{Catching Errors with Info Formatting}
+@xrdef{Debugging with Info-snt}{Section@tie @char70.2}
+@xrdef{Catching Mistakes-pg}{240}
+@xrdef{makeinfo Preferred-pg}{240}
+@xrdef{Debugging with Info-pg}{240}
+@xrdef{Debugging with TeX-title}{Catching Errors with @TeX {} Formatting}
+@xrdef{Debugging with TeX-snt}{Section@tie @char70.3}
+@xrdef{Debugging with TeX-pg}{241}
+@xrdef{Using texinfo-show-structure-title}{Using @code {texinfo-show-structure}}
+@xrdef{Using texinfo-show-structure-snt}{Section@tie @char70.4}
+@xrdef{Using texinfo-show-structure-pg}{243}
+@xrdef{Using occur-title}{Using @code {occur}}
+@xrdef{Using occur-snt}{Section@tie @char70.5}
+@xrdef{Running Info-Validate-title}{Finding Badly Referenced Nodes}
+@xrdef{Running Info-Validate-snt}{Section@tie @char70.6}
+@xrdef{Using occur-pg}{244}
+@xrdef{Running Info-Validate-pg}{244}
+@xrdef{Using Info-validate-title}{Running @code {Info-validate}}
+@xrdef{Using Info-validate-snt}{Section@tie @char70.6.1}
+@xrdef{Unsplit-title}{Creating an Unsplit File}
+@xrdef{Unsplit-snt}{Section@tie @char70.6.2}
+@xrdef{Using Info-validate-pg}{245}
+@xrdef{Unsplit-pg}{245}
+@xrdef{Tagifying-title}{Tagifying a File}
+@xrdef{Tagifying-snt}{Section@tie @char70.6.3}
+@xrdef{Splitting-title}{Splitting a File Manually}
+@xrdef{Splitting-snt}{Section@tie @char70.6.4}
+@xrdef{Tagifying-pg}{246}
+@xrdef{Splitting-pg}{246}
+@xrdef{GNU Free Documentation License-title}{GNU Free Documentation License}
+@xrdef{GNU Free Documentation License-snt}{Appendix@tie @char71{}}
+@xrdef{GNU Free Documentation License-pg}{247}
+@xrdef{Command and Variable Index-title}{Command and Variable Index}
+@xrdef{Command and Variable Index-snt}{}
+@xrdef{Command and Variable Index-pg}{254}
+@xrdef{General Index-title}{General Index}
+@xrdef{General Index-snt}{}
+@xrdef{General Index-pg}{259}

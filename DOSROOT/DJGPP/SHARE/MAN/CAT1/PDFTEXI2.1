@@ -1,0 +1,264 @@
+
+
+
+TEXI2DVI(1)               User Commands               TEXI2DVI(1)
+
+
+NNAAMMEE
+       texi2dvi - convert Texinfo documents to PDF
+
+SSYYNNOOPPSSIISS
+       tteexxii22ddvvii [_O_P_T_I_O_N]... _F_I_L_E...
+
+DDEESSCCRRIIPPTTIIOONN
+       Run each Texinfo or (La)TeX FILE through TeX in turn until
+       all cross-references are resolved, building  all  indices.
+       The   directory  containing  each  FILE  is  searched  for
+       included files.  The suffix of FILE is used  to  determine
+       its  language  ((La)TeX  or Texinfo).  To process (e)plain
+       TeX files, set the environment variable LATEX=tex.
+
+       In  order  to  make  texi2dvi  a  drop-in  replacement  of
+       TeX/LaTeX in AUC-TeX, the FILE may also be composed of the
+       following simple TeX commands.
+
+       `\input{FILE}'
+              the actual file to compile
+
+       `\nonstopmode'
+              same as ----bbaattcchh
+
+       Makeinfo is used to perform Texinfo macro expansion before
+       running TeX when needed.
+
+   GGeenneerraall ooppttiioonnss::
+       --bb, ----bbaattcchh
+              no interaction
+
+       --DD, ----ddeebbuugg
+              turn on shell debugging (set --xx)
+
+       --hh, ----hheellpp
+              display this help and exit successfully
+
+       --oo, ----oouuttppuutt=_O_F_I_L_E
+              leave  output  in OFILE (implies ----cclleeaann); only one
+              input FILE may be specified in this case
+
+       --qq, ----qquuiieett
+              no output unless errors (implies ----bbaattcchh)
+
+       --ss, ----ssiilleenntt
+              same as ----qquuiieett
+
+       --vv, ----vveerrssiioonn
+              display version information and exit successfully
+
+       --VV, ----vveerrbboossee
+              report on what is done
+
+
+
+
+
+texi2dvi 1.135            September 2008                        1
+
+
+
+
+
+TEXI2DVI(1)               User Commands               TEXI2DVI(1)
+
+
+   TTeeXX ttuunniinngg::
+       -@     use @input instead of \input for preloaded Texinfo
+
+       ----ddvvii  output a DVI file [default]
+
+       ----ddvviippddff
+              output a PDF file via DVI (using dvipdf)
+
+       --ee, --EE, ----eexxppaanndd
+              force macro expansion using makeinfo
+
+       --II DIR search DIR for Texinfo files
+
+       --ll, ----llaanngguuaaggee=_L_A_N_G
+              specify LANG for FILE, either latex or texinfo
+
+       ----nnoo--lliinnee--eerrrroorr
+              do not pass ----ffiillee--lliinnee--eerrrroorr to TeX
+
+       --pp, ----ppddff
+              use pdftex or pdflatex for processing
+
+       --rr, ----rreeccooddee
+              call recode before TeX to translate input
+
+       ----rreeccooddee--ffrroomm=_E_N_C
+              recode from ENC to the @documentencoding
+
+       ----ssrrcc--ssppeecciiaallss
+              pass ----ssrrcc--ssppeecciiaallss to TeX
+
+       --tt, ----ccoommmmaanndd=_C_M_D
+              insert CMD in copy of input file
+
+       or ----tteexxiinnffoo=_C_M_D
+              multiple values accumulate
+
+       ----ttrraannssllaattee--ffiillee=_F_I_L_E
+              use given charset translation file for TeX
+
+   BBuuiilldd mmooddeess::
+       ----bbuuiilldd=_M_O_D_E
+              specify the treatment of auxiliary files [local]
+
+       ----ttiiddyy same as ----bbuuiilldd=_t_i_d_y
+
+       --cc, ----cclleeaann
+              same as ----bbuuiilldd=_c_l_e_a_n
+
+       ----bbuuiilldd--ddiirr=_D_I_R
+              specify where the tidy  compilation  is  performed;
+              implies  ----ttiiddyy;  defaults to TEXI2DVI_BUILD_DIREC-
+              TORY [.]
+
+
+
+
+texi2dvi 1.135            September 2008                        2
+
+
+
+
+
+TEXI2DVI(1)               User Commands               TEXI2DVI(1)
+
+
+       ----mmoossttllyy--cclleeaann
+              remove the auxiliary files and directories but  not
+              the output
+
+       The  MODE specifies where the TeX compilation takes place,
+       and, as a consequence, how auxiliary  files  are  treated.
+       The build mode can also be set using the environment vari-
+       able TEXI2DVI_BUILD_MODE.
+
+   VVaalliidd MMOODDEEss aarree::
+       `local'
+              compile in the current directory, leaving  all  the
+              auxiliary  files  around.   This is the traditional
+              TeX use.
+
+       `tidy' compile in a local *.t2d directory, where the  aux-
+              iliary  files  are  left.   Output files are copied
+              back to the original file.
+
+       `clean'
+              same as `tidy', but remove the auxiliary  directory
+              afterwards.   Every  compilation therefore requires
+              the full cycle.
+
+   UUssiinngg tthhee ``ttiiddyy'' mmooddee bbrriinnggss sseevveerraall aaddvvaannttaaggeess::
+       -      the  current  directory  is  not   cluttered   with
+              plethora of temporary files.
+
+       -      clutter  can be even reduced using ----bbuuiilldd--ddiirr=_d_i_r:
+              all the *.t2d directories are stored there.
+
+       -      clutter  can  be  reduced  to  zero  using,   e.g.,
+              ----bbuuiilldd--ddiirr==/tmp/$USER.t2d                       or
+              ----bbuuiilldd--ddiirr==$HOME/.t2d.
+
+       -      the output file is updated  after  every  succesful
+              TeX  run,  for  sake of concurrent visualization of
+              the output.  In a `local' build  the  viewer  stops
+              during the whole TeX run.
+
+       -      if the compilation fails, the previous state of the
+              output file is preserved.
+
+       -      PDF and DVI compilation are kept in separate subdi-
+              rectories  preventing  any possibility of auxiliary
+              file incompatibility.
+
+       On the other hand, because `tidy' compilation takes  place
+       in  another  directory,  occasionally TeX won't be able to
+       find some files (e.g., when using \graphicspath): in  that
+       case  use --II to specify the additional directories to con-
+       sider.
+
+       The values of the BIBTEX, LATEX (or PDFLATEX),  MAKEINDEX,
+
+
+
+texi2dvi 1.135            September 2008                        3
+
+
+
+
+
+TEXI2DVI(1)               User Commands               TEXI2DVI(1)
+
+
+       MAKEINFO, TEX (or PDFTEX), TEXINDEX, and THUMBPDF environ-
+       ment variables are used to run those commands, if they are
+       set.   Any  CMD  strings  are added after @setfilename for
+       Texinfo input, in the first line for LaTeX input.
+
+RREEPPOORRTTIINNGG BBUUGGSS
+       Email bug reports to <bug-texinfo@gnu.org>, general  ques-
+       tions  and  discussion to <help-texinfo@gnu.org>.  Texinfo
+       home page: http://www.gnu.org/software/texinfo/
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (C) 2008 Free Software Foundation, Inc.  License
+       GPLv3+:     GNU     GPL     version     3     or     later
+       <http://gnu.org/licenses/gpl.html>
+       This is free software: you are free to change  and  redis-
+       tribute it.  There is NO WARRANTY, to the extent permitted
+       by law.
+
+SSEEEE AALLSSOO
+       The full documentation for tteexxii22ddvvii  is  maintained  as  a
+       Texinfo  manual.   If  the  iinnffoo and tteexxii22ddvvii programs are
+       properly installed at your site, the command
+
+              iinnffoo tteexxii22ddvvii
+
+       should give you access to the complete manual.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+texi2dvi 1.135            September 2008                        4
+
+
