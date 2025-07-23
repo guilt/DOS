@@ -1,0 +1,10 @@
+#----------------------------------------------------------------------------
+# ObjectWindows - (C) Copyright 1991, 1993 by Borland International
+#----------------------------------------------------------------------------
+
+EXE =listbox
+OBJEXE = listboxx.obj
+RESEXE = listboxx.res
+MODELS=mldf
+!include $(BCEXAMPLEDIR)\owlmake.gen
+

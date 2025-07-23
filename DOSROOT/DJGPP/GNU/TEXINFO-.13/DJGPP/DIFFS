@@ -1,0 +1,452 @@
+2008-11-04  Juan Manuell Guerrero  <juan.guerrero@gmx.de>
+
+	* info/window.c (process_node_text): Use the right type for cur_len and
+	replen; must be size_t instead of int.
+	(clean_manpage): ditto.
+	(window_scan_line): ditto.
+
+
+
+
+
+
+diff -aprNU5 texinfo-4.13.orig/info/window.c texinfo-4.13/info/window.c
+--- texinfo-4.13.orig/info/window.c	2008-09-18 18:31:58 +0000
++++ texinfo-4.13/info/window.c	2008-11-04 22:38:40 +0000
+@@ -1579,12 +1579,12 @@ process_node_text (WINDOW *win, char *st
+        mbi_advance (iter))
+     {
+       const char *carried_over_ptr;
+       size_t carried_over_len, carried_over_count;
+       const char *cur_ptr = mbi_cur_ptr (iter);
+-      int cur_len = mb_len (mbi_cur (iter));
+-      int replen;
++      size_t cur_len = mb_len (mbi_cur (iter));
++      size_t replen;
+       int delim = 0;
+       int rc;
+ 
+       if (mb_isprint (mbi_cur (iter)))
+ 	{
+@@ -1752,11 +1752,11 @@ clean_manpage (char *manpage)
+   for (mbi_init (iter, manpage, len);
+        mbi_avail (iter);
+        mbi_advance (iter))
+     {
+       const char *cur_ptr = mbi_cur_ptr (iter);
+-      int cur_len = mb_len (mbi_cur (iter));
++      size_t cur_len = mb_len (mbi_cur (iter));
+ 
+       if (cur_len == 1)
+ 	{
+ 	  if (*cur_ptr == '\b' || *cur_ptr == '\f')
+ 	    {
+@@ -1850,12 +1850,12 @@ window_scan_line (WINDOW *win, int line,
+ 		   win->line_starts[line]);
+        !delim && mbi_avail (iter);
+        mbi_advance (iter))
+     {
+       const char *cur_ptr = mbi_cur_ptr (iter);
+-      int cur_len = mb_len (mbi_cur (iter));
+-      int replen;
++      size_t cur_len = mb_len (mbi_cur (iter));
++      size_t replen;
+ 
+       if (cur_ptr >= endp)
+ 	break;
+       
+       if (mb_isprint (mbi_cur (iter)))
+
+
+2015-08-01  Juan Manuell Guerrero  <juan.guerrero@gmx.de>
+
+	* djgpp/config.bat: Add DJGPP specific editing of ./config.h
+	and editing of the different makefiles.
+
+	* djgpp/config.sed: Add multi-byte functions support.
+	Remove LINGUAS from dependecy list in ./po/Makefile.
+
+	* djgpp/config_h.sed: DJGPP specific editing of ./config.h.
+
+	* djgpp/Makefile.sed: DJGPP specific editing of the different
+	makefiles.
+
+	* djgpp/_libsupp.h: Header providing multi-byte functions prototypes
+	and libsupp_mbstate_t definition.
+
+	* djgpp/libsupp_mblen.c: mblen implementation.
+
+	* djgpp/libsupp_mbrtowc.c: mbrtowc implementation.
+
+	* djgpp/libsupp_mbsinit.c: mbsinit implementation.
+
+	* djgpp/libsupp_mbtowc.c: mbtowc implementation.
+
+	* djgpp/libsupp_towlower.c: towlower implementation.
+
+	* djgpp/libsupp_towupper.c: towupper implementation.
+
+	* info/pcterm.c [__DJGPP__]: Provide __djgpp_set_ctrl_c prototype.
+
+
+
+
+
+
+diff -aprNU5 texinfo-4.13.orig/djgpp/config.bat texinfo-4.13/djgpp/config.bat
+--- texinfo-4.13.orig/djgpp/config.bat	2007-12-26 18:05:12 -0502
++++ texinfo-4.13/djgpp/config.bat	2015-08-02 18:49:42 -0502
+@@ -205,16 +208,85 @@ echo --disable-nls >> args
+ echo Running the ./configure script...
+ sh ./configure @args
+ if errorlevel 1 goto cfg_error
+ rm args
+ echo Done.
++echo Editing config.h...
++test -f ./config_h.org
++if errorlevel 1 update ./config.h ./config_h.org
++sed -f %XSRC%/djgpp/config_h.sed ./config_h.org > config.h
++if errorlevel 1 goto SedError2
++echo Editing gnulib/lib/Makefile...
++test -f ./gnulib/lib/Makefile.org
++if errorlevel 1 update ./gnulib/lib/Makefile ./gnulib/lib/Makefile.org
++sed -f %XSRC%/djgpp/Makefile.sed ./gnulib/lib/Makefile.org > Makefile.tmp
++if errorlevel 1 goto SedError3
++mv -vf Makefile.tmp gnulib/lib/Makefile
++echo Editing lib/Makefile...
++test -f ./lib/Makefile.org
++if errorlevel 1 update ./lib/Makefile ./lib/Makefile.org
++sed -f %XSRC%/djgpp/Makefile.sed ./lib/Makefile.org > Makefile.tmp
++if errorlevel 1 goto SedError4
++mv -vf Makefile.tmp lib/Makefile
++echo Editing info/Makefile...
++test -f ./info/Makefile.org
++if errorlevel 1 update ./info/Makefile ./info/Makefile.org
++sed -f %XSRC%/djgpp/Makefile.sed ./info/Makefile.org > Makefile.tmp
++if errorlevel 1 goto SedError5
++mv -vf Makefile.tmp info/Makefile
++echo Editing install-info/Makefile...
++test -f ./install-info/Makefile.org
++if errorlevel 1 update ./install-info/Makefile ./install-info/Makefile.org
++sed -f %XSRC%/djgpp/Makefile.sed ./install-info/Makefile.org > Makefile.tmp
++if errorlevel 1 goto SedError6
++mv -vf Makefile.tmp install-info/Makefile
++echo Editing makeinfo/Makefile...
++test -f ./makeinfo/Makefile.org
++if errorlevel 1 update ./makeinfo/Makefile ./makeinfo/Makefile.org
++sed -f %XSRC%/djgpp/Makefile.sed ./makeinfo/Makefile.org > Makefile.tmp
++if errorlevel 1 goto SedError7
++mv -vf Makefile.tmp makeinfo/Makefile
++echo Editing util/Makefile...
++test -f ./util/Makefile.org
++if errorlevel 1 update ./util/Makefile ./util/Makefile.org
++sed -f %XSRC%/djgpp/Makefile.sed ./util/Makefile.org > Makefile.tmp
++if errorlevel 1 goto SedError7
++mv -vf Makefile.tmp util/Makefile
+ goto End
+ 
+ :sed_error
+ echo ./configure script editing failed!
+ goto End
+ 
++:SedError2
++echo config.h fixing failed!
++goto End
++
++:SedError3
++echo ./gnulib/lib/Makefile fixing failed!
++goto End
++
++:SedError4
++echo ./lib/Makefile fixing failed!
++goto End
++
++:SedError5
++echo ./info/Makefile fixing failed!
++goto End
++
++:SedError6
++echo ./install-info/Makefile fixing failed!
++goto End
++
++:SedError7
++echo ./makeinfo/Makefile fixing failed!
++goto End
++
++:SedError8
++echo ./util/Makefile fixing failed!
++goto End
++
+ :cfg_error
+ echo ./configure script exited abnormally!
+ goto End
+ 
+ :small_env
+diff -aprNU5 texinfo-4.13.orig/djgpp/config.sed texinfo-4.13/djgpp/config.sed
+--- texinfo-4.13.orig/djgpp/config.sed	2008-05-23 06:19:26 -0502
++++ texinfo-4.13/djgpp/config.sed	2015-08-02 18:38:30 -0502
+@@ -25,10 +25,44 @@ s,Makefile\\.in\\.in,Makefile.in-in,g\
+ }\
+ /^uninstall-info-am:/,/^$/ {\
+   /@list=.\\\$(INFO_DEPS)\[^ \]/s,DEPS),& texinf- texin- info-stn.i info.inf,\
+   s,\\(file-\\[0-9\\]\\[0-9\\]\\)\\(\[^ \]\\),\\1 \\$\\$file[0-9] \\$\\$file[0-9][0-9]\\2,\
+ }\
++/^gl_LIBOBJS[ 	]*=/s/$/ libsupp_towlower.o libsupp_towupper.o libsupp_mblen.o libsupp_mbrtowc.o libsupp_mbsinit.o libsupp_mbtowc.o/\
++/^gl_LTLIBOBJS[ 	]*=/s/$/ libsupp_towlower.lo libsupp_towupper.lo libsupp_mblen.lo libsupp_mbrtowc.lo libsupp_mbsinit.lo libsupp_mbtowc.lo/\
++/^libgnu.a[	]*:/i\\\\\
++\\\\\
++libsupp_towlower.\\$(OBJEXT): \\$(top_srcdir)/djgpp/libsupp_towlower.c\\\\\
++	\\$(COMPILE) -c -o \\$@ \\$<\\\\\
++libsupp_towupper.\\$(OBJEXT): \\$(top_srcdir)/djgpp/libsupp_towupper.c\\\\\
++	\\$(COMPILE) -c -o \\$@ \\$<\\\\\
++libsupp_mblen.\\$(OBJEXT): \\$(top_srcdir)/djgpp/libsupp_mblen.c\\\\\
++	\\$(COMPILE) -c -o \\$@ \\$<\\\\\
++libsupp_mbrtowc.\\$(OBJEXT): \\$(top_srcdir)/djgpp/libsupp_mbrtowc.c\\\\\
++	\\$(COMPILE) -c -o \\$@ \\$<\\\\\
++libsupp_mbsinit.\\$(OBJEXT): \\$(top_srcdir)/djgpp/libsupp_mbsinit.c\\\\\
++	\\$(COMPILE) -c -o \\$@ \\$<\\\\\
++libsupp_mbtowc.\\$(OBJEXT): \\$(top_srcdir)/djgpp/libsupp_mbtowc.c\\\\\
++	\\$(COMPILE) -c -o \\$@ \\$<\\\\\
++\
++# /^am_libtxi_a_OBJECTS[ 	]*=/s/=[	 ]*/= libsupp_towlower.\\$(OBJEXT) libsupp_towupper.\\$(OBJEXT) libsupp_mblen.\\$(OBJEXT) libsupp_mbrtowc.\\$(OBJEXT) libsupp_mbsinit.\\$(OBJEXT) libsupp_mbtowc.\\$(OBJEXT) /\
++# /^libtxi_a_SOURCES[ 	]*=/s/=[	 ]*/= libsupp_towlower.c libsupp_towupper.c libsupp_mblen.c libsupp_mbrtowc.c libsupp_mbsinit.c libsupp_mbtowc.c /\
++# /^libtxi.a[	]*:/i\\\\\
++# \\\\\
++# libsupp_towlower.\\$(OBJEXT): \\$(top_srcdir)/djgpp/libsupp_towlower.c\\\\\
++# 	\\$(COMPILE) -c \\$<\\\\\
++# libsupp_towupper.\\$(OBJEXT): \\$(top_srcdir)/djgpp/libsupp_towupper.c\\\\\
++# 	\\$(COMPILE) -c \\$<\\\\\
++# libsupp_mblen.\\$(OBJEXT): \\$(top_srcdir)/djgpp/libsupp_mblen.c\\\\\
++# 	\\$(COMPILE) -c \\$<\\\\\
++# libsupp_mbrtowc.\\$(OBJEXT): \\$(top_srcdir)/djgpp/libsupp_mbrtowc.c\\\\\
++# 	\\$(COMPILE) -c \\$<\\\\\
++# libsupp_mbsinit.\\$(OBJEXT): \\$(top_srcdir)/djgpp/libsupp_mbsinit.c\\\\\
++# 	\\$(COMPILE) -c \\$<\\\\\
++# libsupp_mbtowc.\\$(OBJEXT): \\$(top_srcdir)/djgpp/libsupp_mbtowc.c\\\\\
++# 	\\$(COMPILE) -c \\$<\\\\\
++# \
+ eof_djgpp\
+ sed -f "\$tmp/subs-djgpp.sed" \$tmp/out > \$tmp/out.djgpp\
+ mv -f \$tmp/out.djgpp \$tmp/out
+ }
+ 
+@@ -100,5 +134,8 @@ done
+ # The CR test for awk does not work for DJGPP.
+ /^ac_cs_awk_cr=/,/^$/ {
+   /^fi$/ a\
+ ac_cs_awk_cr=$ac_cr
+ }
++
++# Remove LINGUAS from dependecy list in ./po/Makefile
++/POMAKEFILEDEPS=/ s/POMAKEFILEDEPS LINGUAS/POMAKEFILEDEPS #LINGUAS/
+diff -aprNU5 texinfo-4.13.orig/djgpp/config_h.sed texinfo-4.13/djgpp/config_h.sed
+--- texinfo-4.13.orig/djgpp/config_h.sed	1969-12-31 18:57:03 -0502
++++ texinfo-4.13/djgpp/config_h.sed	2015-08-02 18:38:30 -0502
+@@ -0,0 +1,17 @@
++# Sed script to add DJGPP specific issues to config.h.
++
++/.*#undef HAVE_MBSINIT.*/ c\
++#define HAVE_MBSINIT 1
++
++/.*#undef HAVE_MBRTOWC.*/ c\
++#define HAVE_MBRTOWC 1
++
++
++$ a\
++\
++/*\
++ *  Provide missing functions through libsupp.a.\
++ */\
++#ifdef __DJGPP__\
++# include "_libsupp.h"\
++#endif
+diff -aprNU5 texinfo-4.13.orig/djgpp/libsupp_mblen.c texinfo-4.13/djgpp/libsupp_mblen.c
+--- texinfo-4.13.orig/djgpp/libsupp_mblen.c	1969-12-31 18:57:03 -0502
++++ texinfo-4.13/djgpp/libsupp_mblen.c	2015-08-02 18:38:30 -0502
+@@ -0,0 +1,10 @@
++/* Copyright (C) 2015 DJ Delorie, see COPYING.DJ for details */
++/* Copyright (C) 2009 DJ Delorie, see COPYING.DJ for details */
++#include <stdlib.h>
++#include "_libsupp.h"
++
++int
++libsupp_mblen(const char *s, size_t n)
++{
++  return (s == NULL || *s == '\0') ? 0 : (n < 1) ? -1 : 1;
++}
+diff -aprNU5 texinfo-4.13.orig/djgpp/libsupp_mbrtowc.c texinfo-4.13/djgpp/libsupp_mbrtowc.c
+--- texinfo-4.13.orig/djgpp/libsupp_mbrtowc.c	1969-12-31 18:57:03 -0502
++++ texinfo-4.13/djgpp/libsupp_mbrtowc.c	2015-08-02 18:38:30 -0502
+@@ -0,0 +1,19 @@
++/* Copyright (C) 2015 DJ Delorie, see COPYING.DJ for details */
++/* Copyright (C) 2009 DJ Delorie, see COPYING.DJ for details */
++#include <stdlib.h>
++#include "_libsupp.h"
++
++size_t
++libsupp_mbrtowc(wchar_t *pwc, const char *s, size_t n, libsupp_mbstate_t *ps)
++{
++  int ret_val = (s == NULL) ? libsupp_mbtowc(NULL, "", 1) : libsupp_mbtowc(pwc, s, n);
++
++
++  if (ret_val == -1)
++  {
++    ps->__count = 0;
++    return (size_t)(-1);
++  }
++  else
++    return (size_t)ret_val;
++}
+diff -aprNU5 texinfo-4.13.orig/djgpp/libsupp_mbsinit.c texinfo-4.13/djgpp/libsupp_mbsinit.c
+--- texinfo-4.13.orig/djgpp/libsupp_mbsinit.c	1969-12-31 18:57:03 -0502
++++ texinfo-4.13/djgpp/libsupp_mbsinit.c	2015-08-02 18:38:30 -0502
+@@ -0,0 +1,10 @@
++/* Copyright (C) 2015 DJ Delorie, see COPYING.DJ for details */
++/* Copyright (C) 2009 DJ Delorie, see COPYING.DJ for details */
++#include <stdlib.h>
++#include "_libsupp.h"
++
++int
++libsupp_mbsinit(const libsupp_mbstate_t *ps)
++{
++  return (ps == NULL || ps->__count == 0) ? 1 : 0;
++}
+diff -aprNU5 texinfo-4.13.orig/djgpp/libsupp_mbtowc.c texinfo-4.13/djgpp/libsupp_mbtowc.c
+--- texinfo-4.13.orig/djgpp/libsupp_mbtowc.c	1969-12-31 18:57:03 -0502
++++ texinfo-4.13/djgpp/libsupp_mbtowc.c	2015-08-02 18:38:30 -0502
+@@ -0,0 +1,10 @@
++/* Copyright (C) 2015 DJ Delorie, see COPYING.DJ for details */
++/* Copyright (C) 2009 DJ Delorie, see COPYING.DJ for details */
++#include <stdlib.h>
++#include "_libsupp.h"
++
++int
++libsupp_mbtowc(wchar_t *pwc, const char *s, size_t n)
++{
++  return (s == NULL) ? 0 : (n < 1) ? -1 : (pwc) ? (*pwc = (wchar_t)*s), (*s != '\0') : 0;
++}
+diff -aprNU5 texinfo-4.13.orig/djgpp/libsupp_towlower.c texinfo-4.13/djgpp/libsupp_towlower.c
+--- texinfo-4.13.orig/djgpp/libsupp_towlower.c	1969-12-31 18:57:03 -0502
++++ texinfo-4.13/djgpp/libsupp_towlower.c	2015-08-02 18:38:30 -0502
+@@ -0,0 +1,10 @@
++/* Copyright (C) 2015 DJ Delorie, see COPYING.DJ for details */
++/* Copyright (C) 2008 DJ Delorie, see COPYING.DJ for details */
++#include <ctype.h>
++#include "_libsupp.h"
++
++wint_t
++libsupp_towlower(wint_t c)
++{
++  return (c < 0x00ff) ? (wint_t)tolower((int)c) : c;
++}
+diff -aprNU5 texinfo-4.13.orig/djgpp/libsupp_towupper.c texinfo-4.13/djgpp/libsupp_towupper.c
+--- texinfo-4.13.orig/djgpp/libsupp_towupper.c	1969-12-31 18:57:03 -0502
++++ texinfo-4.13/djgpp/libsupp_towupper.c	2015-08-02 18:38:30 -0502
+@@ -0,0 +1,10 @@
++/* Copyright (C) 2015 DJ Delorie, see COPYING.DJ for details */
++/* Copyright (C) 2009 DJ Delorie, see COPYING.DJ for details */
++#include <ctype.h>
++#include "_libsupp.h"
++
++wint_t
++libsupp_towupper(wint_t c)
++{
++  return (c < 0x00ff) ? (wint_t)toupper((int)c) : c;
++}
+diff -aprNU5 texinfo-4.13.orig/djgpp/Makefile.sed texinfo-4.13/djgpp/Makefile.sed
+--- texinfo-4.13.orig/djgpp/Makefile.sed	1969-12-31 18:57:03 -0502
++++ texinfo-4.13/djgpp/Makefile.sed	2015-08-02 18:38:30 -0502
+@@ -0,0 +1,4 @@
++# Sed script for DJGPP specific editing of Makefile.
++
++# Include _libsupp.h
++/^DEFAULT_INCLUDES[	 ]*=/ s|$| -I$(top_srcdir)/djgpp|
+diff -aprNU5 texinfo-4.13.orig/djgpp/_libsupp.h texinfo-4.13/djgpp/_libsupp.h
+--- texinfo-4.13.orig/djgpp/_libsupp.h	1969-12-31 18:57:03 -0502
++++ texinfo-4.13/djgpp/_libsupp.h	2015-08-02 18:38:30 -0502
+@@ -0,0 +1,68 @@
++/* Copyright (C) 2015 DJ Delorie, see COPYING.DJ for details */
++/* Copyright (C) 2009 DJ Delorie, see COPYING.DJ for details */
++/* Copyright (C) 2008 DJ Delorie, see COPYING.DJ for details */
++
++#ifndef __libsupp_h__
++#define __libsupp_h__
++
++#ifdef __cplusplus
++extern "C" {
++#endif
++
++#include <sys/version.h>  /*  gcc 4.3.0 no longer includes this by default.  */
++
++
++/*
++ *  Functions implemented in libsupp 6.1.
++ */
++
++#include <wchar.h>
++
++/*  Conversion state information.  */
++typedef struct
++{
++  int __count;
++  union
++  {
++    wint_t __wch;
++    unsigned char __wchb[4];
++  } __value;  /*  Value so far.  */
++} libsupp_mbstate_t;
++
++#undef  mbstate_t
++#define mbstate_t  libsupp_mbstate_t
++
++int    libsupp_mblen(const char *_s, size_t _n);
++int    libsupp_mbsinit(const libsupp_mbstate_t *_ps);
++size_t libsupp_mbrtowc(wchar_t *_pwc, const char *_s, size_t _n, libsupp_mbstate_t *_ps);
++int    libsupp_mbtowc(wchar_t *_pwc, const char *_s, size_t _n);
++wint_t libsupp_towlower(wint_t _c);
++wint_t libsupp_towupper(wint_t _c);
++
++
++/*---------------------------------------------------------------------------*/
++
++
++/*
++ *  Make them visible.
++ */
++
++#undef  mblen
++#define mblen     libsupp_mblen
++#undef  mbrtowc
++#define mbrtowc   libsupp_mbrtowc
++#undef  mbtowc
++#define mbtowc    libsupp_mbtowc
++#undef  mbsinit
++#define mbsinit   libsupp_mbsinit
++#undef  towlower
++#define towlower  libsupp_towlower
++#undef  towupper
++#define towupper  libsupp_towupper
++
++
++#ifdef __cplusplus
++}
++#endif
++
++#endif /* !__libsupp_h__ */
+diff -aprNU5 texinfo-4.13.orig/info/pcterm.c texinfo-4.13/info/pcterm.c
+--- texinfo-4.13.orig/info/pcterm.c	2008-06-13 06:47:16 -0502
++++ texinfo-4.13/info/pcterm.c	2015-08-02 18:38:30 -0502
+@@ -30,10 +30,13 @@
+ #endif
+ 
+ #include <pc.h>
+ #include <keys.h>
+ #include <conio.h>
++#ifdef __DJGPP__
++# include <sys/exceptn.h>  /*  Provide __djgpp_set_ctrl_c prototype.  */
++#endif
+ 
+ #include "variables.h"
+ 
+ extern int speech_friendly;	/* defined in info.c */
+ 

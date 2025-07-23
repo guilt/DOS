@@ -1,0 +1,438 @@
+2007-09-07  Juan Manuel Guerrero <juan.guerrero@gmx.de>
+
+	* docs/src/allegro._tx: Do not split html files.
+
+	* src/dos/vesa.c: Remove attribute packed for all char variables.
+
+	* src/misc/vbeaf.c: Remove attribute packed for all char variables.
+
+	* tests/afinfo.c: Remove attribute packed for all char variables.
+
+	* tests/vesainfo.c: Remove attribute packed for all char variables.
+
+
+
+
+diff -aprNU5 allegro-4.2.2.orig/docs/src/allegro._tx allegro-4.2.2/docs/src/allegro._tx
+--- allegro-4.2.2.orig/docs/src/allegro._tx	2007-07-22 17:45:48 +0000
++++ allegro-4.2.2/docs/src/allegro._tx	2007-09-07 18:23:06 +0000
+@@ -3,11 +3,10 @@
+ @# Read makedoc.c for a description of what is going on...
+ @#
+ @# If you want to put everything in one big HTML file rather than splitting
+ @# it into sections, remove this 'multiplefiles' statement:
+ @#
+-@multiplefiles
+ @#
+ @# Uncomment the following statement to output css clean html files.
+ @#
+ @#ignore_css
+ @#
+diff -aprNU5 allegro-4.2.2.orig/src/dos/vesa.c allegro-4.2.2/src/dos/vesa.c
+--- allegro-4.2.2.orig/src/dos/vesa.c	2005-12-13 22:13:32 +0000
++++ allegro-4.2.2/src/dos/vesa.c	2007-09-07 18:23:06 +0000
+@@ -164,78 +164,78 @@ GFX_DRIVER gfx_vesa_3 = 
+ 
+ 
+ 
+ typedef struct VESA_INFO         /* VESA information block structure */
+ { 
+-   char           VESASignature[4]     __PACKED__;
++   char           VESASignature[4]               ;
+    unsigned short VESAVersion          __PACKED__;
+    unsigned long  OEMStringPtr         __PACKED__;
+-   unsigned char  Capabilities[4]      __PACKED__;
++   unsigned char  Capabilities[4]                ;
+    unsigned long  VideoModePtr         __PACKED__; 
+    unsigned short TotalMemory          __PACKED__; 
+    unsigned short OemSoftwareRev       __PACKED__; 
+    unsigned long  OemVendorNamePtr     __PACKED__; 
+    unsigned long  OemProductNamePtr    __PACKED__; 
+    unsigned long  OemProductRevPtr     __PACKED__; 
+-   unsigned char  Reserved[222]        __PACKED__; 
+-   unsigned char  OemData[256]         __PACKED__; 
++   unsigned char  Reserved[222]                  ; 
++   unsigned char  OemData[256]                   ; 
+ } VESA_INFO;
+ 
+ 
+ 
+ typedef struct MODE_INFO         /* VESA information for a specific mode */
+ {
+    unsigned short ModeAttributes       __PACKED__; 
+-   unsigned char  WinAAttributes       __PACKED__; 
+-   unsigned char  WinBAttributes       __PACKED__; 
++   unsigned char  WinAAttributes                 ; 
++   unsigned char  WinBAttributes                 ; 
+    unsigned short WinGranularity       __PACKED__; 
+    unsigned short WinSize              __PACKED__; 
+    unsigned short WinASegment          __PACKED__; 
+    unsigned short WinBSegment          __PACKED__; 
+    unsigned long  WinFuncPtr           __PACKED__; 
+    unsigned short BytesPerScanLine     __PACKED__; 
+    unsigned short XResolution          __PACKED__; 
+    unsigned short YResolution          __PACKED__; 
+-   unsigned char  XCharSize            __PACKED__; 
+-   unsigned char  YCharSize            __PACKED__; 
+-   unsigned char  NumberOfPlanes       __PACKED__; 
+-   unsigned char  BitsPerPixel         __PACKED__; 
+-   unsigned char  NumberOfBanks        __PACKED__; 
+-   unsigned char  MemoryModel          __PACKED__; 
+-   unsigned char  BankSize             __PACKED__; 
+-   unsigned char  NumberOfImagePages   __PACKED__;
+-   unsigned char  Reserved_page        __PACKED__; 
+-   unsigned char  RedMaskSize          __PACKED__; 
+-   unsigned char  RedMaskPos           __PACKED__; 
+-   unsigned char  GreenMaskSize        __PACKED__; 
+-   unsigned char  GreenMaskPos         __PACKED__;
+-   unsigned char  BlueMaskSize         __PACKED__; 
+-   unsigned char  BlueMaskPos          __PACKED__; 
+-   unsigned char  ReservedMaskSize     __PACKED__; 
+-   unsigned char  ReservedMaskPos      __PACKED__; 
+-   unsigned char  DirectColorModeInfo  __PACKED__;
++   unsigned char  XCharSize                      ; 
++   unsigned char  YCharSize                      ; 
++   unsigned char  NumberOfPlanes                 ; 
++   unsigned char  BitsPerPixel                   ; 
++   unsigned char  NumberOfBanks                  ; 
++   unsigned char  MemoryModel                    ; 
++   unsigned char  BankSize                       ; 
++   unsigned char  NumberOfImagePages             ;
++   unsigned char  Reserved_page                  ; 
++   unsigned char  RedMaskSize                    ; 
++   unsigned char  RedMaskPos                     ; 
++   unsigned char  GreenMaskSize                  ; 
++   unsigned char  GreenMaskPos                   ;
++   unsigned char  BlueMaskSize                   ; 
++   unsigned char  BlueMaskPos                    ; 
++   unsigned char  ReservedMaskSize               ; 
++   unsigned char  ReservedMaskPos                ; 
++   unsigned char  DirectColorModeInfo            ;
+ 
+    /* VBE 2.0 extensions */
+    unsigned long  PhysBasePtr          __PACKED__; 
+    unsigned long  OffScreenMemOffset   __PACKED__; 
+    unsigned short OffScreenMemSize     __PACKED__; 
+ 
+    /* VBE 3.0 extensions */
+    unsigned short LinBytesPerScanLine  __PACKED__;
+-   unsigned char  BnkNumberOfPages     __PACKED__;
+-   unsigned char  LinNumberOfPages     __PACKED__;
+-   unsigned char  LinRedMaskSize       __PACKED__;
+-   unsigned char  LinRedFieldPos       __PACKED__;
+-   unsigned char  LinGreenMaskSize     __PACKED__;
+-   unsigned char  LinGreenFieldPos     __PACKED__;
+-   unsigned char  LinBlueMaskSize      __PACKED__;
+-   unsigned char  LinBlueFieldPos      __PACKED__;
+-   unsigned char  LinRsvdMaskSize      __PACKED__;
+-   unsigned char  LinRsvdFieldPos      __PACKED__;
++   unsigned char  BnkNumberOfPages               ;
++   unsigned char  LinNumberOfPages               ;
++   unsigned char  LinRedMaskSize                 ;
++   unsigned char  LinRedFieldPos                 ;
++   unsigned char  LinGreenMaskSize               ;
++   unsigned char  LinGreenFieldPos               ;
++   unsigned char  LinBlueMaskSize                ;
++   unsigned char  LinBlueFieldPos                ;
++   unsigned char  LinRsvdMaskSize                ;
++   unsigned char  LinRsvdFieldPos                ;
+    unsigned long  MaxPixelClock        __PACKED__;
+ 
+-   unsigned char  Reserved[190]        __PACKED__; 
++   unsigned char  Reserved[190]                  ; 
+ } MODE_INFO;
+ 
+ 
+ 
+ typedef struct PM_INFO           /* VESA 2.0 protected mode interface */
+@@ -254,14 +254,14 @@ typedef struct CRTCInfoBlock     /* VESA
+     unsigned short HorizontalSyncStart __PACKED__;
+     unsigned short HorizontalSyncEnd   __PACKED__;
+     unsigned short VerticalTotal       __PACKED__;
+     unsigned short VerticalSyncStart   __PACKED__;
+     unsigned short VerticalSyncEnd     __PACKED__;
+-    unsigned char  Flags               __PACKED__;
++    unsigned char  Flags                         ;
+     unsigned long  PixelClock          __PACKED__;    /* units of Hz */
+     unsigned short RefreshRate         __PACKED__;    /* units of 0.01 Hz */
+-    unsigned char  reserved[40]        __PACKED__;
++    unsigned char  reserved[40]                  ;
+ } CRTCInfoBlock;
+ 
+ 
+ #define HPOS         0
+ #define HNEG         (1 << 2)
+diff -aprNU5 allegro-4.2.2.orig/src/misc/vbeaf.c allegro-4.2.2/src/misc/vbeaf.c
+--- allegro-4.2.2.orig/src/misc/vbeaf.c	2007-02-11 09:13:16 +0000
++++ allegro-4.2.2/src/misc/vbeaf.c	2007-09-07 18:23:06 +0000
+@@ -223,41 +223,41 @@ typedef struct AF_MODE_INFO      /* mode
+    unsigned short XResolution             __PACKED__;
+    unsigned short YResolution             __PACKED__;
+    unsigned short BytesPerScanLine        __PACKED__;
+    unsigned short BitsPerPixel            __PACKED__;
+    unsigned short MaxBuffers              __PACKED__;
+-   unsigned char  RedMaskSize             __PACKED__;
+-   unsigned char  RedFieldPosition        __PACKED__;
+-   unsigned char  GreenMaskSize           __PACKED__;
+-   unsigned char  GreenFieldPosition      __PACKED__;
+-   unsigned char  BlueMaskSize            __PACKED__;
+-   unsigned char  BlueFieldPosition       __PACKED__;
+-   unsigned char  RsvdMaskSize            __PACKED__;
+-   unsigned char  RsvdFieldPosition       __PACKED__;
++   unsigned char  RedMaskSize                       ;
++   unsigned char  RedFieldPosition                  ;
++   unsigned char  GreenMaskSize                     ;
++   unsigned char  GreenFieldPosition                ;
++   unsigned char  BlueMaskSize                      ;
++   unsigned char  BlueFieldPosition                 ;
++   unsigned char  RsvdMaskSize                      ;
++   unsigned char  RsvdFieldPosition                 ;
+    unsigned short MaxBytesPerScanLine     __PACKED__;
+    unsigned short MaxScanLineWidth        __PACKED__;
+ 
+    /* VBE/AF 2.0 extensions */
+    unsigned short LinBytesPerScanLine     __PACKED__;
+-   unsigned char  BnkMaxBuffers           __PACKED__;
+-   unsigned char  LinMaxBuffers           __PACKED__;
+-   unsigned char  LinRedMaskSize          __PACKED__;
+-   unsigned char  LinRedFieldPosition     __PACKED__;
+-   unsigned char  LinGreenMaskSize        __PACKED__;
+-   unsigned char  LinGreenFieldPosition   __PACKED__;
+-   unsigned char  LinBlueMaskSize         __PACKED__;
+-   unsigned char  LinBlueFieldPosition    __PACKED__;
+-   unsigned char  LinRsvdMaskSize         __PACKED__;
+-   unsigned char  LinRsvdFieldPosition    __PACKED__;
++   unsigned char  BnkMaxBuffers                     ;
++   unsigned char  LinMaxBuffers                     ;
++   unsigned char  LinRedMaskSize                    ;
++   unsigned char  LinRedFieldPosition               ;
++   unsigned char  LinGreenMaskSize                  ;
++   unsigned char  LinGreenFieldPosition             ;
++   unsigned char  LinBlueMaskSize                   ;
++   unsigned char  LinBlueFieldPosition              ;
++   unsigned char  LinRsvdMaskSize                   ;
++   unsigned char  LinRsvdFieldPosition              ;
+    unsigned long  MaxPixelClock           __PACKED__;
+    unsigned long  VideoCapabilities       __PACKED__;
+    unsigned short VideoMinXScale          __PACKED__;
+    unsigned short VideoMinYScale          __PACKED__;
+    unsigned short VideoMaxXScale          __PACKED__;
+    unsigned short VideoMaxYScale          __PACKED__;
+ 
+-   unsigned char  reserved[76]            __PACKED__;
++   unsigned char  reserved[76]                      ;
+ 
+ } AF_MODE_INFO;
+ 
+ 
+ 
+@@ -266,15 +266,15 @@ typedef struct AF_MODE_INFO      /* mode
+ 
+ 
+ typedef struct AF_DRIVER         /* VBE/AF driver structure */
+ {
+    /* driver header */
+-   char           Signature[12]           __PACKED__;
++   char           Signature[12]                     ;
+    unsigned long  Version                 __PACKED__;
+    unsigned long  DriverRev               __PACKED__;
+-   char           OemVendorName[80]       __PACKED__;
+-   char           OemCopyright[80]        __PACKED__;
++   char           OemVendorName[80]                 ;
++   char           OemCopyright[80]                  ;
+    unsigned short *AvailableModes         __PACKED__;
+    unsigned long  TotalMemory             __PACKED__;
+    unsigned long  Attributes              __PACKED__;
+    unsigned long  BankSize                __PACKED__;
+    unsigned long  BankedBasePtr           __PACKED__;
+diff -aprNU5 allegro-4.2.2.orig/tests/afinfo.c allegro-4.2.2/tests/afinfo.c
+--- allegro-4.2.2.orig/tests/afinfo.c	2007-02-11 09:13:16 +0000
++++ allegro-4.2.2/tests/afinfo.c	2007-09-07 18:23:06 +0000
+@@ -93,53 +93,53 @@ typedef struct AF_MODE_INFO
+    unsigned short XResolution             __PACKED__;
+    unsigned short YResolution             __PACKED__;
+    unsigned short BytesPerScanLine        __PACKED__;
+    unsigned short BitsPerPixel            __PACKED__;
+    unsigned short MaxBuffers              __PACKED__;
+-   unsigned char  RedMaskSize             __PACKED__;
+-   unsigned char  RedFieldPosition        __PACKED__;
+-   unsigned char  GreenMaskSize           __PACKED__;
+-   unsigned char  GreenFieldPosition      __PACKED__;
+-   unsigned char  BlueMaskSize            __PACKED__;
+-   unsigned char  BlueFieldPosition       __PACKED__;
+-   unsigned char  RsvdMaskSize            __PACKED__;
+-   unsigned char  RsvdFieldPosition       __PACKED__;
++   unsigned char  RedMaskSize                       ;
++   unsigned char  RedFieldPosition                  ;
++   unsigned char  GreenMaskSize                     ;
++   unsigned char  GreenFieldPosition                ;
++   unsigned char  BlueMaskSize                      ;
++   unsigned char  BlueFieldPosition                 ;
++   unsigned char  RsvdMaskSize                      ;
++   unsigned char  RsvdFieldPosition                 ;
+    unsigned short MaxBytesPerScanLine     __PACKED__;
+    unsigned short MaxScanLineWidth        __PACKED__;
+    unsigned short LinBytesPerScanLine     __PACKED__;
+-   unsigned char  BnkMaxBuffers           __PACKED__;
+-   unsigned char  LinMaxBuffers           __PACKED__;
+-   unsigned char  LinRedMaskSize          __PACKED__;
+-   unsigned char  LinRedFieldPosition     __PACKED__;
+-   unsigned char  LinGreenMaskSize        __PACKED__;
+-   unsigned char  LinGreenFieldPosition   __PACKED__;
+-   unsigned char  LinBlueMaskSize         __PACKED__;
+-   unsigned char  LinBlueFieldPosition    __PACKED__;
+-   unsigned char  LinRsvdMaskSize         __PACKED__;
+-   unsigned char  LinRsvdFieldPosition    __PACKED__;
++   unsigned char  BnkMaxBuffers                     ;
++   unsigned char  LinMaxBuffers                     ;
++   unsigned char  LinRedMaskSize                    ;
++   unsigned char  LinRedFieldPosition               ;
++   unsigned char  LinGreenMaskSize                  ;
++   unsigned char  LinGreenFieldPosition             ;
++   unsigned char  LinBlueMaskSize                   ;
++   unsigned char  LinBlueFieldPosition              ;
++   unsigned char  LinRsvdMaskSize                   ;
++   unsigned char  LinRsvdFieldPosition              ;
+    unsigned long  MaxPixelClock           __PACKED__;
+    unsigned long  VideoCapabilities       __PACKED__;
+    unsigned short VideoMinXScale          __PACKED__;
+    unsigned short VideoMinYScale          __PACKED__;
+    unsigned short VideoMaxXScale          __PACKED__;
+    unsigned short VideoMaxYScale          __PACKED__;
+-   unsigned char  reserved[76]            __PACKED__;
++   unsigned char  reserved[76]                      ;
+ } AF_MODE_INFO;
+ 
+ 
+ 
+ #define DC  struct AF_DRIVER *dc
+ 
+ 
+ 
+ typedef struct AF_DRIVER
+ {
+-   char           Signature[12]           __PACKED__;
++   char           Signature[12]                     ;
+    unsigned long  Version                 __PACKED__;
+    unsigned long  DriverRev               __PACKED__;
+-   char           OemVendorName[80]       __PACKED__;
+-   char           OemCopyright[80]        __PACKED__;
++   char           OemVendorName[80]                 ;
++   char           OemCopyright[80]                  ;
+    short          *AvailableModes         __PACKED__;
+    unsigned long  TotalMemory             __PACKED__;
+    unsigned long  Attributes              __PACKED__;
+    unsigned long  BankSize                __PACKED__;
+    unsigned long  BankedBasePtr           __PACKED__;
+diff -aprNU5 allegro-4.2.2.orig/tests/vesainfo.c allegro-4.2.2/tests/vesainfo.c
+--- allegro-4.2.2.orig/tests/vesainfo.c	2005-11-14 20:20:20 +0000
++++ allegro-4.2.2/tests/vesainfo.c	2007-09-07 18:23:06 +0000
+@@ -49,73 +49,73 @@ int verbose = FALSE;
+ 
+ 
+ 
+ typedef struct VESA_INFO 
+ { 
+-   char           VESASignature[4]     __PACKED__;
++   char           VESASignature[4]               ;
+    unsigned short VESAVersion          __PACKED__;
+    unsigned long  OEMStringPtr         __PACKED__;
+-   unsigned char  Capabilities[4]      __PACKED__;
++   unsigned char  Capabilities[4]                ;
+    unsigned long  VideoModePtr         __PACKED__; 
+    unsigned short TotalMemory          __PACKED__; 
+    unsigned short OemSoftwareRev       __PACKED__; 
+    unsigned long  OemVendorNamePtr     __PACKED__; 
+    unsigned long  OemProductNamePtr    __PACKED__; 
+    unsigned long  OemProductRevPtr     __PACKED__; 
+-   unsigned char  Reserved[222]        __PACKED__; 
+-   unsigned char  OemData[256]         __PACKED__; 
++   unsigned char  Reserved[222]                  ; 
++   unsigned char  OemData[256]                   ; 
+ } VESA_INFO;
+ 
+ 
+ 
+ typedef struct MODE_INFO 
+ {
+    unsigned short ModeAttributes       __PACKED__; 
+-   unsigned char  WinAAttributes       __PACKED__; 
+-   unsigned char  WinBAttributes       __PACKED__; 
++   unsigned char  WinAAttributes                 ; 
++   unsigned char  WinBAttributes                 ; 
+    unsigned short WinGranularity       __PACKED__; 
+    unsigned short WinSize              __PACKED__; 
+    unsigned short WinASegment          __PACKED__; 
+    unsigned short WinBSegment          __PACKED__; 
+    unsigned long  WinFuncPtr           __PACKED__; 
+    unsigned short BytesPerScanLine     __PACKED__; 
+    unsigned short XResolution          __PACKED__; 
+    unsigned short YResolution          __PACKED__; 
+-   unsigned char  XCharSize            __PACKED__; 
+-   unsigned char  YCharSize            __PACKED__; 
+-   unsigned char  NumberOfPlanes       __PACKED__; 
+-   unsigned char  BitsPerPixel         __PACKED__; 
+-   unsigned char  NumberOfBanks        __PACKED__; 
+-   unsigned char  MemoryModel          __PACKED__; 
+-   unsigned char  BankSize             __PACKED__; 
+-   unsigned char  NumberOfImagePages   __PACKED__;
+-   unsigned char  Reserved_page        __PACKED__; 
+-   unsigned char  RedMaskSize          __PACKED__; 
+-   unsigned char  RedMaskPos           __PACKED__; 
+-   unsigned char  GreenMaskSize        __PACKED__; 
+-   unsigned char  GreenMaskPos         __PACKED__;
+-   unsigned char  BlueMaskSize         __PACKED__; 
+-   unsigned char  BlueMaskPos          __PACKED__; 
+-   unsigned char  ReservedMaskSize     __PACKED__; 
+-   unsigned char  ReservedMaskPos      __PACKED__; 
+-   unsigned char  DirectColorModeInfo  __PACKED__;
++   unsigned char  XCharSize                      ; 
++   unsigned char  YCharSize                      ; 
++   unsigned char  NumberOfPlanes                 ; 
++   unsigned char  BitsPerPixel                   ; 
++   unsigned char  NumberOfBanks                  ; 
++   unsigned char  MemoryModel                    ; 
++   unsigned char  BankSize                       ; 
++   unsigned char  NumberOfImagePages             ;
++   unsigned char  Reserved_page                  ; 
++   unsigned char  RedMaskSize                    ; 
++   unsigned char  RedMaskPos                     ; 
++   unsigned char  GreenMaskSize                  ; 
++   unsigned char  GreenMaskPos                   ;
++   unsigned char  BlueMaskSize                   ; 
++   unsigned char  BlueMaskPos                    ; 
++   unsigned char  ReservedMaskSize               ; 
++   unsigned char  ReservedMaskPos                ; 
++   unsigned char  DirectColorModeInfo            ;
+    unsigned long  PhysBasePtr          __PACKED__; 
+    unsigned long  OffScreenMemOffset   __PACKED__; 
+    unsigned short OffScreenMemSize     __PACKED__; 
+    unsigned short LinBytesPerScanLine  __PACKED__;
+-   unsigned char  BnkNumberOfPages     __PACKED__;
+-   unsigned char  LinNumberOfPages     __PACKED__;
+-   unsigned char  LinRedMaskSize       __PACKED__;
+-   unsigned char  LinRedFieldPos       __PACKED__;
+-   unsigned char  LinGreenMaskSize     __PACKED__;
+-   unsigned char  LinGreenFieldPos     __PACKED__;
+-   unsigned char  LinBlueMaskSize      __PACKED__;
+-   unsigned char  LinBlueFieldPos      __PACKED__;
+-   unsigned char  LinRsvdMaskSize      __PACKED__;
+-   unsigned char  LinRsvdFieldPos      __PACKED__;
++   unsigned char  BnkNumberOfPages               ;
++   unsigned char  LinNumberOfPages               ;
++   unsigned char  LinRedMaskSize                 ;
++   unsigned char  LinRedFieldPos                 ;
++   unsigned char  LinGreenMaskSize               ;
++   unsigned char  LinGreenFieldPos               ;
++   unsigned char  LinBlueMaskSize                ;
++   unsigned char  LinBlueFieldPos                ;
++   unsigned char  LinRsvdMaskSize                ;
++   unsigned char  LinRsvdFieldPos                ;
+    unsigned long  MaxPixelClock        __PACKED__;
+-   unsigned char  Reserved[190]        __PACKED__;
++   unsigned char  Reserved[190]                  ;
+ } MODE_INFO;
+ 
+ 
+ 
+ VESA_INFO vesa_info;

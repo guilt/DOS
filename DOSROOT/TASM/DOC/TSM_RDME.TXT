@@ -1,0 +1,136 @@
+/*************************************************************************/
+                           TSM_RDME.TXT
+                        TURBO ASSEMBLER 4.0
+
+This file contains information on:
+  1) Assembling and linking with TASM 4.0
+  2) The PUSHSTATE and POPSTATE directives
+  3) Text equate substitution
+  4) Rotate instruction extension for 8086
+
+
+1. Assembling and linking with TASM 4.0
+=======================================
+  The TASM 4.0 package includes three different assemblers:
+
+    TASM.EXE           16-bit real-mode assembler
+    TASMX.EXE          16-bit protected-mode assembler
+    TASM32.EXE         32-bit protected-mode assembler
+
+  All three assemblers are capable of producing both 16- and 32-bit
+  object files, depending on the directives contained in your assembler
+  source files. If you produce a 16-bit object file, then you must use
+  the 16-bit linker (TLINK.EXE) to link your application. If you produce
+  a 32-bit object file, then you must use the 32-bit linker (TLINK32.EXE)
+  to link your application.
+
+  TASM.EXE is a real-mode assembler, meaning that it is capable of using
+  only the lower 640K of memory addressable by DOS. If you're assembling
+  larger applications, use either TASMX.EXE or TASM32.EXE. Both of these
+  assemblers use the DPMI server to take advantage of extended memory.
+
+  The biggest difference between the three assemblers is the type of
+  debug information they produce when you assemble your source files with
+  the /zi command-line option. Both TASM.EXE and TASMX.EXE produce
+  only 16-bit debug information. TASM32.EXE produces only 32-bit debug
+  information. If you plan to use Turbo Debugger to debug your assembler
+  application, then you must assemble 16-bit files with either TASM.EXE
+  or TASMX.EXE. To produce 32-bit debug information, then you must assemble
+  your files with TASM32.EXE.
+
+
+2. PUSHSTATE and POPSTATE directives
+====================================
+
+  The PUSHSTATE directive saves the current operating state on an
+  internal stack that is 16 levels deep. PUSHSTATE is particularly
+  useful if you have code inside a macro that functions independently
+  of the current operating state, but does not affect the current
+  operating mode.
+
+  The state information that Turbo Assembler saves consists of:
+
+  o  The current emulation version (for example T310)
+  o  The mode selection (for example IDEAL, MASM, QUIRKS, MASM51)
+  o  EMUL or NOEMUL switches
+  o  The current processor or coprocessor selection
+  o  MULTERRS or NOMULTERRS switches
+  o  SMART or NOSMART switches
+  o  The current radix
+  o  JUMPS or NOJUMPS switches
+  o  LOCALS or NOLOCALS switches
+  o  The current local symbol prefix
+
+  Use the POPSTATE directive to return to the last saved state
+  from the stack.
+
+; PUSHSTATE and POPSTATE example
+
+.386
+ideal
+model small
+dataseg
+
+pass_string db 'passed',13,10,36
+fail_string db 'failed',13,10,36
+
+codeseg
+
+jumps
+
+        ; Show changing processor selection, number radix, and JUMPS mode
+
+        xor     eax,eax    ; Zero out eax. Can use EAX in 386 mode
+        pushstate          ; Preserve state of processor, radix and JUMPS
+
+        nojumps
+        radix   2          ; Set to binary radix
+        p286
+
+        mov     ax,1       ; Only AX available now. EAX would give errors.
+        cmp     ax,1
+        jne     next1      ; No extra NOPS after this
+                           ; Assemble with /la and check in .lst file.
+        mov     ax,100     ; Now 100 means binary 100 or 4 decimal.
+next1:
+        popstate           ; Restores JUMPS and 386 mode and default radix.
+
+        cmp     eax,4      ; EAX available again. Back in decimal mode.
+        je      pass1      ; Extra NOPS to handle JUMPS. Check in .lst file
+        mov     dx,OFFSET fail_string    ; Load the fail string
+        jmp     fini
+pass1:
+        mov     dx,OFFSET pass_string    ; Load the pass string.
+fini:
+        mov     ax,@data   ; Print the string out
+        mov     ds,ax
+        mov     ah,9h
+        int     21h
+
+        mov     ah, 4ch    ; Return to DOS
+        int     21h
+end
+
+
+3. Text Equate Substitution
+===========================
+TASM 4.0 has changed the way text equates are substituted since the TASM 3.0
+version. This makes some TASM 3.0 code produce errors when assembled with
+TASM 4.0. To remedy this problem, do one of the following:
+
+  1) Use the /UT300 command line directive to select TASM 3.0 style
+    processing.
+
+  2) Explicitly use the % text macro substitution operator at the
+     start of lines that cause errors with TASM 4.0.
+
+
+4) Rotate instruction extension for 8086
+========================================
+TASM 4.0 permits rotation instructions to have a constant value other
+than 1 when an 8086 processor is selected. TASM accomplishes this by
+emitting the appropriate number of single rotate instructions when the
+8086 processor is selected.
+
+/**************************** END OF FILE ********************************/
+

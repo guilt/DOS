@@ -1,0 +1,330 @@
+
+
+
+MAKEINFO(1)               User Commands               MAKEINFO(1)
+
+
+NNAAMMEE
+       makeinfo - translate Texinfo documents
+
+SSYYNNOOPPSSIISS
+       mmaakkeeiinnffoo [_O_P_T_I_O_N]... _T_E_X_I_N_F_O_-_F_I_L_E...
+
+DDEESSCCRRIIPPTTIIOONN
+       Translate  Texinfo  source  documentation to various other
+       formats, by default Info files suitable for reading online
+       with Emacs or standalone GNU Info.
+
+   GGeenneerraall ooppttiioonnss::
+       ----eerrrroorr--lliimmiitt=_N_U_M
+              quit after NUM errors (default 100).
+
+       ----ddooccuummeenntt--llaanngguuaaggee=_S_T_R locale to use in translating
+       Texinfo key- words
+              for the output document (default C).
+
+       ----ffoorrccee
+              preserve output even if errors.
+
+       ----hheellpp display this help and exit.
+
+       ----nnoo--vvaalliiddaattee
+              suppress node cross-reference validation.
+
+       ----nnoo--wwaarrnn
+              suppress warnings (but not errors).
+
+       --vv, ----vveerrbboossee
+              explain what is being done.
+
+       ----vveerrssiioonn
+              display version information and exit.
+
+   OOuuttppuutt ffoorrmmaatt sseelleeccttiioonn ((ddeeffaauulltt iiss ttoo pprroodduuccee IInnffoo))::
+       ----ddooccbbooookk
+              output Docbook XML rather than Info.
+
+       ----hhttmmll output HTML rather than Info.
+
+       ----xxmmll  output Texinfo XML rather than Info.
+
+       ----ppllaaiinntteexxtt
+              output plain text rather than Info.
+
+   GGeenneerraall oouuttppuutt ooppttiioonnss::
+       --EE, ----mmaaccrroo--eexxppaanndd=_F_I_L_E
+              output  macro-expanded source to FILE, ignoring any
+              @setfilename.
+
+       ----nnoo--hheeaaddeerrss
+              suppress node separators, Node:  lines,  and  menus
+
+
+
+makeinfo 4.13             September 2008                        1
+
+
+
+
+
+MAKEINFO(1)               User Commands               MAKEINFO(1)
+
+
+              from  Info  output  (thus  producing plain text) or
+              from HTML (thus producing  shorter  output);  also,
+              write to standard output by default.
+
+       ----nnoo--sspplliitt
+              suppress the splitting of Info or HTML output, gen-
+              erate only one output file.
+
+       ----nnuummbbeerr--sseeccttiioonnss
+              output chapter and sectioning numbers.
+
+       --oo, ----oouuttppuutt=_F_I_L_E
+              output to FILE (or directory if split HTML).
+
+   OOppttiioonnss ffoorr IInnffoo aanndd ppllaaiinn tteexxtt::
+       ----ddiissaabbllee--eennccooddiinngg
+              do not output accented and  special  characters  in
+              Info output based on @documentencoding.
+
+       ----eennaabbllee--eennccooddiinngg
+              override ----ddiissaabbllee--eennccooddiinngg (default).
+
+       ----ffiillll--ccoolluummnn=_N_U_M
+              break Info lines at NUM characters (default 72).
+
+       ----ffoooottnnoottee--ssttyyllee=_S_T_Y_L_E
+              output footnotes in Info according to STYLE: `sepa-
+              rate' to put them in their own node; `end'  to  put
+              them  at  the  end  of  the node, in which they are
+              defined (this is the default).
+
+       ----ppaarraaggrraapphh--iinnddeenntt=_V_A_L
+              indent Info paragraphs by VAL spaces  (default  3).
+              If  VAL is `none', do not indent; if VAL is `asis',
+              preserve existing indentation.
+
+       ----sspplliitt--ssiizzee=_N_U_M
+              split Info files at size NUM (default 300000).
+
+   OOppttiioonnss ffoorr HHTTMMLL::
+       ----ccssss--iinncclluuddee=_F_I_L_E
+              include FILE in HTML <style> output; read stdin  if
+              FILE is -.
+
+       ----ccssss--rreeff=_U_R_L
+              generate reference to a CSS file.
+
+       ----iinntteerrnnaall--lliinnkkss=_F_I_L_E
+              produce list of internal links in FILE.
+
+       ----ttrraannsslliitteerraattee--ffiillee--nnaammeess
+              produce file names in ASCII transliteration.
+
+
+
+
+
+makeinfo 4.13             September 2008                        2
+
+
+
+
+
+MAKEINFO(1)               User Commands               MAKEINFO(1)
+
+
+   OOppttiioonnss ffoorr XXMMLL aanndd DDooccbbooookk::
+       ----oouuttppuutt--iinnddeenntt=_V_A_L
+              indent  XML elements by VAL spaces (default 2).  If
+              VAL is 0, ignorable whitespace is dropped.
+
+   IInnppuutt ffiillee ooppttiioonnss::
+       ----ccoommmmaannddss--iinn--nnooddee--nnaammeess
+              allow @ commands in node names.
+
+       --DD VAR define the variable VAR, as with @set.
+
+       --II DIR append DIR to the @include search path.
+
+       --PP DIR prepend DIR to the @include search path.
+
+       --UU VAR undefine the variable VAR, as with @clear.
+
+   CCoonnddiittiioonnaall pprroocceessssiinngg iinn iinnppuutt::
+       ----iiffddooccbbooookk
+              process @ifdocbook and @docbook even if not  gener-
+              ating Docbook.
+
+       ----iiffhhttmmll
+              process  @ifhtml  and  @html even if not generating
+              HTML.
+
+       ----iiffiinnffoo
+              process @ifinfo even if not generating Info.
+
+       ----iiffppllaaiinntteexxtt
+              process @ifplaintext even if not  generating  plain
+              text.
+
+       ----iifftteexx
+              process @iftex and @tex; implies ----nnoo--sspplliitt.
+
+       ----iiffxxmmll
+              process @ifxml and @xml.
+
+       ----nnoo--iiffddooccbbooookk
+              do not process @ifdocbook and @docbook text.
+
+       ----nnoo--iiffhhttmmll
+              do not process @ifhtml and @html text.
+
+       ----nnoo--iiffiinnffoo
+              do not process @ifinfo text.
+
+       ----nnoo--iiffppllaaiinntteexxtt
+              do not process @ifplaintext text.
+
+       ----nnoo--iifftteexx
+              do not process @iftex and @tex text.
+
+
+
+
+makeinfo 4.13             September 2008                        3
+
+
+
+
+
+MAKEINFO(1)               User Commands               MAKEINFO(1)
+
+
+       ----nnoo--iiffxxmmll
+              do not process @ifxml and @xml text.
+
+       Also, for the ----nnoo--iiffFFOORRMMAATT options, do process @ifnotFOR-
+       MAT text.
+
+       The defaults for the @if...  conditionals  depend  on  the
+       output  format: if generating HTML, ----iiffhhttmmll is on and the
+       others are off; if generating Info, ----iiffiinnffoo is on and the
+       others are off; if generating plain text, ----iiffppllaaiinntteexxtt is
+       on and the others are off; if generating XML,  ----iiffxxmmll  is
+       on and the others are off.
+
+EEXXAAMMPPLLEESS
+       makeinfo foo.texi
+              write Info to foo's @setfilename
+
+       makeinfo ----hhttmmll foo.texi
+              write HTML to @setfilename
+
+       makeinfo ----xxmmll foo.texi
+              write Texinfo XML to @setfilename
+
+       makeinfo ----ddooccbbooookk foo.texi
+              write DocBook XML to @setfilename
+
+       makeinfo ----nnoo--hheeaaddeerrss foo.texi
+              write plain text to standard output
+
+       makeinfo ----hhttmmll ----nnoo--hheeaaddeerrss foo.texi
+              write html without node lines, menus
+
+       makeinfo ----nnuummbbeerr--sseeccttiioonnss foo.texi
+              write Info with numbered sections
+
+       makeinfo ----nnoo--sspplliitt foo.texi
+              write one Info file however big
+
+RREEPPOORRTTIINNGG BBUUGGSS
+       Email  bug  reports  to bug-texinfo@gnu.org, general ques-
+       tions and  discussion  to  help-texinfo@gnu.org.   Texinfo
+       home page: http://www.gnu.org/software/texinfo/
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (C) 2008 Free Software Foundation, Inc.  License
+       GPLv3+:     GNU     GPL     version     3     or     later
+       <http://gnu.org/licenses/gpl.html>
+       This  is  free software: you are free to change and redis-
+       tribute it.  There is NO WARRANTY, to the extent permitted
+       by law.
+
+SSEEEE AALLSSOO
+       The  full  documentation  for  mmaakkeeiinnffoo is maintained as a
+       Texinfo manual.  If the iinnffoo  and  mmaakkeeiinnffoo  programs  are
+
+
+
+makeinfo 4.13             September 2008                        4
+
+
+
+
+
+MAKEINFO(1)               User Commands               MAKEINFO(1)
+
+
+       properly installed at your site, the command
+
+              iinnffoo mmaakkeeiinnffoo
+
+       should give you access to the complete manual.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+makeinfo 4.13             September 2008                        5
+
+

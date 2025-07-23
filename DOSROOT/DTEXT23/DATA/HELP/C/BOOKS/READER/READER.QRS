@@ -1,0 +1,10 @@
+<FUNCTION name="Title Search">
+     <FIELD title="Find inside Titles:" variable=q> 
+     <QUERY>$q inside (<title> or <label>)</>
+</FUNCTION>
+<FUNCTION name="Proximity Search">
+     <FIELD title="Find:" variable=w1> 
+     <FIELD title="within how many words:" variable=n> 
+     <FIELD title="of this word:" variable=w2>
+     <QUERY>$w1 within $n words of $w2 </>
+</FUNCTION>

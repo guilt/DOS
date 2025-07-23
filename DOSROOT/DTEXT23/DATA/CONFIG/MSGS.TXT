@@ -1,0 +1,249 @@
+####################################################################
+# EBT Messages database
+#
+# Note: Use '\' to continue a message over consecutive lines.
+#
+# Platform:  DOS/Windows
+# Version:   2.3
+# Language:  English
+#
+# Copyright 1990-1994 Electronic Book Technologies, Inc. 
+# All Rights Reserved.
+####################################################################
+
+# $Id: MSGS.TXT 1.12.1.10 1994/08/11 05:07:14 glf Exp $
+
+# global messages 0-99
+####################################################################
+1	OK
+2	Cancel
+3	Help
+4	Apply
+5	Yes
+6	No
+7	Print
+8	Files:
+9	Open:
+10	Save:
+11	Save As:
+12	Delete:
+13	Open
+14	Close
+15	Untitled 
+16	About Box
+17	Public
+18	Private
+19	Print to file
+20	Print to printer
+21	File Name:
+22	None
+23	Export
+24	...
+25	Path
+# Message 26: Default Table of Contents stylesheet name:
+26	toc
+# Message 27: Default Fulltext stylesheet name:
+27	fulltext
+28	print
+29	Dialog	
+# Message 30: currently unused
+# Message 31: Name of custom Tools menu
+31 &Tools
+
+# InStEd messages 200-299 (Used by INSTED.EXE only)
+####################################################################
+200	New Style Name:
+201	New Group Name:
+202	Entity Name:
+203	Entity Value:
+204	Rename Entity:
+205	Entities
+206	Edit Entity:
+207	Stylesheet path is " %s "
+208	Undo
+209	Copy Style 
+210	Paste Style
+211	Copy Property
+212	Paste Property
+213	Copy Entity
+214	Paste Entity Value
+215	Copy Entity Set
+216	Paste Entity Set
+218	Property Value is " %s "
+219	Paste Entity Reference
+220	Copy
+221	Paste	
+#---
+222	Selects Itself
+223	Selects Another
+224	Value inherited from %s
+225	Value is the universal default
+226	Value is the default
+227	Value derived from group %s
+228 	(not set)
+229	Formula:
+230	True
+231	False
+232	Choose Site values:
+233	IGNORED - style does a 'select'
+234	Origin unknown - style 'selects'
+
+250	(points)
+251	---
+252	Error: invalid value
+253	UNKNOWN due to select
+254	Inherited
+255 	None (doesn't inherit)
+256	" %s " is a virtual style
+# InStEd Note: 257 is an Inwin message. (Ran out of numbers there) -sbk
+257 	Are you sure you want to delete stylesheet " %s " ?
+258	group
+259	(member of group %s)   
+260	(ungrouped)   
+261	ungrouped
+	
+# dtl and dtext messages 300-399
+####################################################################
+300	Printing to file '%s'...
+301	Printing ...
+302	Open
+303	Refresh
+304	Close
+305	Start %s
+306	Create %s
+307	Open '%s' %s (%s)
+308	Delete '%s' %s
+309	Opening Book...
+310	Closing Book...
+311	Exit DynaText?
+# 312	
+313   Delete the annotation?
+314	Delete the %s '%s'?
+315	Graphic
+316	Help
+317	DynaText Library 
+318	%s Table of Contents
+# 319	
+320	%s Annotation Manager
+321	%s - %s
+322	Message Log
+323	Note
+324	Bookmark
+325	Hyperlink
+# 326 -- no longer used
+
+# dhelp messages 500-510
+####################################################################
+500	DynaHelp Document '%s'
+501	Help Items for Document '%s'
+
+
+# Search History messages 1000-1099
+####################################################################
+1003	Find: Standard
+
+
+# tok messages 1500-1800 (Used by SGMLRVW.EXE only) 
+####################################################################
+1501	Element start
+1502	Element end
+1503	Empty element
+1504	Text
+1505	Unresolved entity
+1506	Entity start
+1507	Entity end
+1508	Can't open entity             
+1509	Parsing error
+1510	End of document
+1511	Parameter entity decl.
+1512	General entity decl.
+1513	Element decl.
+1514	Attribute decl.
+1515	Notation decl.
+1516	Null markup decl.
+1517	Comment start
+1518	Comment text
+1519	Comment end
+1520	Marked section start
+1521	Marked section end
+1522	DOCTYPE decl. start
+1523	DOCTYPE decl. end
+1524	DOCTYPE expected
+1525	PI start
+1526	PI end
+1527	EBT PI start
+1528	EBT PI end
+1529	NDATA start
+1530	NDATA end
+1531	SDATA start
+1532	SDATA end
+
+1601	*** Bad option-name character in '%s'.
+1602	* Set empty-tag list to: '%s'.
+1603	*** Missing value for '%c' option.
+1604	* Input file name set to: '%s'.
+1606	* Output  directory: '%s'.
+1608	* Suppressing output until line %d.
+1609	* Set public entity directory to: '%s'.
+                                                               
+1611	* Checkpoints suppressed.
+1612	* Checkpoints every %ld elements.
+1613	* Stripping various whitespace characters in text.
+1614	* Suppressing output until element %d.
+1615	*** Unknown option '%s'.
+1620	* Starting statistics for file '%s'
+1621	Parser types found
+1622	Type-name                 Frequency  Description          
+1623  ------------------------  ---------  ---------------------
+1624	Size statistics
+                                                               
+1627	*** File does not end in '.sgm', so not checking for '.dtd'.
+1628	*** Unable to open DTD from '%s'.
+1629	* Reading DTD from file   '%s'.
+                                                               
+1630	No input document specified.
+1632	*** Unable to open the parser.
+1635	* Successfully set up output directory '%s'.
+1636	*** Unable to set up output directory '%s'.
+1638	*** Unable to open document '%s'.
+1639	Maximum tag nesting level exceeded.
+
+1640	Location:  Line %ld, Element %ld.
+1641	WARNING:  too many end tags, nothing open.
+1642	At element %8ld, line %9ld in entity '%s'
+1643	* Unable to set up SGML parser.
+1644	* Starting time: %s
+1645	* Ending time: %s
+1646	*** sgmlcheck:  can't resolve entity '%s'.
+1647	*** Unknown token type %d ('%s'), token is '%s'
+                                                               
+1648	EBTids: old %8s, new %8s;  Aux data:  '%s'
+1649	* Finished '%s', %ld elements.
+
+1650	****************************************
+1651	-infinite-
+1652	Document entity size
+1653	Bytes parsed
+1654	Bytes in attributes
+1655	Bytes in CDATA
+1656	Total elements
+1657	Total attributes
+1658	Min CDATA % of total
+1659	Text chars per element
+1660	Average CDATA length
+1661	Average tag depth
+1662	Maximum tag depth
+1663	Elapsed time
+1664	Bytes parsed per second
+1665	Elements found, with frequencies:
+1666	Data entities found, with frequencies:
+1667	Attributes found, with frequencies:
+
+
+# End of msgs.txt
+
+
+
+
+
+

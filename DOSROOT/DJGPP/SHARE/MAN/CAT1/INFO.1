@@ -1,0 +1,132 @@
+
+
+
+INFO(1)                   User Commands                   INFO(1)
+
+
+NNAAMMEE
+       info - read Info documents
+
+SSYYNNOOPPSSIISS
+       iinnffoo [_O_P_T_I_O_N]... [_M_E_N_U_-_I_T_E_M...]
+
+DDEESSCCRRIIPPTTIIOONN
+       Read documentation in Info format.
+
+OOPPTTIIOONNSS
+       --kk, ----aapprrooppooss=_S_T_R_I_N_G
+              look up STRING in all indices of all manuals.
+
+       --dd, ----ddiirreeccttoorryy=_D_I_R
+              add DIR to INFOPATH.
+
+       ----ddrriibbbbllee=_F_I_L_E_N_A_M_E
+              remember user keystrokes in FILENAME.
+
+       --ff, ----ffiillee=_F_I_L_E_N_A_M_E
+              specify Info file to visit.
+
+       --hh, ----hheellpp
+              display this help and exit.
+
+       ----iinnddeexx--sseeaarrcchh=_S_T_R_I_N_G
+              go to node pointed by index entry STRING.
+
+       --nn, ----nnooddee=_N_O_D_E_N_A_M_E
+              specify nodes in first visited Info file.
+
+       --oo, ----oouuttppuutt=_F_I_L_E_N_A_M_E
+              output selected nodes to FILENAME.
+
+       --RR, ----rraaww--eessccaappeess
+              output "raw" ANSI escapes (default).
+
+       ----nnoo--rraaww--eessccaappeess
+              output escapes as literal text.
+
+       ----rreessttoorree=_F_I_L_E_N_A_M_E
+              read initial keystrokes from FILENAME.
+
+       --OO, ----sshhooww--ooppttiioonnss, ----uussaaggee
+              go to command-line options node.
+
+       ----ssuubbnnooddeess
+              recursively output menu items.
+
+       ----vvii--kkeeyyss
+              use vi-like and less-like key bindings.
+
+       ----vveerrssiioonn
+              display version information and exit.
+
+
+
+info 4.13                 September 2008                        1
+
+
+
+
+
+INFO(1)                   User Commands                   INFO(1)
+
+
+       --ww, ----wwhheerree, ----llooccaattiioonn
+              print physical location of Info file.
+
+       The  first  non-option  argument,  if present, is the menu
+       entry to start from; it is searched for in all `dir' files
+       along  INFOPATH.   If  it  is not present, info merges all
+       `dir' files and shows the result.  Any remaining arguments
+       are  treated  as  the  names of menu items relative to the
+       initial node visited.
+
+       For a summary of key bindings, type h within Info.
+
+EEXXAAMMPPLLEESS
+       info   show top-level dir menu
+
+       info info
+              show the general manual for Info readers
+
+       info info-stnd
+              show the manual specific to this Info program
+
+       info emacs
+              start at emacs node from top-level dir
+
+       info emacs buffers
+              start at buffers node within emacs manual
+
+       info ----sshhooww--ooppttiioonnss emacs
+              start at node with emacs' command line options
+
+       info ----ssuubbnnooddeess --oo out.txt emacs
+              dump entire manual to out.txt
+
+       info --ff ./foo.info
+              show file ./foo.info, not searching dir
+
+RREEPPOORRTTIINNGG BBUUGGSS
+       Email bug reports to  bug-texinfo@gnu.org,  general  ques-
+       tions  and  discussion  to  help-texinfo@gnu.org.  Texinfo
+       home page: http://www.gnu.org/software/texinfo/
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (C) 2008 Free Software Foundation, Inc.  License
+       GPLv3+:     GNU     GPL     version     3     or     later
+       <http://gnu.org/licenses/gpl.html>
+       This is free software: you are free to change  and  redis-
+       tribute it.  There is NO WARRANTY, to the extent permitted
+       by law.
+
+
+
+
+
+
+
+
+
+info 4.13                 September 2008                        2
+
+

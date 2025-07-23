@@ -1,0 +1,56 @@
+#
+# DSM for Texinfo 4.13 binaries
+# Written by Eli Zaretskii <eliz@is.elta.co.il> 2003-07-24
+#
+
+dsm-file-version: 1.2
+dsm-name: txi413br3
+dsm-version: 0.6.1
+type: binaries
+
+dsm-author: Eli Zaretskii
+dsm-author-email: eliz@is.elta.co.il
+
+name: Texinfo
+version: 4.13 release 3
+manifest: txi413br3
+sources-dsm: txi413sr3
+documentation-dsm: txi413dr3
+short-description: GNU Texinfo version 4.13
+long-description: Texinfo is a documentation system that produces on-line\n\
+manuals and printed output from the same source
+license: GNU GPL
+author: Brian Fox
+maintainer: Karl Berry
+maintainer-email: karl@gnu.org
+# For reporting bugs
+mailing-list: bug-texinfo@gnu.org
+# For getting help in using Texinfo
+mailing-list: help-texinfo@gnu.org
+# For discussing DJGPP- and DOS/Windows-specific aspects
+mailing-list: djgpp@delorie.com
+newsgroup: comp.os.msdos.djgpp
+
+porter: Eli Zaretskii
+porter-email: eliz@is.elta.co.il
+
+simtelnet-path: v2gnu/
+zip: txi413b.zip
+changelog: gnu/texinfo-4.13/ChangeLog
+
+pre-install-readme: gnu/texinfo-4.13/NEWS
+pre-install-readme: gnu/texinfo-4.13/README
+pre-install-readme: gnu/texinfo-4.13/djgpp/README
+
+requires: DPMI 0.9
+replaces: Texinfo < 4.13 release 3
+# Texinfo needs a DIR file
+depends-on: djdev
+
+# This updates the info/DIR main menu
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info --section="From txiNNNb.zip"\
+ /dev/env/DJDIR/info/texinfo
+builtin-post-install-script: command:\
+ install-info --info-dir=/dev/env/DJDIR/info --section="From txiNNNb.zip"\
+ /dev/env/DJDIR/info/info-stnd.info

@@ -1,0 +1,44 @@
+//----------------------------------------------------------------------------
+// ObjectWindows
+// (C) Copyright 1992, 1994 by Borland International, All Rights Reserved
+//
+//   Resources to use with TPrinter and TPrintout.
+//----------------------------------------------------------------------------
+
+#include <owl/printer.rh>
+
+#if defined(RC_INVOKED)
+
+#if !defined(NO_IDD_ABORTDIALOG) && !defined(__IDD_ABORTDIALOG)
+#define __IDD_ABORTDIALOG
+IDD_ABORTDIALOG DIALOG 84, 51, 130, 60
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Printing"
+{
+  PUSHBUTTON "Cancel", IDCANCEL, 46, 40, 40, 14, WS_TABSTOP
+  CTEXT "Now printing", -1, 0, 8, 130, 8
+  CTEXT "Now printing Page %d of", ID_PAGE, 0, 8, 130, 8, SS_CENTER | NOT WS_VISIBLE | WS_GROUP
+  CTEXT "'%s' on the", ID_TITLE, 0, 16, 130, 8
+  CTEXT "", ID_PORT, 0, 24, 130, 8, SS_CENTER | NOT WS_VISIBLE | WS_GROUP
+  CTEXT "%s on %s", ID_DEVICE, 0, 24, 130, 8
+}
+#endif
+#undef NO_DR_ABORTDIALOG
+
+#if !defined(NO_IDS_PRINTER) && !defined(__IDS_PRINTER)
+#define __IDS_PRINTER
+STRINGTABLE LOADONCALL MOVEABLE DISCARDABLE
+{
+  IDS_PRNON,            " on "
+  IDS_PRNERRORTEMPLATE, "'%s' not printed. %s."
+  IDS_PRNOUTOFMEMORY,   "Out of memory"
+  IDS_PRNOUTOFDISK,     "Out of disk space"
+  IDS_PRNCANCEL,        "Printing canceled"
+  IDS_PRNMGRABORT,      "Printing aborted in Print Manager"
+  IDS_PRNGENERROR,      "Error encountered during print"
+  IDS_PRNERRORCAPTION,  "Print Error"
+}
+#endif
+#undef NO_IDS_PRINTER
+
+#endif  // defined(RC_INVOKED)

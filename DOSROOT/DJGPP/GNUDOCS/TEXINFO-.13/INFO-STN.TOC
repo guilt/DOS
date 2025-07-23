@@ -1,0 +1,20 @@
+@numchapentry{Stand-alone Info}{1}{Stand-alone Info}{1}
+@numchapentry{Invoking Info}{2}{Invoking Info}{2}
+@numchapentry{Moving the Cursor}{3}{Cursor Commands}{6}
+@numchapentry{Moving Text Within a Window}{4}{Scrolling Commands}{8}
+@numchapentry{Selecting a Node}{5}{Node Commands}{11}
+@numchapentry{Searching an Info File}{6}{Searching Commands}{14}
+@numchapentry{Selecting Cross References}{7}{Xref Commands}{16}
+@numsecentry{Parts of an Xref}{7.1}{Parts of an Xref}{16}
+@numsecentry{Selecting Xrefs}{7.2}{Selecting Xrefs}{16}
+@numchapentry{Manipulating Multiple Windows}{8}{Window Commands}{18}
+@numsecentry{The Mode Line}{8.1}{The Mode Line}{18}
+@numsecentry{Window Commands}{8.2}{Basic Windows}{18}
+@numsecentry{The Echo Area}{8.3}{The Echo Area}{19}
+@numchapentry{Printing Nodes}{9}{Printing Nodes}{23}
+@numchapentry{Miscellaneous Commands}{10}{Miscellaneous Commands}{24}
+@numchapentry{Manipulating Variables}{11}{Variables}{26}
+@numchapentry{Customizing Key Bindings and Variables}{12}{Custom Key Bindings}{29}
+@numsecentry{Invoking @command {infokey}}{12.1}{Invoking infokey}{29}
+@numsecentry{@command {infokey} source format}{12.2}{infokey source format}{29}
+@appentry{Index}{A}{Index}{32}

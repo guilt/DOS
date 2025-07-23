@@ -1,0 +1,330 @@
+@unnchapentry{Texinfo Copying Conditions}{10001}{Copying Conditions}{2}
+@numchapentry{Overview of Texinfo}{1}{Overview}{3}
+@numsecentry{Reporting Bugs}{1.1}{Reporting Bugs}{3}
+@numsecentry{Using Texinfo}{1.2}{Using Texinfo}{3}
+@numsecentry{Output Formats}{1.3}{Output Formats}{4}
+@numsecentry{Info Files}{1.4}{Info Files}{5}
+@numsecentry{Printed Books}{1.5}{Printed Books}{7}
+@numsecentry{@@-commands}{1.6}{Formatting Commands}{8}
+@numsecentry{General Syntactic Conventions}{1.7}{Conventions}{9}
+@numsecentry{Comments}{1.8}{Comments}{9}
+@numsecentry{What a Texinfo File Must Have}{1.9}{Minimum}{10}
+@numsecentry{Six Parts of a Texinfo File}{1.10}{Six Parts}{11}
+@numsecentry{A Short Sample Texinfo File}{1.11}{Short Sample}{11}
+@numsecentry{History}{1.12}{History}{14}
+@numchapentry{Using Texinfo Mode}{2}{Texinfo Mode}{15}
+@numsecentry{Texinfo Mode Overview}{2.1}{Texinfo Mode Overview}{15}
+@numsecentry{The Usual GNU Emacs Editing Commands}{2.2}{Emacs Editing}{15}
+@numsecentry{Inserting Frequently Used Commands}{2.3}{Inserting}{16}
+@numsecentry{Showing the Section Structure of a File}{2.4}{Showing the Structure}{18}
+@numsecentry{Updating Nodes and Menus}{2.5}{Updating Nodes and Menus}{18}
+@numsubsecentry{The Updating Commands}{2.5.1}{Updating Commands}{18}
+@numsubsecentry{Updating Requirements}{2.5.2}{Updating Requirements}{21}
+@numsubsecentry{Other Updating Commands}{2.5.3}{Other Updating Commands}{21}
+@numsecentry{Formatting for Info}{2.6}{Info Formatting}{23}
+@numsecentry{Printing}{2.7}{Printing}{23}
+@numsecentry{Texinfo Mode Summary}{2.8}{Texinfo Mode Summary}{24}
+@numchapentry{Beginning a Texinfo File}{3}{Beginning a File}{27}
+@numsecentry{Sample Texinfo File Beginning}{3.1}{Sample Beginning}{27}
+@numsecentry{Texinfo File Header}{3.2}{Texinfo File Header}{28}
+@numsubsecentry{The First Line of a Texinfo File}{3.2.1}{First Line}{29}
+@numsubsecentry{Start of Header}{3.2.2}{Start of Header}{29}
+@numsubsecentry{@code {@@setfilename}: Set the output file name}{3.2.3}{setfilename}{29}
+@numsubsecentry{@code {@@settitle}: Set the document title}{3.2.4}{settitle}{30}
+@numsubsecentry{End of Header}{3.2.5}{End of Header}{31}
+@numsecentry{Document Permissions}{3.3}{Document Permissions}{31}
+@numsubsecentry{@code {@@copying}: Declare Copying Permissions}{3.3.1}{copying}{31}
+@numsubsecentry{@code {@@insertcopying}: Include Permissions Text}{3.3.2}{insertcopying}{32}
+@numsecentry{Title and Copyright Pages}{3.4}{Titlepage & Copyright Page}{32}
+@numsubsecentry{@code {@@titlepage}}{3.4.1}{titlepage}{33}
+@numsubsecentry{@code {@@titlefont}, @code {@@center}, and @code {@@sp}}{3.4.2}{titlefont center sp}{33}
+@numsubsecentry{@code {@@title}, @code {@@subtitle}, and @code {@@author}}{3.4.3}{title subtitle author}{34}
+@numsubsecentry{Copyright Page}{3.4.4}{Copyright}{35}
+@numsubsecentry{Heading Generation}{3.4.5}{end titlepage}{36}
+@numsubsecentry{The @code {@@headings} Command}{3.4.6}{headings on off}{36}
+@numsecentry{Generating a Table of Contents}{3.5}{Contents}{37}
+@numsecentry{The `Top' Node and Master Menu}{3.6}{The Top Node}{38}
+@numsubsecentry{Top Node Example}{3.6.1}{Top Node Example}{39}
+@numsubsecentry{Parts of a Master Menu}{3.6.2}{Master Menu Parts}{39}
+@numsecentry{Global Document Commands}{3.7}{Global Document Commands}{40}
+@numsubsecentry{@code {@@documentdescription}: Summary Text}{3.7.1}{documentdescription}{40}
+@numsubsecentry{@code {@@setchapternewpage}:}{3.7.2}{setchapternewpage}{40}
+@numsubsecentry{@code {@@paragraphindent}: Paragraph Indenting}{3.7.3}{paragraphindent}{41}
+@numsubsecentry{@code {@@firstparagraphindent}: Indenting After Headings}{3.7.4}{firstparagraphindent}{42}
+@numsubsecentry{@code {@@exampleindent}: Environment Indenting}{3.7.5}{exampleindent}{42}
+@numsecentry{Software Copying Permissions}{3.8}{Software Copying Permissions}{43}
+@numchapentry{Ending a Texinfo File}{4}{Ending a File}{44}
+@numsecentry{Printing Indices and Menus}{4.1}{Printing Indices & Menus}{44}
+@numsecentry{@code {@@bye} File Ending}{4.2}{File End}{45}
+@numchapentry{Chapter Structuring}{5}{Structuring}{46}
+@numsecentry{Tree Structure of Sections}{5.1}{Tree Structuring}{46}
+@numsecentry{Structuring Command Types}{5.2}{Structuring Command Types}{46}
+@numsecentry{@code {@@top}}{5.3}{makeinfo top}{47}
+@numsecentry{@code {@@chapter}}{5.4}{chapter}{47}
+@numsecentry{@code {@@unnumbered} and @code {@@appendix}}{5.5}{unnumbered & appendix}{48}
+@numsecentry{@code {@@majorheading}, @code {@@chapheading}}{5.6}{majorheading & chapheading}{48}
+@numsecentry{@code {@@section}}{5.7}{section}{48}
+@numsecentry{@code {@@unnumberedsec}, @code {@@appendixsec}, @code {@@heading}}{5.8}{unnumberedsec appendixsec heading}{49}
+@numsecentry{The @code {@@subsection} Command}{5.9}{subsection}{49}
+@numsecentry{The @code {@@subsection}-like Commands}{5.10}{unnumberedsubsec appendixsubsec subheading}{49}
+@numsecentry{The `subsub' Commands}{5.11}{subsubsection}{50}
+@numsecentry{@code {@@raisesections} and @code {@@lowersections}}{5.12}{Raise/lower sections}{50}
+@numchapentry{Nodes}{6}{Nodes}{52}
+@numsecentry{Two Paths}{6.1}{Two Paths}{52}
+@numsecentry{Node and Menu Illustration}{6.2}{Node Menu Illustration}{52}
+@numsecentry{The @code {@@node} Command}{6.3}{node}{54}
+@numsubsecentry{Choosing Node and Pointer Names}{6.3.1}{Node Names}{55}
+@numsubsecentry{How to Write an @code {@@node} Line}{6.3.2}{Writing a Node}{55}
+@numsubsecentry{@code {@@node} Line Tips}{6.3.3}{Node Line Tips}{56}
+@numsubsecentry{@code {@@node} Line Requirements}{6.3.4}{Node Line Requirements}{56}
+@numsubsecentry{The First Node}{6.3.5}{First Node}{57}
+@numsubsecentry{The @code {@@top} Sectioning Command}{6.3.6}{makeinfo top command}{57}
+@numsecentry{Creating Pointers with @code {makeinfo}}{6.4}{makeinfo Pointer Creation}{58}
+@numsecentry{@code {@@anchor}: Defining Arbitrary Cross-reference Targets}{6.5}{anchor}{58}
+@numchapentry{Menus}{7}{Menus}{60}
+@numsecentry{Menu Location}{7.1}{Menu Location}{60}
+@numsecentry{Writing a Menu}{7.2}{Writing a Menu}{60}
+@numsecentry{The Parts of a Menu}{7.3}{Menu Parts}{61}
+@numsecentry{Less Cluttered Menu Entry}{7.4}{Less Cluttered Menu Entry}{61}
+@numsecentry{A Menu Example}{7.5}{Menu Example}{61}
+@numsecentry{Referring to Other Info Files}{7.6}{Other Info Files}{62}
+@numchapentry{Cross References}{8}{Cross References}{64}
+@numsecentry{What References Are For}{8.1}{References}{64}
+@numsecentry{Different Cross Reference Commands}{8.2}{Cross Reference Commands}{64}
+@numsecentry{Parts of a Cross Reference}{8.3}{Cross Reference Parts}{65}
+@numsecentry{@code {@@xref}}{8.4}{xref}{66}
+@numsubsecentry{What a Reference Looks Like and Requires}{8.4.1}{Reference Syntax}{66}
+@numsubsecentry{@code {@@xref} with One Argument}{8.4.2}{One Argument}{66}
+@numsubsecentry{@code {@@xref} with Two Arguments}{8.4.3}{Two Arguments}{67}
+@numsubsecentry{@code {@@xref} with Three Arguments}{8.4.4}{Three Arguments}{68}
+@numsubsecentry{@code {@@xref} with Four and Five Arguments}{8.4.5}{Four and Five Arguments}{69}
+@numsecentry{Naming a `Top' Node}{8.5}{Top Node Naming}{70}
+@numsecentry{@code {@@ref}}{8.6}{ref}{70}
+@numsecentry{@code {@@pxref}}{8.7}{pxref}{71}
+@numsecentry{@code {@@inforef}}{8.8}{inforef}{72}
+@numsecentry{@code {@@url}, @code {@@uref@{@var {url}[, @var {text}][, @var {replacement}]@}}}{8.9}{uref}{72}
+@numsecentry{@code {@@cite}@{@var {reference}@}}{8.10}{cite}{74}
+@numchapentry{Marking Words and Phrases}{9}{Marking Text}{75}
+@numsecentry{Indicating Definitions, Commands, etc.}{9.1}{Indicating}{75}
+@numsubsecentry{Highlighting Commands are Useful}{9.1.1}{Useful Highlighting}{75}
+@numsubsecentry{@code {@@code}@{@var {sample-code}@}}{9.1.2}{code}{76}
+@numsubsecentry{@code {@@kbd}@{@var {keyboard-characters}@}}{9.1.3}{kbd}{77}
+@numsubsecentry{@code {@@key}@{@var {key-name}@}}{9.1.4}{key}{78}
+@numsubsecentry{@code {@@samp}@{@var {text}@}}{9.1.5}{samp}{79}
+@numsubsecentry{@code {@@verb}@{<char>@var {text}<char>@}}{9.1.6}{verb}{79}
+@numsubsecentry{@code {@@var}@{@var {metasyntactic-variable}@}}{9.1.7}{var}{80}
+@numsubsecentry{@code {@@env}@{@var {environment-variable}@}}{9.1.8}{env}{81}
+@numsubsecentry{@code {@@file}@{@var {file-name}@}}{9.1.9}{file}{81}
+@numsubsecentry{@code {@@command}@{@var {command-name}@}}{9.1.10}{command}{81}
+@numsubsecentry{@code {@@option}@{@var {option-name}@}}{9.1.11}{option}{81}
+@numsubsecentry{@code {@@dfn}@{@var {term}@}}{9.1.12}{dfn}{82}
+@numsubsecentry{@code {@@abbr}@{@var {abbreviation}[, @var {meaning}]@}}{9.1.13}{abbr}{82}
+@numsubsecentry{@code {@@acronym}@{@var {acronym}[, @var {meaning}]@}}{9.1.14}{acronym}{82}
+@numsubsecentry{@code {@@indicateurl}@{@var {uniform-resource-locator}@}}{9.1.15}{indicateurl}{83}
+@numsubsecentry{@code {@@email}@{@var {email-address}[, @var {displayed-text}]@}}{9.1.16}{email}{83}
+@numsecentry{Emphasizing Text}{9.2}{Emphasis}{84}
+@numsubsecentry{@code {@@emph}@{@var {text}@} and @code {@@strong}@{@var {text}@}}{9.2.1}{emph & strong}{84}
+@numsubsecentry{@code {@@sc}@{@var {text}@}: The Small Caps Font}{9.2.2}{Smallcaps}{84}
+@numsubsecentry{Fonts for Printing, Not Info}{9.2.3}{Fonts}{85}
+@numchapentry{Quotations and Examples}{10}{Quotations and Examples}{87}
+@numsecentry{Block Enclosing Commands}{10.1}{Block Enclosing Commands}{87}
+@numsecentry{@code {@@quotation}: Block quotations}{10.2}{quotation}{88}
+@numsecentry{@code {@@example}: Example Text}{10.3}{example}{88}
+@numsecentry{@code {@@verbatim}: Literal Text}{10.4}{verbatim}{89}
+@numsecentry{@code {@@verbatiminclude} @var {file}: Include a File Verbatim}{10.5}{verbatiminclude}{90}
+@numsecentry{@code {@@lisp}: Marking a Lisp Example}{10.6}{lisp}{90}
+@numsecentry{@code {@@small@dots {}} Block Commands}{10.7}{small}{91}
+@numsecentry{@code {@@display} and @code {@@smalldisplay}}{10.8}{display}{91}
+@numsecentry{@code {@@format} and @code {@@smallformat}}{10.9}{format}{92}
+@numsecentry{@code {@@exdent}: Undoing a Line's Indentation}{10.10}{exdent}{92}
+@numsecentry{@code {@@flushleft} and @code {@@flushright}}{10.11}{flushleft & flushright}{92}
+@numsecentry{@code {@@noindent}: Omitting Indentation}{10.12}{noindent}{93}
+@numsecentry{@code {@@indent}: Forcing Indentation}{10.13}{indent}{94}
+@numsecentry{@code {@@cartouche}: Rounded Rectangles Around Examples}{10.14}{cartouche}{94}
+@numchapentry{Lists and Tables}{11}{Lists and Tables}{96}
+@numsecentry{Introducing Lists}{11.1}{Introducing Lists}{96}
+@numsecentry{@code {@@itemize}: Making an Itemized List}{11.2}{itemize}{97}
+@numsecentry{@code {@@enumerate}: Making a Numbered or Lettered List}{11.3}{enumerate}{98}
+@numsecentry{Making a Two-column Table}{11.4}{Two-column Tables}{99}
+@numsubsecentry{Using the @code {@@table} Command}{11.4.1}{table}{100}
+@numsubsecentry{@code {@@ftable} and @code {@@vtable}}{11.4.2}{ftable vtable}{101}
+@numsubsecentry{@code {@@itemx}}{11.4.3}{itemx}{101}
+@numsecentry{@code {@@multitable}: Multi-column Tables}{11.5}{Multi-column Tables}{101}
+@numsubsecentry{Multitable Column Widths}{11.5.1}{Multitable Column Widths}{102}
+@numsubsecentry{Multitable Rows}{11.5.2}{Multitable Rows}{102}
+@numchapentry{Special Displays}{12}{Special Displays}{104}
+@numsecentry{Floats}{12.1}{Floats}{104}
+@numsubsecentry{@code {@@float} [@var {type}][,@var {label}]: Floating Material}{12.1.1}{float}{104}
+@numsubsecentry{@code {@@caption} & @code {@@shortcaption}}{12.1.2}{caption shortcaption}{105}
+@numsubsecentry{@code {@@listoffloats}: Tables of Contents for Floats}{12.1.3}{listoffloats}{105}
+@numsecentry{Inserting Images}{12.2}{Images}{106}
+@numsubsecentry{Image Syntax}{12.2.1}{Image Syntax}{106}
+@numsubsecentry{Image Scaling}{12.2.2}{Image Scaling}{107}
+@numsecentry{Footnotes}{12.3}{Footnotes}{108}
+@numsubsecentry{Footnote Commands}{12.3.1}{Footnote Commands}{108}
+@numsubsecentry{Footnote Styles}{12.3.2}{Footnote Styles}{109}
+@numchapentry{Indices}{13}{Indices}{110}
+@numsecentry{Making Index Entries}{13.1}{Index Entries}{110}
+@numsecentry{Predefined Indices}{13.2}{Predefined Indices}{110}
+@numsecentry{Defining the Entries of an Index}{13.3}{Indexing Commands}{111}
+@numsecentry{Combining Indices}{13.4}{Combining Indices}{112}
+@numsubsecentry{@code {@@syncodeindex}}{13.4.1}{syncodeindex}{112}
+@numsubsecentry{@code {@@synindex}}{13.4.2}{synindex}{113}
+@numsecentry{Defining New Indices}{13.5}{New Indices}{113}
+@numchapentry{Special Insertions}{14}{Insertions}{115}
+@numsecentry{Inserting @@ and @{@} and @comma {}}{14.1}{Atsign Braces Comma}{115}
+@numsubsecentry{Inserting `@@' with @code {@@@@}}{14.1.1}{Inserting an Atsign}{115}
+@numsubsecentry{Inserting `@{' and `@}' with @code {@@@{} and @code {@@@}}}{14.1.2}{Inserting Braces}{115}
+@numsubsecentry{Inserting `,' with @code {@@comma@{@}}}{14.1.3}{Inserting a Comma}{115}
+@numsecentry{Inserting Quote Characters}{14.2}{Inserting Quote Characters}{116}
+@numsecentry{Inserting Space}{14.3}{Inserting Space}{116}
+@numsubsecentry{Not Ending a Sentence}{14.3.1}{Not Ending a Sentence}{116}
+@numsubsecentry{Ending a Sentence}{14.3.2}{Ending a Sentence}{117}
+@numsubsecentry{Multiple Spaces}{14.3.3}{Multiple Spaces}{117}
+@numsubsecentry{@code {@@frenchspacing} @var {val}: Control sentence spacing}{14.3.4}{frenchspacing}{118}
+@numsubsecentry{@code {@@dmn}@{@var {dimension}@}: Format a Dimension}{14.3.5}{dmn}{119}
+@numsecentry{Inserting Accents}{14.4}{Inserting Accents}{119}
+@numsecentry{Inserting Quotation Marks}{14.5}{Inserting Quotation Marks}{120}
+@numsecentry{Inserting Ellipsis and Bullets}{14.6}{Dots Bullets}{121}
+@numsubsecentry{@code {@@dots}@{@} (@dots {}) and @code {@@enddots}@{@} (@enddots {})}{14.6.1}{dots}{121}
+@numsubsecentry{@code {@@bullet}@{@} (@bullet {})}{14.6.2}{bullet}{122}
+@numsecentry{Inserting @TeX {} and Legal Symbols: @copyright {}, @registeredsymbol {}}{14.7}{TeX and copyright}{122}
+@numsubsecentry{@code {@@TeX}@{@} (@TeX {}) and @code {@@LaTeX}@{@} (@LaTeX {})}{14.7.1}{tex}{122}
+@numsubsecentry{@code {@@copyright@{@}} (@copyright {})}{14.7.2}{copyright symbol}{122}
+@numsubsecentry{@code {@@registeredsymbol@{@}} (@registeredsymbol {})}{14.7.3}{registered symbol}{122}
+@numsecentry{@code {@@euro}@{@} (@euro {}): Euro Currency Symbol}{14.8}{euro}{122}
+@numsecentry{@code {@@pounds}@{@} (@pounds {}): Pounds Sterling}{14.9}{pounds}{123}
+@numsecentry{@code {@@textdegree}@{@} (@textdegree {}): Degrees Symbol}{14.10}{textdegree}{123}
+@numsecentry{@code {@@minus}@{@} (@minus {}): Inserting a Minus Sign}{14.11}{minus}{123}
+@numsecentry{@code {@@geq@{@}} ($\ge ${}) and @code {@@leq@{@}} ($\le ${}): Inserting relations}{14.12}{geq leq}{123}
+@numsecentry{@code {@@math}: Inserting Mathematical Expressions}{14.13}{math}{123}
+@numsecentry{Click Sequences}{14.14}{Click Sequences}{124}
+@numsecentry{Glyphs for Examples}{14.15}{Glyphs}{125}
+@numsubsecentry{Glyphs Summary}{14.15.1}{Glyphs Summary}{125}
+@numsubsecentry{@code {@@result@{@}} (@result {}): Indicating Evaluation}{14.15.2}{result}{125}
+@numsubsecentry{@code {@@expansion@{@}} (@expansion {}): Indicating an Expansion}{14.15.3}{expansion}{125}
+@numsubsecentry{@code {@@print@{@}} (@print {}): Indicating Printed Output}{14.15.4}{Print Glyph}{126}
+@numsubsecentry{@code {@@error@{@}} (@error {}): Indicating an Error Message}{14.15.5}{Error Glyph}{126}
+@numsubsecentry{@code {@@equiv@{@}} (@equiv {}): Indicating Equivalence}{14.15.6}{Equivalence}{127}
+@numsubsecentry{@code {@@point@{@}} (@point {}): Indicating Point in a Buffer}{14.15.7}{Point Glyph}{127}
+@numchapentry{Forcing and Preventing Breaks}{15}{Breaks}{129}
+@numsecentry{Break Commands}{15.1}{Break Commands}{129}
+@numsecentry{@code {@@*} and @code {@@/}: Generate and Allow Line Breaks}{15.2}{Line Breaks}{129}
+@numsecentry{@code {@@-} and @code {@@hyphenation}: Helping @TeX {} Hyphenate}{15.3}{- and hyphenation}{130}
+@numsecentry{@code {@@allowcodebreaks}: Control Line Breaks in @code {@@code}}{15.4}{allowcodebreaks}{130}
+@numsecentry{@code {@@w}@{@var {text}@}: Prevent Line Breaks}{15.5}{w}{131}
+@numsecentry{@code {@@tie@{@}}: Inserting an Unbreakable Space}{15.6}{tie}{131}
+@numsecentry{@code {@@sp} @var {n}: Insert Blank Lines}{15.7}{sp}{131}
+@numsecentry{@code {@@page}: Start a New Page}{15.8}{page}{131}
+@numsecentry{@code {@@group}: Prevent Page Breaks}{15.9}{group}{132}
+@numsecentry{@code {@@need @var {mils}}: Prevent Page Breaks}{15.10}{need}{132}
+@numchapentry{Definition Commands}{16}{Definition Commands}{133}
+@numsecentry{The Template for a Definition}{16.1}{Def Cmd Template}{133}
+@numsecentry{Definition Command Continuation Lines}{16.2}{Def Cmd Continuation Lines}{134}
+@numsecentry{Optional and Repeated Arguments}{16.3}{Optional Arguments}{135}
+@numsecentry{Two or More `First' Lines}{16.4}{deffnx}{135}
+@numsecentry{The Definition Commands}{16.5}{Def Cmds in Detail}{136}
+@numsubsecentry{Functions and Similar Entities}{16.5.1}{Functions Commands}{136}
+@numsubsecentry{Variables and Similar Entities}{16.5.2}{Variables Commands}{137}
+@numsubsecentry{Functions in Typed Languages}{16.5.3}{Typed Functions}{138}
+@numsubsecentry{Variables in Typed Languages}{16.5.4}{Typed Variables}{139}
+@numsubsecentry{Data Types}{16.5.5}{Data Types}{140}
+@numsubsecentry{Object-Oriented Programming}{16.5.6}{Abstract Objects}{141}
+@numsubsubsecentry{Object-Oriented Variables}{16.5.6.1}{Object-Oriented Variables}{141}
+@numsubsubsecentry{Object-Oriented Methods}{16.5.6.2}{Object-Oriented Methods}{142}
+@numsecentry{Conventions for Writing Definitions}{16.6}{Def Cmd Conventions}{143}
+@numsecentry{A Sample Function Definition}{16.7}{Sample Function Definition}{144}
+@numchapentry{Conditionally Visible Text}{17}{Conditionals}{146}
+@numsecentry{Conditional Commands}{17.1}{Conditional Commands}{146}
+@numsecentry{Conditional Not Commands}{17.2}{Conditional Not Commands}{147}
+@numsecentry{Raw Formatter Commands}{17.3}{Raw Formatter Commands}{147}
+@numsecentry{@code {@@set}, @code {@@clear}, and @code {@@value}}{17.4}{set clear value}{148}
+@numsubsecentry{@code {@@set} and @code {@@value}}{17.4.1}{set value}{149}
+@numsubsecentry{@code {@@ifset} and @code {@@ifclear}}{17.4.2}{ifset ifclear}{150}
+@numsubsecentry{@code {@@value} Example}{17.4.3}{value Example}{151}
+@numsecentry{Conditional Nesting}{17.5}{Conditional Nesting}{152}
+@numchapentry{Internationalization}{18}{Internationalization}{153}
+@numsecentry{@code {@@documentlanguage @var {ll}[_@var {cc}]}: Set the Document Language}{18.1}{documentlanguage}{153}
+@numsecentry{@code {@@documentencoding @var {enc}}: Set Input Encoding}{18.2}{documentencoding}{154}
+@numchapentry{Defining New Texinfo Commands}{19}{Defining New Texinfo Commands}{156}
+@numsecentry{Defining Macros}{19.1}{Defining Macros}{156}
+@numsecentry{Invoking Macros}{19.2}{Invoking Macros}{157}
+@numsecentry{Macro Details and Caveats}{19.3}{Macro Details}{159}
+@numsecentry{@samp {@@alias @var {new}=@var {existing}}}{19.4}{alias}{160}
+@numsecentry{@samp {definfoenclose}: Customized Highlighting}{19.5}{definfoenclose}{161}
+@numchapentry{Formatting and Printing Hardcopy}{20}{Hardcopy}{163}
+@numsecentry{Use @TeX {}}{20.1}{Use TeX}{163}
+@numsecentry{Format with @code {tex} and @code {texindex}}{20.2}{Format with tex/texindex}{163}
+@numsecentry{Format with @code {texi2dvi}}{20.3}{Format with texi2dvi}{164}
+@numsecentry{Shell Print Using @code {lpr -d}}{20.4}{Print with lpr}{166}
+@numsecentry{From an Emacs Shell}{20.5}{Within Emacs}{166}
+@numsecentry{Formatting and Printing in Texinfo Mode}{20.6}{Texinfo Mode Printing}{167}
+@numsecentry{Using the Local Variables List}{20.7}{Compile-Command}{168}
+@numsecentry{@TeX {} Formatting Requirements Summary}{20.8}{Requirements Summary}{169}
+@numsecentry{Preparing for @TeX {}}{20.9}{Preparing for TeX}{169}
+@numsecentry{Overfull ``hboxes''}{20.10}{Overfull hboxes}{171}
+@numsecentry{Printing ``Small'' Books}{20.11}{smallbook}{171}
+@numsecentry{Printing on A4 Paper}{20.12}{A4 Paper}{172}
+@numsecentry{@code {@@pagesizes} [@var {width}][, @var {height}]: Custom Page Sizes}{20.13}{pagesizes}{172}
+@numsecentry{Cropmarks and Magnification}{20.14}{Cropmarks and Magnification}{173}
+@numsecentry{PDF Output}{20.15}{PDF Output}{173}
+@numsecentry{How to Obtain @TeX {}}{20.16}{Obtaining TeX}{174}
+@numchapentry{Creating and Installing Info Files}{21}{Creating and Installing Info Files}{175}
+@numsecentry{Creating an Info File}{21.1}{Creating an Info File}{175}
+@numsubsecentry{@code {makeinfo} Preferred}{21.1.1}{makeinfo advantages}{175}
+@numsubsecentry{Running @code {makeinfo} from a Shell}{21.1.2}{Invoking makeinfo}{175}
+@numsubsecentry{Options for @code {makeinfo}}{21.1.3}{makeinfo options}{175}
+@numsubsecentry{Pointer Validation}{21.1.4}{Pointer Validation}{179}
+@numsubsecentry{Running @code {makeinfo} Within Emacs}{21.1.5}{makeinfo in Emacs}{180}
+@numsubsecentry{The @code {texinfo-format@dots {}} Commands}{21.1.6}{texinfo-format commands}{181}
+@numsubsecentry{Batch Formatting}{21.1.7}{Batch Formatting}{182}
+@numsubsecentry{Tag Files and Split Files}{21.1.8}{Tag and Split Files}{182}
+@numsecentry{Installing an Info File}{21.2}{Installing an Info File}{184}
+@numsubsecentry{The Directory File @file {dir}}{21.2.1}{Directory File}{184}
+@numsubsecentry{Listing a New Info File}{21.2.2}{New Info File}{184}
+@numsubsecentry{Info Files in Other Directories}{21.2.3}{Other Info Directories}{185}
+@numsubsecentry{Installing Info Directory Files}{21.2.4}{Installing Dir Entries}{186}
+@numsubsecentry{Invoking @command {install-info}}{21.2.5}{Invoking install-info}{187}
+@numchapentry{Generating HTML}{22}{Generating HTML}{191}
+@numsecentry{HTML Translation}{22.1}{HTML Translation}{191}
+@numsecentry{HTML Splitting}{22.2}{HTML Splitting}{191}
+@numsecentry{HTML CSS}{22.3}{HTML CSS}{192}
+@numsecentry{HTML Cross-references}{22.4}{HTML Xref}{193}
+@numsubsecentry{HTML Cross-reference Link Basics}{22.4.1}{HTML Xref Link Basics}{193}
+@numsubsecentry{HTML Cross-reference Node Name Expansion}{22.4.2}{HTML Xref Node Name Expansion}{194}
+@numsubsecentry{HTML Cross-reference Command Expansion}{22.4.3}{HTML Xref Command Expansion}{195}
+@numsubsecentry{HTML Cross-reference 8-bit Character Expansion}{22.4.4}{HTML Xref 8-bit Character Expansion}{197}
+@numsubsecentry{HTML Cross-reference Mismatch}{22.4.5}{HTML Xref Mismatch}{197}
+@appentry{@@-Command List}{A}{Command List}{199}
+@appsecentry{@@-Command Syntax}{A.1}{Command Syntax}{218}
+@appentry{Tips and Hints}{B}{Tips}{220}
+@appentry{Sample Texinfo Files}{C}{Sample Texinfo Files}{225}
+@appsecentry{Short Sample}{C.1}{Short Sample Texinfo File}{225}
+@appsecentry{GNU Sample Texts}{C.2}{GNU Sample Texts}{226}
+@appsecentry{Verbatim Copying License}{C.3}{Verbatim Copying License}{229}
+@appsecentry{All-permissive Copying License}{C.4}{All-permissive Copying License}{230}
+@appentry{Include Files}{D}{Include Files}{231}
+@appsecentry{How to Use Include Files}{D.1}{Using Include Files}{231}
+@appsecentry{@code {texinfo-multiple-files-update}}{D.2}{texinfo-multiple-files-update}{231}
+@appsecentry{Include Files Requirements}{D.3}{Include Files Requirements}{232}
+@appsecentry{Sample File with @code {@@include}}{D.4}{Sample Include File}{233}
+@appsecentry{Evolution of Include Files}{D.5}{Include Files Evolution}{233}
+@appentry{Page Headings}{E}{Headings}{235}
+@appsecentry{Headings Introduced}{E.1}{Headings Introduced}{235}
+@appsecentry{Standard Heading Formats}{E.2}{Heading Format}{235}
+@appsecentry{Specifying the Type of Heading}{E.3}{Heading Choice}{236}
+@appsecentry{How to Make Your Own Headings}{E.4}{Custom Headings}{237}
+@appentry{Formatting Mistakes}{F}{Catching Mistakes}{240}
+@appsecentry{@code {makeinfo} Find Errors}{F.1}{makeinfo Preferred}{240}
+@appsecentry{Catching Errors with Info Formatting}{F.2}{Debugging with Info}{240}
+@appsecentry{Catching Errors with @TeX {} Formatting}{F.3}{Debugging with TeX}{241}
+@appsecentry{Using @code {texinfo-show-structure}}{F.4}{Using texinfo-show-structure}{243}
+@appsecentry{Using @code {occur}}{F.5}{Using occur}{244}
+@appsecentry{Finding Badly Referenced Nodes}{F.6}{Running Info-Validate}{244}
+@appsubsecentry{Running @code {Info-validate}}{F.6.1}{Using Info-validate}{245}
+@appsubsecentry{Creating an Unsplit File}{F.6.2}{Unsplit}{245}
+@appsubsecentry{Tagifying a File}{F.6.3}{Tagifying}{246}
+@appsubsecentry{Splitting a File Manually}{F.6.4}{Splitting}{246}
+@appentry{GNU Free Documentation License}{G}{GNU Free Documentation License}{247}
+@unnchapentry{Command and Variable Index}{10002}{Command and Variable Index}{254}
+@unnchapentry{General Index}{10003}{General Index}{259}
