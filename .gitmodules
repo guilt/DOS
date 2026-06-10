@@ -1,3 +1,6 @@
 [submodule "3DGFX"]
 	path = DOSROOT/3DGFX
 	url = https://github.com/guilt/3DGFX.git
+[submodule "MLL"]
+	path = DOSROOT/MLL
+	url = https://github.com/guilt/MLL.git
