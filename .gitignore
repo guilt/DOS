@@ -1,13 +1,23 @@
+# DOS generated / build artifacts
+*.TMP
+*.MAP
+
+# DOS project files
 *.DPR
 *.DSK
 *.STS
-*.OBJ
-*.TMP
-*.BAK
-*.CFG
-*.BIN
-*.SWP
 *.BCW
 *.DSW
 
-WS
+# Workspace
+/DOSROOT/WS/
+
+# Generated files
+*.SWP
+*.BAK
+*.LOG
+
+# Executables
+*.OBJ
+*.EXE
+*.COM

@@ -1,1 +1,0 @@
-BCROOT=C:\BC45
