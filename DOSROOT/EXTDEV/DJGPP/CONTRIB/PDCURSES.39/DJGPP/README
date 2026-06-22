@@ -1,0 +1,90 @@
+This is a port of PDCurses 3.9 to MSDOS/DJGPP.
+
+
+
+1.:     DJGPP specific changes.
+        =======================
+
+        The DJGPP specific implementation of PDC_napms using INT 0x2f function
+        0x1680 and INT 0x28 does not work properly as soon as a programs like
+        DOSIDLE.EXE are loaded.  Programs using PDC_napms seem to hang and it
+        becomes necessary to hit some key to reactivate them.
+        The DJGPP specific implementation now calls delay from libc instead.
+        Apart from this change, only the Makefile for DJGPP has been modified
+        to install the products according to the stock DJGPP installation tree.
+        The diffs file shows the changes.  The library documentation is located
+        in /contrib/PDCurses.39 and /share/doc/PDCurses.39.
+
+
+
+2.:     Installing the library package.
+        ===============================
+
+2.1.:   Copy the binary distribution into the top DJGPP installation directory,
+        just unzip it preserving the directory structure running *ONE* of the
+        following commands:
+          unzip32 pdcur39b.zip      or
+          djtarx pdcur39b.zip       or
+          pkunzip -d pdcur39b.zip
+
+
+
+3.:     Building the binaries from sources.
+        ===================================
+
+3.1.:   Create a temporary directory and copy the source package into the
+        directory.  If you download the source distribution from one of the
+        DJGPP sites, just unzip it preserving the directory structure
+        running *ONE* of the following commands:
+          unzip32 pdcur39s.zip      or
+          djtarx pdcur39s.zip       or
+          pkunzip -d pdcur39s.zip
+
+3.2.:   To build the binaries you will need the following binary packages:
+          djdev205.zip (or a later but NOT a prior version)
+          bsh204b.zip  (or a later but NOT a prior version)
+          gccNNNb.zip, bnuNNNb.zip, makNNNb.zip, filNNNb.zip, shlNNNb.zip
+          and txtNNNb.zip
+
+        All this packages can be found in the v2gnu directory of any
+        ftp.delorie.com mirror.  NNN stands for the newest port versions
+        available when this port was build but older may do the work as well
+        but I have not tested this.
+
+3.3.:   The sources are compiled in a separate build directory under the top
+        srcdir (aka PDCurses-3.9).  To build the binaries cd into the
+        "_build" directory and run the builf batch file like this:
+          djbuild.bat
+        It will set the required environment variables and build the library,
+        the test programs and the manual using the DJGPP specific Makefile
+        stored in the /dos directory.  This is Makefile.
+
+3.4.:   Now you can run the tests if you like.  From the /_build directory run
+        the command:
+          testcurs
+
+        There are some other example and/or test binaries.  You can run and
+        inspect their code if you like.
+
+3.5.:   To install the headers, libraries and docs run the following command
+        from the /dos directory:
+          make install
+
+        This will install the products into your DJGPP installation tree given
+        by the default prefix "/dev/env/DJDIR".  If you prefer to install them
+        into some other directory you will have to set prefix to the appropiate
+        value:
+          make install prefix=z:/some/other/place
+
+
+
+        To send PDCurses specific bug reports look at
+        <http://pdcurses.sourceforge.net/> to see how to register to the bug
+        mailing list.
+        Send suggestions and bug reports concerning the DJGPP port
+        to comp.os.msdos.djgpp or <djgpp@delorie.com>.
+
+
+Enjoy.
+
+          Guerrero, Juan Manuel <juan.guerrero@gmx.de>

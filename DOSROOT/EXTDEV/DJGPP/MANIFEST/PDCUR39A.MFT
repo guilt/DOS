@@ -1,0 +1,15 @@
+contrib/PDCurses.39/djgpp/README
+contrib/PDCurses.39/dos/README
+contrib/PDCurses.39/README
+contrib/PDCurses.39/HISTORY
+contrib/PDCurses.39/IMPLEMNT
+manifest/pdcur39a.dsm
+manifest/pdcur39a.ver
+manifest/pdcur39a.mft
+include/curses.h
+include/panel.h
+lib/libpdcurses.a
+lib/libpanel.a
+share/doc/PDCurses.39/manual.txt
+share/doc/PDCurses.39/users.txt
+contrib/PDCurses.39

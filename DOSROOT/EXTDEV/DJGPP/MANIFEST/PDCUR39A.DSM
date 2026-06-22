@@ -1,11 +1,11 @@
 #
-# DSM for PDCurses 3.8 headers and libraries.
-# Written by Juan Manuel Guerrero <juan.guerrero@gmx.de> 2019-07-08
-# Product compiled using gcc346b, bnu232b and djdev206.
+# DSM for PDCurses 3.9 headers and libraries.
+# Written by Juan Manuel Guerrero <juan.guerrero@gmx.de> 2019-12-30
+# Product compiled using gcc346b, bnu2331b and djdev206.
 #
 
 dsm-file-version: 1.1
-dsm-name: pdcur38a
+dsm-name: pdcur39a
 dsm-version: 0.6.1
 
 type: binaries
@@ -14,12 +14,12 @@ dsm-author: Juan Manuel Guerrero
 dsm-author-email: juan.guerrero@gmx.de
 
 name: PDCurses
-version: 3.8 release 1
-manifest: pdcur38a
-sources-dsm: pdcur38s
+version: 3.9 release 1
+manifest: pdcur39a
+sources-dsm: pdcur39s
 binaries-dsm:
 documentation-dsm:
-short-description: Headers and libraries for Public Domain Curses 3.8
+short-description: Headers and libraries for Public Domain Curses 3.9
 long-description: PDCurses is an implementation of X/Open\n\
 curses for multiple platforms.
 
@@ -43,16 +43,16 @@ porter: Juan Manuel Guerrero
 porter-email: juan.guerrero@gmx.de
 
 simtelnet-path: v2tk/
-zip: pdcur38a.zip
+zip: pdcur39a.zip
 
-changelog: contrib/PDCurses-3.8/HISTORY
+changelog: contrib/PDCurses-3.9/HISTORY
 
-pre-install-readme: contrib/PDCurses-3.8/README
-pre-install-readme: contrib/PDCurses-3.8/djgpp/README
+pre-install-readme: contrib/PDCurses-3.9/README
+pre-install-readme: contrib/PDCurses-3.9/djgpp/README
 
 requires: DPMI 0.9
 
-replaces: PDCurses < 3.8 release 1
+replaces: PDCurses < 3.9 release 1
 
 # For reading docs:
 depends-on: less
