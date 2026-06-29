@@ -37,6 +37,7 @@ C:\
 │   ├── PKZIP\         — PKZIP/PKUNZIP
 │   ├── EDB19\         — Zip-Case-X (ZCX)
 │   └── HWINF623\      — HWiNFO hardware info
+├── DTEXT23\           — DynaText Help System
 ├── HXRT216\           — HX DOS Extender (DPMI, disabled by default)
 ├── SB16\              — Sound Blaster 16 drivers
 ├── ULTRASND\          — Gravis UltraSound (GUS) drivers
@@ -270,7 +271,7 @@ The script auto-detects `%EXTDEV%` for DJGPP paths under DOSBox.
 ## Submodules
 
 - **3DGFX** ([github.com/guilt/3DGFX](https://github.com/guilt/3DGFX)) — 3D
-  graphics library with software rendering, BMP loader, and examples.
+  graphics library with software rendering, BMP loader, unicode, and examples.
 - **MLL** ([github.com/guilt/MLL](https://github.com/guilt/MLL)) — Multi-Layer
   Lossless compression suite with PSNR evaluation.
 
