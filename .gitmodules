@@ -4,3 +4,6 @@
 [submodule "MLL"]
 	path = DOSROOT/EXTDEV/MLL
 	url = https://github.com/guilt/MLL.git
+[submodule "DOSROOT/EXTDEV/EP"]
+	path = DOSROOT/EXTDEV/EP
+	url = https://github.com/guilt/EP.git
