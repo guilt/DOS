@@ -274,12 +274,14 @@ The script auto-detects `%EXTDEV%` for DJGPP paths under DOSBox.
   graphics library with software rendering, BMP loader, unicode, and examples.
 - **MLL** ([github.com/guilt/MLL](https://github.com/guilt/MLL)) — Multi-Layer
   Lossless compression suite with PSNR evaluation.
+- **EP** ([github.com/guilt/EP](https://github.com/guilt/EP)) — Installer — 
+  Extractor/Packer for DOS & Windows
 
 Clone with `--recursive` or run `git submodule update --init --recursive`.
 
 ## License
 
-[MIT License](LICENSE.md).
+[MIT License](LICENSE.MD).
 
 ## Feedback
 
